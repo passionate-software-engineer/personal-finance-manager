@@ -1,11 +1,3 @@
-#Run Project 
-To run project You need to:
-1. Install [NodeJS](https://nodejs.org/en/) and [Angular CLI](https://cli.angular.io/). 
-2. Clone project
-3. cd to project directory
-4. run "npm install"
-5. run "ng serve" 
-
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
@@ -17,6 +9,14 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Run Project 
+To run project:
+1. Install [NodeJS](https://nodejs.org/en/) and [Angular CLI](https://cli.angular.io/). 
+2. Clone project
+3. cd to project directory
+4. run "npm install"
+5. run "ng serve" 
 
 ## Build
 
