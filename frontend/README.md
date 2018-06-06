@@ -10,7 +10,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-# Run Project 
+## Run Project 
 To run project You need to:
 1. Install [NodeJS](https://nodejs.org/en/) and [Angular CLI](https://cli.angular.io/). 
 2. Clone project
