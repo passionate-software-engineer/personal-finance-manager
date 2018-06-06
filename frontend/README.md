@@ -1,11 +1,10 @@
 #Run Project 
 To run project You need to:
-1. Install NODEJS and Angular CLI.
+1. Install NODEJS (https://nodejs.org/en/) and Angular CLI (https://cli.angular.io/). 
 2. Clone project
 3. cd to project directory
 4. run "npm install"
-5. install bootstrap with "npm install --save bootstrap@3
-6. run "ng serve" 
+5. run "ng serve" 
 
 # Frontend
 
