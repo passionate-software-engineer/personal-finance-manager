@@ -1,6 +1,7 @@
-package account;
+package services;
 
-import common.AccountRepository;
+import repositories.AccountRepository;
+import model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,6 @@
-package account;
+package services;
+
+import model.Account;
 
 import java.util.List;
 
