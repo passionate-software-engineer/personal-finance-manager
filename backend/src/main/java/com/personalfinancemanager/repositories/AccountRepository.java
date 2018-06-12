@@ -1,6 +1,6 @@
-package repositories;
+package com.personalfinancemanager.repositories;
 
-import model.Account;
+import com.personalfinancemanager.model.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

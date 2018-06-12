@@ -1,0 +1,11 @@
+server.port: 8081
+spring:
+  profiles: dev
+  h2:
+    console.enabled: true
+
+rest.mapping:
+  accountController: /accounts
+  getAccountById: ${rest.mapping.accountController}/{id}
+  updateAccount: ${rest.mapping.accountController}/{id}
+  deleteAaccount: ${rest.mapping.accountController}/{id}
