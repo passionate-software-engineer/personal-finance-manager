@@ -55,8 +55,8 @@ public class AccountController{
     accountService.deleteAccount(id, account);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
-  @DeleteMapping(value = "${rest.mapping.accountController.deleteAaccount}")
-  public ResponseEntity<Void> deleteAaccount(@PathVariable("id") Long id) {
+  @DeleteMapping(value = "${rest.mapping.accountController.deleteAccount}")
+  public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
     accountService.deleteAccount(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
