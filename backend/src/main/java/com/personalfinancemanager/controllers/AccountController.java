@@ -3,6 +3,7 @@ package com.personalfinancemanager.controllers;
 import com.personalfinancemanager.services.AccountService;
 import lombok.AllArgsConstructor;
 import com.personalfinancemanager.model.Account;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "${rest.mapping.accountController}")
@@ -29,7 +31,8 @@ public class AccountController{
 
   @GetMapping(value = "${rest.mapping.accountController.getAccountById}")
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
-   Account account = accountService.getAccountById(id);
+    Account account = accountService.getAccountById(id);
+    Account account = accountService.getAccountById(id);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
 

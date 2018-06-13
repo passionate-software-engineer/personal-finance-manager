@@ -1,5 +1,6 @@
 package com.personalfinancemanager.services;
 
+import lombok.extern.slf4j.Slf4j;
 import com.personalfinancemanager.repositories.AccountRepository;
 import com.personalfinancemanager.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService{
 
@@ -38,18 +40,18 @@ public class AccountServiceImpl implements AccountService{
   public void deleteAccount(Long id, Account account) {
     accountRepository.deleteById(id);
     accountRepository.save(Account.builder().
-      id(account.getId())
-      .balance(account.getBalance())
-      .accountNumber(account.getAccountNumber())
-      .currency(account.getCurrency())
-      .lastModifiedTS(LocalDateTime.now())
-      .userId(account.getUserId())
-      .build());
-
+        id(account.getId())
+        .balance(account.getBalance())
+        .accountNumber(account.getAccountNumber())
+        .currency(account.getCurrency())
+        .lastModifiedTS(LocalDateTime.now())
+        .userId(account.getUserId())
+        .build());
   }
 
   @Override
   public void deleteAccount(Long id) {
-  accountRepository.deleteById(id);
+    accountRepository.deleteById(id);
   }
+
 }
