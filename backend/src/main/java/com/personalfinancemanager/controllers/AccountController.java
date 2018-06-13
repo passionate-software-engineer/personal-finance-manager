@@ -1,9 +1,8 @@
 package com.personalfinancemanager.controllers;
 
-import com.personalfinancemanager.model.Account;
 import com.personalfinancemanager.services.AccountService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.personalfinancemanager.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,17 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-@Slf4j
+
 @AllArgsConstructor
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping(value = "${rest.mapping.accountController}")
 public class AccountController{
-
 
   @Autowired
   AccountService accountService;
 
-  @GetMapping("/{id}")
+  @GetMapping(value = "${rest.mapping.accountController.getAccountById}")
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
    Account account = accountService.getAccountById(id);
     return new ResponseEntity<>(account, HttpStatus.OK);
@@ -52,12 +50,12 @@ public class AccountController{
     return new ResponseEntity<>(headers, HttpStatus.CREATED);
   }
 
-  @PutMapping("/{id}")
+  @PutMapping(value = "${rest.mapping.accountController.updateAccount}")
   public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id, @RequestBody Account account) {
     accountService.deleteAccount(id, account);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
-  @DeleteMapping("/{id}")
+  @DeleteMapping(value = "${rest.mapping.accountController.deleteAccount}")
   public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
     accountService.deleteAccount(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
