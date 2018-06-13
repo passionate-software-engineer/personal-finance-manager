@@ -1,7 +1,7 @@
-package services;
+package com.personalfinancemanager.services;
 
-import repositories.AccountRepository;
-import model.Account;
+import com.personalfinancemanager.repositories.AccountRepository;
+import com.personalfinancemanager.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

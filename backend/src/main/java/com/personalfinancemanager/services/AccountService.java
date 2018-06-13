@@ -1,6 +1,6 @@
-package services;
+package com.personalfinancemanager.services;
 
-import model.Account;
+import com.personalfinancemanager.model.Account;
 
 import java.util.List;
 
