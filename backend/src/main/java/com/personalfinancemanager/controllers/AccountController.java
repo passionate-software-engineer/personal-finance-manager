@@ -1,8 +1,10 @@
-package com.personalfinancemanager.controllers;
+package controllers;
 
-import com.personalfinancemanager.services.AccountService;
+import java.util.List;
 import lombok.AllArgsConstructor;
-import com.personalfinancemanager.model.Account;
+import model.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,18 +18,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
+import services.AccountService;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "${rest.mapping.accountController}")
+@RequestMapping("/accounts")
 public class AccountController{
+
+  protected final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
   @Autowired
   AccountService accountService;
 
-  @GetMapping(value = "${rest.mapping.accountController.getAccountById}")
+  @GetMapping("/{id}")
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
    Account account = accountService.getAccountById(id);
     return new ResponseEntity<>(account, HttpStatus.OK);
@@ -50,13 +53,13 @@ public class AccountController{
     return new ResponseEntity<>(headers, HttpStatus.CREATED);
   }
 
-  @PutMapping(value = "${rest.mapping.accountController.updateAccount}")
+  @PutMapping("/{id}")
   public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id, @RequestBody Account account) {
     accountService.deleteAccount(id, account);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
-  @DeleteMapping(value = "${rest.mapping.accountController.deleteAccount}")
-  public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteAaccount(@PathVariable("id") Long id) {
     accountService.deleteAccount(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
