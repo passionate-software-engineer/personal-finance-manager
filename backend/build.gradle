@@ -36,8 +36,6 @@ dependencies {
 
 }
 
-
-
 flyway {
     url = 'jdbc:h2:file:./target/foobar'
     user = 'sa'
