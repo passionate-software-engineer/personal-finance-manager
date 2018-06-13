@@ -1,17 +1,22 @@
 package services;
 
-import repositories.AccountRepository;
-import model.Account;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import model.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import repositories.AccountRepository;
+
 
 @Service
 public class AccountServiceImpl implements AccountService{
+
+  protected final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+
 
   @Autowired
   private AccountRepository accountRepository;

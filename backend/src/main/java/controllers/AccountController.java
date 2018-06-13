@@ -1,8 +1,10 @@
 package controllers;
 
-import services.AccountService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import model.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,13 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
+import services.AccountService;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/accounts")
 public class AccountController{
+
+  protected final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
   @Autowired
   AccountService accountService;
