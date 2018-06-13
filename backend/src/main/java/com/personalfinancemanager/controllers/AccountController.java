@@ -1,11 +1,9 @@
-package controllers;
+package com.personalfinancemanager.controllers;
 
-import java.util.List;
+import com.personalfinancemanager.model.Account;
+import com.personalfinancemanager.services.AccountService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import model.Account;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import services.AccountService;
+
+import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
@@ -59,7 +58,7 @@ public class AccountController{
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteAaccount(@PathVariable("id") Long id) {
+  public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
     accountService.deleteAccount(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }

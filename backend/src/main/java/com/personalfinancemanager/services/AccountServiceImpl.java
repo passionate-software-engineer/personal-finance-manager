@@ -1,22 +1,19 @@
-package services;
+package com.personalfinancemanager.services;
+
+import com.personalfinancemanager.model.Account;
+import com.personalfinancemanager.repositories.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import model.Account;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import repositories.AccountRepository;
 
-
+@Slf4j
 @Service
-public class AccountServiceImpl implements AccountService{
-
-  protected final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
-
+public class AccountServiceImpl implements AccountService {
 
   @Autowired
   private AccountRepository accountRepository;
@@ -50,11 +47,11 @@ public class AccountServiceImpl implements AccountService{
       .lastModifiedTS(LocalDateTime.now())
       .userId(account.getUserId())
       .build());
-
   }
 
   @Override
   public void deleteAccount(Long id) {
   accountRepository.deleteById(id);
   }
+
 }
