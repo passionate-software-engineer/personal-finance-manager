@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import model.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import services.AccountService;
-
+@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("/accounts")
 public class AccountController{
 
-  protected final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
   @Autowired
   AccountService accountService;
