@@ -9,7 +9,7 @@ rest.mapping:
   getAccountById: ${rest.mapping.accountController}/{id}
   updateAccount: ${rest.mapping.accountController}/{id}
   deleteAccount: ${rest.mapping.accountController}/{id}
-
+  
 logging:
   level:
     org:

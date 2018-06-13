@@ -32,6 +32,7 @@ public class AccountController{
   @GetMapping(value = "${rest.mapping.accountController.getAccountById}")
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
     Account account = accountService.getAccountById(id);
+    Account account = accountService.getAccountById(id);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
 
