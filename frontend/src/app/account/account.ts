@@ -1,5 +1,5 @@
 export class Account {
     id: number;
-    desc: string;
-    balance: number;
+    name: string;
+    value: number;
 }
