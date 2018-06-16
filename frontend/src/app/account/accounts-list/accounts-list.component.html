@@ -1,6 +1,39 @@
-<ul class="list-group"  >
-  <li *ngFor="let account of accounts" class="list-group-item">
-    {{account.desc}}
-    {{account.balance}}
-  </li>
-</ul>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th style="width: 20%" scope="col">
+        Id
+      </th>
+      <th style="width: 50%">
+        Description
+      </th>
+      <th style="width: 20%">
+        Balance
+      </th>
+      <th style="width: 10%">
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let account of accounts">
+      <td class="align-right">{{account.id}}</td>
+      <td class="align-right">{{account.desc}}</td>
+      <td class="align-left">{{account.balance }}</td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">Delete</a>
+            </li>
+            <li>
+              <a href="#">Edit</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
