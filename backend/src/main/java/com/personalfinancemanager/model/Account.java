@@ -22,10 +22,7 @@ public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String currency;
-  private Long accountNumber;
+  private String name;
   private BigDecimal balance;
-  private LocalDateTime lastModifiedTS;
-  private Integer userId;
 
 }

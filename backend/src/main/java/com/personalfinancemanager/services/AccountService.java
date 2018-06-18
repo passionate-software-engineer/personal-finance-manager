@@ -1,19 +1,48 @@
 package com.personalfinancemanager.services;
 
 import com.personalfinancemanager.model.Account;
+import com.personalfinancemanager.repositories.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public interface AccountService {
+@Slf4j
+@Service
+public class AccountService {
 
-  public Account getAccountById(Long id);
+  @Autowired
+  private AccountRepository accountRepository;
 
-  public List<Account> getAccounts();
+  public Account getAccountById(Long id) {
+    return accountRepository.findById(id).get();
+  }
 
-  public Account addAccount(Account account);
+  public List<Account> getAccounts() {
+    List<Account> accounts = new ArrayList<>();
+    accountRepository.findAll().forEach(account -> accounts.add(account));
+    accounts.sort(Comparator.comparing(Account::getId));
+    return accounts;
+  }
 
-  public void deleteAccount(Long id, Account account);
+  public Account addAccount(Account account) {
+    return accountRepository.save(account);
+  }
 
-  public void deleteAccount(Long id);
+  public void updateAccount(Long id, Account account) {
+    accountRepository.deleteById(id);
+    accountRepository.save(Account.builder().
+        id(account.getId())
+        .balance(account.getBalance())
+        .name(account.getName())
+        .build());
+  }
+
+  public void deleteAccount(Long id) {
+    accountRepository.deleteById(id);
+  }
 
 }

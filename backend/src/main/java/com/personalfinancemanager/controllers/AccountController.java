@@ -23,15 +23,14 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "${rest.mapping.accountController}")
+@RequestMapping(value = "accounts")
 public class AccountController{
 
   @Autowired
-  AccountService accountService;
+  private AccountService accountService;
 
-  @GetMapping(value = "${rest.mapping.accountController.getAccountById}")
+  @GetMapping(value = "/{id}")
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
-    Account account = accountService.getAccountById(id);
     Account account = accountService.getAccountById(id);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
@@ -53,12 +52,12 @@ public class AccountController{
     return new ResponseEntity<>(headers, HttpStatus.CREATED);
   }
 
-  @PutMapping(value = "${rest.mapping.accountController.updateAccount}")
+  @PutMapping(value = "/{id}")
   public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id, @RequestBody Account account) {
-    accountService.deleteAccount(id, account);
+    accountService.updateAccount(id, account);
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
-  @DeleteMapping(value = "${rest.mapping.accountController.deleteAccount}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
     accountService.deleteAccount(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
