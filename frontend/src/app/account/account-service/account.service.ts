@@ -10,18 +10,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8080/v1/accounts/';
-  // accounts: Account[] = [
-  //   { id: 1, desc: 'ing', balance: 1234 },
-  //   { id: 2, desc: 'mbank', balance: 19994 },
-  //   { id: 3, desc: 'idea', balance: 765 },
-  //   { id: 4, desc: 'millenium', balance: 987654 }
-  // ];
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8081/accounts/';
 
-  // getAccounts(): Account[] {
-  //   return this.accounts;
-  // }
+  constructor(private http: HttpClient) { }
 
   getCompanies(): Observable<Account[]> {
     return this.http.get<Account[]>(this.apiUrl);
