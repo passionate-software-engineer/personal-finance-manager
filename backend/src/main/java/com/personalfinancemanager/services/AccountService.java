@@ -33,12 +33,8 @@ public class AccountService {
   }
 
   public void updateAccount(Long id, Account account) {
-    accountRepository.deleteById(id);
-    accountRepository.save(Account.builder().
-        id(account.getId())
-        .balance(account.getBalance())
-        .name(account.getName())
-        .build());
+    account.setId(id);
+    accountRepository.save(account);
   }
 
   public void deleteAccount(Long id) {
