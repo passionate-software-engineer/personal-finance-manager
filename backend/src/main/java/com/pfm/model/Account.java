@@ -1,4 +1,4 @@
-package com.personalfinancemanager.model;
+package com.pfm.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

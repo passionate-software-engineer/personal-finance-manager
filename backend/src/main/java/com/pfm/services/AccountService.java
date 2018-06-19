@@ -1,7 +1,7 @@
-package com.personalfinancemanager.services;
+package com.pfm.services;
 
-import com.personalfinancemanager.model.Account;
-import com.personalfinancemanager.repositories.AccountRepository;
+import com.pfm.model.Account;
+import com.pfm.repositories.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
