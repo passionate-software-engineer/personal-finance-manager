@@ -8,11 +8,3 @@ logging:
     org:
       springframework: ERROR
   file: application.log
-
-
-rest.mapping:
-  accountController: /accounts
-  getAccountById: /{id}
-  addAccount: /{id}
-  updateAccount: /{id}
-  deleteAccount: /{id}

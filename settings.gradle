@@ -1,4 +1,0 @@
-include 'backend'
-findProject(':backend')?.name = 'personal-finance-manager'
-
-
