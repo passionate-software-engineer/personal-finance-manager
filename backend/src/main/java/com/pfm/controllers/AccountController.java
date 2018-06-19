@@ -1,8 +1,8 @@
-package com.personalfinancemanager.controllers;
+package com.pfm.controllers;
 
-import com.personalfinancemanager.services.AccountService;
+import com.pfm.services.AccountService;
 import lombok.AllArgsConstructor;
-import com.personalfinancemanager.model.Account;
+import com.pfm.model.Account;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -43,7 +43,7 @@ public class AccountController{
 
   @PostMapping
   public ResponseEntity<Void> addAccount(@RequestBody Account account, UriComponentsBuilder builder) {
-    boolean flag = accountService.addAccount(account)!=null;
+    boolean flag = accountService.addAccount(account) != null;
     if (!flag) {
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
