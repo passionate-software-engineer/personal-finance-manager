@@ -1,0 +1,18 @@
+server.port: 8081
+spring:
+  h2:
+    console.enabled: true
+
+logging:
+  level:
+    org:
+      springframework: ERROR
+  file: application.log
+
+
+rest.mapping:
+  accountController: /accounts
+  getAccountById: /{id}
+  addAccount: /{id}
+  updateAccount: /{id}
+  deleteAccount: /{id}
