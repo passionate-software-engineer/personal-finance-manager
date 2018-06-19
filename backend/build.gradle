@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+        classpath 'com.h2database:h2:1.4.191'
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "5.1.1"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+version '1.0'
+
+sourceCompatibility = 1.9
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile'junit:junit:4.12'
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'javax.xml.bind:jaxb-api:2.3.0'
+    compile "org.projectlombok:lombok:1.18.0"
+    compile 'com.h2database:h2:1.0.60'
+}
+
+flyway {
+    url = 'jdbc:h2:file:./target/flyway'
+    user = 'sa'
+}

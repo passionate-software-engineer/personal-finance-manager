@@ -1,0 +1,10 @@
+server.port: 8081
+spring:
+  h2:
+    console.enabled: true
+
+logging:
+  level:
+    org:
+      springframework: ERROR
+  file: application.log
