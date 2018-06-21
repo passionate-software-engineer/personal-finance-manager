@@ -1,0 +1,76 @@
+#%RAML 1.0 ResourceType
+
+description: <<typeName>> with a given ID.
+get:
+    description: |
+        Retrieve <<typeName>> with given {<<typeName>> Id}
+    responses:
+      200:
+        description: Returns <<typeName>> with a given ID
+        body:
+          application/json:
+            type: file-types.<<resourcePathName|!singularize|!uppercamelcase>>
+            example: <<itemExample>>
+
+      404:
+        description: Item with a given ID not found
+        body:
+          text/plain:
+            example: |
+                <<typeName>>
+      500:
+        description: Internal server error, e.g. due to misconfiguration
+        body:
+          text/plain:
+            example: internal server error, contact administrator
+delete:
+    description: |
+        Delete <<typeName>> item with given {<<typeName>> Id}
+    responses:
+      204:
+        description: Item deleted successfully
+      404:
+        description: Item with a given ID not found
+        body:
+          text/plain:
+            example: |
+                <<typeName>> not found
+      400:
+        description: Bad request, e.g. malformed request body or query                             parameter. Details of the error provided in the response.
+        body:
+          text/plain:
+            example: |
+                Unable to delete <<typeName>>
+      500:
+        description: Internal server error, e.g. due to misconfiguration
+        body:
+          text/plain:
+            example: Internal server error, contact administrator
+
+put:
+    description: |
+        Update <<typeName>> item with given {<<typeName>> Id}
+    body:
+      application/json:
+        type: file-types.<<resourcePathName|!singularize|!uppercamelcase>>
+        example: <<itemExample>>
+    responses:
+      204:
+        description: <<typeName>> successfully updated
+      404:
+        description: <<typeName>> with a given ID not found
+        body:
+          text/plain:
+            example: |
+                <<typeName>> not found
+      400:
+        description: Bad request, e.g. malformed request body or query                             parameter. Details of the error provided in the response.
+        body:
+          text/plain:
+            example: |
+                Unable to update <<typeName>>
+      500:
+        description: Internal server error, e.g. due to misconfiguration
+        body:
+          text/plain:
+            example: Internal server error, contact administrator

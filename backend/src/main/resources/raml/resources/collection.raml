@@ -1,0 +1,58 @@
+#%RAML 1.0 ResourceType
+
+description: Collection of <<resourcePathName|!singularize>>.
+get:
+  description: | 
+    Retrieve a list of <<resourcePathName|!singularize>>.
+  responses:
+      200:
+        description: | 
+          Returns a list of <<resourcePathName|!singularize>>
+        body:
+          application/json:
+            type: file-types.<<resourcePathName|!singularize|!uppercamelcase>>[]
+            example: <<collectionExample>>
+      400:
+        description: "Bad request, e.g. malformed request body or query parameter. Details of the error provided in the response."
+        body:
+          text/plain:
+            example: "Unable to list <<resourcePathName>>"
+      401:
+        description: "Not authorized to perform requested action"
+        body:
+          text/plain:
+            example: "Unable to list <<resourcePathName>>"
+      500:
+        description: "Internal server error"
+        body:
+          text/plain:
+            example: "internal server error, contact administrator"
+
+post:
+  description: Create a new <<resourcePathName|!singularize>>.
+  responses:
+    201:
+      description: "Returns a newly created member, with server-controlled fields like 'id' populated"
+      headers:
+        Location:
+          description: URI to the created <<resourcePathName|!singularize>>
+      body:
+        application/json:
+          type: file-types.<<resourcePathName|!singularize|!uppercamelcase>>         
+    400:
+      description: "Bad request, e.g. malformed request body or query parameter. Details of the error provided in the response."
+      body:
+        text/plain:
+          example: |
+                  "Unable to add <<resourcePathName|!singularize>>"
+    401:
+      description: "Not authorized to perform requested action"
+      body:
+        text/plain:
+          example: "Unable to create <<resourcePathName>>"
+    500:
+      description: "Internal server error"
+      body:
+        text/plain:
+          example: "Internal server error, contact administrator"
+
