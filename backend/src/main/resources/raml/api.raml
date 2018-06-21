@@ -1,0 +1,33 @@
+#%RAML 1.0
+
+title: personal-finance-manager
+version: v1
+baseUri: http://localhost:8081/
+mediaType: application/json
+
+documentation:
+  - title: Home
+    content: |
+      Welcome to the Personal Finance Manager
+  - title: License
+    content: !include docs/license.txt
+  
+uses:
+  file-types: types/pfm-types.raml
+  
+resourceTypes:
+  collection: !include resources/collection.raml
+  collection-item: !include resources/collection-item.raml
+
+/accounts:
+  type: {
+    collection: { collectionExample: !include examples/Accounts.json }}
+  /{id}:
+    type: { 
+      collection-item: { "typeName": "Category",  
+      itemExample: !include examples/Account.json}}          
+/categories:
+  type:
+    {
+    collection: { collectionExample: !include examples/Categories.json }}
+   
