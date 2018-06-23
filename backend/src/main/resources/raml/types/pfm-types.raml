@@ -1,0 +1,40 @@
+#%RAML 1.0 Library
+types: 
+  Account:
+    type: object
+    properties:
+      id:
+        type: integer
+        minimum: 0
+      name:
+        type: string
+      balance:
+        type: number
+        format: double
+        minimum: 0
+
+  Category:
+    type: object
+    properties:
+      id:
+        type: integer
+        minimum: 0
+      name:
+        type: string
+      parentCategory:
+        type: ParentCategory
+        
+  ParentCategory:
+    type: object
+    properties: 
+      id:
+        type: integer
+        minimum: 0
+      name:
+        type: string
+             
+  Error:
+    type: object
+    properties: 
+      message:
+        type: string

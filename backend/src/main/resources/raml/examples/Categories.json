@@ -1,0 +1,16 @@
+[{
+  "id" : 1, 
+  "name" : "Category three",
+  "parentCategory":{
+      "id" : 3, 
+      "name" : "Category one"
+  }
+},
+{
+  "id" : 2, 
+  "name" : "Category two",
+  "parentCategory" : {
+      "id" : 4, 
+      "name" : "Category four"
+  }
+}]
