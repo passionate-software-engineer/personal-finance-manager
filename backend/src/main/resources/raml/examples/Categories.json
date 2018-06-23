@@ -1,10 +1,16 @@
-[
-  {"id" : 1, 
-"name" : "IT IS NOT EXAMPLE OF CATEGORIES!!!!!!!!! CHANGE IT",
-"balance" : 213141.22
+[{
+  "id" : 1, 
+  "name" : "Category three",
+  "parentCategory":{
+      "id" : 3, 
+      "name" : "Category one"
+  }
 },
-  {"id" : 1, 
-"name" : "IT IS NOT EXAMPLE OF CATEGORIES!!!!!!!!! CHANGE IT",
-"balance" : 1478.02
-}
-]
+{
+  "id" : 2, 
+  "name" : "Category two",
+  "parentCategory" : {
+      "id" : 4, 
+      "name" : "Category four"
+  }
+}]

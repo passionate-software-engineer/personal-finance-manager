@@ -20,14 +20,29 @@ resourceTypes:
   collection-item: !include resources/collection-item.raml
 
 /accounts:
-  type: {
-    collection: { collectionExample: !include examples/Accounts.json }}
+  type: 
+    { 
+      collection: { 
+        collectionExample: !include examples/Accounts.json
+      }
+    }
   /{id}:
-    type: { 
-      collection-item: { "typeName": "Category",  
-      itemExample: !include examples/Account.json}}          
+    type: { collection-item: { 
+      "typeName": "Account", itemExample: !include examples/Account.json
+            }
+          }          
 /categories:
   type:
-    {
-    collection: { collectionExample: !include examples/Categories.json }}
+    { 
+      collection: { 
+        collectionExample: !include examples/Categories.json
+      }
+    }
+  /{id}:
+    type: 
+      { 
+        collection-item:  { 
+          "typeName": "Category",itemExample: !include examples/Category.json
+        }
+      } 
    

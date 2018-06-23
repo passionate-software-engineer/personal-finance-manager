@@ -1,0 +1,8 @@
+{
+  "id" : 1, 
+  "name" : "Category one",
+  "parentCategory" : {
+    "id" : 2, 
+    "name" : "Category two"
+  }
+}
