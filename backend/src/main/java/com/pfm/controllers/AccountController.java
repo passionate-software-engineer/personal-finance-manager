@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "accounts")
 @CrossOrigin
+
 public class AccountController {
 
   @Autowired
