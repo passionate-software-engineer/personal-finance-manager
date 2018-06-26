@@ -12,12 +12,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.get;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.is;
@@ -60,8 +63,32 @@ public class AccountControllerTest {
 
 
     @org.junit.Test
-    public void updateAccount() {
+    public void updateAccount() throws Exception {
+
+        String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
+
+        String accountJson2 = "{\"id\":1,\"name\":\"Jacek\",\"balance\":\"200\"}";
+
+
+        this.mockMvc.perform(post("/accounts/")
+                .contentType("application/json;charset=UTF-8")
+                .content(accountJson))
+                .andDo(print()).andExpect(status().isCreated());
+
+        this.mockMvc.perform(put("/accounts/1")
+                .contentType("application/json;charset=UTF-8")
+                .content(accountJson2))
+                .andDo(print()).andExpect(status().isOk());
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/accounts/1"))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", is("Jacek")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.balance", is("200")));
+
     }
+
 
     @org.junit.Test
     public void Test3deleteAccount() throws Exception {
