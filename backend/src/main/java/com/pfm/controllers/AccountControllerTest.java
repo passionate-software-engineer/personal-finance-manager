@@ -50,7 +50,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void Test2getAccountById() throws Exception {
+    public void Test2shouldGetAccountById() throws Exception {
 
         this.mockMvc
                 .perform(get("/accounts/1"))
@@ -60,12 +60,13 @@ public class AccountControllerTest {
     }
 
     @org.junit.Test
-    public void getAllAccounts() {
+    public void Test3shouldGetAllAccounts() {
+
     }
 
 
     @org.junit.Test
-    public void Test3updateAccount() throws Exception {
+    public void Test4shouldUpdateAccount() throws Exception {
 
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
 
@@ -93,7 +94,7 @@ public class AccountControllerTest {
 
 
     @Test
-    public void Test4deleteAccount() throws Exception {
+    public void Test5shouldDeleteAccount() throws Exception {
 
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
         this.mockMvc.perform(post("/accounts/")
