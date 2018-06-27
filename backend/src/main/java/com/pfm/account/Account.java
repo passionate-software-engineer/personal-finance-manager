@@ -1,5 +1,6 @@
-package com.pfm.model;
+package com.pfm.account;
 
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +20,14 @@ import javax.persistence.Id;
 public class Account {
 
   @Id
+  @NotNull
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
+  @NotNull
   private String name;
+
+  @NotNull
   private BigDecimal balance;
 
 }
