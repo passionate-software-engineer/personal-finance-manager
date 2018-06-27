@@ -52,7 +52,7 @@ public class FirstScreenTest {
 
   @Test
   public void shouldReadPageTitle() {
-    WebElement title = webDriver.findElement(By.xpath("/html/body/app-root/div/h1"));
+    WebElement title = webDriver.findElement(By.xpath("//div/h1[1]"));
     driverWait.until(ExpectedConditions.visibilityOf(title));
     String titleExpected = "Welcome to Personal Finance Manager !";
     String titleResult = title.getText();
