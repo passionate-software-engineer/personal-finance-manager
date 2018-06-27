@@ -1,27 +1,29 @@
-package com.pfm.services;
+package com.pfm.category;
 
-
-import com.pfm.model.Category;
-import com.pfm.repositories.CategoryRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-
+@Slf4j
 @Service
+@AllArgsConstructor
 public class CategoryService {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     public Category getCategoryById(long id) {
         return categoryRepository.getOne(id);
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<Category> getCategories() {
+      List<Category> categories = categoryRepository.findAll();
+      categories.sort(Comparator.comparing(Category::getId));
+        return categories;
     }
 
     public Category addCategory(Category category) {

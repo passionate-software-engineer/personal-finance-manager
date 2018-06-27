@@ -1,16 +1,15 @@
-package com.pfm.services;
+package com.pfm.account;
 
-import com.pfm.model.Account;
-import com.pfm.repositories.AccountRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class AccountService {
 
@@ -32,9 +31,12 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public void updateAccount(Long id, Account account) {
-    account.setId(id);
-    accountRepository.save(account);
+  public Account updateAccount(Long id, Account account) {
+    Account accountToUpdate = getAccountById(id);
+    accountToUpdate.setName(account.getName());
+    accountToUpdate.setBalance(account.getBalance());
+    accountRepository.save(accountToUpdate);
+    return accountToUpdate;
   }
 
   public void deleteAccount(Long id) {
