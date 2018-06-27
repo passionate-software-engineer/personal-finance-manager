@@ -1,10 +1,7 @@
-<app-account-add *ngIf="addAccount===true"></app-account-add>
+<p>Add account</p>
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
-      <th style="width: 20%">
-        Id
-      </th>
       <th style="width: 50%">
         Description
       </th>
@@ -16,10 +13,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let account of accounts">
-      <td>{{account.id}}</td>
-      <td>{{account.name}}</td>
-      <td>{{account.balance }} $</td>
+    <tr>
+      <td>
+        <input type="text" [(ngModel)]="accountToAdd.name">
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="accountToAdd.balance">
+      </td>
+
       <td>
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
@@ -27,10 +28,13 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="deleteAccount(account.id)">Delete</a>
+              <a href="#" (click)="onAddAccount(accountToAdd)">Add</a>
             </li>
             <li>
-              <a href="#">Edit</a>
+              <a href="#">Reset</a>
+            </li>
+            <li>
+              <a href="#">Don't add</a>
             </li>
           </ul>
         </div>
@@ -38,3 +42,4 @@
     </tr>
   </tbody>
 </table>
+<p>{{dupa}}</p>

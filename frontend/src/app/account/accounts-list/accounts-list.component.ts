@@ -9,6 +9,7 @@ import { AccountService } from '../account-service/account.service';
 })
 export class AccountsListComponent implements OnInit {
   accounts: Account[];
+  addAccount = true;
 
   constructor(private accountService: AccountService) { }
 
@@ -17,8 +18,12 @@ export class AccountsListComponent implements OnInit {
   }
 
   getAccounts(): void {
-    this.accountService.getCompanies()
+    this.accountService.getAccounts()
       .subscribe(accounts => this.accounts = accounts);
+  }
+
+  deleteAccount(id: number) {
+    this.accountService.deleteAccount(id).subscribe();
   }
 
 }
