@@ -1,4 +1,3 @@
-<app-account-add *ngIf="addAccount===true"></app-account-add>
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
@@ -30,7 +29,7 @@
               <a href="#" (click)="deleteAccount(account.id)">Delete</a>
             </li>
             <li>
-              <a href="#">Edit</a>
+              <a href="#" (click)="editAccount(account)">Edit</a>
             </li>
           </ul>
         </div>
@@ -38,3 +37,4 @@
     </tr>
   </tbody>
 </table>
+<app-account-add *ngIf="addAccount===true" [account]="selectedAccount" [editAccount]="editingAccount"></app-account-add>

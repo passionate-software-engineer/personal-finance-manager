@@ -27,4 +27,9 @@ export class AccountService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<Account>(url);
   }
+
+  editAccount(account: Account): Observable<Account> {
+    const url = `${this.apiUrl}/${account.id}`;
+    return this.http.put<Account>(url, account, httpOptions);
+  }
 }
