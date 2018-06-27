@@ -52,8 +52,8 @@ public class FirstScreenTest {
 
   @Test
   public void shouldReadPageTitle() {
-    WebElement title = webDriver.findElement(By.xpath("//div/h1[1]"));
-    driverWait.until(ExpectedConditions.visibilityOf(title));
+    WebElement title = driverWait.until(ExpectedConditions.visibilityOf
+        (webDriver.findElement(By.xpath("//div/h1[1]"))));
     String titleExpected = "Welcome to Personal Finance Manager !";
     String titleResult = title.getText();
     assertThat(titleExpected, is(equalTo(titleResult)));
@@ -61,27 +61,24 @@ public class FirstScreenTest {
 
   @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldReadId() {
-    WebElement elementId = webDriver
-        .findElement(By.xpath("//app-accounts-list//tr[1]/td[1]"));
-    driverWait.until(ExpectedConditions.visibilityOf(elementId));
+    WebElement elementId = driverWait.until(ExpectedConditions.visibilityOf
+        (webDriver.findElement(By.xpath("//app-accounts-list//tr[1]/td[1]"))));
     long expectedId = 1L;
     assertThat(Long.valueOf(elementId.getText()), is(equalTo(expectedId)));
   }
 
   @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldReadDescription() {
-    WebElement elementDescription = webDriver
-        .findElement(By.xpath("//app-accounts-list//tr[1]/td[2]"));
-    driverWait.until(ExpectedConditions.visibilityOf(elementDescription));
+    WebElement elementDescription = driverWait.until(ExpectedConditions.visibilityOf
+        (webDriver.findElement(By.xpath("//app-accounts-list//tr[1]/td[2]"))));
     String expectedDescription = "test1";
     assertThat(elementDescription.getText(), is(equalTo(expectedDescription)));
   }
 
   @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldReadBalance() {
-    WebElement elementBalance = webDriver
-        .findElement(By.xpath("//app-accounts-list//tr[1]/td[3]"));
-    driverWait.until(ExpectedConditions.visibilityOf(elementBalance));
+    WebElement elementBalance = driverWait.until(ExpectedConditions.visibilityOf
+        (webDriver.findElement(By.xpath("//app-accounts-list//tr[1]/td[3]"))));
     String expectedBalance = "500 $";
     assertThat(expectedBalance, is(equalTo(elementBalance.getText())));
   }
