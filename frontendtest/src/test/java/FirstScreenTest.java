@@ -53,7 +53,7 @@ public class FirstScreenTest {
   @Test
   public void shouldReadPageTitle() {
     WebElement title = driverWait.until(ExpectedConditions.visibilityOf
-        (webDriver.findElement(By.xpath("//div/h1[1]"))));
+        (webDriver.findElement(By.xpath("//div/*[contains(text(),\"Welcome to Personal\")]"))));
     String titleExpected = "Welcome to Personal Finance Manager !";
     String titleResult = title.getText();
     assertThat(titleExpected, is(equalTo(titleResult)));
@@ -62,7 +62,7 @@ public class FirstScreenTest {
   @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldReadId() {
     WebElement elementId = driverWait.until(ExpectedConditions.visibilityOf
-        (webDriver.findElement(By.xpath("//app-accounts-list//tr[1]/td[1]"))));
+        (webDriver.findElement(By.xpath("//app-accounts-list//*[(text()=\"1\")]"))));
     long expectedId = 1L;
     assertThat(Long.valueOf(elementId.getText()), is(equalTo(expectedId)));
   }
@@ -70,7 +70,7 @@ public class FirstScreenTest {
   @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldReadDescription() {
     WebElement elementDescription = driverWait.until(ExpectedConditions.visibilityOf
-        (webDriver.findElement(By.xpath("//app-accounts-list//tr[1]/td[2]"))));
+        (webDriver.findElement(By.xpath("//app-accounts-list//*[contains(text(),\"test\")]"))));
     String expectedDescription = "test1";
     assertThat(elementDescription.getText(), is(equalTo(expectedDescription)));
   }
@@ -78,7 +78,7 @@ public class FirstScreenTest {
   @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldReadBalance() {
     WebElement elementBalance = driverWait.until(ExpectedConditions.visibilityOf
-        (webDriver.findElement(By.xpath("//app-accounts-list//tr[1]/td[3]"))));
+        (webDriver.findElement(By.xpath("//app-accounts-list//*[contains(text(),\"500\")]"))));
     String expectedBalance = "500 $";
     assertThat(expectedBalance, is(equalTo(elementBalance.getText())));
   }
