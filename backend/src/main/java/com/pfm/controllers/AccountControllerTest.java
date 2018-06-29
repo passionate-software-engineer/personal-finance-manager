@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -25,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -60,18 +59,33 @@ public class AccountControllerTest {
     }
 
     @org.junit.Test
-    public void Test3shouldGetAllAccounts() {
+    public void Test3shouldGetAllAccounts() throws Exception {
+        String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
+        String accountJson2 = "{\"id\":2,\"name\":\"Lukasz\",\"balance\":\"999\"}";
+
+        this.mockMvc.perform(post("/accounts/")
+                .contentType("application/json;charset=UTF-8")
+                .content(accountJson))
+                .andExpect(status().isCreated());
+
+        this.mockMvc.perform(post("/accounts/")
+                .contentType("application/json;charset=UTF-8")
+                .content(accountJson2))
+                .andExpect(status().isCreated());
+
+        this.mockMvc
+                .perform(get("/accounts/"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
 
     }
-
 
     @org.junit.Test
     public void Test4shouldUpdateAccount() throws Exception {
 
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
-
         String accountJson2 = "{\"id\":1,\"name\":\"Jacek\",\"balance\":\"200\"}";
-
 
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
@@ -85,13 +99,10 @@ public class AccountControllerTest {
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/accounts/1"))
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
-
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", is("Jacek")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.balance", is(200.00)));
-
     }
-
 
     @Test
     public void Test5shouldDeleteAccount() throws Exception {
@@ -104,7 +115,6 @@ public class AccountControllerTest {
 
         this.mockMvc
                 .perform(delete("/accounts/1"))
-//                .andDo(print()).andExpect(status().isOk())
                 .andExpect(status().isNoContent());
     }
 }
