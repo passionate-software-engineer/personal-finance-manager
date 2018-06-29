@@ -1,4 +1,4 @@
-package com.pfm.controllers;
+package AccountControllerTest;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
