@@ -24,6 +24,8 @@ pipeline {
                    sonar-scanner \
                    -Dsonar.projectKey=backend \
                    -Dsonar.sources=. \
+                   -Dsonar.java.source=1.8 \
+                   -Dsonar.java.binaries=build/classes \
                    -Dsonar.host.url=http://piotr-sonar.eu.ngrok.io/ \
                    -Dsonar.login=28e3478c5aab55128d7caf542d3d0a32646c1345
                    '''
