@@ -13,14 +13,14 @@ pipeline {
             steps {
                 sh '''
                    cd backend
-                   gradlew build
+                   ./gradlew build
                    '''
             }
         }
         stage('sonar') {
             steps {
                 sh '''
-                   cd frontend
+                   cd backend
                    sonar-scanner \
                    -Dsonar.projectKey=backend \
                    -Dsonar.sources=. \
