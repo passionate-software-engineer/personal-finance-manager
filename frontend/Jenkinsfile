@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('npm install') {
             steps {
-                bash '''
+                sh '''
                      cd frontend
                      npm install
                      '''
@@ -19,14 +19,14 @@ pipeline {
         }
         stage('ng build') {
             steps {
-                bash '''
+                sh '''
                      ng build
                      '''
             }
         }
         stage('sonar') {
             steps {
-                bash '''
+                sh '''
                      sonar-scanner \
                      -Dsonar.projectKey=frontend \
                      -Dsonar.sources=src \
