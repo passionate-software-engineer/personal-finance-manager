@@ -12,27 +12,29 @@ pipeline {
         stage('npm install') {
             steps {
                 sh '''
-                     cd frontend
-                     npm install
-                     '''
+                   cd frontend
+                   npm install
+                   '''
             }
         }
         stage('ng build') {
             steps {
                 sh '''
-                     ng build
-                     '''
+                   cd frontend
+                   ng build
+                   '''
             }
         }
         stage('sonar') {
             steps {
                 sh '''
-                     sonar-scanner \
-                     -Dsonar.projectKey=frontend \
-                     -Dsonar.sources=src \
-                     -Dsonar.host.url=http://piotr-sonar.eu.ngrok.io/ \
-                     -Dsonar.login=28e3478c5aab55128d7caf542d3d0a32646c1345
-                     '''
+                   cd frontend
+                   sonar-scanner \
+                   -Dsonar.projectKey=frontend \
+                   -Dsonar.sources=src \
+                   -Dsonar.host.url=http://piotr-sonar.eu.ngrok.io/ \
+                   -Dsonar.login=28e3478c5aab55128d7caf542d3d0a32646c1345
+                   '''
             }
         }
     }
