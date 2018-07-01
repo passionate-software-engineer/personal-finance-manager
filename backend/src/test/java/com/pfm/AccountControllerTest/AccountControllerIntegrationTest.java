@@ -1,16 +1,13 @@
 package com.pfm.AccountControllerTest;
 
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -22,26 +19,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-
-public class AccountControllerTest {
+public class AccountControllerIntegrationTest{
 
     @Autowired
     private MockMvc mockMvc;
 
-    @org.junit.Test
-    public void Test1shouldAddAccountTest() throws Exception {
+    @Test
+    public void shouldAddAccountTest() throws Exception {
 
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
-
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
                 .content(accountJson))
@@ -49,17 +41,18 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void Test2shouldGetAccountById() throws Exception {
+    public void shouldGetAccountById() throws Exception {
 
+        String accountJson = "{\"id\":2,\"name\":\"Piotrek\",\"balance\":\"100\"}";
         this.mockMvc
-                .perform(get("/accounts/1"))
+                .perform(get("/accounts/2"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(1)));
+                .andExpect(jsonPath("$.id", is(2)));
     }
 
-    @org.junit.Test
-    public void Test3shouldGetAllAccounts() throws Exception {
+    @Test
+    public void shouldGetAllAccounts() throws Exception {
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
         String accountJson2 = "{\"id\":2,\"name\":\"Lukasz\",\"balance\":\"999\"}";
 
@@ -81,8 +74,8 @@ public class AccountControllerTest {
 
     }
 
-    @org.junit.Test
-    public void Test4shouldUpdateAccount() throws Exception {
+    @Test
+    public void shouldUpdateAccount() throws Exception {
 
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
         String accountJson2 = "{\"id\":1,\"name\":\"Jacek\",\"balance\":\"200\"}";
@@ -90,12 +83,14 @@ public class AccountControllerTest {
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
                 .content(accountJson))
-                .andDo(print()).andExpect(status().isCreated());
+                .andDo(print())
+                .andExpect(status().isCreated());
 
         this.mockMvc.perform(put("/accounts/1")
                 .contentType("application/json;charset=UTF-8")
                 .content(accountJson2))
-                .andDo(print()).andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isOk());
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/accounts/1"))
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
@@ -105,7 +100,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void Test5shouldDeleteAccount() throws Exception {
+    public void shouldDeleteAccount() throws Exception {
 
         String accountJson = "{\"id\":1,\"name\":\"Piotrek\",\"balance\":\"100\"}";
         this.mockMvc.perform(post("/accounts/")
