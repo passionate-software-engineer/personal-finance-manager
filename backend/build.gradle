@@ -1,6 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
@@ -28,6 +31,7 @@ repositories {
 
 dependencies {
     testCompile'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.9.5'
 
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
