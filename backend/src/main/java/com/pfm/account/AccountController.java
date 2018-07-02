@@ -29,6 +29,9 @@ public class AccountController {
   @Autowired
   private AccountService accountService;
 
+  @Autowired
+  private AccountValidator accountValidator;
+
   @GetMapping(value = "/{id}")
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
     Account account = accountService.getAccountById(id);
@@ -46,6 +49,9 @@ public class AccountController {
 
   @PostMapping
   public ResponseEntity addAccount(@RequestBody Account account) {
+
+    List<String> validationResult=accountValidator.validate(account, );
+
     Preconditions.checkNotNull(account,
         "Invalid account");
     long id = accountService.addAccount(account).getId();
