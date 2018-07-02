@@ -19,8 +19,8 @@ export class AccountService {
   }
 
   // check this in case of work. Why do We need to return sth?
-  addAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>(this.apiUrl, account, httpOptions);
+  addAccount(account: Account): Observable<any> {
+    return this.http.post<any>(this.apiUrl, account, httpOptions);
   }
 
   deleteAccount(id: number): Observable<Account> {

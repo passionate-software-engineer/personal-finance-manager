@@ -1,14 +1,24 @@
+<button class="btn btn-primary" type="button" (click)="addingMode=true">
+  Add Account</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
+
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
       <th style="width: 20%">
         Id
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('normal')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('reverse')"></span>
       </th>
       <th style="width: 50%">
         Description
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('normal')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('reverse')"></span>
       </th>
       <th style="width: 20%">
         Balance
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortByBalance('asc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortByBalance('dsc')"></span>
       </th>
       <th style="width: 10%">
       </th>
@@ -35,6 +45,28 @@
         </div>
       </td>
     </tr>
+    <tr *ngIf="addingMode">
+      <td>New Account</td>
+      <td>
+        <input type="text" #newAccountName>
+      </td>
+      <td>
+        <input type="text" #newAccountBalance> </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" (click)="onAddAccount(newAccountName,newAccountBalance)">Add Account</a>
+            </li>
+            <li>
+              <a href="#" (click)="addingMode=false">Exit</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
   </tbody>
 </table>
-<app-account-add *ngIf="addAccount===true" [account]="selectedAccount" [editAccount]="editingAccount"></app-account-add>
