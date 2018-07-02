@@ -32,11 +32,21 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'javax.xml.bind:jaxb-api:2.3.0'
-    compile "org.projectlombok:lombok:1.18.0"
+    compile 'org.projectlombok:lombok:1.18.0'
     compile 'com.h2database:h2:1.0.60'
+    compile 'com.google.guava:guava:25.1-jre'
+    compile 'postgresql:postgresql:9.1-901-1.jdbc4'
 }
 
 flyway {
     url = 'jdbc:h2:file:./target/flyway'
     user = 'sa'
+}
+
+bootRun {
+    systemProperty "spring.profiles.active", "dev"
+}
+
+test {
+    systemProperty "spring.profiles.active", "test"
 }
