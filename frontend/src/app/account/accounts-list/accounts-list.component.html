@@ -1,4 +1,4 @@
-<button class="btn btn-primary" type="button" (click)="addingMode=true">
+<button class="btn btn-danger" type="button" (click)="addingMode=true">
   Add Account</button>
 <button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
 
@@ -7,13 +7,13 @@
     <tr>
       <th style="width: 20%">
         Id
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('normal')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('reverse')"></span>
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('asc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('dsc')"></span>
       </th>
       <th style="width: 50%">
         Description
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('normal')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('reverse')"></span>
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
       </th>
       <th style="width: 20%">
         Balance
@@ -27,9 +27,17 @@
   <tbody>
     <tr *ngFor="let account of accounts">
       <td>{{account.id}}</td>
-      <td>{{account.name}}</td>
-      <td>{{account.balance }} $</td>
-      <td>
+
+      <td *ngIf="account.editMode">
+        <input type="text" [(ngModel)]="editedName">
+      </td>
+      <td *ngIf="!account.editMode">{{account.name}}</td>
+
+      <td *ngIf="account.editMode">
+        <input type="text" [(ngModel)]="editedBalance"> $</td>
+      <td *ngIf="!account.editMode">{{account.balance}} $</td>
+
+      <td *ngIf="!account.editMode">
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
             <span class="caret"></span>
@@ -39,11 +47,27 @@
               <a href="#" (click)="deleteAccount(account.id)">Delete</a>
             </li>
             <li>
-              <a href="#" (click)="editAccount(account)">Edit</a>
+              <a href="#" (click)="onShowEditMode(account)">Edit</a>
             </li>
           </ul>
         </div>
       </td>
+      <td *ngIf="account.editMode">
+        <div class="dropdown">
+          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Edit Options
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" (click)="onEditAccount(account)">Save</a>
+            </li>
+            <li>
+              <a href="#" (click)="account.editMode=false">Exit</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+
     </tr>
     <tr *ngIf="addingMode">
       <td>New Account</td>
@@ -68,5 +92,6 @@
         </div>
       </td>
     </tr>
+
   </tbody>
 </table>

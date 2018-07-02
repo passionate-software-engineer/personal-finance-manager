@@ -11,19 +11,17 @@ import { Observable } from 'rxjs';
 export class AccountsListComponent implements OnInit {
   accounts: Account[];
   accountToAdd: Account;
-  addAccount = true;
-  addingMode = true;
-  editingAccount = false;
+  addingMode = false;
+  editedName: string;
+  editedBalance: number;
   selectedAccount: Account = new Account();
   id;
-
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
     this.getAccounts();
   }
-
 
   getAccounts(): void {
     this.accountService.getAccounts()
@@ -34,9 +32,17 @@ export class AccountsListComponent implements OnInit {
     this.accountService.deleteAccount(id).subscribe();
   }
 
-  editAccount(account: Account) {
-    this.editingAccount = true;
-    this.selectedAccount = account;
+  onShowEditMode(account: Account) {
+    account.editMode = true;
+    this.editedBalance = account.balance;
+    this.editedName = account.name;
+  }
+
+  onEditAccount(account: Account) {
+    account.name = this.editedName;
+    account.balance = this.editedBalance;
+    this.accountService.editAccount(account).subscribe();
+    account.editMode = false;
   }
 
   onAddAccount(nameInput: HTMLInputElement, balanceInput: HTMLInputElement) {
@@ -46,6 +52,7 @@ export class AccountsListComponent implements OnInit {
     this.accountService.addAccount(this.accountToAdd)
       .subscribe(id => this.accountToAdd.id = id);
     this.accounts.push(this.accountToAdd);
+    this.addingMode = false;
   }
 
   onRefreshAccounts() {
@@ -53,17 +60,19 @@ export class AccountsListComponent implements OnInit {
   }
 
   sortByName(type: string) {
-    if (type === 'normal') {
+    if (type === 'asc') {
       this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    } else {
+    }
+    if (type === 'dsc') {
       this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
     }
   }
 
   sortById(sortingType: string) {
-    if (sortingType === 'normal') {
+    if (sortingType === 'asc') {
       this.accounts.sort((a1, a2) => a1.id - a2.id);
-    } else {
+    }
+    if (sortingType === 'dsc') {
       this.accounts.sort((a1, a2) => a2.id - a1.id);
     }
   }
