@@ -18,7 +18,7 @@ public class Category {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull
     private String name;

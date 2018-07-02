@@ -1,7 +1,5 @@
 package com.pfm.account;
 
-import com.google.common.base.Preconditions;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,53 +24,59 @@ import java.util.List;
 @CrossOrigin
 public class AccountController {
 
-  @Autowired
-  private AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
-  @GetMapping(value = "/{id}")
-  public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
-    Account account = accountService.getAccountById(id);
-    Preconditions.checkNotNull(account, "Could not get account with id %s", id);
-    return new ResponseEntity<>(account, HttpStatus.OK);
-  }
+    @Autowired
+    private AccountValidator accountValidator;
 
-  @GetMapping
-  public ResponseEntity<List<Account>> getAccounts() {
-    List<Account> accounts = accountService.getAccounts();
-    Preconditions.checkNotNull(accounts,
-        "Could not get accounts");
-    return new ResponseEntity<>(accounts, HttpStatus.OK);
-  }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
+        Account account = accountService.getAccountById(id);
+        if (account == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
-  @PostMapping
-  public ResponseEntity addAccount(@RequestBody Account account) {
-    Preconditions.checkNotNull(account,
-        "Invalid account");
-    long id = accountService.addAccount(account).getId();
-    Preconditions.checkNotNull(id,
-        "Could not add account");
-    return new ResponseEntity<>(id, HttpStatus.CREATED);
-  }
+    @GetMapping
+    public ResponseEntity<List<Account>> getAccounts() {
+        List<Account> accounts = accountService.getAccounts();
+        if (accounts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
 
-  @PutMapping(value = "/{id}")
-  public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id,
-      @RequestBody Account account) {
-    Preconditions.checkNotNull(id,
-        "Could not find account with id %s", id);
-    Account updatedAccount = accountService.updateAccount(id, account);
-    Preconditions.checkNotNull(updatedAccount,
-        "Could not update account with id %s", id);
-    return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
-  }
+    @PostMapping
+    public ResponseEntity addAccount(@RequestBody Account account) {
+        List<String> validationResult = accountValidator.validate(account);
+        if (!validationResult.isEmpty()) {
+            return ResponseEntity.badRequest().body(validationResult);
+        }
+        Account createdAccount = accountService.addAccount(account);
+        return new ResponseEntity<>(createdAccount.getId(), HttpStatus.CREATED);
+    }
 
-  @DeleteMapping(value = "/{id}")
-  public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
-    Preconditions.checkNotNull(id,
-        "Could not find account with id %s", id);
-    accountService.deleteAccount(id);
-    Preconditions.checkArgument(getAccountById(id) == null,
-        "Could not delete account with id %s", id );
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-  }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> updateAccount(@PathVariable("id") Long id, @RequestBody Account account) {
+        List<String> validationResult = accountValidator.validate(account);
+        if (!validationResult.isEmpty()) {
+            return ResponseEntity.badRequest().body(validationResult);
+        }
+        if (id == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Account updatedAccount = accountService.updateAccount(id, account);
+        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+    }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
+        if (accountService.getAccountById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        accountService.deleteAccount(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

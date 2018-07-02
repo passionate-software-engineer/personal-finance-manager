@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,11 +18,12 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public Category getCategoryById(long id) {
-        return categoryRepository.getOne(id);
+        return categoryRepository.findById(id).get();
     }
 
     public List<Category> getCategories() {
-      List<Category> categories = categoryRepository.findAll();
+      List<Category> categories = new ArrayList<>();
+      categoryRepository.findAll().forEach(category -> categories.add(category));
       categories.sort(Comparator.comparing(Category::getId));
         return categories;
     }

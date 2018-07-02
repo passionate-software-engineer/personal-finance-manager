@@ -1,12 +1,15 @@
 package com.pfm.account;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AccountValidator  {
 
     public List<String> validate(Account account) {
