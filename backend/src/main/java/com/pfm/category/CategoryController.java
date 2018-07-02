@@ -23,50 +23,57 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CategoryValidator categoryValidator;
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
         Category category = categoryService.getCategoryById(id);
-        Preconditions.checkNotNull(category,
-            "Could not get category with id %s", id);
+        if (category == null) {
+            return ResponseEntity.notFound().build();
+        }
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @GetMapping
-    public List<Category> getCategories() {
+    public ResponseEntity<List<Category>> getCategories() {
         List<Category> categories = categoryService.getCategories();
-        Preconditions.checkNotNull(categories,
-            "Could not get categories");
-        return categories;
+        if (categories.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity addCategory(@RequestBody Category category) {
-        Preconditions.checkNotNull(category,
-            "Invalid category");
-        long id = categoryService.addCategory(category).getId();
-        Preconditions.checkNotNull(id,
-            "Could not add category");
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+        List<String> validationResult = categoryValidator.validate(category);
+        if (!validationResult.isEmpty()) {
+            return ResponseEntity.badRequest().body(validationResult);
+        }
+        Category createdCategory = categoryService.addCategory(category);
+        return new ResponseEntity<>(createdCategory.getId(), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        Preconditions.checkNotNull(id,
-            "Could not find category with id %s", id);
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        List<String> validationResult = categoryValidator.validate(category);
+        if (!validationResult.isEmpty()) {
+            return ResponseEntity.badRequest().body(validationResult);
+        }
+        if (id == null) {
+            return ResponseEntity.notFound().build();
+        }
         Category updatedCategory = categoryService.updateCategory(id, category.getName(),
             category.getParentCategory());
-        Preconditions.checkNotNull(updatedCategory,
-            "Could not update category with id %s", id);
         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        Preconditions.checkNotNull(id,
-            "Could not find category with id %s", id);
+        if (categoryService.getCategoryById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
         categoryService.removeCategory(id);
-        Preconditions.checkArgument(getCategoryById(id) == null,
-            "Could not delete category with id %s", id );
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
