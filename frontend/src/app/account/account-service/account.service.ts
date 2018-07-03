@@ -10,11 +10,26 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8081/accounts/';
+  private apiUrl = 'http://localhost:8081/accounts';
 
   constructor(private http: HttpClient) { }
 
-  getCompanies(): Observable<Account[]> {
+  getAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(this.apiUrl);
+  }
+
+  // check this in case of work. Why do We need to return sth?
+  addAccount(account: Account): Observable<any> {
+    return this.http.post<any>(this.apiUrl, account, httpOptions);
+  }
+
+  deleteAccount(id: number): Observable<Account> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<Account>(url);
+  }
+
+  editAccount(account: Account): Observable<Account> {
+    const url = `${this.apiUrl}/${account.id}`;
+    return this.http.put<Account>(url, account, httpOptions);
   }
 }
