@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'com.pfm'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.github.bonigarcia:webdrivermanager:1.7.1'
+    compile 'org.seleniumhq.selenium:selenium-java:3.12.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.testng:testng:6.14.3'
+}
