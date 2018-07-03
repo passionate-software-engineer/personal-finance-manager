@@ -1,0 +1,41 @@
+pipeline {
+    agent {
+        label "master"
+    }
+    options {
+        timeout(time: 10, unit: 'MINUTES')
+    }
+    triggers {
+        cron('H 0 * * *')
+    }
+    stages {
+        stage('npm install') {
+            steps {
+                sh '''
+                   cd frontend
+                   npm install
+                   '''
+            }
+        }
+        stage('ng build') {
+            steps {
+                sh '''
+                   cd frontend
+                   ng build
+                   '''
+            }
+        }
+        stage('sonar') {
+            steps {
+                sh '''
+                   cd frontend
+                   sonar-scanner \
+                   -Dsonar.projectKey=frontend \
+                   -Dsonar.sources=src \
+                   -Dsonar.host.url=http://piotr-sonar.eu.ngrok.io/ \
+                   -Dsonar.login=28e3478c5aab55128d7caf542d3d0a32646c1345
+                   '''
+            }
+        }
+    }
+}
