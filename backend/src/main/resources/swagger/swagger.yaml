@@ -1,0 +1,382 @@
+swagger: '2.0'
+info:
+  title: personal-finance-manager
+  version: v1
+host: 'localhost:8080'
+schemes:
+  - http
+consumes: &ref_0
+  - application/json
+produces: *ref_0
+definitions:
+  file-types.Account:
+    type: object
+    properties:
+      id:
+        minimum: 0
+        type: integer
+      name:
+        type: string
+      balance:
+        minimum: 0
+        format: double
+        type: number
+    required:
+      - id
+      - name
+      - balance
+  file-types.Category:
+    type: object
+    properties:
+      id:
+        minimum: 0
+        type: integer
+      name:
+        type: string
+      parentCategory:
+        $ref: '#/definitions/file-types.ParentCategory'
+    required:
+      - id
+      - name
+      - parentCategory
+  file-types.ParentCategory:
+    type: object
+    properties:
+      id:
+        minimum: 0
+        type: integer
+      name:
+        type: string
+    required:
+      - id
+      - name
+paths:
+  /accounts:
+    get:
+      description: |
+        Retrieve a list of account.
+      operationId: GET_accounts
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: |
+            Returns a list of account
+          schema:
+            example:
+              - id: 1
+                name: AccountOne
+                balance: 213141.22
+              - id: 2
+                name: AccountTwo
+                balance: 1218.03
+            type: array
+            items:
+              $ref: '#/definitions/file-types.Account'
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or query parameter. Details
+            of the error provided in the response.
+          schema:
+            example: Unable to list accounts
+        '401':
+          description: Not authorized to perform requested action
+          schema:
+            example: Unable to list accounts
+        '500':
+          description: Internal server error
+          schema:
+            example: 'internal server error, contact administrator'
+    post:
+      description: Create a new account.
+      operationId: POST_accounts
+      produces:
+        - text/plain
+      responses:
+        '201':
+          description: >-
+            Returns a newly created member, with server-controlled fields like
+            'id' populated
+          headers:
+            Location:
+              description: URI to the created account
+              type: string
+          schema:
+            example:
+              - id: 1
+                name: AccountOne
+                balance: 213141.22
+           
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or query parameter. Details
+            of the error provided in the response.
+          schema:
+            example: Unable to add account
+        '401':
+          description: Not authorized to perform requested action
+          schema:
+            example: Unable to create accounts
+        '500':
+          description: Internal server error
+          schema:
+            example: 'Internal server error, contact administrator'
+  '/accounts/{id}':
+    get:
+      description: |
+        Retrieve Account with given {Account Id}
+      operationId: GET_accounts-id
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: Returns Account with a given ID
+          examples:
+            application/json:
+              id: 1
+              name: Account one
+              balance: 213141.22
+          schema:
+            $ref: '#/definitions/file-types.Account'
+        '404':
+          description: Item with a given ID not found
+          schema:
+            example: |
+              Account not found
+        '500':
+          description: 'Internal server error, e.g. due to misconfiguration'
+          schema:
+            example: 'internal server error, contact administrator'
+    delete:
+      description: |
+        Delete Account item with given {Account Id}
+      operationId: DELETE_accounts-id
+      produces:
+        - text/plain
+      responses:
+        '204':
+          description: Item deleted successfully
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or
+            query                             parameter. Details of the error
+            provided in the response.
+          schema:
+            example: |
+              Unable to delete Account
+        '404':
+          description: Item with a given ID not found
+          schema:
+            example: |
+              Account not found
+        '500':
+          description: 'Internal server error, e.g. due to misconfiguration'
+          schema:
+            example: 'Internal server error, contact administrator'
+    put:
+      description: |
+        Update Account item with given {Account Id}
+      operationId: PUT_accounts-id
+      produces:
+        - text/plain
+      responses:
+        '204':
+          description: Account successfully updated
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or
+            query                             parameter. Details of the error
+            provided in the response.
+          schema:
+            example: |
+              Unable to update Account
+        '404':
+          description: Account with a given ID not found
+          schema:
+            example: |
+              Account not found
+        '500':
+          description: 'Internal server error, e.g. due to misconfiguration'
+          schema:
+            example: 'Internal server error, contact administrator'
+      parameters:
+        - schema:
+            example:
+              id: 1
+              name: Account one
+              balance: 213141.22
+          in: body
+          name: body
+          required: true
+    parameters:
+      - type: string
+        in: path
+        name: id
+        required: true
+  /categories:
+    get:
+      description: |
+        Retrieve a list of category.
+      operationId: GET_categories
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: |
+            Returns a list of category
+          schema:
+            example:
+              - id: 1
+                name: Category three
+                parentCategory:
+                  id: 3
+                  name: Category one
+              - id: 2
+                name: Category two
+                parentCategory:
+                  id: 4
+                  name: Category four
+            type: array
+            items:
+              $ref: '#/definitions/file-types.Category'
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or query parameter. Details
+            of the error provided in the response.
+          schema:
+            example: Unable to list categories
+        '401':
+          description: Not authorized to perform requested action
+          schema:
+            example: Unable to list categories
+        '500':
+          description: Internal server error
+          schema:
+            example: 'internal server error, contact administrator'
+    post:
+      description: Create a new category.
+      operationId: POST_categories
+      produces:
+        - text/plain
+      responses:
+        '201':
+          description: >-
+            Returns a newly created member, with server-controlled fields like
+            'id' populated
+          headers:
+            Location:
+              description: URI to the created category
+              type: string
+          schema:
+            $ref: '#/definitions/file-types.Category'
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or query parameter. Details
+            of the error provided in the response.
+          schema:
+            example: Unable to add category
+        '401':
+          description: Not authorized to perform requested action
+          schema:
+            example: Unable to create categories
+        '500':
+          description: Internal server error
+          schema:
+            example: 'Internal server error, contact administrator'
+  '/categories/{id}':
+    get:
+      description: |
+        Retrieve Category with given {Category Id}
+      operationId: GET_categories-id
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: Returns Category with a given ID
+          examples:
+            application/json:
+              id: 1
+              name: Category one
+              parentCategory:
+                id: 2
+                name: Category two
+          schema:
+            $ref: '#/definitions/file-types.Category'
+        '404':
+          description: Item with a given ID not found
+          schema:
+            example: |
+              Category not found
+        '500':
+          description: 'Internal server error, e.g. due to misconfiguration'
+          schema:
+            example: 'internal server error, contact administrator'
+    delete:
+      description: |
+        Delete Category item with given {Category Id}
+      operationId: DELETE_categories-id
+      produces:
+        - text/plain
+      responses:
+        '204':
+          description: Item deleted successfully
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or
+            query                             parameter. Details of the error
+            provided in the response.
+          schema:
+            example: |
+              Unable to delete Category
+        '404':
+          description: Item with a given ID not found
+          schema:
+            example: |
+              Category not found
+        '500':
+          description: 'Internal server error, e.g. due to misconfiguration'
+          schema:
+            example: 'Internal server error, contact administrator'
+    put:
+      description: |
+        Update Category item with given {Category Id}
+      operationId: PUT_categories-id
+      produces:
+        - text/plain
+      responses:
+        '204':
+          description: Category successfully updated
+        '400':
+          description: >-
+            Bad request, e.g. malformed request body or
+            query                             parameter. Details of the error
+            provided in the response.
+          schema:
+            example: |
+              Unable to update Category
+        '404':
+          description: Category with a given ID not found
+          schema:
+            example: |
+              Category not found
+        '500':
+          description: 'Internal server error, e.g. due to misconfiguration'
+          schema:
+            example: 'Internal server error, contact administrator'
+      parameters:
+        - schema:
+            example:
+              id: 1
+              name: Category one
+              parentCategory:
+                id: 2
+                name: Category two
+            $ref: '#/definitions/file-types.Category'
+          in: body
+          name: body
+          required: true
+    parameters:
+      - type: string
+        in: path
+        name: id
+        required: true
