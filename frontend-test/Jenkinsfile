@@ -22,7 +22,7 @@ pipeline {
                 sh '''
                    cd frontend-test
                    sonar-scanner \
-                   -Dsonar.projectKey=backend \
+                   -Dsonar.projectKey=frontend-test \
                    -Dsonar.sources=. \
                    -Dsonar.java.source=1.8 \
                    -Dsonar.java.binaries=build/classes \
