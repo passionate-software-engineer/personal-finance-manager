@@ -26,10 +26,6 @@ class TestHelper {
         .build();
 
     Response httpResponse = client.newCall(request).execute();
-    if (httpResponse.isSuccessful()) {
-      return String.valueOf(httpResponse.code());
-    } else {
-      return String.valueOf(httpResponse.code());
-    }
+    return String.valueOf(httpResponse.code());
   }
 }
