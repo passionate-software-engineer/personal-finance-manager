@@ -10,10 +10,13 @@ class AccountsScreenElements {
 
   @FindBy(xpath = "//div/*[contains(text(),\"Welcome to Personal\")]")
   private WebElement title;
+
   @FindBy(xpath = "//app-accounts-list//*[(text()=\"1\")]")
   private WebElement id;
-  @FindBy(xpath = "//app-accounts-list//*[contains(text(),\"test\")]")
+
+  @FindBy(xpath = "//app-accounts-list//*[contains(text(),\"mbank\")]")
   private WebElement description;
+
   @FindBy(xpath = "//app-accounts-list//*[contains(text(),\"500\")]")
   private WebElement balance;
 

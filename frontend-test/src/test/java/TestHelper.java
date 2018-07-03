@@ -7,15 +7,15 @@ import okhttp3.Response;
 import java.io.IOException;
 
 class TestHelper {
-
+  //TODO externalize
   private static final String URL = "http://localhost:8081/accounts";
 
-  void addSampleAccount() throws IOException {
-    String sampleJson = "{ \"id\":1, \"name\":\"test1\", \"balance\":500 };";
-    postJson(sampleJson);
+  static void addSampleAccount() throws IOException {
+    String sampleJson = "{ \"id\":1, \"name\":\"mbank\", \"balance\":500 };";
+     postJson(sampleJson);
   }
 
-  private String postJson(String json) throws IOException {
+  private static String postJson(String json) throws IOException {
     OkHttpClient client = new OkHttpClient();
     MediaType mediaType = MediaType.parse("application/json");
     RequestBody body = RequestBody

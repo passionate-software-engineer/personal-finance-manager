@@ -9,21 +9,21 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class TestBase {
 
-  private String FRONTEND_URL;
+  private String frontendUrl;
   WebDriver webDriver;
 
   TestBase(String FRONTEND_URL) {
-    this.FRONTEND_URL = FRONTEND_URL;
+    this.frontendUrl = FRONTEND_URL;
   }
 
   @BeforeClass
   void setUp() throws IOException {
-    new TestHelper().addSampleAccount();
+    TestHelper.addSampleAccount();
     ChromeDriverManager.getInstance().setup();
     webDriver = new ChromeDriver();
     webDriver.manage().window().maximize();
     webDriver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-    webDriver.get(FRONTEND_URL);
+    webDriver.get(frontendUrl);
   }
 
   @AfterClass
