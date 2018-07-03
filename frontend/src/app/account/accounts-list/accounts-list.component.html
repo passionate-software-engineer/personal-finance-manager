@@ -1,4 +1,4 @@
-<button class="btn btn-danger" type="button" (click)="addingMode=true">
+<button class="btn btn-danger" type="button" (click)="addingMode === true ? addingMode=false : addingMode=true">
   Add Account</button>
 <button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
 
@@ -44,7 +44,7 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="deleteAccount(account.id)">Delete</a>
+              <a href="#" (click)="deleteAccount(account)">Delete</a>
             </li>
             <li>
               <a href="#" (click)="onShowEditMode(account)">Edit</a>
@@ -78,12 +78,12 @@
         <input type="text" #newAccountBalance> </td>
       <td>
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Adding options
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="onAddAccount(newAccountName,newAccountBalance)">Add Account</a>
+              <a href="#" (click)="onAddAccount(newAccountName,newAccountBalance)">Save</a>
             </li>
             <li>
               <a href="#" (click)="addingMode=false">Exit</a>

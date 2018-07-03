@@ -28,8 +28,12 @@ export class AccountsListComponent implements OnInit {
       .subscribe(accounts => this.accounts = accounts);
   }
 
-  deleteAccount(id: number) {
-    this.accountService.deleteAccount(id).subscribe();
+  deleteAccount(account) {
+    this.accountService.deleteAccount(account.id).subscribe();
+    const index: number = this.accounts.indexOf(account);
+    if (index !== -1) {
+      this.accounts.splice(index, 1);
+    }
   }
 
   onShowEditMode(account: Account) {
