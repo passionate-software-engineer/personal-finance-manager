@@ -49,7 +49,7 @@ public class AccountsScreenTest extends TestBase {
   public void shouldReadDescription() {
     //given
 
-    String expectedDescription = "test1";
+    String expectedDescription = "mbank";
     //when
 
     String resultDescription = accountsElements.getDescription();
