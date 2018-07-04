@@ -8,10 +8,14 @@ import java.io.IOException;
 
 class TestHelper {
   //TODO externalize
+
+  private TestHelper() {
+  }
+
   private static final String URL = "http://localhost:8081/accounts";
 
   static void addSampleAccount() throws IOException {
-    String sampleJson = "{ \"id\":1, \"name\":\"mbank\", \"balance\":500 };";
+    String sampleJson = "{\"name\":\"mbank\", \"balance\":500 };";
      postJson(sampleJson);
   }
 
