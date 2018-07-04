@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +36,9 @@ public class AccountServiceTest {
 
     @Before
     public void beforeTest(){
-        initTestGetAccountData();
+        when(accountRepository.findById(any())).thenReturn(Optional.of(createMockAccount()));
+        when(accountRepository.findAll()).thenReturn(Collections.singletonList(createMockAccount()));
+        when(accountRepository.save(any())).thenReturn(createMockAccount());
     }
 
     @Test
@@ -45,9 +47,12 @@ public class AccountServiceTest {
 
         //when
         Account actualAccount = accountService.getAccountById(ID_1);
+
         //then
         Assert.assertNotNull(actualAccount);
         Assert.assertEquals(ID_1, actualAccount.getId());
+        Assert.assertEquals(NAME, actualAccount.getName());
+        Assert.assertEquals(BALANCE, actualAccount.getBalance());
     }
 
     @Test
@@ -56,6 +61,7 @@ public class AccountServiceTest {
 
         //when
         List<Account> actualAccountsList = accountService.getAccounts();
+
         //then
         Assert.assertFalse(actualAccountsList.isEmpty());
         Assert.assertEquals(ID_1, actualAccountsList.get(0).getId());
@@ -68,10 +74,13 @@ public class AccountServiceTest {
         //given
 
         //when
-        Account actualAccount = accountService.addAccount(createMockAccounts().orElse(null));
+        Account actualAccount = accountService.addAccount(createMockAccount());
+
         //then
         Assert.assertNotNull(actualAccount);
         Assert.assertEquals(ID_1, actualAccount.getId());
+        Assert.assertEquals(NAME, actualAccount.getName());
+        Assert.assertEquals(BALANCE, actualAccount.getBalance());
     }
 
     @Test
@@ -80,8 +89,9 @@ public class AccountServiceTest {
 
         //when
         accountService.deleteAccount(any());
+
         //then
-        verify(accountRepository, atLeastOnce()).deleteById(any());
+        verify(accountRepository, Mockito.times(1)).deleteById(any());
     }
 
     @Test
@@ -89,22 +99,17 @@ public class AccountServiceTest {
         //given
 
         //when
-        accountService.updateAccount(ID_1, createMockAccounts().orElse(null));
+        accountService.updateAccount(ID_1, createMockAccount());
+
         //then
-        verify(accountRepository, atLeastOnce()).save(any());
+        verify(accountRepository, Mockito.times(1)).save(any());
     }
 
-    private void initTestGetAccountData() {
-        when(accountRepository.findById(any())).thenReturn(createMockAccounts());
-        when(accountRepository.findAll()).thenReturn(Collections.singletonList(createMockAccounts().orElse(null)));
-        when(accountRepository.save(any())).thenReturn(createMockAccounts().orElse(null));
-    }
-
-    private Optional<Account> createMockAccounts() {
+    private Account createMockAccount() {
         Account account = new Account();
         account.setId(ID_1);
         account.setName(NAME);
         account.setBalance(BALANCE);
-        return Optional.of(account);
+        return account;
     }
 }
