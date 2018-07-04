@@ -2,11 +2,9 @@ package com.pfm.AccountControllerTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext (classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountControllerIntegrationTest {
 
     public List<String> readFile() throws IOException {
@@ -56,10 +54,9 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldAddAccountTest() throws Exception {
-
         String accountJson = readFile().get(1);
 
-            this.mockMvc.perform(post("/accounts/")
+        this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
                 .content(accountJson))
                 .andExpect(status().isCreated());
@@ -67,14 +64,13 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldGetAccountById() throws Exception {
-
-       String accountJson = readFile().get(1);
+        String accountJson = readFile().get(1);
 
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
                 .content(accountJson))
                 .andExpect(status().isCreated());
-       this.mockMvc
+        this.mockMvc
                 .perform(get("/accounts/1"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print()).andExpect(status().isOk())
@@ -106,7 +102,6 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldUpdateAccount() throws Exception {
-
         String accountJson = readFile().get(0);
         String accountJson2 = readFile().get(4);
 
@@ -131,7 +126,6 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldDeleteAccount() throws Exception {
-
         String accountJson = readFile().get(1);
         this.mockMvc.perform(post("/accounts/")
                 .contentType(MediaType.valueOf("application/json;charset=UTF-8"))
