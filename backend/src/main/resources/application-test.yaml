@@ -1,7 +1,5 @@
 server.port: 8081
 spring:
-  profiles:
-    active: test
   h2:
     console.enabled: true
 

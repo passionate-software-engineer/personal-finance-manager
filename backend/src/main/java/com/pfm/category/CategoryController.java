@@ -1,9 +1,5 @@
 package com.pfm.category;
 
-import static org.springframework.http.ResponseEntity.status;
-
-import com.google.common.base.Preconditions;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
