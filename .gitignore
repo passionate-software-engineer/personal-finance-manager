@@ -35,4 +35,5 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 frontend/.scannerwork
-application.log
+backend/application.log*
+.DS_Store
