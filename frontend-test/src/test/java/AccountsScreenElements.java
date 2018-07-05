@@ -8,6 +8,7 @@ class AccountsScreenElements {
 
   private static final int SECONDS_10 = 10;
 
+  // TODO - locating by text is not good idea - you should locate by id (request Seba to provide it) and then check if value is as expected
   @FindBy(xpath = "//div/*[contains(text(),\"Welcome to Personal\")]")
   private WebElement title;
 
