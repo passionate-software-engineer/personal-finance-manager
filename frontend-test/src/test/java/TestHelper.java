@@ -33,6 +33,7 @@ class TestHelper {
         .build();
 
     Response httpResponse = client.newCall(request).execute();
-    return String.valueOf(httpResponse.code()); // TODO would be good to verify if response was 200, otherwise precondition failed
+    return String.valueOf(httpResponse
+        .code()); // TODO would be good to verify if response was 200, otherwise precondition failed
   }
 }

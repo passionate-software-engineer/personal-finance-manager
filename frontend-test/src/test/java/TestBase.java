@@ -20,7 +20,8 @@ public abstract class TestBase {
 
   @BeforeClass
   void setUp() throws IOException {
-    TestHelper.addSampleAccount(); // TODO It's not correct place - it should be in screen preconditions - this class should stay as generic as possible
+    TestHelper
+        .addSampleAccount(); // TODO It's not correct place - it should be in screen preconditions - this class should stay as generic as possible
     ChromeDriverManager.getInstance().setup();
     webDriver = new ChromeDriver();
     webDriver.manage().window().maximize();
