@@ -12,8 +12,8 @@ public abstract class TestBase {
   private String frontendUrl;
   WebDriver webDriver;
 
-  TestBase(String FRONTEND_URL) {
-    this.frontendUrl = FRONTEND_URL;
+  TestBase(String frontendUrl) {
+    this.frontendUrl = frontendUrl;
   }
 
   @BeforeClass
