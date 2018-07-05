@@ -1,5 +1,5 @@
 server.port: 8081
-spring:
+spring: #TODO - postgres is not available, you mix postgres with mysql, some of the properties can be moved to root file (here should be only overrides)
   h2:
     console.enabled: false
   jpa:
