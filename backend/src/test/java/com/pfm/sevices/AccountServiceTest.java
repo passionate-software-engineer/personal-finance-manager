@@ -3,13 +3,11 @@ package com.pfm.sevices;
 import com.pfm.model.Account;
 import com.pfm.repositories.AccountRepository;
 import com.pfm.services.AccountService;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
@@ -17,7 +15,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,10 +39,10 @@ public class AccountServiceTest {
     private AccountService accountService;
 
     @Before
-    public void beforeTest(){
-        when(accountRepository.findById(any())).thenReturn(Optional.of(createMockAccount()));
+    public void mockAccount() {
+        when(accountRepository.findById(1L)).thenReturn(Optional.of(createMockAccount()));
         when(accountRepository.findAll()).thenReturn(Collections.singletonList(createMockAccount()));
-        when(accountRepository.save(any())).thenReturn(createMockAccount());
+        when(accountRepository.save(createMockAccount())).thenReturn(createMockAccount());
     }
 
     @Test
@@ -49,10 +53,10 @@ public class AccountServiceTest {
         Account actualAccount = accountService.getAccountById(ID_1);
 
         //then
-        Assert.assertNotNull(actualAccount);
-        Assert.assertEquals(ID_1, actualAccount.getId());
-        Assert.assertEquals(NAME, actualAccount.getName());
-        Assert.assertEquals(BALANCE, actualAccount.getBalance());
+        assertNotNull(actualAccount);
+        assertThat(ID_1, is(equalTo(actualAccount.getId())));
+        assertThat(NAME, is(equalTo(actualAccount.getName())));
+        assertThat(BALANCE, is(equalTo(actualAccount.getBalance())));
     }
 
     @Test
@@ -63,10 +67,11 @@ public class AccountServiceTest {
         List<Account> actualAccountsList = accountService.getAccounts();
 
         //then
-        Assert.assertFalse(actualAccountsList.isEmpty());
-        Assert.assertEquals(ID_1, actualAccountsList.get(0).getId());
-        Assert.assertEquals(NAME, actualAccountsList.get(0).getName());
-        Assert.assertEquals(BALANCE, actualAccountsList.get(0).getBalance());
+        assertFalse(actualAccountsList.isEmpty());
+        Account actualAccount = actualAccountsList.get(0);
+        assertThat(ID_1, is(equalTo(actualAccount.getId())));
+        assertThat(NAME, is(equalTo(actualAccount.getName())));
+        assertThat(BALANCE, is(equalTo(actualAccount.getBalance())));
     }
 
     @Test
@@ -77,10 +82,10 @@ public class AccountServiceTest {
         Account actualAccount = accountService.addAccount(createMockAccount());
 
         //then
-        Assert.assertNotNull(actualAccount);
-        Assert.assertEquals(ID_1, actualAccount.getId());
-        Assert.assertEquals(NAME, actualAccount.getName());
-        Assert.assertEquals(BALANCE, actualAccount.getBalance());
+        assertNotNull(actualAccount);
+        assertThat(ID_1, is(equalTo(actualAccount.getId())));
+        assertThat(NAME, is(equalTo(actualAccount.getName())));
+        assertThat(BALANCE, is(equalTo(actualAccount.getBalance())));
     }
 
     @Test
@@ -88,10 +93,10 @@ public class AccountServiceTest {
         //given
 
         //when
-        accountService.deleteAccount(any());
+        accountService.deleteAccount(1L);
 
         //then
-        verify(accountRepository, Mockito.times(1)).deleteById(any());
+        verify(accountRepository, times(1)).deleteById(1L);
     }
 
     @Test
@@ -102,7 +107,7 @@ public class AccountServiceTest {
         accountService.updateAccount(ID_1, createMockAccount());
 
         //then
-        verify(accountRepository, Mockito.times(1)).save(any());
+        verify(accountRepository, times(1)).save(any());
     }
 
     private Account createMockAccount() {
