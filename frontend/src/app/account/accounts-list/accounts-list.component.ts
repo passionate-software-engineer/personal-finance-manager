@@ -25,7 +25,13 @@ export class AccountsListComponent implements OnInit {
 
   getAccounts(): void {
     this.accountService.getAccounts()
-      .subscribe(accounts => this.accounts = accounts);
+      .subscribe(accounts => {
+        if (accounts === null) {
+          this.accounts = [];
+        } else {
+          this.accounts = accounts;
+        }
+      });
   }
 
   deleteAccount(account) {
@@ -54,8 +60,10 @@ export class AccountsListComponent implements OnInit {
     this.accountToAdd.name = nameInput.value;
     this.accountToAdd.balance = +balanceInput.value;
     this.accountService.addAccount(this.accountToAdd)
-      .subscribe(id => this.accountToAdd.id = id);
-    this.accounts.push(this.accountToAdd);
+      .subscribe(id => {
+        this.accountToAdd.id = id;
+        this.accounts.push(this.accountToAdd);
+      });
     this.addingMode = false;
   }
 
