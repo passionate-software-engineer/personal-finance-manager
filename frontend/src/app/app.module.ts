@@ -4,11 +4,13 @@ import { AppComponent } from './app.component';
 import { AccountsListComponent } from './account/accounts-list/accounts-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CategoriesComponent } from './category/categories/categories.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountsListComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,

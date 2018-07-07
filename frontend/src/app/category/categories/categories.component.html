@@ -1,0 +1,97 @@
+<button class="btn btn-danger" type="button" (click)="addingMode === true ? addingMode=false : addingMode=true">
+  Add Category</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshCategories()">Refresh</button>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th style="width: 20%">
+        Id
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('asc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('dsc')"></span>
+      </th>
+      <th style="width: 50%">
+        Name
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
+      </th>
+      <th style="width: 20%">
+        Parent Category
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortByBalance('asc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortByBalance('dsc')"></span>
+      </th>
+      <th style="width: 10%">
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{category.id}}</td>
+
+      <td *ngIf="category.editMode">
+        <input type="text" [(ngModel)]="editedName">
+      </td>
+      <td *ngIf="!category.editMode">{{category.name}}</td>
+
+      <td *ngIf="category.editMode">
+        <input type="text" [(ngModel)]="editedParentCategory"> $</td>
+      <td *ngIf="!category.editMode">{{category.ParentCategory}} $</td>
+
+      <td *ngIf="!category.editMode">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" (click)="deleteCategory(category)">Delete</a>
+            </li>
+            <li>
+              <a href="#" (click)="onShowEditMode(category)">Edit</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+      <td *ngIf="category.editMode">
+        <div class="dropdown">
+          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Edit Options
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" (click)="onEditCategory(category)">Save</a>
+            </li>
+            <li>
+              <a href="#" (click)="category.editMode=false">Exit</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+
+    </tr>
+    <tr *ngIf="addingMode">
+      <td>New Category</td>
+      <td>
+        <input type="text" #newCategoryName>
+      </td>
+      <td>
+        <input type="text" #newParentCategory> </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Adding options
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" (click)="onAddCategory(newCategoryName,newParentCategory)">Save</a>
+            </li>
+            <li>
+              <a href="#" (click)="addingMode=false">Exit</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
