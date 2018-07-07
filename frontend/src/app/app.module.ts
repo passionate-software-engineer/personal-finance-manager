@@ -5,17 +5,23 @@ import { AccountsListComponent } from './account/accounts-list/accounts-list.com
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CategoriesComponent } from './category/categories/categories.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { NavigatiorComponent } from './navigation/navigatior/navigatior.component';
+import { NavigationComponent } from './navigation/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountsListComponent,
     CategoriesComponent,
+    NavigatiorComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
