@@ -8,10 +8,11 @@ import { CategoryService } from '../category-service/category.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  categories:Category[];
-  categoryToAdd: Category;
+  categories: Category[];
+  categoryToAdd: Category = new Category();
   addingMode = false;
   editedName: string;
+  selectedCategory: Category;
   editedParentCategory: number;
   id;
 
@@ -41,17 +42,17 @@ export class CategoriesComponent implements OnInit {
   }
 
   onShowEditMode(account: Account) {
-   
+
   }
 
   onEditCategory(account: Account) {
-    
+
   }
 
-  onAddCategory(nameInput: HTMLInputElement, parentCategory: Category) {
+  onAddCategory(nameInput: HTMLInputElement) {
     this.categoryToAdd = new Category();
     this.categoryToAdd.name = nameInput.value;
-    this.categoryToAdd.parentCategory = parentCategory;
+    this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
         this.categoryToAdd.id = id;
@@ -60,7 +61,7 @@ export class CategoriesComponent implements OnInit {
     this.addingMode = false;
   }
 
-  onRefreshAccounts() {
+  onRefreshCategories() {
     this.getCategories();
   }
 
@@ -80,5 +81,12 @@ export class CategoriesComponent implements OnInit {
     if (sortingType === 'dsc') {
       this.categories.sort((a1, a2) => a2.id - a1.id);
     }
+  }
+
+  getParentCategoryName(category): string {
+    if (category.parentCategory != null) {
+      return category.parentCategory.name;
+    }
+    return 'Main Category';
   }
 }

@@ -35,7 +35,7 @@
 
       <td *ngIf="category.editMode">
         <input type="text" [(ngModel)]="editedParentCategory"> $</td>
-      <td *ngIf="!category.editMode">{{category.ParentCategory}} $</td>
+      <td *ngIf="!category.editMode">{{getParentCategoryName(category)}} </td>
 
       <td *ngIf="!category.editMode">
         <div class="dropdown">
@@ -75,7 +75,9 @@
         <input type="text" #newCategoryName>
       </td>
       <td>
-        <input type="text" #newParentCategory> </td>
+        <select [(ngModel)]="selectedCategory">
+          <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+        </select> </td>
       <td>
         <div class="dropdown">
           <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Adding options
@@ -83,7 +85,7 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="onAddCategory(newCategoryName,newParentCategory)">Save</a>
+              <a href="#" (click)="onAddCategory(newCategoryName)">Save</a>
             </li>
             <li>
               <a href="#" (click)="addingMode=false">Exit</a>
