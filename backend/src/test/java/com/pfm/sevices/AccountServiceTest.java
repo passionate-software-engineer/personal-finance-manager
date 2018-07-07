@@ -1,8 +1,8 @@
 package com.pfm.sevices;
 
-import com.pfm.model.Account;
-import com.pfm.repositories.AccountRepository;
-import com.pfm.services.AccountService;
+import com.pfm.account.Account;
+import com.pfm.account.AccountRepository;
+import com.pfm.account.AccountService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
