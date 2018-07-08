@@ -49,7 +49,7 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#categories" (click)="deleteCategory(category)">Delete</a>
+              <p (click)="deleteCategory(category)">Delete</p>
             </li>
             <li>
               <p (click)="onShowEditMode(category)">Edit</p>
@@ -68,7 +68,7 @@
               <!-- <a href="#categories" (click)="onEditCategory(category)">Save</a> -->
             </li>
             <li>
-              <a href="#categories" (click)="category.editMode=false">Exit</a>
+              <p  (click)="category.editMode=false">Exit</p>
             </li>
           </ul>
         </div>
@@ -93,10 +93,10 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="onAddCategory(newCategoryName)">Save</a>
+              <p (click)="onAddCategory(newCategoryName)">Save</p>
             </li>
             <li>
-              <a href="#" (click)="addingMode=false">Exit</a>
+              <p (click)="addingMode=false">Exit</p>
             </li>
           </ul>
         </div>

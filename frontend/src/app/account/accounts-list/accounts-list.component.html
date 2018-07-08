@@ -44,10 +44,10 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="deleteAccount(account)">Delete</a>
+              <p (click)="deleteAccount(account)">Delete</p>
             </li>
             <li>
-              <a href="#" (click)="onShowEditMode(account)">Edit</a>
+              <p (click)="onShowEditMode(account)">Edit</p>
             </li>
           </ul>
         </div>
@@ -59,10 +59,10 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="onEditAccount(account)">Save</a>
+              <p (click)="onEditAccount(account)">Save</p>
             </li>
             <li>
-              <a href="#" (click)="account.editMode=false">Exit</a>
+              <p (click)="account.editMode=false">Exit</p>
             </li>
           </ul>
         </div>
@@ -83,10 +83,10 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="onAddAccount(newAccountName,newAccountBalance)">Save</a>
+              <p (click)="onAddAccount(newAccountName,newAccountBalance)">Save</p>
             </li>
             <li>
-              <a href="#" (click)="addingMode=false">Exit</a>
+              <p (click)="addingMode=false">Exit</p>
             </li>
           </ul>
         </div>
