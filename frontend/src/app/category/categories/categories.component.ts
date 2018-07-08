@@ -13,7 +13,7 @@ export class CategoriesComponent implements OnInit {
   addingMode = false;
   editedName: string;
   selectedCategory: Category;
-  editedParentCategory: number;
+  editedParentCategory: Category = new Category();
   id;
 
   constructor(private categoryService: CategoryService) { }
@@ -41,12 +41,17 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  onShowEditMode(account: Account) {
-
+  onShowEditMode(category: Category) {
+    category.editMode = true;
+    this.editedName = category.name;
+    this.editedParentCategory = category.parentCategory;
   }
 
-  onEditCategory(account: Account) {
-
+  onEditCategory(category: Category) {
+    category.name = this.editedName;
+    category.parentCategory = this.editedParentCategory;
+    this.categoryService.editCategory(category).subscribe();
+    category.editMode = false;
   }
 
   onAddCategory(nameInput: HTMLInputElement) {

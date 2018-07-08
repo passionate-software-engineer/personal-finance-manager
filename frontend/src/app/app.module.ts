@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CategoriesComponent } from './category/categories/categories.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { NavigatiorComponent } from './navigation/navigatior/navigatior.component';
 import { NavigationComponent } from './navigation/navigation/navigation.component';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { NavigationComponent } from './navigation/navigation/navigation.componen
     AppComponent,
     AccountsListComponent,
     CategoriesComponent,
-    NavigatiorComponent,
     NavigationComponent,
   ],
   imports: [

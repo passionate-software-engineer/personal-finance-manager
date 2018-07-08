@@ -4,7 +4,6 @@ import { CategoriesComponent } from './category/categories/categories.component'
 import { AccountsListComponent } from './account/accounts-list/accounts-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/accounts', pathMatch: 'full' },
   { path: 'categories', component: CategoriesComponent },
   { path: 'accounts', component: AccountsListComponent }
 ];
