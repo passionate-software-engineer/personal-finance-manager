@@ -2,30 +2,28 @@ package com.pfm.account;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @AllArgsConstructor
 @Service
 public class AccountService {
 
-  @Autowired // TODO - it's better to do dependency injection through constructor - please change to it
   private AccountRepository accountRepository;
 
   public Account getAccountById(Long id) {
-    return accountRepository.findById(id).get(); // TODO - it's not correct use of optional - you should return it further and then in controller check if value is present
+    return accountRepository.findById(id).orElse(null);
   }
 
   public List<Account> getAccounts() {
-    List<Account> accounts = new ArrayList<>(); // TODO better to use: StreamSupport.stream(iterable.spliterator(), false)
-    accountRepository.findAll().forEach(account -> accounts.add(account));
-    accounts.sort(Comparator.comparing(Account::getId)); // TODO when you will refactor to method above just use sorted() on stream and then collect
-    return accounts;
+    return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
+            .sorted(Comparator.comparing(Account::getId))
+            .collect(Collectors.toList());
   }
 
   public Account addAccount(Account account) {
@@ -43,5 +41,4 @@ public class AccountService {
   public void deleteAccount(Long id) {
     accountRepository.deleteById(id);
   }
-
 }
