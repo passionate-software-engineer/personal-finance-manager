@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesComponent } from './category/categories/categories.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { NavigationComponent } from './navigation/navigation/navigation.component';
+import { MessagesComponent } from './messages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { NavigationComponent } from './navigation/navigation/navigation.componen
     AccountsListComponent,
     CategoriesComponent,
     NavigationComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,

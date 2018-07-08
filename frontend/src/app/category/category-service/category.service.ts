@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Category } from '../category';
+import { MessagesService } from '../../messages/messages.service';
+import { catchError, map, tap } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -12,23 +14,49 @@ export class CategoryService {
 
   private apiUrl = 'http://localhost:8081/categories';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private messagesService: MessagesService) { }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
+    return this.http.get<Category[]>(this.apiUrl).pipe(
+      tap(categories => this.log(`fetched categories`)),
+      catchError(this.handleError('getCategories', [])));
   }
 
   addCategory(category: Category): Observable<any> {
-    return this.http.post<any>(this.apiUrl, category, httpOptions);
+    return this.http.post<any>(this.apiUrl, category, httpOptions).pipe(
+      tap(any => this.log(`added category`)),
+      catchError(this.handleError('addCategory', [])));
   }
 
   deleteCategory(id: number): Observable<Category> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<Category>(url);
+    return this.http.delete<any>(url).pipe(
+      tap(any =>this.log(`deleted category`)),
+      catchError(this.handleError('deleteCategory', [])));
   }
 
   editCategory(category: Category): Observable<Category> {
     const url = `${this.apiUrl}/${category.id}`;
-    return this.http.put<Category>(url, category, httpOptions);
+    return this.http.put<Category>(url, category, httpOptions).pipe(
+      tap(category => this.log(`added category`)),
+      catchError(this.handleError('addCategory', [])));
+  }
+
+  private log(message: string) {
+    this.messagesService.add('CategoryService: ' + message);
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }

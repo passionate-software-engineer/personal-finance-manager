@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../category';
 import { CategoryService } from '../category-service/category.service';
+import { MessagesService } from '../../messages/messages.service';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories',
@@ -30,6 +32,7 @@ export class CategoriesComponent implements OnInit {
         } else {
           this.categories = categories;
         }
+
       });
   }
 
@@ -94,4 +97,6 @@ export class CategoriesComponent implements OnInit {
     }
     return 'Main Category';
   }
+
+  
 }
