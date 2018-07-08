@@ -28,18 +28,18 @@ export class CategoryService {
       catchError(this.handleError('addCategory', [])));
   }
 
-  deleteCategory(id: number): Observable<Category> {
+  deleteCategory(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url).pipe(
-      tap(any =>this.log(`deleted category`)),
+      tap(any =>this.log(`deleted category ` + id)),
       catchError(this.handleError('deleteCategory', [])));
   }
 
-  editCategory(category: Category): Observable<Category> {
+  editCategory(category: Category): Observable<any> {
     const url = `${this.apiUrl}/${category.id}`;
     return this.http.put<Category>(url, category, httpOptions).pipe(
-      tap(category => this.log(`added category`)),
-      catchError(this.handleError('addCategory', [])));
+      tap(category => this.log(`edited category`)),
+      catchError(this.handleError('editCategory', [])));
   }
 
   private log(message: string) {

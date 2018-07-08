@@ -35,9 +35,10 @@
 
       <td *ngIf="category.editMode">
         <select *ngIf="categories.length>1" [(ngModel)]="editedParentCategory">
+            <option  [ngValue]="null">Main Category</option>
           <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
         </select>
-        <p *ngIf="categories.length<2">Main Category</p>
+        <p *ngIf="categories.length < 2">Main Category</p>
       </td>
       <td *ngIf="!category.editMode">{{getParentCategoryName(category)}} </td>
 
@@ -48,10 +49,10 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="deleteCategory(category)">Delete</a>
+              <a href="#categories" (click)="deleteCategory(category)">Delete</a>
             </li>
             <li>
-              <a href="#" (click)="onShowEditMode(category)">Edit</a>
+              <p (click)="onShowEditMode(category)">Edit</p>
             </li>
           </ul>
         </div>
@@ -63,10 +64,11 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="onEditCategory(category)">Save</a>
+              <p (click)="onEditCategory(category)">Save</p>
+              <!-- <a href="#categories" (click)="onEditCategory(category)">Save</a> -->
             </li>
             <li>
-              <a href="#" (click)="category.editMode=false">Exit</a>
+              <a href="#categories" (click)="category.editMode=false">Exit</a>
             </li>
           </ul>
         </div>
