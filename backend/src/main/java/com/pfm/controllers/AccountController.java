@@ -16,14 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "accounts")
 @CrossOrigin
-
 public class AccountController {
 
   @Autowired
   private AccountService accountService;
 
   @GetMapping(value = "/{id}")
-  @ResponseBody
   public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
     Account account = accountService.getAccountById(id);
     return new ResponseEntity<>(account, HttpStatus.OK);

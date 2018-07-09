@@ -1,5 +1,8 @@
 package com.pfm.AccountControllerTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pfm.JsonConverter;
+import com.pfm.model.Account;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.math.BigDecimal;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -35,26 +32,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountControllerIntegrationTest {
 
-    public List<String> readFile() throws IOException {
-        FileReader fileReader = new FileReader("src\\test\\resources\\account.txt");
-        List<String> accountList = new ArrayList<>();
-
-        try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            String textLine = bufferedReader.readLine();
-            do {
-                accountList.add(textLine);
-                textLine = bufferedReader.readLine();
-            } while (textLine != null);
-        }
-        return accountList;
-    }
-
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Test
     public void shouldAddAccountTest() throws Exception {
-        String accountJson = readFile().get(1);
+        JsonConverter converter = new JsonConverter(objectMapper);
+        Account account = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(1000)).build();
+        String accountJson = converter.convertFromAccountToJson(account);
 
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
@@ -64,7 +52,9 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldGetAccountById() throws Exception {
-        String accountJson = readFile().get(1);
+        JsonConverter converter = new JsonConverter(objectMapper);
+        Account account = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(1000)).build();
+        String accountJson = converter.convertFromAccountToJson(account);
 
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
@@ -79,8 +69,11 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldGetAllAccounts() throws Exception {
-        String accountJson = readFile().get(1);
-        String accountJson2 = readFile().get(2);
+        JsonConverter converter = new JsonConverter(objectMapper);
+        Account account = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(1000)).build();
+        Account account2 = new Account().builder().id(2L).name("Piotrek").balance(BigDecimal.valueOf(9)).build();
+        String accountJson = converter.convertFromAccountToJson(account);
+        String accountJson2 = converter.convertFromAccountToJson(account2);
 
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
@@ -97,13 +90,15 @@ public class AccountControllerIntegrationTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
-
     }
 
     @Test
     public void shouldUpdateAccount() throws Exception {
-        String accountJson = readFile().get(0);
-        String accountJson2 = readFile().get(4);
+        JsonConverter converter = new JsonConverter(objectMapper);
+        Account account = new Account().builder().id(1L).name("Adam").balance(BigDecimal.valueOf(1000)).build();
+        Account account2 = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(200.00)).build();
+        String accountJson = converter.convertFromAccountToJson(account);
+        String accountJson2 = converter.convertFromAccountToJson(account2);
 
         this.mockMvc.perform(post("/accounts/")
                 .contentType("application/json;charset=UTF-8")
@@ -126,7 +121,10 @@ public class AccountControllerIntegrationTest {
 
     @Test
     public void shouldDeleteAccount() throws Exception {
-        String accountJson = readFile().get(1);
+        JsonConverter converter = new JsonConverter(objectMapper);
+        Account account = new Account().builder().id(1L).name("Adam").balance(BigDecimal.valueOf(1000)).build();
+        String accountJson = converter.convertFromAccountToJson(account);
+
         this.mockMvc.perform(post("/accounts/")
                 .contentType(MediaType.valueOf("application/json;charset=UTF-8"))
                 .content(accountJson))
