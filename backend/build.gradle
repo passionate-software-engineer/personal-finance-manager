@@ -38,6 +38,7 @@ dependencies {
     compile 'javax.xml.bind:jaxb-api:2.3.0'
     compile "org.projectlombok:lombok:1.18.0"
     compile 'com.h2database:h2:1.0.60'
+    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
 }
 
 flyway {
