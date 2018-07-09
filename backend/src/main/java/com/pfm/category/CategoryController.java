@@ -2,7 +2,6 @@ package com.pfm.category;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +26,7 @@ public class CategoryController {
 
   private static final String DELETE_CATEGORY_IS_PARENT_CATEGORY =
       "CATEGORY IS PARENT CATEGORY. DELETE NOT POSSIBLE - FIRST DELETE ALL SUBCATEGORIES";
-  private static final String UPDATE_NO_ID =
+  private static final String UPDATE_NO_ID_OR_ID_NOT_EXIST =
       "ID IS EMPTY OR THERE IS NO CATEGORY WITH PROVIDED ID";
 
   private CategoryService categoryService;
@@ -61,7 +60,7 @@ public class CategoryController {
   @PutMapping(value = "/{id}")
   public ResponseEntity updateCategory(@PathVariable Long id, @RequestBody Category category) {
     if (id == null || !categoryService.idExist(id)) {
-      return ResponseEntity.badRequest().body(UPDATE_NO_ID);
+      return ResponseEntity.badRequest().body(UPDATE_NO_ID_OR_ID_NOT_EXIST);
     }
     category.setId(id);
     List<String> validationResult = categoryValidator.validate(category);

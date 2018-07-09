@@ -12,7 +12,7 @@ public class CategoryValidator {
 
   private static final String EMPTY_CATEGORY_NAME = "Category name is empty";
   private static final String PROVIDED_PARRENT_CATEGORY_NOT_EXIST
-      = "Provided parent category not exist";
+      = "Provided parent category does not exist";
 
   private CategoryService categoryService;
 
@@ -30,6 +30,7 @@ public class CategoryValidator {
 
     return validationResult;
   }
+
 }
 
 

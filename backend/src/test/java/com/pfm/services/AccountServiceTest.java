@@ -1,4 +1,4 @@
-package com.pfm.sevices;
+package com.pfm.services;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountRepository;
