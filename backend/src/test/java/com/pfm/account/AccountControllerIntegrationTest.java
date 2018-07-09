@@ -42,7 +42,7 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldAddAccountTest() throws Exception {
     JsonConverter converter = new JsonConverter(objectMapper);
-    Account account = new Account().builder()
+    Account account = Account.builder()
         .name("Jacek")
         .balance(BigDecimal.valueOf(1000)).build();
     String accountJson = converter.convertFromAccountToJson(account);
@@ -56,7 +56,7 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldGetAccountById() throws Exception {
     JsonConverter converter = new JsonConverter(objectMapper);
-    Account account = new Account().builder()
+    Account account = Account.builder()
         .name("Jacek")
         .balance(BigDecimal.valueOf(1000)).build();
     String accountJson = converter.convertFromAccountToJson(account);
@@ -75,10 +75,10 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldGetAllAccounts() throws Exception {
     JsonConverter converter = new JsonConverter(objectMapper);
-    Account account = new Account().builder()
+    Account account = Account.builder()
         .name("Jacek")
         .balance(BigDecimal.valueOf(1000)).build();
-    Account account2 = new Account().builder()
+    Account account2 = Account.builder()
         .name("Piotrek")
         .balance(BigDecimal.valueOf(9)).build();
     String accountJson = converter.convertFromAccountToJson(account);
@@ -104,10 +104,10 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldUpdateAccount() throws Exception {
     JsonConverter converter = new JsonConverter(objectMapper);
-    Account account = new Account().builder()
+    Account account = Account.builder()
         .name("Adam")
         .balance(BigDecimal.valueOf(1000)).build();
-    Account account2 = new Account().builder()
+    Account account2 = Account.builder()
         .name("Jacek")
         .balance(BigDecimal.valueOf(200.00)).build();
     String accountJson = converter.convertFromAccountToJson(account);
@@ -135,7 +135,7 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldDeleteAccount() throws Exception {
     JsonConverter converter = new JsonConverter(objectMapper);
-    Account account = new Account().builder()
+    Account account = Account.builder()
         .name("Adam")
         .balance(BigDecimal.valueOf(1000)).build();
     String accountJson = converter.convertFromAccountToJson(account);
