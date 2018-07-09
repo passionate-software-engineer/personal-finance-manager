@@ -1,4 +1,4 @@
-package com.pfm.AccountControllerTest;
+package com.pfm.helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ObjectMapperConfig {
 
-@Bean
-    public ObjectMapper createObjectMapper() {
+  @Bean
+  public ObjectMapper createObjectMapper() {
     ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
-    }
+    mapper.registerModule(new JavaTimeModule());
+    return mapper;
+  }
 }
 
 
