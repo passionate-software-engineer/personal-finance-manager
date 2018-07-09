@@ -18,5 +18,5 @@ spring: #TODO - postgres is not available, you mix postgres with mysql, some of 
 logging:
   level:
     org:
-      springframework: ERROR
+      springframework: INFO
   file: application.log
