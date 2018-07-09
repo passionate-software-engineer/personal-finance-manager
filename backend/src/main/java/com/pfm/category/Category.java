@@ -30,4 +30,9 @@ public class Category {
   @ManyToOne
   private Category parentCategory;
 
+
+
+
+
+  
 }
