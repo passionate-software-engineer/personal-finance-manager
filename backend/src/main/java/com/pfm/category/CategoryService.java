@@ -61,4 +61,8 @@ public class CategoryService {
         .filter(category -> category.getParentCategory() != null)
         .anyMatch((category -> category.getParentCategory().getId() == id));
   }
+
+  public boolean idExist(long id) {
+    return categoryRepository.existsById(id);
+  }
 }
