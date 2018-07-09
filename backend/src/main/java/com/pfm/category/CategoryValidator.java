@@ -23,7 +23,7 @@ public class CategoryValidator {
       validationResult.add(EMPTY_CATEGORY_NAME);
     }
 
-    if (category.getParentCategory() != null ||
+    if (category.getParentCategory() != null &&
         !categoryService.idExist(category.getParentCategory().getId())) {
       validationResult.add(PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
     }

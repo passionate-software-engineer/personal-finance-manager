@@ -28,7 +28,7 @@ public class CategoryController {
   private static final String DELETE_CATEGORY_IS_PARENT_CATEGORY =
       "CATEGORY IS PARENT CATEGORY. DELETE NOT POSSIBLE - FIRST DELETE ALL SUBCATEGORIES";
   private static final String UPDATE_NO_ID =
-      "ID IS EMPTY. YOU NEED TO PROVIDE EXISTING ID ";
+      "ID IS EMPTY OR THERE IS NO CATEGORY WITH PROVIDED ID";
 
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
@@ -60,7 +60,7 @@ public class CategoryController {
 
   @PutMapping(value = "/{id}")
   public ResponseEntity updateCategory(@PathVariable Long id, @RequestBody Category category) {
-    if (id == null || categoryService.idExist(id)) {
+    if (id == null || !categoryService.idExist(id)) {
       return ResponseEntity.badRequest().body(UPDATE_NO_ID);
     }
     category.setId(id);
