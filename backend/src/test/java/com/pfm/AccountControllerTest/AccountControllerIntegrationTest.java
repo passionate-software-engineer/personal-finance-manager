@@ -1,7 +1,6 @@
 package com.pfm.AccountControllerTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.JsonConverter;
 import com.pfm.model.Account;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +40,10 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldAddAccountTest() throws Exception {
         JsonConverter converter = new JsonConverter(objectMapper);
-        Account account = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(1000)).build();
+        Account account = new Account().builder()
+                .id(1L)
+                .name("Jacek")
+                .balance(BigDecimal.valueOf(1000)).build();
         String accountJson = converter.convertFromAccountToJson(account);
 
         this.mockMvc.perform(post("/accounts/")
@@ -53,7 +55,10 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldGetAccountById() throws Exception {
         JsonConverter converter = new JsonConverter(objectMapper);
-        Account account = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(1000)).build();
+        Account account = new Account().builder()
+                .id(1L)
+                .name("Jacek")
+                .balance(BigDecimal.valueOf(1000)).build();
         String accountJson = converter.convertFromAccountToJson(account);
 
         this.mockMvc.perform(post("/accounts/")
@@ -70,8 +75,14 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldGetAllAccounts() throws Exception {
         JsonConverter converter = new JsonConverter(objectMapper);
-        Account account = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(1000)).build();
-        Account account2 = new Account().builder().id(2L).name("Piotrek").balance(BigDecimal.valueOf(9)).build();
+        Account account = new Account().builder()
+                .id(1L)
+                .name("Jacek")
+                .balance(BigDecimal.valueOf(1000)).build();
+        Account account2 = new Account().builder()
+                .id(2L)
+                .name("Piotrek")
+                .balance(BigDecimal.valueOf(9)).build();
         String accountJson = converter.convertFromAccountToJson(account);
         String accountJson2 = converter.convertFromAccountToJson(account2);
 
@@ -95,8 +106,14 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldUpdateAccount() throws Exception {
         JsonConverter converter = new JsonConverter(objectMapper);
-        Account account = new Account().builder().id(1L).name("Adam").balance(BigDecimal.valueOf(1000)).build();
-        Account account2 = new Account().builder().id(1L).name("Jacek").balance(BigDecimal.valueOf(200.00)).build();
+        Account account = new Account().builder()
+                .id(1L)
+                .name("Adam")
+                .balance(BigDecimal.valueOf(1000)).build();
+        Account account2 = new Account().builder()
+                .id(1L)
+                .name("Jacek")
+                .balance(BigDecimal.valueOf(200.00)).build();
         String accountJson = converter.convertFromAccountToJson(account);
         String accountJson2 = converter.convertFromAccountToJson(account2);
 
@@ -122,7 +139,10 @@ public class AccountControllerIntegrationTest {
     @Test
     public void shouldDeleteAccount() throws Exception {
         JsonConverter converter = new JsonConverter(objectMapper);
-        Account account = new Account().builder().id(1L).name("Adam").balance(BigDecimal.valueOf(1000)).build();
+        Account account = new Account().builder()
+                .id(1L)
+                .name("Adam")
+                .balance(BigDecimal.valueOf(1000)).build();
         String accountJson = converter.convertFromAccountToJson(account);
 
         this.mockMvc.perform(post("/accounts/")

@@ -1,5 +1,0 @@
-{"id":1,"name":"Piotreksssss", "balance":"9999"}
-{"id":2,"name":"dfsfdsf", "balance":"99414199"}
-{"id":3,"name":"Piotreksssss", "balance":"99941419"}
-{"id":4,"name":"dfsfdsf", "balance":"9994449"}
-{"id":1,"name":"Jacek", "balance":"200"}
