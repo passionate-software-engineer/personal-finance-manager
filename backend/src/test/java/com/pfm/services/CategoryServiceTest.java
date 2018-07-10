@@ -42,8 +42,10 @@ public class CategoryServiceTest {
   public void shouldGetCategoryById() {
     //given
     when(categoryRepository.findById(MOCK_CATEGORY_ID)).thenReturn(Optional.of(mockCategory));
+
     //when
     categoryService.getCategoryById(MOCK_CATEGORY_ID);
+
     //then
     verify(categoryRepository).findById(MOCK_CATEGORY_ID);
   }
@@ -52,8 +54,10 @@ public class CategoryServiceTest {
   public void shouldGetCategories() {
     //given
     when(categoryRepository.findAll()).thenReturn(Collections.singletonList(mockCategory));
+
     //when
     categoryService.getCategories();
+
     //then
     verify(categoryRepository).findAll();
   }
@@ -66,9 +70,11 @@ public class CategoryServiceTest {
         .thenReturn(Optional.of(mockCategory));
     when(categoryRepository.save(mockCategoryWithParentCategory))
         .thenReturn(mockCategoryWithParentCategory);
+
     //when
     categoryService.addCategory(mockCategory);
     categoryService.addCategory(mockCategoryWithParentCategory);
+
     //then
     verify(categoryRepository).save(mockCategory);
     verify(categoryRepository).findById(MOCK_CATEGORY_ID);
@@ -79,8 +85,10 @@ public class CategoryServiceTest {
   public void shouldDeleteCategory() {
     //given
     doNothing().when(categoryRepository).deleteById(MOCK_CATEGORY_ID);
+
     //when
     categoryService.removeCategory(MOCK_CATEGORY_ID);
+
     //then
     verify(categoryRepository).deleteById(MOCK_CATEGORY_ID);
   }
@@ -95,9 +103,11 @@ public class CategoryServiceTest {
         .thenReturn(Optional.of(mockCategoryWithParentCategory));
     when(categoryRepository.save(mockCategoryWithParentCategory))
         .thenReturn(mockCategoryWithParentCategory);
+
     //when
     categoryService.updateCategory(mockCategory);
     categoryService.updateCategory(mockCategoryWithParentCategory);
+
     //then
     verify(categoryRepository).save(mockCategory);
     verify(categoryRepository, times(2)).findById(MOCK_CATEGORY_ID);
@@ -109,8 +119,10 @@ public class CategoryServiceTest {
   public void shouldCheckIfCategoryExist() {
     //given
     when(categoryRepository.existsById(MOCK_CATEGORY_ID)).thenReturn(true);
+
     //when
     categoryService.idExist(MOCK_CATEGORY_ID);
+
     //then
     verify(categoryRepository).existsById(MOCK_CATEGORY_ID);
   }
