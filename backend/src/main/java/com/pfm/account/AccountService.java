@@ -22,8 +22,8 @@ public class AccountService {
 
   public List<Account> getAccounts() {
     return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
-            .sorted(Comparator.comparing(Account::getId))
-            .collect(Collectors.toList());
+        .sorted(Comparator.comparing(Account::getId))
+        .collect(Collectors.toList());
   }
 
   public Account addAccount(Account account) {
