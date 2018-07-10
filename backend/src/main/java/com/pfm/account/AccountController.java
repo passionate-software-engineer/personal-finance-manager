@@ -39,13 +39,13 @@ public class AccountController {
       log.info(ACCOUNT_WITH_ID + id + NOT_FOUND);
       return ResponseEntity.notFound().build();
     }
-   log.info(ACCOUNT_WITH_ID + id + " successfully retrieved");
+    log.info(ACCOUNT_WITH_ID + id + " successfully retrieved");
     return new ResponseEntity<>(account, HttpStatus.OK);
   }
 
   @GetMapping
   public ResponseEntity<List<Account>> getAccounts() {
-    log.info("Retrieving all accounts from database..." );
+    log.info("Retrieving all accounts from database...");
     List<Account> accounts = accountService.getAccounts();
     return new ResponseEntity<>(accounts, HttpStatus.OK);
   }
@@ -66,7 +66,7 @@ public class AccountController {
   @PutMapping(value = "/{id}")
   public ResponseEntity updateAccount(@PathVariable("id") Long id,
       @RequestBody Account account) {
-    log.info("Updating account with ID = ", id ," in the database");
+    log.info("Updating account with ID = ", id, " in the database");
     List<String> validationResult = accountValidator.validate(account);
     if (!validationResult.isEmpty()) {
       log.error(ACCOUNT_NOT_VALID);

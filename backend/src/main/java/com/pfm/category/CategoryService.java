@@ -2,34 +2,37 @@ package com.pfm.category;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class CategoryService {
 
-  @Autowired // TODO - it's better to do dependency injection through constructor - please change to it
   private CategoryRepository categoryRepository;
 
-  // TODO - it's not correct use of optional - you should return it further and then in controller check if value is present
-  public Category getCategoryById(long id) {
-    return categoryRepository.findById(id).get();
+  public Optional<Category> getCategoryById(long id) {
+    return categoryRepository.findById(id);
   }
 
   public List<Category> getCategories() {
-    List<Category> categories = new ArrayList<>(); // TODO better to use: StreamSupport.stream(iterable.spliterator(), false)
-    categoryRepository.findAll().forEach(category -> categories.add(category));
-    categories.sort(Comparator.comparing(Category::getId)); // TODO when you will refactor to method above just use sorted() on stream and then collect
-    return categories;
+    return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+        .sorted(Comparator.comparing(Category::getId))
+        .collect(Collectors.toList());
   }
 
   public Category addCategory(Category category) {
+    if (category.getParentCategory() == null) {
+      return categoryRepository.save(category);
+    }
+    category.setParentCategory(getCategoryById(category.getParentCategory().getId())
+        .orElse(null));
     return categoryRepository.save(category);
   }
 
@@ -37,12 +40,26 @@ public class CategoryService {
     categoryRepository.deleteById(id);
   }
 
-  // TODO - no need to extract value get whole Category object and take values from it.
-  public Category updateCategory(long id, String name, Category parentCategory) {
-    Category categoryToUpdate = getCategoryById(id);
-    categoryToUpdate.setName(name);
-    categoryToUpdate.setParentCategory(parentCategory);
+  public Category updateCategory(Category category) {
+    Category categoryToUpdate = getCategoryById(category.getId()).get();
+    categoryToUpdate.setName(category.getName());
+    if (category.getParentCategory() == null) {
+      categoryToUpdate.setParentCategory(null);
+    } else {
+      categoryToUpdate.setParentCategory(getCategoryById(category.getParentCategory().getId())
+          .orElse(null));
+    }
     categoryRepository.save(categoryToUpdate);
     return categoryToUpdate;
+  }
+
+  public boolean isParentCategory(long id) {
+    return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+        .filter(category -> category.getParentCategory() != null)
+        .anyMatch((category -> category.getParentCategory().getId() == id));
+  }
+
+  public boolean idExist(long id) {
+    return categoryRepository.existsById(id);
   }
 }
