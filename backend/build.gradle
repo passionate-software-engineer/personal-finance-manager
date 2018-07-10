@@ -32,7 +32,9 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
     compile 'com.h2database:h2:1.0.60'
     compile 'javax.xml.bind:jaxb-api:2.3.0'
     compile 'org.postgresql:postgresql:9.4.1212'
