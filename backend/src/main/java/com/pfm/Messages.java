@@ -2,6 +2,8 @@ package com.pfm;
 
 public class Messages {
 
+  //TODO write this properly in property file
+
   public static final String DELETE_CATEGORY_IS_PARENT_CATEGORY =
       "CATEGORY IS PARENT CATEGORY. DELETE NOT POSSIBLE - FIRST DELETE ALL SUBCATEGORIES";
   public static final String UPDATE_NO_ID_OR_ID_NOT_EXIST =

@@ -45,8 +45,7 @@ public class CategoryControllerIntegrationTest {
   private ObjectMapper mapper = new ObjectMapper();
 
   private Category testParentCategory = new Category(null, "Food", null);
-  private Category testSubCategory
-      = new Category(null, "Snickers", null);
+  private Category testSubCategory = new Category(null, "Snickers", null);
   private Long testParentCategoryId;
   private Long testSubCategoryId;
 
@@ -71,8 +70,7 @@ public class CategoryControllerIntegrationTest {
     Category subCategoryToAdd = new Category(null, "Oil", parentCategoryToAdd);
     Category expectedParentCategory = new Category(null, "Car", null);
     Category expectedSubCategory =
-        new Category(null, "Oil", new Category(null, "Car"
-            , null));
+        new Category(null, "Oil", new Category(null, "Car", null));
 
     //when
     long addedParentCategoryId = addCategory(parentCategoryToAdd);
@@ -230,7 +228,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
       throws Exception {
-  //when
+    //when
     this.mockMvc.perform(delete(DEFAULT_PATH + "/" + testParentCategoryId))
         .andExpect(content().string(Messages.DELETE_CATEGORY_IS_PARENT_CATEGORY))
         .andExpect(status().isBadRequest());
@@ -238,7 +236,7 @@ public class CategoryControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedDeleteMethod() throws Exception {
-   //when
+    //when
     this.mockMvc.perform(delete(DEFAULT_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
   }
