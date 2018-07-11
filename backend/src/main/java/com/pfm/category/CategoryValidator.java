@@ -16,7 +16,7 @@ public class CategoryValidator {
   public List<String> validate(Category category) {
     List<String> validationResult = new ArrayList<>();
 
-    if (category.getName() == null || category.getName() == "") {
+    if (category.getName() == null || category.getName().equals("")) {
       validationResult.add(Messages.EMPTY_CATEGORY_NAME);
     }
 

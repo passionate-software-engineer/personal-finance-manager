@@ -45,6 +45,9 @@ public class CategoryController {
 
   @PostMapping
   public ResponseEntity addCategory(@RequestBody Category category) {
+    if (category.getId() != null && categoryService.idExist(category.getId())) {
+      return ResponseEntity.badRequest().body(Messages.ADD_CATEGORY_PROVIDED_ID_ALREADY_EXIST);
+    }
     List<String> validationResult = categoryValidator.validate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
@@ -56,7 +59,7 @@ public class CategoryController {
   @PutMapping(value = "/{id}")
   public ResponseEntity updateCategory(@PathVariable Long id, @RequestBody Category category) {
     if (id == null || !categoryService.idExist(id)) {
-      return ResponseEntity.badRequest().body(Messages.UPDATE_NO_ID_OR_ID_NOT_EXIST);
+      return ResponseEntity.badRequest().body(Messages.UPDATE_CATEGORY_NO_ID_OR_ID_NOT_EXIST);
     }
     category.setId(id);
     List<String> validationResult = categoryValidator.validate(category);
