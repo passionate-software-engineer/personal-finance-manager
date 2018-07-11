@@ -4,8 +4,4 @@ spring:
 
 swagger:
      swagger:
-       title: personal-finance-manager
-       description:  Personal Finance Manager
-       contact-name: Piotr & Friends
-       contact-url: https://programming-in-practice.github.io
-       path: rest-api
+        path: rest-api
