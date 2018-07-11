@@ -31,30 +31,29 @@ public class CategoryService {
     if (category.getParentCategory() == null) {
       return categoryRepository.save(category);
     }
-    category.setParentCategory(getCategoryById(category.getParentCategory().getId())
-        .orElse(null));
+    Category parentCategory = getCategoryById(category.getParentCategory().getId()).orElse(null);
+    category.setParentCategory(parentCategory);
     return categoryRepository.save(category);
   }
 
   public void removeCategory(long id) {
-    categoryRepository.deleteById(id);
+    categoryRepository.deleteById(id); // TODO remove or delete?
   }
 
-  public Category updateCategory(Category category) {
-    Category categoryToUpdate = getCategoryById(category.getId()).get();
+  public void updateCategory(Category category) { // TODO pass id and set it inside
+    Category categoryToUpdate = getCategoryById(category.getId()).get(); // TODO IllegalStateException
     categoryToUpdate.setName(category.getName());
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
     } else {
-      categoryToUpdate.setParentCategory(getCategoryById(category.getParentCategory().getId())
-          .orElse(null));
+      Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId());
+      categoryToUpdate.setParentCategory(parentCategory.orElse(null)); // TODO unify :)
     }
     categoryRepository.save(categoryToUpdate);
-    return categoryToUpdate;
   }
 
   public boolean isParentCategory(long id) {
-    return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+    return StreamSupport.stream(categoryRepository.findAll().spliterator(), false) // TODO not optimal please write query
         .filter(category -> category.getParentCategory() != null)
         .anyMatch((category -> category.getParentCategory().getId() == id));
   }

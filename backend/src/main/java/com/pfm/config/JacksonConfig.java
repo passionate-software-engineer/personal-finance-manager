@@ -14,7 +14,7 @@ public class JacksonConfig {
   public ObjectMapper createObjectMapper() {
     ObjectMapper mapper = new ObjectMapper();
     SimpleModule module = new SimpleModule();
-    module.addSerializer(BigDecimal.class,new MoneySerializer());
+    module.addSerializer(BigDecimal.class, new MoneySerializer()); // TODO make money serializer private static class
     mapper.registerModule(module);
     return mapper;
   }

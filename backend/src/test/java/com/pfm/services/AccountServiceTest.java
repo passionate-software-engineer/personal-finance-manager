@@ -66,7 +66,7 @@ public class AccountServiceTest {
     List<Account> actualAccountsList = accountService.getAccounts();
 
     //then
-    assertFalse(actualAccountsList.isEmpty());
+    assertFalse(actualAccountsList.isEmpty()); // TODO unify tests - merge both approaches
     Account actualAccount = actualAccountsList.get(0);
     assertThat(ID_1, is(equalTo(actualAccount.getId())));
     assertThat(NAME, is(equalTo(actualAccount.getName())));

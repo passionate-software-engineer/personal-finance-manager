@@ -45,7 +45,7 @@ public class CategoryController {
 
   @PostMapping
   public ResponseEntity addCategory(@RequestBody Category category) {
-    if (category.getId() != null && categoryService.idExist(category.getId())) {
+    if (category.getId() != null && categoryService.idExist(category.getId())) { // TODO should be handled by validator
       return ResponseEntity.badRequest().body(Messages.ADD_CATEGORY_PROVIDED_ID_ALREADY_EXIST);
     }
     List<String> validationResult = categoryValidator.validate(category);
@@ -57,26 +57,26 @@ public class CategoryController {
   }
 
   @PutMapping(value = "/{id}")
-  public ResponseEntity updateCategory(@PathVariable Long id, @RequestBody Category category) {
-    if (id == null || !categoryService.idExist(id)) {
-      return ResponseEntity.badRequest().body(Messages.UPDATE_CATEGORY_NO_ID_OR_ID_NOT_EXIST);
+  public ResponseEntity updateCategory(@PathVariable long id, @RequestBody Category category) {
+    if (!categoryService.idExist(id)) {
+      return ResponseEntity.badRequest().body(Messages.UPDATE_CATEGORY_NO_ID_OR_ID_NOT_EXIST); // TODO return not found
     }
-    category.setId(id);
+    category.setId(id); // TODO cover with tests
     List<String> validationResult = categoryValidator.validate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
-    Category updatedCategory = categoryService.updateCategory(category);
-    return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+    categoryService.updateCategory(category);
+    return ResponseEntity.ok().build(); // TODO unify
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity deleteCategory(@PathVariable Long id) {
+  public ResponseEntity deleteCategory(@PathVariable long id) {
     if (!categoryService.getCategoryById(id).isPresent()) {
-      return ResponseEntity.notFound().build();
+      return ResponseEntity.notFound().build(); // TODO unify approach ! !! :)
     }
     if (categoryService.isParentCategory(id)) {
-      return ResponseEntity.badRequest().body(Messages.DELETE_CATEGORY_IS_PARENT_CATEGORY);
+      return ResponseEntity.badRequest().body(Messages.CANNOT_DELETE_PARENT_CATEGORY);
     }
     categoryService.removeCategory(id);
     return new ResponseEntity<>(HttpStatus.OK);

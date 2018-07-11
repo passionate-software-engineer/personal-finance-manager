@@ -73,7 +73,7 @@ public class CategoryServiceTest {
 
     //when
     categoryService.addCategory(mockCategory);
-    categoryService.addCategory(mockCategoryWithParentCategory);
+    categoryService.addCategory(mockCategoryWithParentCategory); // TODO 2 separate tests
 
     //then
     verify(categoryRepository).save(mockCategory);
@@ -106,7 +106,7 @@ public class CategoryServiceTest {
 
     //when
     categoryService.updateCategory(mockCategory);
-    categoryService.updateCategory(mockCategoryWithParentCategory);
+    categoryService.updateCategory(mockCategoryWithParentCategory); // TODO 2 separate tests
 
     //then
     verify(categoryRepository).save(mockCategory);
