@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -16,8 +17,8 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
-  public Account getAccountById(Long id) {
-    return accountRepository.findById(id).orElse(null);
+  public Optional<Account> getAccountById(Long id) {
+    return accountRepository.findById(id);
   }
 
   public List<Account> getAccounts() {
@@ -31,14 +32,17 @@ public class AccountService {
   }
 
   public Account updateAccount(Long id, Account account) {
-    Account accountToUpdate = getAccountById(id);
+    Account accountToUpdate = getAccountById(id).get();
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
-    accountRepository.save(accountToUpdate);
-    return accountToUpdate;
+    return accountRepository.save(accountToUpdate);
   }
 
   public void deleteAccount(Long id) {
     accountRepository.deleteById(id);
+  }
+
+  public boolean idExist(long id) {
+    return accountRepository.existsById(id);
   }
 }

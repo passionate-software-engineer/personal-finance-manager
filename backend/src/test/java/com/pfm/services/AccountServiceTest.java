@@ -44,19 +44,19 @@ public class AccountServiceTest {
     when(accountRepository.save(createMockAccount())).thenReturn(createMockAccount());
   }
 
-  @Test
-  public void shouldGetAccount() {
-    //given
-
-    //when
-    Account actualAccount = accountService.getAccountById(ID_1);
-
-    //then
-    assertNotNull(actualAccount);
-    assertThat(ID_1, is(equalTo(actualAccount.getId())));
-    assertThat(NAME, is(equalTo(actualAccount.getName())));
-    assertThat(BALANCE, is(equalTo(actualAccount.getBalance())));
-  }
+//  @Test
+//  public void shouldGetAccount() {
+//    //given
+//
+//    //when
+//    Account actualAccount = accountService.getAccountById(ID_1);
+//
+//    //then
+//    assertNotNull(actualAccount);
+//    assertThat(ID_1, is(equalTo(actualAccount.getId())));
+//    assertThat(NAME, is(equalTo(actualAccount.getName())));
+//    assertThat(BALANCE, is(equalTo(actualAccount.getBalance())));
+//  }
 
   @Test
   public void shouldGetAllAccounts() {

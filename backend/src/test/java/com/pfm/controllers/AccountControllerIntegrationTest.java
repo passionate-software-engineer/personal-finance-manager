@@ -1,4 +1,4 @@
-package com.pfm.account;
+package com.pfm.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pfm.account.Account;
 import com.pfm.helpers.JsonConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
