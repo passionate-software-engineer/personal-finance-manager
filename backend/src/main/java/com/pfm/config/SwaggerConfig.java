@@ -1,8 +1,6 @@
 package com.pfm.config;
 
 import com.google.common.base.Predicate;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +14,11 @@ import java.util.Collections;
 import static com.google.common.base.Predicates.and;
 import static springfox.documentation.builders.PathSelectors.regex;
 
-@Getter
-@Setter
 @Configuration
 @EnableSwagger2
 @ConfigurationProperties(prefix = "swagger.swagger")
 public class SwaggerConfig {
 
-    private String title;
-    private String description;
     private String path;
 
     private static final String NO_ERROR_REGEX = "(?!.*error).*$";
