@@ -37,13 +37,9 @@ public class CategoryControllerIntegrationTest {
 
   private static final String DEFAULT_PATH = "/categories";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
-  private static final String INT_FROM_STRING_REGEX_PATTERN = "([0-9])+";
   private static final Long NOT_EXISTING_ID = 0L;
 
-  private Pattern extractIntFromString = Pattern.compile(INT_FROM_STRING_REGEX_PATTERN);
-
-  private ObjectMapper mapper = new ObjectMapper();
-
+  private Pattern extractIntFromString = Pattern.compile("([0-9])+");
   private Category testParentCategory = new Category(null, "Food", null);
   private Category testSubCategory = new Category(null, "Snickers", null);
   private Long testParentCategoryId;
@@ -51,6 +47,9 @@ public class CategoryControllerIntegrationTest {
 
   @Autowired
   private MockMvc mockMvc;
+
+  @Autowired
+  private ObjectMapper mapper;
 
   @Before
   public void defaultGiven() throws Exception {
@@ -230,7 +229,7 @@ public class CategoryControllerIntegrationTest {
       throws Exception {
     //when
     this.mockMvc.perform(delete(DEFAULT_PATH + "/" + testParentCategoryId))
-        .andExpect(content().string(Messages.DELETE_CATEGORY_IS_PARENT_CATEGORY))
+        .andExpect(content().string(Messages.CANNOT_DELETE_PARENT_CATEGORY))
         .andExpect(status().isBadRequest());
   }
 
