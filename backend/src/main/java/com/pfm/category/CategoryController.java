@@ -1,13 +1,21 @@
 package com.pfm.category;
 
+import com.pfm.Messages;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("categories")
 @RestController
@@ -16,60 +24,56 @@ import java.util.List;
 @CrossOrigin
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+  private CategoryService categoryService;
+  private CategoryValidator categoryValidator;
 
-    @Autowired
-    private CategoryValidator categoryValidator;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
-        Category category = categoryService.getCategoryById(id);
-        if (category == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(category, HttpStatus.OK);
+  @GetMapping(value = "/{id}")
+  public ResponseEntity getCategoryById(@PathVariable long id) {
+    Optional<Category> category = categoryService.getCategoryById(id);
+    if (category.isPresent()) {
+      return ResponseEntity.ok(category.get());
     }
+    return ResponseEntity.notFound().build();
+  }
 
-    @GetMapping
-    public ResponseEntity<List<Category>> getCategories() {
-        List<Category> categories = categoryService.getCategories();
-        if (categories.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return new ResponseEntity<>(categories, HttpStatus.OK);
-    }
+  @GetMapping
+  public ResponseEntity<List<Category>> getCategories() {
+    List<Category> categories = categoryService.getCategories();
+    return ResponseEntity.ok(categories);
+  }
 
-    @PostMapping
-    public ResponseEntity addCategory(@RequestBody Category category) {
-        List<String> validationResult = categoryValidator.validate(category);
-        if (!validationResult.isEmpty()) {
-            return ResponseEntity.badRequest().body(validationResult);
-        }
-        Category createdCategory = categoryService.addCategory(category);
-        return new ResponseEntity<>(createdCategory.getId(), HttpStatus.CREATED);
+  @PostMapping
+  public ResponseEntity addCategory(@RequestBody Category category) {
+    List<String> validationResult = categoryValidator.addCategoryValidation(category);
+    if (!validationResult.isEmpty()) {
+      return ResponseEntity.badRequest().body(validationResult);
     }
+    Category createdCategory = categoryService.addCategory(category);
+    return ResponseEntity.ok(createdCategory.getId());
+  }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        List<String> validationResult = categoryValidator.validate(category);
-        if (!validationResult.isEmpty()) {
-            return ResponseEntity.badRequest().body(validationResult);
-        }
-        if (id == null) {
-            return ResponseEntity.notFound().build();
-        }
-        Category updatedCategory = categoryService.updateCategory(id, category.getName(),
-            category.getParentCategory());
-        return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+  @PutMapping(value = "/{id}")
+  public ResponseEntity updateCategory(@PathVariable long id, @RequestBody Category category) {
+    if (!categoryService.idExist(id)) {
+      return ResponseEntity.notFound().build();
     }
+    List<String> validationResult = categoryValidator.updateCategoryValidation(category);
+    if (!validationResult.isEmpty()) {
+      return ResponseEntity.badRequest().body(validationResult);
+    }
+    categoryService.updateCategory(id, category);
+    return ResponseEntity.ok().build();
+  }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        if (categoryService.getCategoryById(id) == null) {
-            return ResponseEntity.notFound().build();
-        }
-        categoryService.removeCategory(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity deleteCategory(@PathVariable long id) {
+    if (!categoryService.getCategoryById(id).isPresent()) {
+      return ResponseEntity.notFound().build();
     }
+    if (categoryService.isParentCategory(id)) {
+      return ResponseEntity.badRequest().body(Messages.CANNOT_DELETE_PARENT_CATEGORY);
+    }
+    categoryService.deleteCategory(id);
+    return ResponseEntity.ok().build();
+  }
 }

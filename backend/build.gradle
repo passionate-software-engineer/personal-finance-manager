@@ -1,6 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
@@ -24,16 +27,24 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+
 }
 
 dependencies {
     testCompile'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.9.5'
 
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'javax.xml.bind:jaxb-api:2.3.0'
-    compile "org.projectlombok:lombok:1.18.0"
     compile 'com.h2database:h2:1.0.60'
+    compile 'io.rest-assured:spring-mock-mvc:3.1.0'
+    compile 'javax.xml.bind:jaxb-api:2.3.0'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile "org.projectlombok:lombok:1.18.0"
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+
 }
 
 flyway {
