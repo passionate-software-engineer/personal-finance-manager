@@ -1,6 +1,7 @@
 package com.pfm.category;
 
 import com.pfm.Messages;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class CategoryController {
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
 
+  @ApiOperation(value = "Get category with an ID", notes = "Get a category with specific ID")
   @GetMapping(value = "/{id}")
   public ResponseEntity getCategoryById(@PathVariable long id) {
     Optional<Category> category = categoryService.getCategoryById(id);
@@ -37,12 +39,14 @@ public class CategoryController {
     return ResponseEntity.notFound().build();
   }
 
+  @ApiOperation(value = "Get list of categories", notes = "Get all categories in database")
   @GetMapping
   public ResponseEntity<List<Category>> getCategories() {
     List<Category> categories = categoryService.getCategories();
     return new ResponseEntity<>(categories, HttpStatus.OK);
   }
 
+  @ApiOperation(value = "Create a new category", notes = "Creating a new category")
   @PostMapping
   public ResponseEntity addCategory(@RequestBody Category category) {
     if (category.getId() != null && categoryService.idExist(category.getId())) { // TODO should be handled by validator
@@ -56,6 +60,7 @@ public class CategoryController {
     return new ResponseEntity<>(createdCategory.getId(), HttpStatus.OK);
   }
 
+  @ApiOperation(value = "Update a category with ID", notes = "Update a category with specific ID")
   @PutMapping(value = "/{id}")
   public ResponseEntity updateCategory(@PathVariable long id, @RequestBody Category category) {
     if (!categoryService.idExist(id)) {
@@ -70,6 +75,7 @@ public class CategoryController {
     return ResponseEntity.ok().build(); // TODO unify
   }
 
+  @ApiOperation(value = "Delete a category with ID", notes = "Deleting a category with specific ID")
   @DeleteMapping(value = "/{id}")
   public ResponseEntity deleteCategory(@PathVariable long id) {
     if (!categoryService.getCategoryById(id).isPresent()) {
