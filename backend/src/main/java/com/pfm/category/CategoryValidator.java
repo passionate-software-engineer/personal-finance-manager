@@ -13,19 +13,29 @@ public class CategoryValidator {
 
   private CategoryService categoryService;
 
-  public List<String> validate(Category category) {
-    List<String> validationResult = new ArrayList<>();
-
-    if (category.getName() == null || category.getName().equals("")) {
-      validationResult.add(Messages.EMPTY_CATEGORY_NAME);
+  public List<String> addCategoryValidation(Category category) {
+    List<String> validationResults = new ArrayList<>();
+    if (category.getId() != null && categoryService.idExist(category.getId())) {
+      validationResults.add(Messages.ADD_CATEGORY_PROVIDED_ID_ALREADY_EXIST);
     }
+    return validate(validationResults, category);
+  }
 
+  public List<String> updateCategoryValidation(Category category) {
+    List<String> validationResults = new ArrayList<>();
+    return validate(validationResults, category);
+  }
+
+
+  private List<String> validate(List<String> validationResults, Category category) {
+    if (category.getName() == null || category.getName().equals("")) {
+      validationResults.add(Messages.EMPTY_CATEGORY_NAME);
+    }
     if (category.getParentCategory() != null &&
         !categoryService.idExist(category.getParentCategory().getId())) {
-      validationResult.add(Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
+      validationResults.add(Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
     }
-
-    return validationResult;
+    return validationResults;
   }
 
 }

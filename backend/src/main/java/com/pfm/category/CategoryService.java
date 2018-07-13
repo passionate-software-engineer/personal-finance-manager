@@ -36,26 +36,33 @@ public class CategoryService {
     return categoryRepository.save(category);
   }
 
-  public void removeCategory(long id) {
-    categoryRepository.deleteById(id); // TODO remove or delete?
+  public void deleteCategory(long id) {
+    categoryRepository.deleteById(id);
   }
 
-  public void updateCategory(Category category) { // TODO pass id and set it inside
-    Category categoryToUpdate = getCategoryById(category.getId()).get(); // TODO IllegalStateException
+  public void updateCategory(long id, Category category) {
+    if (!idExist(id)) {
+      throw new IllegalStateException("Category with id : " + id + " not exist in database");
+    }
+    Category categoryToUpdate = getCategoryById(category.getId()).get();
+    categoryToUpdate.setId(id);
     categoryToUpdate.setName(category.getName());
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
     } else {
+      //Should we throw exception here also??
       Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId());
-      categoryToUpdate.setParentCategory(parentCategory.orElse(null)); // TODO unify :)
+      if (!parentCategory.isPresent()) {
+        throw new IllegalStateException("Category with id : " + category.getParentCategory().getId()
+            + " not exist in database");
+      }
+      categoryToUpdate.setParentCategory(parentCategory.get());
     }
     categoryRepository.save(categoryToUpdate);
   }
 
   public boolean isParentCategory(long id) {
-    return StreamSupport.stream(categoryRepository.findAll().spliterator(), false) // TODO not optimal please write query
-        .filter(category -> category.getParentCategory() != null)
-        .anyMatch((category -> category.getParentCategory().getId() == id));
+    return categoryRepository.parentCategoryNumber(id) != 0;
   }
 
   public boolean idExist(long id) {

@@ -176,8 +176,7 @@ public class CategoryControllerIntegrationTest {
     this.mockMvc
         .perform(put(DEFAULT_PATH + "/" + NOT_EXISTING_ID)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
-        .andExpect(content().string(Messages.UPDATE_CATEGORY_NO_ID_OR_ID_NOT_EXIST))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isNotFound());
   }
 
   @Test

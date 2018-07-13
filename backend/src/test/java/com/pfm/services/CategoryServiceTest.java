@@ -68,12 +68,27 @@ public class CategoryServiceTest {
     when(categoryRepository.save(mockCategory)).thenReturn(mockCategory);
     when(categoryRepository.findById(MOCK_CATEGORY_ID))
         .thenReturn(Optional.of(mockCategory));
+
+    //when
+    categoryService.addCategory(mockCategory);
+
+    //then
+    verify(categoryRepository).save(mockCategory);
+
+  }
+
+  @Test
+  public void shouldAddCategoryWithParentCategory() {
+    //given
+    when(categoryRepository.save(mockCategory)).thenReturn(mockCategory);
+    when(categoryRepository.findById(MOCK_CATEGORY_ID))
+        .thenReturn(Optional.of(mockCategory));
     when(categoryRepository.save(mockCategoryWithParentCategory))
         .thenReturn(mockCategoryWithParentCategory);
 
     //when
     categoryService.addCategory(mockCategory);
-    categoryService.addCategory(mockCategoryWithParentCategory); // TODO 2 separate tests
+    categoryService.addCategory(mockCategoryWithParentCategory);
 
     //then
     verify(categoryRepository).save(mockCategory);
@@ -87,7 +102,7 @@ public class CategoryServiceTest {
     doNothing().when(categoryRepository).deleteById(MOCK_CATEGORY_ID);
 
     //when
-    categoryService.removeCategory(MOCK_CATEGORY_ID);
+    categoryService.deleteCategory(MOCK_CATEGORY_ID);
 
     //then
     verify(categoryRepository).deleteById(MOCK_CATEGORY_ID);
@@ -97,6 +112,8 @@ public class CategoryServiceTest {
   public void shouldUpdateCategory() {
     //given
     when(categoryRepository.save(mockCategory)).thenReturn(mockCategory);
+    when(categoryRepository.existsById(MOCK_CATEGORY_ID)).thenReturn(true);
+    when(categoryRepository.existsById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID)).thenReturn(true);
     when(categoryRepository.findById(MOCK_CATEGORY_ID))
         .thenReturn(Optional.of(mockCategory));
     when(categoryRepository.findById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID))
@@ -105,14 +122,16 @@ public class CategoryServiceTest {
         .thenReturn(mockCategoryWithParentCategory);
 
     //when
-    categoryService.updateCategory(mockCategory);
-    categoryService.updateCategory(mockCategoryWithParentCategory); // TODO 2 separate tests
+    categoryService.updateCategory(MOCK_CATEGORY_ID, mockCategory);
+    categoryService.updateCategory(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID,
+        mockCategoryWithParentCategory); // TODO 2 separate tests
 
     //then
     verify(categoryRepository).save(mockCategory);
-    verify(categoryRepository, times(2)).findById(MOCK_CATEGORY_ID);
+    verify(categoryRepository, times(3)).existsById(MOCK_CATEGORY_ID);
     verify(categoryRepository).findById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID);
     verify(categoryRepository).save(mockCategoryWithParentCategory);
+    verify(categoryRepository).existsById(MOCK)
   }
 
   @Test
