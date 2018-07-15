@@ -5,6 +5,10 @@ import static com.pfm.Messages.ACCOUNT_WITH_ID;
 import static com.pfm.Messages.NOT_FOUND;
 import static com.pfm.Messages.UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,19 +23,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
-
 @Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("accounts")
 @CrossOrigin
+@Api(value = "Accounts", description = "Account Controller")
 public class AccountController {
 
   private AccountService accountService;
   private AccountValidator accountValidator;
 
+  @ApiOperation(value = "Get Accounts with an ID", notes = "Get an account with specific ID")
   @GetMapping(value = "/{id}")
   public ResponseEntity getAccountById(@PathVariable long id) {
     log.info("Retrieving account with ID = ", id);
@@ -45,6 +48,7 @@ public class AccountController {
     return ResponseEntity.ok(account.get());
   }
 
+  @ApiOperation(value = "Get list of Accounts", notes = "Get all Account in database")
   @GetMapping
   public ResponseEntity<List<Account>> getAccounts() {
     log.info("Retrieving all accounts from database...");
@@ -52,6 +56,7 @@ public class AccountController {
     return ResponseEntity.ok(accounts);
   }
 
+  @ApiOperation(value = "Create a new account", notes = "Creating a new account")
   @PostMapping
   public ResponseEntity addAccount(@RequestBody Account account) {
     log.info("Saving account to the database");
@@ -66,6 +71,7 @@ public class AccountController {
     return ResponseEntity.ok(createdAccount.getId());
   }
 
+  @ApiOperation(value = "Update an account with ID", notes = "Update an account with specific ID")
   @PutMapping(value = "/{id}")
   public ResponseEntity updateAccount(@PathVariable long id, @RequestBody Account account) {
     if (!accountService.idExist(id)) {
@@ -85,6 +91,7 @@ public class AccountController {
     return ResponseEntity.ok(updatedAccount);
   }
 
+  @ApiOperation(value = "Delete an account", notes = "Deleting an account")
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<Long> deleteAccount(@PathVariable long id) {
     log.info("Attempting to delete account with ID = " + id);
