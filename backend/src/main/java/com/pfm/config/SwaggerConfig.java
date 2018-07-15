@@ -38,5 +38,4 @@ public class SwaggerConfig {
             "kolacz.piotrek@gmail.com"),
         "License of API", "API license URL", Collections.emptyList());
   }
-
 }

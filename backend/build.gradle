@@ -27,11 +27,10 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-
 }
 
 dependencies {
-    testCompile'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.9.5'
 
     compile 'com.h2database:h2:1.0.60'
@@ -41,10 +40,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile "org.projectlombok:lombok:1.18.0"
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-
-
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
 }
 
 flyway {

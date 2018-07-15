@@ -1,6 +1,7 @@
 package com.pfm.account;
 
 
+import com.pfm.Messages;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,14 +14,13 @@ public class AccountValidator {
     List<String> validationErrors = new ArrayList<>();
 
     if (account.getName() == null || account.getName().equals("")) {
-      validationErrors.add("Account name is empty");
+      validationErrors.add(Messages.EMPTY_ACCOUNT_NAME);
     }
 
     if (account.getBalance() == null) {
-      validationErrors.add("Account balance is empty");
+      validationErrors.add(Messages.EMPTY_ACCOUNT_BALANCE);
     }
 
     return validationErrors;
   }
-
 }
