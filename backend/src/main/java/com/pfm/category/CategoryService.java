@@ -41,20 +41,19 @@ public class CategoryService {
   }
 
   public void updateCategory(long id, Category category) {
-    if (!idExist(id)) {
-      throw new IllegalStateException("Category with id : " + id + " not exist in database");
+    Optional<Category> receivedCategory = getCategoryById(id);
+    if (!receivedCategory.isPresent()) {
+      throw new IllegalStateException("Category with id : " + id + "does not exist in database");
     }
-    Category categoryToUpdate = getCategoryById(category.getId()).get();
-    categoryToUpdate.setId(id);
+    Category categoryToUpdate = receivedCategory.get();
     categoryToUpdate.setName(category.getName());
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
     } else {
-      //Should we throw exception here also??
       Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId());
       if (!parentCategory.isPresent()) {
         throw new IllegalStateException("Category with id : " + category.getParentCategory().getId()
-            + " not exist in database");
+            + " does exist in database");
       }
       categoryToUpdate.setParentCategory(parentCategory.get());
     }
@@ -62,7 +61,7 @@ public class CategoryService {
   }
 
   public boolean isParentCategory(long id) {
-    return categoryRepository.parentCategoryNumber(id) != 0;
+    return categoryRepository.numberOfEntriesUsingThisCategoryAsParentId(id) != 0;
   }
 
   public boolean idExist(long id) {

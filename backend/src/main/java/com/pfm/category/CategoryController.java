@@ -44,7 +44,7 @@ public class CategoryController {
 
   @PostMapping
   public ResponseEntity addCategory(@RequestBody Category category) {
-    List<String> validationResult = categoryValidator.addCategoryValidation(category);
+    List<String> validationResult = categoryValidator.validate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
@@ -57,7 +57,7 @@ public class CategoryController {
     if (!categoryService.idExist(id)) {
       return ResponseEntity.notFound().build();
     }
-    List<String> validationResult = categoryValidator.updateCategoryValidation(category);
+    List<String> validationResult = categoryValidator.validate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
