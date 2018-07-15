@@ -1,5 +1,7 @@
 package com.pfm.account;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,12 +24,14 @@ public class Account {
   @Id
   @NotNull
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @ApiModelProperty(value = "The database generated account ID.", required = true, example = "22")
   private Long id;
 
   @NotNull
+  @ApiModelProperty(value = "Account name", required = true, example = "Alior")
   private String name;
 
   @NotNull
+  @ApiModelProperty(value = "Account's balance", required = true, example = "12345")
   private BigDecimal balance;
-
 }

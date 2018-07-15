@@ -176,8 +176,7 @@ public class CategoryControllerIntegrationTest {
     this.mockMvc
         .perform(put(DEFAULT_PATH + "/" + NOT_EXISTING_ID)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
-        .andExpect(content().string(Messages.UPDATE_CATEGORY_NO_ID_OR_ID_NOT_EXIST))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isNotFound());
   }
 
   @Test
@@ -261,7 +260,7 @@ public class CategoryControllerIntegrationTest {
         .andExpect(content().contentType(CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
-    return getCompaniesFromResponse(response);
+    return getCategoriesFromResponse(response);
   }
 
   private void deleteCategoryById(long id) throws Exception {
@@ -277,7 +276,7 @@ public class CategoryControllerIntegrationTest {
     return mapper.readValue(jsonCompany, Category.class);
   }
 
-  private List<Category> getCompaniesFromResponse(String response) throws Exception {
+  private List<Category> getCategoriesFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
