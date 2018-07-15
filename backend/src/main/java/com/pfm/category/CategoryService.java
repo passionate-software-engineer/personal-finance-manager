@@ -53,7 +53,7 @@ public class CategoryService {
       Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId());
       if (!parentCategory.isPresent()) {
         throw new IllegalStateException("Category with id : " + category.getParentCategory().getId()
-            + " does exist in database");
+            + " does not exist in database");
       }
       categoryToUpdate.setParentCategory(parentCategory.get());
     }
