@@ -8,8 +8,6 @@ import static com.pfm.Messages.UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -74,11 +75,13 @@ public class AccountController {
 
   @ApiOperation(value = "Update an account with ID", notes = "Update an account with specific ID")
   @PutMapping(value = "/{id}")
-  public ResponseEntity updateAccount(@PathVariable long id, @RequestBody Account account) {
+  public ResponseEntity updateAccount(@PathVariable("id") Long id,
+      @RequestBody AccountWithoutId accountWithoutId) {
     if (!accountService.idExist(id)) {
       log.info("Updating account : " + UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST);
       return ResponseEntity.notFound().build();
     }
+    Account account = new Account(id, accountWithoutId.getName(), accountWithoutId.getBalance());
     account.setId(id);
     log.info("Updating account with ID = ", id, " in the database");
     List<String> validationResult = accountValidator.validate(account);
