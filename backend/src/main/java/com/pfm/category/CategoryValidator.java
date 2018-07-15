@@ -14,20 +14,14 @@ public class CategoryValidator {
   private CategoryService categoryService;
 
   public List<String> validate(Category category) {
-    List<String> validationResult = new ArrayList<>();
-
+    List<String> validationResults = new ArrayList<>();
     if (category.getName() == null || category.getName().equals("")) {
-      validationResult.add(Messages.EMPTY_CATEGORY_NAME);
+      validationResults.add(Messages.EMPTY_CATEGORY_NAME);
     }
-
     if (category.getParentCategory() != null &&
         !categoryService.idExist(category.getParentCategory().getId())) {
-      validationResult.add(Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
+      validationResults.add(Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
     }
-
-    return validationResult;
+    return validationResults;
   }
-
 }
-
-

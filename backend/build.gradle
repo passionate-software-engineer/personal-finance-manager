@@ -31,19 +31,19 @@ repositories {
 }
 
 dependencies {
-    testCompile'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.9.5'
 
     compile 'com.h2database:h2:1.0.60'
     compile 'io.rest-assured:spring-mock-mvc:3.1.0'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
     compile 'javax.xml.bind:jaxb-api:2.3.0'
+    compile 'org.postgresql:postgresql:42.1.4'
+    compile "org.projectlombok:lombok:1.18.0"
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile "org.projectlombok:lombok:1.18.0"
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-
 
 }
 
