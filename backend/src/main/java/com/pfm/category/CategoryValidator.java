@@ -25,5 +25,3 @@ public class CategoryValidator {
     return validationResults;
   }
 }
-
-
