@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value= "Account", description="Account data")
 public class Account {
 
   @Id

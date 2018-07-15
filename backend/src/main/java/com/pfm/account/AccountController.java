@@ -1,7 +1,9 @@
 package com.pfm.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.Messages;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -58,11 +60,10 @@ public class AccountController {
 
   @ApiOperation(value = "Create a new account", notes = "Creating a new account")
   @PostMapping
-  public ResponseEntity addAccount(@RequestBody Account account) {
+  public ResponseEntity addAccount(@RequestBody AccountWithoutId accountWithoutId) {
     log.info("Saving account to the database");
-    if (account.getId() != null && accountService.idExist(account.getId())) {
-      return ResponseEntity.badRequest().body(Messages.ADD_ACCOUNT_PROVIDED_ID_ALREAD_EXIST);
-    }
+    // must copy as types do not match for Hibernate
+    Account account = new Account(null, accountWithoutId.getName(), accountWithoutId.getBalance());
     List<String> validationResult = accountValidator.validate(account);
     if (!validationResult.isEmpty()) {
       log.error(ACCOUNT_NOT_VALID);
@@ -75,12 +76,13 @@ public class AccountController {
 
   @ApiOperation(value = "Update an account with ID", notes = "Update an account with specific ID")
   @PutMapping(value = "/{id}")
-  public ResponseEntity updateAccount(@PathVariable("id") Long id, @RequestBody Account account) {
+  public ResponseEntity updateAccount(@PathVariable("id") Long id, @RequestBody AccountWithoutId accountWithoutId) {
     if (id == null || !accountService.idExist(id)) {
       log.info("Updating account : " + Messages.UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST);
       return ResponseEntity.badRequest().body(Messages.UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST);
     }
-    account.setId(id);
+    // must copy as types do not match for Hibernate
+    Account account = new Account(id, accountWithoutId.getName(), accountWithoutId.getBalance());
     log.info("Updating account with ID = ", id, " in the database");
     List<String> validationResult = accountValidator.validate(account);
     if (!validationResult.isEmpty()) {
@@ -107,5 +109,13 @@ public class AccountController {
     accountService.deleteAccount(id);
     log.info(ACCOUNT_WITH_ID + id, " deleted successfully");
     return new ResponseEntity<>(id, HttpStatus.OK);
+  }
+
+  private static class AccountWithoutId extends Account {
+
+    @JsonIgnore
+    public void setId(Long id) {
+      super.setId(id);
+    }
   }
 }
