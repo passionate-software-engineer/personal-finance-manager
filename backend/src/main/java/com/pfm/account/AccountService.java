@@ -17,7 +17,7 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
-  public Optional<Account> getAccountById(Long id) {
+  public Optional<Account> getAccountById(long id) {
     return accountRepository.findById(id);
   }
 
@@ -31,14 +31,14 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public Account updateAccount(Long id, Account account) {
+  public Account updateAccount(long id, Account account) {
     Account accountToUpdate = getAccountById(id).get();
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
     return accountRepository.save(accountToUpdate);
   }
 
-  public void deleteAccount(Long id) {
+  public void deleteAccount(long id) {
     accountRepository.deleteById(id);
   }
 
