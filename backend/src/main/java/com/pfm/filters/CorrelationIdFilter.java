@@ -25,10 +25,9 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
     } finally {
       removeRequestCorrelationIdFromMDC();
     }
-
   }
 
-  private String addRequestCorrelationIdToMDC(HttpServletRequest request) {
+  private void addRequestCorrelationIdToMDC(HttpServletRequest request) {
     String correlationId = request.getHeader("correlationId");
 
     if (correlationId == null) {
@@ -36,12 +35,9 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
     }
 
     MDC.put("correlationId", correlationId);
-
-    return correlationId;
   }
 
   private void removeRequestCorrelationIdFromMDC() {
     MDC.remove("correlationId");
   }
-
 }

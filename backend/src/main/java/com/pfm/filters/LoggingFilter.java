@@ -49,7 +49,7 @@ public class LoggingFilter extends OncePerRequestFilter {
       ContentCachingResponseWrapper response, FilterChain filterChain)
       throws ServletException, IOException {
     try {
-      beforeRequest(request, response);
+      beforeRequest(request);
       filterChain.doFilter(request, response);
     } finally {
       afterRequest(request, response);
@@ -57,8 +57,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private void beforeRequest(ContentCachingRequestWrapper request,
-      ContentCachingResponseWrapper response) {
+  private void beforeRequest(ContentCachingRequestWrapper request) {
 
     if (log.isInfoEnabled()) {
       logRequestMethod(request);
@@ -91,9 +90,8 @@ public class LoggingFilter extends OncePerRequestFilter {
   private static void logRequestHeaders(ContentCachingRequestWrapper request) {
     Collections.list(request.getHeaderNames())
         .forEach(headerName -> Collections.list(request.getHeaders(headerName))
-            .forEach(headerValue -> {
-              log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue);
-            }));
+            .forEach(headerValue ->
+                log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
   }
 
   private static void logRequestBody(ContentCachingRequestWrapper request) {
@@ -106,10 +104,12 @@ public class LoggingFilter extends OncePerRequestFilter {
   private static void logResponse(ContentCachingResponseWrapper response) {
     int status = response.getStatus();
     log.info("{} {} {}", RESPONSE_MARKER, status, HttpStatus.valueOf(status).getReasonPhrase());
+
     response.getHeaderNames().forEach(headerName ->
         response.getHeaders(headerName).forEach(headerValue ->
             log.info("{} {}: {}", RESPONSE_MARKER, headerName, headerValue)));
     byte[] content = response.getContentAsByteArray();
+
     if (content.length > 0) {
       logContent(content, response.getContentType(), response.getCharacterEncoding(),
           RESPONSE_MARKER);
@@ -121,12 +121,14 @@ public class LoggingFilter extends OncePerRequestFilter {
     MediaType mediaType = MediaType.valueOf(contentType);
     Boolean visible = VISIBLE_TYPES.stream()
         .anyMatch(visibleType -> visibleType.includes(mediaType));
+
     if (visible) {
       try {
         String contentAsString = new String(content, contentEncoding);
         log.info("{} \n {}", prefix, contentAsString);
       } catch (UnsupportedEncodingException e) {
         log.info("{} [{} bytes content]", prefix, content.length);
+        log.warn("Not able to convert response", e);
       }
     } else {
       log.info("{} [{} bytes content]", prefix, content.length);
