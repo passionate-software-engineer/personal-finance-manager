@@ -37,12 +37,12 @@ public class AccountController {
     log.info("Retrieving account with ID = ", id);
     Optional<Account> account = accountService.getAccountById(id);
 
-    if (account.isPresent()) {
-      log.info(ACCOUNT_WITH_ID + id + " successfully retrieved");
-      return ResponseEntity.ok(account.get());
+    if (!account.isPresent()) {
+      log.info(ACCOUNT_WITH_ID + id + NOT_FOUND);
+      return ResponseEntity.notFound().build();
     }
-    log.info(ACCOUNT_WITH_ID + id + NOT_FOUND);
-    return ResponseEntity.notFound().build();
+    log.info(ACCOUNT_WITH_ID + id + " successfully retrieved");
+    return ResponseEntity.ok(account.get());
   }
 
   @GetMapping
@@ -70,7 +70,7 @@ public class AccountController {
   public ResponseEntity updateAccount(@PathVariable long id, @RequestBody Account account) {
     if (!accountService.idExist(id)) {
       log.info("Updating account : " + UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST);
-      return ResponseEntity.badRequest().body(UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST);
+      return ResponseEntity.notFound().build();
     }
     account.setId(id);
     log.info("Updating account with ID = ", id, " in the database");
@@ -81,7 +81,7 @@ public class AccountController {
       return ResponseEntity.badRequest().body(validationResult);
     }
     Account updatedAccount = accountService.updateAccount(id, account);
-    log.info(ACCOUNT_WITH_ID + id + " successfully updated");
+    log.info(ACCOUNT_WITH_ID + id + " was successfully updated");
     return ResponseEntity.ok(updatedAccount);
   }
 

@@ -1,5 +1,12 @@
 package com.pfm.controllers;
 
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_LUKASZ_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MATEUSZ_BALANCE_200;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTREK_BALANCE_9;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SEBASTIAN_BALANCE_1000;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -24,8 +31,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -43,25 +48,16 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldAddAccountTest() throws Exception {
-    Account account = Account.builder()
-        .name("Jacek mBank saving account")
-        .balance(BigDecimal.valueOf(1000))
-        .build();
 
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
-        .content(json(account)))
+        .content(json(ACCOUNT_JACEK_BALANCE_1000)))
         .andExpect(status().isOk());
   }
 
   @Test
   public void shouldGetAccountById() throws Exception {
-    Account account = Account.builder()
-        .name("Lukasz mBank saving account")
-        .balance(BigDecimal.valueOf(1000))
-        .build();
-
-    callRestServiceToAddAccount(account);
+    callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1000);
 
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH + "/1"))
@@ -72,18 +68,8 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldGetAllAccounts() throws Exception {
-    Account account = Account.builder()
-        .name("Sebastian mBank saving account")
-        .balance(BigDecimal.valueOf(1000))
-        .build();
-
-    Account account2 = Account.builder()
-        .name("Piotrek ing saving account")
-        .balance(BigDecimal.valueOf(9))
-        .build();
-
-    callRestServiceToAddAccount(account);
-    callRestServiceToAddAccount(account2);
+    callRestServiceToAddAccount(ACCOUNT_SEBASTIAN_BALANCE_1000);
+    callRestServiceToAddAccount(ACCOUNT_PIOTREK_BALANCE_9);
 
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH))
@@ -94,18 +80,11 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-    Account account = Account.builder()
-        .name("Adam bzwbk saving account")
-        .balance(BigDecimal.valueOf(1000)).build();
-    Account account2 = Account.builder()
-        .name("Mateusz mBank saving account")
-        .balance(BigDecimal.valueOf(200.00)).build();
-
-    callRestServiceToAddAccount(account);
+    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_1000);
 
     this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/1")
         .contentType(CONTENT_TYPE)
-        .content(json(account2)))
+        .content(json(ACCOUNT_MATEUSZ_BALANCE_200)))
         .andDo(print())
         .andExpect(status().isOk());
 
@@ -118,12 +97,7 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-    Account account = Account.builder()
-        .name("Jurek bzwbk saving account")
-        .balance(BigDecimal.valueOf(1000))
-        .build();
-
-    callRestServiceToAddAccount(account);
+    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_1000);
 
     this.mockMvc
         .perform(delete(INVOICES_SERVICE_PATH + "/1"))
