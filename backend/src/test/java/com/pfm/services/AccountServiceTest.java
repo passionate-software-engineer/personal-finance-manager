@@ -110,6 +110,10 @@ public class AccountServiceTest {
   }
 
   private Account createMockAccount() {
-    return Account.builder().id(ID_1).name(NAME).balance(BALANCE).build();
+    return Account.builder()
+        .id(ID_1)
+        .name(NAME)
+        .balance(BALANCE)
+        .build();
   }
 }

@@ -5,13 +5,11 @@ public class Messages {
   //TODO write this properly in property file
 
   //account
-  public static final String ADD_ACCOUNT_PROVIDED_ID_ALREADY_EXIST =
-      "CATEGORY WITH PROVIDED ID ALREADY EXIST";
   public static final String UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST =
-      "ID IS EMPTY OR THERE IS NO ACCOUNT WITH PROVIDED ID";
-  public static final String ACCOUNT_WITH_ID = "Account with ID = ";
+      "ID IS EMPTY OR THERE IS NO ACCOUNT WITH PROVIDED id";
+  public static final String ACCOUNT_WITH_ID = "Account with id = ";
   public static final String NOT_FOUND = " was not found!";
-  public static final String ACCOUNT_NOT_VALID = "Passed account is not valid!";
+  public static final String ACCOUNT_NOT_VALID = "passed account is not valid";
 
   //category
   public static final String ADD_CATEGORY_PROVIDED_ID_ALREADY_EXIST =

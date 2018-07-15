@@ -1,7 +1,5 @@
 package com.pfm.account;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.pfm.config.MoneySerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +28,6 @@ public class Account {
   private String name;
 
   @NotNull
-  @JsonSerialize(using = MoneySerializer.class)
   private BigDecimal balance;
 
 }

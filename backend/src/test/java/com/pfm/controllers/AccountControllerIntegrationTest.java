@@ -32,22 +32,23 @@ import java.math.BigDecimal;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountControllerIntegrationTest {
 
-  private static final String DEFAULT_PATH = "/accounts";
+  private static final String INVOICES_SERVICE_PATH = "/accounts";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
 
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
-  ObjectMapper objectMapper;
+  private ObjectMapper objectMapper;
 
   @Test
   public void shouldAddAccountTest() throws Exception {
     Account account = Account.builder()
-        .name("Jacek")
-        .balance(BigDecimal.valueOf(1000)).build();
+        .name("Jacek mBank saving account")
+        .balance(BigDecimal.valueOf(1000))
+        .build();
 
-    this.mockMvc.perform(post(DEFAULT_PATH)
+    this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
         .content(json(account)))
         .andExpect(status().isOk());
@@ -56,15 +57,14 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldGetAccountById() throws Exception {
     Account account = Account.builder()
-        .name("Jacek")
-        .balance(BigDecimal.valueOf(1000)).build();
+        .name("Lukasz mBank saving account")
+        .balance(BigDecimal.valueOf(1000))
+        .build();
 
-    this.mockMvc.perform(post(DEFAULT_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account)))
-        .andExpect(status().isOk());
+    callRestServiceToAddAccount(account);
+
     this.mockMvc
-        .perform(get(DEFAULT_PATH + "/1"))
+        .perform(get(INVOICES_SERVICE_PATH + "/1"))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(1)));
@@ -73,24 +73,20 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldGetAllAccounts() throws Exception {
     Account account = Account.builder()
-        .name("Jacek")
-        .balance(BigDecimal.valueOf(1000)).build();
+        .name("Sebastian mBank saving account")
+        .balance(BigDecimal.valueOf(1000))
+        .build();
+
     Account account2 = Account.builder()
-        .name("Piotrek")
-        .balance(BigDecimal.valueOf(9)).build();
+        .name("Piotrek ing saving account")
+        .balance(BigDecimal.valueOf(9))
+        .build();
 
-    this.mockMvc.perform(post(DEFAULT_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account)))
-        .andExpect(status().isOk());
-
-    this.mockMvc.perform(post(DEFAULT_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account2)))
-        .andExpect(status().isOk());
+    callRestServiceToAddAccount(account);
+    callRestServiceToAddAccount(account2);
 
     this.mockMvc
-        .perform(get(DEFAULT_PATH))
+        .perform(get(INVOICES_SERVICE_PATH))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)));
@@ -99,48 +95,49 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldUpdateAccount() throws Exception {
     Account account = Account.builder()
-        .name("Adam")
+        .name("Adam bzwbk saving account")
         .balance(BigDecimal.valueOf(1000)).build();
     Account account2 = Account.builder()
-        .name("Jacek")
+        .name("Mateusz mBank saving account")
         .balance(BigDecimal.valueOf(200.00)).build();
 
-    this.mockMvc.perform(post(DEFAULT_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account)))
-        .andDo(print())
-        .andExpect(status().isOk());
+    callRestServiceToAddAccount(account);
 
-    this.mockMvc.perform(put(DEFAULT_PATH + "/1")
+    this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/1")
         .contentType(CONTENT_TYPE)
         .content(json(account2)))
         .andDo(print())
         .andExpect(status().isOk());
 
-    this.mockMvc.perform(get(DEFAULT_PATH + "/1"))
+    this.mockMvc.perform(get(INVOICES_SERVICE_PATH + "/1"))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is("Jacek")))
+        .andExpect(jsonPath("$.name", is("Mateusz mBank saving account")))
         .andExpect(jsonPath("$.balance", is(equalTo("200.00"))));
   }
 
   @Test
   public void shouldDeleteAccount() throws Exception {
     Account account = Account.builder()
-        .name("Adam")
-        .balance(BigDecimal.valueOf(1000)).build();
+        .name("Jurek bzwbk saving account")
+        .balance(BigDecimal.valueOf(1000))
+        .build();
 
-    this.mockMvc.perform(post(DEFAULT_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account)))
-        .andExpect(status().isOk());
+    callRestServiceToAddAccount(account);
 
     this.mockMvc
-        .perform(delete(DEFAULT_PATH + "/1"))
+        .perform(delete(INVOICES_SERVICE_PATH + "/1"))
         .andExpect(status().isOk());
   }
 
   private String json(Account account) throws Exception {
     return objectMapper.writeValueAsString(account);
+  }
+
+  private void callRestServiceToAddAccount(Account account) throws Exception {
+    this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
+        .contentType(CONTENT_TYPE)
+        .content(json(account)))
+        .andExpect(status().isOk());
   }
 }
