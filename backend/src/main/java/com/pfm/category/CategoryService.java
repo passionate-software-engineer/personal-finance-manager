@@ -43,7 +43,7 @@ public class CategoryService {
   public void updateCategory(long id, Category category) {
     Optional<Category> receivedCategory = getCategoryById(id);
     if (!receivedCategory.isPresent()) {
-      throw new IllegalStateException("Category with id : " + id + "does not exist in database");
+      throw new IllegalStateException("Category with id : " + id + " does not exist in database");
     }
     Category categoryToUpdate = receivedCategory.get();
     categoryToUpdate.setName(category.getName());

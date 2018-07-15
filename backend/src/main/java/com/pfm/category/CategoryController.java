@@ -1,7 +1,7 @@
 package com.pfm.category;
 
 import com.pfm.Messages;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
