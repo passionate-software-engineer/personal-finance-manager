@@ -1,7 +1,6 @@
 spring:
   profiles:
     active: test
-
-swagger:
-     swagger:
-        path: rest-api
+logging:
+  pattern:
+    console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"
