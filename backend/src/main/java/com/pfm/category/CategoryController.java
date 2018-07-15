@@ -1,7 +1,8 @@
 package com.pfm.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.Messages;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,11 @@ public class CategoryController {
 
   @ApiOperation(value = "Create a new category", notes = "Creating a new category")
   @PostMapping
-  public ResponseEntity addCategory(@RequestBody Category category) {
+  public ResponseEntity addCategory(@RequestBody CategoryWithoutId categoryWithoutId) {
+    // must copy as types do not match for Hibernate
+    Category category = new Category(null, categoryWithoutId.getName(),
+        categoryWithoutId.getParentCategory());
+
     List<String> validationResult = categoryValidator.validate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
@@ -58,10 +63,15 @@ public class CategoryController {
 
   @ApiOperation(value = "Update a category with ID", notes = "Update a category with specific ID")
   @PutMapping(value = "/{id}")
-  public ResponseEntity updateCategory(@PathVariable long id, @RequestBody Category category) {
+  public ResponseEntity updateCategory(@PathVariable long id,
+      @RequestBody CategoryWithoutId categoryWithoutId) {
     if (!categoryService.idExist(id)) {
       return ResponseEntity.notFound().build();
     }
+    // must copy as types do not match for Hibernate
+    Category category = new Category(id, categoryWithoutId.getName(),
+        categoryWithoutId.getParentCategory());
+
     List<String> validationResult = categoryValidator.validate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
@@ -81,5 +91,13 @@ public class CategoryController {
     }
     categoryService.deleteCategory(id);
     return ResponseEntity.ok().build();
+  }
+
+  private static class CategoryWithoutId extends Category {
+
+    @JsonIgnore
+    public void setId(Long id) {
+      super.setId(id);
+    }
   }
 }

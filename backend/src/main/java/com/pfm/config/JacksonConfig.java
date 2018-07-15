@@ -1,7 +1,7 @@
 package com.pfm.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -21,14 +21,15 @@ public class JacksonConfig {
     SimpleModule module = new SimpleModule();
     module.addSerializer(BigDecimal.class, new MoneySerializer());
     mapper.registerModule(module);
+    mapper.setSerializationInclusion(Include.NON_NULL);
     return mapper;
   }
 
   private static final class MoneySerializer extends JsonSerializer<BigDecimal> {
 
     @Override
-    public void serialize(BigDecimal value, JsonGenerator jsonGenerator, SerializerProvider provider)
-        throws IOException, JsonProcessingException {
+    public void serialize(BigDecimal value, JsonGenerator jsonGenerator,
+        SerializerProvider provider) throws IOException {
       jsonGenerator.writeString(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
     }
   }
