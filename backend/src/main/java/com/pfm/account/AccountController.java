@@ -81,8 +81,9 @@ public class AccountController {
       log.info("Updating account : " + UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST);
       return ResponseEntity.notFound().build();
     }
+    // must copy as types do not match for Hibernate
     Account account = new Account(id, accountWithoutId.getName(), accountWithoutId.getBalance());
-    account.setId(id);
+
     log.info("Updating account with ID = ", id, " in the database");
     List<String> validationResult = accountValidator.validate(account);
 
