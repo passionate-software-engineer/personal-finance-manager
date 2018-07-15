@@ -5,6 +5,7 @@ import static com.pfm.Messages.ACCOUNT_WITH_ID;
 import static com.pfm.Messages.NOT_FOUND;
 import static com.pfm.Messages.UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -58,9 +59,9 @@ public class AccountController {
 
   @ApiOperation(value = "Create a new account", notes = "Creating a new account")
   @PostMapping
-  public ResponseEntity addAccount(@RequestBody Account account) {
+  public ResponseEntity addAccount(@RequestBody AccountWithoutId accountWithoutId) {
     log.info("Saving account to the database");
-
+    Account account = new Account(null, accountWithoutId.getName(), accountWithoutId.getBalance());
     List<String> validationResult = accountValidator.validate(account);
     if (!validationResult.isEmpty()) {
       log.error(ACCOUNT_NOT_VALID);
@@ -103,5 +104,13 @@ public class AccountController {
     accountService.deleteAccount(id);
     log.info(ACCOUNT_WITH_ID + id, " deleted successfully");
     return new ResponseEntity<>(id, HttpStatus.OK);
+  }
+
+  private static class AccountWithoutId extends Account {
+
+    @JsonIgnore
+    public void setId(Long id) {
+      super.setId(id);
+    }
   }
 }
