@@ -19,7 +19,7 @@ public class CategoryValidator {
     if (category.getParentCategory() != null &&
         !categoryService
             .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
-      validationResults.add("Category cant be self parent category and any of subcategories");
+      validationResults.add(Messages.PROVIDED_PARENT_CATEGORY_PROBLEM);
     }
 
     return validationResults;
@@ -29,13 +29,13 @@ public class CategoryValidator {
     List<String> validationResults = new ArrayList<>();
     if (category.getName() == null || category.getName().equals("")) {
       validationResults.add(Messages.EMPTY_CATEGORY_NAME);
+    } else if (categoryService.nameExist(category.getName())) {
+      validationResults.add(Messages.PROVIDED_NAME_ALREADY_EXIST);
     }
+
     if (category.getParentCategory() != null &&
         !categoryService.idExist(category.getParentCategory().getId())) {
       validationResults.add(Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
-//      if (category.getParentCategory().getId().equals(category.getId())) {
-//        validationResults.add("dupa");
-//      }
     }
 
     return validationResults;
