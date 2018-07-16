@@ -84,4 +84,10 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            archiveArtifacts artifacts: 'backend/build/jacocoHtml/**/*'
+            junit 'backend/build/test-results/**/*.xml'
+        }
+    }
 }
