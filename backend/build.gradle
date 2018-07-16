@@ -54,7 +54,7 @@ flyway {
 jacocoTestReport {
     group = "Reporting"
     reports {
-        xml.enabled true
+        xml.enabled false
         csv.enabled false
         html.destination file("${buildDir}/jacocoHtml")
     }
