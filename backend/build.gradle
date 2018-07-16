@@ -16,10 +16,11 @@ plugins {
     id "org.flywaydb.flyway" version "5.1.1"
 }
 
-apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "jacoco"
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
 
 version '1.0'
 
@@ -48,4 +49,53 @@ dependencies {
 flyway {
     url = 'jdbc:h2:file:./target/flyway'
     user = 'sa'
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.55
+            }
+        }
+        rule {
+            limit {
+                counter = 'LINE'
+                minimum = 0.80
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            excludes = ['com.pfm.Application']
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.80
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            excludes = ['com.pfm.Application']
+            limit {
+                counter = 'LINE'
+                minimum = 0.90
+            }
+        }
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+    finalizedBy jacocoTestCoverageVerification
 }
