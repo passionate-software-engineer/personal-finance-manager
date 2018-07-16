@@ -36,7 +36,7 @@
       <td *ngIf="category.editMode">
         <select *ngIf="categories.length>1" [(ngModel)]="editedParentCategory">
             <option  [ngValue]="null">Main Category</option>
-          <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+          <option *ngFor="let parCategory of possibleParentCategories" [ngValue]="parCategory">{{parCategory.name}}</option>
         </select>
         <p *ngIf="categories.length < 2">Main Category</p>
       </td>
@@ -65,7 +65,6 @@
           <ul class="dropdown-menu">
             <li>
               <p (click)="onEditCategory(category)">Save</p>
-              <!-- <a href="#categories" (click)="onEditCategory(category)">Save</a> -->
             </li>
             <li>
               <p  (click)="category.editMode=false">Exit</p>

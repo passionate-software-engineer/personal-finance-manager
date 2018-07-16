@@ -11,6 +11,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[];
+  possibleParentCategories: Category[];
   categoryToAdd: Category = new Category();
   addingMode = false;
   editedName: string;
@@ -48,6 +49,7 @@ export class CategoriesComponent implements OnInit {
     category.editMode = true;
     this.editedName = category.name;
     this.editedParentCategory = category.parentCategory;
+    this.refreshListOfPossibleParentCategories(category);
   }
 
   onEditCategory(category: Category) {
@@ -98,5 +100,19 @@ export class CategoriesComponent implements OnInit {
     return 'Main Category';
   }
 
-  
+  refreshListOfPossibleParentCategories(cat: Category) {
+    this.possibleParentCategories = this.categories
+      .filter(element => element.id !== cat.id)
+      .filter(x => {
+        if (x.parentCategory == null) {
+          return true;
+        } else {
+          if (x.parentCategory.id === cat.id) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      });
+  }
 }

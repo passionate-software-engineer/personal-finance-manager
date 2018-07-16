@@ -17,25 +17,33 @@ export class AccountService {
   constructor(private http: HttpClient, private messagesService: MessagesService) { }
 
   getAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUrl);
+    return this.http.get<Account[]>(this.apiUrl).pipe(
+      tap(categories => this.log(`fetched accounts`)),
+      catchError(this.handleError('getAccounts', [])));
   }
 
   addAccount(account: Account): Observable<any> {
-    return this.http.post<any>(this.apiUrl, account, httpOptions);
+    return this.http.post<any>(this.apiUrl, account, httpOptions).pipe(
+      tap(any => this.log(`added account with id: ` + any)),
+      catchError(this.handleError('addAccount', [])));
   }
 
-  deleteAccount(id: number): Observable<Account> {
+  deleteAccount(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<Account>(url);
+    return this.http.delete<Account>(url).pipe(
+      tap(() => this.log(`deleted account with id: ` + id)),
+      catchError(this.handleError('deleteAccount', [])));
   }
 
-  editAccount(account: Account): Observable<Account> {
+  editAccount(account: Account): Observable<any> {
     const url = `${this.apiUrl}/${account.id}`;
-    return this.http.put<Account>(url, account, httpOptions);
+    return this.http.put<Account>(url, account, httpOptions).pipe(
+      tap(() => this.log(`edited category with id: ` + account.id)),
+      catchError(this.handleError('editCategory', [])));
   }
 
   private log(message: string) {
-    this.messagesService.add('CategoryService: ' + message);
+    this.messagesService.add('AccountService: ' + message);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

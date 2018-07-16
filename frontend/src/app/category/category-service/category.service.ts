@@ -24,21 +24,21 @@ export class CategoryService {
 
   addCategory(category: Category): Observable<any> {
     return this.http.post<any>(this.apiUrl, category, httpOptions).pipe(
-      tap(any => this.log(`added category`)),
+      tap(any => this.log(`added category with id: ` + any)),
       catchError(this.handleError('addCategory', [])));
   }
 
   deleteCategory(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url).pipe(
-      tap(any =>this.log(`deleted category ` + id)),
+      tap(any => this.log(`deleted category with id: ` + id)),
       catchError(this.handleError('deleteCategory', [])));
   }
 
   editCategory(category: Category): Observable<any> {
     const url = `${this.apiUrl}/${category.id}`;
     return this.http.put<Category>(url, category, httpOptions).pipe(
-      tap(category => this.log(`edited category`)),
+      tap(() => this.log(`edited category with id: ` + category.id)),
       catchError(this.handleError('editCategory', [])));
   }
 
