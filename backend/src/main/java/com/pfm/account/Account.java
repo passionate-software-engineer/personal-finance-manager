@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Account {
   private Long id;
 
   @NotNull
+  @Column(unique = true)
   @ApiModelProperty(value = "Account name", required = true, example = "Alior")
   private String name;
 

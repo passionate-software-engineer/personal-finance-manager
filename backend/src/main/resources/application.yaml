@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: dev
 logging:
   pattern:
     console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"

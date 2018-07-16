@@ -72,7 +72,7 @@ public class CategoryController {
     Category category = new Category(id, categoryWithoutId.getName(),
         categoryWithoutId.getParentCategory());
 
-    List<String> validationResult = categoryValidator.validate(category);
+    List<String> validationResult = categoryValidator.updateValidate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
