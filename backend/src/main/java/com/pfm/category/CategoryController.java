@@ -2,6 +2,7 @@ package com.pfm.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.Messages;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,13 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 @CrossOrigin
+@Api(value = "Category", description = "Controller used to list / add / update / delete categories.")
 public class CategoryController {
 
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
 
-  @ApiOperation(value = "Get category with an ID", notes = "Get a category with specific ID")
+  @ApiOperation(value = "Find category by id")
   @GetMapping(value = "/{id}")
   public ResponseEntity getCategoryById(@PathVariable long id) {
     Optional<Category> category = categoryService.getCategoryById(id);
@@ -39,14 +41,14 @@ public class CategoryController {
     return ResponseEntity.notFound().build();
   }
 
-  @ApiOperation(value = "Get list of categories", notes = "Get all categories in database")
+  @ApiOperation(value = "Get list of categories")
   @GetMapping
   public ResponseEntity<List<Category>> getCategories() {
     List<Category> categories = categoryService.getCategories();
     return ResponseEntity.ok(categories);
   }
 
-  @ApiOperation(value = "Create a new category", notes = "Creating a new category")
+  @ApiOperation(value = "Create a new category")
   @PostMapping
   public ResponseEntity addCategory(@RequestBody CategoryWithoutId categoryWithoutId) {
     // must copy as types do not match for Hibernate
@@ -61,7 +63,7 @@ public class CategoryController {
     return ResponseEntity.ok(createdCategory.getId());
   }
 
-  @ApiOperation(value = "Update a category with ID", notes = "Update a category with specific ID")
+  @ApiOperation(value = "Update an existing category")
   @PutMapping(value = "/{id}")
   public ResponseEntity updateCategory(@PathVariable long id,
       @RequestBody CategoryWithoutId categoryWithoutId) {
@@ -80,7 +82,7 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
-  @ApiOperation(value = "Delete a category with ID", notes = "Deleting a category with specific ID")
+  @ApiOperation(value = "Delete an existing category")
   @DeleteMapping(value = "/{id}")
   public ResponseEntity deleteCategory(@PathVariable long id) {
     if (!categoryService.getCategoryById(id).isPresent()) {
