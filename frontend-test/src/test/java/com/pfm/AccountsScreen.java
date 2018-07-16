@@ -17,7 +17,7 @@ class AccountsScreen {
   @FindBy(xpath = "//button[@class='btn btn-primary']")
   private WebElement refresh;
 
-  @FindBy(xpath = "//app-accounts-list//*[(text()=\"1\")]")
+  @FindBy(xpath = "//app-accounts-list//td[1]")
   private List<WebElement> id;
 
   @FindBy(xpath = "//app-accounts-list//td[2]")

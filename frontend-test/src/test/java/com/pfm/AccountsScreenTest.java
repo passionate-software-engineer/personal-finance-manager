@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.pfm.helpers.TestHelper;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class AccountsScreenTest extends TestBase {
 
@@ -31,9 +33,18 @@ public class AccountsScreenTest extends TestBase {
   @Test
   public void shouldAddAccount() {
     //given
-    String[] expectedListOfDescription = {"bzwbk", "mbank", "alior", "pko", "ing"};
-    BigDecimal[] expectedListOfBalance = {BigDecimal.valueOf(100.25), BigDecimal.valueOf(500.48),
-        BigDecimal.valueOf(50.00), BigDecimal.valueOf(666.78), BigDecimal.valueOf(2.82)};
+    Random random = new Random();
+    long randomNumber = random.nextInt(100000);
+    String[] expectedListOfDescription =
+        {"bzwbk number: " + randomNumber, "mbank number: " + randomNumber,
+            "alior number: " + randomNumber, "pko number: " + randomNumber,
+            "ing number: " + randomNumber};
+    BigDecimal[] expectedListOfBalance =
+        {BigDecimal.valueOf(100.25).add(BigDecimal.valueOf(randomNumber)),
+            BigDecimal.valueOf(500.48).add(BigDecimal.valueOf(randomNumber)),
+            BigDecimal.valueOf(50.00).add(BigDecimal.valueOf(randomNumber)),
+            BigDecimal.valueOf(666.78).add(BigDecimal.valueOf(randomNumber)),
+            BigDecimal.valueOf(2.82).add(BigDecimal.valueOf(randomNumber))};
     List<String> resultListOfDescription;
     List<BigDecimal> resultListOfBalance;
 
@@ -217,12 +228,22 @@ public class AccountsScreenTest extends TestBase {
     resultListOfBalance = accountsScreen.getBalance();
     assertThat(resultListOfBalance.contains(sampleBalance), is(false));
     assertThat(resultListOfDescription.contains(sampleDescription), is(false));
+
     accountsScreen.refreshButton();
+
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
 
     //then
     assertThat(resultListOfBalance.contains(sampleBalance), is(true));
     assertThat(resultListOfDescription.contains(sampleDescription), is(true));
+  }
+
+  @AfterClass
+  void tearDown() {
+    List<WebElement> optionsButtonList = accountsScreen.optionsButton();
+    optionsButtonList.get(optionsButtonList.size()-1).click();
+    accountsScreen.deleteButton();
+
   }
 }
