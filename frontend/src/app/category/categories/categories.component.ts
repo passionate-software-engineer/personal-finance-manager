@@ -100,6 +100,8 @@ export class CategoriesComponent implements OnInit {
     return 'Main Category';
   }
 
+  // add sort by ParentCategory
+
   refreshListOfPossibleParentCategories(cat: Category) {
     this.possibleParentCategories = this.categories
       .filter(element => element.id !== cat.id)

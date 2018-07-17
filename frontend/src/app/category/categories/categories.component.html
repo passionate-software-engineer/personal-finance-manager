@@ -7,8 +7,8 @@
     <tr>
       <th style="width: 20%">
         Id
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('asc')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('dsc')"></span>
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('dsc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('asc')"></span>
       </th>
       <th style="width: 50%">
         Name
@@ -35,7 +35,7 @@
 
       <td *ngIf="category.editMode">
         <select *ngIf="categories.length>1" [(ngModel)]="editedParentCategory">
-            <option  [ngValue]="null">Main Category</option>
+          <option [ngValue]="null">Main Category</option>
           <option *ngFor="let parCategory of possibleParentCategories" [ngValue]="parCategory">{{parCategory.name}}</option>
         </select>
         <p *ngIf="categories.length < 2">Main Category</p>
@@ -49,28 +49,17 @@
           </button>
           <ul class="dropdown-menu">
             <li>
-              <p (click)="deleteCategory(category)">Delete</p>
+              <button class="btn-primary" (click)="deleteCategory(category)">Delete</button>
             </li>
             <li>
-              <p (click)="onShowEditMode(category)">Edit</p>
+              <button class="btn-primary" (click)="onShowEditMode(category)">Edit</button>
             </li>
           </ul>
         </div>
       </td>
       <td *ngIf="category.editMode">
-        <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Edit Options
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <p (click)="onEditCategory(category)">Save</p>
-            </li>
-            <li>
-              <p  (click)="category.editMode=false">Exit</p>
-            </li>
-          </ul>
-        </div>
+        <button class="btn-primary" (click)="onEditCategory(category)">Save</button>
+        <button class="btn-danger" (click)="category.editMode=false">Exit</button>
       </td>
 
     </tr>
@@ -86,19 +75,8 @@
         </select>
       </td>
       <td>
-        <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Adding options
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <p (click)="onAddCategory(newCategoryName)">Save</p>
-            </li>
-            <li>
-              <p (click)="addingMode=false">Exit</p>
-            </li>
-          </ul>
-        </div>
+        <button class="btn-primary" (click)="onAddCategory(newCategoryName)">Save</button>
+        <button class="btn-danger" (click)="addingMode=false">Exit</button>
       </td>
     </tr>
 
