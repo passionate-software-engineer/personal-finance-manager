@@ -7,8 +7,8 @@
     <tr>
       <th style="width: 20%">
         Id
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('asc')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('dsc')"></span>
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('dsc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('asc')"></span>
       </th>
       <th style="width: 50%">
         Description
@@ -17,8 +17,8 @@
       </th>
       <th style="width: 20%">
         Balance
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortByBalance('asc')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortByBalance('dsc')"></span>
+        <span class="glyphicon glyphicon-collapse-down" (click)="sortByBalance('dsc')"></span>
+        <span class="glyphicon glyphicon-collapse-up" (click)="sortByBalance('asc')"></span>
       </th>
       <th style="width: 10%">
       </th>
@@ -39,33 +39,22 @@
 
       <td *ngIf="!account.editMode">
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+          <button class="btn btn-primary dropdown-toggle" id="accountScreenOptionsButton" type="button" data-toggle="dropdown">Options
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" (click)="deleteAccount(account)">Delete</a>
+              <button class="btn-primary" (click)="deleteAccount(account)">Delete</button>
             </li>
             <li>
-              <a href="#" (click)="onShowEditMode(account)">Edit</a>
+              <button class="btn-danger" (click)="onShowEditMode(account)">Edit</button>
             </li>
           </ul>
         </div>
       </td>
       <td *ngIf="account.editMode">
-        <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Edit Options
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#" (click)="onEditAccount(account)">Save</a>
-            </li>
-            <li>
-              <a href="#" (click)="account.editMode=false">Exit</a>
-            </li>
-          </ul>
-        </div>
+        <button class="btn-primary" (click)="onEditAccount(account)">Save</button>
+        <button class="btn-danger" (click)="account.editMode=false">Exit</button>
       </td>
 
     </tr>
@@ -77,21 +66,9 @@
       <td>
         <input type="text" #newAccountBalance> </td>
       <td>
-        <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Adding options
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#" (click)="onAddAccount(newAccountName,newAccountBalance)">Save</a>
-            </li>
-            <li>
-              <a href="#" (click)="addingMode=false">Exit</a>
-            </li>
-          </ul>
-        </div>
+        <button class="btn-primary" (click)="onAddAccount(newAccountName,newAccountBalance)">Save</button>
+        <button class="btn-danger" (click)="addingMode=false">Exit</button>
       </td>
     </tr>
-
   </tbody>
 </table>
