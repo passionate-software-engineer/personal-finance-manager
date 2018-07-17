@@ -67,4 +67,27 @@ public class CategoryService {
   public boolean idExist(long id) {
     return categoryRepository.existsById(id);
   }
+
+  public boolean canBeParentCategory(long categoryId, long parentCategoryId) {
+    if (categoryId == parentCategoryId) {
+      return false;
+    }
+    Category receivedCategory = getCategoryById(parentCategoryId).orElse(null);
+    if (receivedCategory == null) {
+      return true;
+    }
+    if (receivedCategory.getId() == categoryId) {
+      return false;
+    }
+    if (receivedCategory.getParentCategory() == null) {
+      return true;
+    }
+    return canBeParentCategory(categoryId, receivedCategory.getParentCategory().getId());
+  }
+
+  public boolean nameExist(String name) {
+    return categoryRepository.findByNameContainingIgnoreCase(name).size() != 0;
+  }
+
+
 }

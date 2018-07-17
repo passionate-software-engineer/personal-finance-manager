@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Account {
 
   @Id
@@ -26,6 +29,7 @@ public class Account {
   private Long id;
 
   @NotNull
+  @Column(unique = true)
   @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
   private String name;
 
