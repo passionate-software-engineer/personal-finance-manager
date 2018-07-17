@@ -1,5 +1,6 @@
 package com.pfm.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode
 @Data
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Category {
 
   @Id

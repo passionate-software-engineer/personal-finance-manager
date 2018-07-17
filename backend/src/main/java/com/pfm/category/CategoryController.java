@@ -1,6 +1,7 @@
 package com.pfm.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfm.Messages;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -53,7 +54,7 @@ public class CategoryController {
     Category category = new Category(null, categoryWithoutId.getName(),
         categoryWithoutId.getParentCategory());
 
-    List<String> validationResult = categoryValidator.validate(category);
+    List<String> validationResult = categoryValidator.validateCategoryForAdd(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
@@ -72,7 +73,7 @@ public class CategoryController {
     Category category = new Category(id, categoryWithoutId.getName(),
         categoryWithoutId.getParentCategory());
 
-    List<String> validationResult = categoryValidator.updateValidate(category);
+    List<String> validationResult = categoryValidator.validateCategoryForUpdate(category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
@@ -93,6 +94,7 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private static class CategoryWithoutId extends Category {
 
     @JsonIgnore

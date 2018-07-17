@@ -6,6 +6,7 @@ import static com.pfm.Messages.NOT_FOUND;
 import static com.pfm.Messages.UPDATE_ACCOUNT_NO_ID_OR_ID_NOT_EXIST;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -110,6 +111,7 @@ public class AccountController {
     return new ResponseEntity<>(id, HttpStatus.OK);
   }
 
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private static class AccountWithoutId extends Account {
 
     @JsonIgnore

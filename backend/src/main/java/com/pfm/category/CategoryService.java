@@ -68,21 +68,21 @@ public class CategoryService {
     return categoryRepository.existsById(id);
   }
 
-  public boolean canBeParentCategory(long rootCategoryId, long possibleParentCategoryId) {
-    if (rootCategoryId == possibleParentCategoryId) {
+  public boolean canBeParentCategory(long categoryId, long parentCategoryId) {
+    if (categoryId == parentCategoryId) {
       return false;
     }
-    Category receivedCategory = getCategoryById(possibleParentCategoryId).orElse(null);
+    Category receivedCategory = getCategoryById(parentCategoryId).orElse(null);
     if (receivedCategory == null) {
       return true;
     }
-    if (receivedCategory.getId() == rootCategoryId) {
+    if (receivedCategory.getId() == categoryId) {
       return false;
     }
     if (receivedCategory.getParentCategory() == null) {
       return true;
     }
-    return canBeParentCategory(rootCategoryId, receivedCategory.getParentCategory().getId());
+    return canBeParentCategory(categoryId, receivedCategory.getParentCategory().getId());
   }
 
   public boolean nameExist(String name) {
