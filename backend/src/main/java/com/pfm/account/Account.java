@@ -26,15 +26,14 @@ public class Account {
   @Id
   @NotNull
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @ApiModelProperty(value = "The database generated account ID.", required = true, example = "22")
   private Long id;
 
   @NotNull
   @Column(unique = true)
-  @ApiModelProperty(value = "Account name", required = true, example = "Alior")
+  @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
   private String name;
 
   @NotNull
-  @ApiModelProperty(value = "Account's balance", required = true, example = "12345")
+  @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   private BigDecimal balance;
 }

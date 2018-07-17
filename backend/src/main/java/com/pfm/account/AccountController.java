@@ -31,13 +31,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("accounts")
 @CrossOrigin
-@Api(value = "Accounts", description = "Account Controller")
+@Api(value = "Accounts", description = "Controller used to list / add / update / delete accounts.")
 public class AccountController {
 
   private AccountService accountService;
   private AccountValidator accountValidator;
 
-  @ApiOperation(value = "Get Accounts with an ID", notes = "Get an account with specific ID")
+  @ApiOperation(value = "Find account by id")
   @GetMapping(value = "/{id}")
   public ResponseEntity getAccountById(@PathVariable long id) {
     log.info("Retrieving account with ID = ", id);
@@ -51,7 +51,7 @@ public class AccountController {
     return ResponseEntity.ok(account.get());
   }
 
-  @ApiOperation(value = "Get list of Accounts", notes = "Get all Account in database")
+  @ApiOperation(value = "Get list of accounts")
   @GetMapping
   public ResponseEntity<List<Account>> getAccounts() {
     log.info("Retrieving all accounts from database...");
@@ -59,7 +59,7 @@ public class AccountController {
     return ResponseEntity.ok(accounts);
   }
 
-  @ApiOperation(value = "Create a new account", notes = "Creating a new account")
+  @ApiOperation(value = "Create a new account")
   @PostMapping
   public ResponseEntity addAccount(@RequestBody AccountWithoutId accountWithoutId) {
     log.info("Saving account to the database");
@@ -74,7 +74,7 @@ public class AccountController {
     return ResponseEntity.ok(createdAccount.getId());
   }
 
-  @ApiOperation(value = "Update an account with ID", notes = "Update an account with specific ID")
+  @ApiOperation(value = "Update an existing account")
   @PutMapping(value = "/{id}")
   public ResponseEntity updateAccount(@PathVariable("id") Long id,
       @RequestBody AccountWithoutId accountWithoutId) {
@@ -97,7 +97,7 @@ public class AccountController {
     return ResponseEntity.ok(updatedAccount);
   }
 
-  @ApiOperation(value = "Delete an account", notes = "Deleting an account")
+  @ApiOperation(value = "Delete an existing account")
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<Long> deleteAccount(@PathVariable long id) {
     log.info("Attempting to delete account with ID = " + id);

@@ -25,11 +25,10 @@ public class Category {
   @Id
   @NotNull
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @ApiModelProperty(value = "The database generated category ID.", required = true, example = "23")
   private Long id;
 
   @NotNull
-  @ApiModelProperty(value = "Category name", required = true, example = "Car")
+  @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
   private String name;
 
   @ManyToOne
