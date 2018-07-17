@@ -30,9 +30,10 @@ public class SwaggerConfig {
     final Contact contact = new Contact("Piotr and Friends",
         "https://github.com/programming-in-practice/personal-finance-manager",
         "kolacz.piotrek@gmail.com");
+
     return new ApiInfoBuilder()
         .title("Personal Finance Manager")
-        .description("Here is the best app for personal finances ")
+        .description("Our app for personal finances ")
         .version("1.0.0")
         .license("Apache License 2.0")
         .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")

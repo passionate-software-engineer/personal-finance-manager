@@ -12,7 +12,7 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8081/categories';
+  private apiUrl = 'http://localhost:8088/categories';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) { }
 

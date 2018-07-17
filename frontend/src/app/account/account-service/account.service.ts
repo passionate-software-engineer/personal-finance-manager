@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8081/accounts';
+  private apiUrl = 'http://localhost:8088/accounts';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) { }
 

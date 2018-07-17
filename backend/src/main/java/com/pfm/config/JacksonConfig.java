@@ -17,10 +17,12 @@ public class JacksonConfig {
   @Bean
   public ObjectMapper createObjectMapper() {
     ObjectMapper mapper = new ObjectMapper();
+    mapper.setSerializationInclusion(Include.NON_NULL);
+
     SimpleModule module = new SimpleModule();
     module.addSerializer(BigDecimal.class, new MoneySerializer());
     mapper.registerModule(module);
-    mapper.setSerializationInclusion(Include.NON_NULL);
+
     return mapper;
   }
 

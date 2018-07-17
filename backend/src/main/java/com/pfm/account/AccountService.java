@@ -32,9 +32,16 @@ public class AccountService {
   }
 
   public Account updateAccount(long id, Account account) {
-    Account accountToUpdate = getAccountById(id).get();
+    Optional<Account> accountFromDb = getAccountById(id);
+
+    if (!accountFromDb.isPresent()) {
+      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+    }
+
+    Account accountToUpdate = accountFromDb.get();
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
+
     return accountRepository.save(accountToUpdate);
   }
 
@@ -45,4 +52,6 @@ public class AccountService {
   public boolean idExist(long id) {
     return accountRepository.existsById(id);
   }
+
+  // TODO - add check if account name already exists (similar as in category)
 }
