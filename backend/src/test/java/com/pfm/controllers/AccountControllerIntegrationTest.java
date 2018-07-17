@@ -38,6 +38,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountControllerIntegrationTest {
 
+  //TODO write cleaner, in most tests should get id of object returned from server then use
+
   private static final String INVOICES_SERVICE_PATH = "/accounts";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   private static final long NOT_EXISTING_ID = 0;
@@ -50,7 +52,6 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldAddAccount() throws Exception {
-
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
         .content(json(ACCOUNT_JACEK_BALANCE_1000)))
@@ -59,7 +60,6 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedByEmptyNameAndEmptyBalanceFields() throws Exception {
-
     Account accountWithOutName = new Account(null, null, null);
 
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
@@ -84,7 +84,6 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingId() throws Exception {
-
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
@@ -122,14 +121,28 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
-
     Account accountToUpdate = ACCOUNT_ADAM_BALANCE_1000;
 
     this.mockMvc
         .perform(put(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .contentType(CONTENT_TYPE)
-        .content(json(accountToUpdate)))
+            .contentType(CONTENT_TYPE)
+            .content(json(accountToUpdate)))
         .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
+    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_1000);
+    Account accountToUpdate = Account.builder()
+        .name("")
+        .balance(ACCOUNT_ADAM_BALANCE_1000.getBalance())
+        .build();
+
+    this.mockMvc
+        .perform(put(INVOICES_SERVICE_PATH + "/1")
+            .contentType(CONTENT_TYPE)
+            .content(json(accountToUpdate)))
+        .andExpect(status().isBadRequest());
   }
 
   @Test
@@ -143,7 +156,6 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
-
     Account accountWithOutName = new Account(null, null, null);
 
     callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_1000);
