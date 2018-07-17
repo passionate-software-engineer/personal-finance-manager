@@ -101,6 +101,19 @@ public class CategoryControllerIntegrationTest {
   }
 
   @Test
+  public void shouldReturnErrorCauseByNameAlreadyExist() throws Exception {
+    //given
+    Category categoryToAdd = new Category(null, testParentCategory.getName(), null);
+
+    //when
+    this.mockMvc
+        .perform(post(DEFAULT_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
+        .andExpect(
+            content().string("[\"" + Messages.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST + "\"]"))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   public void shouldGetCategories() throws Exception {
     //when
     List<Category> categories = getAllCategoriesInDb();
@@ -180,7 +193,7 @@ public class CategoryControllerIntegrationTest {
   }
 
   @Test
-  public void shouldReturnErrorCausedByNotExistingParentCategoryIdProviced()
+  public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided()
       throws Exception {
     //given
     Category categoryToUpdate = testSubCategory;
@@ -194,6 +207,40 @@ public class CategoryControllerIntegrationTest {
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(content().string(
             "[\"" + Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST + "\"]"))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByCycling()
+      throws Exception {
+    //given
+    Category categoryToUpdate = new Category(testParentCategoryId, testParentCategory.getName(),
+        new Category(testSubCategoryId, testSubCategory.getName(),
+            null));
+
+    //when
+    this.mockMvc
+        .perform(put(DEFAULT_PATH + "/" + testParentCategoryId)
+            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+        .andExpect(content().string(
+            "[\"" + Messages.CATEGORIES_CYCLE_DETECTED + "\"]"))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory()
+      throws Exception {
+    //given
+    Category categoryToUpdate = new Category(testParentCategoryId, testParentCategory.getName(),
+        new Category(testParentCategoryId, testParentCategory.getName(),
+            null));
+
+    //when
+    this.mockMvc
+        .perform(put(DEFAULT_PATH + "/" + testParentCategoryId)
+            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+        .andExpect(content().string(
+            "[\"" + Messages.CATEGORIES_CYCLE_DETECTED + "\"]"))
         .andExpect(status().isBadRequest());
   }
 
