@@ -1,3 +1,5 @@
+package com.pfm.helpers;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -6,8 +8,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-// TODO you use too much of "default" - class should be public and should be in helpers package
-class TestHelper {
+public class TestHelper {
 
   private TestHelper() {
   }
@@ -15,15 +16,14 @@ class TestHelper {
   // TODO externalize URL
   private static final String URL = "http://localhost:8081/accounts";
 
-  static void addSampleAccount() throws IOException {
-    String sampleJson = "{\"name\":\"mbank\", \"balance\":500 };";
+  public static void addSampleAccount() throws IOException {
+    String sampleJson = "{\"name\":\"ideaBank\", \"balance\":320 };";
     postJson(sampleJson);
   }
 
   private static String postJson(String json) throws IOException {
     OkHttpClient client = new OkHttpClient();
     MediaType mediaType = MediaType.parse("application/json");
-
     RequestBody body = RequestBody
         .create(mediaType, json);
 
@@ -33,7 +33,6 @@ class TestHelper {
         .build();
 
     Response httpResponse = client.newCall(request).execute();
-    return String.valueOf(httpResponse
-        .code()); // TODO would be good to verify if response was 200, otherwise precondition failed
+    return String.valueOf(httpResponse.code());
   }
 }
