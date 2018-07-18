@@ -1,7 +1,6 @@
 package com.pfm.helpers;
 
 import com.pfm.account.Account;
-
 import java.math.BigDecimal;
 
 public class TestAccountProvider {

@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.Messages;
 import com.pfm.category.CategoryController.CategoryRequest;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +27,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,7 +37,8 @@ public class CategoryControllerIntegrationTest {
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   private static final Long NOT_EXISTING_ID = 0L;
 
-  // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call those methods in // given part of the test
+  // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
+  // those methods in // given part of the test
   private CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
   private CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers").build();
   private Long parentCategoryId;
@@ -54,7 +54,8 @@ public class CategoryControllerIntegrationTest {
 
   @Before
   public void defaultGiven() throws Exception {
-    // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call those methods in // given part of the test
+    // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
+    // those methods in // given part of the test
     parentCategoryId = addCategory(parentCategoryRq);
     childCategoryRq.setParentCategoryId(parentCategoryId);
     childCategoryId = addCategory(childCategoryRq);
@@ -162,8 +163,8 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldUpdateCategoryParentCategory() throws Exception {
     //given
-    CategoryRequest categoryToUpdate = parentCategoryRq; // TODO such assignments does not make sense - maybe you wanted to copy? Please rethink how you handle objects - TestCategoryProvider will help you a lot.
-    categoryToUpdate.setName("Changed Name");
+    CategoryRequest categoryToUpdate = parentCategoryRq; // TODO such assignments does not make sense - maybe you wanted to copy?
+    categoryToUpdate.setName("Changed Name"); // Please rethink how you handle objects - TestCategoryProvider will help you a lot.
 
     Category expectedCategory = convertToCategory(categoryToUpdate);
     expectedCategory.setId(parentCategoryId);

@@ -88,7 +88,8 @@ public class CategoryService {
       return true;
     }
 
-    // TODO - I don't like this recursion - simply category can be parent category for other if it's not any of it's children - we need to handle that with single query to db, can do some processing in java but not multiple calls to DB - hint DFS algorithm ;)
+    // TODO - I don't like this recursion - simply category can be parent category for other if it's not any of it's
+    // children - we need to handle that with single query to db, can do some processing in java but not multiple calls to DB - hint DFS algorithm ;)
     return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId());
   }
 

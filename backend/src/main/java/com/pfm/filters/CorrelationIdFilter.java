@@ -19,14 +19,14 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws IOException, ServletException {
     try {
-      addRequestCorrelationIdToMDC(request);
+      addRequestCorrelationIdToMdc(request);
       filterChain.doFilter(request, response);
     } finally {
-      removeRequestCorrelationIdFromMDC();
+      removeRequestCorrelationIdFromMdc();
     }
   }
 
-  private void addRequestCorrelationIdToMDC(HttpServletRequest request) {
+  private void addRequestCorrelationIdToMdc(HttpServletRequest request) {
     String correlationId = request.getHeader("correlationId");
 
     if (correlationId == null) {
@@ -36,7 +36,7 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
     MDC.put("correlationId", correlationId);
   }
 
-  private void removeRequestCorrelationIdFromMDC() {
+  private void removeRequestCorrelationIdFromMdc() {
     MDC.remove("correlationId");
   }
 }

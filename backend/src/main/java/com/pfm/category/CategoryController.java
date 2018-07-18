@@ -113,7 +113,6 @@ public class CategoryController {
     @ApiModelProperty(value = "Parent category id", example = "1")
     private Long parentCategoryId;
 
-    @NotNull
     @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
     private String name;
   }

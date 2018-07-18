@@ -5,11 +5,10 @@ import static com.pfm.Messages.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
 import static com.pfm.Messages.EMPTY_CATEGORY_NAME;
 import static com.pfm.Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
@@ -22,9 +21,9 @@ public class CategoryValidator {
     validate(validationResults, category);
 
     // TODO - why only for update - why cycle cannot happen when creating new category?
-    if (category.getParentCategory() != null &&
-        !categoryService
-            .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
+    if (category.getParentCategory() != null
+        && !categoryService
+        .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
       validationResults.add(CATEGORIES_CYCLE_DETECTED);
     }
 
@@ -34,8 +33,8 @@ public class CategoryValidator {
   public List<String> validateCategoryForAdd(Category category) {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
-    if (category.getName() != null && !category.getName().trim().equals("") && categoryService
-        .isCategoryNameAlreadyUsed(category.getName())) {
+    if (category.getName() != null && !category.getName().trim().equals("")
+        && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
       validationResults.add(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST);
     } // TODO - why you don't check names in case of update? :)
 
@@ -47,8 +46,8 @@ public class CategoryValidator {
       validationResults.add(EMPTY_CATEGORY_NAME);
     }
 
-    if (category.getParentCategory() != null &&
-        !categoryService.idExist(category.getParentCategory().getId())) {
+    if (category.getParentCategory() != null
+        && !categoryService.idExist(category.getParentCategory().getId())) {
       validationResults.add(PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
     }
   }
