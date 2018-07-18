@@ -32,10 +32,10 @@ class AccountsScreen {
   @FindBy(xpath = "//button[@class='btn btn-danger dropdown-toggle' and (text()='Adding options ')]")
   private WebElement addingOptionsButton;
 
-  @FindBy(xpath = "//button[@class='btn btn-danger dropdown-toggle'and (text()='Edit Options ')]")
+  @FindBy(xpath = "//*/button[@id='accountScreenOptionsButton' and @class='btn btn-primary dropdown-toggle' and 1]")
   private WebElement editOptions;
 
-  @FindBy(xpath = "//div/ul[@class='dropdown-menu']//*[(text()='Save')]")
+  @FindBy(xpath = "//td[4]/button[@class='btn-primary' and 1]")
   private WebElement saveButton;
 
   @FindBy(xpath = "//div/ul[@class='dropdown-menu']//*[(text()='Exit')]")
@@ -50,10 +50,10 @@ class AccountsScreen {
   @FindBy(xpath = "//div[@class='dropdown open']//*[(text()='Edit')]")
   private WebElement edit;
 
-  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-down']")
+  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-up']")
   private WebElement idAscending;
 
-  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-up']")
+  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-down']")
   private WebElement idDescending;
 
   @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-up']")
@@ -62,10 +62,10 @@ class AccountsScreen {
   @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-down']")
   private WebElement descriptionDescending;
 
-  @FindBy(xpath = "//th[3]/*[@class='glyphicon glyphicon-collapse-down']")
+  @FindBy(xpath = "//th[3]/*[@class='glyphicon glyphicon-collapse-up']")
   private WebElement balanceAscending;
 
-  @FindBy(xpath = "//th[3]/*[@class='glyphicon glyphicon-collapse-up']")
+  @FindBy(xpath = "//th[3]/*[@class='glyphicon glyphicon-collapse-down']")
   private WebElement balanceDescending;
 
   @FindBy(xpath = "//app-accounts-list//td[2]/input[1]")

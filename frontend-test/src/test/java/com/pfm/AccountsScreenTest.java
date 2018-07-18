@@ -53,7 +53,6 @@ public class AccountsScreenTest extends TestBase {
       accountsScreen.addAccountButton();
       accountsScreen.addDescription(expectedListOfDescription[i]);
       accountsScreen.addBalance(expectedListOfBalance[i]);
-      accountsScreen.addingOptionsButton();
       accountsScreen.saveOptionButton();
     }
     resultListOfDescription = accountsScreen.getDescription();
@@ -186,10 +185,15 @@ public class AccountsScreenTest extends TestBase {
   @Test(dependsOnMethods = {"shouldDeleteAccount"})
   public void shouldUpdateAccount() {
     //given
+    Random random = new Random();
+    long randomNumber = random.nextInt(100000);
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    String[] descriptionsList = {"pekao", "mienium", "santander"};
+    String[] descriptionsList = {"pekao number: " + randomNumber, "milenium number: " + randomNumber,
+        "santander number: " + randomNumber};
     BigDecimal[] balanceList =
-        {BigDecimal.valueOf(77.77), BigDecimal.valueOf(12.12), BigDecimal.valueOf(0.45)};
+        {BigDecimal.valueOf(77.77).add(BigDecimal.valueOf(randomNumber)),
+            BigDecimal.valueOf(12.12).add(BigDecimal.valueOf(randomNumber)),
+            BigDecimal.valueOf(0.45).add(BigDecimal.valueOf(randomNumber))};
     List<String> resultListOfDescription;
     List<BigDecimal> resultListOfBalance;
 
@@ -199,7 +203,6 @@ public class AccountsScreenTest extends TestBase {
       accountsScreen.editButton();
       accountsScreen.addDescription(descriptionsList[i]);
       accountsScreen.addBalance(balanceList[i]);
-      accountsScreen.editOptionsButton();
       accountsScreen.saveOptionButton();
     }
 
@@ -242,7 +245,7 @@ public class AccountsScreenTest extends TestBase {
   @AfterClass
   void tearDown() {
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    optionsButtonList.get(optionsButtonList.size()-1).click();
+    optionsButtonList.get(optionsButtonList.size() - 1).click();
     accountsScreen.deleteButton();
 
   }
