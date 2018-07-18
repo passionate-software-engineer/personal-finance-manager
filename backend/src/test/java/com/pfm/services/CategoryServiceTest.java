@@ -11,15 +11,15 @@ import static org.mockito.Mockito.when;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRepository;
 import com.pfm.category.CategoryService;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryServiceTest {

@@ -1,11 +1,9 @@
 package com.pfm.account;
 
-
 import com.pfm.Messages;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AccountValidator {
