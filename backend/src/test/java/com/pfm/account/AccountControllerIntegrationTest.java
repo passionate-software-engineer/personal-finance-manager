@@ -1,12 +1,12 @@
-package com.pfm.controllers;
+package com.pfm.account;
 
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_1000;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_LUKASZ_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_10_99;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_LUKASZ_BALANCE_1124;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MATEUSZ_BALANCE_200;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTREK_BALANCE_9;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SEBASTIAN_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SEBASTIAN_BALANCE_1_000_000;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.Messages;
-import com.pfm.account.Account;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountControllerIntegrationTest {
 
-  //TODO write cleaner, in most tests should get id of object returned from server then use
+  // TODO write cleaner, in most tests should get id of object returned from server then use
+  // TODO - apply suggestions from CategoryControllerIntegrationTest
 
   private static final String INVOICES_SERVICE_PATH = "/accounts";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
@@ -60,11 +60,11 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedByEmptyNameAndEmptyBalanceFields() throws Exception {
-    Account accountWithOutName = new Account(null, null, null);
+    Account accountWithoutName = new Account(null, null, null);
 
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
-        .content(json(accountWithOutName)))
+        .content(json(accountWithoutName)))
         .andExpect(
             content().string("[\"" + Messages.EMPTY_ACCOUNT_NAME + "\",\""
                 + Messages.EMPTY_ACCOUNT_BALANCE + "\"]"))
@@ -73,10 +73,10 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldGetAccountById() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1000);
+    callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1124);
 
     this.mockMvc
-        .perform(get(INVOICES_SERVICE_PATH + "/1"))
+        .perform(get(INVOICES_SERVICE_PATH + "/1")) // TODO you cannot assume the id will be 1
         .andExpect(content().contentType(CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(1)));
@@ -92,19 +92,20 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldGetAllAccounts() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_SEBASTIAN_BALANCE_1000);
-    callRestServiceToAddAccount(ACCOUNT_PIOTREK_BALANCE_9);
+    callRestServiceToAddAccount(ACCOUNT_SEBASTIAN_BALANCE_1_000_000);
+    callRestServiceToAddAccount(ACCOUNT_PIOTR_BALANCE_9);
 
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
-        .andExpect(jsonPath("$", hasSize(2)));
+        .andExpect(jsonPath("$",
+            hasSize(2))); // TODO you should assert entire response not just check if it returned 2
   }
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_1000);
+    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
 
     this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/1")
         .contentType(CONTENT_TYPE)
@@ -121,7 +122,7 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
-    Account accountToUpdate = ACCOUNT_ADAM_BALANCE_1000;
+    Account accountToUpdate = ACCOUNT_ADAM_BALANCE_0;
 
     this.mockMvc
         .perform(put(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -132,10 +133,10 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_1000);
+    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
     Account accountToUpdate = Account.builder()
         .name("")
-        .balance(ACCOUNT_ADAM_BALANCE_1000.getBalance())
+        .balance(ACCOUNT_ADAM_BALANCE_0.getBalance())
         .build();
 
     this.mockMvc
@@ -147,7 +148,7 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_1000);
+    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
 
     this.mockMvc
         .perform(delete(INVOICES_SERVICE_PATH + "/1"))
@@ -158,7 +159,7 @@ public class AccountControllerIntegrationTest {
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
     Account accountWithOutName = new Account(null, null, null);
 
-    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_1000);
+    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
 
     this.mockMvc
         .perform(delete(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))

@@ -1,6 +1,5 @@
 package com.pfm.category;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfm.Messages;
 import io.swagger.annotations.Api;
@@ -107,7 +106,7 @@ public class CategoryController {
   @AllArgsConstructor
   @Builder
   @Data
-  public static class CategoryRequest {
+  static class CategoryRequest {
 
     @Setter
     @Getter
@@ -119,7 +118,7 @@ public class CategoryController {
     private String name;
   }
 
-  private Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+  static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     if (parentCategoryId == null) {

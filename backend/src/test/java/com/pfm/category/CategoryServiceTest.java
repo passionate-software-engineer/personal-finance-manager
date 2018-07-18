@@ -1,4 +1,4 @@
-package com.pfm.services;
+package com.pfm.category;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -8,21 +8,20 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.pfm.category.Category;
-import com.pfm.category.CategoryRepository;
-import com.pfm.category.CategoryService;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryServiceTest {
+
+  // TODO Unify tests to match approach similar to AccountServiceTest (create category provider, verify results not mock calls where possible)
 
   private static final Long MOCK_CATEGORY_ID = 1L;
   private static final String MOCK_CATEGORY_NAME = "Food";

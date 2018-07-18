@@ -92,9 +92,9 @@ public class AccountController {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Account updatedAccount = accountService.updateAccount(id, account);
+    accountService.updateAccount(id, account);
     log.info("Account with id {} was successfully updated", id);
-    return ResponseEntity.ok(updatedAccount);
+    return ResponseEntity.ok().build();
   }
 
   @ApiOperation(value = "Delete an existing account", response = Void.class)

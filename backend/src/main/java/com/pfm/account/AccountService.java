@@ -31,7 +31,7 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public Account updateAccount(long id, Account account) {
+  public void updateAccount(long id, Account account) {
     Optional<Account> accountFromDb = getAccountById(id);
 
     if (!accountFromDb.isPresent()) {
@@ -42,7 +42,7 @@ public class AccountService {
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
 
-    return accountRepository.save(accountToUpdate);
+    accountRepository.save(accountToUpdate);
   }
 
   public void deleteAccount(long id) {
