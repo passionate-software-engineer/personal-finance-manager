@@ -1,11 +1,10 @@
 package com.pfm.category;
 
 import com.pfm.Messages;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
@@ -17,8 +16,8 @@ public class CategoryValidator {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
 
-    if (category.getParentCategory() != null &&
-        !categoryService
+    if (category.getParentCategory() != null
+        && !categoryService
             .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
       validationResults.add(Messages.CATEGORIES_CYCLE_DETECTED);
     }
@@ -42,8 +41,8 @@ public class CategoryValidator {
       validationResults.add(Messages.EMPTY_CATEGORY_NAME);
     }
 
-    if (category.getParentCategory() != null &&
-        !categoryService.idExist(category.getParentCategory().getId())) {
+    if (category.getParentCategory() != null
+        && !categoryService.idExist(category.getParentCategory().getId())) {
       validationResults.add(Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
     }
     return validationResults;

@@ -1,14 +1,13 @@
 package com.pfm.category;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -88,6 +87,5 @@ public class CategoryService {
   public boolean nameExist(String name) {
     return categoryRepository.findByNameContainingIgnoreCase(name).size() != 0;
   }
-
 
 }

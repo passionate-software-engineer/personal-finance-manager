@@ -14,6 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.Messages;
 import com.pfm.category.Category;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +28,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -198,8 +198,8 @@ public class CategoryControllerIntegrationTest {
     //given
     Category categoryToUpdate = testSubCategory;
     categoryToUpdate
-        .setParentCategory(new Category(NOT_EXISTING_ID, "Not existing Category"
-            , null));
+        .setParentCategory(new Category(NOT_EXISTING_ID, "Not existing Category",
+            null));
 
     //when
     this.mockMvc
