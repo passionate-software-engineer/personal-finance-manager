@@ -1,18 +1,17 @@
-server.port: 8081
 spring:
   h2:
     console.enabled: false
   jpa:
       properties:
         hibernate:
-          dialect: org.hibernate.dialect.MySQL5Dialect
+          dialect: org.hibernate.dialect.PostgreSQL94Dialect
       show-sql: true
       hibernate:
-        ddl-auto: validate
+        ddl-auto: create
   datasource:
-      url: jdbc:mysql://localhost:5432/pfm
+      url: jdbc:postgresql://localhost:5432/pfm
       username: postgres
-      password: postgres
+      password: 1234
       driver-class-name: org.postgresql.Driver
 
 logging:

@@ -57,6 +57,7 @@ export class AccountsListComponent implements OnInit {
 
   onAddAccount(nameInput: HTMLInputElement, balanceInput: HTMLInputElement) {
     this.accountToAdd = new Account();
+    this.accountToAdd.id = null;
     this.accountToAdd.name = nameInput.value;
     this.accountToAdd.balance = +balanceInput.value;
     this.accountService.addAccount(this.accountToAdd)

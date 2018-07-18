@@ -1,46 +1,56 @@
 package com.pfm.account;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @AllArgsConstructor
 @Service
 public class AccountService {
 
-  @Autowired
   private AccountRepository accountRepository;
 
-  public Account getAccountById(Long id) {
-    return accountRepository.findById(id).get();
+  public Optional<Account> getAccountById(long id) {
+    return accountRepository.findById(id);
   }
 
   public List<Account> getAccounts() {
-    List<Account> accounts = new ArrayList<>();
-    accountRepository.findAll().forEach(account -> accounts.add(account));
-    accounts.sort(Comparator.comparing(Account::getId));
-    return accounts;
+    return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
+        .sorted(Comparator.comparing(Account::getId))
+        .collect(Collectors.toList());
   }
 
   public Account addAccount(Account account) {
     return accountRepository.save(account);
   }
 
-  public Account updateAccount(Long id, Account account) {
-    Account accountToUpdate = getAccountById(id);
+  public void updateAccount(long id, Account account) {
+    Optional<Account> accountFromDb = getAccountById(id);
+
+    if (!accountFromDb.isPresent()) {
+      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+    }
+
+    Account accountToUpdate = accountFromDb.get();
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
+
     accountRepository.save(accountToUpdate);
-    return accountToUpdate;
   }
 
-  public void deleteAccount(Long id) {
+  public void deleteAccount(long id) {
     accountRepository.deleteById(id);
   }
 
+  public boolean idExist(long id) {
+    return accountRepository.existsById(id);
+  }
+
+  // TODO - add check if account name already exists (similar as in category)
 }
