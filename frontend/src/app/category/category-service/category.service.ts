@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Category } from '../category';
-import { MessagesService } from '../../messages/messages.service';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {Category} from '../category';
+import {MessagesService} from '../../messages/messages.service';
+import {catchError, tap} from 'rxjs/operators';
+
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +16,15 @@ export class CategoryService {
 
   private apiUrl = 'http://localhost:8088/categories';
 
-  constructor(private http: HttpClient, private messagesService: MessagesService) { }
+  constructor(private http: HttpClient, private messagesService: MessagesService) {
+  }
+
+  private static categoryToCategoryRequest(category: Category) {
+    return {
+      name: category.name,
+      parentCategoryId: category.parentCategory == null ? null : category.parentCategory.id
+    };
+  }
 
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl).pipe(
@@ -23,7 +33,8 @@ export class CategoryService {
   }
 
   addCategory(category: Category): Observable<any> {
-    return this.http.post<any>(this.apiUrl, category, httpOptions).pipe(
+    const categoryRequest = CategoryService.categoryToCategoryRequest(category);
+    return this.http.post<any>(this.apiUrl, categoryRequest, httpOptions).pipe(
       tap(any => this.log(`added category with id: ` + any)),
       catchError(this.handleError('addCategory', [])));
   }
@@ -36,8 +47,9 @@ export class CategoryService {
   }
 
   editCategory(category: Category): Observable<any> {
+    const categoryRequest = CategoryService.categoryToCategoryRequest(category);
     const url = `${this.apiUrl}/${category.id}`;
-    return this.http.put<Category>(url, category, httpOptions).pipe(
+    return this.http.put<Category>(url, categoryRequest, httpOptions).pipe(
       tap(() => this.log(`edited category with id: ` + category.id)),
       catchError(this.handleError('editCategory', [])));
   }

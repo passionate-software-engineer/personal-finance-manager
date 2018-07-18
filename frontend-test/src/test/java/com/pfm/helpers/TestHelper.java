@@ -14,7 +14,7 @@ public class TestHelper {
   }
 
   // TODO externalize URL
-  private static final String URL = "http://localhost:8081/accounts";
+  private static final String URL = "http://localhost:8088/accounts";
 
   public static void addSampleAccount() throws IOException {
     String sampleJson = "{\"name\":\"ideaBank\", \"balance\":320 };";
