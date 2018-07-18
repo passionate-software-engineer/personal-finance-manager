@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,11 +30,18 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public Account updateAccount(long id, Account account) {
-    Account accountToUpdate = getAccountById(id).get();
+  public void updateAccount(long id, Account account) {
+    Optional<Account> accountFromDb = getAccountById(id);
+
+    if (!accountFromDb.isPresent()) {
+      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+    }
+
+    Account accountToUpdate = accountFromDb.get();
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
-    return accountRepository.save(accountToUpdate);
+
+    accountRepository.save(accountToUpdate);
   }
 
   public void deleteAccount(long id) {
@@ -45,4 +51,6 @@ public class AccountService {
   public boolean idExist(long id) {
     return accountRepository.existsById(id);
   }
+
+  // TODO - add check if account name already exists (similar as in category)
 }

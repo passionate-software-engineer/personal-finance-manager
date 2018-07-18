@@ -30,6 +30,7 @@ public class CategoryService {
     if (category.getParentCategory() == null) {
       return categoryRepository.save(category);
     }
+    // TODO - if parent category returned by DB is null then throw IllegalStateException
     Category parentCategory = getCategoryById(category.getParentCategory().getId()).orElse(null);
     category.setParentCategory(parentCategory);
     return categoryRepository.save(category);
@@ -44,6 +45,7 @@ public class CategoryService {
     if (!receivedCategory.isPresent()) {
       throw new IllegalStateException("Category with id : " + id + " does not exist in database");
     }
+
     Category categoryToUpdate = receivedCategory.get();
     categoryToUpdate.setName(category.getName());
     if (category.getParentCategory() == null) {
@@ -71,20 +73,27 @@ public class CategoryService {
     if (categoryId == parentCategoryId) {
       return false;
     }
-    Category receivedCategory = getCategoryById(parentCategoryId).orElse(null);
-    if (receivedCategory == null) {
+
+    Category parentCategory = getCategoryById(parentCategoryId).orElse(null);
+    // TODO - this check does not make sense - if parent category don't exists we should throw illegalStateException
+    if (parentCategory == null) {
       return true;
     }
-    if (receivedCategory.getId() == categoryId) {
+    // TODO - it's the same check as the first one
+    if (parentCategory.getId() == categoryId) {
       return false;
     }
-    if (receivedCategory.getParentCategory() == null) {
+    // TODO - why? if parent category don't have parent then it's some special case? should be handled in query below
+    if (parentCategory.getParentCategory() == null) {
       return true;
     }
-    return canBeParentCategory(categoryId, receivedCategory.getParentCategory().getId());
+
+    // TODO - I don't like this recursion - simply category can be parent category for other if it's not any of it's
+    // children - we need to handle that with single query to db, can do some processing in java but not multiple calls to DB - hint DFS algorithm ;)
+    return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId());
   }
 
-  public boolean nameExist(String name) {
+  public boolean isCategoryNameAlreadyUsed(String name) {
     return categoryRepository.findByNameContainingIgnoreCase(name).size() != 0;
   }
 

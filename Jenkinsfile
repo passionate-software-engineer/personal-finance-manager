@@ -86,7 +86,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'backend/build/jacocoHtml/**/*'
+            archiveArtifacts artifacts: 'backend/build/jacocoHtml/**/*, backend/build/reports/checkstyle/**/*'
             junit 'backend/build/test-results/**/*.xml'
         }
     }

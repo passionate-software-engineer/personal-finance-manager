@@ -12,9 +12,10 @@ buildscript {
     }
 }
 
-plugins {
+plugins { // TODO unify appraoch with below entries
     id "org.flywaydb.flyway" version "5.1.1"
 }
+
 apply plugin: 'checkstyle'
 apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
@@ -30,9 +31,10 @@ repositories {
     mavenCentral()
 }
 
+// keep alphabetical order in groups
 dependencies {
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.mockito:mockito-core:1.9.5'
 
     compile 'com.h2database:h2:1.0.60'
     compile 'io.rest-assured:spring-mock-mvc:3.1.0'
@@ -41,9 +43,9 @@ dependencies {
     compile 'javax.xml.bind:jaxb-api:2.3.0'
     compile 'org.postgresql:postgresql:42.1.4'
     compile "org.projectlombok:lombok:1.18.0"
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-web'
 }
 
 checkstyle {
@@ -51,6 +53,8 @@ checkstyle {
     toolVersion '8.11'
     showViolations = true
     ignoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
 }
 
 flyway {
@@ -72,7 +76,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'BRANCH'
-                minimum = 0.55
+                minimum = 0.55 // TODO increase limit
             }
         }
         rule {
