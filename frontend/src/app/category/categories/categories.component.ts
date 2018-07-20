@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Category } from '../category';
-import { CategoryService } from '../category-service/category.service';
-import { MessagesService } from '../../messages/messages.service';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Category} from '../category';
+import {CategoryService} from '../category-service/category.service';
+import {MessagesService} from '../../messages/messages.service';
+import {catchError, map, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories',
@@ -19,7 +19,8 @@ export class CategoriesComponent implements OnInit {
   editedParentCategory: Category = new Category();
   id;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {
+  }
 
   ngOnInit() {
     this.getCategories();
@@ -84,6 +85,31 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+  sortByParentCategory(type: string) {
+    if (type === 'asc') {
+      this.categories.sort((a1, a2) => {
+        if (a1.parentCategory == null) {
+          return 1;
+        }
+        if (a2.parentCategory == null) {
+          return -1;
+        }
+        return a1.parentCategory.name.toLowerCase() > a2.parentCategory.name.toLowerCase() ? -1 : 1;
+      });
+    }
+    if (type === 'dsc') {
+      this.categories.sort((a1, a2) => {
+        if (a1.parentCategory == null) {
+          return -1;
+        }
+        if (a2.parentCategory == null) {
+          return 1;
+        }
+        return a1.parentCategory.name.toLowerCase() < a2.parentCategory.name.toLowerCase() ? -1 : 1;
+      });
+    }
+  }
+
   sortById(sortingType: string) {
     if (sortingType === 'asc') {
       this.categories.sort((a1, a2) => a1.id - a2.id);
@@ -109,11 +135,7 @@ export class CategoriesComponent implements OnInit {
         if (x.parentCategory == null) {
           return true;
         } else {
-          if (x.parentCategory.id === cat.id) {
-            return false;
-          } else {
-            return true;
-          }
+          return x.parentCategory.id !== cat.id;
         }
       });
   }
