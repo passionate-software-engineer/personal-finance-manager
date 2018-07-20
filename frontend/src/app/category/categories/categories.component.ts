@@ -3,6 +3,7 @@ import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, map, tap} from 'rxjs/operators';
+import {isNumber} from 'util';
 
 @Component({
   selector: 'app-categories',
@@ -66,8 +67,10 @@ export class CategoriesComponent implements OnInit {
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
-        this.categoryToAdd.id = id;
-        this.categories.push(this.categoryToAdd);
+        if (id.isNumber()) {
+          this.categoryToAdd.id = id;
+          this.categories.push(this.categoryToAdd);
+        }
       });
     this.addingMode = false;
   }

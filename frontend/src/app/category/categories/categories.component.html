@@ -65,22 +65,28 @@
     </td>
 
   </tr>
+
   <tr *ngIf="addingMode">
     <td>New Category</td>
+
     <td>
       <input type="text" #newCategoryName>
     </td>
     <td>
-      <select [(ngModel)]="selectedCategory" name="selectedParentCategory">
-        <option [ngValue]="null" >Main Category</option>
-        <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-      </select>
+      <div class="form-group">
+        <select class="form-control" id="selectedParentCategory" [(ngModel)]="selectedCategory"
+                name="selectedParentCategory">
+          <option required [ngValue]="null">Main Category</option>
+          <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+        </select>
+      </div>
     </td>
+
     <td>
       <button class="btn-primary" (click)="onAddCategory(newCategoryName)">Save</button>
       <button class="btn-danger" (click)="addingMode=false">Exit</button>
     </td>
-  </tr>
 
+  </tr>
   </tbody>
 </table>

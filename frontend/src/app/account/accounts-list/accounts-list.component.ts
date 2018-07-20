@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Account } from '../account';
-import { AccountService } from '../account-service/account.service';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Account} from '../account';
+import {AccountService} from '../account-service/account.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-accounts-list',
@@ -17,7 +17,8 @@ export class AccountsListComponent implements OnInit {
   selectedAccount: Account = new Account();
   id;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService) {
+  }
 
   ngOnInit() {
     this.getAccounts();
@@ -62,8 +63,10 @@ export class AccountsListComponent implements OnInit {
     this.accountToAdd.balance = +balanceInput.value;
     this.accountService.addAccount(this.accountToAdd)
       .subscribe(id => {
-        this.accountToAdd.id = id;
-        this.accounts.push(this.accountToAdd);
+        if (id.isNumber()) {
+          this.accountToAdd.id = id;
+          this.accounts.push(this.accountToAdd);
+        }
       });
     this.addingMode = false;
   }
