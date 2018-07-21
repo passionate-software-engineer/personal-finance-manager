@@ -4,6 +4,7 @@ import {CategoryService} from '../category-service/category.service';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, map, tap} from 'rxjs/operators';
 import {isNumber} from 'util';
+import {isNumeric} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-categories',
@@ -67,7 +68,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
-        if (id.isNumber) {
+        if (isNumeric(id)) {
           this.categoryToAdd.id = id;
           this.categories.push(this.categoryToAdd);
         }

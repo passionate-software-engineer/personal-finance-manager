@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {Category} from '../category';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,7 +15,7 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8088/categories';
+  private apiUrl = environment.appUrl + 'categories';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) {
   }

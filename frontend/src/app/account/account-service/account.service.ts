@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8088/accounts';
+  private apiUrl = environment.appUrl + 'accounts';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) {
   }
@@ -52,9 +53,6 @@ export class AccountService {
     return (error: any): Observable<T> => {
 
       alert(error.error);
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}  `);

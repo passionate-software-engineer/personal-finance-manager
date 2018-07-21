@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
+import {isNumeric} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-accounts-list',
@@ -59,7 +60,7 @@ export class AccountsListComponent implements OnInit {
     this.accountToAdd = new Account();
     this.accountToAdd.id = null;
     this.accountToAdd.name = nameInput.value;
-    if (balanceInput.value.length > 0 && isNaN(parseFloat(balanceInput.value))) {
+    if (!isNumeric(balanceInput.value)) {
       alert('Balance must be number');
       return;
     }
@@ -71,7 +72,7 @@ export class AccountsListComponent implements OnInit {
 
     this.accountService.addAccount(this.accountToAdd)
       .subscribe(id => {
-        if (id.isNumber) {
+        if (isNumeric(id)) {
           this.accountToAdd.id = id;
           this.accounts.push(this.accountToAdd);
         }
