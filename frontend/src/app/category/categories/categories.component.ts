@@ -67,7 +67,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
-        if (id.isNumber()) {
+        if (id.isNumber) {
           this.categoryToAdd.id = id;
           this.categories.push(this.categoryToAdd);
         }
