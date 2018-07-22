@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private apiUrl = environment.appUrl + 'categories';
+  private apiUrl = environment.appUrl + '/categories';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) {
   }
@@ -29,7 +29,7 @@ export class CategoryService {
 
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl).pipe(
-      tap(categories => this.log(`fetched categories`)),
+      tap(() => this.log(`fetched categories`)),
       catchError(this.handleError('getCategories', [])));
   }
 
@@ -43,7 +43,7 @@ export class CategoryService {
   deleteCategory(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url).pipe(
-      tap(any => this.log(`deleted category with id: ` + id)),
+      tap(() => this.log(`deleted category with id: ` + id)),
       catchError(this.handleError('deleteCategory', [])));
   }
 

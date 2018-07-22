@@ -14,14 +14,15 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AccountService {
-  private apiUrl = environment.appUrl + 'accounts';
+  private apiUrl = environment.appUrl + '/accounts';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) {
   }
 
   getAccounts(): Observable<Account[]> {
+    console.log(this.apiUrl);
     return this.http.get<Account[]>(this.apiUrl).pipe(
-      tap(categories => this.log(`fetched accounts`)),
+      tap(() => this.log(`fetched accounts`)),
       catchError(this.handleError('getAccounts', [])));
   }
 
