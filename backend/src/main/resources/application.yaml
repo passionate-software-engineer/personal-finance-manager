@@ -14,5 +14,6 @@ logging:
 #error messages language pl country PL or en US
 com:
   pfm:
-    lang: en
-    country: US
+    config:
+      lang: pl
+      country: PL

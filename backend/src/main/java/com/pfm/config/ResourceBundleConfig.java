@@ -8,13 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ResourceBundleConfig {
 
-  @Value("${com.pfm.lang}")
-  String language;
-
-  @Value("${com.pfm.country}")
-  String country;
-
-  Locale locale = new Locale(language, country);
+  Locale locale = new Locale("pl");
   ResourceBundle langBundle = ResourceBundle.getBundle("messages", locale);
 
   public String getMessage(String errorMessage) {

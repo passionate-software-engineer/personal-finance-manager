@@ -95,7 +95,7 @@ public class CategoryController {
       return ResponseEntity.notFound().build();
     }
     if (categoryService.isParentCategory(id)) {
-      return ResponseEntity.badRequest().body(resourceBundleConfig.getMessage("emptyCategoryName"));
+      return ResponseEntity.badRequest().body(resourceBundleConfig.getMessage("cannotDeleteParentCategory"));
     }
     categoryService.deleteCategory(id);
     return ResponseEntity.ok().build();

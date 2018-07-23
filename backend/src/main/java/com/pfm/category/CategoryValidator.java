@@ -21,7 +21,7 @@ public class CategoryValidator {
     if (category.getParentCategory() != null
         && !categoryService
         .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
-      validationResults.add(resourceBundleConfig.getMessage("cannotDeleteParentCategory"));
+      validationResults.add(resourceBundleConfig.getMessage("categoryCycleDetected"));
     }
 
     return validationResults;
