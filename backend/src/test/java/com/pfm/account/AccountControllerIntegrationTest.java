@@ -20,9 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.Messages;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
+import com.pfm.config.ResourceBundleConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,13 +70,14 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByEmptyNameAndEmptyBalanceFields() throws Exception {
     Account accountWithoutName = new Account(null, null, null);
+    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
         .content(json(accountWithoutName)))
         .andExpect(
-            content().string("[\"" + Messages.EMPTY_ACCOUNT_NAME + "\",\""
-                + Messages.EMPTY_ACCOUNT_BALANCE + "\"]"))
+            content().string("[\"" + resourceBundleConfig.getMessage("emptyAccountName") + "\",\""
+                + resourceBundleConfig.getMessage("emptyAccountBalance") + "\"]"))
         .andExpect(status().isBadRequest());
   }
 

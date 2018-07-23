@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.Messages;
 import com.pfm.category.CategoryController.CategoryRequest;
+import com.pfm.config.ResourceBundleConfig;
 import java.util.List;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
@@ -109,12 +109,13 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCauseByEmptyNameFiled() throws Exception {
     //given
     CategoryRequest categoryToAdd = CategoryRequest.builder().name("").build();
+    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
-        .andExpect(content().string("[\"" + Messages.EMPTY_CATEGORY_NAME
+        .andExpect(content().string("[\"" + resourceBundleConfig.getMessage("emptyCategoryName")
             + "\"]")) // TODO if you get list as a result then first assert size and then take element from index - [ ] is making code less readable
         .andExpect(status()
             .isBadRequest()); // TODO always assert status first - further assertions does not make sense if status is not correct
@@ -126,13 +127,14 @@ public class CategoryControllerIntegrationTest {
     CategoryRequest categoryToAdd = CategoryRequest.builder()
         .name(parentCategoryRq.getName())
         .build();
+    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
         .andExpect(
-            content().string("[\"" + Messages.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST + "\"]"))
+            content().string("[\"" + resourceBundleConfig.getMessage("categoryWithProvidedNameAlreadyExist") + "\"]"))
         .andExpect(status()
             .isBadRequest());  // TODO always assert status first - further assertions does not make sense if status is not correct
   }
@@ -232,6 +234,7 @@ public class CategoryControllerIntegrationTest {
     CategoryRequest categoryToUpdate = childCategoryRq;
     categoryToUpdate
         .setParentCategoryId(NOT_EXISTING_ID);
+    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc
@@ -239,7 +242,7 @@ public class CategoryControllerIntegrationTest {
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "[\"" + Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST + "\"]"));
+            "[\"" + resourceBundleConfig.getMessage("providedParentCategoryNotExist") + "\"]"));
   }
 
   @Test
@@ -265,12 +268,15 @@ public class CategoryControllerIntegrationTest {
   }
 
   private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate) throws Exception {
+    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
+
+    //when
     this.mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "[\"" + Messages.CATEGORIES_CYCLE_DETECTED + "\"]"));
+            "[\"" + resourceBundleConfig.getMessage("categoryCycleDetected") + "\"]"));
   }
 
   @Test
@@ -304,10 +310,13 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
       throws Exception {
+    //given
+    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
+
     //when
     this.mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId))
         .andExpect(status().isBadRequest())
-        .andExpect(content().string(Messages.CANNOT_DELETE_PARENT_CATEGORY));
+        .andExpect(content().string(resourceBundleConfig.getMessage("cannotDeleteParentCategory")));
   }
 
   @Test
