@@ -62,8 +62,6 @@ export class CategoryService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      alert(error.error);
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 

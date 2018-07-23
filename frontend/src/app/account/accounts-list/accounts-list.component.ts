@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
+import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
 @Component({
   selector: 'app-accounts-list',
@@ -17,7 +18,7 @@ export class AccountsListComponent implements OnInit {
   selectedAccount: Account = new Account();
   id;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private alertService: AlertsService) {
   }
 
   ngOnInit() {
@@ -52,27 +53,39 @@ export class AccountsListComponent implements OnInit {
   onEditAccount(account: Account) {
     account.name = this.editedName;
     account.balance = this.editedBalance;
-    this.accountService.editAccount(account).subscribe();
+    this.accountService.editAccount(account).subscribe(
+      () => {
+        this.alertService.success('Account updated');
+      }
+    );
     account.editMode = false;
   }
 
   onAddAccount(nameInput: HTMLInputElement, balanceInput: HTMLInputElement) {
     this.accountToAdd = new Account();
     this.accountToAdd.id = null;
-    this.accountToAdd.name = nameInput.value;
-    if (!isNumeric(balanceInput.value)) {
-      alert('Balance must be number');
+    if (nameInput.value.length === 0 && balanceInput.value.length === 0) {
+      this.alertService.error('Name cannot be empty,Balance cannot be empty');
       return;
     }
-    if (balanceInput.value.length < 1) {
-      this.accountToAdd.balance = null;
-    } else {
-      this.accountToAdd.balance = +balanceInput.value;
+    if (nameInput.value.length === 0) {
+      this.alertService.error('Name cannot be empty');
+      return;
     }
-
+    if (balanceInput.value.length === 0) {
+      this.alertService.error('Name cannot be empty');
+      return;
+    }
+    if (!isNumeric(balanceInput.value)) {
+      this.alertService.error('Balance must be a number');
+      return;
+    }
+    this.accountToAdd.name = nameInput.value;
+    this.accountToAdd.balance = +balanceInput.value;
     this.accountService.addAccount(this.accountToAdd)
       .subscribe(id => {
         if (isNumeric(id)) {
+          this.alertService.success('Account added');
           this.accountToAdd.id = id;
           this.accounts.push(this.accountToAdd);
         }

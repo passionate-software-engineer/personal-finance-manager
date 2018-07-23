@@ -53,8 +53,6 @@ export class AccountService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      alert(error.error);
-
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}  `);
       this.log(`${operation} failed: ${error.error}  `);
