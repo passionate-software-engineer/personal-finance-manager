@@ -16,6 +16,11 @@ export class AlertsComponent implements OnInit {
 
   ngOnInit() {
     this.alertService.getAlert().subscribe((alert: Alert) => {
+      setTimeout(() => {
+        if (this.alerts && this.alerts.length > 0) {
+          this.alerts.shift();
+        }
+      }, 3000);
       if (!alert) {
         // clear alerts when an empty alert is received
         this.alerts = [];
