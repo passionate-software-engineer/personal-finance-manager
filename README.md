@@ -53,7 +53,6 @@ System allowing users to managed their personal finances.
 8. run "npm install"
 9. run "ng serve --open"
 
-
 To stop backend proces go to de backend directory and run: "./gradlew --stop"
 
 In application you can choose between 2 databases:
