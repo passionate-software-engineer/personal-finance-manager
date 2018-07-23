@@ -37,7 +37,9 @@ export class AccountsListComponent implements OnInit {
   }
 
   deleteAccount(account) {
-    this.accountService.deleteAccount(account.id).subscribe();
+    this.accountService.deleteAccount(account.id).subscribe(() => {
+      this.alertService.info('Account deleted');
+    });
     const index: number = this.accounts.indexOf(account);
     if (index !== -1) {
       this.accounts.splice(index, 1);
@@ -55,7 +57,7 @@ export class AccountsListComponent implements OnInit {
     account.balance = this.editedBalance;
     this.accountService.editAccount(account).subscribe(
       () => {
-        this.alertService.success('Account updated');
+        this.alertService.info('Account updated');
       }
     );
     account.editMode = false;

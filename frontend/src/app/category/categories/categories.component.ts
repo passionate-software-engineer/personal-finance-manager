@@ -43,7 +43,11 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(category) {
-    this.categoryService.deleteCategory(category.id).subscribe();
+    this.categoryService.deleteCategory(category.id).subscribe(
+      () => {
+        this.alertService.info('Category deleted');
+      }
+    );
     const index: number = this.categories.indexOf(category);
     if (index !== -1) {
       this.categories.splice(index, 1);
@@ -70,6 +74,10 @@ export class CategoriesComponent implements OnInit {
 
   onAddCategory(nameInput: HTMLInputElement) {
     this.categoryToAdd = new Category();
+    if (nameInput.value.length === 0) {
+      this.alertService.error('Category name cannot be empty');
+      return;
+    }
     this.categoryToAdd.name = nameInput.value;
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
