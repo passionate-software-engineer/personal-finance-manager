@@ -1,4 +1,3 @@
-#Fill with proper values from AWS
 spring:
   h2:
     console.enabled: false
@@ -8,7 +7,7 @@ spring:
           dialect: org.hibernate.dialect.PostgreSQL94Dialect
       show-sql: true
       hibernate:
-        ddl-auto: create
+        ddl-auto: update
   datasource:
       url: jdbc:postgresql://pfm.cp6kikmytpuw.us-east-2.rds.amazonaws.com:5432/pfm
       username: postgres
