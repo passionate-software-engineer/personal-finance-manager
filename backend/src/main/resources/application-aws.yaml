@@ -1,22 +1,13 @@
-#Fill with proper values from AWS
 spring:
-  h2:
-    console.enabled: false
   jpa:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.PostgreSQL94Dialect
       show-sql: true
       hibernate:
-        ddl-auto: create
+        ddl-auto: update
   datasource:
       url: jdbc:postgresql://pfm.cp6kikmytpuw.us-east-2.rds.amazonaws.com:5432/pfm
       username: postgres
       password: postgres123
       driver-class-name: org.postgresql.Driver
-
-logging:
-  level:
-    org:
-      springframework: ERROR
-  file: application.log

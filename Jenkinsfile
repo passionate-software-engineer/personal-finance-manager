@@ -83,6 +83,41 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+          when{
+            branch 'master' 
+          }
+          parallel {
+            stage('BACKEND') {
+                steps {
+                     sh '''
+                     cd backend/build/libs
+                     scp -i "~/.ssh/piotr-key-aws.pem" backend-1.0.jar ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/backend-1.0.jar.new
+                     ssh -i "~/.ssh/piotr-key-aws.pem" ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com <<'ENDSSH'
+# must be formatted like that - command will pass whitespaces to remote server otherwise
+# TODO move that to script, then it will be more natural
+cd app
+chmod 500 backend-1.0.jar.new
+kill $(ps -ef | grep "[b]ackend-1.0.jar" | awk '{print $2}')
+mv backend-1.0.jar backend-1.0.jar.bak
+mv backend-1.0.jar.new backend-1.0.jar
+nohup java -jar backend-1.0.jar -Dspring.profile=aws >> /dev/null 2>> /dev/null &
+ENDSSH
+                       '''
+                }
+            }
+            stage(‘FRONTEND’) {
+                steps {
+                     sh '''
+                        cd frontend
+                        ng build --configuration=aws
+                        cd dist/frontend
+                        aws s3 cp --profile pfm --recursive --acl "public-read" . s3://personal-finance-manager
+                        '''
+                }
+            }
+         }
+      }
     }
     post {
         always {
