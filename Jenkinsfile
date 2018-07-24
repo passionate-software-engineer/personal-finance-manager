@@ -85,7 +85,7 @@ pipeline {
         }
         stage('Deploy') {
           when{
-            branch 'deploy' // TODO change to master
+            branch 'master' 
           }
           parallel {
             stage('BACKEND') {
