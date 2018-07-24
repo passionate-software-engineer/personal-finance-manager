@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.Messages;
 import com.pfm.category.CategoryController.CategoryRequest;
 import java.util.List;
+import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CategoryControllerIntegrationTest {
 
   private static final String CATEGORIES_SERVICE_PATH = "/categories";
@@ -52,8 +52,14 @@ public class CategoryControllerIntegrationTest {
   @Autowired
   private ObjectMapper mapper;
 
+  @Autowired
+  private Flyway flyway;
+
   @Before
-  public void defaultGiven() throws Exception {
+  public void before() throws Exception {
+    flyway.clean();
+    flyway.migrate();
+
     // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
     // those methods in // given part of the test
     parentCategoryId = addCategory(parentCategoryRq);
