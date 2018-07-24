@@ -34,8 +34,8 @@
       <td *ngIf="!account.editMode">{{account.name}}</td>
 
       <td *ngIf="account.editMode">
-        <input type="text" [(ngModel)]="editedBalance"> $</td>
-      <td *ngIf="!account.editMode">{{account.balance}} $</td>
+        <input type="text" [(ngModel)]="editedBalance"> </td>
+      <td *ngIf="!account.editMode">{{account.balance}} </td>
 
       <td *ngIf="!account.editMode">
         <div class="dropdown">
@@ -61,12 +61,12 @@
     <tr *ngIf="addingMode">
       <td>New Account</td>
       <td>
-        <input type="text" #newAccountName>
+        <input type="text" [(ngModel)]="newAccountName">
       </td>
       <td>
-        <input type="text" #newAccountBalance> </td>
+        <input type="text" [(ngModel)]="newAccountBalance"> </td>
       <td>
-        <button class="btn-primary" (click)="onAddAccount(newAccountName,newAccountBalance)">Save</button>
+        <button class="btn-primary" (click)="onAddAccount()">Save</button>
         <button class="btn-danger" (click)="addingMode=false">Exit</button>
       </td>
     </tr>
