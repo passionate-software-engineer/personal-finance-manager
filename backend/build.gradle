@@ -8,20 +8,21 @@ buildscript {
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
-        classpath 'com.h2database:h2:1.4.191'
     }
 }
 
 plugins { // TODO unify appraoch with below entries
-    id "org.flywaydb.flyway" version "5.1.1"
+    id 'de.aaschmid.cpd' version '1.0'
 }
 
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "jacoco"
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'pmd'
 
 version '1.0'
 
@@ -36,11 +37,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
 
-    compile 'com.h2database:h2:1.0.60'
+    compile 'com.h2database:h2:1.4.197'
     compile 'io.rest-assured:spring-mock-mvc:3.1.0'
     compile 'io.springfox:springfox-swagger-ui:2.9.2'
     compile 'io.springfox:springfox-swagger2:2.9.2'
     compile 'javax.xml.bind:jaxb-api:2.3.0'
+    compile "org.flywaydb:flyway-core:5.1.4"
     compile 'org.postgresql:postgresql:42.1.4'
     compile "org.projectlombok:lombok:1.18.0"
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -55,11 +57,6 @@ checkstyle {
     ignoreFailures = false
     maxWarnings = 0
     maxErrors = 0
-}
-
-flyway {
-    url = 'jdbc:h2:file:./target/flyway'
-    user = 'sa'
 }
 
 jacocoTestReport {
@@ -103,6 +100,13 @@ jacocoTestCoverageVerification {
                 minimum = 0.90
             }
         }
+    }
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
     }
 }
 

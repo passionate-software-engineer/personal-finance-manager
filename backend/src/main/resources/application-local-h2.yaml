@@ -2,9 +2,3 @@
 spring: # TODO - please add comments when which profile is intended to be used.
   h2:
     console.enabled: true
-
-logging:
-  level:
-    org:
-      springframework: ERROR
-  file: application.log

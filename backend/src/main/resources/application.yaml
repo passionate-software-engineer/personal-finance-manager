@@ -2,6 +2,11 @@ server.port: 8088
 spring:
   profiles:
     active: local-h2
+  jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: none
+
 logging:
   pattern:
     console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"
