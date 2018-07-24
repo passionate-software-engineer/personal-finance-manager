@@ -18,6 +18,7 @@ export class CategoriesComponent implements OnInit {
   categoryToAdd: Category = new Category();
   addingMode = false;
   editedName: string;
+  newCategoryName: string;
   selectedCategory: Category;
   editedParentCategory: Category = new Category();
   id;
@@ -62,6 +63,9 @@ export class CategoriesComponent implements OnInit {
   }
 
   onEditCategory(category: Category) {
+    if (!this.validateCategory(this.editedName)) {
+      return;
+    }
     category.name = this.editedName;
     category.parentCategory = this.editedParentCategory;
     this.categoryService.editCategory(category).subscribe(
@@ -70,15 +74,16 @@ export class CategoriesComponent implements OnInit {
       }
     );
     category.editMode = false;
+    this.editedParentCategory = null;
+    this.editedName = null;
   }
 
-  onAddCategory(nameInput: HTMLInputElement) {
+  onAddCategory() {
     this.categoryToAdd = new Category();
-    if (nameInput.value.length === 0) {
-      this.alertService.error('Category name cannot be empty');
+    if (!this.validateCategory(this.newCategoryName)) {
       return;
     }
-    this.categoryToAdd.name = nameInput.value;
+    this.categoryToAdd.name = this.newCategoryName;
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
@@ -89,6 +94,7 @@ export class CategoriesComponent implements OnInit {
         }
       });
     this.addingMode = false;
+    this.newCategoryName = null;
   }
 
   onRefreshCategories() {
@@ -157,5 +163,13 @@ export class CategoriesComponent implements OnInit {
           return x.parentCategory.id !== cat.id;
         }
       });
+  }
+
+  validateCategory(categoryName: string): boolean {
+    if (categoryName == null || categoryName === '') {
+      this.alertService.error('Category name cannot be empty');
+      return false;
+    }
+    return true;
   }
 }

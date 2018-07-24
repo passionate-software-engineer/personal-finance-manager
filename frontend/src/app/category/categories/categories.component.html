@@ -1,4 +1,3 @@
-
 <button class="btn btn-danger" type="button" (click)="addingMode === true ? addingMode=false : addingMode=true">
   Add Category
 </button>
@@ -71,7 +70,7 @@
     <td>New Category</td>
 
     <td>
-      <input type="text" #newCategoryName>
+      <input type="text" [(ngModel)]="newCategoryName">
     </td>
     <td>
       <div class="form-group">
@@ -84,7 +83,7 @@
     </td>
 
     <td>
-      <button class="btn-primary" (click)="onAddCategory(newCategoryName)">Save</button>
+      <button class="btn-primary" (click)="onAddCategory()">Save</button>
       <button class="btn-danger" (click)="addingMode=false">Exit</button>
     </td>
 
