@@ -26,28 +26,28 @@ public class TestAccountProvider {
           .balance(BigDecimal.valueOf(1000))
           .build();
 
-  public static Account ACCOUNT_LUKASZ_BALANCE_1124 =
+  public static final Account ACCOUNT_LUKASZ_BALANCE_1124 =
       Account.builder()
           .id(987654321L)
           .name("Lukasz CreditBank")
           .balance(BigDecimal.valueOf(1124))
           .build();
 
-  public static Account ACCOUNT_ADAM_BALANCE_0 =
+  public static final Account ACCOUNT_ADAM_BALANCE_0 =
       Account.builder()
           .id(Long.MAX_VALUE)
           .name("Adam ALIOR account")
           .balance(BigDecimal.valueOf(0))
           .build();
 
-  public static Account ACCOUNT_MATEUSZ_BALANCE_200 =
+  public static final Account ACCOUNT_MATEUSZ_BALANCE_200 =
       Account.builder()
           .id(1L)
           .name("Mateusz mBank saving account")
           .balance(BigDecimal.valueOf(200.00))
           .build();
 
-  public static Account ACCOUNT_JUREK_BALANCE_10_99 =
+  public static final Account ACCOUNT_JUREK_BALANCE_10_99 =
       Account.builder()
           .id(0L)
           .name("Jurek BZWBK account")

@@ -14,14 +14,17 @@ buildscript {
 
 plugins { // TODO unify appraoch with below entries
     id "org.flywaydb.flyway" version "5.1.1"
+    id 'de.aaschmid.cpd' version '1.0'
 }
 
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "jacoco"
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'pmd'
 
 version '1.0'
 
@@ -103,6 +106,13 @@ jacocoTestCoverageVerification {
                 minimum = 0.90
             }
         }
+    }
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
     }
 }
 

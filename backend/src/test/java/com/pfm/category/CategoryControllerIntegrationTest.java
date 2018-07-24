@@ -244,12 +244,7 @@ public class CategoryControllerIntegrationTest {
         .parentCategoryId(childCategoryId).build();
 
     //when
-    this.mockMvc
-        .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
-            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
-        .andExpect(status().isBadRequest())
-        .andExpect(content().string(
-            "[\"" + Messages.CATEGORIES_CYCLE_DETECTED + "\"]"));
+    performUpdateRequestAndAssertCycleErrorIsReturned(categoryToUpdate);
   }
 
   @Test
@@ -260,6 +255,10 @@ public class CategoryControllerIntegrationTest {
         .parentCategoryId(parentCategoryId).build();
 
     //when
+    performUpdateRequestAndAssertCycleErrorIsReturned(categoryToUpdate);
+  }
+
+  private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate) throws Exception {
     this.mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
@@ -320,7 +319,7 @@ public class CategoryControllerIntegrationTest {
                 .contentType(CONTENT_TYPE))
         .andExpect(status().isOk()).andReturn()
         .getResponse().getContentAsString();
-    return Long.valueOf(response);
+    return Long.parseLong(response);
   }
 
   private Category getCategoryById(long id) throws Exception {

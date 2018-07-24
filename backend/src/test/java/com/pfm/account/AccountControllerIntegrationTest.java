@@ -157,8 +157,6 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
-    Account accountWithOutName = new Account(null, null, null);
-
     callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
 
     this.mockMvc
