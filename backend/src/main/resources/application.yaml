@@ -11,8 +11,7 @@ logging:
   pattern:
     console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"
 
-language: pl
 com:
   pfm:
     config:
-      rbc: language
+      rbc: pl
