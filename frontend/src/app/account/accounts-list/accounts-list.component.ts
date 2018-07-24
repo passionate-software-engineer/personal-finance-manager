@@ -67,7 +67,8 @@ export class AccountsListComponent implements OnInit {
     this.accountToAdd = new Account();
     this.accountToAdd.id = null;
     if (nameInput.value.length === 0 && balanceInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty,Balance cannot be empty');
+      this.alertService.error('Name cannot be empty');
+      this.alertService.error('Balance cannot be empty');
       return;
     }
     if (nameInput.value.length === 0) {
