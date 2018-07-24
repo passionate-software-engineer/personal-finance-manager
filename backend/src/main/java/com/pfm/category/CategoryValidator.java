@@ -1,6 +1,11 @@
 package com.pfm.category;
 
-import com.pfm.config.ResourceBundleConfig;
+import static com.pfm.config.ResourceBundleConfig.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.ResourceBundleConfig.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.ResourceBundleConfig.EMPTY_CATEGORY_NAME;
+import static com.pfm.config.ResourceBundleConfig.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.ResourceBundleConfig.getMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -11,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class CategoryValidator {
 
   private CategoryService categoryService;
-  private ResourceBundleConfig resourceBundleConfig;
+
 
   public List<String> validateCategoryForUpdate(Category category) {
     List<String> validationResults = new ArrayList<>();
@@ -21,7 +26,7 @@ public class CategoryValidator {
     if (category.getParentCategory() != null
         && !categoryService
         .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
-      validationResults.add(resourceBundleConfig.getMessage("categoryCycleDetected"));
+      validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 
     return validationResults;
@@ -32,7 +37,7 @@ public class CategoryValidator {
     validate(validationResults, category);
     if (category.getName() != null && !category.getName().trim().equals("")
         && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
-      validationResults.add(resourceBundleConfig.getMessage("categoryWithProvidedNameAlreadyExist"));
+      validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST));
     } // TODO - why you don't check names in case of update? :)
 
     return validationResults;
@@ -40,12 +45,12 @@ public class CategoryValidator {
 
   private void validate(List<String> validationResults, Category category) {
     if (category.getName() == null || category.getName().trim().equals("")) {
-      validationResults.add(resourceBundleConfig.getMessage("emptyCategoryName"));
+      validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
     }
 
     if (category.getParentCategory() != null
         && !categoryService.idExist(category.getParentCategory().getId())) {
-      validationResults.add(resourceBundleConfig.getMessage("providedParentCategoryNotExist"));
+      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST));
     }
   }
 

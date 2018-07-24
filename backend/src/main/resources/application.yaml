@@ -11,9 +11,5 @@ logging:
   pattern:
     console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"
 
-#error messages language pl country PL or en US
-com:
-  pfm:
-    config:
-      lang: pl
-      country: PL
+language: pl
+
