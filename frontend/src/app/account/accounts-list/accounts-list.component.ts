@@ -64,6 +64,8 @@ export class AccountsListComponent implements OnInit {
       }
     );
     account.editMode = false;
+    this.editedBalance = null;
+    this.editedName = null;
   }
 
   onAddAccount() {
@@ -83,6 +85,8 @@ export class AccountsListComponent implements OnInit {
         }
       });
     this.addingMode = false;
+    this.newAccountBalance = null;
+    this.newAccountName = null;
   }
 
   onRefreshAccounts() {
