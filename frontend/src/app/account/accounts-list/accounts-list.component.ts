@@ -15,8 +15,8 @@ export class AccountsListComponent implements OnInit {
   addingMode = false;
   editedName: string;
   editedBalance: number;
-  selectedAccount: Account = new Account();
-  id;
+  newAccountName: string;
+  newAccountBalance: number;
 
   constructor(private accountService: AccountService, private alertService: AlertsService) {
   }
@@ -53,6 +53,9 @@ export class AccountsListComponent implements OnInit {
   }
 
   onEditAccount(account: Account) {
+    if (!this.validateAccount(this.editedName, this.editedBalance)) {
+      return;
+    }
     account.name = this.editedName;
     account.balance = this.editedBalance;
     this.accountService.editAccount(account).subscribe(
@@ -63,28 +66,14 @@ export class AccountsListComponent implements OnInit {
     account.editMode = false;
   }
 
-  onAddAccount(nameInput: HTMLInputElement, balanceInput: HTMLInputElement) {
+  onAddAccount() {
     this.accountToAdd = new Account();
-    this.accountToAdd.id = null;
-    if (nameInput.value.length === 0 && balanceInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty');
-      this.alertService.error('Balance cannot be empty');
+    if (!this.validateAccount(this.newAccountName, this.newAccountBalance)) {
       return;
     }
-    if (nameInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty');
-      return;
-    }
-    if (balanceInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty');
-      return;
-    }
-    if (!isNumeric(balanceInput.value)) {
-      this.alertService.error('Balance must be a number');
-      return;
-    }
-    this.accountToAdd.name = nameInput.value;
-    this.accountToAdd.balance = +balanceInput.value;
+    this.accountToAdd.name = this.newAccountName;
+    // @ts-ignore
+    this.accountToAdd.balance = (parseFloat(this.newAccountBalance)).toFixed(2);
     this.accountService.addAccount(this.accountToAdd)
       .subscribe(id => {
         if (isNumeric(id)) {
@@ -125,5 +114,34 @@ export class AccountsListComponent implements OnInit {
     if (sortingType === 'dsc') {
       this.accounts.sort((a1, a2) => a2.balance - a1.balance);
     }
+  }
+
+  validateAccount(accountName: string, accountBalance: number): boolean {
+    if ((accountName == null || accountName === '')
+      && (!accountBalance)) {
+      this.alertService.error('Name cannot be empty');
+      this.alertService.error('Balance cannot be empty');
+      return false;
+    }
+    if (accountName == null || accountName === '') {
+      this.alertService.error('Name cannot be empty');
+      return false;
+    }
+    if (typeof accountBalance === 'undefined' || !accountBalance) {
+      this.alertService.error('Balance cannot be empty');
+      return false;
+    }
+
+    if (!isNumeric(accountBalance)) {
+      this.alertService.error('Provided balance is not correct number');
+      return false;
+    }
+
+    if ((Math.round(accountBalance * 100) / 100) > 999999999999999) {
+      this.alertService.error('Balance number is too big.' +
+        ' If You are so rich why do You need personal finance manager !? ');
+      return false;
+    }
+    return true;
   }
 }
