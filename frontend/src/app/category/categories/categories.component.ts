@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Category } from '../category';
-import { CategoryService } from '../category-service/category.service';
-import { MessagesService } from '../../messages/messages.service';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Category} from '../category';
+import {CategoryService} from '../category-service/category.service';
+import {MessagesService} from '../../messages/messages.service';
+import {catchError, map, tap} from 'rxjs/operators';
+import {isNumber} from 'util';
+import {isNumeric} from 'rxjs/internal-compatibility';
+import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
 @Component({
   selector: 'app-categories',
@@ -19,10 +22,12 @@ export class CategoriesComponent implements OnInit {
   editedParentCategory: Category = new Category();
   id;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private alertService: AlertsService) {
+  }
 
   ngOnInit() {
     this.getCategories();
+
   }
 
   getCategories(): void {
@@ -38,7 +43,11 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(category) {
-    this.categoryService.deleteCategory(category.id).subscribe();
+    this.categoryService.deleteCategory(category.id).subscribe(
+      () => {
+        this.alertService.info('Category deleted');
+      }
+    );
     const index: number = this.categories.indexOf(category);
     if (index !== -1) {
       this.categories.splice(index, 1);
@@ -55,18 +64,29 @@ export class CategoriesComponent implements OnInit {
   onEditCategory(category: Category) {
     category.name = this.editedName;
     category.parentCategory = this.editedParentCategory;
-    this.categoryService.editCategory(category).subscribe();
+    this.categoryService.editCategory(category).subscribe(
+      () => {
+        this.alertService.success('Category edited');
+      }
+    );
     category.editMode = false;
   }
 
   onAddCategory(nameInput: HTMLInputElement) {
     this.categoryToAdd = new Category();
+    if (nameInput.value.length === 0) {
+      this.alertService.error('Category name cannot be empty');
+      return;
+    }
     this.categoryToAdd.name = nameInput.value;
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
-        this.categoryToAdd.id = id;
-        this.categories.push(this.categoryToAdd);
+        if (isNumeric(id)) {
+          this.categoryToAdd.id = id;
+          this.categories.push(this.categoryToAdd);
+          this.alertService.success('Category added');
+        }
       });
     this.addingMode = false;
   }
@@ -81,6 +101,31 @@ export class CategoriesComponent implements OnInit {
     }
     if (type === 'dsc') {
       this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
+    }
+  }
+
+  sortByParentCategory(type: string) {
+    if (type === 'asc') {
+      this.categories.sort((a1, a2) => {
+        if (a1.parentCategory == null) {
+          return 1;
+        }
+        if (a2.parentCategory == null) {
+          return -1;
+        }
+        return a1.parentCategory.name.toLowerCase() > a2.parentCategory.name.toLowerCase() ? -1 : 1;
+      });
+    }
+    if (type === 'dsc') {
+      this.categories.sort((a1, a2) => {
+        if (a1.parentCategory == null) {
+          return -1;
+        }
+        if (a2.parentCategory == null) {
+          return 1;
+        }
+        return a1.parentCategory.name.toLowerCase() < a2.parentCategory.name.toLowerCase() ? -1 : 1;
+      });
     }
   }
 
@@ -109,11 +154,7 @@ export class CategoriesComponent implements OnInit {
         if (x.parentCategory == null) {
           return true;
         } else {
-          if (x.parentCategory.id === cat.id) {
-            return false;
-          } else {
-            return true;
-          }
+          return x.parentCategory.id !== cat.id;
         }
       });
   }

@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {Category} from '../category';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,7 +15,7 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8088/categories';
+  private apiUrl = environment.appUrl + '/categories';
 
   constructor(private http: HttpClient, private messagesService: MessagesService) {
   }
@@ -28,7 +29,7 @@ export class CategoryService {
 
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl).pipe(
-      tap(categories => this.log(`fetched categories`)),
+      tap(() => this.log(`fetched categories`)),
       catchError(this.handleError('getCategories', [])));
   }
 
@@ -42,7 +43,7 @@ export class CategoryService {
   deleteCategory(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url).pipe(
-      tap(any => this.log(`deleted category with id: ` + id)),
+      tap(() => this.log(`deleted category with id: ` + id)),
       catchError(this.handleError('deleteCategory', [])));
   }
 
@@ -65,7 +66,8 @@ export class CategoryService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.log(`${operation} failed: ${error.message}  `);
+      this.log(`${operation} failed: ${error.error}  `);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
