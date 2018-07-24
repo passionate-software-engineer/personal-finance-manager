@@ -1,5 +1,8 @@
 package com.pfm.account;
 
+import static com.pfm.config.ResourceBundleConfig.EMPTY_ACCOUNT_BALANCE;
+import static com.pfm.config.ResourceBundleConfig.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.ResourceBundleConfig.getMessage;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_10_99;
@@ -70,14 +73,13 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByEmptyNameAndEmptyBalanceFields() throws Exception {
     Account accountWithoutName = new Account(null, null, null);
-    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
         .content(json(accountWithoutName)))
         .andExpect(
-            content().string("[\"" + resourceBundleConfig.getMessage("emptyAccountName") + "\",\""
-                + resourceBundleConfig.getMessage("emptyAccountBalance") + "\"]"))
+            content().string("[\"" + getMessage(EMPTY_ACCOUNT_NAME) + "\",\""
+                + getMessage(EMPTY_ACCOUNT_BALANCE) + "\"]"))
         .andExpect(status().isBadRequest());
   }
 

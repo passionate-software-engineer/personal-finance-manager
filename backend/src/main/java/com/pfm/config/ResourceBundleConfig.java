@@ -8,19 +8,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ResourceBundleConfig {
 
-  //category
-  public static final String CANNOT_DELETE_PARENT_CATEGORY = "cannotDeleteParentCategory";
-  //account validator
-  public static final String EMPTY_ACCOUNT_NAME = "emptyAccountName";
-  public static final String EMPTY_ACCOUNT_BALANCE = "emptyAccountBalance";
-  //category validator
-  public static final String EMPTY_CATEGORY_NAME = "emptyCategoryName";
-  public static final String PROVIDED_PARENT_CATEGORY_NOT_EXIST = "providedParentCategoryNotExist";
-  public static final String CATEGORIES_CYCLE_DETECTED = "categoryCycleDetected";
-  public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST = "categoryWithProvidedNameAlreadyExist";
+  public static final String CANNOT_DELETE_PARENT_CATEGORY = "category.cannotDeleteParentCategory";
 
-  @Value("${language}")
-  static String language;
+  public static final String EMPTY_ACCOUNT_NAME = "accountValidator.emptyAccountName";
+  public static final String EMPTY_ACCOUNT_BALANCE = "accountValidator.emptyAccountBalance";
+
+  public static final String EMPTY_CATEGORY_NAME = "categoryValidator.emptyCategoryName";
+  public static final String PROVIDED_PARENT_CATEGORY_NOT_EXIST = "categoryValidator.providedParentCategoryNotExist";
+  public static final String CATEGORIES_CYCLE_DETECTED = "categoryValidator.categoryCycleDetected";
+  public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST = "categoryValidator.categoryWithProvidedNameAlreadyExist";
+
+  //FIXME language in null. Before added static too.
+  @Value("${com.pfm.config.rbc}")
+  private static String language;
 
   private static Locale locale = new Locale("pl");
   private static ResourceBundle langBundle = ResourceBundle.getBundle("messages", locale);

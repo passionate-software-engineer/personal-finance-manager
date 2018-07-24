@@ -6,6 +6,7 @@ import static com.pfm.config.ResourceBundleConfig.CATEGORIES_CYCLE_DETECTED;
 import static com.pfm.config.ResourceBundleConfig.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
 import static com.pfm.config.ResourceBundleConfig.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.ResourceBundleConfig.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.ResourceBundleConfig.getMessage;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -114,13 +115,12 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCauseByEmptyNameFiled() throws Exception {
     //given
     CategoryRequest categoryToAdd = CategoryRequest.builder().name("").build();
-    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
-        .andExpect(content().string("[\"" + resourceBundleConfig.getMessage(EMPTY_CATEGORY_NAME)
+        .andExpect(content().string("[\"" + getMessage(EMPTY_CATEGORY_NAME)
             + "\"]")) // TODO if you get list as a result then first assert size and then take element from index - [ ] is making code less readable
         .andExpect(status()
             .isBadRequest()); // TODO always assert status first - further assertions does not make sense if status is not correct
@@ -132,14 +132,13 @@ public class CategoryControllerIntegrationTest {
     CategoryRequest categoryToAdd = CategoryRequest.builder()
         .name(parentCategoryRq.getName())
         .build();
-    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
         .andExpect(
-            content().string("[\"" + resourceBundleConfig.getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"))
+            content().string("[\"" + getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"))
         .andExpect(status()
             .isBadRequest());  // TODO always assert status first - further assertions does not make sense if status is not correct
   }
@@ -239,7 +238,6 @@ public class CategoryControllerIntegrationTest {
     CategoryRequest categoryToUpdate = childCategoryRq;
     categoryToUpdate
         .setParentCategoryId(NOT_EXISTING_ID);
-    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc
@@ -247,7 +245,7 @@ public class CategoryControllerIntegrationTest {
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "[\"" + resourceBundleConfig.getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST) + "\"]"));
+            "[\"" + getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST) + "\"]"));
   }
 
   @Test
@@ -281,7 +279,7 @@ public class CategoryControllerIntegrationTest {
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "[\"" + resourceBundleConfig.getMessage(CATEGORIES_CYCLE_DETECTED) + "\"]"));
+            "[\"" + getMessage(CATEGORIES_CYCLE_DETECTED) + "\"]"));
   }
 
   @Test
@@ -316,12 +314,11 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
       throws Exception {
     //given
-    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
 
     //when
     this.mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId))
         .andExpect(status().isBadRequest())
-        .andExpect(content().string(resourceBundleConfig.getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
+        .andExpect(content().string(getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
   }
 
   @Test
