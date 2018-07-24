@@ -3,9 +3,7 @@ package com.pfm.config;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class ResourceBundleConfig {
@@ -24,7 +22,7 @@ public class ResourceBundleConfig {
   @Value("${language}")
   static String language;
 
-  private static Locale locale = new Locale(language);
+  private static Locale locale = new Locale("pl");
   private static ResourceBundle langBundle = ResourceBundle.getBundle("messages", locale);
 
   public static String getMessage(String errorMessage) {
