@@ -1,8 +1,8 @@
 package com.pfm.account;
 
-import static com.pfm.config.ResourceBundleConfig.EMPTY_ACCOUNT_BALANCE;
-import static com.pfm.config.ResourceBundleConfig.EMPTY_ACCOUNT_NAME;
-import static com.pfm.config.ResourceBundleConfig.getMessage;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_10_99;

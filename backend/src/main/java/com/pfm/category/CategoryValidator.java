@@ -1,10 +1,10 @@
 package com.pfm.category;
 
-import static com.pfm.config.ResourceBundleConfig.CATEGORIES_CYCLE_DETECTED;
-import static com.pfm.config.ResourceBundleConfig.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
-import static com.pfm.config.ResourceBundleConfig.EMPTY_CATEGORY_NAME;
-import static com.pfm.config.ResourceBundleConfig.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
-import static com.pfm.config.ResourceBundleConfig.getMessage;
+import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;

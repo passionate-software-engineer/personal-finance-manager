@@ -52,7 +52,7 @@ public class AccountService {
     return accountRepository.existsById(id);
   }
 
-  // TODO - add check if account name already exists (similar as in category) DONE
+  // TODO - add check if account name already exists (similar as in category) (use method below)
 
   public boolean isAccountNameAlreadyUsed(String name)  {
     return accountRepository.findByNameContainingIgnoreCase(name).size() != 0;

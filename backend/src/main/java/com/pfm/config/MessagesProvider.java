@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ResourceBundleConfig {
+public class MessagesProvider {
 
   public static final String CANNOT_DELETE_PARENT_CATEGORY = "category.cannotDeleteParentCategory";
 
@@ -18,12 +18,8 @@ public class ResourceBundleConfig {
   public static final String CATEGORIES_CYCLE_DETECTED = "categoryValidator.categoryCycleDetected";
   public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST = "categoryValidator.categoryWithProvidedNameAlreadyExist";
 
-  //FIXME language in null. Before added static too.
-  @Value("${com.pfm.config.rbc}")
-  private static String language;
-
-  private static Locale locale = new Locale("pl");
-  private static ResourceBundle langBundle = ResourceBundle.getBundle("messages", locale);
+  // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
+  private static ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 
   public static String getMessage(String errorMessage) {
     return langBundle.getString(errorMessage);

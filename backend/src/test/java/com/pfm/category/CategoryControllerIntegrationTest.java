@@ -1,12 +1,12 @@
 package com.pfm.category;
 
 import static com.pfm.category.CategoryController.convertToCategory;
-import static com.pfm.config.ResourceBundleConfig.CANNOT_DELETE_PARENT_CATEGORY;
-import static com.pfm.config.ResourceBundleConfig.CATEGORIES_CYCLE_DETECTED;
-import static com.pfm.config.ResourceBundleConfig.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
-import static com.pfm.config.ResourceBundleConfig.EMPTY_CATEGORY_NAME;
-import static com.pfm.config.ResourceBundleConfig.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
-import static com.pfm.config.ResourceBundleConfig.getMessage;
+import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
+import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.category.CategoryController.CategoryRequest;
-import com.pfm.config.ResourceBundleConfig;
 import java.util.List;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
@@ -30,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 

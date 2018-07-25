@@ -1,10 +1,9 @@
 package com.pfm.category;
 
-import static com.pfm.config.ResourceBundleConfig.CANNOT_DELETE_PARENT_CATEGORY;
-import static com.pfm.config.ResourceBundleConfig.getMessage;
+import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
+import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.config.ResourceBundleConfig;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +37,6 @@ public class CategoryController {
 
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
-  private ResourceBundleConfig resourceBundleConfig;
 
   // TODO - add loging similar way it is added in Account Controller
   @ApiOperation(value = "Find category by id", response = Category.class)
