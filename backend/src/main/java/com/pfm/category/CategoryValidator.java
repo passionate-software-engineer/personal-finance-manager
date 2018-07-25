@@ -1,9 +1,10 @@
 package com.pfm.category;
 
-import static com.pfm.Messages.CATEGORIES_CYCLE_DETECTED;
-import static com.pfm.Messages.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
-import static com.pfm.Messages.EMPTY_CATEGORY_NAME;
-import static com.pfm.Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class CategoryValidator {
 
   private CategoryService categoryService;
 
+
   public List<String> validateCategoryForUpdate(Category category) {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
@@ -24,7 +26,7 @@ public class CategoryValidator {
     if (category.getParentCategory() != null
         && !categoryService
         .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
-      validationResults.add(CATEGORIES_CYCLE_DETECTED);
+      validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 
     return validationResults;
@@ -35,7 +37,7 @@ public class CategoryValidator {
     validate(validationResults, category);
     if (category.getName() != null && !category.getName().trim().equals("")
         && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
-      validationResults.add(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST);
+      validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST));
     } // TODO - why you don't check names in case of update? :)
 
     return validationResults;
@@ -43,12 +45,12 @@ public class CategoryValidator {
 
   private void validate(List<String> validationResults, Category category) {
     if (category.getName() == null || category.getName().trim().equals("")) {
-      validationResults.add(EMPTY_CATEGORY_NAME);
+      validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
     }
 
     if (category.getParentCategory() != null
         && !categoryService.idExist(category.getParentCategory().getId())) {
-      validationResults.add(PROVIDED_PARRENT_CATEGORY_NOT_EXIST);
+      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST));
     }
   }
 

@@ -1,7 +1,9 @@
 package com.pfm.category;
 
+import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.Messages;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -94,7 +96,7 @@ public class CategoryController {
       return ResponseEntity.notFound().build();
     }
     if (categoryService.isParentCategory(id)) {
-      return ResponseEntity.badRequest().body(Messages.CANNOT_DELETE_PARENT_CATEGORY);
+      return ResponseEntity.badRequest().body(getMessage(CANNOT_DELETE_PARENT_CATEGORY));
     }
     categoryService.deleteCategory(id);
     return ResponseEntity.ok().build();

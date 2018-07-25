@@ -1,7 +1,8 @@
 package com.pfm.account;
 
-import static com.pfm.Messages.EMPTY_ACCOUNT_BALANCE;
-import static com.pfm.Messages.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,12 @@ public class AccountValidator {
     List<String> validationErrors = new ArrayList<>();
 
     if (account.getName() == null || account.getName().trim().equals("")) {
-      validationErrors.add(EMPTY_ACCOUNT_NAME);
+      validationErrors.add(getMessage(EMPTY_ACCOUNT_NAME));
     }
 
     if (account.getBalance() == null) {
-      validationErrors.add(EMPTY_ACCOUNT_BALANCE);
+      validationErrors.add(getMessage(EMPTY_ACCOUNT_BALANCE));
     }
-
     return validationErrors;
   }
 

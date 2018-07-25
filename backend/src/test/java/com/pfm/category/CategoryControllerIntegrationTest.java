@@ -1,6 +1,12 @@
 package com.pfm.category;
 
 import static com.pfm.category.CategoryController.convertToCategory;
+import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
+import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.Messages;
 import com.pfm.category.CategoryController.CategoryRequest;
 import java.util.List;
 import org.flywaydb.core.Flyway;
@@ -24,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -114,7 +118,7 @@ public class CategoryControllerIntegrationTest {
     this.mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
-        .andExpect(content().string("[\"" + Messages.EMPTY_CATEGORY_NAME
+        .andExpect(content().string("[\"" + getMessage(EMPTY_CATEGORY_NAME)
             + "\"]")) // TODO if you get list as a result then first assert size and then take element from index - [ ] is making code less readable
         .andExpect(status()
             .isBadRequest()); // TODO always assert status first - further assertions does not make sense if status is not correct
@@ -132,7 +136,7 @@ public class CategoryControllerIntegrationTest {
         .perform(
             post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
         .andExpect(
-            content().string("[\"" + Messages.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST + "\"]"))
+            content().string("[\"" + getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"))
         .andExpect(status()
             .isBadRequest());  // TODO always assert status first - further assertions does not make sense if status is not correct
   }
@@ -239,7 +243,7 @@ public class CategoryControllerIntegrationTest {
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "[\"" + Messages.PROVIDED_PARRENT_CATEGORY_NOT_EXIST + "\"]"));
+            "[\"" + getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST) + "\"]"));
   }
 
   @Test
@@ -265,12 +269,13 @@ public class CategoryControllerIntegrationTest {
   }
 
   private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate) throws Exception {
+    //when
     this.mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "[\"" + Messages.CATEGORIES_CYCLE_DETECTED + "\"]"));
+            "[\"" + getMessage(CATEGORIES_CYCLE_DETECTED) + "\"]"));
   }
 
   @Test
@@ -304,10 +309,12 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
       throws Exception {
+    //given
+
     //when
     this.mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId))
         .andExpect(status().isBadRequest())
-        .andExpect(content().string(Messages.CANNOT_DELETE_PARENT_CATEGORY));
+        .andExpect(content().string(getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
   }
 
   @Test

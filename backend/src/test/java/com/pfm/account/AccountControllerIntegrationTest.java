@@ -1,5 +1,8 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_10_99;
@@ -20,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.Messages;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.junit.Test;
@@ -75,8 +77,8 @@ public class AccountControllerIntegrationTest {
         .contentType(CONTENT_TYPE)
         .content(json(accountWithoutName)))
         .andExpect(
-            content().string("[\"" + Messages.EMPTY_ACCOUNT_NAME + "\",\""
-                + Messages.EMPTY_ACCOUNT_BALANCE + "\"]"))
+            content().string("[\"" + getMessage(EMPTY_ACCOUNT_NAME) + "\",\""
+                + getMessage(EMPTY_ACCOUNT_BALANCE) + "\"]"))
         .andExpect(status().isBadRequest());
   }
 
