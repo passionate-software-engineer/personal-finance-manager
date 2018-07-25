@@ -17,6 +17,7 @@ export class AccountsListComponent implements OnInit {
   editedBalance: number;
   newAccountName: string;
   newAccountBalance: number;
+  sthGoesWrong = 'Something goes wrong ,try again';
 
   constructor(private accountService: AccountService, private alertService: AlertsService) {
   }
@@ -28,22 +29,23 @@ export class AccountsListComponent implements OnInit {
   getAccounts(): void {
     this.accountService.getAccounts()
       .subscribe(accounts => {
-        if (accounts === null) {
-          this.accounts = [];
-        } else {
           this.accounts = accounts;
+        }, () => {
+          this.alertService.error(this.sthGoesWrong);
         }
-      });
+      );
   }
 
   deleteAccount(account) {
     this.accountService.deleteAccount(account.id).subscribe(() => {
       this.alertService.info('Account deleted');
+      const index: number = this.accounts.indexOf(account);
+      if (index !== -1) {
+        this.accounts.splice(index, 1);
+      }
+    }, () => {
+      this.alertService.error(this.sthGoesWrong);
     });
-    const index: number = this.accounts.indexOf(account);
-    if (index !== -1) {
-      this.accounts.splice(index, 1);
-    }
   }
 
   onShowEditMode(account: Account) {
@@ -61,11 +63,13 @@ export class AccountsListComponent implements OnInit {
     this.accountService.editAccount(account).subscribe(
       () => {
         this.alertService.info('Account updated');
+        account.editMode = false;
+        this.editedBalance = null;
+        this.editedName = null;
+      }, () => {
+        this.alertService.error(this.sthGoesWrong);
       }
     );
-    account.editMode = false;
-    this.editedBalance = null;
-    this.editedName = null;
   }
 
   onAddAccount() {
@@ -78,16 +82,14 @@ export class AccountsListComponent implements OnInit {
     this.accountToAdd.balance = (parseFloat(this.newAccountBalance)).toFixed(2);
     this.accountService.addAccount(this.accountToAdd)
       .subscribe(id => {
-        if (isNumeric(id)) {
-          this.alertService.success('Account added');
-          this.accountToAdd.id = id;
-          this.accounts.push(this.accountToAdd);
-          this.addingMode = false;
-          this.newAccountBalance = null;
-          this.newAccountName = null;
-        } else {
-          this.alertService.error('Something goes wrong try again');
-        }
+        this.alertService.success('Account added');
+        this.accountToAdd.id = id;
+        this.accounts.push(this.accountToAdd);
+        this.addingMode = false;
+        this.newAccountBalance = null;
+        this.newAccountName = null;
+      }, () => {
+        this.alertService.error(this.sthGoesWrong);
       });
   }
 

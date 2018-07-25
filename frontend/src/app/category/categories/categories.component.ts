@@ -22,9 +22,11 @@ export class CategoriesComponent implements OnInit {
   selectedCategory: Category;
   editedParentCategory: Category = new Category();
   id;
+  sthGoesWrong = 'Something goes wrong ,try again';
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
   }
+
 
   ngOnInit() {
     this.getCategories();
@@ -34,13 +36,11 @@ export class CategoriesComponent implements OnInit {
   getCategories(): void {
     this.categoryService.getCategories()
       .subscribe(categories => {
-        if (categories === null) {
-          this.categories = [];
-        } else {
           this.categories = categories;
+        }, () => {
+          this.alertService.error(this.sthGoesWrong);
         }
-
-      });
+      );
   }
 
   deleteCategory(category) {
@@ -49,7 +49,7 @@ export class CategoriesComponent implements OnInit {
         this.alertService.info('Category deleted');
       },
       error1 => {
-        this.alertService.error('tez dupa');
+        this.alertService.error(this.sthGoesWrong);
       }
     );
     const index: number = this.categories.indexOf(category);
@@ -74,11 +74,13 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.editCategory(category).subscribe(
       () => {
         this.alertService.success('Category edited');
+        category.editMode = false;
+        this.editedParentCategory = null;
+        this.editedName = null;
+      }, () => {
+        this.alertService.error(this.sthGoesWrong);
       }
     );
-    category.editMode = false;
-    this.editedParentCategory = null;
-    this.editedName = null;
   }
 
   onAddCategory() {
@@ -90,21 +92,15 @@ export class CategoriesComponent implements OnInit {
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
-          console.log('!!!!' + id.toLocaleString());
-          if (isNumeric(id)) {
-            this.categoryToAdd.id = id;
-            this.categories.push(this.categoryToAdd);
-            this.alertService.success('Category added');
-            this.addingMode = false;
-            this.newCategoryName = null;
-          } else {
-            this.alertService.error('Something goes wrong try againg');
-          }
+          this.categoryToAdd.id = id;
+          this.categories.push(this.categoryToAdd);
+          this.alertService.success('Category added');
+          this.addingMode = false;
+          this.newCategoryName = null;
         }
-        , error1 => {
-          this.alertService.error(' fajna dupa');
+        , () => {
+          this.alertService.error(this.sthGoesWrong);
         });
-
   }
 
   onRefreshCategories() {
