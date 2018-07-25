@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {Category} from '../category';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
@@ -67,10 +67,10 @@ export class CategoryService {
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}  `);
-      this.log(`${operation} failed: ${error.error}  `);
+      this.log(`${operation} failed: ${JSON.stringify(error)}  `);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return throwError(error);
     };
   }
 }
