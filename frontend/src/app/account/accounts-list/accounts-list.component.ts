@@ -13,8 +13,6 @@ export class AccountsListComponent implements OnInit {
   accounts: Account[];
   accountToAdd: Account;
   addingMode = false;
-  editedName: string;
-  editedBalance: number;
   newAccountName: string;
   newAccountBalance: number;
   sthGoesWrong = 'Something goes wrong ,try again';
@@ -50,22 +48,22 @@ export class AccountsListComponent implements OnInit {
 
   onShowEditMode(account: Account) {
     account.editMode = true;
-    this.editedBalance = account.balance;
-    this.editedName = account.name;
+    account.editedName = account.name;
+    account.editedBalance = account.balance;
   }
 
   onEditAccount(account: Account) {
-    if (!this.validateAccount(this.editedName, this.editedBalance)) {
+    if (!this.validateAccount(account.editedName, account.editedBalance)) {
       return;
     }
-    account.name = this.editedName;
-    account.balance = this.editedBalance;
-    this.accountService.editAccount(account).subscribe(
+    const accountToEdit: Account = new Account();
+    accountToEdit.id = account.id;
+    accountToEdit.name = account.editedName;
+    accountToEdit.balance = account.editedBalance;
+    this.accountService.editAccount(accountToEdit).subscribe(
       () => {
         this.alertService.info('Account updated');
-        account.editMode = false;
-        this.editedBalance = null;
-        this.editedName = null;
+        Object.assign(account, accountToEdit);
       }, () => {
         this.alertService.error(this.sthGoesWrong);
       }

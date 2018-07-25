@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
-import {MessagesService} from '../../messages/messages.service';
-import {catchError, map, tap} from 'rxjs/operators';
-import {isNumber} from 'util';
-import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
 @Component({
@@ -17,20 +13,15 @@ export class CategoriesComponent implements OnInit {
   possibleParentCategories: Category[];
   categoryToAdd: Category = new Category();
   addingMode = false;
-  editedName: string;
   newCategoryName: string;
   selectedCategory: Category;
-  editedParentCategory: Category = new Category();
-  id;
   sthGoesWrong = 'Something goes wrong ,try again';
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
   }
 
-
   ngOnInit() {
     this.getCategories();
-
   }
 
   getCategories(): void {
@@ -60,23 +51,24 @@ export class CategoriesComponent implements OnInit {
 
   onShowEditMode(category: Category) {
     category.editMode = true;
-    this.editedName = category.name;
-    this.editedParentCategory = category.parentCategory;
+    category.editedName = category.name;
+    category.editedParentCategory = category.parentCategory;
     this.refreshListOfPossibleParentCategories(category);
   }
 
   onEditCategory(category: Category) {
-    if (!this.validateCategory(this.editedName)) {
+    if (!this.validateCategory(category.editedName)) {
       return;
     }
-    category.name = this.editedName;
-    category.parentCategory = this.editedParentCategory;
-    this.categoryService.editCategory(category).subscribe(
+    const categoryToEdid: Category = new Category();
+    categoryToEdid.id = category.id;
+    categoryToEdid.name = category.editedName;
+    categoryToEdid.parentCategory = category.editedParentCategory;
+    this.categoryService.editCategory(categoryToEdid).subscribe(
       () => {
         this.alertService.success('Category edited');
-        category.editMode = false;
-        this.editedParentCategory = null;
-        this.editedName = null;
+        Object.assign(category, categoryToEdid);
+
       }, () => {
         this.alertService.error(this.sthGoesWrong);
       }
@@ -161,14 +153,7 @@ export class CategoriesComponent implements OnInit {
 
   refreshListOfPossibleParentCategories(cat: Category) {
     this.possibleParentCategories = this.categories
-      .filter(element => element.id !== cat.id)
-      .filter(x => {
-        if (x.parentCategory == null) {
-          return true;
-        } else {
-          return x.parentCategory.id !== cat.id;
-        }
-      });
+      .filter(element => element.id !== cat.id);
   }
 
   validateCategory(categoryName: string): boolean {

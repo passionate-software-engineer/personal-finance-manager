@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Account} from '../account';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
@@ -64,7 +64,7 @@ export class AccountService {
       this.log(`${operation} failed: ${error.error}  `);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return throwError(error);
     };
   }
 }
