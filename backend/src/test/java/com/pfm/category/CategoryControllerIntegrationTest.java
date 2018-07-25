@@ -271,8 +271,6 @@ public class CategoryControllerIntegrationTest {
   }
 
   private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate) throws Exception {
-    ResourceBundleConfig resourceBundleConfig = new ResourceBundleConfig();
-
     //when
     this.mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
