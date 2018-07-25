@@ -6,11 +6,6 @@
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
-    <th style="width: 20%">
-      Id
-      <span class="glyphicon glyphicon-collapse-down" (click)="sortById('dsc')"></span>
-      <span class="glyphicon glyphicon-collapse-up" (click)="sortById('asc')"></span>
-    </th>
     <th style="width: 50%">
       Name
       <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
@@ -27,7 +22,6 @@
   </thead>
   <tbody>
   <tr *ngFor="let category of categories">
-    <td>{{category.id}}</td>
 
     <td *ngIf="category.editMode">
       <input type="text" [(ngModel)]="category.editedName">
@@ -67,7 +61,6 @@
   </tr>
 
   <tr *ngIf="addingMode">
-    <td>New Category</td>
 
     <td>
       <input type="text" [(ngModel)]="newCategoryName">
