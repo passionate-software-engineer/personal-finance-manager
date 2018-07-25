@@ -11,18 +11,21 @@ buildscript {
     }
 }
 
-plugins { // TODO unify appraoch with below entries
+// keep alphabetical order in groups
+plugins {
+    // 3rd party
     id 'de.aaschmid.cpd' version '1.0'
-}
+    id 'io.spring.dependency-management' version "1.0.6.RELEASE"
+    id 'org.springframework.boot' version '2.0.3.RELEASE'
 
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-apply plugin: 'idea'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: "jacoco"
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'pmd'
+    // core
+    id 'checkstyle'
+    id 'findbugs'
+    id 'idea'
+    id "jacoco"
+    id 'java'
+    id 'pmd'
+}
 
 version '1.0'
 

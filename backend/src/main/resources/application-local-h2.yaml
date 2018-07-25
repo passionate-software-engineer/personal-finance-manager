@@ -1,4 +1,3 @@
-#TODO - some of the properties can be moved to root file (here should be only overrides)
-spring: # TODO - please add comments when which profile is intended to be used.
+spring:
   h2:
     console.enabled: true
