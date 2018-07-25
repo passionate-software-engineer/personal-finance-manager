@@ -40,7 +40,7 @@ System allowing users to managed their personal finances.
 [![js-standard-style](https://img.shields.io/badge/code%20style-Google_Style-brightgreen.svg?style=flat)](https://github.com/checkstyle/checkstyle)
 
 
-## Installation
+## Installation and Start-up
 
 1. Clone project<br/>
 2. Install Java JDK at least 1.8 version(http://www.oracle.com/technetwork/java/index.html)
@@ -64,13 +64,11 @@ To change the database you can change configuration in application.yaml file.
 Start the application and open the URL for API Documentation http://localhost:8088/swagger-ui.html
 ![Swagger API](http://ec2-13-59-117-184.us-east-2.compute.amazonaws.com:8088/swagger-ui.html)
 
-
------ do zmiany ------
-## Tests
+## TODO - Tests
 We have three different types of tests : JUnit, integrations, and E2E tests.<br/>
 To run e2e tests :<br/>
 **1)** Run main application<br/>
-**2)** Build E2E project from gradle build file ( /e2e/build.gradle ) as separate project. <br/>
+**2)** Build E2E project from gradle build file (in directory: ../frontend-test/build.gradle ) as separate project. <br/>
 **3)** Enable annotation processing for lombok. <br/>
 ![Enable annotations](https://github.com/pio-kol/accouting-system/blob/master/readme/annotatnion.png)
 **4)** Run e2e tests as TestNG.<br/>
