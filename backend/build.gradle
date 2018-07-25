@@ -1,22 +1,31 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
-        classpath 'com.h2database:h2:1.4.191'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE'
     }
 }
 
+// keep alphabetical order in groups
 plugins {
-    id "org.flywaydb.flyway" version "5.1.1"
-}
+    // 3rd party
+    id 'de.aaschmid.cpd' version '1.0'
+    id 'io.spring.dependency-management' version "1.0.6.RELEASE"
+    id 'org.springframework.boot' version '2.0.3.RELEASE'
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+    // core
+    id 'checkstyle'
+    id 'findbugs'
+    id 'idea'
+    id "jacoco"
+    id 'java'
+    id 'pmd'
+}
 
 version '1.0'
 
@@ -26,17 +35,85 @@ repositories {
     mavenCentral()
 }
 
+// keep alphabetical order in groups
 dependencies {
-    testCompile'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.9.5'
 
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'com.h2database:h2:1.4.197'
+    compile 'io.rest-assured:spring-mock-mvc:3.1.0'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
     compile 'javax.xml.bind:jaxb-api:2.3.0'
-    compile "org.projectlombok:lombok:1.18.0"
-    compile 'com.h2database:h2:1.0.60'
+    compile "org.flywaydb:flyway-core:5.1.4"
+    compile 'org.postgresql:postgresql:42.1.4'
+    compile 'org.projectlombok:lombok:1.18.0'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-web'
 }
 
-flyway {
-    url = 'jdbc:h2:file:./target/flyway'
-    user = 'sa'
+checkstyle {
+    configFile file('checkstyle-config/checkstyle.xml')
+    toolVersion '8.11'
+    showViolations = true
+    ignoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.55 // TODO increase limit
+            }
+        }
+        rule {
+            limit {
+                counter = 'LINE'
+                minimum = 0.80
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            excludes = ['com.pfm.Application']
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.80
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            excludes = ['com.pfm.Application']
+            limit {
+                counter = 'LINE'
+                minimum = 0.90
+            }
+        }
+    }
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+    finalizedBy jacocoTestCoverageVerification
 }
