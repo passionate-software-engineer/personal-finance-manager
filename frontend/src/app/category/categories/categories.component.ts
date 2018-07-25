@@ -47,6 +47,9 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.deleteCategory(category.id).subscribe(
       () => {
         this.alertService.info('Category deleted');
+      },
+      error1 => {
+        this.alertService.error('tez dupa');
       }
     );
     const index: number = this.categories.indexOf(category);
@@ -87,14 +90,21 @@ export class CategoriesComponent implements OnInit {
     this.categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(this.categoryToAdd)
       .subscribe(id => {
-        if (isNumeric(id)) {
-          this.categoryToAdd.id = id;
-          this.categories.push(this.categoryToAdd);
-          this.alertService.success('Category added');
+          console.log('!!!!' + id.toLocaleString());
+          if (isNumeric(id)) {
+            this.categoryToAdd.id = id;
+            this.categories.push(this.categoryToAdd);
+            this.alertService.success('Category added');
+            this.addingMode = false;
+            this.newCategoryName = null;
+          } else {
+            this.alertService.error('Something goes wrong try againg');
+          }
         }
-      });
-    this.addingMode = false;
-    this.newCategoryName = null;
+        , error1 => {
+          this.alertService.error(' fajna dupa');
+        });
+
   }
 
   onRefreshCategories() {

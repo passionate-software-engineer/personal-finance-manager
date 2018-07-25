@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Account} from '../account';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {errorObject} from 'rxjs/internal-compatibility';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -28,14 +29,19 @@ export class AccountService {
 
   addAccount(account: Account): Observable<any> {
     return this.http.post<any>(this.apiUrl, account, httpOptions).pipe(
-      tap(any => this.log(`added account with id: ` + any)),
+      tap(any => {
+        this.log(`added account with id: ` + any);
+      }),
       catchError(this.handleError('addAccount', [])));
   }
 
   deleteAccount(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<Account>(url).pipe(
-      tap(() => this.log(`deleted account with id: ` + id)),
+      tap(() => {
+        this.log(`deleted account with id: ` + id);
+        Observable.throw(errorObject);
+      }),
       catchError(this.handleError('deleteAccount', [])));
   }
 
@@ -55,7 +61,7 @@ export class AccountService {
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}  `);
-      this.log(`${operation} failed: ${JSON.stringify(error)}  `);
+      this.log(`${operation} failed: ${error.error}  `);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);

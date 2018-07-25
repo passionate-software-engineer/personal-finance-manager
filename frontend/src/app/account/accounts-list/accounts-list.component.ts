@@ -82,11 +82,13 @@ export class AccountsListComponent implements OnInit {
           this.alertService.success('Account added');
           this.accountToAdd.id = id;
           this.accounts.push(this.accountToAdd);
+          this.addingMode = false;
+          this.newAccountBalance = null;
+          this.newAccountName = null;
+        } else {
+          this.alertService.error('Something goes wrong try again');
         }
       });
-    this.addingMode = false;
-    this.newAccountBalance = null;
-    this.newAccountName = null;
   }
 
   onRefreshAccounts() {
