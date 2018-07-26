@@ -42,21 +42,22 @@ Define accounts you are using, define categories and you are ready to save your 
 ## How to start project locally
 
 1. Install [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
-2. Open terminal window, go to <b><i>backend</i></b> directory & run <b><i>./gradlew bootRun</i></b>
-3. Open second terminal window, go to <b><i>frontend</i></b> directory, run <b><i>npm install</i></b> & <b><i>ng serve --open</i></b>
+2. Open terminal window, go to **_backend_** directory & run **_./gradlew bootRun_**
+3. Open second terminal window, go to **_frontend_** directory, run **_npm install_** & **_ng serve --open_**
 4. Browser window will open automatically, you can play with the application
 
 ## API Reference
 [Swagger API](http://ec2-13-59-117-184.us-east-2.compute.amazonaws.com:8088/swagger-ui.html)
 
 ## Demo instance
-[Personal Finance Manager Demo](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
+[Personal Finance Manager demo instance](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
 
 ## Running application in IntelliJ
-- Open IntelliJ, click open project, select <b><i>build.gradle</i></b> file, click <b><i>import as project</i></b>
+- Open IntelliJ, click open project, select **_build.gradle_** file, click **_import as project_**
 - Enable annotation processing for Lombok. 
 ![Enable annotations for Lombok](https://github.com/pio-kol/accouting-system/blob/master/readme/annotatnion.png)
 - Wait for Gradle to download half of the internet :)
+- Right click on **_Application.java_** and select **_Run_**
 
 
 
