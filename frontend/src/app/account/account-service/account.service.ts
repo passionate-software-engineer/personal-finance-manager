@@ -40,9 +40,7 @@ export class AccountService {
     return this.http.delete<Account>(url).pipe(
       tap(() => {
         this.log(`deleted account with id: ` + id);
-        Observable.throw(errorObject);
-      }),
-      catchError(this.handleError('deleteAccount', [])));
+      }), catchError(this.handleError('deleteAccount', [])));
   }
 
   editAccount(account: Account): Observable<any> {
@@ -61,9 +59,8 @@ export class AccountService {
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}  `);
-      this.log(`${operation} failed: ${error.error}  `);
+      this.log(`${operation} failed: ${JSON.stringify(error)}  `);
 
-      // Let the app keep running by returning an empty result.
       return throwError(error);
     };
   }

@@ -1,4 +1,4 @@
-<button class="btn btn-danger" type="button" (click)="addingMode === true ? addingMode=false : addingMode=true">
+<button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
   Add Account
 </button>
 <button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
@@ -30,7 +30,7 @@
 
     <td *ngIf="account.editMode">
       <input type="text" [(ngModel)]="account.editedBalance"></td>
-    <td *ngIf="!account.editMode">{{account.balance}}</td>
+    <td *ngIf="!account.editMode"> {{account.balance | number:'0.2'}}</td>
 
     <td *ngIf="!account.editMode">
       <div class="dropdown">

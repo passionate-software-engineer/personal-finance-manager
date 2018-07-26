@@ -69,7 +69,6 @@ export class CategoryService {
       this.log(`${operation} failed: ${error.message}  `);
       this.log(`${operation} failed: ${JSON.stringify(error)}  `);
 
-      // Let the app keep running by returning an empty result.
       return throwError(error);
     };
   }

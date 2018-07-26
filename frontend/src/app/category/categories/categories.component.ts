@@ -11,7 +11,6 @@ import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 export class CategoriesComponent implements OnInit {
   categories: Category[];
   possibleParentCategories: Category[];
-  categoryToAdd: Category = new Category();
   addingMode = false;
   newCategoryName: string;
   selectedCategory: Category;
@@ -35,14 +34,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(category) {
-    this.categoryService.deleteCategory(category.id).subscribe(
-      () => {
-        this.alertService.info('Category deleted');
-      },
-      error1 => {
-        this.alertService.error(this.sthGoesWrong);
-      }
-    );
+    this.categoryService.deleteCategory(category.id)
+      .subscribe(() => {
+          this.alertService.success('Category deleted');
+        },
+        error1 => {
+          this.alertService.error(this.sthGoesWrong);
+        }
+      );
     const index: number = this.categories.indexOf(category);
     if (index !== -1) {
       this.categories.splice(index, 1);
@@ -60,32 +59,32 @@ export class CategoriesComponent implements OnInit {
     if (!this.validateCategory(category.editedName)) {
       return;
     }
-    const categoryToEdid: Category = new Category();
-    categoryToEdid.id = category.id;
-    categoryToEdid.name = category.editedName;
-    categoryToEdid.parentCategory = category.editedParentCategory;
-    this.categoryService.editCategory(categoryToEdid).subscribe(
-      () => {
-        this.alertService.success('Category edited');
-        Object.assign(category, categoryToEdid);
+    const editedCategory: Category = new Category();
+    editedCategory.id = category.id;
+    editedCategory.name = category.editedName;
+    editedCategory.parentCategory = category.editedParentCategory;
+    this.categoryService.editCategory(editedCategory)
+      .subscribe(() => {
+          this.alertService.success('Category edited');
+          Object.assign(category, editedCategory);
 
-      }, () => {
-        this.alertService.error(this.sthGoesWrong);
-      }
-    );
+        }, () => {
+          this.alertService.error(this.sthGoesWrong);
+        }
+      );
   }
 
   onAddCategory() {
-    this.categoryToAdd = new Category();
+    const categoryToAdd = new Category();
     if (!this.validateCategory(this.newCategoryName)) {
       return;
     }
-    this.categoryToAdd.name = this.newCategoryName;
-    this.categoryToAdd.parentCategory = this.selectedCategory;
-    this.categoryService.addCategory(this.categoryToAdd)
+    categoryToAdd.name = this.newCategoryName;
+    categoryToAdd.parentCategory = this.selectedCategory;
+    this.categoryService.addCategory(categoryToAdd)
       .subscribe(id => {
-          this.categoryToAdd.id = id;
-          this.categories.push(this.categoryToAdd);
+          categoryToAdd.id = id;
+          this.categories.push(categoryToAdd);
           this.alertService.success('Category added');
           this.addingMode = false;
           this.newCategoryName = null;
@@ -133,15 +132,6 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  sortById(sortingType: string) {
-    if (sortingType === 'asc') {
-      this.categories.sort((a1, a2) => a1.id - a2.id);
-    }
-    if (sortingType === 'dsc') {
-      this.categories.sort((a1, a2) => a2.id - a1.id);
-    }
-  }
-
   getParentCategoryName(category): string {
     if (category.parentCategory != null) {
       return category.parentCategory.name;
@@ -157,7 +147,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   validateCategory(categoryName: string): boolean {
-    if (categoryName == null || categoryName === '') {
+    if (categoryName == null || categoryName.trim() === '') {
       this.alertService.error('Category name cannot be empty');
       return false;
     }

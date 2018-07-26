@@ -4,14 +4,17 @@ import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
+const maxLongNumber = 9223372036854775807;
+const minLongNumber = -9223372036854775808;
+
 @Component({
   selector: 'app-accounts-list',
   templateUrl: './accounts-list.component.html',
   styleUrls: ['./accounts-list.component.css']
 })
+
 export class AccountsListComponent implements OnInit {
   accounts: Account[];
-  accountToAdd: Account;
   addingMode = false;
   newAccountName: string;
   newAccountBalance: number;
@@ -35,15 +38,16 @@ export class AccountsListComponent implements OnInit {
   }
 
   deleteAccount(account) {
-    this.accountService.deleteAccount(account.id).subscribe(() => {
-      this.alertService.info('Account deleted');
-      const index: number = this.accounts.indexOf(account);
-      if (index !== -1) {
-        this.accounts.splice(index, 1);
-      }
-    }, () => {
-      this.alertService.error(this.sthGoesWrong);
-    });
+    this.accountService.deleteAccount(account.id)
+      .subscribe(() => {
+        this.alertService.success('Account deleted');
+        const index: number = this.accounts.indexOf(account);
+        if (index !== -1) {
+          this.accounts.splice(index, 1);
+        }
+      }, () => {
+        this.alertService.error(this.sthGoesWrong);
+      });
   }
 
   onShowEditMode(account: Account) {
@@ -56,33 +60,33 @@ export class AccountsListComponent implements OnInit {
     if (!this.validateAccount(account.editedName, account.editedBalance)) {
       return;
     }
-    const accountToEdit: Account = new Account();
-    accountToEdit.id = account.id;
-    accountToEdit.name = account.editedName;
-    accountToEdit.balance = account.editedBalance;
-    this.accountService.editAccount(accountToEdit).subscribe(
-      () => {
-        this.alertService.info('Account updated');
-        Object.assign(account, accountToEdit);
-      }, () => {
-        this.alertService.error(this.sthGoesWrong);
-      }
-    );
+    const editedAccount: Account = new Account();
+    editedAccount.id = account.id;
+    editedAccount.name = account.editedName;
+    editedAccount.balance = account.editedBalance;
+    this.accountService.editAccount(editedAccount)
+      .subscribe(() => {
+          this.alertService.success('Account updated');
+          Object.assign(account, editedAccount);
+        }, () => {
+          this.alertService.error(this.sthGoesWrong);
+        }
+      );
   }
 
   onAddAccount() {
-    this.accountToAdd = new Account();
+    const accountToAdd = new Account();
     if (!this.validateAccount(this.newAccountName, this.newAccountBalance)) {
       return;
     }
-    this.accountToAdd.name = this.newAccountName;
+    accountToAdd.name = this.newAccountName;
     // @ts-ignore
-    this.accountToAdd.balance = (parseFloat(this.newAccountBalance)).toFixed(2);
-    this.accountService.addAccount(this.accountToAdd)
+    accountToAdd.balance = this.newAccountBalance;
+    this.accountService.addAccount(accountToAdd)
       .subscribe(id => {
         this.alertService.success('Account added');
-        this.accountToAdd.id = id;
-        this.accounts.push(this.accountToAdd);
+        accountToAdd.id = id;
+        this.accounts.push(accountToAdd);
         this.addingMode = false;
         this.newAccountBalance = null;
         this.newAccountName = null;
@@ -104,15 +108,6 @@ export class AccountsListComponent implements OnInit {
     }
   }
 
-  sortById(sortingType: string) {
-    if (sortingType === 'asc') {
-      this.accounts.sort((a1, a2) => a1.id - a2.id);
-    }
-    if (sortingType === 'dsc') {
-      this.accounts.sort((a1, a2) => a2.id - a1.id);
-    }
-  }
-
   sortByBalance(sortingType: string) {
     if (sortingType === 'asc') {
       this.accounts.sort((a1, a2) => a1.balance - a2.balance);
@@ -123,7 +118,7 @@ export class AccountsListComponent implements OnInit {
   }
 
   validateAccount(accountName: string, accountBalance: number): boolean {
-    if ((accountName == null || accountName === '')
+    if ((accountName == null || accountName.trim() === '')
       && (!accountBalance)) {
       this.alertService.error('Name cannot be empty');
       this.alertService.error('Balance cannot be empty');
@@ -143,7 +138,8 @@ export class AccountsListComponent implements OnInit {
       return false;
     }
 
-    if ((Math.round(accountBalance * 100) / 100) > 999999999999999) {
+    const newAccountBalance = Math.round(accountBalance * 100) / 100;
+    if (newAccountBalance > maxLongNumber || newAccountBalance < minLongNumber) {
       this.alertService.error('Balance number is too big.' +
         ' If You are so rich why do You need personal finance manager !? ');
       return false;
