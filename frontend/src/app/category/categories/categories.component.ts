@@ -134,6 +134,10 @@ export class CategoriesComponent implements OnInit {
       this.alertService.error('Category name cannot be empty');
       return false;
     }
+    if (categoryName.length > 100) {
+      this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
+      return false;
+    }
     return true;
   }
 }

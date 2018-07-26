@@ -29,8 +29,8 @@ export class AccountsListComponent implements OnInit {
   getAccounts(): void {
     this.accountService.getAccounts()
       .subscribe(accounts => {
-          this.accounts = accounts;
-        });
+        this.accounts = accounts;
+      });
   }
 
   deleteAccount(account) {
@@ -116,6 +116,10 @@ export class AccountsListComponent implements OnInit {
     }
     if (accountName == null || accountName === '') {
       this.alertService.error('Name cannot be empty');
+      return false;
+    }
+    if (accountName.length > 100) {
+      this.alertService.error('Account name too long. Account name can not be longer then 100 characters');
       return false;
     }
     if (typeof accountBalance === 'undefined' || !accountBalance) {
