@@ -2,7 +2,6 @@ package com.pfm.config;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
