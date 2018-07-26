@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Category} from '../category';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,7 +18,8 @@ export class CategoryService {
 
   private apiUrl = environment.appUrl + '/categories';
 
-  constructor(private http: HttpClient, private messagesService: MessagesService) {
+  constructor(private http: HttpClient, private messagesService: MessagesService,
+              private alertService: AlertsService) {
   }
 
   private static categoryToCategoryRequest(category: Category) {
@@ -61,10 +63,12 @@ export class CategoryService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
+      if (error.status === 400) {
+        this.alertService.error(error.error);
+      }
+      if (error.status === 0 || error.status === 500) {
+        this.alertService.error('Sth goes wrong, try again later');
+      }
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}  `);
       this.log(`${operation} failed: ${JSON.stringify(error)}  `);

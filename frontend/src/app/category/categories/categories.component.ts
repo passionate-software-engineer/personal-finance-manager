@@ -14,7 +14,6 @@ export class CategoriesComponent implements OnInit {
   addingMode = false;
   newCategoryName: string;
   selectedCategory: Category;
-  sthGoesWrong = 'Something goes wrong ,try again';
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
   }
@@ -26,26 +25,19 @@ export class CategoriesComponent implements OnInit {
   getCategories(): void {
     this.categoryService.getCategories()
       .subscribe(categories => {
-          this.categories = categories;
-        }, () => {
-          this.alertService.error(this.sthGoesWrong);
-        }
-      );
+        this.categories = categories;
+      });
   }
 
   deleteCategory(category) {
     this.categoryService.deleteCategory(category.id)
       .subscribe(() => {
-          this.alertService.success('Category deleted');
-        },
-        error1 => {
-          this.alertService.error(this.sthGoesWrong);
+        this.alertService.success('Category deleted');
+        const index: number = this.categories.indexOf(category);
+        if (index !== -1) {
+          this.categories.splice(index, 1);
         }
-      );
-    const index: number = this.categories.indexOf(category);
-    if (index !== -1) {
-      this.categories.splice(index, 1);
-    }
+      });
   }
 
   onShowEditMode(category: Category) {
@@ -65,13 +57,9 @@ export class CategoriesComponent implements OnInit {
     editedCategory.parentCategory = category.editedParentCategory;
     this.categoryService.editCategory(editedCategory)
       .subscribe(() => {
-          this.alertService.success('Category edited');
-          Object.assign(category, editedCategory);
-
-        }, () => {
-          this.alertService.error(this.sthGoesWrong);
-        }
-      );
+        this.alertService.success('Category edited');
+        Object.assign(category, editedCategory);
+      });
   }
 
   onAddCategory() {
@@ -83,15 +71,12 @@ export class CategoriesComponent implements OnInit {
     categoryToAdd.parentCategory = this.selectedCategory;
     this.categoryService.addCategory(categoryToAdd)
       .subscribe(id => {
-          categoryToAdd.id = id;
-          this.categories.push(categoryToAdd);
-          this.alertService.success('Category added');
-          this.addingMode = false;
-          this.newCategoryName = null;
-        }
-        , () => {
-          this.alertService.error(this.sthGoesWrong);
-        });
+        categoryToAdd.id = id;
+        this.categories.push(categoryToAdd);
+        this.alertService.success('Category added');
+        this.addingMode = false;
+        this.newCategoryName = null;
+      });
   }
 
   onRefreshCategories() {
@@ -138,8 +123,6 @@ export class CategoriesComponent implements OnInit {
     }
     return 'Main Category';
   }
-
-  // add sort by ParentCategory
 
   refreshListOfPossibleParentCategories(cat: Category) {
     this.possibleParentCategories = this.categories

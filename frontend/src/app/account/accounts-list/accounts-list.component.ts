@@ -18,7 +18,6 @@ export class AccountsListComponent implements OnInit {
   addingMode = false;
   newAccountName: string;
   newAccountBalance: number;
-  sthGoesWrong = 'Something goes wrong ,try again';
 
   constructor(private accountService: AccountService, private alertService: AlertsService) {
   }
@@ -31,10 +30,7 @@ export class AccountsListComponent implements OnInit {
     this.accountService.getAccounts()
       .subscribe(accounts => {
           this.accounts = accounts;
-        }, () => {
-          this.alertService.error(this.sthGoesWrong);
-        }
-      );
+        });
   }
 
   deleteAccount(account) {
@@ -45,8 +41,6 @@ export class AccountsListComponent implements OnInit {
         if (index !== -1) {
           this.accounts.splice(index, 1);
         }
-      }, () => {
-        this.alertService.error(this.sthGoesWrong);
       });
   }
 
@@ -68,8 +62,6 @@ export class AccountsListComponent implements OnInit {
       .subscribe(() => {
           this.alertService.success('Account updated');
           Object.assign(account, editedAccount);
-        }, () => {
-          this.alertService.error(this.sthGoesWrong);
         }
       );
   }
@@ -90,8 +82,6 @@ export class AccountsListComponent implements OnInit {
         this.addingMode = false;
         this.newAccountBalance = null;
         this.newAccountName = null;
-      }, () => {
-        this.alertService.error(this.sthGoesWrong);
       });
   }
 
