@@ -34,14 +34,16 @@ export class AccountsListComponent implements OnInit {
   }
 
   deleteAccount(account) {
-    this.accountService.deleteAccount(account.id)
-      .subscribe(() => {
-        this.alertService.success('Account deleted');
-        const index: number = this.accounts.indexOf(account);
-        if (index !== -1) {
-          this.accounts.splice(index, 1);
-        }
-      });
+    if (confirm('Are you sure You want to delete this account ?')) {
+      this.accountService.deleteAccount(account.id)
+        .subscribe(() => {
+          this.alertService.success('Account deleted');
+          const index: number = this.accounts.indexOf(account);
+          if (index !== -1) {
+            this.accounts.splice(index, 1);
+          }
+        });
+    }
   }
 
   onShowEditMode(account: Account) {

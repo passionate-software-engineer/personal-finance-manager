@@ -30,14 +30,16 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(category) {
-    this.categoryService.deleteCategory(category.id)
-      .subscribe(() => {
-        this.alertService.success('Category deleted');
-        const index: number = this.categories.indexOf(category);
-        if (index !== -1) {
-          this.categories.splice(index, 1);
-        }
-      });
+    if (confirm('Are you sure You want to delete this account ?')) {
+      this.categoryService.deleteCategory(category.id)
+        .subscribe(() => {
+          this.alertService.success('Category deleted');
+          const index: number = this.categories.indexOf(category);
+          if (index !== -1) {
+            this.categories.splice(index, 1);
+          }
+        });
+    }
   }
 
   onShowEditMode(category: Category) {

@@ -22,7 +22,6 @@ export class AccountService {
   }
 
   getAccounts(): Observable<Account[]> {
-    console.log(this.apiUrl);
     return this.http.get<Account[]>(this.apiUrl)
       .pipe(
         tap(() => this.log(`fetched accounts`)),
