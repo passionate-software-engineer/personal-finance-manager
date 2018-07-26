@@ -69,6 +69,7 @@ public class CategoryController {
     return ResponseEntity.ok(createdCategory.getId());
   }
 
+
   @ApiOperation(value = "Update an existing category", response = Void.class)
   @PutMapping(value = "/{id}")
   public ResponseEntity<?> updateCategory(@PathVariable long id,

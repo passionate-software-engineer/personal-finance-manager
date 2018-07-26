@@ -112,7 +112,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCauseByEmptyNameFiled() throws Exception {
     //given
-    CategoryRequest categoryToAdd = CategoryRequest.builder().name("").build();
+    CategoryRequest categoryToAdd = CategoryRequest.builder().name(null).build();
 
     //when
     this.mockMvc

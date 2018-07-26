@@ -11,6 +11,7 @@ public class MessagesProvider {
 
   public static final String EMPTY_ACCOUNT_NAME = "accountValidator.emptyAccountName";
   public static final String EMPTY_ACCOUNT_BALANCE = "accountValidator.emptyAccountBalance";
+  public static final String ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST = "accountValidator.accountWithProvidedNameAlreadyExist";
 
   public static final String EMPTY_CATEGORY_NAME = "categoryValidator.emptyCategoryName";
   public static final String PROVIDED_PARENT_CATEGORY_NOT_EXIST = "categoryValidator.providedParentCategoryNotExist";

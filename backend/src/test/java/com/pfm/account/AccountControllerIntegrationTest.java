@@ -23,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.NumberDeserializers.BigDecimalDeserializer;
+import java.math.BigDecimal;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.junit.Test;
@@ -111,7 +113,14 @@ public class AccountControllerIntegrationTest {
         .andExpect(content().contentType(CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$",
-            hasSize(2))); // TODO you should assert entire response not just check if it returned 2
+            hasSize(2)))
+        .andExpect(jsonPath("$", hasSize(2)))
+        .andExpect(jsonPath("$[0].id", is(1)))
+        .andExpect(jsonPath("$[0].name", is("Sebastian Revolut USD")))
+        .andExpect(jsonPath("$[0].balance", is(1_000_000)))
+        .andExpect(jsonPath("$[1].id", is(2)))
+        .andExpect(jsonPath("$[1].name", is("Cash")))
+        .andExpect(jsonPath("$[1].balance", is(2)));
   }
 
   @Test
