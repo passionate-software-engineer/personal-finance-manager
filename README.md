@@ -3,6 +3,12 @@
 System allowing users to manage their personal finances.
 Define accounts you are using, define categories and you are ready to save your transaction.
 
+## Demo instance
+[Personal Finance Manager demo instance](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
+
+## API Reference
+[Swagger API](http://ec2-13-59-117-184.us-east-2.compute.amazonaws.com:8088/swagger-ui.html)
+
 ## Technologies & Frameworks
 
 ### Frontend
@@ -15,7 +21,6 @@ Define accounts you are using, define categories and you are ready to save your 
 - [Spring data](https://projects.spring.io/spring-data/)
 - [Gradle](https://gradle.org/)
 - [JUnit](https://maven.apache.org/)
-- [JUnit Params](https://github.com/junit-team/junit4/wiki/parameterized-tests)
 - [Mockito](http://site.mockito.org/)
 - [Swagger](https://swagger.io/)
 - [Hibernate](http://hibernate.org/)
@@ -45,12 +50,6 @@ Define accounts you are using, define categories and you are ready to save your 
 2. Open terminal window, go to **_backend_** directory & run **_./gradlew bootRun_**
 3. Open second terminal window, go to **_frontend_** directory, run **_npm install_** & **_ng serve --open_**
 4. Browser window will open automatically, you can play with the application
-
-## API Reference
-[Swagger API](http://ec2-13-59-117-184.us-east-2.compute.amazonaws.com:8088/swagger-ui.html)
-
-## Demo instance
-[Personal Finance Manager demo instance](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
 
 ## Running application in IntelliJ
 - Open IntelliJ, click open project, select **_build.gradle_** file, click **_import as project_**
