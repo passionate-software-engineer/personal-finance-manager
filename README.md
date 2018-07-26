@@ -1,7 +1,8 @@
 # Personal Finance Manager
 
 System allowing users to manage their personal finances.
-Define accounts you are using, define categories and you are ready to save your transaction.
+
+Define accounts, categories and you are ready to track your transactions.
 
 ## Demo instance
 [Personal Finance Manager demo instance](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
