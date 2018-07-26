@@ -140,6 +140,11 @@ export class CategoriesComponent implements OnInit {
       this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
       return false;
     }
+    if (this.categories.filter(category => category.name.toLocaleLowerCase()
+      === categoryName.toLocaleLowerCase()).length > 0) {
+      this.alertService.error('Category with provided name already exist');
+      return false;
+    }
     return true;
   }
 }
