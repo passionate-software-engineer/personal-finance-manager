@@ -12,7 +12,7 @@ import java.util.List;
 
 class AccountsScreen {
 
-  private static final int SECONDS_10 = 10;
+  private static final int SECONDS_30 = 30;
 
   @FindBy(xpath = "//button[@class='btn btn-primary']")
   private WebElement refresh;
@@ -75,7 +75,7 @@ class AccountsScreen {
   private WebElement inputBalance;
 
   AccountsScreen(WebDriver driver) {
-    PageFactory.initElements(new AjaxElementLocatorFactory(driver, SECONDS_10), this);
+    PageFactory.initElements(new AjaxElementLocatorFactory(driver, SECONDS_30), this);
   }
 
   void refreshButton() {
