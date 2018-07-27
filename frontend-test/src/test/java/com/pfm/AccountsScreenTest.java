@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.pfm.helpers.TestHelper;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,7 +19,8 @@ import java.util.Random;
 public class AccountsScreenTest extends TestBase {
 
   // TODO take this value from System properties / gradle properties - it should be possible to provide this value from outside
-  private static final String FRONTEND_URL = "http://localhost:4200/";
+  private static final String FRONTEND_URL
+      = "http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts";
 
   private AccountsScreen accountsScreen;
 
@@ -31,7 +31,20 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test
-  public void shouldAddAccount() {
+  public void shouldRemoveAllAccountsBeforeTest() throws InterruptedException {
+    List<WebElement> optionsButtonList = accountsScreen.optionsButton();
+    //when
+    for (WebElement anOptionsButtonList : optionsButtonList) {
+      anOptionsButtonList.click();
+      accountsScreen.deleteButton();
+      Thread.sleep(500);
+    }
+    optionsButtonList = accountsScreen.optionsButton();
+    assertThat(optionsButtonList.size(), is(0));
+  }
+
+  @Test(dependsOnMethods = {"shouldRemoveAllAccountsBeforeTest"})
+  public void shouldAddAccount() throws InterruptedException {
     //given
     Random random = new Random();
     long randomNumber = random.nextInt(100000);
@@ -54,6 +67,7 @@ public class AccountsScreenTest extends TestBase {
       accountsScreen.addDescription(expectedListOfDescription[i]);
       accountsScreen.addBalance(expectedListOfBalance[i]);
       accountsScreen.saveOptionButton();
+      Thread.sleep(500);
     }
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
@@ -66,7 +80,7 @@ public class AccountsScreenTest extends TestBase {
     }
   }
 
-  @Test
+  @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldSortDescriptionAscending() {
     //given
     List<String> descriptionAscending = accountsScreen.getDescription();
@@ -183,12 +197,13 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldDeleteAccount"})
-  public void shouldUpdateAccount() {
+  public void shouldUpdateAccount() throws InterruptedException {
     //given
     Random random = new Random();
     long randomNumber = random.nextInt(100000);
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    String[] descriptionsList = {"pekao number: " + randomNumber, "milenium number: " + randomNumber,
+    String[] descriptionsList = {"pekao number: " + randomNumber,
+        "milenium number: " + randomNumber,
         "santander number: " + randomNumber};
     BigDecimal[] balanceList =
         {BigDecimal.valueOf(77.77).add(BigDecimal.valueOf(randomNumber)),
@@ -200,6 +215,7 @@ public class AccountsScreenTest extends TestBase {
     //when
     for (int i = 0; i < 3; i++) {
       optionsButtonList.get(i).click();
+      Thread.sleep(500);
       accountsScreen.editButton();
       accountsScreen.addDescription(descriptionsList[i]);
       accountsScreen.addBalance(balanceList[i]);
@@ -218,7 +234,7 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldUpdateAccount"})
-  public void shouldRefreshPage() throws IOException {
+  public void shouldRefreshPage() throws IOException, InterruptedException {
     //given
     BigDecimal sampleBalance = BigDecimal.valueOf(320.00);
     String sampleDescription = "ideaBank";
@@ -232,7 +248,9 @@ public class AccountsScreenTest extends TestBase {
     assertThat(resultListOfBalance.contains(sampleBalance), is(false));
     assertThat(resultListOfDescription.contains(sampleDescription), is(false));
 
+    Thread.sleep(5000);
     accountsScreen.refreshButton();
+    Thread.sleep(5000);
 
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
@@ -240,13 +258,5 @@ public class AccountsScreenTest extends TestBase {
     //then
     assertThat(resultListOfBalance.contains(sampleBalance), is(true));
     assertThat(resultListOfDescription.contains(sampleDescription), is(true));
-  }
-
-  @AfterClass
-  void tearDown() {
-    List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    optionsButtonList.get(optionsButtonList.size() - 1).click();
-    accountsScreen.deleteButton();
-
   }
 }
