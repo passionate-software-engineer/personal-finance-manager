@@ -2,12 +2,11 @@ package com.pfm.config;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MessagesProvider {
+
   public static final String CANNOT_DELETE_PARENT_CATEGORY = "category.cannotDeleteParentCategory";
   public static final String EMPTY_ACCOUNT_NAME = "accountValidator.emptyAccountName";
   public static final String EMPTY_ACCOUNT_BALANCE = "accountValidator.emptyAccountBalance";

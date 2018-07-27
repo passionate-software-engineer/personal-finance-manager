@@ -12,9 +12,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -110,8 +108,6 @@ public class CategoryController {
   @Data
   static class CategoryRequest {
 
-    @Setter
-    @Getter
     @ApiModelProperty(value = "Parent category id", example = "1")
     private Long parentCategoryId;
 
