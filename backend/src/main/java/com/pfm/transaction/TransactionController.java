@@ -1,17 +1,22 @@
 package com.pfm.transaction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.pfm.account.Account;
+import com.pfm.account.AccountService;
+import com.pfm.category.Category;
+import com.pfm.category.CategoryService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +37,8 @@ public class TransactionController {
 
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
+  private CategoryService categoryService;
+  private AccountService accountService;
 
   @ApiOperation(value = "Find Transaction by id", response = Transaction.class)
   @GetMapping(value = "/{id}")
@@ -60,10 +67,24 @@ public class TransactionController {
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     log.info("Saving transaction {} to the database", transactionRequest.getDescription());
 
-    // must copy as types do not match for Hibernate
-    Transaction transaction = new Transaction(null, transactionRequest.getDescription(),
-        transactionRequest.getCategory(), transactionRequest.getPrice(),
-        transactionRequest.getAccount());
+    Optional<Account> account = accountService.getAccountById(transactionRequest.getAccountId());
+
+    if (!account.isPresent()) {
+      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
+    }
+
+    Optional<Category> category = categoryService.getCategoryById(transactionRequest.getCategoryId());
+
+    if (!category.isPresent()) {
+      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
+    }
+
+    Transaction transaction = Transaction.builder()
+        .description(transactionRequest.getDescription())
+        .price(transactionRequest.getPrice())
+        .account(account.get())
+        .category(category.get())
+        .build();
 
     List<String> validationResult = transactionValidator.validate(transaction);
     if (!validationResult.isEmpty()) {
@@ -86,10 +107,25 @@ public class TransactionController {
       log.info("No transaction with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
-    // must copy as types do not match for Hibernate
-    Transaction transaction = new Transaction(null, transactionRequest.getDescription(),
-        transactionRequest.getCategory(), transactionRequest.getPrice(),
-        transactionRequest.getAccount());
+
+    Optional<Account> account = accountService.getAccountById(transactionRequest.getAccountId());
+
+    if (!account.isPresent()) {
+      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
+    }
+
+    Optional<Category> category = categoryService.getCategoryById(transactionRequest.getCategoryId());
+
+    if (!category.isPresent()) {
+      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
+    }
+
+    Transaction transaction = Transaction.builder()
+        .description(transactionRequest.getDescription())
+        .price(transactionRequest.getPrice())
+        .account(account.get())
+        .category(category.get())
+        .build();
 
     log.info("Updating transaction with id {}", id);
     List<String> validationResult = transactionValidator.validate(transaction);
@@ -119,13 +155,23 @@ public class TransactionController {
     return ResponseEntity.ok().build();
   }
 
-  // hack to ignore id provided by user and not show it in Swagger example
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   @JsonIgnoreProperties(ignoreUnknown = true)
-  private static class TransactionRequest extends Transaction {
+  private static class TransactionRequest {
 
-    @JsonIgnore
-    public void setId(Long id) {
-      super.setId(id);
-    }
+    @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
+    private String description;
+
+    @ApiModelProperty(value = "Category id", required = true, example = "1")
+    private Integer categoryId;
+
+    @ApiModelProperty(value = "Account id", required = true, example = "1")
+    private Integer accountId;
+
+    @ApiModelProperty(value = "Price", required = true, example = "15.99")
+    private BigDecimal price;
   }
 }

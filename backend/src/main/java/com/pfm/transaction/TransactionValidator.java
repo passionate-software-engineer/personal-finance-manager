@@ -8,7 +8,6 @@ import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 
@@ -20,10 +19,10 @@ public class TransactionValidator {
     if (transaction.getDescription() == null || transaction.getDescription().trim().equals("")) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_NAME));
     }
-    if (transaction.getCategory() == null || transaction.getCategory().trim().equals("")) {
+    if (transaction.getCategory() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
     }
-    if (transaction.getAccount() == null || transaction.getAccount().trim().equals("")) {
+    if (transaction.getAccount() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT_NAME));
     }
     if (transaction.getPrice() == null) {

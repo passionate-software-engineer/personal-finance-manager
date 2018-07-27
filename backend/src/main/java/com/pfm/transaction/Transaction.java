@@ -1,6 +1,8 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pfm.account.Account;
+import com.pfm.category.Category;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -8,12 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 
 @Data
@@ -31,19 +33,21 @@ public class Transaction {
 
   @NotNull
   @Column(unique = true)
-  @ApiModelProperty(value = "Description", required = true, example = "Cinema")
+  @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
   private String description;
 
+  @ManyToOne
   @NotNull
-  @ApiModelProperty(value = "Category", required = true, example = "Entertainment")
-  private String category;
+  @ApiModelProperty(value = "Category", required = true)
+  private Category category;
+
+  @ManyToOne
+  @NotNull
+  @ApiModelProperty(value = "Account", required = true)
+  private Account account;
 
   @NotNull
-  @ApiModelProperty(value = "Price", required = true, example = "15")
+  @ApiModelProperty(value = "Price", required = true, example = "15.99")
   private BigDecimal price;
-
-  @NotNull
-  @ApiModelProperty(value = "Account", required = true, example = "Mbank")
-  private String account;
 }
 
