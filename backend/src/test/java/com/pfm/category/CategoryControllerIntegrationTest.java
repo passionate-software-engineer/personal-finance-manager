@@ -138,7 +138,7 @@ public class CategoryControllerIntegrationTest {
         .andExpect(
             content().string("[\"" + getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"))
         .andExpect(status()
-            .isBadRequest());  // TODO always assert status first - further assertions does not make sense if status is not correct
+            .isBadRequest()); // TODO always assert status first - further assertions does not make sense if status is not correct
   }
 
   @Test
@@ -304,7 +304,6 @@ public class CategoryControllerIntegrationTest {
         childCategoryRq)); // TODo http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
     assertFalse(categories.contains(parentCategoryRq));
   }
-
 
   @Test
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()

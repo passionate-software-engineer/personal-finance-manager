@@ -17,7 +17,6 @@ public class CategoryValidator {
 
   private CategoryService categoryService;
 
-
   public List<String> validateCategoryForUpdate(Category category) {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
