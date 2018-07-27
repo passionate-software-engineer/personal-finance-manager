@@ -8,9 +8,9 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @AllArgsConstructor
 public class AccountValidator {
 

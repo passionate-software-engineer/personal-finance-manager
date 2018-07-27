@@ -1,7 +1,7 @@
 package com.pfm.category;
 
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
-import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -9,9 +9,9 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @AllArgsConstructor
 public class CategoryValidator {
 
@@ -36,7 +36,7 @@ public class CategoryValidator {
     validate(validationResults, category);
     if (category.getName() != null && !category.getName().trim().equals("")
         && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
-      validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST));
+      validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     } // TODO - why you don't check names in case of update? :)
 
     return validationResults;

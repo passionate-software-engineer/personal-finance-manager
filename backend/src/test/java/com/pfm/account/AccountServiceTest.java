@@ -135,7 +135,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldCheckIfAccountExist() {
+  public void shouldCheckIfAccountExists() {
     //given
     when(accountRepository.existsById(MOCK_ACCOUNT_ID)).thenReturn(true);
 
@@ -146,14 +146,13 @@ public class AccountServiceTest {
     verify(accountRepository).existsById(MOCK_ACCOUNT_ID);
   }
 
+  // TODO assert exact exception message - user Rule
   @Test(expected = IllegalStateException.class)
   public void shouldThrowExceptionCausedByIdNotExist() {
     //given
-    when(accountRepository.findById(MOCK_ACCOUNT_ID))
-        .thenReturn(Optional.empty());
+    when(accountRepository.findById(MOCK_ACCOUNT_ID)).thenReturn(Optional.empty());
 
     //when
-    accountService
-        .updateAccount(MOCK_ACCOUNT_ID, ACCOUNT_JUREK_BALANCE_10_99);
+    accountService.updateAccount(MOCK_ACCOUNT_ID, ACCOUNT_JUREK_BALANCE_10_99);
   }
 }

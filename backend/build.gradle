@@ -39,6 +39,7 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'pl.pragmatists:JUnitParams:1.1.1'
 
     compile 'com.h2database:h2:1.4.197'
     compile 'io.rest-assured:spring-mock-mvc:3.1.0'
@@ -116,4 +117,8 @@ tasks.withType(FindBugs) {
 test {
     finalizedBy jacocoTestReport
     finalizedBy jacocoTestCoverageVerification
+}
+
+cpdCheck {
+    source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
 }
