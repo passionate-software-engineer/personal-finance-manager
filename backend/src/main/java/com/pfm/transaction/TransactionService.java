@@ -17,7 +17,6 @@ public class TransactionService {
   private TransactionRepository transactionRepository;
 
   public Optional<Transaction> getTransactionById(long id) {
-
     return transactionRepository.findById(id);
   }
 
@@ -27,19 +26,19 @@ public class TransactionService {
         .collect(Collectors.toList());
   }
 
-  public Transaction addTransactions(Transaction transaction) {
+  public Transaction addTransaction(Transaction transaction) {
     return transactionRepository.save(transaction);
   }
 
   public void updateTransaction(long id, Transaction transaction) {
-    Optional<Transaction> transactionsFromDb = getTransactionById(id);
+    Optional<Transaction> transactionFromDb = getTransactionById(id);
 
-    if (!transactionsFromDb.isPresent()) {
+    if (!transactionFromDb.isPresent()) {
       throw new IllegalStateException(
           "Transaction with id: " + id + " does not exist in database");
     }
 
-    Transaction transactionToUpdate = transactionsFromDb.get();
+    Transaction transactionToUpdate = transactionFromDb.get();
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategory(transaction.getCategory());
     transactionToUpdate.setPrice(transaction.getPrice());
@@ -48,7 +47,7 @@ public class TransactionService {
     transactionRepository.save(transactionToUpdate);
   }
 
-  public void deleteTransctions(long id) {
+  public void deleteTransaction(long id) {
     transactionRepository.deleteById(id);
   }
 

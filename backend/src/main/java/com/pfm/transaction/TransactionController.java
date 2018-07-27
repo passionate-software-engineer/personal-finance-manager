@@ -40,7 +40,7 @@ public class TransactionController {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  @ApiOperation(value = "Find Transaction by id", response = Transaction.class)
+  @ApiOperation(value = "Find transaction by id", response = Transaction.class)
   @GetMapping(value = "/{id}")
   public ResponseEntity<?> getTransactionById(@PathVariable long id) {
     log.info("Retrieving transaction with id: {}", id);
@@ -50,22 +50,22 @@ public class TransactionController {
       log.info("Transaction with id {} was not found", id);
       return ResponseEntity.notFound().build();
     }
+
     log.info("Transaction with id {} was successfully retrieved", id);
     return ResponseEntity.ok(transaction.get());
   }
 
-  @ApiOperation(value = "Get list of all transaction", response = Transaction.class, responseContainer = "List")
+  @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List")
   @GetMapping
-  public ResponseEntity<List<Transaction>> getTransaction() {
-    log.info("Retrieving all transaction from database");
-    List<Transaction> transaction = transactionService.getTransactions();
-    return ResponseEntity.ok(transaction);
+  public ResponseEntity<List<Transaction>> getTransactions() {
+    log.info("Retrieving all transactions");
+    return ResponseEntity.ok(transactionService.getTransactions());
   }
 
   @ApiOperation(value = "Create a new transaction", response = Long.class)
   @PostMapping
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
-    log.info("Saving transaction {} to the database", transactionRequest.getDescription());
+    log.info("Adding transaction {} to the database", transactionRequest.getDescription());
 
     Optional<Account> account = accountService.getAccountById(transactionRequest.getAccountId());
 
@@ -86,15 +86,15 @@ public class TransactionController {
         .category(category.get())
         .build();
 
+    // TODO - the good trick may be to do account.orElse(null) and then check in validator if null was not provided
     List<String> validationResult = transactionValidator.validate(transaction);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction createdTransaction = transactionService.addTransactions(transaction);
-    log.info("Saving transaction to the database was successful. Transaction id is {}",
-        createdTransaction.getId());
+    Transaction createdTransaction = transactionService.addTransaction(transaction);
+    log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     return ResponseEntity.ok(createdTransaction.getId());
   }
 
@@ -127,7 +127,7 @@ public class TransactionController {
         .category(category.get())
         .build();
 
-    log.info("Updating transaction with id {}", id);
+    log.info("Updating transaction with id {}", id); // TODO so updating or validationg? :)
     List<String> validationResult = transactionValidator.validate(transaction);
 
     if (!validationResult.isEmpty()) {
@@ -149,7 +149,7 @@ public class TransactionController {
     }
 
     log.info("Attempting to delete transaction with id {}", id);
-    transactionService.deleteTransctions(id);
+    transactionService.deleteTransaction(id);
 
     log.info("Transaction with id {} was deleted successfully", id);
     return ResponseEntity.ok().build();
