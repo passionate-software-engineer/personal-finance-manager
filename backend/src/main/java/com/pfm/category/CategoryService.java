@@ -79,10 +79,6 @@ public class CategoryService {
     if (parentCategory == null) {
       return true;
     }
-    // TODO - it's the same check as the first one
-    if (parentCategory.getId() == categoryId) {
-      return false;
-    }
     // TODO - why? if parent category don't have parent then it's some special case? should be handled in query below
     if (parentCategory.getParentCategory() == null) {
       return true;
