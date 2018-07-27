@@ -200,9 +200,9 @@ public class AccountControllerIntegrationTest {
   private long callRestServiceToAddAccount(Account account) throws Exception {
     String response =
         this.mockMvc
-        .perform(post(INVOICES_SERVICE_PATH)
-            .content(json(account))
-            .contentType(CONTENT_TYPE))
+            .perform(post(INVOICES_SERVICE_PATH)
+                .content(json(account))
+                .contentType(CONTENT_TYPE))
             .andExpect(status().isOk()).andReturn()
             .getResponse().getContentAsString();
     return Long.parseLong(response);
