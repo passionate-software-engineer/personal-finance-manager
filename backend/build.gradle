@@ -54,7 +54,7 @@ dependencies {
 }
 
 checkstyle {
-    configFile file('checkstyle-config/checkstyle.xml')
+    configFile file('config/checkstyle.xml')
     toolVersion '8.11'
     showViolations = true
     ignoreFailures = false
@@ -76,7 +76,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'BRANCH'
-                minimum = 0.55 // TODO increase limit
+                minimum = 0.55 // TODO increase limit to 0.7
             }
         }
         rule {
@@ -86,7 +86,7 @@ jacocoTestCoverageVerification {
             }
         }
         rule {
-            enabled = false
+            enabled = false // TODO enable when all classes covered
             element = 'CLASS'
             excludes = ['com.pfm.Application']
             limit {
@@ -95,7 +95,7 @@ jacocoTestCoverageVerification {
             }
         }
         rule {
-            enabled = false
+            enabled = false // TODO enable when all classes covered
             element = 'CLASS'
             excludes = ['com.pfm.Application']
             limit {
