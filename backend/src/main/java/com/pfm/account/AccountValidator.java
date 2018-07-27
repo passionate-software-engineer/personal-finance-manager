@@ -1,6 +1,6 @@
 package com.pfm.account;
 
-import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -16,18 +16,8 @@ public class AccountValidator {
 
   private AccountService accountService;
 
-  public List<String> validateAccountName(Account account) {
+  public List<String> validate(Account account) {
     List<String> validationResults = new ArrayList<>();
-    validate(validationResults, account);
-
-    if (account.getName() != null && !account.getName().trim().equals("")
-        && accountService.isAccountNameAlreadyUsed(account.getName())) {
-      validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST));
-    }
-    return validationResults;
-  }
-
-  public List<String> validate(List<String> validationResults, Account account) {
 
     if (account.getName() == null || account.getName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_ACCOUNT_NAME));
@@ -36,6 +26,12 @@ public class AccountValidator {
     if (account.getBalance() == null) {
       validationResults.add(getMessage(EMPTY_ACCOUNT_BALANCE));
     }
+
+    if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
+      validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
+    }
+
     return validationResults;
   }
+
 }

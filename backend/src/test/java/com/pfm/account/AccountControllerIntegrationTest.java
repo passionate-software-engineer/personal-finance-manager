@@ -1,6 +1,6 @@
 package com.pfm.account;
 
-import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -190,7 +190,7 @@ public class AccountControllerIntegrationTest {
         .andExpect(status().isBadRequest())
         .andExpect(
             content().string(
-                "[\"" + getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"));
+                "[\"" + getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS) + "\"]"));
   }
 
   private String json(Account account) throws Exception {
