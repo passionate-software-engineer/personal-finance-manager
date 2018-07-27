@@ -184,5 +184,4 @@ public class CategoryServiceTest {
     verify(categoryRepository).existsById(MOCK_CATEGORY_ID);
   }
 
-
 }
