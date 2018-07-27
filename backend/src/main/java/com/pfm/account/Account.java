@@ -28,7 +28,7 @@ public class Account {
   private Long id;
 
   @NotNull
-  @Column(unique = true) // TODO add name validation
+  @Column(unique = true)
   @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
   private String name;
 

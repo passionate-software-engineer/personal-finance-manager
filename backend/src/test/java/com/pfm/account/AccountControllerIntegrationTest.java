@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -23,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.NumberDeserializers.BigDecimalDeserializer;
 import java.math.BigDecimal;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
@@ -40,9 +40,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AccountControllerIntegrationTest {
-
-  // TODO write cleaner, in most tests should get id of object returned from server then use
-  // TODO - apply suggestions from CategoryControllerIntegrationTest
 
   private static final String INVOICES_SERVICE_PATH = "/accounts";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
@@ -78,20 +75,22 @@ public class AccountControllerIntegrationTest {
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(CONTENT_TYPE)
         .content(json(accountWithoutName)))
+        .andExpect(status().isBadRequest())
         .andExpect(
             content().string("[\"" + getMessage(EMPTY_ACCOUNT_NAME) + "\",\""
-                + getMessage(EMPTY_ACCOUNT_BALANCE) + "\"]"))
-        .andExpect(status().isBadRequest());
+                + getMessage(EMPTY_ACCOUNT_BALANCE) + "\"]"));
+
   }
 
   @Test
   public void shouldGetAccountById() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1124);
+    long accountId = callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1124);
 
     this.mockMvc
-        .perform(get(INVOICES_SERVICE_PATH + "/1")) // TODO you cannot assume the id will be 1
+        .perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
         .andExpect(content().contentType(CONTENT_TYPE))
-        .andDo(print()).andExpect(status().isOk())
+        .andDo(print())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(1)));
   }
 
@@ -100,7 +99,6 @@ public class AccountControllerIntegrationTest {
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
-
   }
 
   @Test
@@ -112,28 +110,26 @@ public class AccountControllerIntegrationTest {
         .perform(get(INVOICES_SERVICE_PATH))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
-        .andExpect(jsonPath("$",
-            hasSize(2)))
         .andExpect(jsonPath("$", hasSize(2)))
         .andExpect(jsonPath("$[0].id", is(1)))
         .andExpect(jsonPath("$[0].name", is("Sebastian Revolut USD")))
-        .andExpect(jsonPath("$[0].balance", is(1_000_000)))
+        .andExpect((jsonPath("$[0].balance", is("1000000.00"))))
         .andExpect(jsonPath("$[1].id", is(2)))
         .andExpect(jsonPath("$[1].name", is("Cash")))
-        .andExpect(jsonPath("$[1].balance", is(2)));
+        .andExpect(jsonPath("$[1].balance", is("9.00")));
   }
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
+    long accountId = callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
 
-    this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/1")
+    this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
         .contentType(CONTENT_TYPE)
         .content(json(ACCOUNT_MATEUSZ_BALANCE_200)))
         .andDo(print())
         .andExpect(status().isOk());
 
-    this.mockMvc.perform(get(INVOICES_SERVICE_PATH + "/1"))
+    this.mockMvc.perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andExpect(jsonPath("$.id", is(1)))
         .andExpect(jsonPath("$.name", is("Mateusz mBank saving account")))
@@ -142,25 +138,24 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
-    Account accountToUpdate = ACCOUNT_ADAM_BALANCE_0;
 
     this.mockMvc
         .perform(put(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .contentType(CONTENT_TYPE)
-            .content(json(accountToUpdate)))
+            .content(json(ACCOUNT_ADAM_BALANCE_0)))
         .andExpect(status().isNotFound());
   }
 
   @Test
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
+    long accountId = callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
     Account accountToUpdate = Account.builder()
         .name("")
         .balance(ACCOUNT_ADAM_BALANCE_0.getBalance())
         .build();
 
     this.mockMvc
-        .perform(put(INVOICES_SERVICE_PATH + "/1")
+        .perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
             .contentType(CONTENT_TYPE)
             .content(json(accountToUpdate)))
         .andExpect(status().isBadRequest());
@@ -168,10 +163,10 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
+    long accountId = callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
 
     this.mockMvc
-        .perform(delete(INVOICES_SERVICE_PATH + "/1"))
+        .perform(delete(INVOICES_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk());
   }
 
@@ -184,14 +179,32 @@ public class AccountControllerIntegrationTest {
         .andExpect(status().isNotFound());
   }
 
+  @Test
+  public void shouldReturnErrorCauseByExistingAccountName() throws Exception {
+    callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1124);
+    Account testAccount = new Account(547L, "Lukasz CreditBank", BigDecimal.ZERO);
+
+    this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
+        .contentType(CONTENT_TYPE)
+        .content(json(testAccount)))
+        .andExpect(status().isBadRequest())
+        .andExpect(
+            content().string(
+                "[\"" + getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"));
+  }
+
   private String json(Account account) throws Exception {
     return objectMapper.writeValueAsString(account);
   }
 
-  private void callRestServiceToAddAccount(Account account) throws Exception {
-    this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account)))
-        .andExpect(status().isOk());
+  private long callRestServiceToAddAccount(Account account) throws Exception {
+    String response =
+        this.mockMvc
+        .perform(post(INVOICES_SERVICE_PATH)
+            .content(json(account))
+            .contentType(CONTENT_TYPE))
+            .andExpect(status().isOk()).andReturn()
+            .getResponse().getContentAsString();
+    return Long.parseLong(response);
   }
 }

@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 public class TestAccountProvider {
 
+  public static final Long MOCK_ACCOUNT_ID = 1L;
+
   public static final Account ACCOUNT_SEBASTIAN_BALANCE_1_000_000 =
       Account.builder()
           .id(123L)

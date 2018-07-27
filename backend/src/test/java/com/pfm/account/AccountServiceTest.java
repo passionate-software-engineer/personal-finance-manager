@@ -5,6 +5,7 @@ import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_10_99;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MATEUSZ_BALANCE_200;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SEBASTIAN_BALANCE_1_000_000;
+import static com.pfm.helpers.TestAccountProvider.MOCK_ACCOUNT_ID;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -133,6 +134,26 @@ public class AccountServiceTest {
     verify(accountRepository, times(1)).save(expectedAccount);
   }
 
-  // TODO add missing tests so coverage of service is 100%
+  @Test
+  public void shouldCheckIfAccountExist() {
+    //given
+    when(accountRepository.existsById(MOCK_ACCOUNT_ID)).thenReturn(true);
 
+    //when
+    accountService.idExist(MOCK_ACCOUNT_ID);
+
+    //then
+    verify(accountRepository).existsById(MOCK_ACCOUNT_ID);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void shouldThrowExceptionCausedByIdNotExist() {
+    //given
+    when(accountRepository.findById(MOCK_ACCOUNT_ID))
+        .thenReturn(Optional.empty());
+
+    //when
+    accountService
+        .updateAccount(MOCK_ACCOUNT_ID, ACCOUNT_JUREK_BALANCE_10_99);
+  }
 }
