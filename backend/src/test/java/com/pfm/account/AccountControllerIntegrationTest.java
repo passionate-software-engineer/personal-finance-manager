@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -39,11 +40,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class AccountControllerIntegrationTest {
 
-  // TODO write cleaner, in most tests should get id of object returned from server then use
-  // TODO - apply suggestions from CategoryControllerIntegrationTest
-
   private static final String INVOICES_SERVICE_PATH = "/accounts";
-  private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
+  private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   private static final long NOT_EXISTING_ID = 0;
 
   @Autowired
@@ -64,7 +62,7 @@ public class AccountControllerIntegrationTest {
   @Test
   public void shouldAddAccount() throws Exception {
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
-        .contentType(CONTENT_TYPE)
+        .contentType(JSON_CONTENT_TYPE)
         .content(json(ACCOUNT_JACEK_BALANCE_1000)))
         .andExpect(status().isOk());
   }
@@ -74,22 +72,23 @@ public class AccountControllerIntegrationTest {
     Account accountWithoutName = new Account(null, null, null);
 
     this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
-        .contentType(CONTENT_TYPE)
+        .contentType(JSON_CONTENT_TYPE)
         .content(json(accountWithoutName)))
-        .andExpect(
-            content().string("[\"" + getMessage(EMPTY_ACCOUNT_NAME) + "\",\""
-                + getMessage(EMPTY_ACCOUNT_BALANCE) + "\"]"))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(2)))
+        .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_NAME))))
+        .andExpect(jsonPath("$[1]", is(getMessage(EMPTY_ACCOUNT_BALANCE))));
   }
 
   @Test
   public void shouldGetAccountById() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_LUKASZ_BALANCE_1124);
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
 
     this.mockMvc
-        .perform(get(INVOICES_SERVICE_PATH + "/1")) // TODO you cannot assume the id will be 1
-        .andExpect(content().contentType(CONTENT_TYPE))
-        .andDo(print()).andExpect(status().isOk())
+        .perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andDo(print())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(1)));
   }
 
@@ -98,34 +97,39 @@ public class AccountControllerIntegrationTest {
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
-
   }
 
   @Test
   public void shouldGetAllAccounts() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_SEBASTIAN_BALANCE_1_000_000);
-    callRestServiceToAddAccount(ACCOUNT_PIOTR_BALANCE_9);
+    callRestServiceToAddAccountAndReturnId(ACCOUNT_SEBASTIAN_BALANCE_1_000_000);
+    callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
 
     this.mockMvc
         .perform(get(INVOICES_SERVICE_PATH))
-        .andExpect(content().contentType(CONTENT_TYPE))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
-        .andExpect(jsonPath("$",
-            hasSize(2))); // TODO you should assert entire response not just check if it returned 2
+        .andExpect(jsonPath("$", hasSize(2)))
+        .andExpect(jsonPath("$[0].id", is(1)))
+        .andExpect(jsonPath("$[0].name", is("Sebastian Revolut USD")))
+        .andExpect(jsonPath("$[0].balance", is("1000000.00")))
+        .andExpect(jsonPath("$[1].id", is(2)))
+        .andExpect(jsonPath("$[1].name", is("Cash")))
+        .andExpect(jsonPath("$[1].balance", is("9.00")));
   }
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
 
-    this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/1")
-        .contentType(CONTENT_TYPE)
+    this.mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
+        .contentType(JSON_CONTENT_TYPE)
         .content(json(ACCOUNT_MATEUSZ_BALANCE_200)))
         .andDo(print())
         .andExpect(status().isOk());
 
-    this.mockMvc.perform(get(INVOICES_SERVICE_PATH + "/1"))
-        .andExpect(content().contentType(CONTENT_TYPE))
+    this.mockMvc.perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(jsonPath("$.id", is(1)))
         .andExpect(jsonPath("$.name", is("Mateusz mBank saving account")))
         .andExpect(jsonPath("$.balance", is(equalTo("200.00"))));
@@ -133,56 +137,71 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
-    Account accountToUpdate = ACCOUNT_ADAM_BALANCE_0;
 
     this.mockMvc
         .perform(put(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .contentType(CONTENT_TYPE)
-            .content(json(accountToUpdate)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(ACCOUNT_ADAM_BALANCE_0)))
         .andExpect(status().isNotFound());
   }
 
   @Test
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_ADAM_BALANCE_0);
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
     Account accountToUpdate = Account.builder()
         .name("")
         .balance(ACCOUNT_ADAM_BALANCE_0.getBalance())
         .build();
 
     this.mockMvc
-        .perform(put(INVOICES_SERVICE_PATH + "/1")
-            .contentType(CONTENT_TYPE)
+        .perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
+            .contentType(JSON_CONTENT_TYPE)
             .content(json(accountToUpdate)))
         .andExpect(status().isBadRequest());
   }
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JUREK_BALANCE_10_99);
 
     this.mockMvc
-        .perform(delete(INVOICES_SERVICE_PATH + "/1"))
+        .perform(delete(INVOICES_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk());
   }
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
-    callRestServiceToAddAccount(ACCOUNT_JUREK_BALANCE_10_99);
+    callRestServiceToAddAccountAndReturnId(ACCOUNT_JUREK_BALANCE_10_99);
 
     this.mockMvc
         .perform(delete(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
   }
 
+  @Test
+  public void shouldReturnErrorCausedByExistingAccountName() throws Exception {
+    callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
+
+    this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(ACCOUNT_LUKASZ_BALANCE_1124)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
+
   private String json(Account account) throws Exception {
     return objectMapper.writeValueAsString(account);
   }
 
-  private void callRestServiceToAddAccount(Account account) throws Exception {
-    this.mockMvc.perform(post(INVOICES_SERVICE_PATH)
-        .contentType(CONTENT_TYPE)
-        .content(json(account)))
-        .andExpect(status().isOk());
+  private long callRestServiceToAddAccountAndReturnId(Account account) throws Exception {
+    String response =
+        this.mockMvc
+            .perform(post(INVOICES_SERVICE_PATH)
+                .content(json(account))
+                .contentType(JSON_CONTENT_TYPE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return Long.parseLong(response);
   }
 }
