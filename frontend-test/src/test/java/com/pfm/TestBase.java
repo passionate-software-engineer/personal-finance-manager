@@ -15,8 +15,8 @@ public abstract class TestBase {
   void setUp() {
     WebDriverManager.chromedriver().setup();
     ChromeOptions options = new ChromeOptions();
-    options.setHeadless(true);
-    options.addArguments("--disable-gpu");
+//    options.setHeadless(true);
+//    options.addArguments("--disable-gpu");
     webDriver = new ChromeDriver(options);
   }
 

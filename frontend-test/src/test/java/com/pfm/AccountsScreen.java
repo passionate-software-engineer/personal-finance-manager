@@ -169,4 +169,5 @@ class AccountsScreen {
   void editOptionsButton() {
     editOptions.click();
   }
+
 }

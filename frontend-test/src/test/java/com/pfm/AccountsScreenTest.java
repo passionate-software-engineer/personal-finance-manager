@@ -5,22 +5,21 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.pfm.helpers.TestHelper;
-import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 public class AccountsScreenTest extends TestBase {
 
   // TODO take this value from System properties / gradle properties - it should be possible to provide this value from outside
-  private static final String FRONTEND_URL = "http://localhost:4200/";
+  private static final String FRONTEND_URL = "http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts";
 
   private AccountsScreen accountsScreen;
 
@@ -31,6 +30,20 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test
+  public void shouldRemoveAllAccountsBeforeTest() {
+    List<WebElement> optionsButtonList = accountsScreen.optionsButton();
+
+    //when
+    for (int i = 0; i < optionsButtonList.size(); i++) {
+      optionsButtonList.get(i).click();
+      accountsScreen.deleteButton();
+    }
+
+    optionsButtonList = accountsScreen.optionsButton();
+    assertThat(optionsButtonList.size(), is(0));
+  }
+
+  @Test(dependsOnMethods = {"shouldRemoveAllAccountsBeforeTest"})
   public void shouldAddAccount() {
     //given
     Random random = new Random();
@@ -60,13 +73,13 @@ public class AccountsScreenTest extends TestBase {
 
     //then
     for (int i = 0; i < expectedListOfBalance.length; i++) {
-      assertThat(resultListOfDescription.contains(expectedListOfDescription[i]),
+      assertThat(expectedListOfDescription[i] + " not found", resultListOfDescription.contains(expectedListOfDescription[i]),
           is(true));
       assertThat(resultListOfBalance.contains(expectedListOfBalance[i]), is(true));
     }
   }
 
-  @Test
+  @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldSortDescriptionAscending() {
     //given
     List<String> descriptionAscending = accountsScreen.getDescription();
