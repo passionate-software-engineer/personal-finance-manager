@@ -29,12 +29,12 @@
     <td *ngIf="!category.editMode">{{category.name}}</td>
 
     <td *ngIf="category.editMode">
-      <select *ngIf="categories.length>1" [(ngModel)]="category.editedParentCategory">
+      <select [(ngModel)]="category.editedParentCategory">
+        <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
+          {{parCategory.name}}
         <option [ngValue]="null">Main Category</option>
-        <option *ngFor="let parCategory of possibleParentCategories" [ngValue]="parCategory">{{parCategory.name}}
-        </option>
+
       </select>
-      <p *ngIf="categories.length < 2">Main Category</p>
     </td>
     <td *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
 

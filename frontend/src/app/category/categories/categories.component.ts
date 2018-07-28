@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-categories',
@@ -45,8 +46,12 @@ export class CategoriesComponent implements OnInit {
   onShowEditMode(category: Category) {
     category.editMode = true;
     category.editedName = category.name;
-    category.editedParentCategory = category.parentCategory;
-    this.refreshListOfPossibleParentCategories(category);
+    if (category.parentCategory == null) {
+      category.editedParentCategory = null;
+    } else {
+      category.editedParentCategory = <Category> JSON.parse(JSON.stringify(category.parentCategory));
+    }
+
   }
 
   onEditCategory(category: Category) {
@@ -127,16 +132,21 @@ export class CategoriesComponent implements OnInit {
     return 'Main Category';
   }
 
-  refreshListOfPossibleParentCategories(cat: Category) {
-    this.possibleParentCategories = this.categories
-      .filter(element => element.id !== cat.id)
-      .filter(x => {
-        if (x.parentCategory == null) {
-          return true;
-        } else {
-          return x.parentCategory.id !== cat.id;
+  getListOfPossibleParentCategories(cat: Category) {
+    return this.categories.filter(category => {
+      if (category.id === cat.id) {
+        return false;
+      }
+      let categoryToCheck = category.parentCategory;
+      while (categoryToCheck != null) {
+
+        if (categoryToCheck.id === cat.id) {
+          return false;
         }
-      });
+        categoryToCheck = categoryToCheck.parentCategory;
+      }
+      return true;
+    });
   }
 
   validateCategory(categoryName: string): boolean {
