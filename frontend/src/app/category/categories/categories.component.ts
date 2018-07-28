@@ -13,7 +13,7 @@ export class CategoriesComponent implements OnInit {
   possibleParentCategories: Category[];
   addingMode = false;
   newCategoryName: string;
-  selectedCategory: Category;
+  newCategoryParentCategory: Category = null;
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
   }
@@ -70,7 +70,7 @@ export class CategoriesComponent implements OnInit {
       return;
     }
     categoryToAdd.name = this.newCategoryName;
-    categoryToAdd.parentCategory = this.selectedCategory;
+    categoryToAdd.parentCategory = this.newCategoryParentCategory;
     this.categoryService.addCategory(categoryToAdd)
       .subscribe(id => {
         categoryToAdd.id = id;
