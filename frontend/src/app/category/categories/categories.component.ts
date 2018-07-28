@@ -78,6 +78,7 @@ export class CategoriesComponent implements OnInit {
         this.alertService.success('Category added');
         this.addingMode = false;
         this.newCategoryName = null;
+        this.newCategoryParentCategory = null;
       });
   }
 
@@ -128,10 +129,17 @@ export class CategoriesComponent implements OnInit {
 
   refreshListOfPossibleParentCategories(cat: Category) {
     this.possibleParentCategories = this.categories
-      .filter(element => element.id !== cat.id);
+      .filter(element => element.id !== cat.id)
+      .filter(x => {
+        if (x.parentCategory == null) {
+          return true;
+        } else {
+          return x.parentCategory.id !== cat.id;
+        }
+      });
   }
 
-   validateCategory(categoryName: string): boolean {
+  validateCategory(categoryName: string): boolean {
     if (categoryName == null || categoryName.trim() === '') {
       this.alertService.error('Category name cannot be empty');
       return false;
@@ -148,8 +156,9 @@ export class CategoriesComponent implements OnInit {
       return false;
     }
 
-    if (this.categories.filter(category => category.name.toLocaleLowerCase()
-      === categoryName.toLocaleLowerCase()).length > 0) {
+    if (this.categories.filter(category =>
+      category.name.toLowerCase()
+      === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Category with provided name already exist');
       return false;
     }

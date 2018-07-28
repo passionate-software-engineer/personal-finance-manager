@@ -69,7 +69,7 @@
       <div class="form-group">
         <select class="form-control" id="selectedParentCategory" [(ngModel)]="newCategoryParentCategory"
                 name="selectedParentCategory">
-          <option selected required [ngValue]="null">Main Category</option>
+          <option [ngValue]="null">Main Category</option>
           <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
         </select>
       </div>
