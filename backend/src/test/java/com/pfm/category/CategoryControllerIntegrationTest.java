@@ -3,36 +3,43 @@ package com.pfm.category;
 import static com.pfm.category.CategoryController.convertToCategory;
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
-import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.category.CategoryController.CategoryRequest;
 import java.util.List;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
+@RunWith(JUnitParamsRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CategoryControllerIntegrationTest {
@@ -49,6 +56,12 @@ public class CategoryControllerIntegrationTest {
   private Long childCategoryId;
   private Category parentCategory;
   private Category childCategory;
+
+  @ClassRule
+  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+
+  @Rule
+  public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
   @Autowired
   private MockMvc mockMvc;
@@ -110,35 +123,42 @@ public class CategoryControllerIntegrationTest {
   }
 
   @Test
-  public void shouldReturnErrorCauseByEmptyNameFiled() throws Exception {
+  @Parameters(method = "emptyAccountNameParameters")
+  public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
     //given
-    CategoryRequest categoryToAdd = CategoryRequest.builder().name("").build();
+    CategoryRequest categoryToAdd = CategoryRequest.builder().name(name).build();
 
     //when
-    this.mockMvc
+    mockMvc
         .perform(
-            post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
-        .andExpect(content().string("[\"" + getMessage(EMPTY_CATEGORY_NAME)
-            + "\"]")) // TODO if you get list as a result then first assert size and then take element from index - [ ] is making code less readable
-        .andExpect(status()
-            .isBadRequest()); // TODO always assert status first - further assertions does not make sense if status is not correct
+            post(CATEGORIES_SERVICE_PATH)
+                .content(json(categoryToAdd))
+                .contentType(CONTENT_TYPE)
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_CATEGORY_NAME))));
+  }
+
+  private Object[] emptyAccountNameParameters() {
+    return new Object[]{"", " ", "    ", null};
   }
 
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
     //given
-    CategoryRequest categoryToAdd = CategoryRequest.builder()
-        .name(parentCategoryRq.getName())
-        .build();
+    CategoryRequest categoryToAdd = CategoryRequest.builder().name(parentCategoryRq.getName()).build();
 
     //when
-    this.mockMvc
+    mockMvc
         .perform(
-            post(CATEGORIES_SERVICE_PATH).content(json(categoryToAdd)).contentType(CONTENT_TYPE))
-        .andExpect(
-            content().string("[\"" + getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST) + "\"]"))
-        .andExpect(status()
-            .isBadRequest());  // TODO always assert status first - further assertions does not make sense if status is not correct
+            post(CATEGORIES_SERVICE_PATH)
+                .content(json(categoryToAdd))
+                .contentType(CONTENT_TYPE)
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }
 
   @Test
@@ -166,7 +186,8 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedGetMethod() throws Exception {
     //when
-    this.mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + childCategoryId + 1))
+    mockMvc
+        .perform(get(CATEGORIES_SERVICE_PATH + "/" + childCategoryId + 1))
         .andExpect(status().isNotFound());
   }
 
@@ -180,9 +201,11 @@ public class CategoryControllerIntegrationTest {
     expectedCategory.setId(parentCategoryId);
 
     //when
-    this.mockMvc
+    mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
-            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+            .content(json(categoryToUpdate))
+            .contentType(CONTENT_TYPE)
+        )
         .andExpect(status().isOk());
 
     //given
@@ -207,7 +230,7 @@ public class CategoryControllerIntegrationTest {
     expectedCategory.getParentCategory().setName(secondParentCategory.getName());
 
     //when
-    this.mockMvc
+    mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + childCategoryId)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isOk());
@@ -223,7 +246,7 @@ public class CategoryControllerIntegrationTest {
     CategoryRequest categoryToUpdate = childCategoryRq;
 
     //when
-    this.mockMvc
+    mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -238,12 +261,12 @@ public class CategoryControllerIntegrationTest {
         .setParentCategoryId(NOT_EXISTING_ID);
 
     //when
-    this.mockMvc
+    mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + childCategoryId)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
-        .andExpect(content().string(
-            "[\"" + getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST) + "\"]"));
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST))));
   }
 
   @Test
@@ -270,12 +293,12 @@ public class CategoryControllerIntegrationTest {
 
   private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate) throws Exception {
     //when
-    this.mockMvc
+    mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
             .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
         .andExpect(status().isBadRequest())
-        .andExpect(content().string(
-            "[\"" + getMessage(CATEGORIES_CYCLE_DETECTED) + "\"]"));
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORIES_CYCLE_DETECTED))));
   }
 
   @Test
@@ -305,14 +328,13 @@ public class CategoryControllerIntegrationTest {
     assertFalse(categories.contains(parentCategoryRq));
   }
 
-
   @Test
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
       throws Exception {
     //given
 
     //when
-    this.mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId))
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
   }
@@ -320,12 +342,12 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedDeleteMethod() throws Exception {
     //when
-    this.mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
   }
 
   private long addCategory(CategoryRequest category) throws Exception {
-    String response = this.mockMvc
+    String response = mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
                 .content(json(category))
@@ -336,7 +358,7 @@ public class CategoryControllerIntegrationTest {
   }
 
   private Category getCategoryById(long id) throws Exception {
-    String response = this.mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + id))
+    String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + id))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -344,7 +366,7 @@ public class CategoryControllerIntegrationTest {
   }
 
   private List<Category> getAllCategoriesFromDatabase() throws Exception {
-    String response = this.mockMvc.perform(get(CATEGORIES_SERVICE_PATH))
+    String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH))
         .andExpect(content().contentType(CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -352,7 +374,7 @@ public class CategoryControllerIntegrationTest {
   }
 
   private void deleteCategoryById(long id) throws Exception {
-    this.mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + id))
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + id))
         .andExpect(status().isOk());
   }
 

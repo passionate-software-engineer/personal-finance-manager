@@ -27,7 +27,6 @@ public class Account {
   private Long id;
 
   @NotNull
-  // TODO add name validation
   @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
   private String name;
 
