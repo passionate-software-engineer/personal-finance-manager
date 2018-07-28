@@ -66,7 +66,7 @@ export class CategoriesComponent implements OnInit {
 
   onAddCategory() {
     const categoryToAdd = new Category();
-    if (!this.validateCategory(this.newCategoryName)) {
+    if (!this.validateAddingCategory(this.newCategoryName)) {
       return;
     }
     categoryToAdd.name = this.newCategoryName;
@@ -131,7 +131,7 @@ export class CategoriesComponent implements OnInit {
       .filter(element => element.id !== cat.id);
   }
 
-  validateCategory(categoryName: string): boolean {
+   validateCategory(categoryName: string): boolean {
     if (categoryName == null || categoryName.trim() === '') {
       this.alertService.error('Category name cannot be empty');
       return false;
@@ -140,6 +140,14 @@ export class CategoriesComponent implements OnInit {
       this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
       return false;
     }
+    return true;
+  }
+
+  validateAddingCategory(categoryName: string): boolean {
+    if (!this.validateCategory(categoryName)) {
+      return false;
+    }
+
     if (this.categories.filter(category => category.name.toLocaleLowerCase()
       === categoryName.toLocaleLowerCase()).length > 0) {
       this.alertService.error('Category with provided name already exist');
@@ -147,4 +155,5 @@ export class CategoriesComponent implements OnInit {
     }
     return true;
   }
+
 }

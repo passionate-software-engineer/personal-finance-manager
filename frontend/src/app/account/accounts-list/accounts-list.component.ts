@@ -70,7 +70,7 @@ export class AccountsListComponent implements OnInit {
 
   onAddAccount() {
     const accountToAdd = new Account();
-    if (!this.validateAccount(this.newAccountName, this.newAccountBalance)) {
+    if (!this.validateAddingAccount(this.newAccountName, this.newAccountBalance)) {
       return;
     }
     accountToAdd.name = this.newAccountName;
@@ -124,11 +124,7 @@ export class AccountsListComponent implements OnInit {
       this.alertService.error('Account name too long. Account name can not be longer then 100 characters');
       return false;
     }
-    if (this.accounts.filter(account => account.name.toLocaleLowerCase()
-      === accountName.toLocaleLowerCase()).length > 0) {
-      this.alertService.error('Account with provided name already exist');
-      return false;
-    }
+
     if (typeof accountBalance === 'undefined' || !accountBalance) {
       this.alertService.error('Balance cannot be empty');
       return false;
@@ -146,5 +142,19 @@ export class AccountsListComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  validateAddingAccount(accountName: string, accountBalance: number): boolean {
+    if (!this.validateAccount(accountName, accountBalance)) {
+      this.alertService.error('Account with provided name already exist');
+      return false;
+    }
+
+    if (this.accounts.filter(account => account.name.toLocaleLowerCase()
+      === accountName.toLocaleLowerCase()).length > 0) {
+      this.alertService.error('Account with provided name already exist');
+      return false;
+    }
+
   }
 }
