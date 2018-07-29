@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -102,16 +101,14 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
-  // hack to get different object for request and response
   @JsonIgnoreProperties(ignoreUnknown = true)
   @NoArgsConstructor
   @AllArgsConstructor
   @Builder
-  @Data
+  @Setter
+  @Getter
   static class CategoryRequest {
 
-    @Setter
-    @Getter
     @ApiModelProperty(value = "Parent category id", example = "1")
     private Long parentCategoryId;
 
