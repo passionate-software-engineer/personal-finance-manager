@@ -38,8 +38,15 @@ public class AccountValidator {
     return validationResults;
   }
 
-  public List<String> validateAccountForUpdate(Account account) {
-    return validate(account);
+  public List<String> validateAccountForUpdate(long id, Account account) {
+    if (accountService.getAccountById(id).get().getName().equals(account.getName())) {
+      return validate(account);
+    }
+    List<String> validationResults = validate(account);
+    if (account.getName() != null && accountService
+        .isAccountNameAlreadyUsed(account.getName())) {
+      validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
+    }
+    return validationResults;
   }
-
 }

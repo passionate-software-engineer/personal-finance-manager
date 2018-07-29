@@ -48,8 +48,8 @@ export class AccountService {
     const url = `${this.apiUrl}/${account.id}`;
     return this.http.put<Account>(url, account, httpOptions)
       .pipe(
-        tap(() => this.log(`edited category with id: ` + account.id)),
-        catchError(this.handleError('editCategory', [])));
+        tap(() => this.log(`edited account with id: ` + account.id)),
+        catchError(this.handleError('editAccount', [])));
   }
 
   private log(message: string) {
@@ -58,7 +58,7 @@ export class AccountService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      if (error.response === 400) {
+      if (error.status === 400) {
         this.alertService.error(error.error);
       }
       if (error.status === 0 || error.status === 500) {

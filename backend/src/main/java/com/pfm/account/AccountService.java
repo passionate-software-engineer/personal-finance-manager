@@ -55,4 +55,5 @@ public class AccountService {
   public boolean isAccountNameAlreadyUsed(String name) {
     return accountRepository.findByNameIgnoreCase(name).size() != 0;
   }
+
 }
