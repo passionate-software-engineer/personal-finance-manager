@@ -3,6 +3,7 @@ package com.pfm.account;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
@@ -24,7 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.math.BigDecimal;
 import org.flywaydb.core.Flyway;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,7 +72,8 @@ public class AccountControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedByEmptyNameAndEmptyBalanceFields() throws Exception {
-    Account accountWithoutName = new Account(null, null, null); // TODO should be using AccoutRequest not Account
+    Account accountWithoutName = new Account(null, null,
+        null); // TODO should be using AccoutRequest not Account
 
     mockMvc.perform(post(INVOICES_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
@@ -133,6 +137,43 @@ public class AccountControllerIntegrationTest {
         .andExpect(jsonPath("$.id", is(1)))
         .andExpect(jsonPath("$.name", is("Mateusz mBank saving account")))
         .andExpect(jsonPath("$.balance", is(equalTo("200.00"))));
+  }
+
+  @Test
+  public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
+    Account updatedAccount = Account.builder().name(ACCOUNT_ADAM_BALANCE_0.getName())
+        .balance(ACCOUNT_ADAM_BALANCE_0.getBalance().add(BigDecimal.TEN)).build();
+
+    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedAccount)))
+        .andDo(print())
+        .andExpect(status().isOk());
+
+    mockMvc.perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.id", is(1)))
+        .andExpect(jsonPath("$.name", is(ACCOUNT_ADAM_BALANCE_0.getName())))
+        .andExpect(jsonPath("$.balance", is(equalTo("10.00"))));
+  }
+
+  @Test
+  public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
+    callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    Account updatedAccount = Account.builder().name(ACCOUNT_ADAM_BALANCE_0.getName())
+        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance()).build();
+
+    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountJacekId)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedAccount)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]",
+            is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+
   }
 
   @Test
