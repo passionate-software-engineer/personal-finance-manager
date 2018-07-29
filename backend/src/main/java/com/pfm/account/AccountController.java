@@ -64,7 +64,7 @@ public class AccountController {
     // must copy as types do not match for Hibernate
     Account account = new Account(null, accountRequest.getName(), accountRequest.getBalance());
 
-    List<String> validationResult = accountValidator.validate(account);
+    List<String> validationResult = accountValidator.validateAccountForAdd(account);
     if (!validationResult.isEmpty()) {
       log.info("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -89,7 +89,7 @@ public class AccountController {
     Account account = new Account(id, accountRequest.getName(), accountRequest.getBalance());
 
     log.info("Updating account with id {}", id);
-    List<String> validationResult = accountValidator.validate(account);
+    List<String> validationResult = accountValidator.validateAccountForUpdate(account);
 
     if (!validationResult.isEmpty()) {
       log.error("Account is not valid {}", validationResult);

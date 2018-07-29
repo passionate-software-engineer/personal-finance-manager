@@ -16,7 +16,7 @@ public class AccountValidator {
 
   private AccountService accountService;
 
-  public List<String> validate(Account account) {
+  private List<String> validate(Account account) {
     List<String> validationResults = new ArrayList<>();
 
     if (account.getName() == null || account.getName().trim().equals("")) {
@@ -27,11 +27,19 @@ public class AccountValidator {
       validationResults.add(getMessage(EMPTY_ACCOUNT_BALANCE));
     }
 
+    return validationResults;
+  }
+
+  public List<String> validateAccountForAdd(Account account) {
+    List<String> validationResults = validate(account);
     if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
-
     return validationResults;
+  }
+
+  public List<String> validateAccountForUpdate(Account account) {
+    return validate(account);
   }
 
 }
