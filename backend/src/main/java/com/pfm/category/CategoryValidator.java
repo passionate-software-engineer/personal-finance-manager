@@ -38,11 +38,6 @@ public class CategoryValidator {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
     checkForDuplicatedName(validationResults, category);
-    if (category.getName() != null && category.getParentCategory() != null &&
-        category.getParentCategory().getName() != null &&
-        category.getName().equals(category.getParentCategory().getName())) {
-      validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
-    }
     return validationResults;
   }
 
