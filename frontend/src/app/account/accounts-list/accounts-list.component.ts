@@ -120,7 +120,7 @@ export class AccountsListComponent implements OnInit {
       this.alertService.error('Name cannot be empty');
       return false;
     }
-    if (accountName.length > 100) {
+    if (accountName.length > 70) {
       this.alertService.error('Account name too long. Account name can not be longer then 100 characters');
       return false;
     }
@@ -146,7 +146,6 @@ export class AccountsListComponent implements OnInit {
 
   validateAddingAccount(accountName: string, accountBalance: number): boolean {
     if (!this.validateAccount(accountName, accountBalance)) {
-      this.alertService.error('Account with provided name already exist');
       return false;
     }
 
@@ -155,6 +154,6 @@ export class AccountsListComponent implements OnInit {
       this.alertService.error('Account with provided name already exist');
       return false;
     }
-
+    return true;
   }
 }

@@ -11,7 +11,6 @@ import {MessagesComponent} from './messages/messages/messages.component';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AlertsService} from './alerts/alerts-service/alerts.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
