@@ -1,12 +1,16 @@
 package com.pfm.account;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -112,13 +116,16 @@ public class AccountController {
     return ResponseEntity.ok().build();
   }
 
-  // hack to ignore id provided by user and not show it in Swagger example
   @JsonIgnoreProperties(ignoreUnknown = true)
-  private static class AccountRequest extends Account {
+  @NoArgsConstructor
+  @Getter
+  @Setter
+  static class AccountRequest {
 
-    @JsonIgnore
-    public void setId(Long id) {
-      super.setId(id);
-    }
+    @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
+    private String name;
+
+    @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
+    private BigDecimal balance;
   }
 }
