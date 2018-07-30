@@ -34,6 +34,8 @@ export class AccountsListComponent implements OnInit {
       });
   }
 
+  // TODO make nice looking confirmation popup
+
   deleteAccount(account) {
     if (confirm('Are you sure You want to delete this account ?')) {
       this.accountService.deleteAccount(account.id)
@@ -92,6 +94,8 @@ export class AccountsListComponent implements OnInit {
   onRefreshAccounts() {
     this.getAccounts();
   }
+
+  // TODO make sorting using pipes not methods below
 
   sortByName(type: string) {
     if (type === 'asc') {

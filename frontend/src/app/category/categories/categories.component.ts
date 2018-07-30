@@ -29,6 +29,8 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
+  // TODO make nice looking confirmation popup
+
   deleteCategory(category) {
     if (confirm('Are you sure You want to delete this account ?')) {
       this.categoryService.deleteCategory(category.id)
@@ -91,6 +93,8 @@ export class CategoriesComponent implements OnInit {
   onRefreshCategories() {
     this.getCategories();
   }
+
+  // TODO make sorting using pipes not methods below
 
   sortByName(type: string) {
     if (type === 'asc') {
