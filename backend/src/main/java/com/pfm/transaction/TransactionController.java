@@ -160,7 +160,7 @@ public class TransactionController {
   @NoArgsConstructor
   @AllArgsConstructor
   @JsonIgnoreProperties(ignoreUnknown = true)
-  private static class TransactionRequest {
+  public static class TransactionRequest {
 
     @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
     private String description;

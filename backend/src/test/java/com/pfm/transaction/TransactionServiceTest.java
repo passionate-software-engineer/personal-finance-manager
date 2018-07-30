@@ -44,7 +44,8 @@ public class TransactionServiceTest {
   @Test
   public void shouldGetTransactionById() {
     //given
-    when(transactionRepository.findById(MOCK_TRANSACTION_ID)).thenReturn(Optional.of(mockTransaction));
+    when(transactionRepository.findById(MOCK_TRANSACTION_ID))
+        .thenReturn(Optional.of(mockTransaction));
 
     //when
     Transaction result = transactionService.getTransactionById(MOCK_TRANSACTION_ID).orElse(null);
@@ -79,7 +80,7 @@ public class TransactionServiceTest {
     when(transactionRepository.save(mockTransaction)).thenReturn(mockTransaction);
 
     //when
-    Transaction result=transactionService.addTransaction(mockTransaction);
+    Transaction result = transactionService.addTransaction(mockTransaction);
 
     //then
     verify(transactionRepository).save(mockTransaction);
@@ -94,12 +95,12 @@ public class TransactionServiceTest {
   public void shouldUpdateTransaction() {
 
     //given
-    when(transactionRepository.findById(MOCK_TRANSACTION_ID)).thenReturn(Optional.of(mockTransaction));
+    when(transactionRepository.findById(MOCK_TRANSACTION_ID))
+        .thenReturn(Optional.of(mockTransaction));
     when(transactionRepository.save(mockTransaction)).thenReturn(mockTransaction);
 
-
     //when
-   transactionService.updateTransaction(MOCK_TRANSACTION_ID, mockTransaction);
+    transactionService.updateTransaction(MOCK_TRANSACTION_ID, mockTransaction);
 
     //then
     verify(transactionRepository).findById(MOCK_TRANSACTION_ID);
