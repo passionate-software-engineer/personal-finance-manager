@@ -3,6 +3,7 @@ package com.pfm.helpers;
 import com.pfm.account.Account;
 import com.pfm.category.Category;
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionController.TransactionRequest;
 import java.math.BigDecimal;
 
 public class TestTransactionProvider {
@@ -22,6 +23,15 @@ public class TestTransactionProvider {
   public static Transaction mockTransaction = new Transaction(MOCK_TRANSACTION_ID,
       MOCK_TRANSACTION_DESCRIPTION, MOCK_TRANSACTION_CATEGORY, MOCK_TRANSACTION_ACCOUNT,
       MOCK_TRANSACTION_PRICE);
+
+  public static final Integer CATEGORY_ID=1;
+  public static final Integer ACCOUNT_ID=1;
 //  public static Transaction mockUpdatedTransaction= new Transaction(MOCK_TRANSACTION_ID,MOCK_UPDATED_TRANSACTION_DESCRIPTION,MOCK_UPDATED_TRANSACTION_CATEGORY,MOCK_UPDATED_TRANSACTION_ACCOUNT,MOCK_UPDATED_TRANSACTION_PRICE);
 
+//  public static TransactionRequest mockTransaction = new TransactionRequest(MOCK_TRANSACTION_ID,
+//      MOCK_TRANSACTION_DESCRIPTION, MOCK_TRANSACTION_CATEGORY, MOCK_TRANSACTION_ACCOUNT,
+//      MOCK_TRANSACTION_PRICE);
+//  CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car")
+
+  public static final TransactionRequest transactionRequest = TransactionRequest.builder().description(MOCK_TRANSACTION_DESCRIPTION).categoryId(CATEGORY_ID).accountId(ACCOUNT_ID).price(MOCK_TRANSACTION_PRICE).build();
 }
