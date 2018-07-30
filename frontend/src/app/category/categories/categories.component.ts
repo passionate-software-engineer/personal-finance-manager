@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {element} from 'protractor';
 
 @Component({
   selector: 'app-categories',
@@ -11,7 +10,6 @@ import {element} from 'protractor';
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[];
-  possibleParentCategories: Category[];
   addingMode = false;
   newCategoryName: string;
   newCategoryParentCategory: Category = null;

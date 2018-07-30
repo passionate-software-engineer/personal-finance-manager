@@ -4,8 +4,8 @@ import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
-const maxLongNumber = 9223372036854775807;
-const minLongNumber = -9223372036854775808;
+const maxAccountBalance = Number.MAX_SAFE_INTEGER;
+const minAccountBalance = Number.MIN_SAFE_INTEGER;
 
 @Component({
   selector: 'app-accounts-list',
@@ -138,9 +138,13 @@ export class AccountsListComponent implements OnInit {
     }
 
     const newAccountBalance = Math.round(accountBalance * 100) / 100;
-    if (newAccountBalance > maxLongNumber || newAccountBalance < minLongNumber) {
+    if (newAccountBalance > maxAccountBalance) {
       this.alertService.error('Balance number is too big.' +
         ' If You are so rich why do You need personal finance manager !? ');
+      return false;
+    }
+    if (newAccountBalance < minAccountBalance) {
+      this.alertService.error('Balance number is too low');
       return false;
     }
     return true;
