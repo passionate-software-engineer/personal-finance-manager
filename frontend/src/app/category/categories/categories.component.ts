@@ -27,6 +27,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
+        this.sortByName('asc');
       });
   }
 
@@ -66,6 +67,7 @@ export class CategoriesComponent implements OnInit {
       .subscribe(() => {
         this.alertService.success('Category edited');
         Object.assign(category, editedCategory);
+        this.sortByName('asc');
       });
   }
 
@@ -84,6 +86,7 @@ export class CategoriesComponent implements OnInit {
         this.addingMode = false;
         this.newCategoryName = null;
         this.newCategoryParentCategory = null;
+        this.sortByName('asc');
       });
   }
 
@@ -93,10 +96,10 @@ export class CategoriesComponent implements OnInit {
 
   sortByName(type: string) {
     if (type === 'asc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
+      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
     }
     if (type === 'dsc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
+      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
     }
   }
 

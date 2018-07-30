@@ -30,6 +30,7 @@ export class AccountsListComponent implements OnInit {
     this.accountService.getAccounts()
       .subscribe(accounts => {
         this.accounts = accounts;
+        this.sortByName('asc');
       });
   }
 
@@ -62,10 +63,10 @@ export class AccountsListComponent implements OnInit {
     editedAccount.balance = account.editedBalance;
     this.accountService.editAccount(editedAccount)
       .subscribe(() => {
-          this.alertService.success('Account updated');
-          Object.assign(account, editedAccount);
-        }
-      );
+        this.alertService.success('Account updated');
+        Object.assign(account, editedAccount);
+        this.sortByName('asc');
+      });
   }
 
   onAddAccount() {
@@ -84,6 +85,7 @@ export class AccountsListComponent implements OnInit {
         this.addingMode = false;
         this.newAccountBalance = null;
         this.newAccountName = null;
+        this.sortByName('asc');
       });
   }
 
@@ -93,10 +95,10 @@ export class AccountsListComponent implements OnInit {
 
   sortByName(type: string) {
     if (type === 'asc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
+      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
     }
     if (type === 'dsc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
+      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
     }
   }
 
