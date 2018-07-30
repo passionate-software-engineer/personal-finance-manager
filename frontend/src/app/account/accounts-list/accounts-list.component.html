@@ -1,74 +1,69 @@
-<button class="btn btn-danger" type="button" (click)="addingMode === true ? addingMode=false : addingMode=true">
-  Add Account</button>
+<button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
+  Add Account
+</button>
 <button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
-    <tr>
-      <th style="width: 20%">
-        Id
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortById('dsc')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortById('asc')"></span>
-      </th>
-      <th style="width: 50%">
-        Description
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
-      </th>
-      <th style="width: 20%">
-        Balance
-        <span class="glyphicon glyphicon-collapse-down" (click)="sortByBalance('dsc')"></span>
-        <span class="glyphicon glyphicon-collapse-up" (click)="sortByBalance('asc')"></span>
-      </th>
-      <th style="width: 10%">
-      </th>
-    </tr>
+  <tr>
+    <th style="width: 50%">
+      Description
+      <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
+      <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
+    </th>
+    <th style="width: 20%">
+      Balance
+      <span class="glyphicon glyphicon-collapse-down" (click)="sortByBalance('dsc')"></span>
+      <span class="glyphicon glyphicon-collapse-up" (click)="sortByBalance('asc')"></span>
+    </th>
+    <th style="width: 10%">
+    </th>
+  </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let account of accounts">
-      <td>{{account.id}}</td>
+  <tr *ngFor="let account of accounts">
 
-      <td *ngIf="account.editMode">
-        <input type="text" [(ngModel)]="editedName">
-      </td>
-      <td *ngIf="!account.editMode">{{account.name}}</td>
+    <td *ngIf="account.editMode">
+      <input type="text" [(ngModel)]="account.editedName">
+    </td>
+    <td *ngIf="!account.editMode">{{account.name}}</td>
 
-      <td *ngIf="account.editMode">
-        <input type="text" [(ngModel)]="editedBalance"> $</td>
-      <td *ngIf="!account.editMode">{{account.balance}} $</td>
+    <td *ngIf="account.editMode">
+      <input type="text" [(ngModel)]="account.editedBalance"></td>
+    <td *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
 
-      <td *ngIf="!account.editMode">
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" id="accountScreenOptionsButton" type="button" data-toggle="dropdown">Options
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <button class="btn-primary" (click)="deleteAccount(account)">Delete</button>
-            </li>
-            <li>
-              <button class="btn-danger" (click)="onShowEditMode(account)">Edit</button>
-            </li>
-          </ul>
-        </div>
-      </td>
-      <td *ngIf="account.editMode">
-        <button class="btn-primary" (click)="onEditAccount(account)">Save</button>
-        <button class="btn-danger" (click)="account.editMode=false">Exit</button>
-      </td>
+    <td *ngIf="!account.editMode">
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" id="accountScreenOptionsButton" type="button"
+                data-toggle="dropdown">Options
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <button class="btn-primary" (click)="deleteAccount(account)">Delete</button>
+          </li>
+          <li>
+            <button class="btn-danger" (click)="onShowEditMode(account)">Edit</button>
+          </li>
+        </ul>
+      </div>
+    </td>
+    <td *ngIf="account.editMode">
+      <button class="btn-primary" (click)="onEditAccount(account)">Save</button>
+      <button class="btn-danger" (click)="account.editMode=false">Exit</button>
+    </td>
 
-    </tr>
-    <tr *ngIf="addingMode">
-      <td>New Account</td>
-      <td>
-        <input type="text" #newAccountName>
-      </td>
-      <td>
-        <input type="text" #newAccountBalance> </td>
-      <td>
-        <button class="btn-primary" (click)="onAddAccount(newAccountName,newAccountBalance)">Save</button>
-        <button class="btn-danger" (click)="addingMode=false">Exit</button>
-      </td>
-    </tr>
+  </tr>
+  <tr *ngIf="addingMode">
+    <td>
+      <input type="text" [(ngModel)]="newAccountName">
+    </td>
+    <td>
+      <input type="text" [(ngModel)]="newAccountBalance"></td>
+    <td>
+      <button class="btn-primary" (click)="onAddAccount()">Save</button>
+      <button class="btn-danger" (click)="addingMode=false">Exit</button>
+    </td>
+  </tr>
   </tbody>
 </table>

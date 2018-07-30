@@ -224,6 +224,8 @@
         value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>
     </module>
     <module name="UnusedImports"/>
+    <module name="UnnecessaryParentheses"/>
+    <module name="WhitespaceAfter"/>
     <module name="SingleSpaceSeparator">
       <property name="validateComments" value="true"/>
     </module>

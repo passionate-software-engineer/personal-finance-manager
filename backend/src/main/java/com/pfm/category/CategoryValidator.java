@@ -1,7 +1,7 @@
 package com.pfm.category;
 
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
-import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -9,22 +9,25 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @AllArgsConstructor
 public class CategoryValidator {
 
+  //TODO possible can simplify this
+
   private CategoryService categoryService;
 
-  public List<String> validateCategoryForUpdate(Category category) {
+  public List<String> validateCategoryForUpdate(long id, Category category) {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
+    if (!categoryService.getCategoryById(id).get().getName().equals(category.getName())) {
+      checkForDuplicatedName(validationResults, category);
+    }
 
-    // TODO - why only for update - why cycle cannot happen when creating new category?
-    if (category.getParentCategory() != null
-        && !categoryService
-        .canBeParentCategory(category.getId(), category.getParentCategory().getId())) {
+    if (category.getParentCategory() != null && !categoryService
+        .canBeParentCategory(id, category.getParentCategory().getId())) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 
@@ -34,11 +37,7 @@ public class CategoryValidator {
   public List<String> validateCategoryForAdd(Category category) {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
-    if (category.getName() != null && !category.getName().trim().equals("")
-        && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
-      validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXIST));
-    } // TODO - why you don't check names in case of update? :)
-
+    checkForDuplicatedName(validationResults, category);
     return validationResults;
   }
 
@@ -46,10 +45,16 @@ public class CategoryValidator {
     if (category.getName() == null || category.getName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
     }
-
     if (category.getParentCategory() != null
         && !categoryService.idExist(category.getParentCategory().getId())) {
       validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST));
+    }
+  }
+
+  private void checkForDuplicatedName(List<String> validationResults, Category category) {
+    if (category.getName() != null && !category.getName().trim().equals("")
+        && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
+      validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }
 

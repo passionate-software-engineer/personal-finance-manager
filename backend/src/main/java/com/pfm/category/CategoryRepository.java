@@ -12,7 +12,7 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
   @Query(value = "select count(category.parentCategory.id) from Category category where category.parentCategory.id = :id")
   Integer numberOfEntriesUsingThisCategoryAsParentId(@Param("id") long id);
 
-  List<Category> findByNameContainingIgnoreCase(String name);
+  List<Category> findByNameIgnoreCase(String name);
 
   // TODO flyway is missing table for categories, in flyway remove V2
   // TODO- this account should not be added at startup, looks like flyway is not used but should be
