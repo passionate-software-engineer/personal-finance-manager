@@ -79,7 +79,7 @@ public class CategoryController {
     Category category = convertToCategory(categoryRequest);
     category.setId(id);
 
-    List<String> validationResult = categoryValidator.validateCategoryForUpdate(id,category);
+    List<String> validationResult = categoryValidator.validateCategoryForUpdate(id, category);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }

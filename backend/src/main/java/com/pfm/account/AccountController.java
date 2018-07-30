@@ -89,7 +89,7 @@ public class AccountController {
     Account account = new Account(id, accountRequest.getName(), accountRequest.getBalance());
 
     log.info("Updating account with id {}", id);
-    List<String> validationResult = accountValidator.validateAccountForUpdate(id,account);
+    List<String> validationResult = accountValidator.validateAccountForUpdate(id, account);
 
     if (!validationResult.isEmpty()) {
       log.error("Account is not valid {}", validationResult);
