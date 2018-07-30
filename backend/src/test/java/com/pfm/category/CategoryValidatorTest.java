@@ -1,5 +1,6 @@
 package com.pfm.category;
 
+import static com.pfm.helpers.TestCategoryProvider.CATEGORY_FOOD_NO_PARENT_CATEGORY;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -21,10 +22,11 @@ public class CategoryValidatorTest {
   @Test(expected = IllegalStateException.class)
   public void validateCategoryForUpdate() {
     //when
-    Category categoryToVerify = new Category(1L, "Food", null);
-    when(categoryService.getCategoryById(1)).thenReturn(Optional.empty());
+    when(categoryService.getCategoryById(CATEGORY_FOOD_NO_PARENT_CATEGORY.getId()))
+        .thenReturn(Optional.empty());
 
     //then
-    categoryValidator.validateCategoryForUpdate(1, categoryToVerify);
+    categoryValidator.validateCategoryForUpdate(CATEGORY_FOOD_NO_PARENT_CATEGORY.getId(),
+        CATEGORY_FOOD_NO_PARENT_CATEGORY);
   }
 }

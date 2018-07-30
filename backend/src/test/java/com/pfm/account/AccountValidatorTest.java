@@ -1,8 +1,8 @@
 package com.pfm.account;
 
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +22,11 @@ public class AccountValidatorTest {
   @Test(expected = IllegalStateException.class)
   public void validateAccountForUpdate() {
     //when
-    Account accountToVerify = Account.builder().id(1L).name("Food").balance(BigDecimal.TEN).build();
-    when(accountService.getAccountById(1)).thenReturn(Optional.empty());
+    when(accountService.getAccountById(ACCOUNT_ADAM_BALANCE_0.getId()))
+        .thenReturn(Optional.empty());
 
     //then
-    accountValidator.validateAccountForUpdate(1, accountToVerify);
+    accountValidator
+        .validateAccountForUpdate(ACCOUNT_ADAM_BALANCE_0.getId(), ACCOUNT_ADAM_BALANCE_0);
   }
 }

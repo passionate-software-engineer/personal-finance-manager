@@ -44,6 +44,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class CategoryControllerIntegrationTest {
 
+  //TODO Rewrite test to use helper class and add Category builder
+
   private static final String CATEGORIES_SERVICE_PATH = "/categories";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   private static final Long NOT_EXISTING_ID = 0L;
