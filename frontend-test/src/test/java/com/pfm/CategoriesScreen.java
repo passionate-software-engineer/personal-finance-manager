@@ -1,5 +1,6 @@
 package com.pfm;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,16 +14,18 @@ class CategoriesScreen {
 
   private static final int SECONDS_30 = 30;
 
+  private WebDriver driver;
+
   @FindBy(xpath = "//*[@class='btn btn-danger']")
   private WebElement addCategoryBt;
 
-  @FindBy(xpath = "//app-categories/table/tbody/tr//td[4]/div/button")
+  @FindBy(xpath = "//app-categories/table/tbody/tr//td[3]/div/button")
   private List<WebElement> options;
 
   @FindBy(xpath = "//div[@class='dropdown open']//*[(text()='Delete')]")
   private WebElement delete;
 
-  @FindBy(xpath = "//app-categories/table/tbody/tr/td[2]/input")
+  @FindBy(xpath = "//app-categories/table/tbody/tr/td[1]/input")
   private WebElement inputCategoryName;
 
   @FindBy(xpath = "//select[@id='selectedParentCategory']")
@@ -34,31 +37,20 @@ class CategoriesScreen {
   @FindBy(xpath = "//div[@class='dropdown open']//*[(text()='Edit')]")
   private WebElement edit;
 
-  @FindBy(xpath = "//button[@class='btn-danger']")
-  private WebElement exitBt;
-
   @FindBy(xpath = "//*[@id='selectedParentCategory']/option[1]")
   private WebElement selectMainCategoryBt;
 
-  @FindBy(xpath = "//app-categories//td[2]")
+  @FindBy(xpath = "//app-categories//td[1]")
   private List<WebElement> listOfCategoriesName;
 
   @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-up']")
-  private WebElement idAscending;
-
-  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-down']")
-  private WebElement idDescending;
-
-  @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-up']")
   private WebElement nameAscending;
 
-  @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-down']")
+  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-down']")
   private WebElement nameDescending;
 
-  @FindBy(xpath = "//app-categories//td[1]")
-  private List<WebElement> id;
-
   CategoriesScreen(WebDriver driver) {
+    this.driver = driver;
     PageFactory.initElements(new AjaxElementLocatorFactory(driver, SECONDS_30), this);
   }
 
@@ -91,22 +83,6 @@ class CategoriesScreen {
     return categoriesNamesList;
   }
 
-  List<Long> getId() {
-    List<Long> idElementsList = new ArrayList<>();
-    for (WebElement idElement : id) {
-      idElementsList.add(Long.parseLong(idElement.getText()));
-    }
-    return idElementsList;
-  }
-
-  void idAscendingButton() {
-    idAscending.click();
-  }
-
-  void idDescendingButton() {
-    idDescending.click();
-  }
-
   void nameAscendingButton() {
     nameAscending.click();
   }
@@ -121,6 +97,8 @@ class CategoriesScreen {
 
   void deleteButton() {
     delete.click();
+    Alert alert = driver.switchTo().alert();
+    alert.accept();
   }
 
   void editButton() {

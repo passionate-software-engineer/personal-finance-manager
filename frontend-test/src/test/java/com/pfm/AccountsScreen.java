@@ -1,5 +1,6 @@
 package com.pfm;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,35 +14,24 @@ import java.util.List;
 class AccountsScreen {
 
   private static final int SECONDS_30 = 30;
+  private WebDriver driver;
 
   @FindBy(xpath = "//button[@class='btn btn-primary']")
   private WebElement refresh;
 
   @FindBy(xpath = "//app-accounts-list//td[1]")
-  private List<WebElement> id;
-
-  @FindBy(xpath = "//app-accounts-list//td[2]")
   private List<WebElement> description;
 
-  @FindBy(xpath = "//app-accounts-list//td[3]")
+  @FindBy(xpath = "//app-accounts-list//td[2]")
   private List<WebElement> balance;
 
-  @FindBy(xpath = "//button[@class='btn btn-danger' and (text()=' Add Account')]")
+  @FindBy(xpath = "//button[@class='btn btn-danger']")
   private WebElement addAccountButton;
 
-  @FindBy(xpath = "//button[@class='btn btn-danger dropdown-toggle' and (text()='Adding options ')]")
-  private WebElement addingOptionsButton;
-
-  @FindBy(xpath = "//*/button[@id='accountScreenOptionsButton' and @class='btn btn-primary dropdown-toggle' and 1]")
-  private WebElement editOptions;
-
-  @FindBy(xpath = "//td[4]/button[@class='btn-primary' and 1]")
+  @FindBy(xpath = "//td[3]/button[@class='btn-primary' and 1]")
   private WebElement saveButton;
 
-  @FindBy(xpath = "//div/ul[@class='dropdown-menu']//*[(text()='Exit')]")
-  private WebElement exitButton;
-
-  @FindBy(xpath = "//app-accounts-list/table/tbody/tr//td[4]/div/button")
+  @FindBy(xpath = "//app-accounts-list/table/tbody/tr//td[3]/div/button")
   private List<WebElement> options;
 
   @FindBy(xpath = "//div[@class='dropdown open']//*[(text()='Delete')]")
@@ -51,43 +41,30 @@ class AccountsScreen {
   private WebElement edit;
 
   @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-up']")
-  private WebElement idAscending;
-
-  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-down']")
-  private WebElement idDescending;
-
-  @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-up']")
   private WebElement descriptionAscending;
 
-  @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-down']")
+  @FindBy(xpath = "//th[1]/*[@class='glyphicon glyphicon-collapse-down']")
   private WebElement descriptionDescending;
 
-  @FindBy(xpath = "//th[3]/*[@class='glyphicon glyphicon-collapse-up']")
+  @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-up']")
   private WebElement balanceAscending;
 
-  @FindBy(xpath = "//th[3]/*[@class='glyphicon glyphicon-collapse-down']")
+  @FindBy(xpath = "//th[2]/*[@class='glyphicon glyphicon-collapse-down']")
   private WebElement balanceDescending;
 
-  @FindBy(xpath = "//app-accounts-list//td[2]/input[1]")
+  @FindBy(xpath = "//app-accounts-list//td[1]/input[1]")
   private WebElement inputDescription;
 
-  @FindBy(xpath = "//app-accounts-list//td[3]/input[1]")
+  @FindBy(xpath = "//app-accounts-list//td[2]/input[1]")
   private WebElement inputBalance;
 
   AccountsScreen(WebDriver driver) {
+    this.driver = driver;
     PageFactory.initElements(new AjaxElementLocatorFactory(driver, SECONDS_30), this);
   }
 
   void refreshButton() {
     refresh.click();
-  }
-
-  List<Long> getId() {
-    List<Long> idElementsList = new ArrayList<>();
-    for (WebElement idElement : id) {
-      idElementsList.add(Long.parseLong(idElement.getText()));
-    }
-    return idElementsList;
   }
 
   List<String> getDescription() {
@@ -112,10 +89,6 @@ class AccountsScreen {
     addAccountButton.click();
   }
 
-  void addingOptionsButton() {
-    addingOptionsButton.click();
-  }
-
   void addDescription(String description) {
     inputDescription.clear();
     inputDescription.sendKeys(description);
@@ -130,13 +103,6 @@ class AccountsScreen {
     saveButton.click();
   }
 
-  void idAscendingButton() {
-    idAscending.click();
-  }
-
-  void idDescendingButton() {
-    idDescending.click();
-  }
 
   void descriptionAscendingButton() {
     descriptionAscending.click();
@@ -164,9 +130,7 @@ class AccountsScreen {
 
   void deleteButton() {
     delete.click();
-  }
-
-  void editOptionsButton() {
-    editOptions.click();
+    Alert alert = driver.switchTo().alert();
+    alert.accept();
   }
 }

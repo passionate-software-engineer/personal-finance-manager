@@ -111,36 +111,6 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldSortDescriptionDescending"})
-  public void shouldSortIdAscending() {
-    //given
-    List<Long> idAscending = accountsScreen.getId();
-    idAscending.sort(Long::compareTo);
-    List<Long> resultIdAscending;
-
-    //when
-    accountsScreen.idAscendingButton();
-    resultIdAscending = accountsScreen.getId();
-
-    //then
-    assertThat(resultIdAscending, is(equalTo(idAscending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortIdAscending"})
-  public void shouldSortIdDescending() {
-    //given
-    List<Long> idDescending = accountsScreen.getId();
-    idDescending.sort(Collections.reverseOrder());
-    List<Long> resultIdDescending;
-
-    //when
-    accountsScreen.idDescendingButton();
-    resultIdDescending = accountsScreen.getId();
-
-    //then
-    assertThat(resultIdDescending, is(equalTo(idDescending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortIdDescending"})
   public void shouldSortBalanceAscending() {
     //given
     List<BigDecimal> balanceAscending = accountsScreen.getBalance();
@@ -171,7 +141,7 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldSortBalanceDescending"})
-  public void shouldDeleteAccount() {
+  public void shouldDeleteAccount() throws InterruptedException {
     //given
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
     List<String> resultListOfDescription;
@@ -185,6 +155,7 @@ public class AccountsScreenTest extends TestBase {
       deletedBalance.add(accountsScreen.getBalance().get(i));
       optionsButtonList.get(i).click();
       accountsScreen.deleteButton();
+      Thread.sleep(500);
     }
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
@@ -220,6 +191,7 @@ public class AccountsScreenTest extends TestBase {
       accountsScreen.addDescription(descriptionsList[i]);
       accountsScreen.addBalance(balanceList[i]);
       accountsScreen.saveOptionButton();
+      Thread.sleep(500);
     }
 
     webDriver.navigate().refresh();

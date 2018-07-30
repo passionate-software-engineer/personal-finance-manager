@@ -92,37 +92,7 @@ public class CategoriesScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldSortNameDescending"})
-  public void shouldSortIdAscending() {
-    //given
-    List<Long> idAscending = categoriesScreen.getId();
-    idAscending.sort(Long::compareTo);
-    List<Long> resultIdAscending;
-
-    //when
-    categoriesScreen.idAscendingButton();
-    resultIdAscending = categoriesScreen.getId();
-
-    //then
-    assertThat(resultIdAscending, is(equalTo(idAscending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortIdAscending"})
-  public void shouldSortIdDescending() {
-    //given
-    List<Long> idDescending = categoriesScreen.getId();
-    idDescending.sort(Collections.reverseOrder());
-    List<Long> resultIdDescending;
-
-    //when
-    categoriesScreen.idDescendingButton();
-    resultIdDescending = categoriesScreen.getId();
-
-    //then
-    assertThat(resultIdDescending, is(equalTo(idDescending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortIdDescending"})
-  public void shouldDeleteAccount() {
+  public void shouldDeleteAccount() throws InterruptedException {
     //given
     List<WebElement> optionsButtonList = categoriesScreen.optionsButton();
     List<String> resultListOfCategories;
@@ -133,6 +103,7 @@ public class CategoriesScreenTest extends TestBase {
       deletedCategories.add(categoriesScreen.getListOfCategoriesName().get(i));
       optionsButtonList.get(i).click();
       categoriesScreen.deleteButton();
+      Thread.sleep(500);
     }
     resultListOfCategories = categoriesScreen.getListOfCategoriesName();
 
@@ -152,10 +123,11 @@ public class CategoriesScreenTest extends TestBase {
     //when
     for (int i = 0; i < 3; i++) {
       optionsButtonList.get(i).click();
-      Thread.sleep(500);
       categoriesScreen.editButton();
+      Thread.sleep(500);
       categoriesScreen.setCategoryName(categoryNameList[i]);
       categoriesScreen.save();
+      Thread.sleep(500);
     }
 
     webDriver.navigate().refresh();
