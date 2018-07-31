@@ -46,9 +46,9 @@ public class AccountServiceTest {
 
     //then
     assertNotNull(returnedAccount);
-    assertThat(returnedAccount.isPresent(), is(true));
 
-    Account account = returnedAccount.get();
+    Account account = returnedAccount.orElse(null);
+    assertNotNull(account);
     assertThat(account.getId(), is(equalTo(ACCOUNT_ADAM_BALANCE_0.getId())));
     assertThat(account.getName(), is(equalTo(ACCOUNT_ADAM_BALANCE_0.getName())));
     assertThat(account.getBalance(), is(equalTo(ACCOUNT_ADAM_BALANCE_0.getBalance())));

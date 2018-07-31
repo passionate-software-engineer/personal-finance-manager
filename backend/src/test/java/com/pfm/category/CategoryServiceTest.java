@@ -28,9 +28,9 @@ public class CategoryServiceTest {
   private static final Long MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID = 2L;
   private static final String MOCK_CATEGORY_WITH_PARENT_CATEGORY_NAME = "Meat";
 
-  private static Category mockCategory =
+  private static final Category mockCategory =
       new Category(MOCK_CATEGORY_ID, MOCK_CATEGORY_NAME, null);
-  private static Category mockCategoryWithParentCategory =
+  private static final Category mockCategoryWithParentCategory =
       new Category(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, MOCK_CATEGORY_WITH_PARENT_CATEGORY_NAME,
           mockCategory);
 
@@ -50,6 +50,7 @@ public class CategoryServiceTest {
 
     //then
     verify(categoryRepository).findById(MOCK_CATEGORY_ID);
+    assertNotNull(result);
     assertThat(result.getId(), is(equalTo(MOCK_CATEGORY_ID)));
     assertThat(result.getName(), is(equalTo(MOCK_CATEGORY_NAME)));
     assertThat(result.getParentCategory(), is(equalTo(null)));

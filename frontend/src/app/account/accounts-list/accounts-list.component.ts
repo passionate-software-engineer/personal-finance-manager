@@ -4,8 +4,8 @@ import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
-const maxLongNumber = 9223372036854775807;
-const minLongNumber = -9223372036854775808;
+const maxAccountBalance = Number.MAX_SAFE_INTEGER;
+const minAccountBalance = Number.MIN_SAFE_INTEGER;
 
 @Component({
   selector: 'app-accounts-list',
@@ -30,8 +30,11 @@ export class AccountsListComponent implements OnInit {
     this.accountService.getAccounts()
       .subscribe(accounts => {
         this.accounts = accounts;
+        this.sortByName('asc');
       });
   }
+
+  // TODO make nice looking confirmation popup
 
   deleteAccount(account) {
     if (confirm('Are you sure You want to delete this account ?')) {
@@ -62,10 +65,10 @@ export class AccountsListComponent implements OnInit {
     editedAccount.balance = account.editedBalance;
     this.accountService.editAccount(editedAccount)
       .subscribe(() => {
-          this.alertService.success('Account updated');
-          Object.assign(account, editedAccount);
-        }
-      );
+        this.alertService.success('Account updated');
+        Object.assign(account, editedAccount);
+        this.sortByName('asc');
+      });
   }
 
   onAddAccount() {
@@ -84,6 +87,7 @@ export class AccountsListComponent implements OnInit {
         this.addingMode = false;
         this.newAccountBalance = null;
         this.newAccountName = null;
+        this.sortByName('asc');
       });
   }
 
@@ -91,12 +95,14 @@ export class AccountsListComponent implements OnInit {
     this.getAccounts();
   }
 
+  // TODO make sorting using pipes not methods below
+
   sortByName(type: string) {
     if (type === 'asc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
+      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
     }
     if (type === 'dsc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
+      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
     }
   }
 
@@ -136,9 +142,13 @@ export class AccountsListComponent implements OnInit {
     }
 
     const newAccountBalance = Math.round(accountBalance * 100) / 100;
-    if (newAccountBalance > maxLongNumber || newAccountBalance < minLongNumber) {
+    if (newAccountBalance > maxAccountBalance) {
       this.alertService.error('Balance number is too big.' +
         ' If You are so rich why do You need personal finance manager !? ');
+      return false;
+    }
+    if (newAccountBalance < minAccountBalance) {
+      this.alertService.error('Balance number is too low');
       return false;
     }
     return true;

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {element} from 'protractor';
 
 @Component({
   selector: 'app-categories',
@@ -11,7 +10,6 @@ import {element} from 'protractor';
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[];
-  possibleParentCategories: Category[];
   addingMode = false;
   newCategoryName: string;
   newCategoryParentCategory: Category = null;
@@ -27,8 +25,11 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
+        this.sortByName('asc');
       });
   }
+
+  // TODO make nice looking confirmation popup
 
   deleteCategory(category) {
     if (confirm('Are you sure You want to delete this account ?')) {
@@ -66,6 +67,7 @@ export class CategoriesComponent implements OnInit {
       .subscribe(() => {
         this.alertService.success('Category edited');
         Object.assign(category, editedCategory);
+        this.sortByName('asc');
       });
   }
 
@@ -84,6 +86,7 @@ export class CategoriesComponent implements OnInit {
         this.addingMode = false;
         this.newCategoryName = null;
         this.newCategoryParentCategory = null;
+        this.sortByName('asc');
       });
   }
 
@@ -91,12 +94,14 @@ export class CategoriesComponent implements OnInit {
     this.getCategories();
   }
 
+  // TODO make sorting using pipes not methods below
+
   sortByName(type: string) {
     if (type === 'asc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
+      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
     }
     if (type === 'dsc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
+      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
     }
   }
 
