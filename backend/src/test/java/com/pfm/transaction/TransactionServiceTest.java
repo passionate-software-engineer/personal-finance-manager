@@ -1,6 +1,5 @@
 package com.pfm.transaction;
 
-
 import static com.pfm.helpers.TestTransactionProvider.MOCK_TRANSACTION_ACCOUNT;
 import static com.pfm.helpers.TestTransactionProvider.MOCK_TRANSACTION_CATEGORY;
 import static com.pfm.helpers.TestTransactionProvider.MOCK_TRANSACTION_DESCRIPTION;
@@ -11,7 +10,8 @@ import static com.pfm.helpers.TestTransactionProvider.mockTransaction;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doNothing;
 
 import static org.mockito.Mockito.verify;
@@ -25,11 +25,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
