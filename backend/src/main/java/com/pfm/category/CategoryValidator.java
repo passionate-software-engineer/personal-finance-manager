@@ -52,5 +52,4 @@ public class CategoryValidator {
       validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST));
     }
   }
-
 }

@@ -128,7 +128,7 @@ public class CategoryController {
   @AllArgsConstructor
   @Builder
   @Data
-  static class CategoryRequest {
+  public static class CategoryRequest {
 
     @Setter
     @Getter
