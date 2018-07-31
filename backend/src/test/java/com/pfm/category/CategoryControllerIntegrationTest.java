@@ -52,8 +52,8 @@ public class CategoryControllerIntegrationTest {
 
   // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
   // those methods in // given part of the test
-  private CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
-  private CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers").build();
+  private final CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
+  private final CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers").build();
   private Long parentCategoryId;
   private Long childCategoryId;
   private Category parentCategory;
@@ -142,6 +142,7 @@ public class CategoryControllerIntegrationTest {
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_CATEGORY_NAME))));
   }
 
+  @SuppressWarnings("unused")
   private Object[] emptyAccountNameParameters() {
     return new Object[]{"", " ", "    ", null};
   }
@@ -245,12 +246,11 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedUpdateMethod() throws Exception {
     //given
-    CategoryRequest categoryToUpdate = childCategoryRq;
 
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+            .content(json(childCategoryRq)).contentType(CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
 
@@ -311,7 +311,7 @@ public class CategoryControllerIntegrationTest {
     //then
     List<Category> categories = getAllCategoriesFromDatabase();
     assertThat(categories.size(), is(equalTo(1)));
-    assertFalse(categories.contains(childCategoryRq));
+    assertFalse(categories.contains(childCategoryRq)); // TODO it will always be false as types don't match
   }
 
   @Test
@@ -324,10 +324,10 @@ public class CategoryControllerIntegrationTest {
 
     //then
     List<Category> categories = getAllCategoriesFromDatabase();
-    assertThat(categories.size(), is(equalTo(0)));
-    assertFalse(categories.contains(
-        childCategoryRq)); // TODo http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
-    assertFalse(categories.contains(parentCategoryRq));
+    assertThat(categories.size(), is(equalTo(0))); // TODO it will always be false as types don't match
+    assertFalse(
+        categories.contains(childCategoryRq)); // TODO http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
+    assertFalse(categories.contains(parentCategoryRq)); // TODO it will always be false as types don't match
   }
 
   @Test
