@@ -47,7 +47,7 @@ public class AccountsScreenTest extends TestBase {
   public void shouldAddAccount() throws InterruptedException {
     //given
     Random random = new Random();
-    long randomNumber = random.nextInt(100000);
+    long randomNumber = random.nextInt(1000);
     String[] expectedListOfDescription =
         {"bzwbk number: " + randomNumber, "mbank number: " + randomNumber,
             "alior number: " + randomNumber, "pko number: " + randomNumber,
@@ -81,36 +81,6 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldAddAccount"})
-  public void shouldSortDescriptionAscending() {
-    //given
-    List<String> descriptionAscending = accountsScreen.getDescription();
-    descriptionAscending.sort(String::compareToIgnoreCase);
-    List<String> resultDescriptionAscending;
-
-    //when
-    accountsScreen.descriptionAscendingButton();
-    resultDescriptionAscending = accountsScreen.getDescription();
-
-    //then
-    assertThat(resultDescriptionAscending, is(equalTo(descriptionAscending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortDescriptionAscending"})
-  public void shouldSortDescriptionDescending() {
-    //given
-    List<String> descriptionDescending = accountsScreen.getDescription();
-    descriptionDescending.sort(Collections.reverseOrder());
-    List<String> resultDescriptionDescending;
-
-    //when
-    accountsScreen.descriptionDescendingButton();
-    resultDescriptionDescending = accountsScreen.getDescription();
-
-    //then
-    assertThat(resultDescriptionDescending, is(equalTo(descriptionDescending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortDescriptionDescending"})
   public void shouldSortBalanceAscending() {
     //given
     List<BigDecimal> balanceAscending = accountsScreen.getBalance();
@@ -140,7 +110,38 @@ public class AccountsScreenTest extends TestBase {
     assertThat(resultBalanceDescending, is(equalTo(balanceDescending)));
   }
 
+
   @Test(dependsOnMethods = {"shouldSortBalanceDescending"})
+  public void shouldSortDescriptionAscending() {
+    //given
+    List<String> descriptionAscending = accountsScreen.getDescription();
+    descriptionAscending.sort(Collections.reverseOrder());
+    List<String> resultDescriptionAscending;
+
+    //when
+    accountsScreen.descriptionAscendingButton();
+    resultDescriptionAscending = accountsScreen.getDescription();
+
+    //then
+    assertThat(resultDescriptionAscending, is(equalTo(descriptionAscending)));
+  }
+
+  @Test(dependsOnMethods = {"shouldSortDescriptionAscending"})
+  public void shouldSortDescriptionDescending() {
+    //given
+    List<String> descriptionDescending = accountsScreen.getDescription();
+    descriptionDescending.sort(String::compareToIgnoreCase);
+    List<String> resultDescriptionDescending;
+
+    //when
+    accountsScreen.descriptionDescendingButton();
+    resultDescriptionDescending = accountsScreen.getDescription();
+
+    //then
+    assertThat(resultDescriptionDescending, is(equalTo(descriptionDescending)));
+  }
+
+  @Test(dependsOnMethods = {"shouldSortDescriptionDescending"})
   public void shouldDeleteAccount() throws InterruptedException {
     //given
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
@@ -171,11 +172,11 @@ public class AccountsScreenTest extends TestBase {
   public void shouldUpdateAccount() throws InterruptedException {
     //given
     Random random = new Random();
-    long randomNumber = random.nextInt(100000);
+    long randomNumber = random.nextInt(1000);
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    String[] descriptionsList = {"pekao number: " + randomNumber,
-        "milenium number: " + randomNumber,
-        "santander number: " + randomNumber};
+    String[] descriptionsList = {"aSantander number: " + randomNumber,
+        "bMilenium number: " + randomNumber,
+        "cPekao number: " + randomNumber};
     BigDecimal[] balanceList =
         {BigDecimal.valueOf(77.77).add(BigDecimal.valueOf(randomNumber)),
             BigDecimal.valueOf(12.12).add(BigDecimal.valueOf(randomNumber)),
@@ -186,8 +187,8 @@ public class AccountsScreenTest extends TestBase {
     //when
     for (int i = 0; i < 3; i++) {
       optionsButtonList.get(i).click();
-      Thread.sleep(500);
       accountsScreen.editButton();
+      Thread.sleep(500);
       accountsScreen.addDescription(descriptionsList[i]);
       accountsScreen.addBalance(balanceList[i]);
       accountsScreen.saveOptionButton();
@@ -195,8 +196,10 @@ public class AccountsScreenTest extends TestBase {
     }
 
     webDriver.navigate().refresh();
+    Thread.sleep(1000);
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
+    System.out.println(resultListOfDescription);
 
     //then
     for (int i = 0; i < descriptionsList.length; i++) {

@@ -66,7 +66,7 @@ public class CategoriesScreenTest extends TestBase {
   public void shouldSortNameAscending() {
     //given
     List<String> nameAscending = categoriesScreen.getListOfCategoriesName();
-    nameAscending.sort(String::compareToIgnoreCase);
+    nameAscending.sort(Collections.reverseOrder());
     List<String> resultNameAscending;
 
     //when
@@ -81,7 +81,7 @@ public class CategoriesScreenTest extends TestBase {
   public void shouldSortNameDescending() {
     //given
     List<String> nameDescending = categoriesScreen.getListOfCategoriesName();
-    nameDescending.sort(Collections.reverseOrder());
+    nameDescending.sort(String::compareToIgnoreCase);
     List<String> resultNameDescending;
     //when
     categoriesScreen.nameDescendingButton();
