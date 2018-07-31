@@ -62,7 +62,7 @@ ENDSSH
                        '''
                 }
             }
-            stage(‘FRONTEND’) {
+            stage('FRONTEND') {
                 steps {
                      sh '''
                         cd frontend

@@ -127,6 +127,10 @@ tasks.withType(FindBugs) {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"
+}
+
 test {
     finalizedBy jacocoTestReport
     finalizedBy jacocoTestCoverageVerification

@@ -120,7 +120,7 @@ public class AccountController {
   @NoArgsConstructor
   @Getter
   @Setter
-  static class AccountRequest {
+  private static class AccountRequest {
 
     @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
     private String name;

@@ -8,6 +8,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,11 @@ public class CategoryValidator {
   public List<String> validateCategoryForUpdate(long id, Category category) {
     List<String> validationResults = new ArrayList<>();
     validate(validationResults, category);
-    if (!categoryService.getCategoryById(id).get().getName().equals(category.getName())) {
+    Optional<Category> categoryToUpdate = categoryService.getCategoryById(id);
+    if (!categoryToUpdate.isPresent()) {
+      throw new IllegalStateException("Category with id: " + id + " does not exist in database");
+    }
+    if (!categoryToUpdate.get().getName().equals(category.getName())) {
       checkForDuplicatedName(validationResults, category);
     }
 

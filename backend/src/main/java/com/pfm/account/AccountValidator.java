@@ -7,6 +7,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,11 @@ public class AccountValidator {
   }
 
   public List<String> validateAccountForUpdate(long id, Account account) {
-    if (accountService.getAccountById(id).get().getName().equals(account.getName())) {
+    Optional<Account> accountToUpdate = accountService.getAccountById(id);
+    if (!accountToUpdate.isPresent()) {
+      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+    }
+    if (accountToUpdate.get().getName().equals(account.getName())) {
       return validate(account);
     }
     List<String> validationResults = validate(account);
