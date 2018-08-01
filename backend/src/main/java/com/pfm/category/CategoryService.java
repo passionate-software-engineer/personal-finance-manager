@@ -92,4 +92,5 @@ public class CategoryService {
   public boolean isCategoryNameAlreadyUsed(String name) {
     return categoryRepository.findByNameContainingIgnoreCase(name).size() != 0;
   }
+
 }
