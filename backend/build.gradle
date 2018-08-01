@@ -14,6 +14,7 @@ buildscript {
 // keep alphabetical order in groups
 plugins {
     // 3rd party
+    id "com.gorylenko.gradle-git-properties" version "1.5.1"
     id 'de.aaschmid.cpd' version '1.0'
     id 'io.spring.dependency-management' version "1.0.6.RELEASE"
     id 'org.springframework.boot' version '2.0.3.RELEASE'
@@ -39,6 +40,7 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'pl.pojo:pojo-tester:0.7.6'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
 
     compile 'com.h2database:h2:1.4.197'
@@ -49,6 +51,7 @@ dependencies {
     compile "org.flywaydb:flyway-core:5.1.4"
     compile 'org.postgresql:postgresql:42.1.4'
     compile 'org.projectlombok:lombok:1.18.0'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.springframework.boot:spring-boot-starter-web'
@@ -77,28 +80,38 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'BRANCH'
-                minimum = 0.55 // TODO increase limit to 0.7
+                minimum = 0.90
             }
         }
         rule {
             limit {
                 counter = 'LINE'
-                minimum = 0.80
+                minimum = 0.90
             }
         }
         rule {
-            enabled = false // TODO enable when all classes covered
+            limit {
+                counter = 'CLASS'
+                minimum = 1.00
+            }
+        }
+        rule {
+            limit {
+                counter = 'METHOD'
+                minimum = 0.94 // TODO cover missing methods and increase to 1.0
+            }
+        }
+        rule {
             element = 'CLASS'
-            excludes = ['com.pfm.Application']
+            excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
             limit {
                 counter = 'BRANCH'
-                minimum = 0.80
+                minimum = 0.86 // TODO Account class is below 90%
             }
         }
         rule {
-            enabled = false // TODO enable when all classes covered
             element = 'CLASS'
-            excludes = ['com.pfm.Application']
+            excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
             limit {
                 counter = 'LINE'
                 minimum = 0.90
@@ -114,6 +127,10 @@ tasks.withType(FindBugs) {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"
+}
+
 test {
     finalizedBy jacocoTestReport
     finalizedBy jacocoTestCoverageVerification
@@ -121,4 +138,9 @@ test {
 
 cpdCheck {
     source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
+}
+
+gitProperties {
+    dateFormat = "yyyy-MM-dd'T'HH:mmZ"
+    dateFormatTimeZone = "UTC"
 }

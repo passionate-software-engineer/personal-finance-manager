@@ -16,15 +16,23 @@ export class AlertsComponent implements OnInit {
 
   ngOnInit() {
     this.alertService.getAlert().subscribe((alert: Alert) => {
-      setTimeout(() => {
-        if (this.alerts && this.alerts.length > 0) {
-          this.alerts.shift();
-        }
-      }, 3000);
       if (!alert) {
         // clear alerts when an empty alert is received
         this.alerts = [];
         return;
+      }
+      if (alert.type === AlertType.Error) {
+        setTimeout(() => {
+          if (this.alerts && this.alerts.length > 0) {
+            this.alerts.shift();
+          }
+        }, 10000);
+      } else {
+        setTimeout(() => {
+          if (this.alerts && this.alerts.length > 0) {
+            this.alerts.shift();
+          }
+        }, 3000);
       }
 
       // add alert to array

@@ -19,7 +19,7 @@ public class MessagesProvider {
   public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS = "categoryValidator.categoryWithProvidedNameAlreadyExists";
 
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
-  private static ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
+  private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 
   public static String getMessage(String errorMessage) {
     return langBundle.getString(errorMessage);

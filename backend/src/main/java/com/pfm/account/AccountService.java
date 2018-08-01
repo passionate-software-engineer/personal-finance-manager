@@ -53,6 +53,7 @@ public class AccountService {
   }
 
   public boolean isAccountNameAlreadyUsed(String name) {
-    return accountRepository.findByNameContainingIgnoreCase(name).size() != 0;
+    return accountRepository.findByNameIgnoreCase(name).size() != 0;
   }
+
 }

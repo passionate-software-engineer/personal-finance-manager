@@ -15,6 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
+  public static final String CORRELATION_ID = "correlationId";
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws IOException, ServletException {
@@ -27,16 +29,16 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
   }
 
   private void addRequestCorrelationIdToMdc(HttpServletRequest request) {
-    String correlationId = request.getHeader("correlationId");
+    String correlationId = request.getHeader(CORRELATION_ID);
 
     if (correlationId == null) {
       correlationId = UUID.randomUUID().toString();
     }
 
-    MDC.put("correlationId", correlationId);
+    MDC.put(CORRELATION_ID, correlationId);
   }
 
   private void removeRequestCorrelationIdFromMdc() {
-    MDC.remove("correlationId");
+    MDC.remove(CORRELATION_ID);
   }
 }

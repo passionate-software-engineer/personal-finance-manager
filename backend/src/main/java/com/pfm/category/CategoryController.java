@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -92,7 +91,7 @@ public class CategoryController {
     Category category = convertToCategory(categoryRequest);
     category.setId(id);
 
-    List<String> validationResult = categoryValidator.validateCategoryForUpdate(category);
+    List<String> validationResult = categoryValidator.validateCategoryForUpdate(id, category);
     if (!validationResult.isEmpty()) {
       log.error("Category is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -122,16 +121,14 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
-  // hack to get different object for request and response
   @JsonIgnoreProperties(ignoreUnknown = true)
   @NoArgsConstructor
   @AllArgsConstructor
   @Builder
-  @Data
+  @Setter
+  @Getter
   static class CategoryRequest {
 
-    @Setter
-    @Getter
     @ApiModelProperty(value = "Parent category id", example = "1")
     private Long parentCategoryId;
 

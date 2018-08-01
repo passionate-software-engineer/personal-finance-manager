@@ -4,19 +4,20 @@ import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 
+const maxAccountBalance = Number.MAX_SAFE_INTEGER;
+const minAccountBalance = Number.MIN_SAFE_INTEGER;
+
 @Component({
   selector: 'app-accounts-list',
   templateUrl: './accounts-list.component.html',
   styleUrls: ['./accounts-list.component.css']
 })
+
 export class AccountsListComponent implements OnInit {
   accounts: Account[];
-  accountToAdd: Account;
   addingMode = false;
-  editedName: string;
-  editedBalance: number;
-  selectedAccount: Account = new Account();
-  id;
+  newAccountName: string;
+  newAccountBalance: number;
 
   constructor(private accountService: AccountService, private alertService: AlertsService) {
   }
@@ -28,92 +29,80 @@ export class AccountsListComponent implements OnInit {
   getAccounts(): void {
     this.accountService.getAccounts()
       .subscribe(accounts => {
-        if (accounts === null) {
-          this.accounts = [];
-        } else {
-          this.accounts = accounts;
-        }
+        this.accounts = accounts;
+        this.sortByName('asc');
       });
   }
 
+  // TODO make nice looking confirmation popup
+
   deleteAccount(account) {
-    this.accountService.deleteAccount(account.id).subscribe(() => {
-      this.alertService.info('Account deleted');
-    });
-    const index: number = this.accounts.indexOf(account);
-    if (index !== -1) {
-      this.accounts.splice(index, 1);
+    if (confirm('Are you sure You want to delete this account ?')) {
+      this.accountService.deleteAccount(account.id)
+        .subscribe(() => {
+          this.alertService.success('Account deleted');
+          const index: number = this.accounts.indexOf(account);
+          if (index !== -1) {
+            this.accounts.splice(index, 1);
+          }
+        });
     }
   }
 
   onShowEditMode(account: Account) {
     account.editMode = true;
-    this.editedBalance = account.balance;
-    this.editedName = account.name;
+    account.editedName = account.name;
+    account.editedBalance = account.balance;
   }
 
   onEditAccount(account: Account) {
-    account.name = this.editedName;
-    account.balance = this.editedBalance;
-    this.accountService.editAccount(account).subscribe(
-      () => {
-        this.alertService.info('Account updated');
-      }
-    );
-    account.editMode = false;
+    if (!this.validateAccount(account.editedName, account.editedBalance)) {
+      return;
+    }
+    const editedAccount: Account = new Account();
+    editedAccount.id = account.id;
+    editedAccount.name = account.editedName;
+    editedAccount.balance = account.editedBalance;
+    this.accountService.editAccount(editedAccount)
+      .subscribe(() => {
+        this.alertService.success('Account updated');
+        Object.assign(account, editedAccount);
+        this.sortByName('asc');
+      });
   }
 
-  onAddAccount(nameInput: HTMLInputElement, balanceInput: HTMLInputElement) {
-    this.accountToAdd = new Account();
-    this.accountToAdd.id = null;
-    if (nameInput.value.length === 0 && balanceInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty,Balance cannot be empty');
+  onAddAccount() {
+    const accountToAdd = new Account();
+    if (!this.validateAddingAccount(this.newAccountName, this.newAccountBalance)) {
       return;
     }
-    if (nameInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty');
-      return;
-    }
-    if (balanceInput.value.length === 0) {
-      this.alertService.error('Name cannot be empty');
-      return;
-    }
-    if (!isNumeric(balanceInput.value)) {
-      this.alertService.error('Balance must be a number');
-      return;
-    }
-    this.accountToAdd.name = nameInput.value;
-    this.accountToAdd.balance = +balanceInput.value;
-    this.accountService.addAccount(this.accountToAdd)
+    accountToAdd.name = this.newAccountName;
+    // @ts-ignore
+    accountToAdd.balance = this.newAccountBalance;
+    this.accountService.addAccount(accountToAdd)
       .subscribe(id => {
-        if (isNumeric(id)) {
-          this.alertService.success('Account added');
-          this.accountToAdd.id = id;
-          this.accounts.push(this.accountToAdd);
-        }
+        this.alertService.success('Account added');
+        accountToAdd.id = id;
+        this.accounts.push(accountToAdd);
+        this.addingMode = false;
+        this.newAccountBalance = null;
+        this.newAccountName = null;
+        this.sortByName('asc');
       });
-    this.addingMode = false;
   }
 
   onRefreshAccounts() {
     this.getAccounts();
   }
 
+  // TODO make sorting using pipes not methods below
+
   sortByName(type: string) {
     if (type === 'asc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-    if (type === 'dsc') {
       this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
     }
-  }
-
-  sortById(sortingType: string) {
-    if (sortingType === 'asc') {
-      this.accounts.sort((a1, a2) => a1.id - a2.id);
-    }
-    if (sortingType === 'dsc') {
-      this.accounts.sort((a1, a2) => a2.id - a1.id);
+    if (type === 'dsc') {
+      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
     }
   }
 
@@ -124,5 +113,57 @@ export class AccountsListComponent implements OnInit {
     if (sortingType === 'dsc') {
       this.accounts.sort((a1, a2) => a2.balance - a1.balance);
     }
+  }
+
+  validateAccount(accountName: string, accountBalance: number): boolean {
+    if ((accountName == null || accountName.trim() === '')
+      && (!accountBalance)) {
+      this.alertService.error('Name cannot be empty');
+      this.alertService.error('Balance cannot be empty');
+      return false;
+    }
+    if (accountName == null || accountName === '') {
+      this.alertService.error('Name cannot be empty');
+      return false;
+    }
+    if (accountName.length > 70) {
+      this.alertService.error('Account name too long. Account name can not be longer then 100 characters');
+      return false;
+    }
+
+    if (typeof accountBalance === 'undefined' || !accountBalance) {
+      this.alertService.error('Balance cannot be empty');
+      return false;
+    }
+
+    if (!isNumeric(accountBalance)) {
+      this.alertService.error('Provided balance is not correct number');
+      return false;
+    }
+
+    const newAccountBalance = Math.round(accountBalance * 100) / 100;
+    if (newAccountBalance > maxAccountBalance) {
+      this.alertService.error('Balance number is too big.' +
+        ' If You are so rich why do You need personal finance manager !? ');
+      return false;
+    }
+    if (newAccountBalance < minAccountBalance) {
+      this.alertService.error('Balance number is too low');
+      return false;
+    }
+    return true;
+  }
+
+  validateAddingAccount(accountName: string, accountBalance: number): boolean {
+    if (!this.validateAccount(accountName, accountBalance)) {
+      return false;
+    }
+
+    if (this.accounts.filter(account => account.name.toLocaleLowerCase()
+      === accountName.toLocaleLowerCase()).length > 0) {
+      this.alertService.error('Account with provided name already exist');
+      return false;
+    }
+    return true;
   }
 }
