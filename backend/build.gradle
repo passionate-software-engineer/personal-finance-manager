@@ -38,10 +38,11 @@ repositories {
 
 // keep alphabetical order in groups
 dependencies {
-    testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'pl.pojo:pojo-tester:0.7.6'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+
 
     compile 'com.h2database:h2:1.4.197'
     compile 'io.rest-assured:spring-mock-mvc:3.1.0'
