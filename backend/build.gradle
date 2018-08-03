@@ -8,6 +8,7 @@ buildscript {
 
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE'
+        classpath 'org.owasp:dependency-check-gradle:3.3.0'
     }
 }
 
@@ -16,6 +17,7 @@ plugins {
     // 3rd party
     id "com.gorylenko.gradle-git-properties" version "1.5.1"
     id 'de.aaschmid.cpd' version '1.0'
+    id 'org.owasp.dependencycheck' version '3.3.0'
     id 'io.spring.dependency-management' version "1.0.6.RELEASE"
     id 'org.springframework.boot' version '2.0.3.RELEASE'
 
@@ -28,6 +30,8 @@ plugins {
     id 'pmd'
 }
 
+
+
 version '1.0'
 
 sourceCompatibility = 1.8
@@ -38,6 +42,7 @@ repositories {
 
 // keep alphabetical order in groups
 dependencies {
+
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'pl.pojo:pojo-tester:0.7.6'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
