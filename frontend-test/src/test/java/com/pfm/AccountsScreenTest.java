@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.pfm.helpers.TestHelper;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,7 +19,8 @@ import java.util.Random;
 public class AccountsScreenTest extends TestBase {
 
   // TODO take this value from System properties / gradle properties - it should be possible to provide this value from outside
-  private static final String FRONTEND_URL = "http://localhost:4200/";
+  private static final String FRONTEND_URL
+      = "http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts";
 
   private AccountsScreen accountsScreen;
 
@@ -31,10 +31,23 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test
-  public void shouldAddAccount() {
+  public void shouldRemoveAllAccountsBeforeTest() throws InterruptedException {
+    List<WebElement> optionsButtonList = accountsScreen.optionsButton();
+    //when
+    for (WebElement anOptionsButtonList : optionsButtonList) {
+      anOptionsButtonList.click();
+      accountsScreen.deleteButton();
+      Thread.sleep(500);
+    }
+    optionsButtonList = accountsScreen.optionsButton();
+    assertThat(optionsButtonList.size(), is(0));
+  }
+
+  @Test(dependsOnMethods = {"shouldRemoveAllAccountsBeforeTest"})
+  public void shouldAddAccount() throws InterruptedException {
     //given
     Random random = new Random();
-    long randomNumber = random.nextInt(100000);
+    long randomNumber = random.nextInt(1000);
     String[] expectedListOfDescription =
         {"bzwbk number: " + randomNumber, "mbank number: " + randomNumber,
             "alior number: " + randomNumber, "pko number: " + randomNumber,
@@ -54,6 +67,7 @@ public class AccountsScreenTest extends TestBase {
       accountsScreen.addDescription(expectedListOfDescription[i]);
       accountsScreen.addBalance(expectedListOfBalance[i]);
       accountsScreen.saveOptionButton();
+      Thread.sleep(500);
     }
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
@@ -66,67 +80,7 @@ public class AccountsScreenTest extends TestBase {
     }
   }
 
-  @Test
-  public void shouldSortDescriptionAscending() {
-    //given
-    List<String> descriptionAscending = accountsScreen.getDescription();
-    descriptionAscending.sort(String::compareToIgnoreCase);
-    List<String> resultDescriptionAscending;
-
-    //when
-    accountsScreen.descriptionAscendingButton();
-    resultDescriptionAscending = accountsScreen.getDescription();
-
-    //then
-    assertThat(resultDescriptionAscending, is(equalTo(descriptionAscending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortDescriptionAscending"})
-  public void shouldSortDescriptionDescending() {
-    //given
-    List<String> descriptionDescending = accountsScreen.getDescription();
-    descriptionDescending.sort(Collections.reverseOrder());
-    List<String> resultDescriptionDescending;
-
-    //when
-    accountsScreen.descriptionDescendingButton();
-    resultDescriptionDescending = accountsScreen.getDescription();
-
-    //then
-    assertThat(resultDescriptionDescending, is(equalTo(descriptionDescending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortDescriptionDescending"})
-  public void shouldSortIdAscending() {
-    //given
-    List<Long> idAscending = accountsScreen.getId();
-    idAscending.sort(Long::compareTo);
-    List<Long> resultIdAscending;
-
-    //when
-    accountsScreen.idAscendingButton();
-    resultIdAscending = accountsScreen.getId();
-
-    //then
-    assertThat(resultIdAscending, is(equalTo(idAscending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortIdAscending"})
-  public void shouldSortIdDescending() {
-    //given
-    List<Long> idDescending = accountsScreen.getId();
-    idDescending.sort(Collections.reverseOrder());
-    List<Long> resultIdDescending;
-
-    //when
-    accountsScreen.idDescendingButton();
-    resultIdDescending = accountsScreen.getId();
-
-    //then
-    assertThat(resultIdDescending, is(equalTo(idDescending)));
-  }
-
-  @Test(dependsOnMethods = {"shouldSortIdDescending"})
+  @Test(dependsOnMethods = {"shouldAddAccount"})
   public void shouldSortBalanceAscending() {
     //given
     List<BigDecimal> balanceAscending = accountsScreen.getBalance();
@@ -156,8 +110,39 @@ public class AccountsScreenTest extends TestBase {
     assertThat(resultBalanceDescending, is(equalTo(balanceDescending)));
   }
 
+
   @Test(dependsOnMethods = {"shouldSortBalanceDescending"})
-  public void shouldDeleteAccount() {
+  public void shouldSortDescriptionAscending() {
+    //given
+    List<String> descriptionAscending = accountsScreen.getDescription();
+    descriptionAscending.sort(Collections.reverseOrder());
+    List<String> resultDescriptionAscending;
+
+    //when
+    accountsScreen.descriptionAscendingButton();
+    resultDescriptionAscending = accountsScreen.getDescription();
+
+    //then
+    assertThat(resultDescriptionAscending, is(equalTo(descriptionAscending)));
+  }
+
+  @Test(dependsOnMethods = {"shouldSortDescriptionAscending"})
+  public void shouldSortDescriptionDescending() {
+    //given
+    List<String> descriptionDescending = accountsScreen.getDescription();
+    descriptionDescending.sort(String::compareToIgnoreCase);
+    List<String> resultDescriptionDescending;
+
+    //when
+    accountsScreen.descriptionDescendingButton();
+    resultDescriptionDescending = accountsScreen.getDescription();
+
+    //then
+    assertThat(resultDescriptionDescending, is(equalTo(descriptionDescending)));
+  }
+
+  @Test(dependsOnMethods = {"shouldSortDescriptionDescending"})
+  public void shouldDeleteAccount() throws InterruptedException {
     //given
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
     List<String> resultListOfDescription;
@@ -171,6 +156,7 @@ public class AccountsScreenTest extends TestBase {
       deletedBalance.add(accountsScreen.getBalance().get(i));
       optionsButtonList.get(i).click();
       accountsScreen.deleteButton();
+      Thread.sleep(500);
     }
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
@@ -183,13 +169,14 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldDeleteAccount"})
-  public void shouldUpdateAccount() {
+  public void shouldUpdateAccount() throws InterruptedException {
     //given
     Random random = new Random();
-    long randomNumber = random.nextInt(100000);
+    long randomNumber = random.nextInt(1000);
     List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    String[] descriptionsList = {"pekao number: " + randomNumber, "milenium number: " + randomNumber,
-        "santander number: " + randomNumber};
+    String[] descriptionsList = {"aSantander number: " + randomNumber,
+        "bMilenium number: " + randomNumber,
+        "cPekao number: " + randomNumber};
     BigDecimal[] balanceList =
         {BigDecimal.valueOf(77.77).add(BigDecimal.valueOf(randomNumber)),
             BigDecimal.valueOf(12.12).add(BigDecimal.valueOf(randomNumber)),
@@ -201,14 +188,18 @@ public class AccountsScreenTest extends TestBase {
     for (int i = 0; i < 3; i++) {
       optionsButtonList.get(i).click();
       accountsScreen.editButton();
+      Thread.sleep(500);
       accountsScreen.addDescription(descriptionsList[i]);
       accountsScreen.addBalance(balanceList[i]);
       accountsScreen.saveOptionButton();
+      Thread.sleep(500);
     }
 
     webDriver.navigate().refresh();
+    Thread.sleep(1000);
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
+    System.out.println(resultListOfDescription);
 
     //then
     for (int i = 0; i < descriptionsList.length; i++) {
@@ -218,7 +209,7 @@ public class AccountsScreenTest extends TestBase {
   }
 
   @Test(dependsOnMethods = {"shouldUpdateAccount"})
-  public void shouldRefreshPage() throws IOException {
+  public void shouldRefreshPage() throws IOException, InterruptedException {
     //given
     BigDecimal sampleBalance = BigDecimal.valueOf(320.00);
     String sampleDescription = "ideaBank";
@@ -232,7 +223,9 @@ public class AccountsScreenTest extends TestBase {
     assertThat(resultListOfBalance.contains(sampleBalance), is(false));
     assertThat(resultListOfDescription.contains(sampleDescription), is(false));
 
+    Thread.sleep(5000);
     accountsScreen.refreshButton();
+    Thread.sleep(5000);
 
     resultListOfDescription = accountsScreen.getDescription();
     resultListOfBalance = accountsScreen.getBalance();
@@ -240,13 +233,5 @@ public class AccountsScreenTest extends TestBase {
     //then
     assertThat(resultListOfBalance.contains(sampleBalance), is(true));
     assertThat(resultListOfDescription.contains(sampleDescription), is(true));
-  }
-
-  @AfterClass
-  void tearDown() {
-    List<WebElement> optionsButtonList = accountsScreen.optionsButton();
-    optionsButtonList.get(optionsButtonList.size() - 1).click();
-    accountsScreen.deleteButton();
-
   }
 }
