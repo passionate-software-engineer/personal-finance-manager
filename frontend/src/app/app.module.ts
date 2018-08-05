@@ -5,17 +5,19 @@ import {AccountsListComponent} from './account/accounts-list/accounts-list.compo
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CategoriesComponent} from './category/categories/categories.component';
-import {AppRoutingModule} from './/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {NavigationComponent} from './navigation/navigation/navigation.component';
 import {MessagesComponent} from './messages/messages/messages.component';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AlertsService} from './alerts/alerts-service/alerts.service';
+import {TransactionsComponent} from './transaction/transactions/transactions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountsListComponent,
     CategoriesComponent,
+    TransactionsComponent,
     NavigationComponent,
     MessagesComponent,
     AlertsComponent

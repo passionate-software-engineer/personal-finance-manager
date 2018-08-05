@@ -1,0 +1,85 @@
+<button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
+  Add Transaction
+</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshTransactions()">Refresh</button>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th style="width: 50%">
+      Name
+      <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
+      <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
+    </th>
+    <th style="width: 20%">
+      Parent Category
+      <span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>
+      <span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>
+    </th>
+    <th style="width: 10%">
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let category of transactions">
+
+    <td *ngIf="category.editMode">
+      <input type="text" [(ngModel)]="category.editedName">
+    </td>
+    <td *ngIf="!category.editMode">{{category.name}}</td>
+
+    <td *ngIf="category.editMode">
+      <select [(ngModel)]="category.editedParentCategory">
+        <option *ngFor="let parCategory of getListOfPossibleParentTransactions(category)" [ngValue]="parCategory">
+          {{parCategory.name}}
+        <option [ngValue]="null">Main Category</option>
+
+      </select>
+    </td>
+    <td *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
+
+    <td *ngIf="!category.editMode">
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <button class="btn-primary" (click)="deleteTransaction(category)">Delete</button>
+          </li>
+          <li>
+            <button class="btn-danger" (click)="onShowEditMode(category)">Edit</button>
+          </li>
+        </ul>
+      </div>
+    </td>
+    <td *ngIf="category.editMode">
+      <button class="btn-primary" (click)="onEditTransaction(category)">Save</button>
+      <button class="btn-danger" (click)="category.editMode=false">Exit</button>
+    </td>
+
+  </tr>
+
+  <tr *ngIf="addingMode">
+
+    <td>
+      <input type="text" [(ngModel)]="newTransactionName">
+    </td>
+    <td>
+      <div class="form-group">
+        <select class="form-control" id="selectedParentCategory" [(ngModel)]="newTransactionParentCategory"
+                name="selectedParentCategory">
+          <option [ngValue]="null">Main Category</option>
+          <option *ngFor="let category of transactions" [ngValue]="category">{{category.name}}</option>
+        </select>
+      </div>
+    </td>
+
+    <td>
+      <button class="btn-primary" (click)="onAddTransaction()">Save</button>
+      <button class="btn-danger" (click)="addingMode=false">Exit</button>
+    </td>
+
+  </tr>
+  </tbody>
+</table>
