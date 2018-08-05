@@ -55,7 +55,7 @@ public class CategoryController {
   @GetMapping
   public ResponseEntity<List<Category>> getCategories() {
 
-    log.info("Retrieving all category from database");
+    log.info("Retrieving categories from database");
     List<Category> categories = categoryService.getCategories();
     return ResponseEntity.ok(categories);
   }
@@ -110,7 +110,7 @@ public class CategoryController {
       return ResponseEntity.notFound().build();
     }
     if (categoryService.isParentCategory(id)) {
-      log.info("Category is parent category. Delete category {} not possible", id);
+      log.info("Category is used as parent. category Delete category {} not possible", id);
       return ResponseEntity.badRequest().body(getMessage(CANNOT_DELETE_PARENT_CATEGORY));
     }
     log.info("Attempting to delete category with id {}", id);
