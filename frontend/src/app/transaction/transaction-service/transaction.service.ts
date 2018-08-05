@@ -16,17 +16,18 @@ const httpOptions = {
 })
 export class TransactionService {
 
-  private apiUrl = environment.appUrl + '/categories';
+  private apiUrl = environment.appUrl + '/transactions';
 
   constructor(private http: HttpClient, private messagesService: MessagesService,
               private alertService: AlertsService) {
   }
 
-  private static categoryToCategoryRequest(category: Transaction) {
-    return {
-      name: category.name,
-      parentCategoryId: category.parentCategory == null ? null : category.parentCategory.id
-    };
+  private static transactionToTransactionRequest(transaction: Transaction) {
+    // return {
+    //   name: transaction.description,
+    //   parentCategoryId: transaction.category == null ? null : transaction.category.id
+    // };
+    return transaction;
   }
 
   getTransactions(): Observable<Transaction[]> {
@@ -35,11 +36,11 @@ export class TransactionService {
       catchError(this.handleError('getCategories', [])));
   }
 
-  addTransaction(category: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.categoryToCategoryRequest(category);
+  addTransaction(transaction: Transaction): Observable<any> {
+    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
     return this.http.post<any>(this.apiUrl, categoryRequest, httpOptions).pipe(
-      tap(any => this.log(`added category with id: ` + any)),
-      catchError(this.handleError('addCategory', [])));
+      tap(any => this.log(`added transaction with id: ` + any)),
+      catchError(this.handleError('addTransaction', [])));
   }
 
   deleteTransaction(id: number): Observable<any> {
@@ -50,7 +51,7 @@ export class TransactionService {
   }
 
   editTransaction(category: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.categoryToCategoryRequest(category);
+    const categoryRequest = TransactionService.transactionToTransactionRequest(category);
     const url = `${this.apiUrl}/${category.id}`;
     return this.http.put<Transaction>(url, categoryRequest, httpOptions).pipe(
       tap(() => this.log(`edited category with id: ` + category.id)),

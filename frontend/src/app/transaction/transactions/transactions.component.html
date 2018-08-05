@@ -7,79 +7,121 @@
   <thead class="thead-dark">
   <tr>
     <th style="width: 50%">
-      Name
-      <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
-      <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
+      Date
+      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>-->
+      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>-->
+    </th>
+    <th style="width: 50%">
+      Description
+      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>-->
+      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>-->
     </th>
     <th style="width: 20%">
-      Parent Category
-      <span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>
-      <span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>
+      Price
+      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>-->
+      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>-->
     </th>
+    <th style="width: 20%">
+      Category
+      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>-->
+      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>-->
+    </th>
+    <th style="width: 20%">
+      Account
+      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>-->
+      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>-->
+    </th>
+
     <th style="width: 10%">
     </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let category of transactions">
+  <tr *ngFor="let transaction of transactions">
 
-    <td *ngIf="category.editMode">
-      <input type="text" [(ngModel)]="category.editedName">
+    <td *ngIf="!transaction.editMode">{{transaction.date}}</td>
+    <td *ngIf="transaction.editMode">
+      <input type="text" [(ngModel)]="transaction.editedTransaction.date">
     </td>
-    <td *ngIf="!category.editMode">{{category.name}}</td>
 
-    <td *ngIf="category.editMode">
-      <select [(ngModel)]="category.editedParentCategory">
-        <option *ngFor="let parCategory of getListOfPossibleParentTransactions(category)" [ngValue]="parCategory">
-          {{parCategory.name}}
-        <option [ngValue]="null">Main Category</option>
+    <td *ngIf="!transaction.editMode">{{transaction.description}}</td>
+    <td *ngIf="transaction.editMode">
+      <input type="text" [(ngModel)]="transaction.editedTransaction.description">
+    </td>
 
+    <td *ngIf="!transaction.editMode">{{transaction.price}}</td>
+    <td *ngIf="transaction.editMode">
+      <input type="text" [(ngModel)]="transaction.editedTransaction.price">
+    </td>
+
+    <td *ngIf="!transaction.editMode">{{transaction.account.name}}</td>
+    <td *ngIf="transaction.editMode">
+      <select [(ngModel)]="transaction.editedTransaction.account">
+        <option *ngFor="let account of accounts" [ngValue]="account">
+          {{account.name}}
       </select>
     </td>
-    <td *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
 
-    <td *ngIf="!category.editMode">
+    <td *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
+    <td *ngIf="transaction.editMode">
+      <select [(ngModel)]="transaction.editedTransaction.category">
+        <option *ngFor="let category of categories" [ngValue]="category">
+          {{category.name}}
+      </select>
+    </td>
+
+    <td *ngIf="transaction.editMode">
+      <!--<button class="btn-primary" (click)="onEditTransaction(category)">Save</button>-->
+      <button class="btn-danger" (click)="transaction.editMode=false">Exit</button>
+    </td>
+    <td *ngIf="!transaction.editMode">
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn-primary" (click)="deleteTransaction(category)">Delete</button>
+            <!--<button class="btn-primary" (click)="deleteTransaction(category)">Delete</button>-->
           </li>
           <li>
-            <button class="btn-danger" (click)="onShowEditMode(category)">Edit</button>
+            <button class="btn-danger" (click)="onShowEditMode(transaction)">Edit</button>
           </li>
         </ul>
       </div>
     </td>
-    <td *ngIf="category.editMode">
-      <button class="btn-primary" (click)="onEditTransaction(category)">Save</button>
-      <button class="btn-danger" (click)="category.editMode=false">Exit</button>
-    </td>
 
   </tr>
 
-  <tr *ngIf="addingMode">
 
+  <tr *ngIf="addingMode">
     <td>
-      <input type="text" [(ngModel)]="newTransactionName">
+      <input type="text" [(ngModel)]="newTransaction.date">
     </td>
     <td>
-      <div class="form-group">
-        <select class="form-control" id="selectedParentCategory" [(ngModel)]="newTransactionParentCategory"
-                name="selectedParentCategory">
-          <option [ngValue]="null">Main Category</option>
-          <option *ngFor="let category of transactions" [ngValue]="category">{{category.name}}</option>
-        </select>
-      </div>
+      <input type="text" [(ngModel)]="newTransaction.description">
+    </td>
+    <td>
+      <input type="text" [(ngModel)]="newTransaction.price">
+    </td>
+    <td>
+      <select [(ngModel)]="newTransaction.account">
+        <option *ngFor="let account of accounts" [ngValue]="account">
+          {{account.name}}
+      </select>
+    </td>
+    <td>
+      <select [(ngModel)]="newTransaction.category">
+        <option *ngFor="let category of categories" [ngValue]="category">
+          {{category.name}}
+      </select>
     </td>
 
     <td>
       <button class="btn-primary" (click)="onAddTransaction()">Save</button>
       <button class="btn-danger" (click)="addingMode=false">Exit</button>
     </td>
-
   </tr>
+
+
   </tbody>
 </table>

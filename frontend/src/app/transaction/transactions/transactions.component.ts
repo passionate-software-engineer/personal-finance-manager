@@ -3,6 +3,10 @@ import {Component, OnInit} from '@angular/core';
 import {TransactionService} from '../transaction-service/transaction.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 import {Transaction} from '../Transaction';
+import {Account} from '../../account/account';
+import {Category} from '../../category/category';
+import {CategoryService} from '../../category/category-service/category.service';
+import {AccountService} from '../../account/account-service/account.service';
 
 @Component({
   selector: 'app-transactions',
@@ -11,83 +15,98 @@ import {Transaction} from '../Transaction';
 })
 export class TransactionsComponent implements OnInit {
   transactions: Transaction[];
+  categories: Category[];
+  accounts: Account[];
   addingMode = false;
-  newTransactionName: string;
-  newTransactionParentCategory: Transaction = null;
+  newTransaction = new Transaction();
 
-  constructor(private categoryService: TransactionService, private alertService: AlertsService) {
+  constructor(private transactionService: TransactionService, private alertService: AlertsService, private categoryService: CategoryService,
+              private accountService: AccountService) {
   }
 
   ngOnInit() {
     this.getTransactions();
+    this.getCategories();
+    this.getAccounts();
   }
 
   getTransactions(): void {
-    this.categoryService.getTransactions()
+    this.transactionService.getTransactions()
       .subscribe(transactions => {
         this.transactions = transactions;
-        this.sortByName('asc');
       });
   }
 
-  // TODO make nice looking confirmation popup
-
-  deleteTransaction(category) {
-    if (confirm('Are you sure You want to delete this account ?')) {
-      this.categoryService.deleteTransaction(category.id)
-        .subscribe(() => {
-          this.alertService.success('Transaction deleted');
-          const index: number = this.transactions.indexOf(category);
-          if (index !== -1) {
-            this.transactions.splice(index, 1);
-          }
-        });
-    }
-  }
-
-  onShowEditMode(category: Transaction) {
-    category.editMode = true;
-    category.editedName = category.name;
-    if (category.parentCategory == null) {
-      category.editedParentCategory = null;
-    } else {
-      category.editedParentCategory = <Transaction> JSON.parse(JSON.stringify(category.parentCategory));
-    }
-
-  }
-
-  onEditTransaction(category: Transaction) {
-    if (!this.validateTransaction(category.editedName)) {
-      return;
-    }
-    const editedTransaction: Transaction = new Transaction();
-    editedTransaction.id = category.id;
-    editedTransaction.name = category.editedName;
-    editedTransaction.parentCategory = category.editedParentCategory;
-    this.categoryService.editTransaction(editedTransaction)
-      .subscribe(() => {
-        this.alertService.success('Transaction edited');
-        Object.assign(category, editedTransaction);
-        this.sortByName('asc');
+  getCategories(): void {
+    this.categoryService.getCategories()
+      .subscribe(categories => {
+        this.categories = categories;
       });
   }
 
+  getAccounts(): void {
+    this.accountService.getAccounts()
+      .subscribe(accounts => {
+        this.accounts = accounts;
+      });
+  }
+
+  // // TODO make nice looking confirmation popup
+  //
+  // deleteTransaction(category) {
+  //   if (confirm('Are you sure You want to delete this account ?')) {
+  //     this.categoryService.deleteTransaction(category.id)
+  //       .subscribe(() => {
+  //         this.alertService.success('Transaction deleted');
+  //         const index: number = this.transactions.indexOf(category);
+  //         if (index !== -1) {
+  //           this.transactions.splice(index, 1);
+  //         }
+  //       });
+  //   }
+  // }
+
+  onShowEditMode(transaction: Transaction) {
+    transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
+    transaction.editMode = true;
+    // transaction.editedName = transaction.description;
+    // if (transaction.parentCategory == null) {
+    //   transaction.editedParentCategory = null;
+    // } else {
+    //   transaction.editedParentCategory = <Transaction> JSON.parse(JSON.stringify(transaction.parentCategory));
+    // }
+
+  }
+
+  // onEditTransaction(category: Transaction) {
+  //   if (!this.validateTransaction(category.editedName)) {
+  //     return;
+  //   }
+  //   const editedTransaction: Transaction = new Transaction();
+  //   editedTransaction.id = category.id;
+  //   editedTransaction.name = category.editedName;
+  //   editedTransaction.parentCategory = category.editedParentCategory;
+  //   this.categoryService.editTransaction(editedTransaction)
+  //     .subscribe(() => {
+  //       this.alertService.success('Transaction edited');
+  //       Object.assign(category, editedTransaction);
+  //       this.sortByName('asc');
+  //     });
+  // }
+  //
   onAddTransaction() {
-    const categoryToAdd = new Transaction();
-    if (!this.validateAddingTransaction(this.newTransactionName)) {
-      return;
-    }
-    categoryToAdd.name = this.newTransactionName;
-    categoryToAdd.parentCategory = this.newTransactionParentCategory;
-    this.categoryService.addTransaction(categoryToAdd)
+    const transactionToAdd = JSON.parse(JSON.stringify(this.newTransaction));
+
+    // categoryToAdd.name = this.newTransactionName;
+    // categoryToAdd.category = this.newTransactionParentCategory;
+
+    this.transactionService.addTransaction(transactionToAdd)
       .subscribe(id => {
-        categoryToAdd.id = id;
-        this.transactions.push(categoryToAdd);
+        transactionToAdd.id = id;
+        this.transactions.push(transactionToAdd);
         this.alertService.success('Transaction added');
         this.addingMode = false;
-        this.newTransactionName = null;
-        this.newTransactionParentCategory = null;
-        this.sortByName('asc');
+        this.newTransaction = new Transaction();
       });
   }
 
@@ -97,39 +116,39 @@ export class TransactionsComponent implements OnInit {
 
   // TODO make sorting using pipes not methods below
 
-  sortByName(type: string) {
-    if (type === 'asc') {
-      this.transactions.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-    }
-    if (type === 'dsc') {
-      this.transactions.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-  }
-
-  sortByParentTransaction(type: string) {
-    if (type === 'asc') {
-      this.transactions.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return 1;
-        }
-        if (a2.parentCategory == null) {
-          return -1;
-        }
-        return a1.parentCategory.name.toLowerCase() > a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
-    if (type === 'dsc') {
-      this.transactions.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return -1;
-        }
-        if (a2.parentCategory == null) {
-          return 1;
-        }
-        return a1.parentCategory.name.toLowerCase() < a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
-  }
+  // sortByName(type: string) {
+  //   if (type === 'asc') {
+  //     this.transactions.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
+  //   }
+  //   if (type === 'dsc') {
+  //     this.transactions.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
+  //   }
+  // }
+  //
+  // sortByParentTransaction(type: string) {
+  //   if (type === 'asc') {
+  //     this.transactions.sort((a1, a2) => {
+  //       if (a1.category == null) {
+  //         return 1;
+  //       }
+  //       if (a2.category == null) {
+  //         return -1;
+  //       }
+  //       return a1.category.name.toLowerCase() > a2.category.name.toLowerCase() ? -1 : 1;
+  //     });
+  //   }
+  //   if (type === 'dsc') {
+  //     this.transactions.sort((a1, a2) => {
+  //       if (a1.category == null) {
+  //         return -1;
+  //       }
+  //       if (a2.category == null) {
+  //         return 1;
+  //       }
+  //       return a1.category.name.toLowerCase() < a2.category.name.toLowerCase() ? -1 : 1;
+  //     });
+  //   }
+  // }
 
   getParentCategoryName(category): string {
     if (category.parentCategory != null) {
@@ -143,7 +162,7 @@ export class TransactionsComponent implements OnInit {
       if (category.id === cat.id) {
         return false;
       }
-      let categoryToCheck = category.parentCategory;
+      let categoryToCheck = category.category;
       while (categoryToCheck != null) {
 
         if (categoryToCheck.id === cat.id) {
@@ -173,8 +192,8 @@ export class TransactionsComponent implements OnInit {
     }
 
     if (this.transactions.filter(category =>
-      category.name.toLowerCase()
-      === categoryName.toLowerCase()).length > 0) {
+        category.description.toLowerCase()
+        === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Transaction with provided name already exist');
       return false;
     }

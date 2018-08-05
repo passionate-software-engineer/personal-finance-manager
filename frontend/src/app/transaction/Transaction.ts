@@ -1,8 +1,13 @@
+import {Category} from '../category/category';
+import {Account} from '../account/account';
+
 export class Transaction {
   id: number;
-  name: string;
-  parentCategory: Transaction = null;
+  date: Date;
+  description: string;
+  category: Category;
+  account: Account;
+  price: number;
   editMode = false;
-  editedName: string;
-  editedParentCategory: Transaction;
+  editedTransaction: Transaction;
 }
