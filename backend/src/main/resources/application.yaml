@@ -1,7 +1,7 @@
 server.port: 8088
 spring:
   profiles:
-    active: local-h2
+    active: local-postgres
   jpa:
       show-sql: true
       hibernate:
