@@ -34,48 +34,6 @@ public class LoggingFilter extends OncePerRequestFilter {
   private static final String REQUEST_MARKER = "|>";
   private static final String RESPONSE_MARKER = "|<";
 
-  @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws ServletException, IOException {
-    if (isAsyncDispatch(request)) {
-      filterChain.doFilter(request, response);
-    } else {
-      doFilterWrapped(wrapRequest(request), wrapResponse(response), filterChain);
-    }
-  }
-
-  private void doFilterWrapped(ContentCachingRequestWrapper request,
-      ContentCachingResponseWrapper response, FilterChain filterChain)
-      throws ServletException, IOException {
-    try {
-      beforeRequest(request);
-      filterChain.doFilter(request, response);
-    } finally {
-      afterRequest(request, response);
-      response.copyBodyToResponse();
-    }
-  }
-
-  private void beforeRequest(ContentCachingRequestWrapper request) {
-
-    if (log.isInfoEnabled()) {
-      logRequestMethod(request);
-    }
-
-    if (log.isDebugEnabled()) {
-      logRequestHeaders(request);
-    }
-  }
-
-  private void afterRequest(ContentCachingRequestWrapper request,
-      ContentCachingResponseWrapper response) {
-
-    if (log.isInfoEnabled()) {
-      logRequestBody(request);
-      logResponse(response);
-    }
-  }
-
   private static void logRequestMethod(ContentCachingRequestWrapper request) {
     String queryString = request.getQueryString();
     if (queryString == null) {
@@ -147,6 +105,48 @@ public class LoggingFilter extends OncePerRequestFilter {
       return (ContentCachingResponseWrapper) response;
     } else {
       return new ContentCachingResponseWrapper(response);
+    }
+  }
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException {
+    if (isAsyncDispatch(request)) {
+      filterChain.doFilter(request, response);
+    } else {
+      doFilterWrapped(wrapRequest(request), wrapResponse(response), filterChain);
+    }
+  }
+
+  private void doFilterWrapped(ContentCachingRequestWrapper request,
+      ContentCachingResponseWrapper response, FilterChain filterChain)
+      throws ServletException, IOException {
+    try {
+      beforeRequest(request);
+      filterChain.doFilter(request, response);
+    } finally {
+      afterRequest(request, response);
+      response.copyBodyToResponse();
+    }
+  }
+
+  private void beforeRequest(ContentCachingRequestWrapper request) {
+
+    if (log.isInfoEnabled()) {
+      logRequestMethod(request);
+    }
+
+    if (log.isDebugEnabled()) {
+      logRequestHeaders(request);
+    }
+  }
+
+  private void afterRequest(ContentCachingRequestWrapper request,
+      ContentCachingResponseWrapper response) {
+
+    if (log.isInfoEnabled()) {
+      logRequestBody(request);
+      logResponse(response);
     }
   }
 }

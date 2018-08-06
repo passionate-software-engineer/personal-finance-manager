@@ -31,7 +31,8 @@ public class CategoryValidatorTest {
         .thenReturn(Optional.empty());
 
     thrown.expect(IllegalStateException.class);
-    thrown.expectMessage("Category with id: " + CATEGORY_FOOD_NO_PARENT_CATEGORY.getId() + " does not exist in database");
+    thrown.expectMessage("Category with id: " + CATEGORY_FOOD_NO_PARENT_CATEGORY.getId()
+        + " does not exist in database");
 
     //then
     categoryValidator.validateCategoryForUpdate(CATEGORY_FOOD_NO_PARENT_CATEGORY.getId(),

@@ -46,25 +46,22 @@ public class CategoryControllerIntegrationTest {
 
   //TODO Rewrite test to use helper class and add Category builder
 
+  @ClassRule
+  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
   private static final String CATEGORIES_SERVICE_PATH = "/categories";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   private static final Long NOT_EXISTING_ID = 0L;
-
+  @Rule
+  public final SpringMethodRule springMethodRule = new SpringMethodRule();
   // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
   // those methods in // given part of the test
   private final CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
-  private final CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers").build();
+  private final CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers")
+      .build();
   private Long parentCategoryId;
   private Long childCategoryId;
   private Category parentCategory;
   private Category childCategory;
-
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
-
-  @Rule
-  public final SpringMethodRule springMethodRule = new SpringMethodRule();
-
   @Autowired
   private MockMvc mockMvc;
 
@@ -150,7 +147,8 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
     //given
-    CategoryRequest categoryToAdd = CategoryRequest.builder().name(parentCategoryRq.getName()).build();
+    CategoryRequest categoryToAdd = CategoryRequest.builder().name(parentCategoryRq.getName())
+        .build();
 
     //when
     mockMvc
@@ -198,7 +196,8 @@ public class CategoryControllerIntegrationTest {
   public void shouldUpdateCategoryParentCategory() throws Exception {
     //given
     CategoryRequest categoryToUpdate = parentCategoryRq; // TODO such assignments does not make sense - maybe you wanted to copy?
-    categoryToUpdate.setName("Changed Name"); // Please rethink how you handle objects - TestCategoryProvider will help you a lot.
+    categoryToUpdate.setName(
+        "Changed Name"); // Please rethink how you handle objects - TestCategoryProvider will help you a lot.
 
     Category expectedCategory = convertToCategory(categoryToUpdate);
     expectedCategory.setId(parentCategoryId);
@@ -293,7 +292,8 @@ public class CategoryControllerIntegrationTest {
     performUpdateRequestAndAssertCycleErrorIsReturned(categoryToUpdate);
   }
 
-  private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate) throws Exception {
+  private void performUpdateRequestAndAssertCycleErrorIsReturned(CategoryRequest categoryToUpdate)
+      throws Exception {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
@@ -311,7 +311,8 @@ public class CategoryControllerIntegrationTest {
     //then
     List<Category> categories = getAllCategoriesFromDatabase();
     assertThat(categories.size(), is(equalTo(1)));
-    assertFalse(categories.contains(childCategoryRq)); // TODO it will always be false as types don't match
+    assertFalse(
+        categories.contains(childCategoryRq)); // TODO it will always be false as types don't match
   }
 
   @Test
@@ -324,10 +325,13 @@ public class CategoryControllerIntegrationTest {
 
     //then
     List<Category> categories = getAllCategoriesFromDatabase();
-    assertThat(categories.size(), is(equalTo(0))); // TODO it will always be false as types don't match
+    assertThat(categories.size(),
+        is(equalTo(0))); // TODO it will always be false as types don't match
     assertFalse(
-        categories.contains(childCategoryRq)); // TODO http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
-    assertFalse(categories.contains(parentCategoryRq)); // TODO it will always be false as types don't match
+        categories.contains(
+            childCategoryRq)); // TODO http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
+    assertFalse(
+        categories.contains(parentCategoryRq)); // TODO it will always be false as types don't match
   }
 
   @Test

@@ -1,10 +1,10 @@
 spring:
   jpa:
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQL94Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
   datasource:
-      url: jdbc:postgresql://pfm-2.cp6kikmytpuw.us-east-2.rds.amazonaws.com:5432/pfm
-      username: postgres
-      password: postgres123
-      driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://pfm-2.cp6kikmytpuw.us-east-2.rds.amazonaws.com:5432/pfm
+    username: postgres
+    password: postgres123
+    driver-class-name: org.postgresql.Driver

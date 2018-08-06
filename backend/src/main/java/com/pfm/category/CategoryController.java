@@ -36,6 +36,17 @@ public class CategoryController {
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
 
+  static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+    Long parentCategoryId = categoryRequest.getParentCategoryId();
+
+    if (parentCategoryId == null) {
+      return new Category(null, categoryRequest.getName(), null);
+    }
+
+    return new Category(null, categoryRequest.getName(),
+        new Category(parentCategoryId, null, null));
+  }
+
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{id}")
   public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
@@ -73,7 +84,8 @@ public class CategoryController {
       return ResponseEntity.badRequest().body(validationResult);
     }
     Category createdCategory = categoryService.addCategory(category);
-    log.info("Saving category to the database was successful. Category id is {}", createdCategory.getId());
+    log.info("Saving category to the database was successful. Category id is {}",
+        createdCategory.getId());
     return ResponseEntity.ok(createdCategory.getId());
   }
 
@@ -132,16 +144,5 @@ public class CategoryController {
 
     @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
     private String name;
-  }
-
-  static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
-    Long parentCategoryId = categoryRequest.getParentCategoryId();
-
-    if (parentCategoryId == null) {
-      return new Category(null, categoryRequest.getName(), null);
-    }
-
-    return new Category(null, categoryRequest.getName(),
-        new Category(parentCategoryId, null, null));
   }
 }

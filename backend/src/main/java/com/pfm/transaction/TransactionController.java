@@ -1,9 +1,7 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.account.Account;
 import com.pfm.account.AccountService;
-import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
@@ -67,26 +65,13 @@ public class TransactionController {
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     log.info("Adding transaction {} to the database", transactionRequest.getDescription());
 
-    Optional<Account> account = accountService.getAccountById(transactionRequest.getAccountId());
-
-    if (!account.isPresent()) {
-      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
-    }
-
-    Optional<Category> category = categoryService.getCategoryById(transactionRequest.getCategoryId());
-
-    if (!category.isPresent()) {
-      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
-    }
-
     Transaction transaction = Transaction.builder()
         .description(transactionRequest.getDescription())
         .price(transactionRequest.getPrice())
-        .account(account.get())
-        .category(category.get())
+        .account(accountService.getAccountById(transactionRequest.getAccountId()).orElse(null))
+        .category(categoryService.getCategoryById(transactionRequest.getCategoryId()).orElse(null))
         .build();
 
-    // TODO - the good trick may be to do account.orElse(null) and then check in validator if null was not provided
     List<String> validationResult = transactionValidator.validate(transaction);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
@@ -94,7 +79,9 @@ public class TransactionController {
     }
 
     Transaction createdTransaction = transactionService.addTransaction(transaction);
-    log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
+    log.info("Saving transaction to the database was successful. Transaction id is {}",
+        createdTransaction.getId());
+
     return ResponseEntity.ok(createdTransaction.getId());
   }
 
@@ -108,34 +95,24 @@ public class TransactionController {
       return ResponseEntity.notFound().build();
     }
 
-    Optional<Account> account = accountService.getAccountById(transactionRequest.getAccountId());
-
-    if (!account.isPresent()) {
-      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
-    }
-
-    Optional<Category> category = categoryService.getCategoryById(transactionRequest.getCategoryId());
-
-    if (!category.isPresent()) {
-      return ResponseEntity.badRequest().build(); // TODO that should be a part of core validation
-    }
-
-    Transaction transaction = Transaction.builder()
+    Transaction transactionToUpdate = Transaction.builder()
         .description(transactionRequest.getDescription())
         .price(transactionRequest.getPrice())
-        .account(account.get())
-        .category(category.get())
+        .account(
+            accountService.getAccountById(transactionRequest.getAccountId()).orElse(null))
+        .category(
+            categoryService.getCategoryById(transactionRequest.getCategoryId()).orElse(null))
         .build();
 
-    log.info("Updating transaction with id {}", id); // TODO so updating or validationg? :)
-    List<String> validationResult = transactionValidator.validate(transaction);
+    log.info("Validating transaction with id {}", id);
+    List<String> validationResult = transactionValidator.validate(transactionToUpdate);
 
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    transactionService.updateTransaction(id, transaction);
+    transactionService.updateTransaction(id, transactionToUpdate);
     log.info("Transaction with id {} was successfully updated", id);
     return ResponseEntity.ok().build();
   }
@@ -173,5 +150,6 @@ public class TransactionController {
 
     @ApiModelProperty(value = "Price", required = true, example = "15.99")
     private BigDecimal price;
+
   }
 }

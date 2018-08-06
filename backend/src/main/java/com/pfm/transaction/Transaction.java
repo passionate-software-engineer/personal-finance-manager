@@ -5,7 +5,6 @@ import com.pfm.account.Account;
 import com.pfm.category.Category;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +30,6 @@ public class Transaction {
   private Long id;
 
   @NotNull
-  @Column(unique = true)
   @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
   private String description;
 

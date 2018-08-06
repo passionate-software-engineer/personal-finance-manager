@@ -31,7 +31,8 @@ public class AccountValidatorTest {
         .thenReturn(Optional.empty());
 
     thrown.expect(IllegalStateException.class);
-    thrown.expectMessage("Account with id: " + ACCOUNT_ADAM_BALANCE_0.getId() + " does not exist in database");
+    thrown.expectMessage(
+        "Account with id: " + ACCOUNT_ADAM_BALANCE_0.getId() + " does not exist in database");
 
     //then
     accountValidator
