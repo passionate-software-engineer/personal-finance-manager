@@ -17,7 +17,7 @@ public class AccountValidator {
 
   private AccountService accountService;
 
-  private List<String> validate(Account account) {
+  public List<String> validate(Account account) {
     List<String> validationResults = new ArrayList<>();
 
     if (account.getName() == null || account.getName().trim().equals("")) {
@@ -33,9 +33,7 @@ public class AccountValidator {
 
   public List<String> validateAccountForAdd(Account account) {
     List<String> validationResults = validate(account);
-    if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
-      validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
-    }
+    checkForDuplicatedName(validationResults, account);
     return validationResults;
   }
 
@@ -47,10 +45,14 @@ public class AccountValidator {
     if (accountToUpdate.get().getName().equals(account.getName())) {
       return validate(account);
     }
-    List<String> validationResults = validate(account);
-    if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
+    List<String> validationResults = validateAccountForAdd(account);
+    return validationResults;
+  }
+
+  public void checkForDuplicatedName(List<String> validationResults, Account account) {
+    if (account.getName() != null && !account.getName().trim().equals("")
+        && accountService.isAccountNameAlreadyUsed(account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
-    return validationResults;
   }
 }

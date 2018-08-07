@@ -73,7 +73,6 @@ public class CategoryService {
     if (categoryId == parentCategoryId) {
       return false;
     }
-
     Category parentCategory = getCategoryById(parentCategoryId).orElse(null);
     // TODO - this check does not make sense - if parent category don't exists we should throw illegalStateException
     if (parentCategory == null) {

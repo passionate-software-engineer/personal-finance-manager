@@ -10,10 +10,11 @@ import java.math.RoundingMode;
 public class TestAccountProvider {
 
   public static final Long MOCK_ACCOUNT_ID = 1L;
+  public static final BigDecimal ACCOUNT_BALANCE = BigDecimal.valueOf(100);
 
-  public static final Account ACCOUNT_SEBASTIAN_BALANCE_1_000_000 =
+  public static final Account ACCOUNT_ANDRZEJ_BALANCE_1_000_000 =
       Account.builder()
-          .id(123L)
+          .id(12L)
           .name("Sebastian Revolut USD")
           .balance(BigDecimal.valueOf(1_000_000))
           .build();
@@ -25,37 +26,44 @@ public class TestAccountProvider {
           .balance(BigDecimal.valueOf(9).setScale(2, RoundingMode.HALF_UP))
           .build();
 
+  public static final Account ACCOUNT_SLAWEK_BALANCE_9 =
+      Account.builder()
+          .id(15L)
+          .name("Cash")
+          .balance(BigDecimal.valueOf(9))
+          .build();
+
   public static final Account ACCOUNT_JACEK_BALANCE_1000 =
       Account.builder()
-          .id(666666L)
+          .id(2L)
           .name("Jacek Millenium Bank savings")
           .balance(BigDecimal.valueOf(1000).setScale(2, RoundingMode.HALF_UP))
           .build();
 
   public static final Account ACCOUNT_LUKASZ_BALANCE_1124 =
       Account.builder()
-          .id(987654321L)
+          .id(122L)
           .name("Lukasz CreditBank")
           .balance(BigDecimal.valueOf(1124))
           .build();
 
-  public static final Account ACCOUNT_ADAM_BALANCE_0 =
+  public static final Account ACCOUNT_RAFAL_BALANCE_0 =
       Account.builder()
           .id(Long.MAX_VALUE)
           .name("Adam ALIOR account")
           .balance(BigDecimal.valueOf(0))
           .build();
 
-  public static final Account ACCOUNT_MATEUSZ_BALANCE_200 =
+  public static final Account ACCOUNT_MARIUSZ_BALANCE_200 =
       Account.builder()
-          .id(1L)
+          .id(89L)
           .name("Mateusz mBank saving account")
           .balance(BigDecimal.valueOf(200.00))
           .build();
 
-  public static final Account ACCOUNT_JUREK_BALANCE_10_99 =
+  public static final Account ACCOUNT_MARCIN_BALANCE_10_99 =
       Account.builder()
-          .id(0L)
+          .id(17L)
           .name("Jurek BZWBK account")
           .balance(BigDecimal.valueOf(10.99))
           .build();

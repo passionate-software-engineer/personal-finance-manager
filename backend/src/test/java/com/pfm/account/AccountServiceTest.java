@@ -1,10 +1,11 @@
 package com.pfm.account;
 
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ADAM_BALANCE_0;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JUREK_BALANCE_10_99;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MATEUSZ_BALANCE_200;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SEBASTIAN_BALANCE_1_000_000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ANDRZEJ_BALANCE_1_000_000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARCIN_BALANCE_10_99;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARIUSZ_BALANCE_200;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
+
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SLAWEK_BALANCE_9;
 import static com.pfm.helpers.TestAccountProvider.MOCK_ACCOUNT_ID;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,7 +20,9 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -37,28 +40,28 @@ public class AccountServiceTest {
   @Test
   public void shouldGetAccount() {
     //given
-    when(accountRepository.findById(ACCOUNT_ADAM_BALANCE_0.getId()))
-        .thenReturn(Optional.of(ACCOUNT_ADAM_BALANCE_0));
+    when(accountRepository.findById(ACCOUNT_RAFAL_BALANCE_0.getId()))
+        .thenReturn(Optional.of(ACCOUNT_RAFAL_BALANCE_0));
 
     //when
     Optional<Account> returnedAccount = accountService
-        .getAccountById(ACCOUNT_ADAM_BALANCE_0.getId());
+        .getAccountById(ACCOUNT_RAFAL_BALANCE_0.getId());
 
     //then
     assertNotNull(returnedAccount);
 
     Account account = returnedAccount.orElse(null);
     assertNotNull(account);
-    assertThat(account.getId(), is(equalTo(ACCOUNT_ADAM_BALANCE_0.getId())));
-    assertThat(account.getName(), is(equalTo(ACCOUNT_ADAM_BALANCE_0.getName())));
-    assertThat(account.getBalance(), is(equalTo(ACCOUNT_ADAM_BALANCE_0.getBalance())));
+    assertThat(account.getId(), is(equalTo(ACCOUNT_RAFAL_BALANCE_0.getId())));
+    assertThat(account.getName(), is(equalTo(ACCOUNT_RAFAL_BALANCE_0.getName())));
+    assertThat(account.getBalance(), is(equalTo(ACCOUNT_RAFAL_BALANCE_0.getBalance())));
   }
 
   @Test
   public void shouldGetAllAccounts() {
     //given
     when(accountRepository.findAll()).thenReturn(
-        Arrays.asList(ACCOUNT_PIOTR_BALANCE_9, ACCOUNT_SEBASTIAN_BALANCE_1_000_000));
+        Arrays.asList(ACCOUNT_SLAWEK_BALANCE_9, ACCOUNT_ANDRZEJ_BALANCE_1_000_000));
 
     //when
     List<Account> actualAccountsList = accountService.getAccounts();
@@ -67,35 +70,35 @@ public class AccountServiceTest {
     assertThat(actualAccountsList.size(), is(2));
 
     // accounts should be sorted by id
-    assertThat(ACCOUNT_SEBASTIAN_BALANCE_1_000_000.getId(),
-        lessThan(ACCOUNT_PIOTR_BALANCE_9.getId()));
+    assertThat(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getId(),
+        lessThan(ACCOUNT_SLAWEK_BALANCE_9.getId()));
 
     Account account1 = actualAccountsList.get(0);
-    assertThat(account1.getId(), is(equalTo(ACCOUNT_SEBASTIAN_BALANCE_1_000_000.getId())));
-    assertThat(account1.getName(), is(equalTo(ACCOUNT_SEBASTIAN_BALANCE_1_000_000.getName())));
+    assertThat(account1.getId(), is(equalTo(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getId())));
+    assertThat(account1.getName(), is(equalTo(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getName())));
     assertThat(account1.getBalance(),
-        is(equalTo(ACCOUNT_SEBASTIAN_BALANCE_1_000_000.getBalance())));
+        is(equalTo(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getBalance())));
 
     Account account2 = actualAccountsList.get(1);
-    assertThat(account2.getId(), is(equalTo(ACCOUNT_PIOTR_BALANCE_9.getId())));
-    assertThat(account2.getName(), is(equalTo(ACCOUNT_PIOTR_BALANCE_9.getName())));
-    assertThat(account2.getBalance(), is(equalTo(ACCOUNT_PIOTR_BALANCE_9.getBalance())));
+    assertThat(account2.getId(), is(equalTo(ACCOUNT_SLAWEK_BALANCE_9.getId())));
+    assertThat(account2.getName(), is(equalTo(ACCOUNT_SLAWEK_BALANCE_9.getName())));
+    assertThat(account2.getBalance(), is(equalTo(ACCOUNT_SLAWEK_BALANCE_9.getBalance())));
   }
 
   @Test
   public void shouldSaveAccount() {
     //given
-    when(accountRepository.save(ACCOUNT_JUREK_BALANCE_10_99))
-        .thenReturn(ACCOUNT_JUREK_BALANCE_10_99);
+    when(accountRepository.save(ACCOUNT_MARCIN_BALANCE_10_99))
+        .thenReturn(ACCOUNT_MARCIN_BALANCE_10_99);
 
     //when
-    Account account = accountService.addAccount(ACCOUNT_JUREK_BALANCE_10_99);
+    Account account = accountService.addAccount(ACCOUNT_MARCIN_BALANCE_10_99);
 
     //then
     assertNotNull(account);
-    assertThat(account.getId(), is(equalTo(ACCOUNT_JUREK_BALANCE_10_99.getId())));
-    assertThat(account.getName(), is(equalTo(ACCOUNT_JUREK_BALANCE_10_99.getName())));
-    assertThat(account.getBalance(), is(equalTo(ACCOUNT_JUREK_BALANCE_10_99.getBalance())));
+    assertThat(account.getId(), is(equalTo(ACCOUNT_MARCIN_BALANCE_10_99.getId())));
+    assertThat(account.getName(), is(equalTo(ACCOUNT_MARCIN_BALANCE_10_99.getName())));
+    assertThat(account.getBalance(), is(equalTo(ACCOUNT_MARCIN_BALANCE_10_99.getBalance())));
   }
 
   @Test
@@ -121,11 +124,11 @@ public class AccountServiceTest {
     Account expectedAccount = Account.builder()
         .balance(updatedAccount.getBalance())
         .name(updatedAccount.getName())
-        .id(ACCOUNT_MATEUSZ_BALANCE_200.getId())
+        .id(ACCOUNT_MARIUSZ_BALANCE_200.getId())
         .build();
 
     when(accountRepository.findById(expectedAccount.getId()))
-        .thenReturn(Optional.of(ACCOUNT_MATEUSZ_BALANCE_200));
+        .thenReturn(Optional.of(ACCOUNT_MARIUSZ_BALANCE_200));
 
     //when
     accountService.updateAccount(expectedAccount.getId(), updatedAccount);
@@ -146,13 +149,19 @@ public class AccountServiceTest {
     verify(accountRepository).existsById(MOCK_ACCOUNT_ID);
   }
 
-  // TODO assert exact exception message - user Rule
-  @Test(expected = IllegalStateException.class)
+  @Rule
+  public ExpectedException expectedEx = ExpectedException.none();
+
+  @Test
   public void shouldThrowExceptionCausedByIdNotExist() {
+
+    expectedEx.expect(IllegalStateException.class);
+    expectedEx.expectMessage("Account with id: " + MOCK_ACCOUNT_ID + " does not exist in database");
     //given
     when(accountRepository.findById(MOCK_ACCOUNT_ID)).thenReturn(Optional.empty());
 
     //when
-    accountService.updateAccount(MOCK_ACCOUNT_ID, ACCOUNT_JUREK_BALANCE_10_99);
+    accountService.updateAccount(MOCK_ACCOUNT_ID, ACCOUNT_MARCIN_BALANCE_10_99);
+
   }
 }
