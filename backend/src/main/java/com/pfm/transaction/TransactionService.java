@@ -31,7 +31,7 @@ public class TransactionService {
   }
 
   public Transaction addTransaction(Transaction transaction) {
-    substractAmountToAccountWhileProcessingTransaction(transaction.getAccount().getId(),
+    subtractAmountToAccountWhileProcessingTransaction(transaction.getAccount().getId(),
         transaction.getPrice());
     return transactionRepository.save(transaction);
   }
@@ -48,14 +48,14 @@ public class TransactionService {
 
     addAmountToAccountWhileProcessingTransaction(transactionToUpdate.getAccount().getId(),
         transactionToUpdate.getPrice());
-      
+
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategory(transaction.getCategory());
     transactionToUpdate.setPrice(transaction.getPrice());
     transactionToUpdate.setAccount(transaction.getAccount());
     transactionToUpdate.setDate(transaction.getDate());
 
-    substractAmountToAccountWhileProcessingTransaction(transactionToUpdate.getAccount().getId(),
+    subtractAmountToAccountWhileProcessingTransaction(transactionToUpdate.getAccount().getId(),
         transactionToUpdate.getPrice());
 
     transactionRepository.save(transactionToUpdate);
@@ -93,7 +93,7 @@ public class TransactionService {
     accountService.updateAccount(accountToUpdate.getId(), accountToUpdate);
   }
 
-  private void substractAmountToAccountWhileProcessingTransaction(long accountId,
+  private void subtractAmountToAccountWhileProcessingTransaction(long accountId,
       BigDecimal amountToAdd) {
     Optional<Account> transactionAccount = accountService
         .getAccountById(accountId);
