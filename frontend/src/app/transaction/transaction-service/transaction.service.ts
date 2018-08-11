@@ -23,11 +23,13 @@ export class TransactionService {
   }
 
   private static transactionToTransactionRequest(transaction: Transaction) {
-    // return {
-    //   name: transaction.description,
-    //   parentCategoryId: transaction.category == null ? null : transaction.category.id
-    // };
-    return transaction;
+    return {
+      description: transaction.description,
+      categoryId: transaction.category.id,
+      accountId: transaction.account.id,
+      price: transaction.price,
+      date: transaction.date
+    };
   }
 
   getTransactions(): Observable<Transaction[]> {
