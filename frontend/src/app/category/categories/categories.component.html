@@ -33,7 +33,6 @@
         <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
           {{parCategory.name}}
         <option [ngValue]="null">Main Category</option>
-
       </select>
     </td>
     <td *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
