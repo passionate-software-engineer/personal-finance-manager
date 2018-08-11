@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -85,6 +86,7 @@ public class TransactionController {
           .price(transactionRequest.getPrice())
           .account(transactionAccount.get())
           .category(transactionCategory.get())
+          .date(transactionRequest.getDate())
           .build();
     } else {
       throw new IllegalStateException();
@@ -126,6 +128,7 @@ public class TransactionController {
           .price(transactionRequest.getPrice())
           .account(transactionAccount.get())
           .category(transactionCategory.get())
+          .date(transactionRequest.getDate())
           .build();
     } else {
       throw new IllegalStateException();
@@ -168,6 +171,9 @@ public class TransactionController {
 
     @ApiModelProperty(value = "Price", required = true, example = "15.99")
     private BigDecimal price;
+
+    @ApiModelProperty(value = "Date", required = true, example = "10-02-2018")
+    private LocalDate date;
 
   }
 }

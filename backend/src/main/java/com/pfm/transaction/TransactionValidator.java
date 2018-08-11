@@ -4,6 +4,7 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_ID_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
+import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -14,7 +15,6 @@ import com.pfm.transaction.TransactionController.TransactionRequest;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
@@ -44,9 +44,13 @@ public class TransactionValidator {
     if (transactionRequest.getAccountId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT_NAME));
     } else {
-      if (accountService.idExist(transactionRequest.getAccountId())) {
+      if (!accountService.idExist(transactionRequest.getAccountId())) {
         validationErrors.add(getMessage(ACCOUNT_ID_NOT_EXIST));
       }
+    }
+
+    if (transactionRequest.getDate() == null) {
+      validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
 
     if (transactionRequest.getPrice() == null) {

@@ -5,6 +5,7 @@ import com.pfm.account.Account;
 import com.pfm.category.Category;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,4 +47,8 @@ public class Transaction {
   @NotNull
   @ApiModelProperty(value = "Price", required = true, example = "15.99")
   private BigDecimal price;
+
+  @NotNull
+  @ApiModelProperty(value = "Date", required = true, example = "10-02-2018")
+  private LocalDate date;
 }
