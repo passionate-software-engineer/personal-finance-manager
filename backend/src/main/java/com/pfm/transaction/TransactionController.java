@@ -1,7 +1,9 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
@@ -63,21 +65,30 @@ public class TransactionController {
   @ApiOperation(value = "Create a new transaction", response = Long.class)
   @PostMapping
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
-    log.info("Adding transaction {} to the database", transactionRequest.getDescription());
+    log.info("Adding transaction to the database");
 
-    Transaction transaction = Transaction.builder()
-        .description(transactionRequest.getDescription())
-        .price(transactionRequest.getPrice())
-        .account(accountService.getAccountById(transactionRequest.getAccountId()).orElse(null))
-        .category(categoryService.getCategoryById(transactionRequest.getCategoryId()).orElse(null))
-        .build();
-
-    List<String> validationResult = transactionValidator.validate(transaction);
+    List<String> validationResult = transactionValidator.validate(transactionRequest);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
+    Optional<Account> transactionAccount = accountService
+        .getAccountById(transactionRequest.getAccountId());
+    Optional<Category> transactionCategory = categoryService
+        .getCategoryById(transactionRequest.getCategoryId());
+
+    Transaction transaction;
+    if (transactionAccount.isPresent() && transactionCategory.isPresent()) {
+      transaction = Transaction.builder()
+          .description(transactionRequest.getDescription())
+          .price(transactionRequest.getPrice())
+          .account(transactionAccount.get())
+          .category(transactionCategory.get())
+          .build();
+    } else {
+      throw new IllegalStateException();
+    }
     Transaction createdTransaction = transactionService.addTransaction(transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}",
         createdTransaction.getId());
@@ -95,24 +106,31 @@ public class TransactionController {
       return ResponseEntity.notFound().build();
     }
 
-    Transaction transactionToUpdate = Transaction.builder()
-        .description(transactionRequest.getDescription())
-        .price(transactionRequest.getPrice())
-        .account(
-            accountService.getAccountById(transactionRequest.getAccountId()).orElse(null))
-        .category(
-            categoryService.getCategoryById(transactionRequest.getCategoryId()).orElse(null))
-        .build();
-
     log.info("Validating transaction with id {}", id);
-    List<String> validationResult = transactionValidator.validate(transactionToUpdate);
+    List<String> validationResult = transactionValidator.validate(transactionRequest);
 
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    transactionService.updateTransaction(id, transactionToUpdate);
+    Optional<Account> transactionAccount = accountService
+        .getAccountById(transactionRequest.getAccountId());
+    Optional<Category> transactionCategory = categoryService
+        .getCategoryById(transactionRequest.getCategoryId());
+
+    Transaction transaction;
+    if (transactionAccount.isPresent() && transactionCategory.isPresent()) {
+      transaction = Transaction.builder()
+          .description(transactionRequest.getDescription())
+          .price(transactionRequest.getPrice())
+          .account(transactionAccount.get())
+          .category(transactionCategory.get())
+          .build();
+    } else {
+      throw new IllegalStateException();
+    }
+    transactionService.updateTransaction(id, transaction);
     log.info("Transaction with id {} was successfully updated", id);
     return ResponseEntity.ok().build();
   }
