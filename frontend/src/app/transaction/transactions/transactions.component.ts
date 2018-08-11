@@ -14,6 +14,8 @@ import {AccountService} from '../../account/account-service/account.service';
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent implements OnInit {
+  order = 'date';
+  reverse = false;
   transactions: Transaction[];
   categories: Category[];
   accounts: Account[];
@@ -124,42 +126,6 @@ export class TransactionsComponent implements OnInit {
     this.getTransactions();
   }
 
-  // TODO make sorting using pipes not methods below
-
-  // sortByName(type: string) {
-  //   if (type === 'asc') {
-  //     this.transactions.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-  //   }
-  //   if (type === 'dsc') {
-  //     this.transactions.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-  //   }
-  // }
-  //
-  // sortByParentTransaction(type: string) {
-  //   if (type === 'asc') {
-  //     this.transactions.sort((a1, a2) => {
-  //       if (a1.category == null) {
-  //         return 1;
-  //       }
-  //       if (a2.category == null) {
-  //         return -1;
-  //       }
-  //       return a1.category.name.toLowerCase() > a2.category.name.toLowerCase() ? -1 : 1;
-  //     });
-  //   }
-  //   if (type === 'dsc') {
-  //     this.transactions.sort((a1, a2) => {
-  //       if (a1.category == null) {
-  //         return -1;
-  //       }
-  //       if (a2.category == null) {
-  //         return 1;
-  //       }
-  //       return a1.category.name.toLowerCase() < a2.category.name.toLowerCase() ? -1 : 1;
-  //     });
-  //   }
-  // }
-
   validateTransaction(categoryName: string): boolean {
     if (categoryName == null || categoryName.trim() === '') {
       this.alertService.error('Transaction name cannot be empty');
@@ -178,12 +144,19 @@ export class TransactionsComponent implements OnInit {
     }
 
     if (this.transactions.filter(category =>
-        category.description.toLowerCase()
-        === categoryName.toLowerCase()).length > 0) {
+        category.description.toLowerCase() === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Transaction with provided name already exist');
       return false;
     }
     return true;
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
 
 }

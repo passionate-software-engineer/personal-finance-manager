@@ -6,54 +6,68 @@
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
-    <th style="width: 50%">
+
+    <!--Date-->
+    <th [class.active]="order === 'date'" (click)="setOrder('date')">
       Date
-      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>-->
-      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>-->
-    </th>
-    <th style="width: 50%">
-      Description
-      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>-->
-      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>-->
-    </th>
-    <th style="width: 20%">
-      Price
-      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>-->
-      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>-->
-    </th>
-    <th style="width: 20%">
-      Category
-      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>-->
-      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>-->
-    </th>
-    <th style="width: 20%">
-      Account
-      <!--<span class="glyphicon glyphicon-collapse-down" (click)="sortByParentTransaction('asc')"></span>-->
-      <!--<span class="glyphicon glyphicon-collapse-up" (click)="sortByParentTransaction('dsc')"></span>-->
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
     </th>
 
-    <th style="width: 10%">
+    <!--Description-->
+    <th [class.active]="order === 'description'" (click)="setOrder('description')">
+      Description
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
+    </th>
+
+    <!--Price-->
+    <th [class.active]="order === 'price'" (click)="setOrder('price')">
+      Price
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
+    </th>
+
+    <!--Account-->
+    <th [class.active]="order === 'account.name'" (click)="setOrder('account.name')">
+      Category
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
+    </th>
+
+    <!--Category-->
+    <th [class.active]="order === 'category.name'" (click)="setOrder('category.name')">
+      Category
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
+    </th>
+
+    <th>
     </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let transaction of transactions">
+  <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
 
+    <!--Date-->
     <td *ngIf="!transaction.editMode">{{transaction.date}}</td>
     <td *ngIf="transaction.editMode">
       <input type="text" [(ngModel)]="transaction.editedTransaction.date">
     </td>
 
+    <!--Description-->
     <td *ngIf="!transaction.editMode">{{transaction.description}}</td>
     <td *ngIf="transaction.editMode">
       <input type="text" [(ngModel)]="transaction.editedTransaction.description">
     </td>
 
-    <td *ngIf="!transaction.editMode">{{transaction.price}}</td>
+    <!--Price-->
+    <td class="right aligned" *ngIf="!transaction.editMode">{{transaction.price | number:'0.2'}}</td>
     <td *ngIf="transaction.editMode">
       <input type="text" [(ngModel)]="transaction.editedTransaction.price">
     </td>
 
+    <!--Account-->
     <td *ngIf="!transaction.editMode">{{transaction.account.name}}</td>
     <td *ngIf="transaction.editMode">
       <select [(ngModel)]="transaction.editedTransaction.account">
@@ -62,6 +76,7 @@
       </select>
     </td>
 
+    <!--Category-->
     <td *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
     <td *ngIf="transaction.editMode">
       <select [(ngModel)]="transaction.editedTransaction.category">
@@ -74,6 +89,7 @@
       <button class="btn-primary" (click)="onEditTransaction(transaction)">Save</button>
       <button class="btn-danger" (click)="transaction.editMode=false">Exit</button>
     </td>
+
     <td *ngIf="!transaction.editMode">
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
@@ -89,26 +105,34 @@
         </ul>
       </div>
     </td>
-
   </tr>
 
 
   <tr *ngIf="addingMode">
+    <!--Date-->
     <td>
       <input type="text" placeholder="2018-09-26" [(ngModel)]="newTransaction.date">
     </td>
+
+    <!--Description-->
     <td>
       <input type="text" [(ngModel)]="newTransaction.description">
     </td>
+
+    <!--Price-->
     <td>
       <input type="text" [(ngModel)]="newTransaction.price">
     </td>
+
+    <!--Account-->
     <td>
       <select [(ngModel)]="newTransaction.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
       </select>
     </td>
+
+    <!--Category-->
     <td>
       <select [(ngModel)]="newTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">

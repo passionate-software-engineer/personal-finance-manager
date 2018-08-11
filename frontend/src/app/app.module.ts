@@ -11,6 +11,7 @@ import {MessagesComponent} from './messages/messages/messages.component';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AlertsService} from './alerts/alerts-service/alerts.service';
 import {TransactionsComponent} from './transaction/transactions/transactions.component';
+import {OrderModule} from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {TransactionsComponent} from './transaction/transactions/transactions.com
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    OrderModule
   ],
   providers: [AlertsService],
   bootstrap: [AppComponent]
