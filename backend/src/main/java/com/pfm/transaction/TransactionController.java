@@ -26,7 +26,7 @@ public class TransactionController {
 
   @GetMapping(value = "/{id}")
   public ResponseEntity<?> getTransactionById(@PathVariable long id) {
-    return ResponseEntity.ok(new Transaction());
+    return ResponseEntity.ok(transactions.stream().filter(transaction -> transaction.getId() == id).findAny().get());
   }
 
   @GetMapping

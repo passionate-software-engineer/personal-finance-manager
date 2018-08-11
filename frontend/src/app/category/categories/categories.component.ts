@@ -65,6 +65,7 @@ export class CategoriesComponent implements OnInit {
     if (!this.validateCategory(category.editedName)) {
       return;
     }
+
     const editedCategory: Category = new Category();
     editedCategory.id = category.id;
     editedCategory.name = category.editedName;
@@ -178,8 +179,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     if (this.categories.filter(category =>
-      category.name.toLowerCase()
-      === categoryName.toLowerCase()).length > 0) {
+        category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Category with provided name already exist');
       return false;
     }

@@ -38,7 +38,7 @@ public class JacksonConfig {
     @Override
     public void serialize(BigDecimal value, JsonGenerator jsonGenerator,
         SerializerProvider provider) throws IOException {
-      jsonGenerator.writeString(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+      jsonGenerator.writeNumber(value.setScale(2, BigDecimal.ROUND_HALF_UP));
     }
   }
 }

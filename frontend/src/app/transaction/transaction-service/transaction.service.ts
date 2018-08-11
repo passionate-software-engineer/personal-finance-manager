@@ -36,6 +36,13 @@ export class TransactionService {
       catchError(this.handleError('getTransactions', [])));
   }
 
+  getTransaction(id: number): Observable<Transaction> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Transaction>(url).pipe(
+      tap(() => this.log(`fetched transaction with id ` + id)),
+      catchError(this.handleError('getSingleTransaction', null)));
+  }
+
   addTransaction(transaction: Transaction): Observable<any> {
     const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
     return this.http.post<any>(this.apiUrl, categoryRequest, httpOptions).pipe(

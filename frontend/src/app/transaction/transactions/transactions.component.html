@@ -50,9 +50,9 @@
   <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
 
     <!--Date-->
-    <td *ngIf="!transaction.editMode">{{transaction.date}}</td>
+    <td *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
     <td *ngIf="transaction.editMode">
-      <input type="text" [(ngModel)]="transaction.editedTransaction.date">
+      <input type="date" [(ngModel)]="transaction.editedTransaction.date">
     </td>
 
     <!--Description-->
@@ -64,7 +64,7 @@
     <!--Price-->
     <td class="right aligned" *ngIf="!transaction.editMode">{{transaction.price | number:'0.2'}}</td>
     <td *ngIf="transaction.editMode">
-      <input type="text" [(ngModel)]="transaction.editedTransaction.price">
+      <input type="number" [(ngModel)]="transaction.editedTransaction.price">
     </td>
 
     <!--Account-->
@@ -111,7 +111,7 @@
   <tr *ngIf="addingMode">
     <!--Date-->
     <td>
-      <input type="text" placeholder="2018-09-26" [(ngModel)]="newTransaction.date">
+      <input type="date" [(ngModel)]="newTransaction.date">
     </td>
 
     <!--Description-->
@@ -121,7 +121,8 @@
 
     <!--Price-->
     <td>
-      <input type="text" [(ngModel)]="newTransaction.price">
+      <input type="number" [(ngModel)]="newTransaction.price">
+      <!--<input type="number" min="0.00" max="10000.00" step="0.01" />-->
     </td>
 
     <!--Account-->

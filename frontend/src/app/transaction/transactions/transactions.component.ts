@@ -1,4 +1,3 @@
-///<reference path="../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, OnInit} from '@angular/core';
 import {TransactionService} from '../transaction-service/transaction.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
@@ -87,9 +86,10 @@ export class TransactionsComponent implements OnInit {
   }
 
   onEditTransaction(transaction: Transaction) {
-    // if (!this.validateTransaction(category.editedName)) {
-    //   return;
-    // }
+    if (!this.validateTransaction(transaction)) {
+      return;
+    }
+
     const editedTransaction: Transaction = new Transaction();
     editedTransaction.id = transaction.editedTransaction.id;
     editedTransaction.description = transaction.editedTransaction.description;
@@ -101,24 +101,30 @@ export class TransactionsComponent implements OnInit {
     this.transactionService.editTransaction(editedTransaction)
       .subscribe(() => {
         this.alertService.success('Transaction edited');
-        Object.assign(transaction, editedTransaction);
-        // this.sortByName('asc');
+        this.transactionService.getTransaction(editedTransaction.id)
+          .subscribe(updatedTransaction => {
+          updatedTransaction.editMode = false;
+          Object.assign(transaction, updatedTransaction);
+        });
       });
   }
 
   onAddTransaction() {
     const transactionToAdd = JSON.parse(JSON.stringify(this.newTransaction));
 
-    // categoryToAdd.name = this.newTransactionName;
-    // categoryToAdd.category = this.newTransactionParentCategory;
+    if (!this.validateTransaction(transactionToAdd)) {
+      return;
+    }
 
     this.transactionService.addTransaction(transactionToAdd)
       .subscribe(id => {
-        transactionToAdd.id = id;
-        this.transactions.push(transactionToAdd);
         this.alertService.success('Transaction added');
-        this.addingMode = false;
-        this.newTransaction = new Transaction();
+        this.transactionService.getTransaction(id)
+          .subscribe(createdTransaction => {
+            this.transactions.push(createdTransaction);
+            this.addingMode = false;
+            this.newTransaction = new Transaction();
+          });
       });
   }
 
@@ -126,29 +132,39 @@ export class TransactionsComponent implements OnInit {
     this.getTransactions();
   }
 
-  validateTransaction(categoryName: string): boolean {
-    if (categoryName == null || categoryName.trim() === '') {
-      this.alertService.error('Transaction name cannot be empty');
-      return false;
-    }
-    if (categoryName.length > 70) {
-      this.alertService.error('Transaction name too long. Transaction name can not be longer then 100 characters');
-      return false;
-    }
-    return true;
-  }
-
-  validateAddingTransaction(categoryName: string): boolean {
-    if (!this.validateTransaction(categoryName)) {
-      return false;
+  validateTransaction(transaction: Transaction): boolean {
+    let status = true;
+    if (transaction.date == null) {
+      this.alertService.error('Date cannot be empty');
+      status = false;
     }
 
-    if (this.transactions.filter(category =>
-        category.description.toLowerCase() === categoryName.toLowerCase()).length > 0) {
-      this.alertService.error('Transaction with provided name already exist');
-      return false;
+    if (transaction.description == null || transaction.description.trim() === '') {
+      this.alertService.error('Description cannot be empty');
+      status = false;
     }
-    return true;
+
+    if (transaction.description != null && transaction.description.length > 100) {
+      this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
+      status = false;
+    }
+
+    if (transaction.price == null) {
+      this.alertService.error('Price is empty or price format is incorrect');
+      status = false;
+    }
+
+    if (transaction.category == null) {
+      this.alertService.error('Category cannot be empty');
+      status = false;
+    }
+
+    if (transaction.account == null) {
+      this.alertService.error('Account cannot be empty');
+      status = false;
+    }
+
+    return status;
   }
 
   setOrder(value: string) {
