@@ -69,6 +69,19 @@ export class TransactionsComponent implements OnInit {
   onShowEditMode(transaction: Transaction) {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
+
+    for (const account of this.accounts) {
+      if (account.id === transaction.editedTransaction.account.id) {
+        transaction.editedTransaction.account = account;
+      }
+    }
+
+    for (const category of this.categories) {
+      if (category.id === transaction.editedTransaction.category.id) {
+        transaction.editedTransaction.category = category;
+      }
+    }
+
     // transaction.editedName = transaction.description;
     // if (transaction.parentCategory == null) {
     //   transaction.editedParentCategory = null;
@@ -78,22 +91,26 @@ export class TransactionsComponent implements OnInit {
 
   }
 
-  // onEditTransaction(category: Transaction) {
-  //   if (!this.validateTransaction(category.editedName)) {
-  //     return;
-  //   }
-  //   const editedTransaction: Transaction = new Transaction();
-  //   editedTransaction.id = category.id;
-  //   editedTransaction.name = category.editedName;
-  //   editedTransaction.parentCategory = category.editedParentCategory;
-  //   this.categoryService.editTransaction(editedTransaction)
-  //     .subscribe(() => {
-  //       this.alertService.success('Transaction edited');
-  //       Object.assign(category, editedTransaction);
-  //       this.sortByName('asc');
-  //     });
-  // }
-  //
+  onEditTransaction(transaction: Transaction) {
+    // if (!this.validateTransaction(category.editedName)) {
+    //   return;
+    // }
+    const editedTransaction: Transaction = new Transaction();
+    editedTransaction.id = transaction.editedTransaction.id;
+    editedTransaction.description = transaction.editedTransaction.description;
+    editedTransaction.date = transaction.editedTransaction.date;
+    editedTransaction.price = transaction.editedTransaction.price;
+    editedTransaction.category = transaction.editedTransaction.category; // TODO send only category id
+    editedTransaction.account = transaction.editedTransaction.account; // TODO send only account id
+
+    this.transactionService.editTransaction(editedTransaction)
+      .subscribe(() => {
+        this.alertService.success('Transaction edited');
+        Object.assign(transaction, editedTransaction);
+        // this.sortByName('asc');
+      });
+  }
+
   onAddTransaction() {
     const transactionToAdd = JSON.parse(JSON.stringify(this.newTransaction));
 

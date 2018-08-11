@@ -50,7 +50,13 @@ export class CategoriesComponent implements OnInit {
     if (category.parentCategory == null) {
       category.editedParentCategory = null;
     } else {
-      category.editedParentCategory = <Category> JSON.parse(JSON.stringify(category.parentCategory));
+      category.editedParentCategory = category.parentCategory;
+    }
+
+    for (const categoryEntry of this.categories) {
+      if (categoryEntry.id === category.editedParentCategory.id) {
+        category.editedParentCategory = categoryEntry;
+      }
     }
 
   }

@@ -71,7 +71,7 @@
     </td>
 
     <td *ngIf="transaction.editMode">
-      <!--<button class="btn-primary" (click)="onEditTransaction(category)">Save</button>-->
+      <button class="btn-primary" (click)="onEditTransaction(transaction)">Save</button>
       <button class="btn-danger" (click)="transaction.editMode=false">Exit</button>
     </td>
     <td *ngIf="!transaction.editMode">
@@ -95,7 +95,7 @@
 
   <tr *ngIf="addingMode">
     <td>
-      <input type="text" [(ngModel)]="newTransaction.date">
+      <input type="text" placeholder="2018-09-26" [(ngModel)]="newTransaction.date">
     </td>
     <td>
       <input type="text" [(ngModel)]="newTransaction.description">
