@@ -51,20 +51,20 @@ export class TransactionsComponent implements OnInit {
       });
   }
 
-  // // TODO make nice looking confirmation popup
-  //
-  // deleteTransaction(category) {
-  //   if (confirm('Are you sure You want to delete this account ?')) {
-  //     this.categoryService.deleteTransaction(category.id)
-  //       .subscribe(() => {
-  //         this.alertService.success('Transaction deleted');
-  //         const index: number = this.transactions.indexOf(category);
-  //         if (index !== -1) {
-  //           this.transactions.splice(index, 1);
-  //         }
-  //       });
-  //   }
-  // }
+  // TODO make nice looking confirmation popup
+
+  deleteTransaction(transaction) {
+    if (confirm('Are you sure You want to delete this transaction ?')) {
+      this.transactionService.deleteTransaction(transaction.id)
+        .subscribe(() => {
+          this.alertService.success('Transaction deleted');
+          const index: number = this.transactions.indexOf(transaction);
+          if (index !== -1) {
+            this.transactions.splice(index, 1);
+          }
+        });
+    }
+  }
 
   onShowEditMode(transaction: Transaction) {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
@@ -81,13 +81,6 @@ export class TransactionsComponent implements OnInit {
         transaction.editedTransaction.category = category;
       }
     }
-
-    // transaction.editedName = transaction.description;
-    // if (transaction.parentCategory == null) {
-    //   transaction.editedParentCategory = null;
-    // } else {
-    //   transaction.editedParentCategory = <Transaction> JSON.parse(JSON.stringify(transaction.parentCategory));
-    // }
 
   }
 
@@ -166,30 +159,6 @@ export class TransactionsComponent implements OnInit {
   //     });
   //   }
   // }
-
-  getParentCategoryName(category): string {
-    if (category.parentCategory != null) {
-      return category.parentCategory.name;
-    }
-    return 'Main Category';
-  }
-
-  getListOfPossibleParentTransactions(cat: Transaction) {
-    return this.transactions.filter(category => {
-      if (category.id === cat.id) {
-        return false;
-      }
-      let categoryToCheck = category.category;
-      while (categoryToCheck != null) {
-
-        if (categoryToCheck.id === cat.id) {
-          return false;
-        }
-        categoryToCheck = categoryToCheck.parentCategory;
-      }
-      return true;
-    });
-  }
 
   validateTransaction(categoryName: string): boolean {
     if (categoryName == null || categoryName.trim() === '') {

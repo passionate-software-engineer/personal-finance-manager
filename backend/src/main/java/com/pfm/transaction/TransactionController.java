@@ -1,15 +1,8 @@
 package com.pfm.transaction;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
 
   List<Transaction> transactions = new ArrayList<>();
+  int id = 0;
 
   @GetMapping(value = "/{id}")
   public ResponseEntity<?> getTransactionById(@PathVariable long id) {
@@ -37,38 +31,29 @@ public class TransactionController {
 
   @GetMapping
   public ResponseEntity<List<Transaction>> getTransactions() {
-
     return ResponseEntity.ok(transactions);
   }
 
   @PostMapping
   public ResponseEntity<?> addTransaction(@RequestBody Transaction transactionRequest) {
+    transactionRequest.setId(id++);
     transactions.add(transactionRequest);
-    return ResponseEntity.ok(0);
+    return ResponseEntity.ok(transactionRequest.getId());
   }
 
   @PutMapping(value = "/{id}")
-  public ResponseEntity<?> updateTransaction(@PathVariable("id") Long id,
-      @RequestBody Transaction transactionRequest) {
-
+  public ResponseEntity<?> updateTransaction(@PathVariable("id") int id, @RequestBody Transaction transactionRequest) {
+    transactions = transactions.stream().filter(transaction -> transaction.getId() != id).collect(Collectors.toList());
+    transactionRequest.setId(id);
+    transactions.add(transactionRequest);
     return ResponseEntity.ok().build();
   }
 
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<?> deleteTransaction(@PathVariable long id) {
+    transactions = transactions.stream().filter(transaction -> transaction.getId() != id).collect(Collectors.toList());
     return ResponseEntity.ok().build();
   }
 
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  @NoArgsConstructor
-  @Getter
-  @Setter
-  private static class TransactionRequest {
 
-    @ApiModelProperty(value = "Transaction name", required = true, example = "Alior Bank savings transaction")
-    private String name;
-
-    @ApiModelProperty(value = "Transaction's balance", required = true, example = "1438.89")
-    private BigDecimal balance;
-  }
 }

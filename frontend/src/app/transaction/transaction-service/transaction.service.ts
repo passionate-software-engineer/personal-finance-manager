@@ -32,8 +32,8 @@ export class TransactionService {
 
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(this.apiUrl).pipe(
-      tap(() => this.log(`fetched categories`)),
-      catchError(this.handleError('getCategories', [])));
+      tap(() => this.log(`fetched transactions`)),
+      catchError(this.handleError('getTransactions', [])));
   }
 
   addTransaction(transaction: Transaction): Observable<any> {
@@ -46,16 +46,16 @@ export class TransactionService {
   deleteTransaction(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url).pipe(
-      tap(() => this.log(`deleted category with id: ` + id)),
-      catchError(this.handleError('deleteCategory', [])));
+      tap(() => this.log(`deleted transaction with id: ` + id)),
+      catchError(this.handleError('deleteTransaction', [])));
   }
 
   editTransaction(category: Transaction): Observable<any> {
     const categoryRequest = TransactionService.transactionToTransactionRequest(category);
     const url = `${this.apiUrl}/${category.id}`;
     return this.http.put<Transaction>(url, categoryRequest, httpOptions).pipe(
-      tap(() => this.log(`edited category with id: ` + category.id)),
-      catchError(this.handleError('editCategory', [])));
+      tap(() => this.log(`edited transaction with id: ` + category.id)),
+      catchError(this.handleError('editTransaction', [])));
   }
 
   private log(message: string) {
