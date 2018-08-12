@@ -27,8 +27,7 @@ public class MessagesProvider {
   public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
 
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
-  private static final ResourceBundle langBundle = ResourceBundle
-      .getBundle("messages", new Locale("pl"));
+  private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 
   public static String getMessage(String errorMessage) {
     return langBundle.getString(errorMessage);

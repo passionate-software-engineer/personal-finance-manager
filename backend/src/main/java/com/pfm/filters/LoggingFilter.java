@@ -18,7 +18,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
-@Component
+@Component // TODO not working for bad request
 public class LoggingFilter extends OncePerRequestFilter {
 
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(

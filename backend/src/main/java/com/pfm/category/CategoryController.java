@@ -132,6 +132,7 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
+  // TODO separate class
   @JsonIgnoreProperties(ignoreUnknown = true)
   @AllArgsConstructor
   @Builder
