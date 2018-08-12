@@ -36,7 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RunWith(ConcurrentTestRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ControllerAddTest {
+public class SimultaneouslyAddAccountTest {
 
   private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
   private final static int THREAD_COUNT = 24; //set how much threads you want to start
@@ -73,9 +73,9 @@ public class ControllerAddTest {
   @ThreadCount(THREAD_COUNT)
   public void shouldAddSimultaneouslyAccountTest() throws Exception {
     Account tempAccount = Account.builder()
-        .name(UUID.randomUUID().toString())
-        .balance(BigDecimal.valueOf((long) (Math.random() * Integer.MAX_VALUE)).setScale(2, RoundingMode.CEILING))
-        .build();
+            .name(UUID.randomUUID().toString())
+            .balance(BigDecimal.valueOf((long) (Math.random() * Integer.MAX_VALUE)).setScale(2, RoundingMode.CEILING))
+            .build();
 
     HttpEntity<String> entity = new HttpEntity<String>((json(tempAccount)), headers);
     ResponseEntity<String> answer = restTemplate.exchange(servicePath(), HttpMethod.POST, entity, String.class);
