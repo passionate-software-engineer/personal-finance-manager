@@ -43,8 +43,7 @@ public class CategoryController {
       return new Category(null, categoryRequest.getName(), null);
     }
 
-    return new Category(null, categoryRequest.getName(),
-        new Category(parentCategoryId, null, null));
+    return new Category(null, categoryRequest.getName(), new Category(parentCategoryId, null, null));
   }
 
   @ApiOperation(value = "Find category by id", response = Category.class)
