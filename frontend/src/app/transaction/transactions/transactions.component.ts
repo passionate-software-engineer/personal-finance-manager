@@ -26,31 +26,71 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTransactions();
-    this.getCategories();
-    this.getAccounts();
+    // forkJoin(
+    //   this.categoryService.getCategories(),
+    //   this.accountService.getAccounts(),
+    //   (categories, accounts) => {
+    //     this.categories = categories;
+    //     this.accounts = accounts;
+    //     return this.getTransactions();
+    //   }
+    // );
+
+    // TODO do in parallel with forkJoin (not working for some reason)
+    this.categoryService.getCategories()
+      .subscribe(categories => {
+        this.categories = categories;
+
+        this.accountService.getAccounts()
+          .subscribe(accounts => {
+            this.accounts = accounts;
+            this.getTransactions();
+          });
+      });
   }
 
   getTransactions(): void {
     this.transactionService.getTransactions()
       .subscribe(transactions => {
-        this.transactions = transactions;
+        this.transactions = [];
+        for (const transactionResponse of transactions) {
+          const transaction = new Transaction();
+          transaction.date = transactionResponse.date;
+          transaction.id = transactionResponse.id;
+          transaction.price = transactionResponse.price;
+          transaction.description = transactionResponse.description;
+
+          // need to have same object to allow dropdown to work correctly
+          for (const account of this.accounts) {
+            if (account.id === transactionResponse.accountId) {
+              transaction.account = account;
+            }
+          }
+
+          for (const category of this.categories) {
+            if (category.id === transactionResponse.categoryId) {
+              transaction.category = category;
+            }
+          }
+
+          this.transactions.push(transaction);
+        }
       });
   }
 
-  getCategories(): void {
-    this.categoryService.getCategories()
-      .subscribe(categories => {
-        this.categories = categories;
-      });
-  }
-
-  getAccounts(): void {
-    this.accountService.getAccounts()
-      .subscribe(accounts => {
-        this.accounts = accounts;
-      });
-  }
+  // getCategories(): void {
+  //   this.categoryService.getCategories()
+  //     .subscribe(categories => {
+  //       this.categories = categories;
+  //     });
+  // }
+  //
+  // getAccounts(): void {
+  //   this.accountService.getAccounts()
+  //     .subscribe(accounts => {
+  //       this.accounts = accounts;
+  //     });
+  // }
 
   deleteTransaction(transaction) {
     if (confirm('Are you sure You want to delete this transaction ?')) {
@@ -94,8 +134,27 @@ export class TransactionsComponent implements OnInit {
         this.alertService.success('Transaction edited');
         this.transactionService.getTransaction(transaction.id)
           .subscribe(updatedTransaction => {
-            updatedTransaction.editMode = false;
-            Object.assign(transaction, updatedTransaction);
+            const returnedTransaction = new Transaction();
+            returnedTransaction.date = updatedTransaction.date;
+            returnedTransaction.id = updatedTransaction.id;
+            returnedTransaction.price = updatedTransaction.price;
+            returnedTransaction.description = updatedTransaction.description;
+
+            // need to have same object to allow dropdown to work correctly
+            for (const account of this.accounts) {
+              if (account.id === updatedTransaction.accountId) {
+                returnedTransaction.account = account;
+              }
+            }
+
+            for (const category of this.categories) {
+              if (category.id === updatedTransaction.categoryId) {
+                returnedTransaction.category = category;
+              }
+            }
+
+
+            Object.assign(transaction, returnedTransaction);
           });
       });
   }
@@ -110,7 +169,27 @@ export class TransactionsComponent implements OnInit {
         this.alertService.success('Transaction added');
         this.transactionService.getTransaction(id)
           .subscribe(createdTransaction => {
-            this.transactions.push(createdTransaction);
+
+            const returnedTransaction = new Transaction();
+            returnedTransaction.date = createdTransaction.date;
+            returnedTransaction.id = createdTransaction.id;
+            returnedTransaction.price = createdTransaction.price;
+            returnedTransaction.description = createdTransaction.description;
+
+            // need to have same object to allow dropdown to work correctly
+            for (const account of this.accounts) {
+              if (account.id === createdTransaction.accountId) {
+                returnedTransaction.account = account;
+              }
+            }
+
+            for (const category of this.categories) {
+              if (category.id === createdTransaction.categoryId) {
+                returnedTransaction.category = category;
+              }
+            }
+
+            this.transactions.push(returnedTransaction);
             this.addingMode = false;
             this.newTransaction = new Transaction();
           });

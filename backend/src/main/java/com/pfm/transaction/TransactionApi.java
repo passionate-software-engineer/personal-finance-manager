@@ -19,7 +19,7 @@ public interface TransactionApi { // TODO extract API for other services
 
   @ApiOperation(value = "Find transaction by id", response = Transaction.class)
   @GetMapping(value = "/{id}")
-  ResponseEntity<Transaction> getTransactionById(@PathVariable long id);
+  ResponseEntity<Transaction> getTransactionById(long id);
 
   @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List")
   @GetMapping
@@ -31,9 +31,9 @@ public interface TransactionApi { // TODO extract API for other services
 
   @ApiOperation(value = "Update an existing transaction", response = Void.class)
   @PutMapping(value = "/{id}")
-  ResponseEntity<?> updateTransaction(@PathVariable long id, TransactionRequest transactionRequest);
+  ResponseEntity<?> updateTransaction(long id, TransactionRequest transactionRequest);
 
   @ApiOperation(value = "Delete an existing transaction", response = Void.class)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<?> deleteTransaction(@PathVariable long id);
+  ResponseEntity<?> deleteTransaction(long id);
 }

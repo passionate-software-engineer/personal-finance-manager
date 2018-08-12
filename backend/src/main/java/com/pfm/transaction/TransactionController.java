@@ -9,6 +9,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class TransactionController implements TransactionApi {
   private AccountService accountService;
 
   @Override
-  public ResponseEntity<Transaction> getTransactionById(long id) {
+  public ResponseEntity<Transaction> getTransactionById(@PathVariable long id) {
     log.info("Retrieving transaction with id: {}", id);
     Optional<Transaction> transaction = transactionService.getTransactionById(id);
 
@@ -63,7 +64,7 @@ public class TransactionController implements TransactionApi {
 
 
   @Override
-  public ResponseEntity<?> updateTransaction(long id, @RequestBody TransactionRequest transactionRequest) {
+  public ResponseEntity<?> updateTransaction(@PathVariable long id, @RequestBody TransactionRequest transactionRequest) {
     if (!transactionService.idExist(id)) {
       log.info("No transaction with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
@@ -84,7 +85,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteTransaction(long id) {
+  public ResponseEntity<?> deleteTransaction(@PathVariable long id) {
     if (!transactionService.getTransactionById(id).isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
