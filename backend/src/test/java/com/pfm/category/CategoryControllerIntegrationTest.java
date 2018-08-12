@@ -384,8 +384,8 @@ public class CategoryControllerIntegrationTest {
     return mapper.writeValueAsString(category);
   }
 
-  private Category jsonToCategory(String jsonCompany) throws Exception {
-    return mapper.readValue(jsonCompany, Category.class);
+  private Category jsonToCategory(String jsonCategory) throws Exception {
+    return mapper.readValue(jsonCategory, Category.class);
   }
 
   private List<Category> getCategoriesFromResponse(String response) throws Exception {

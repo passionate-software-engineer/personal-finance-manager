@@ -1,8 +1,8 @@
 package com.pfm.transaction;
 
-import static com.pfm.config.MessagesProvider.ACCOUNT_ID_NOT_EXIST;
-import static com.pfm.config.MessagesProvider.CATEGORY_ID_NOT_EXIST;
-import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_ACCOUNT;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
@@ -33,13 +33,13 @@ public class TransactionValidator {
     if (transactionRequest.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
     } else if (!categoryService.idExist(transactionRequest.getCategoryId())) {
-      validationErrors.add(getMessage(CATEGORY_ID_NOT_EXIST)); // TODO does not exist or not exists :)
+      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST));
     }
 
     if (transactionRequest.getAccountId() == null) {
-      validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT_NAME)); // TODO empty account (not name)
+      validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
     } else if (!accountService.idExist(transactionRequest.getAccountId())) {
-      validationErrors.add(getMessage(ACCOUNT_ID_NOT_EXIST)); // TODO does not exist or not exists :)
+      validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST));
     }
 
     if (transactionRequest.getDate() == null) {
