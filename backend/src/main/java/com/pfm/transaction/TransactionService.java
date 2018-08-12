@@ -21,50 +21,50 @@ public class TransactionService {
   private TransactionRepository transactionRepository;
   private AccountService accountService;
 
-  public Optional<TransactionPojo> getTransactionById(long id) {
+  public Optional<Transaction> getTransactionById(long id) {
     return transactionRepository.findById(id);
   }
 
-  public List<TransactionPojo> getTransactions() {
+  public List<Transaction> getTransactions() {
     return StreamSupport.stream(transactionRepository.findAll().spliterator(), false)
-        .sorted(Comparator.comparing(TransactionPojo::getId))
+        .sorted(Comparator.comparing(Transaction::getId))
         .collect(Collectors.toList());
   }
 
-  public TransactionPojo addTransaction(TransactionPojo transaction) {
-    subtractAmountFromAccount(transaction.getAccount().getId(), transaction.getPrice());
+  public Transaction addTransaction(Transaction transaction) {
+//    subtractAmountFromAccount(transaction.getAccount().getId(), transaction.getPrice());
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     return transactionRepository.save(transaction);
   }
 
-  public void updateTransaction(long id, TransactionPojo transaction) {
-    TransactionPojo transactionToUpdate = getTransactionFromDatabase(id);
+  public void updateTransaction(long id, Transaction transaction) {
+    Transaction transactionToUpdate = getTransactionFromDatabase(id);
     transactionToUpdate.setDescription(transaction.getDescription());
-    transactionToUpdate.setCategory(transaction.getCategory());
+    transactionToUpdate.setCategoryId(transaction.getCategoryId());
     transactionToUpdate.setPrice(transaction.getPrice());
-    transactionToUpdate.setAccount(transaction.getAccount());
+    transactionToUpdate.setAccountId(transaction.getAccountId());
     transactionToUpdate.setDate(transaction.getDate());
 
     transactionRepository.save(transactionToUpdate);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-    addAmountToAccount(transactionToUpdate.getAccount().getId(), transactionToUpdate.getPrice());
-    subtractAmountFromAccount(transactionToUpdate.getAccount().getId(), transactionToUpdate.getPrice());
+    addAmountToAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
+    subtractAmountFromAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
   }
 
   public void deleteTransaction(long id) {
-    TransactionPojo transactionToDelete = getTransactionFromDatabase(id);
+    Transaction transactionToDelete = getTransactionFromDatabase(id);
     transactionRepository.deleteById(id);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-    addAmountToAccount(transactionToDelete.getAccount().getId(), transactionToDelete.getPrice());
+    addAmountToAccount(transactionToDelete.getAccountId(), transactionToDelete.getPrice());
   }
 
-  private TransactionPojo getTransactionFromDatabase(long id) {
-    Optional<TransactionPojo> transactionFromDb = getTransactionById(id);
+  private Transaction getTransactionFromDatabase(long id) {
+    Optional<Transaction> transactionFromDb = getTransactionById(id);
 
     if (!transactionFromDb.isPresent()) {
-      throw new IllegalStateException("TransactionPojo with id: " + id + " not exist in database");
+      throw new IllegalStateException("Transaction with id: " + id + " not exist in database");
     }
 
     return transactionFromDb.get();

@@ -6,7 +6,6 @@ import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,49 +25,45 @@ public class TransactionController implements TransactionApi {
   @Override
   public ResponseEntity<Transaction> getTransactionById(long id) {
     log.info("Retrieving transaction with id: {}", id);
-    Optional<TransactionPojo> transaction = transactionService.getTransactionById(id);
+    Optional<Transaction> transaction = transactionService.getTransactionById(id);
 
     if (!transaction.isPresent()) {
-      log.info("TransactionPojo with id {} was not found", id);
+      log.info("Transaction with id {} was not found", id);
       return ResponseEntity.notFound().build();
     }
 
-    log.info("TransactionPojo with id {} was successfully retrieved", id);
-    return ResponseEntity.ok(convertTransactionToTransactionResponse(transaction.get()));
+    log.info("Transaction with id {} was successfully retrieved", id);
+    return ResponseEntity.ok(transaction.get());
   }
 
   @Override
   public ResponseEntity<List<Transaction>> getTransactions() {
     log.info("Retrieving all transactions");
 
-    List<Transaction> transactions = transactionService.getTransactions().stream()
-        .map(this::convertTransactionToTransactionResponse)
-        .collect(Collectors.toList());
-
-    return ResponseEntity.ok(transactions);
+    return ResponseEntity.ok(transactionService.getTransactions());
   }
 
   @Override
-  public ResponseEntity<?> addTransaction(@RequestBody Transaction transactionRequest) {
+  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     log.info("Adding transaction to the database");
 
     List<String> validationResult = transactionValidator.validate(transactionRequest);
     if (!validationResult.isEmpty()) {
-      log.info("TransactionPojo is not valid {}", validationResult);
+      log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    TransactionPojo transaction = convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
 
-    TransactionPojo createdTransaction = transactionService.addTransaction(transaction);
-    log.info("Saving transaction to the database was successful. TransactionPojo id is {}", createdTransaction.getId());
+    Transaction createdTransaction = transactionService.addTransaction(transaction);
+    log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
 
     return ResponseEntity.ok(createdTransaction.getId());
   }
 
 
   @Override
-  public ResponseEntity<?> updateTransaction(long id, @RequestBody Transaction transactionRequest) {
+  public ResponseEntity<?> updateTransaction(long id, @RequestBody TransactionRequest transactionRequest) {
     if (!transactionService.idExist(id)) {
       log.info("No transaction with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
@@ -76,14 +71,14 @@ public class TransactionController implements TransactionApi {
 
     List<String> validationResult = transactionValidator.validate(transactionRequest);
     if (!validationResult.isEmpty()) {
-      log.error("TransactionPojo is not valid {}", validationResult);
+      log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    TransactionPojo transaction = convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
 
     transactionService.updateTransaction(id, transaction);
-    log.info("TransactionPojo with id {} was successfully updated", id);
+    log.info("Transaction with id {} was successfully updated", id);
 
     return ResponseEntity.ok().build();
   }
@@ -98,11 +93,11 @@ public class TransactionController implements TransactionApi {
     log.info("Attempting to delete transaction with id {}", id);
     transactionService.deleteTransaction(id);
 
-    log.info("TransactionPojo with id {} was deleted successfully", id);
+    log.info("Transaction with id {} was deleted successfully", id);
     return ResponseEntity.ok().build();
   }
 
-  private TransactionPojo convertTransactionRequestToTransaction(Transaction transactionRequest) {
+  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
     Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
     Optional<Category> transactionCategory = categoryService.getCategoryById(transactionRequest.getCategoryId());
 
@@ -111,22 +106,12 @@ public class TransactionController implements TransactionApi {
       throw new IllegalStateException("Account or category was not provided");
     }
 
-    return TransactionPojo.builder()
+    return Transaction.builder()
         .description(transactionRequest.getDescription())
         .price(transactionRequest.getPrice())
-        .account(transactionAccount.get())
-        .category(transactionCategory.get())
+        .accountId(transactionRequest.getAccountId())
+        .categoryId(transactionRequest.getCategoryId())
         .date(transactionRequest.getDate())
-        .build();
-  }
-
-  private Transaction convertTransactionToTransactionResponse(TransactionPojo transaction) {
-    return Transaction.builder()
-        .description(transaction.getDescription())
-        .price(transaction.getPrice())
-        .accountId(transaction.getAccount().getId())
-        .categoryId(transaction.getCategory().getId())
-        .date(transaction.getDate())
         .build();
   }
 

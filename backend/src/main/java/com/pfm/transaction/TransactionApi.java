@@ -27,11 +27,11 @@ public interface TransactionApi { // TODO extract API for other services
 
   @ApiOperation(value = "Create a new transaction", response = Long.class)
   @PostMapping
-  ResponseEntity<?> addTransaction(Transaction transactionRequest);
+  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
 
   @ApiOperation(value = "Update an existing transaction", response = Void.class)
   @PutMapping(value = "/{id}")
-  ResponseEntity<?> updateTransaction(@PathVariable long id, Transaction transactionRequest);
+  ResponseEntity<?> updateTransaction(@PathVariable long id, TransactionRequest transactionRequest);
 
   @ApiOperation(value = "Delete an existing transaction", response = Void.class)
   @DeleteMapping(value = "/{id}")

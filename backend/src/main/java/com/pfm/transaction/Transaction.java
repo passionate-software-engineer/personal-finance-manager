@@ -1,9 +1,13 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,24 +15,24 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
+@Entity
+@Table(name = "transaction")
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
 
-  @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
-  protected String description;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  @ApiModelProperty(value = "Category id", required = true, example = "1")
-  protected Long categoryId;
+  private String description;
 
-  @ApiModelProperty(value = "Account id", required = true, example = "1")
-  protected Long accountId;
+  private long categoryId;
 
-  @ApiModelProperty(value = "Price", required = true, example = "15.99")
-  protected BigDecimal price;
+  private long accountId;
 
-  @ApiModelProperty(value = "Date", required = true, example = "2018-12-31")
-  protected LocalDate date;
+  private BigDecimal price;
 
+  private LocalDate date;
 }

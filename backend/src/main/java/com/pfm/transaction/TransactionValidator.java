@@ -23,7 +23,7 @@ public class TransactionValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public List<String> validate(Transaction transactionRequest) {
+  public List<String> validate(TransactionRequest transactionRequest) {
     List<String> validationErrors = new ArrayList<>();
 
     if (transactionRequest.getDescription() == null || transactionRequest.getDescription().trim().equals("")) {
