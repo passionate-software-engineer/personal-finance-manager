@@ -1,6 +1,8 @@
 package com.pfm.performance;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
 import com.anarsoft.vmlens.concurrent.junit.ThreadCount;
@@ -8,10 +10,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -34,7 +39,9 @@ import org.springframework.web.client.RestTemplate;
 public class ControllerAddTest {
 
   private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
-  private final static int THREAD_COUNT = 8; //set how much threads you want to start
+  private final static int THREAD_COUNT = 24; //set how much threads you want to start
+
+  private List<Account> addedAccounts = Collections.synchronizedList(new ArrayList<>());
 
   private ObjectMapper objectMapper = new ObjectMapper();
   private HttpHeaders headers = new HttpHeaders();
@@ -48,7 +55,7 @@ public class ControllerAddTest {
 
   @Before
   public void initialization() throws Exception {
-    System.out.println("Before servicePath "+servicePath());
+    System.out.println("Before servicePath " + servicePath());
     headers.setContentType(MediaType.APPLICATION_JSON);
     //int temp = dataBaseCleaner();
   }
@@ -56,50 +63,52 @@ public class ControllerAddTest {
   @LocalServerPort
   private int port;
 
-  private String servicePath(){
+  private final AtomicLong counter = new AtomicLong(1L);
+
+  private String servicePath() {
     return String.format(INVOICES_SERVICE_PATH, port);
   }
 
   @Test
   @ThreadCount(THREAD_COUNT)
   public void shoulAddAccountTest() throws Exception {
-    System.out.println("Test servicePath "+servicePath());
     Account tempAccount = Account.builder()
-        .id(666666L)
         .name(UUID.randomUUID().toString())
-        .balance(BigDecimal.valueOf(1000))
+        .balance(BigDecimal.valueOf((long) (Math.random() * Integer.MAX_VALUE)).setScale(2, RoundingMode.CEILING))
         .build();
+
     HttpEntity<String> entity = new HttpEntity<String>((json(tempAccount)), headers);
     ResponseEntity<String> answer = restTemplate.exchange(servicePath(), HttpMethod.POST, entity, String.class);
-    Assert.assertEquals(200, answer.getStatusCodeValue());
+    assertEquals(200, answer.getStatusCodeValue());
+
+    tempAccount.setId(Long.parseLong(answer.getBody()));
+    addedAccounts.add(tempAccount);
   }
 
 
   @After
-  public void afterCheck() throws Exception{
-    System.out.println("After servicePath "+servicePath());
-    Assert.assertEquals(THREAD_COUNT, dataBaseCleaner());
+  public void afterCheck() throws Exception {
+    addedAccounts.sort((first, second) -> (int) (first.getId() - second.getId()));
+
+    List<Account> accounts = getAccounts();
+    assertThat(accounts.size(), is(THREAD_COUNT));
+
+    int index = 0;
+    for (Account account : accounts) {
+      assertThat(account, is(addedAccounts.get(index++))); // TODO use error collector
+    }
   }
 
-//  private Account toObject(String json) throws Exception {
-//    return objectMapper.readValue(json, Account.class);
-//  }
 
   private String json(Account account) throws Exception {
     return objectMapper.writeValueAsString(account);
   }
 
-  private int dataBaseCleaner() throws Exception{
-    System.out.println("DBCleaner servicePath "+servicePath());
+  private List<Account> getAccounts() throws Exception {
     HttpEntity<String> entity = new HttpEntity<>("", headers);
     ResponseEntity<String> answer = restTemplate.exchange(servicePath(), HttpMethod.GET, entity, String.class);
-    TypeReference<List<Account>> mapType = new TypeReference<List<Account>>() {};
-    List<Account> accountsReceived = objectMapper.readValue(answer.getBody(), mapType);
-    for (Account account : accountsReceived) {
-      System.out.println(servicePath()+"/"+account.getId().toString());
-      answer = restTemplate.exchange(servicePath()+"/"+account.getId().toString(), HttpMethod.DELETE, entity, String.class);
-    }
-    return accountsReceived.size();
+    return objectMapper.readValue(answer.getBody(), new TypeReference<List<Account>>() {
+    });
   }
 
 }
