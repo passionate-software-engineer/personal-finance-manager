@@ -39,6 +39,9 @@ public class TransactionService {
 
   public void updateTransaction(long id, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id);
+
+    addAmountToAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
+
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategoryId(transaction.getCategoryId());
     transactionToUpdate.setPrice(transaction.getPrice());
@@ -48,7 +51,7 @@ public class TransactionService {
     transactionRepository.save(transactionToUpdate);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-    addAmountToAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
+
     subtractAmountFromAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
   }
 
