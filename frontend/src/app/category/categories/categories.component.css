@@ -6,3 +6,18 @@ button {
   margin-left: 3px;
   margin-bottom: 5px;
 }
+
+thead th {
+  cursor: pointer;
+  margin-right: 15px;
+  margin-left: 15px;
+  width: 40%
+}
+
+thead th span {
+  visibility: hidden;
+}
+
+thead th.active span {
+  visibility: visible;
+}

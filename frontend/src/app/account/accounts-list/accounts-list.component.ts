@@ -3,6 +3,7 @@ import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
+import { OrderPipe } from '../../order-pipe/pfm-order.pipe';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -14,12 +15,14 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 
 export class AccountsListComponent implements OnInit {
+  order = 'name';
+  reverse = false;
   accounts: Account[];
   addingMode = false;
   newAccountName: string;
   newAccountBalance: number;
 
-  constructor(private accountService: AccountService, private alertService: AlertsService) {
+  constructor(private accountService: AccountService, private alertService: AlertsService, private orderPipe: OrderPipe) {
   }
 
   ngOnInit() {
@@ -30,7 +33,6 @@ export class AccountsListComponent implements OnInit {
     this.accountService.getAccounts()
       .subscribe(accounts => {
         this.accounts = accounts;
-        this.sortByName('asc');
       });
   }
 
@@ -67,7 +69,6 @@ export class AccountsListComponent implements OnInit {
       .subscribe(() => {
         this.alertService.success('Account updated');
         Object.assign(account, editedAccount);
-        this.sortByName('asc');
       });
   }
 
@@ -87,32 +88,11 @@ export class AccountsListComponent implements OnInit {
         this.addingMode = false;
         this.newAccountBalance = null;
         this.newAccountName = null;
-        this.sortByName('asc');
       });
   }
 
   onRefreshAccounts() {
     this.getAccounts();
-  }
-
-  // TODO make sorting using pipes not methods below
-
-  sortByName(type: string) {
-    if (type === 'asc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-    }
-    if (type === 'dsc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-  }
-
-  sortByBalance(sortingType: string) {
-    if (sortingType === 'asc') {
-      this.accounts.sort((a1, a2) => a1.balance - a2.balance);
-    }
-    if (sortingType === 'dsc') {
-      this.accounts.sort((a1, a2) => a2.balance - a1.balance);
-    }
   }
 
   validateAccount(accountName: string, accountBalance: number): boolean {
@@ -165,5 +145,13 @@ export class AccountsListComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
 }
