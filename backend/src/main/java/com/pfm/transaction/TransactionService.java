@@ -32,7 +32,7 @@ public class TransactionService {
   }
 
   public Transaction addTransaction(Transaction transaction) {
-//    subtractAmountFromAccount(transaction.getAccount().getId(), transaction.getPrice());
+    subtractAmountFromAccount(transaction.getAccountId(), transaction.getPrice());
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     return transactionRepository.save(transaction);
   }
@@ -64,7 +64,7 @@ public class TransactionService {
     Optional<Transaction> transactionFromDb = getTransactionById(id);
 
     if (!transactionFromDb.isPresent()) {
-      throw new IllegalStateException("Transaction with id: " + id + " not exist in database");
+      throw new IllegalStateException("Transaction with id: " + id + " does not exist in database");
     }
 
     return transactionFromDb.get();
@@ -78,8 +78,8 @@ public class TransactionService {
     updateAccountBalance(accountId, amountToAdd, BigDecimal::add);
   }
 
-  private void subtractAmountFromAccount(long accountId, BigDecimal amountToAdd) {
-    updateAccountBalance(accountId, amountToAdd, BigDecimal::subtract);
+  private void subtractAmountFromAccount(long accountId, BigDecimal amountToSubtract) {
+    updateAccountBalance(accountId, amountToSubtract, BigDecimal::subtract);
   }
 
   private void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {

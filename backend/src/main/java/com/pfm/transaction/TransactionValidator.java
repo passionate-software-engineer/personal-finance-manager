@@ -37,7 +37,7 @@ public class TransactionValidator {
     }
 
     if (transactionRequest.getAccountId() == null) {
-      validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT_NAME));
+      validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT_NAME)); // TODO empty account (not name)
     } else if (!accountService.idExist(transactionRequest.getAccountId())) {
       validationErrors.add(getMessage(ACCOUNT_ID_NOT_EXIST)); // TODO does not exist or not exists :)
     }

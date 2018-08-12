@@ -73,8 +73,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private static void logContent(byte[] content, String contentType, String contentEncoding,
-      String prefix) {
+  private static void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
     MediaType mediaType = MediaType.valueOf(contentType);
     Boolean visible = VISIBLE_TYPES.stream()
         .anyMatch(visibleType -> visibleType.includes(mediaType));
@@ -109,8 +108,8 @@ public class LoggingFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
     if (isAsyncDispatch(request)) {
       filterChain.doFilter(request, response);
     } else {
@@ -118,8 +117,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private void doFilterWrapped(ContentCachingRequestWrapper request,
-      ContentCachingResponseWrapper response, FilterChain filterChain)
+  private void doFilterWrapped(ContentCachingRequestWrapper request, ContentCachingResponseWrapper response, FilterChain filterChain)
       throws ServletException, IOException {
     try {
       beforeRequest(request);

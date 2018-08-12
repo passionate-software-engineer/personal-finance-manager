@@ -58,6 +58,7 @@ public class CategoryController {
       log.info("Category with id {} was not found", id);
       return ResponseEntity.notFound().build();
     }
+
     log.info("Category with id {} was successfully retrieved", id);
     return ResponseEntity.ok(category.get());
   }
@@ -83,9 +84,10 @@ public class CategoryController {
       log.info("Category is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
+
     Category createdCategory = categoryService.addCategory(category);
-    log.info("Saving category to the database was successful. Category id is {}",
-        createdCategory.getId());
+    log.info("Saving category to the database was successful. Category id is {}", createdCategory.getId());
+
     return ResponseEntity.ok(createdCategory.getId());
   }
 
