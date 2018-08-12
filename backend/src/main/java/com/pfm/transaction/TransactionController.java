@@ -74,23 +74,21 @@ public class TransactionController {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Optional<Account> transactionAccount = accountService
-        .getAccountById(transactionRequest.getAccountId());
-    Optional<Category> transactionCategory = categoryService
-        .getCategoryById(transactionRequest.getCategoryId());
+    Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
+    Optional<Category> transactionCategory = categoryService.getCategoryById(transactionRequest.getCategoryId());
 
-    Transaction transaction;
-    if (transactionAccount.isPresent() && transactionCategory.isPresent()) {
-      transaction = Transaction.builder()
-          .description(transactionRequest.getDescription())
-          .price(transactionRequest.getPrice())
-          .account(transactionAccount.get())
-          .category(transactionCategory.get())
-          .date(transactionRequest.getDate())
-          .build();
-    } else {
-      throw new IllegalStateException();
+    if (!(transactionAccount.isPresent() && transactionCategory.isPresent())) {
+      throw new IllegalStateException("Account or category was not provided");
     }
+
+    Transaction transaction = Transaction.builder()
+        .description(transactionRequest.getDescription())
+        .price(transactionRequest.getPrice())
+        .account(transactionAccount.get())
+        .category(transactionCategory.get())
+        .date(transactionRequest.getDate())
+        .build();
+
     Transaction createdTransaction = transactionService.addTransaction(transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}",
         createdTransaction.getId());

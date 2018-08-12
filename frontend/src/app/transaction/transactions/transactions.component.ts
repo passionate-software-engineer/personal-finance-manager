@@ -52,8 +52,6 @@ export class TransactionsComponent implements OnInit {
       });
   }
 
-  // TODO make nice looking confirmation popup
-
   deleteTransaction(transaction) {
     if (confirm('Are you sure You want to delete this transaction ?')) {
       this.transactionService.deleteTransaction(transaction.id)
@@ -71,6 +69,7 @@ export class TransactionsComponent implements OnInit {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
 
+    // need to have same object to allow dropdown to work correctly
     for (const account of this.accounts) {
       if (account.id === transaction.editedTransaction.account.id) {
         transaction.editedTransaction.account = account;
@@ -86,37 +85,27 @@ export class TransactionsComponent implements OnInit {
   }
 
   onEditTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction)) {
+    if (!this.validateTransaction(transaction.editedTransaction)) {
       return;
     }
 
-    const editedTransaction: Transaction = new Transaction();
-    editedTransaction.id = transaction.editedTransaction.id;
-    editedTransaction.description = transaction.editedTransaction.description;
-    editedTransaction.date = transaction.editedTransaction.date;
-    editedTransaction.price = transaction.editedTransaction.price;
-    editedTransaction.category = transaction.editedTransaction.category; // TODO send only category id
-    editedTransaction.account = transaction.editedTransaction.account; // TODO send only account id
-
-    this.transactionService.editTransaction(editedTransaction)
+    this.transactionService.editTransaction(transaction.editedTransaction)
       .subscribe(() => {
         this.alertService.success('Transaction edited');
-        this.transactionService.getTransaction(editedTransaction.id)
+        this.transactionService.getTransaction(transaction.id)
           .subscribe(updatedTransaction => {
-          updatedTransaction.editMode = false;
-          Object.assign(transaction, updatedTransaction);
-        });
+            updatedTransaction.editMode = false;
+            Object.assign(transaction, updatedTransaction);
+          });
       });
   }
 
   onAddTransaction() {
-    const transactionToAdd = JSON.parse(JSON.stringify(this.newTransaction));
-
-    if (!this.validateTransaction(transactionToAdd)) {
+    if (!this.validateTransaction(this.newTransaction)) {
       return;
     }
 
-    this.transactionService.addTransaction(transactionToAdd)
+    this.transactionService.addTransaction(this.newTransaction)
       .subscribe(id => {
         this.alertService.success('Transaction added');
         this.transactionService.getTransaction(id)
@@ -134,8 +123,9 @@ export class TransactionsComponent implements OnInit {
 
   validateTransaction(transaction: Transaction): boolean {
     let status = true;
-    if (transaction.date == null) {
-      this.alertService.error('Date cannot be empty');
+
+    if (transaction.date == null || transaction.date.toString() === '') {
+      this.alertService.error('Date is empty or incomplete');
       status = false;
     }
 

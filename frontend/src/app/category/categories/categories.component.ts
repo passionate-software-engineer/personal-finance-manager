@@ -29,8 +29,6 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  // TODO make nice looking confirmation popup
-
   deleteCategory(category) {
     if (confirm('Are you sure You want to delete this account ?')) {
       this.categoryService.deleteCategory(category.id)
