@@ -171,8 +171,6 @@ export class TransactionsComponent implements OnInit {
     if (this.order === value) {
       this.reverse = !this.reverse;
     }
-
     this.order = value;
   }
-
 }
