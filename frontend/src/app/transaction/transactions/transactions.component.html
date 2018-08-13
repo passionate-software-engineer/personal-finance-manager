@@ -52,25 +52,25 @@
     <!--Date-->
     <td *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
     <td *ngIf="transaction.editMode">
-      <input type="date" [(ngModel)]="transaction.editedTransaction.date">
+      <input class="form-control" type="date" [(ngModel)]="transaction.editedTransaction.date">
     </td>
 
     <!--Description-->
     <td *ngIf="!transaction.editMode">{{transaction.description}}</td>
     <td *ngIf="transaction.editMode">
-      <input type="text" [(ngModel)]="transaction.editedTransaction.description">
+      <input class="form-control" type="text" [(ngModel)]="transaction.editedTransaction.description">
     </td>
 
     <!--Price-->
     <td class="right aligned" *ngIf="!transaction.editMode">{{transaction.price | number:'0.2'}}</td>
     <td *ngIf="transaction.editMode">
-      <input type="number" [(ngModel)]="transaction.editedTransaction.price">
+      <input class="form-control" type="number" [(ngModel)]="transaction.editedTransaction.price">
     </td>
 
     <!--Account-->
     <td *ngIf="!transaction.editMode">{{transaction.account.name}}</td>
     <td *ngIf="transaction.editMode">
-      <select [(ngModel)]="transaction.editedTransaction.account">
+      <select class="form-control" [(ngModel)]="transaction.editedTransaction.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
       </select>
@@ -79,7 +79,7 @@
     <!--Category-->
     <td *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
     <td *ngIf="transaction.editMode">
-      <select [(ngModel)]="transaction.editedTransaction.category">
+      <select class="form-control" [(ngModel)]="transaction.editedTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
       </select>
@@ -111,23 +111,23 @@
   <tr *ngIf="addingMode">
     <!--Date-->
     <td>
-      <input type="date" [(ngModel)]="newTransaction.date">
+      <input class="form-control" type="date" [(ngModel)]="newTransaction.date">
     </td>
 
     <!--Description-->
     <td>
-      <input type="text" [(ngModel)]="newTransaction.description">
+      <input class="form-control" type="text" [(ngModel)]="newTransaction.description">
     </td>
 
     <!--Price-->
     <td>
-      <input type="number" [(ngModel)]="newTransaction.price">
+      <input class="form-control" type="number" [(ngModel)]="newTransaction.price">
       <!--<input type="number" min="0.00" max="10000.00" step="0.01" />-->
     </td>
 
     <!--Account-->
     <td>
-      <select [(ngModel)]="newTransaction.account">
+      <select class="form-control" [(ngModel)]="newTransaction.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
       </select>
@@ -135,7 +135,7 @@
 
     <!--Category-->
     <td>
-      <select [(ngModel)]="newTransaction.category">
+      <select class="form-control" [(ngModel)]="newTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
       </select>

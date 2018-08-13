@@ -49,11 +49,11 @@ export class CategoriesComponent implements OnInit {
       category.editedParentCategory = null;
     } else {
       category.editedParentCategory = category.parentCategory;
-    }
 
-    for (const categoryEntry of this.categories) {
-      if (categoryEntry.id === category.editedParentCategory.id) {
-        category.editedParentCategory = categoryEntry;
+      for (const categoryEntry of this.categories) {
+        if (categoryEntry.id === category.editedParentCategory.id) {
+          category.editedParentCategory = categoryEntry;
+        }
       }
     }
 
