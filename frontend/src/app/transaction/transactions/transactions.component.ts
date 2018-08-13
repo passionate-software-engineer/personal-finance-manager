@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TransactionService} from '../transaction-service/transaction.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {Transaction} from '../Transaction';
+import {Transaction} from '../transaction';
 import {Account} from '../../account/account';
 import {Category} from '../../category/category';
 import {CategoryService} from '../../category/category-service/category.service';
@@ -57,7 +57,7 @@ export class TransactionsComponent implements OnInit {
           const transaction = new Transaction();
           transaction.date = transactionResponse.date;
           transaction.id = transactionResponse.id;
-          transaction.price = transactionResponse.price;
+          transaction.price = +transactionResponse.price; // + added to convert to number
           transaction.description = transactionResponse.description;
 
           // need to have same object to allow dropdown to work correctly
@@ -77,20 +77,6 @@ export class TransactionsComponent implements OnInit {
         }
       });
   }
-
-  // getCategories(): void {
-  //   this.categoryService.getCategories()
-  //     .subscribe(categories => {
-  //       this.categories = categories;
-  //     });
-  // }
-  //
-  // getAccounts(): void {
-  //   this.accountService.getAccounts()
-  //     .subscribe(accounts => {
-  //       this.accounts = accounts;
-  //     });
-  // }
 
   deleteTransaction(transaction) {
     if (confirm('Are you sure You want to delete this transaction ?')) {
@@ -137,7 +123,7 @@ export class TransactionsComponent implements OnInit {
             const returnedTransaction = new Transaction();
             returnedTransaction.date = updatedTransaction.date;
             returnedTransaction.id = updatedTransaction.id;
-            returnedTransaction.price = updatedTransaction.price;
+            returnedTransaction.price = +updatedTransaction.price; // + added to convert to number
             returnedTransaction.description = updatedTransaction.description;
 
             // need to have same object to allow dropdown to work correctly
@@ -173,7 +159,7 @@ export class TransactionsComponent implements OnInit {
             const returnedTransaction = new Transaction();
             returnedTransaction.date = createdTransaction.date;
             returnedTransaction.id = createdTransaction.id;
-            returnedTransaction.price = createdTransaction.price;
+            returnedTransaction.price = +createdTransaction.price; // + added to convert to number
             returnedTransaction.description = createdTransaction.description;
 
             // need to have same object to allow dropdown to work correctly

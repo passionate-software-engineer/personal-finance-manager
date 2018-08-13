@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {Transaction} from '../Transaction';
+import {Transaction} from '../transaction';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
