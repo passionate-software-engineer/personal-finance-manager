@@ -11,7 +11,7 @@ import {MessagesComponent} from './messages/messages/messages.component';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AlertsService} from './alerts/alerts-service/alerts.service';
 import {TransactionsComponent} from './transaction/transactions/transactions.component';
-import {OrderModule} from '././order-pipe/pfm-order.module';
+import {OrderModule} from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
