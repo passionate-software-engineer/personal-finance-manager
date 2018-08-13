@@ -24,12 +24,12 @@
   <tr *ngFor="let category of categories">
 
     <td *ngIf="category.editMode">
-      <input type="text" [(ngModel)]="category.editedName">
+      <input class="form-control" type="text" [(ngModel)]="category.editedName">
     </td>
     <td *ngIf="!category.editMode">{{category.name}}</td>
 
     <td *ngIf="category.editMode">
-      <select [(ngModel)]="category.editedParentCategory">
+      <select class="form-control" [(ngModel)]="category.editedParentCategory">
         <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
           {{parCategory.name}}
         <option [ngValue]="null">Main Category</option>
@@ -62,7 +62,7 @@
   <tr *ngIf="addingMode">
 
     <td>
-      <input type="text" [(ngModel)]="newCategoryName">
+      <input class="form-control" type="text" [(ngModel)]="newCategoryName">
     </td>
     <td>
       <div class="form-group">
