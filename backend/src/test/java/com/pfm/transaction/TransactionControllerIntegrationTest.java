@@ -133,30 +133,35 @@ public class TransactionControllerIntegrationTest {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long piotrAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    long carCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_CAR_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
+
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
     foodTransactionRequest.setAccountId(piotrAccountId);
     foodTransactionRequest.setCategoryId(carCategoryId);
     foodTransactionRequest.setDate(foodTransactionRequest.getDate().plusDays(1));
     foodTransactionRequest.setPrice(BigDecimal.valueOf(25.00).setScale(2, RoundingMode.HALF_UP));
+    // TODO create helper method to replace all BigDecimal creation (to keep it in 1 place)
     foodTransactionRequest.setDescription("Car parts");
+
+    // TODO you should not pass account, category additionally - you set it a moment above and you set different values ;)
+    long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
+
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + foodTransactionId)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(foodTransactionRequest)))
-        .andExpect(status().isOk());
+        .andExpect(status()
+            .isOk()); // TODO - you update transaction with the same transaction data - does not make sense (good test case but additionaly we need
+    // additional one with different transaction).
 
     //then
     List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(1));
     assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest)), is(true));
-    assertThat(callRestServiceAndReturnAccountBalance(jacekAccountId), is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
-    assertThat(callRestServiceAndReturnAccountBalance(piotrAccountId),
-        is(ACCOUNT_PIOTR_BALANCE_9.getBalance().subtract(foodTransactionRequest.getPrice())));
+    assertThat(callRestServiceAndReturnAccountBalance(jacekAccountId), // TODO extract those calls to variables - will be more readable.
+        is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(foodTransactionRequest.getPrice())));
+    assertThat(callRestServiceAndReturnAccountBalance(piotrAccountId), is(ACCOUNT_PIOTR_BALANCE_9.getBalance()));
   }
 
   @Test
@@ -285,8 +290,7 @@ public class TransactionControllerIntegrationTest {
     return Long.parseLong(response);
   }
 
-  private Transaction convertTransactionRequestToTransactionAndSetId(long transactionId,
-      TransactionRequest transactionRequest) {
+  private Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
         .accountId(transactionRequest.getAccountId())
@@ -322,10 +326,6 @@ public class TransactionControllerIntegrationTest {
     return mapper.writeValueAsString(object);
   }
 
-  private Category jsonToCategory(String jsonCategory) throws Exception {
-    return mapper.readValue(jsonCategory, Category.class);
-  }
-
   private Account jsonToAccount(String jsonAccount) throws Exception {
     return mapper.readValue(jsonAccount, Account.class);
   }
@@ -335,9 +335,7 @@ public class TransactionControllerIntegrationTest {
   }
 
   private List<Transaction> getCategoriesFromResponse(String response) throws Exception {
-    return mapper.readValue(response,
-        mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
+    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
-
 
 }

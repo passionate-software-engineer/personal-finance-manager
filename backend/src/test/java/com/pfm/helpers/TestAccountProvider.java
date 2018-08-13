@@ -18,8 +18,8 @@ public class TestAccountProvider {
   public static final Account ACCOUNT_PIOTR_BALANCE_9 =
       Account.builder()
           .id(444L)
-          .name("Cash")
-          .balance(BigDecimal.valueOf(9))
+          .name("Cash") // TODO correct all places to rounding
+          .balance(BigDecimal.valueOf(9).setScale(2, RoundingMode.HALF_UP))
           .build();
 
   public static final Account ACCOUNT_JACEK_BALANCE_1000 =

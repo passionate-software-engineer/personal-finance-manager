@@ -62,7 +62,6 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok(createdTransaction.getId());
   }
 
-
   @Override
   public ResponseEntity<?> updateTransaction(@PathVariable long id, @RequestBody TransactionRequest transactionRequest) {
     if (!transactionService.idExist(id)) {
