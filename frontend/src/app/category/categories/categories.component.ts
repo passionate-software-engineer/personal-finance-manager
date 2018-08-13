@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import { OrderPipe } from '../../order-pipe/pfm-order.pipe';
 
 @Component({
   selector: 'app-categories',
@@ -17,7 +16,7 @@ export class CategoriesComponent implements OnInit {
   newCategoryName: string;
   newCategoryParentCategory: Category = null;
 
-  constructor(private categoryService: CategoryService, private alertService: AlertsService, private orderPipe: OrderPipe) {
+  constructor(private categoryService: CategoryService, private alertService: AlertsService) {
   }
 
   ngOnInit() {

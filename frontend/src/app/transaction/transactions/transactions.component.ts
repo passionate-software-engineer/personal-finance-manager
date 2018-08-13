@@ -6,7 +6,6 @@ import {Account} from '../../account/account';
 import {Category} from '../../category/category';
 import {CategoryService} from '../../category/category-service/category.service';
 import {AccountService} from '../../account/account-service/account.service';
-import { OrderPipe } from '../../order-pipe/pfm-order.pipe';
 
 @Component({
   selector: 'app-transactions',
@@ -23,7 +22,7 @@ export class TransactionsComponent implements OnInit {
   newTransaction = new Transaction();
 
   constructor(private transactionService: TransactionService, private alertService: AlertsService, private categoryService: CategoryService,
-              private accountService: AccountService, private orderPipe: OrderPipe) {
+              private accountService: AccountService) {
   }
 
   ngOnInit() {

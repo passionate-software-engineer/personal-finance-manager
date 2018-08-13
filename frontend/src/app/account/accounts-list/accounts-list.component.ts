@@ -3,7 +3,6 @@ import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import { OrderPipe } from '../../order-pipe/pfm-order.pipe';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -22,7 +21,7 @@ export class AccountsListComponent implements OnInit {
   newAccountName: string;
   newAccountBalance: number;
 
-  constructor(private accountService: AccountService, private alertService: AlertsService, private orderPipe: OrderPipe) {
+  constructor(private accountService: AccountService, private alertService: AlertsService) {
   }
 
   ngOnInit() {
