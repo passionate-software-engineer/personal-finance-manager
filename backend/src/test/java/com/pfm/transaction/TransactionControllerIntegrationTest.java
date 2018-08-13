@@ -12,11 +12,13 @@ import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
 import static com.pfm.helpers.TestCategoryProvider.CATEGORY_CAR_NO_PARENT_CATEGORY;
 import static com.pfm.helpers.TestCategoryProvider.CATEGORY_FOOD_NO_PARENT_CATEGORY;
+import static com.pfm.helpers.TestTransactionProvider.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.getCarTransactionRequestWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.getFoodTransactionRequestWithNoAccountAndNoCategory;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.category.Category;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
@@ -74,26 +76,21 @@ public class TransactionControllerIntegrationTest {
   public void shouldAddTransaction() throws Exception {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
     //when
-    long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId,
-        foodCategoryId);
+    long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     //then
-    assertThat(getTransactionById(transactionId),
-        is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId,
-            transactionToAdd))));
-    assertThat(callRestServiceAndReturnAccountBalance(jacekAccountId),
-        is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
+    assertThat(getTransactionById(transactionId), is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
+    BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
+    assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
   }
 
   @Test
   public void shouldDeleteTransaction() throws Exception {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     Transaction addedTransaction = convertTransactionRequestToTransactionAndSetId(transactionId,
@@ -104,7 +101,8 @@ public class TransactionControllerIntegrationTest {
     List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(0));
     assertThat(allTransactionsInDb.contains(addedTransaction), is(false));
-    assertThat(callRestServiceAndReturnAccountBalance(jacekAccountId),
+    BigDecimal jacekAccountBalanceAfterDeletingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
+    assertThat(jacekAccountBalanceAfterDeletingTransaction,
         is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
   }
 
@@ -112,10 +110,8 @@ public class TransactionControllerIntegrationTest {
   public void shouldGetTransactions() throws Exception {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    long carCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_CAR_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
     TransactionRequest carTransactionRequest = getCarTransactionRequestWithNoAccountAndNoCategory();
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
@@ -124,44 +120,47 @@ public class TransactionControllerIntegrationTest {
     List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
     //then
     assertThat(allTransactionsInDb.size(), is(2));
-    assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest)), is(true));
-    assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(carTransactionId, carTransactionRequest)), is(true));
+    Transaction foodTransaction = convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest);
+    Transaction carTransaction = convertTransactionRequestToTransactionAndSetId(carTransactionId, carTransactionRequest);
+    assertThat(allTransactionsInDb, containsInAnyOrder(foodTransaction, carTransaction));
+
   }
 
   @Test
   public void shouldUpdateTransaction() throws Exception {
+
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long piotrAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
     long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
     long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
+    final long foodTransactionId = callRestServiceToAddTransactionAndReturnId(getFoodTransactionRequestWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId);
 
-    TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    foodTransactionRequest.setAccountId(piotrAccountId);
-    foodTransactionRequest.setCategoryId(carCategoryId);
-    foodTransactionRequest.setDate(foodTransactionRequest.getDate().plusDays(1));
-    foodTransactionRequest.setPrice(BigDecimal.valueOf(25.00).setScale(2, RoundingMode.HALF_UP));
-    // TODO create helper method to replace all BigDecimal creation (to keep it in 1 place)
-    foodTransactionRequest.setDescription("Car parts");
-
-    // TODO you should not pass account, category additionally - you set it a moment above and you set different values ;)
-    long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
+    TransactionRequest updatedFoodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
+    updatedFoodTransactionRequest.setAccountId(piotrAccountId);
+    updatedFoodTransactionRequest.setCategoryId(carCategoryId);
+    updatedFoodTransactionRequest.setDate(updatedFoodTransactionRequest.getDate().plusDays(1));
+    updatedFoodTransactionRequest.setPrice(convertDoubleToBigDecimal(25));
+    updatedFoodTransactionRequest.setDescription("Car parts");
 
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + foodTransactionId)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(foodTransactionRequest)))
+        .content(json(updatedFoodTransactionRequest)))
         .andExpect(status()
-            .isOk()); // TODO - you update transaction with the same transaction data - does not make sense (good test case but additionaly we need
-    // additional one with different transaction).
+            .isOk());
 
     //then
     List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(1));
-    assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest)), is(true));
-    assertThat(callRestServiceAndReturnAccountBalance(jacekAccountId), // TODO extract those calls to variables - will be more readable.
-        is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(foodTransactionRequest.getPrice())));
-    assertThat(callRestServiceAndReturnAccountBalance(piotrAccountId), is(ACCOUNT_PIOTR_BALANCE_9.getBalance()));
+    assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest)),
+        is(true));
+    BigDecimal jacekAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(jacekAccountId);
+    assertThat(jacekAccountBalanceAfterTransactionUpdate, is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
+    BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(piotrAccountId);
+    assertThat(piotrAccountBalanceAfterTransactionUpdate,
+        is(ACCOUNT_PIOTR_BALANCE_9.getBalance().subtract(updatedFoodTransactionRequest.getPrice())));
   }
 
   @Test
@@ -180,13 +179,13 @@ public class TransactionControllerIntegrationTest {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_DATE))));
-
   }
 
   @Test
   public void shouldReturnErrorCausedByEmptyFields() throws Exception {
     //given
     TransactionRequest transactionToAdd = new TransactionRequest();
+
     //when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
@@ -198,6 +197,29 @@ public class TransactionControllerIntegrationTest {
         .andExpect(jsonPath("$[2]", Matchers.is(getMessage(EMPTY_TRANSACTION_ACCOUNT))))
         .andExpect(jsonPath("$[3]", Matchers.is(getMessage(EMPTY_TRANSACTION_DATE))))
         .andExpect(jsonPath("$[4]", Matchers.is(getMessage(EMPTY_TRANSACTION_PRICE))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByEmptyDescription() throws Exception {
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
+        CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    TransactionRequest transactionToAdd = TransactionRequest.builder()
+        .description(" ")
+        .accountId(jacekAccountId)
+        .categoryId(foodCategoryId)
+        .date(LocalDate.of(2018, 10, 10))
+        .price(convertDoubleToBigDecimal(10))
+        .build();
+
+    //when
+    mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(transactionToAdd)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME))));
   }
 
   @Test

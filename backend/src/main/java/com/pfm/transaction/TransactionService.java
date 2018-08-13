@@ -89,11 +89,12 @@ public class TransactionService {
     Optional<Account> account = accountService.getAccountById(accountId);
 
     if (!account.isPresent()) {
-      throw new IllegalStateException("Account with id: " + accountId + " not exist in database");
+      throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
     }
 
     Account accountToUpdate = account.get();
     // TODO maybe you can write query which updates only balance? that's common operation so does not make sense to update other values
+    // I can
     accountToUpdate.setBalance(operation.apply(accountToUpdate.getBalance(), amount));
 
     accountService.updateAccount(accountToUpdate.getId(), accountToUpdate);
