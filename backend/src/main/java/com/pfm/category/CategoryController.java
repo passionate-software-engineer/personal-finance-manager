@@ -36,6 +36,16 @@ public class CategoryController {
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
 
+  static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+    Long parentCategoryId = categoryRequest.getParentCategoryId();
+
+    if (parentCategoryId == null) {
+      return new Category(null, categoryRequest.getName(), null);
+    }
+
+    return new Category(null, categoryRequest.getName(), new Category(parentCategoryId, null, null));
+  }
+
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{id}")
   public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
@@ -47,6 +57,7 @@ public class CategoryController {
       log.info("Category with id {} was not found", id);
       return ResponseEntity.notFound().build();
     }
+
     log.info("Category with id {} was successfully retrieved", id);
     return ResponseEntity.ok(category.get());
   }
@@ -72,8 +83,10 @@ public class CategoryController {
       log.info("Category is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
+
     Category createdCategory = categoryService.addCategory(category);
     log.info("Saving category to the database was successful. Category id is {}", createdCategory.getId());
+
     return ResponseEntity.ok(createdCategory.getId());
   }
 
@@ -120,6 +133,7 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
+  // TODO separate class
   @JsonIgnoreProperties(ignoreUnknown = true)
   @AllArgsConstructor
   @Builder
@@ -132,16 +146,5 @@ public class CategoryController {
 
     @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
     private String name;
-  }
-
-  static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
-    Long parentCategoryId = categoryRequest.getParentCategoryId();
-
-    if (parentCategoryId == null) {
-      return new Category(null, categoryRequest.getName(), null);
-    }
-
-    return new Category(null, categoryRequest.getName(),
-        new Category(parentCategoryId, null, null));
   }
 }

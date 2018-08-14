@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TransactionService} from '../transaction-service/transaction.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {Transaction} from '../Transaction';
+import {Transaction} from '../transaction';
 import {Account} from '../../account/account';
 import {Category} from '../../category/category';
 import {CategoryService} from '../../category/category-service/category.service';
@@ -26,33 +26,57 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTransactions();
-    this.getCategories();
-    this.getAccounts();
+    // forkJoin(
+    //   this.categoryService.getCategories(),
+    //   this.accountService.getAccounts(),
+    //   (categories, accounts) => {
+    //     this.categories = categories;
+    //     this.accounts = accounts;
+    //     return this.getTransactions();
+    //   }
+    // );
+
+    // TODO do in parallel with forkJoin (not working for some reason)
+    this.categoryService.getCategories()
+      .subscribe(categories => {
+        this.categories = categories;
+
+        this.accountService.getAccounts()
+          .subscribe(accounts => {
+            this.accounts = accounts;
+            this.getTransactions();
+          });
+      });
   }
 
   getTransactions(): void {
     this.transactionService.getTransactions()
       .subscribe(transactions => {
-        this.transactions = transactions;
+        this.transactions = [];
+        for (const transactionResponse of transactions) {
+          const transaction = new Transaction();
+          transaction.date = transactionResponse.date;
+          transaction.id = transactionResponse.id;
+          transaction.price = +transactionResponse.price; // + added to convert to number
+          transaction.description = transactionResponse.description;
+
+          // need to have same object to allow dropdown to work correctly
+          for (const account of this.accounts) {
+            if (account.id === transactionResponse.accountId) {
+              transaction.account = account;
+            }
+          }
+
+          for (const category of this.categories) {
+            if (category.id === transactionResponse.categoryId) {
+              transaction.category = category;
+            }
+          }
+
+          this.transactions.push(transaction);
+        }
       });
   }
-
-  getCategories(): void {
-    this.categoryService.getCategories()
-      .subscribe(categories => {
-        this.categories = categories;
-      });
-  }
-
-  getAccounts(): void {
-    this.accountService.getAccounts()
-      .subscribe(accounts => {
-        this.accounts = accounts;
-      });
-  }
-
-  // TODO make nice looking confirmation popup
 
   deleteTransaction(transaction) {
     if (confirm('Are you sure You want to delete this transaction ?')) {
@@ -71,6 +95,7 @@ export class TransactionsComponent implements OnInit {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
 
+    // need to have same object to allow dropdown to work correctly
     for (const account of this.accounts) {
       if (account.id === transaction.editedTransaction.account.id) {
         transaction.editedTransaction.account = account;
@@ -86,42 +111,71 @@ export class TransactionsComponent implements OnInit {
   }
 
   onEditTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction)) {
+    if (!this.validateTransaction(transaction.editedTransaction)) {
       return;
     }
 
-    const editedTransaction: Transaction = new Transaction();
-    editedTransaction.id = transaction.editedTransaction.id;
-    editedTransaction.description = transaction.editedTransaction.description;
-    editedTransaction.date = transaction.editedTransaction.date;
-    editedTransaction.price = transaction.editedTransaction.price;
-    editedTransaction.category = transaction.editedTransaction.category; // TODO send only category id
-    editedTransaction.account = transaction.editedTransaction.account; // TODO send only account id
-
-    this.transactionService.editTransaction(editedTransaction)
+    this.transactionService.editTransaction(transaction.editedTransaction)
       .subscribe(() => {
         this.alertService.success('Transaction edited');
-        this.transactionService.getTransaction(editedTransaction.id)
+        this.transactionService.getTransaction(transaction.id)
           .subscribe(updatedTransaction => {
-          updatedTransaction.editMode = false;
-          Object.assign(transaction, updatedTransaction);
-        });
+            const returnedTransaction = new Transaction();
+            returnedTransaction.date = updatedTransaction.date;
+            returnedTransaction.id = updatedTransaction.id;
+            returnedTransaction.price = +updatedTransaction.price; // + added to convert to number
+            returnedTransaction.description = updatedTransaction.description;
+
+            // need to have same object to allow dropdown to work correctly
+            for (const account of this.accounts) {
+              if (account.id === updatedTransaction.accountId) {
+                returnedTransaction.account = account;
+              }
+            }
+
+            for (const category of this.categories) {
+              if (category.id === updatedTransaction.categoryId) {
+                returnedTransaction.category = category;
+              }
+            }
+
+
+            Object.assign(transaction, returnedTransaction);
+          });
       });
   }
 
   onAddTransaction() {
-    const transactionToAdd = JSON.parse(JSON.stringify(this.newTransaction));
-
-    if (!this.validateTransaction(transactionToAdd)) {
+    if (!this.validateTransaction(this.newTransaction)) {
       return;
     }
 
-    this.transactionService.addTransaction(transactionToAdd)
+    this.transactionService.addTransaction(this.newTransaction)
       .subscribe(id => {
         this.alertService.success('Transaction added');
         this.transactionService.getTransaction(id)
           .subscribe(createdTransaction => {
-            this.transactions.push(createdTransaction);
+
+            const returnedTransaction = new Transaction();
+            returnedTransaction.date = createdTransaction.date;
+            returnedTransaction.id = createdTransaction.id;
+            returnedTransaction.price = +createdTransaction.price; // + added to convert to number
+            returnedTransaction.description = createdTransaction.description;
+
+            // need to have same object to allow dropdown to work correctly
+            for (const account of this.accounts) {
+              if (account.id === createdTransaction.accountId) {
+                returnedTransaction.account = account;
+              }
+            }
+
+            for (const category of this.categories) {
+              if (category.id === createdTransaction.categoryId) {
+                returnedTransaction.category = category;
+              }
+            }
+
+            this.transactions.push(returnedTransaction);
             this.addingMode = false;
             this.newTransaction = new Transaction();
           });
@@ -134,8 +188,9 @@ export class TransactionsComponent implements OnInit {
 
   validateTransaction(transaction: Transaction): boolean {
     let status = true;
-    if (transaction.date == null) {
-      this.alertService.error('Date cannot be empty');
+
+    if (transaction.date == null || transaction.date.toString() === '') {
+      this.alertService.error('Date is empty or incomplete');
       status = false;
     }
 
@@ -171,6 +226,8 @@ export class TransactionsComponent implements OnInit {
     if (this.order === value) {
       this.reverse = !this.reverse;
     }
+
     this.order = value;
   }
+
 }

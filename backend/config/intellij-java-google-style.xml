@@ -20,9 +20,9 @@
   </option>
   <option name="IMPORT_LAYOUT_TABLE">
     <value>
-      <package name="" withSubpackages="true" static="true"/>
+      <package name="" static="true" withSubpackages="true"/>
       <emptyLine/>
-      <package name="" withSubpackages="true" static="false"/>
+      <package name="" static="false" withSubpackages="true"/>
     </value>
   </option>
   <option name="RIGHT_MARGIN" value="100"/>
@@ -574,8 +574,8 @@
       <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="DeallocMethod"/>
     </class>
     <extensions>
-      <pair source="cc" header="h"/>
-      <pair source="c" header="h"/>
+      <pair header="h" source="cc"/>
+      <pair header="h" source="c"/>
     </extensions>
   </Objective-C-extensions>
   <codeStyleSettings language="ObjectiveC">

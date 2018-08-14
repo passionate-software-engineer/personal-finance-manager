@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Account {
+public final class Account {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

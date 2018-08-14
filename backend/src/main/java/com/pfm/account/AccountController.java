@@ -71,8 +71,7 @@ public class AccountController {
     }
 
     Account createdAccount = accountService.addAccount(account);
-    log.info("Saving account to the database was successful. Account id is {}",
-        createdAccount.getId());
+    log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
     return ResponseEntity.ok(createdAccount.getId());
   }
 

@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {Transaction} from '../Transaction';
+import {Transaction} from '../transaction';
 import {MessagesService} from '../../messages/messages.service';
 import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
+import {TransactionResponse} from './transaction-response';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -23,22 +24,24 @@ export class TransactionService {
   }
 
   private static transactionToTransactionRequest(transaction: Transaction) {
-    // return {
-    //   name: transaction.description,
-    //   parentCategoryId: transaction.category == null ? null : transaction.category.id
-    // };
-    return transaction;
+    return {
+      description: transaction.description,
+      categoryId: transaction.category.id,
+      accountId: transaction.account.id,
+      price: transaction.price,
+      date: transaction.date
+    };
   }
 
-  getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.apiUrl).pipe(
+  getTransactions(): Observable<TransactionResponse[]> {
+    return this.http.get<TransactionResponse[]>(this.apiUrl).pipe(
       tap(() => this.log(`fetched transactions`)),
       catchError(this.handleError('getTransactions', [])));
   }
 
-  getTransaction(id: number): Observable<Transaction> {
+  getTransaction(id: number): Observable<TransactionResponse> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Transaction>(url).pipe(
+    return this.http.get<TransactionResponse>(url).pipe(
       tap(() => this.log(`fetched transaction with id ` + id)),
       catchError(this.handleError('getSingleTransaction', null)));
   }

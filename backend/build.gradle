@@ -82,13 +82,13 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'BRANCH'
-                minimum = 0.90
+                minimum = 0.96
             }
         }
         rule {
             limit {
                 counter = 'LINE'
-                minimum = 0.90
+                minimum = 0.98
             }
         }
         rule {
@@ -100,7 +100,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'METHOD'
-                minimum = 0.94 // TODO cover missing methods and increase to 1.0
+                minimum = 1.00
             }
         }
         rule {
@@ -108,7 +108,7 @@ jacocoTestCoverageVerification {
             excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
             limit {
                 counter = 'BRANCH'
-                minimum = 0.86 // TODO Account class is below 90%
+                minimum = 1.00
             }
         }
         rule {
@@ -116,7 +116,7 @@ jacocoTestCoverageVerification {
             excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
             limit {
                 counter = 'LINE'
-                minimum = 0.90
+                minimum = 1.00
             }
         }
     }
