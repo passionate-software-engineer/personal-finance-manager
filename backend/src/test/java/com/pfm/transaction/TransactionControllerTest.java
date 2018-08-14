@@ -7,7 +7,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -33,14 +35,50 @@ public class TransactionControllerTest {
   private TransactionController transactionController;
 
   @Test
-  public void shouldReturnExceptionCausedByNotExistingCategoryIdAndNotExistingAccountId() throws Exception {
-
+  public void shouldReturnExceptionCausedByNotExistingCategoryIdAndNotExistingAccountId() {
     //given
     TransactionRequest transactionRequestToAdd = getCarTransactionRequestWithNoAccountAndNoCategory();
     transactionRequestToAdd.setAccountId(1L);
     transactionRequestToAdd.setCategoryId(1L);
+
     when(transactionValidator.validate(transactionRequestToAdd)).thenReturn(new ArrayList<>());
     when(categoryService.getCategoryById(1L)).thenReturn(Optional.empty());
+    when(accountService.getAccountById(1L)).thenReturn(Optional.empty());
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      transactionController.addTransaction(transactionRequestToAdd);
+    });
+    assertThat(exception.getMessage(), is(equalTo("Account or category was not provided")));
+  }
+
+  @Test
+  public void shouldReturnExceptionCausedByNotExistingCategoryId() {
+    //given
+    TransactionRequest transactionRequestToAdd = getCarTransactionRequestWithNoAccountAndNoCategory();
+    transactionRequestToAdd.setAccountId(1L);
+    transactionRequestToAdd.setCategoryId(1L);
+
+    when(transactionValidator.validate(transactionRequestToAdd)).thenReturn(new ArrayList<>());
+    when(categoryService.getCategoryById(1L)).thenReturn(Optional.empty());
+    when(accountService.getAccountById(1L)).thenReturn(Optional.of(new Account()));
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      transactionController.addTransaction(transactionRequestToAdd);
+    });
+    assertThat(exception.getMessage(), is(equalTo("Account or category was not provided")));
+  }
+
+  @Test
+  public void shouldReturnExceptionCausedByNotExistingExistingAccountId() {
+    //given
+    TransactionRequest transactionRequestToAdd = getCarTransactionRequestWithNoAccountAndNoCategory();
+    transactionRequestToAdd.setAccountId(1L);
+    transactionRequestToAdd.setCategoryId(1L);
+
+    when(transactionValidator.validate(transactionRequestToAdd)).thenReturn(new ArrayList<>());
+    when(categoryService.getCategoryById(1L)).thenReturn(Optional.of(new Category()));
     when(accountService.getAccountById(1L)).thenReturn(Optional.empty());
 
     //when

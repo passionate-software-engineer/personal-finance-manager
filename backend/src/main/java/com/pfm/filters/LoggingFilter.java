@@ -39,8 +39,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     if (queryString == null) {
       log.info("{} {} {}", REQUEST_MARKER, request.getMethod(), request.getRequestURI());
     } else {
-      log.info("{} {} {}?{}", REQUEST_MARKER, request.getMethod(), request.getRequestURI(),
-          queryString);
+      log.info("{} {} {}?{}", REQUEST_MARKER, request.getMethod(), request.getRequestURI(), queryString);
     }
   }
 
@@ -63,20 +62,17 @@ public class LoggingFilter extends OncePerRequestFilter {
     log.info("{} {} {}", RESPONSE_MARKER, status, HttpStatus.valueOf(status).getReasonPhrase());
 
     response.getHeaderNames().forEach(headerName ->
-        response.getHeaders(headerName).forEach(headerValue ->
-            log.info("{} {}: {}", RESPONSE_MARKER, headerName, headerValue)));
-    byte[] content = response.getContentAsByteArray();
+        response.getHeaders(headerName).forEach(headerValue -> log.info("{} {}: {}", RESPONSE_MARKER, headerName, headerValue)));
 
+    byte[] content = response.getContentAsByteArray();
     if (content.length > 0) {
-      logContent(content, response.getContentType(), response.getCharacterEncoding(),
-          RESPONSE_MARKER);
+      logContent(content, response.getContentType(), response.getCharacterEncoding(), RESPONSE_MARKER);
     }
   }
 
   private void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
     MediaType mediaType = MediaType.valueOf(contentType);
-    Boolean visible = VISIBLE_TYPES.stream()
-        .anyMatch(visibleType -> visibleType.includes(mediaType));
+    Boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 
     if (visible) {
       try {

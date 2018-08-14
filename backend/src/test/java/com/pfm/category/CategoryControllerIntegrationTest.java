@@ -101,8 +101,8 @@ public class CategoryControllerIntegrationTest {
     CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car").build();
     // TODO move all that logic to TestCategoryProvider - tests will be cleaner
     CategoryRequest subCategoryToAdd = CategoryRequest.builder().name("Oil").build();
-    Category expectedParentCategory = new Category(null, "Car", null);
-    Category expectedSubCategory = new Category(null, "Oil", new Category(null, "Car", null));
+    Category expectedParentCategory = Category.builder().name("Car").build();
+    Category expectedSubCategory = Category.builder().name("Oil").parentCategory(expectedParentCategory).build();
 
     //when
     long addedParentCategoryId = addCategory(parentCategoryToAdd);
