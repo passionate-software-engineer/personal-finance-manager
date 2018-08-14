@@ -1,26 +1,37 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.account.Account;
-import com.pfm.category.Category;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
+@Builder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Transaction {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class Transaction {
 
-  private int id;
-  private LocalDate date;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
   private String description;
-  private Category category;
-  private Account account;
+
+  private long categoryId;
+
+  private long accountId;
+
   private BigDecimal price;
+
+  private LocalDate date;
+
 }
