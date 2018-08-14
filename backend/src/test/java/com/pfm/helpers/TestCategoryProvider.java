@@ -6,4 +6,8 @@ public class TestCategoryProvider {
 
   public static final Category CATEGORY_FOOD_NO_PARENT_CATEGORY =
       new Category(1L, "Food", null);
+
+  public static final Category CATEGORY_CAR_NO_PARENT_CATEGORY =
+      new Category(1L, "Car", null);
 }
+

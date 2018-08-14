@@ -48,8 +48,7 @@ public class AccountValidator {
       return validate(account);
     }
     List<String> validationResults = validate(account);
-    if (account.getName() != null && accountService
-        .isAccountNameAlreadyUsed(account.getName())) {
+    if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
     return validationResults;

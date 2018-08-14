@@ -24,12 +24,12 @@
   <tr *ngFor="let account of accounts">
 
     <td *ngIf="account.editMode">
-      <input type="text" [(ngModel)]="account.editedName">
+      <input class="form-control" type="text" [(ngModel)]="account.editedName">
     </td>
     <td *ngIf="!account.editMode">{{account.name}}</td>
 
     <td *ngIf="account.editMode">
-      <input type="text" [(ngModel)]="account.editedBalance"></td>
+      <input class="form-control" type="number" [(ngModel)]="account.editedBalance"></td>
     <td *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
 
     <td *ngIf="!account.editMode">
@@ -56,10 +56,10 @@
   </tr>
   <tr *ngIf="addingMode">
     <td>
-      <input type="text" [(ngModel)]="newAccountName">
+      <input class="form-control" type="text" [(ngModel)]="newAccountName">
     </td>
     <td>
-      <input type="text" [(ngModel)]="newAccountBalance"></td>
+      <input class="form-control" type="number" [(ngModel)]="newAccountBalance"></td>
     <td>
       <button class="btn-primary" (click)="onAddAccount()">Save</button>
       <button class="btn-danger" (click)="addingMode=false">Exit</button>
