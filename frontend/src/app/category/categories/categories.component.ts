@@ -9,6 +9,8 @@ import {AlertsService} from '../../alerts/alerts-service/alerts.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
+  order = 'name';
+  reverse = false;
   categories: Category[];
   addingMode = false;
   newCategoryName: string;
@@ -25,7 +27,6 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
-        this.sortByName('asc');
       });
   }
 
@@ -72,7 +73,6 @@ export class CategoriesComponent implements OnInit {
       .subscribe(() => {
         this.alertService.success('Category edited');
         Object.assign(category, editedCategory);
-        this.sortByName('asc');
       });
   }
 
@@ -91,48 +91,11 @@ export class CategoriesComponent implements OnInit {
         this.addingMode = false;
         this.newCategoryName = null;
         this.newCategoryParentCategory = null;
-        this.sortByName('asc');
       });
   }
 
   onRefreshCategories() {
     this.getCategories();
-  }
-
-  // TODO make sorting using pipes not methods below
-
-  sortByName(type: string) {
-    if (type === 'asc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-    }
-    if (type === 'dsc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-  }
-
-  sortByParentCategory(type: string) {
-    if (type === 'asc') {
-      this.categories.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return 1;
-        }
-        if (a2.parentCategory == null) {
-          return -1;
-        }
-        return a1.parentCategory.name.toLowerCase() > a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
-    if (type === 'dsc') {
-      this.categories.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return -1;
-        }
-        if (a2.parentCategory == null) {
-          return 1;
-        }
-        return a1.parentCategory.name.toLowerCase() < a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
   }
 
   getParentCategoryName(category): string {
@@ -184,4 +147,10 @@ export class CategoriesComponent implements OnInit {
     return true;
   }
 
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+  }
 }

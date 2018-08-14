@@ -1,4 +1,4 @@
-<button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
+<button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
   Add Category
 </button>
 <button class="btn btn-primary" type="button" (click)="onRefreshCategories()">Refresh</button>
@@ -6,28 +6,32 @@
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
-    <th style="width: 50%">
-      Name
-      <span class="glyphicon glyphicon-collapse-down" (click)="sortByName('asc')"></span>
-      <span class="glyphicon glyphicon-collapse-up" (click)="sortByName('dsc')"></span>
-    </th>
-    <th style="width: 20%">
-      Parent Category
-      <span class="glyphicon glyphicon-collapse-down" (click)="sortByParentCategory('asc')"></span>
-      <span class="glyphicon glyphicon-collapse-up" (click)="sortByParentCategory('dsc')"></span>
-    </th>
-    <th style="width: 10%">
-    </th>
+
+     <!--Name-->
+     <th [class.active]="order === 'name'" (click)="setOrder('name')">
+        Name
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
+  
+      <!--Parent Category-->
+      <th [class.active]="order === 'category'" (click)="setOrder('category')">
+          Parent Category
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let category of categories">
+  <tr *ngFor="let category of categories | orderBy: order:reverse:'case-insensitive'">
 
+    <!--Name-->
     <td *ngIf="category.editMode">
       <input class="form-control" type="text" [(ngModel)]="category.editedName">
     </td>
     <td *ngIf="!category.editMode">{{category.name}}</td>
 
+    <!--Parent Category-->
     <td *ngIf="category.editMode">
       <select class="form-control" [(ngModel)]="category.editedParentCategory">
         <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
@@ -44,23 +48,24 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn-primary" (click)="deleteCategory(category)">Delete</button>
+            <button class="btn-warning" (click)="onShowEditMode(category)">Edit</button> 
           </li>
           <li>
-            <button class="btn-danger" (click)="onShowEditMode(category)">Edit</button>
+            <button class="btn-danger" (click)="deleteCategory(category)">Delete</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="category.editMode">
-      <button class="btn-primary" (click)="onEditCategory(category)">Save</button>
+      <button class="btn-success" (click)="onEditCategory(category)">Save</button>
       <button class="btn-danger" (click)="category.editMode=false">Exit</button>
     </td>
 
   </tr>
 
   <tr *ngIf="addingMode">
-
+    
+    <!--Name-->
     <td>
       <input class="form-control" type="text" [(ngModel)]="newCategoryName">
     </td>
@@ -75,7 +80,7 @@
     </td>
 
     <td>
-      <button class="btn-primary" (click)="onAddCategory()">Save</button>
+      <button class="btn-success" (click)="onAddCategory()">Save</button>
       <button class="btn-danger" (click)="addingMode=false">Exit</button>
     </td>
 

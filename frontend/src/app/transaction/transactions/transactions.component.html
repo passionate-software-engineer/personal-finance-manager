@@ -1,4 +1,4 @@
-<button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
+<button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
   Add Transaction
 </button>
 <button class="btn btn-primary" type="button" (click)="onRefreshTransactions()">Refresh</button>
@@ -86,7 +86,7 @@
     </td>
 
     <td *ngIf="transaction.editMode">
-      <button class="btn-primary" (click)="onEditTransaction(transaction)">Save</button>
+      <button class="btn-success" (click)="onEditTransaction(transaction)">Save</button>
       <button class="btn-danger" (click)="transaction.editMode=false">Exit</button>
     </td>
 
@@ -97,10 +97,10 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn-primary" (click)="deleteTransaction(transaction)">Delete</button>
+            <button class="btn-warning" (click)="onShowEditMode(transaction)">Edit</button>
           </li>
           <li>
-            <button class="btn-danger" (click)="onShowEditMode(transaction)">Edit</button>
+            <button class="btn-danger" (click)="deleteTransaction(transaction)">Delete</button>
           </li>
         </ul>
       </div>
@@ -142,7 +142,7 @@
     </td>
 
     <td>
-      <button class="btn-primary" (click)="onAddTransaction()">Save</button>
+      <button class="btn-success" (click)="onAddTransaction()">Save</button>
       <button class="btn-danger" (click)="addingMode=false">Exit</button>
     </td>
   </tr>
