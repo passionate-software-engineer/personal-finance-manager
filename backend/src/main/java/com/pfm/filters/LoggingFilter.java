@@ -34,7 +34,7 @@ public class LoggingFilter extends OncePerRequestFilter {
   private static final String REQUEST_MARKER = "|>";
   private static final String RESPONSE_MARKER = "|<";
 
-  private static void logRequestMethod(ContentCachingRequestWrapper request) {
+  private void logRequestMethod(ContentCachingRequestWrapper request) {
     String queryString = request.getQueryString();
     if (queryString == null) {
       log.info("{} {} {}", REQUEST_MARKER, request.getMethod(), request.getRequestURI());
@@ -44,21 +44,21 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private static void logRequestHeaders(ContentCachingRequestWrapper request) {
+  private void logRequestHeaders(ContentCachingRequestWrapper request) {
     Collections.list(request.getHeaderNames())
         .forEach(headerName -> Collections.list(request.getHeaders(headerName))
             .forEach(headerValue ->
                 log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
   }
 
-  private static void logRequestBody(ContentCachingRequestWrapper request) {
+  private void logRequestBody(ContentCachingRequestWrapper request) {
     byte[] content = request.getContentAsByteArray();
     if (content.length > 0) {
       logContent(content, request.getContentType(), request.getCharacterEncoding(), REQUEST_MARKER);
     }
   }
 
-  private static void logResponse(ContentCachingResponseWrapper response) {
+  private void logResponse(ContentCachingResponseWrapper response) {
     int status = response.getStatus();
     log.info("{} {} {}", RESPONSE_MARKER, status, HttpStatus.valueOf(status).getReasonPhrase());
 
@@ -73,7 +73,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private static void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
+  private void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
     MediaType mediaType = MediaType.valueOf(contentType);
     Boolean visible = VISIBLE_TYPES.stream()
         .anyMatch(visibleType -> visibleType.includes(mediaType));
@@ -91,7 +91,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private static ContentCachingRequestWrapper wrapRequest(HttpServletRequest request) {
+  private ContentCachingRequestWrapper wrapRequest(HttpServletRequest request) {
     if (request instanceof ContentCachingRequestWrapper) {
       return (ContentCachingRequestWrapper) request;
     } else {
@@ -99,7 +99,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private static ContentCachingResponseWrapper wrapResponse(HttpServletResponse response) {
+  private ContentCachingResponseWrapper wrapResponse(HttpServletResponse response) {
     if (response instanceof ContentCachingResponseWrapper) {
       return (ContentCachingResponseWrapper) response;
     } else {
@@ -146,5 +146,5 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestBody(request);
       logResponse(response);
     }
-  }
+  } // TODO cover class with tests verifying how it logs information
 }

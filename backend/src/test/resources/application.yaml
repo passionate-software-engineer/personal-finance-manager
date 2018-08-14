@@ -1,2 +1,5 @@
 server:
   port: 8105
+logging:
+    level:
+      com.pfm.filters: DEBUG

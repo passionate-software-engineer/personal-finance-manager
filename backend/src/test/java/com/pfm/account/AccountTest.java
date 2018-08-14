@@ -22,4 +22,17 @@ public class AccountTest {
         .areWellImplemented();
   }
 
+  @Test
+  public void shouldVerifyToString() {
+    // given
+    final Class<?> classUnderTest = Account.AccountBuilder.class;
+
+    // when
+
+    // then
+    assertPojoMethodsFor(classUnderTest)
+        .testing(Method.TO_STRING)
+        .areWellImplemented();
+  }
+
 }
