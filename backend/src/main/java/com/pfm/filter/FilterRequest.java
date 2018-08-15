@@ -29,8 +29,5 @@ public class FilterRequest {
   private BigDecimal priceFrom;
   private BigDecimal priceTo;
 
-  private LocalDate dateFrom;
-  private LocalDate dateTo;
-
   private String description;
 }

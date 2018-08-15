@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfm.account.Account;
 import com.pfm.category.Category;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,9 +37,6 @@ public final class Filter {
 
   private BigDecimal priceFrom;
   private BigDecimal priceTo;
-
-  private LocalDate dateFrom;
-  private LocalDate dateTo;
 
   private String description;
 }
