@@ -14,7 +14,8 @@ public class TestHelper {
   }
 
   // TODO externalize URL
-  private static final String URL = "http://localhost:8088/accounts";
+  private static final String URL
+      = "http://ec2-13-59-117-184.us-east-2.compute.amazonaws.com:8088/accounts";
 
   public static void addSampleAccount() throws IOException {
     String sampleJson = "{\"name\":\"ideaBank\", \"balance\":320 };";
