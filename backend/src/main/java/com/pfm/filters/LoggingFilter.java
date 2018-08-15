@@ -18,7 +18,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
-@Component
+@Component // TODO not working for bad request (HTTP 400) caused by invalid request and handled by Spring
 public class LoggingFilter extends OncePerRequestFilter {
 
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
@@ -34,9 +34,78 @@ public class LoggingFilter extends OncePerRequestFilter {
   private static final String REQUEST_MARKER = "|>";
   private static final String RESPONSE_MARKER = "|<";
 
+  private void logRequestMethod(ContentCachingRequestWrapper request) {
+    String queryString = request.getQueryString();
+    if (queryString == null) {
+      log.info("{} {} {}", REQUEST_MARKER, request.getMethod(), request.getRequestURI());
+    } else {
+      log.info("{} {} {}?{}", REQUEST_MARKER, request.getMethod(), request.getRequestURI(), queryString);
+    }
+  }
+
+  private void logRequestHeaders(ContentCachingRequestWrapper request) {
+    Collections.list(request.getHeaderNames())
+        .forEach(headerName -> Collections.list(request.getHeaders(headerName))
+            .forEach(headerValue ->
+                log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
+  }
+
+  private void logRequestBody(ContentCachingRequestWrapper request) {
+    byte[] content = request.getContentAsByteArray();
+    if (content.length > 0) {
+      logContent(content, request.getContentType(), request.getCharacterEncoding(), REQUEST_MARKER);
+    }
+  }
+
+  private void logResponse(ContentCachingResponseWrapper response) {
+    int status = response.getStatus();
+    log.info("{} {} {}", RESPONSE_MARKER, status, HttpStatus.valueOf(status).getReasonPhrase());
+
+    response.getHeaderNames().forEach(headerName ->
+        response.getHeaders(headerName).forEach(headerValue -> log.info("{} {}: {}", RESPONSE_MARKER, headerName, headerValue)));
+
+    byte[] content = response.getContentAsByteArray();
+    if (content.length > 0) {
+      logContent(content, response.getContentType(), response.getCharacterEncoding(), RESPONSE_MARKER);
+    }
+  }
+
+  private void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
+    MediaType mediaType = MediaType.valueOf(contentType);
+    Boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+
+    if (visible) {
+      try {
+        String contentAsString = new String(content, contentEncoding);
+        log.info("{} \n {}", prefix, contentAsString);
+      } catch (UnsupportedEncodingException e) {
+        log.info("{} [{} bytes content]", prefix, content.length);
+        log.warn("Not able to convert response", e);
+      }
+    } else {
+      log.info("{} [{} bytes content]", prefix, content.length);
+    }
+  }
+
+  private ContentCachingRequestWrapper wrapRequest(HttpServletRequest request) {
+    if (request instanceof ContentCachingRequestWrapper) {
+      return (ContentCachingRequestWrapper) request;
+    } else {
+      return new ContentCachingRequestWrapper(request);
+    }
+  }
+
+  private ContentCachingResponseWrapper wrapResponse(HttpServletResponse response) {
+    if (response instanceof ContentCachingResponseWrapper) {
+      return (ContentCachingResponseWrapper) response;
+    } else {
+      return new ContentCachingResponseWrapper(response);
+    }
+  }
+
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
     if (isAsyncDispatch(request)) {
       filterChain.doFilter(request, response);
     } else {
@@ -44,8 +113,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
   }
 
-  private void doFilterWrapped(ContentCachingRequestWrapper request,
-      ContentCachingResponseWrapper response, FilterChain filterChain)
+  private void doFilterWrapped(ContentCachingRequestWrapper request, ContentCachingResponseWrapper response, FilterChain filterChain)
       throws ServletException, IOException {
     try {
       beforeRequest(request);
@@ -74,79 +142,5 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestBody(request);
       logResponse(response);
     }
-  }
-
-  private static void logRequestMethod(ContentCachingRequestWrapper request) {
-    String queryString = request.getQueryString();
-    if (queryString == null) {
-      log.info("{} {} {}", REQUEST_MARKER, request.getMethod(), request.getRequestURI());
-    } else {
-      log.info("{} {} {}?{}", REQUEST_MARKER, request.getMethod(), request.getRequestURI(),
-          queryString);
-    }
-  }
-
-  private static void logRequestHeaders(ContentCachingRequestWrapper request) {
-    Collections.list(request.getHeaderNames())
-        .forEach(headerName -> Collections.list(request.getHeaders(headerName))
-            .forEach(headerValue ->
-                log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
-  }
-
-  private static void logRequestBody(ContentCachingRequestWrapper request) {
-    byte[] content = request.getContentAsByteArray();
-    if (content.length > 0) {
-      logContent(content, request.getContentType(), request.getCharacterEncoding(), REQUEST_MARKER);
-    }
-  }
-
-  private static void logResponse(ContentCachingResponseWrapper response) {
-    int status = response.getStatus();
-    log.info("{} {} {}", RESPONSE_MARKER, status, HttpStatus.valueOf(status).getReasonPhrase());
-
-    response.getHeaderNames().forEach(headerName ->
-        response.getHeaders(headerName).forEach(headerValue ->
-            log.info("{} {}: {}", RESPONSE_MARKER, headerName, headerValue)));
-    byte[] content = response.getContentAsByteArray();
-
-    if (content.length > 0) {
-      logContent(content, response.getContentType(), response.getCharacterEncoding(),
-          RESPONSE_MARKER);
-    }
-  }
-
-  private static void logContent(byte[] content, String contentType, String contentEncoding,
-      String prefix) {
-    MediaType mediaType = MediaType.valueOf(contentType);
-    Boolean visible = VISIBLE_TYPES.stream()
-        .anyMatch(visibleType -> visibleType.includes(mediaType));
-
-    if (visible) {
-      try {
-        String contentAsString = new String(content, contentEncoding);
-        log.info("{} \n {}", prefix, contentAsString);
-      } catch (UnsupportedEncodingException e) {
-        log.info("{} [{} bytes content]", prefix, content.length);
-        log.warn("Not able to convert response", e);
-      }
-    } else {
-      log.info("{} [{} bytes content]", prefix, content.length);
-    }
-  }
-
-  private static ContentCachingRequestWrapper wrapRequest(HttpServletRequest request) {
-    if (request instanceof ContentCachingRequestWrapper) {
-      return (ContentCachingRequestWrapper) request;
-    } else {
-      return new ContentCachingRequestWrapper(request);
-    }
-  }
-
-  private static ContentCachingResponseWrapper wrapResponse(HttpServletResponse response) {
-    if (response instanceof ContentCachingResponseWrapper) {
-      return (ContentCachingResponseWrapper) response;
-    } else {
-      return new ContentCachingResponseWrapper(response);
-    }
-  }
+  } // TODO cover class with tests verifying how it logs information
 }

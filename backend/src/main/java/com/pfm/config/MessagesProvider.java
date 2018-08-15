@@ -18,6 +18,14 @@ public class MessagesProvider {
   public static final String CATEGORIES_CYCLE_DETECTED = "categoryValidator.categoryCycleDetected";
   public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS = "categoryValidator.categoryWithProvidedNameAlreadyExists";
 
+  public static final String EMPTY_TRANSACTION_NAME = "transactionValidator.emptyTransactionName";
+  public static final String EMPTY_TRANSACTION_CATEGORY = "transactionValidator.emptyTransactionCategory";
+  public static final String EMPTY_TRANSACTION_PRICE = "transactionValidator.emptyTransactionPrice";
+  public static final String EMPTY_TRANSACTION_ACCOUNT = "transactionValidator.emptyTransactionAccountName";
+  public static final String CATEGORY_ID_DOES_NOT_EXIST = "transactionValidator.categoryIdNotExist";
+  public static final String ACCOUNT_ID_DOES_NOT_EXIST = "transactionValidator.accountIdNotExist";
+  public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
+
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
   private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 

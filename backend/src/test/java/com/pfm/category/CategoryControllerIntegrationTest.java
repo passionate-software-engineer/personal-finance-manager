@@ -46,9 +46,15 @@ public class CategoryControllerIntegrationTest {
 
   //TODO Rewrite test to use helper class and add Category builder
 
+  @ClassRule
+  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+
   private static final String CATEGORIES_SERVICE_PATH = "/categories";
   private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   private static final Long NOT_EXISTING_ID = 0L;
+
+  @Rule
+  public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
   // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
   // those methods in // given part of the test
@@ -58,12 +64,6 @@ public class CategoryControllerIntegrationTest {
   private Long childCategoryId;
   private Category parentCategory;
   private Category childCategory;
-
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
-
-  @Rule
-  public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
   @Autowired
   private MockMvc mockMvc;
@@ -96,20 +96,18 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldAddCategory() throws Exception {
     //given
-    deleteCategoryById(
-        childCategoryId); // TODO that should not be happening - you should start each test from clear state
+    deleteCategoryById(childCategoryId); // TODO that should not be happening - you should start each test from clear state
     deleteCategoryById(parentCategoryId);
-    CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car")
-        .build(); // TODO move all that logic to TestCategoryProvider - tests will be cleaner
+    CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car").build();
+    // TODO move all that logic to TestCategoryProvider - tests will be cleaner
     CategoryRequest subCategoryToAdd = CategoryRequest.builder().name("Oil").build();
-    Category expectedParentCategory = new Category(null, "Car", null);
-    Category expectedSubCategory =
-        new Category(null, "Oil", new Category(null, "Car", null));
+    Category expectedParentCategory = Category.builder().name("Car").build();
+    Category expectedSubCategory = Category.builder().name("Oil").parentCategory(expectedParentCategory).build();
 
     //when
     long addedParentCategoryId = addCategory(parentCategoryToAdd);
-    subCategoryToAdd.setParentCategoryId(
-        addedParentCategoryId); // TODO that can be hidden in addCategory method, just pass id of parent category to it, don't set it before
+    subCategoryToAdd.setParentCategoryId(addedParentCategoryId);
+    // TODO that can be hidden in addCategory method, just pass id of parent category to it, don't set it before
     long addedSubCategoryId = addCategory(subCategoryToAdd);
 
     //then
@@ -150,7 +148,8 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
     //given
-    CategoryRequest categoryToAdd = CategoryRequest.builder().name(parentCategoryRq.getName()).build();
+    CategoryRequest categoryToAdd = CategoryRequest.builder().name(parentCategoryRq.getName())
+        .build();
 
     //when
     mockMvc
@@ -311,7 +310,8 @@ public class CategoryControllerIntegrationTest {
     //then
     List<Category> categories = getAllCategoriesFromDatabase();
     assertThat(categories.size(), is(equalTo(1)));
-    assertFalse(categories.contains(childCategoryRq)); // TODO it will always be false as types don't match
+    assertFalse(
+        categories.contains(childCategoryRq)); // TODO it will always be false as types don't match
   }
 
   @Test
@@ -325,8 +325,8 @@ public class CategoryControllerIntegrationTest {
     //then
     List<Category> categories = getAllCategoriesFromDatabase();
     assertThat(categories.size(), is(equalTo(0))); // TODO it will always be false as types don't match
-    assertFalse(
-        categories.contains(childCategoryRq)); // TODO http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
+    assertFalse(categories.contains(childCategoryRq));
+    // TODO http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
     assertFalse(categories.contains(parentCategoryRq)); // TODO it will always be false as types don't match
   }
 
@@ -384,8 +384,8 @@ public class CategoryControllerIntegrationTest {
     return mapper.writeValueAsString(category);
   }
 
-  private Category jsonToCategory(String jsonCompany) throws Exception {
-    return mapper.readValue(jsonCompany, Category.class);
+  private Category jsonToCategory(String jsonCategory) throws Exception {
+    return mapper.readValue(jsonCategory, Category.class);
   }
 
   private List<Category> getCategoriesFromResponse(String response) throws Exception {

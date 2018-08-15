@@ -7,17 +7,20 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.4.RELEASE'
+        classpath 'org.owasp:dependency-check-gradle:3.3.0'
     }
 }
 
 // keep alphabetical order in groups
 plugins {
     // 3rd party
+    id "com.github.ben-manes.versions" version "0.20.0"
     id "com.gorylenko.gradle-git-properties" version "1.5.1"
-    id 'de.aaschmid.cpd' version '1.0'
+    id 'de.aaschmid.cpd' version '1.1'
     id 'io.spring.dependency-management' version "1.0.6.RELEASE"
-    id 'org.springframework.boot' version '2.0.3.RELEASE'
+    id 'org.owasp.dependencycheck' version '3.3.0'
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
 
     // core
     id 'checkstyle'
@@ -26,6 +29,7 @@ plugins {
     id "jacoco"
     id 'java'
     id 'pmd'
+    id 'project-report'
 }
 
 version '1.0'
@@ -38,19 +42,17 @@ repositories {
 
 // keep alphabetical order in groups
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.0-M1'
+    testCompile 'org.mockito:mockito-core:2.21.0'
     testCompile 'pl.pojo:pojo-tester:0.7.6'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
 
     compile 'com.h2database:h2:1.4.197'
-    compile 'io.rest-assured:spring-mock-mvc:3.1.0'
     compile 'io.springfox:springfox-swagger-ui:2.9.2'
     compile 'io.springfox:springfox-swagger2:2.9.2'
-    compile 'javax.xml.bind:jaxb-api:2.3.0'
     compile "org.flywaydb:flyway-core:5.1.4"
-    compile 'org.postgresql:postgresql:42.1.4'
-    compile 'org.projectlombok:lombok:1.18.0'
+    compile 'org.postgresql:postgresql:42.2.4'
+    compile 'org.projectlombok:lombok:1.16.0'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-starter-test'
@@ -80,13 +82,13 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'BRANCH'
-                minimum = 0.90
+                minimum = 0.96
             }
         }
         rule {
             limit {
                 counter = 'LINE'
-                minimum = 0.90
+                minimum = 0.98
             }
         }
         rule {
@@ -98,7 +100,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'METHOD'
-                minimum = 0.94 // TODO cover missing methods and increase to 1.0
+                minimum = 1.00
             }
         }
         rule {
@@ -106,7 +108,7 @@ jacocoTestCoverageVerification {
             excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
             limit {
                 counter = 'BRANCH'
-                minimum = 0.86 // TODO Account class is below 90%
+                minimum = 1.00
             }
         }
         rule {
@@ -114,7 +116,7 @@ jacocoTestCoverageVerification {
             excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
             limit {
                 counter = 'LINE'
-                minimum = 0.90
+                minimum = 1.00
             }
         }
     }

@@ -161,8 +161,11 @@ public class AccountControllerIntegrationTest {
   public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
     callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
     long accountJacekId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    Account updatedAccount = Account.builder().name(ACCOUNT_ADAM_BALANCE_0.getName())
-        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance()).build();
+
+    Account updatedAccount = Account.builder()
+        .name(ACCOUNT_ADAM_BALANCE_0.getName())
+        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
+        .build();
 
     mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountJacekId)
         .contentType(JSON_CONTENT_TYPE)
@@ -171,7 +174,25 @@ public class AccountControllerIntegrationTest {
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]",
             is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
 
+  @Test
+  public void shouldReturnErrorCauseByNullName() throws Exception {
+    callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+
+    Account updatedAccount = Account.builder()
+        .name(null)
+        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
+        .build();
+
+    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountJacekId)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedAccount)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]",
+            is(getMessage(EMPTY_ACCOUNT_NAME))));
   }
 
   @Test

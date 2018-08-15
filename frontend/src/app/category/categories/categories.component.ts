@@ -29,8 +29,6 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  // TODO make nice looking confirmation popup
-
   deleteCategory(category) {
     if (confirm('Are you sure You want to delete this account ?')) {
       this.categoryService.deleteCategory(category.id)
@@ -50,7 +48,13 @@ export class CategoriesComponent implements OnInit {
     if (category.parentCategory == null) {
       category.editedParentCategory = null;
     } else {
-      category.editedParentCategory = <Category> JSON.parse(JSON.stringify(category.parentCategory));
+      category.editedParentCategory = category.parentCategory;
+
+      for (const categoryEntry of this.categories) {
+        if (categoryEntry.id === category.editedParentCategory.id) {
+          category.editedParentCategory = categoryEntry;
+        }
+      }
     }
 
   }
@@ -59,6 +63,7 @@ export class CategoriesComponent implements OnInit {
     if (!this.validateCategory(category.editedName)) {
       return;
     }
+
     const editedCategory: Category = new Category();
     editedCategory.id = category.id;
     editedCategory.name = category.editedName;
@@ -172,8 +177,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     if (this.categories.filter(category =>
-      category.name.toLowerCase()
-      === categoryName.toLowerCase()).length > 0) {
+        category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Category with provided name already exist');
       return false;
     }

@@ -2,6 +2,7 @@ package com.pfm.helpers;
 
 import com.pfm.account.Account;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class TestAccountProvider {
 
@@ -17,15 +18,15 @@ public class TestAccountProvider {
   public static final Account ACCOUNT_PIOTR_BALANCE_9 =
       Account.builder()
           .id(444L)
-          .name("Cash")
-          .balance(BigDecimal.valueOf(9))
+          .name("Cash") // TODO correct all places to rounding
+          .balance(BigDecimal.valueOf(9).setScale(2, RoundingMode.HALF_UP))
           .build();
 
   public static final Account ACCOUNT_JACEK_BALANCE_1000 =
       Account.builder()
           .id(666666L)
           .name("Jacek Millenium Bank savings")
-          .balance(BigDecimal.valueOf(1000))
+          .balance(BigDecimal.valueOf(1000).setScale(2, RoundingMode.HALF_UP))
           .build();
 
   public static final Account ACCOUNT_LUKASZ_BALANCE_1124 =
