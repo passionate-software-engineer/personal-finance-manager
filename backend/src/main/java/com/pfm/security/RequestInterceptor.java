@@ -19,7 +19,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
   private TokenService tokenService;
 
   //TODO this should be done be spring security
-  private static final String pattern = "(\\/users.*|\\/swagger.*)";
+  private static final String pattern = "(\\/users.*|.*swagger.*)";
   private final Logger logger = LoggerFactory.getLogger(RequestInterceptor.class.getName());
 
   @Override
@@ -39,6 +39,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
       response.setContentType("text/plain");
       response.getWriter().write("Authorization header value is empty");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.setHeader("Access-Control-Allow-Origin", "*");
       return false;
     }
 
@@ -51,6 +52,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
       response.setContentType("text/plain");
       response.getWriter().write("Request token " + requestToken + " is incorrect");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.setHeader("Access-Control-Allow-Origin", "*");
       return false;
     }
   }

@@ -1,8 +1,11 @@
 package com.pfm.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pfm.history.DifferenceProvider;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class Account {
+public final class Account implements DifferenceProvider<Account> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +35,33 @@ public final class Account {
   private BigDecimal balance;
 
   @ApiModelProperty(value = "Account owner id", required = true, example = "1")
-  private Long userId;
+  private long userId;
 
+  @Override
+  public List<String> getDifferences(Account otherAccount) {
+    List<String> differences = new ArrayList<>();
+
+    if (!(this.getName().equals(otherAccount.getName()))) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Account name", this.getName(), otherAccount.getName()));
+    }
+
+    if (!(this.getBalance().compareTo(otherAccount.getBalance()) == 0)) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Account '" + this.getName() + "' balance", this.getBalance().toString(),
+          otherAccount.getBalance().toString()));
+    }
+
+    return differences;
+  }
+
+  @Override
+  public List<String> getObjectPropertiesWithValues() {
+    List<String> newValues = new ArrayList<>();
+    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getName() + " Account ", "'balance'", this.getBalance().toString()));
+    return newValues;
+  }
+
+  @Override
+  public String getObjectDescriptiveName() {
+    return this.getName();
+  }
 }

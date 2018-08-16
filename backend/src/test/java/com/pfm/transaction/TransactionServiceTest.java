@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.pfm.account.AccountService;
+import com.pfm.category.CategoryService;
 import java.util.Collections;
 import java.util.Optional;
 import org.junit.Test;
@@ -26,6 +27,9 @@ public class TransactionServiceTest {
 
   @Mock
   private AccountService accountService;
+
+  @Mock
+  private CategoryService categoryService;
 
   @InjectMocks
   private TransactionService transactionService;

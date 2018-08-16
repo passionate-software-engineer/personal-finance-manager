@@ -72,6 +72,9 @@ public abstract class IntegrationTestsBase {
   @Autowired
   protected Flyway flyway;
 
+  protected String token;
+  protected long userId;
+
   @Before
   public void before() {
     flyway.clean();
