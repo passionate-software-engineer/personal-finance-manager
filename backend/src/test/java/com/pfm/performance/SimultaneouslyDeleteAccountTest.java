@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -21,15 +22,12 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(ConcurrentTestRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class SimultaneouslyDeleteAccountTest {
-
 
     private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
     private static final int THREAD_COUNT = 24; //set how much threads you want to start
@@ -40,6 +38,7 @@ public class SimultaneouslyDeleteAccountTest {
 
     @Rule
     public final SpringMethodRule springMethodRule = new SpringMethodRule();
+    public ErrorCollector collector = new ErrorCollector();
 
     @LocalServerPort
     private int port;
@@ -51,23 +50,26 @@ public class SimultaneouslyDeleteAccountTest {
     @Test
     @ThreadCount(THREAD_COUNT)
     public void shouldDeleteSimultaneouslyAccountTest() throws Exception {
+        BigDecimal balance = BigDecimal.valueOf((long) (Math.random() * Integer.MAX_VALUE)).setScale(2, RoundingMode.CEILING);
         Account tempAccount = Account.builder()
                 .name(UUID.randomUUID().toString())
-                .balance(BigDecimal.valueOf((long) (Math.random() * Integer.MAX_VALUE)).setScale(2, RoundingMode.CEILING))
+                .balance(balance)
                 .build();
 
-        tempAccount.setId(Long.parseLong(given().contentType("application/json").body(tempAccount).when().post(servicePath()).getBody().asString()));
-        assertThat(given().when().delete(servicePath() + "/" + tempAccount.getId().toString()).statusCode(), is(200));
+        Long tempAccountId = Long.parseLong(given().contentType("application/json").body(tempAccount).when().post(servicePath()).getBody().asString());
+        tempAccount.setId(tempAccountId);
+        collector.checkThat(given().when().delete(servicePath() + "/" + tempAccount.getId().toString()).statusCode(), equalTo(200));
     }
 
     @After
     public void afterCheck() throws Exception {
         List<Account> accounts = getAccounts();
-        assertThat(accounts.size(), is(0));
+        collector.checkThat(accounts.size(), equalTo(0));
     }
 
     private List<Account> getAccounts() throws Exception {
-        return objectMapper.readValue(given().when().get(servicePath()).getBody().asString(), new TypeReference<List<Account>>() {
+        String json = given().when().get(servicePath()).getBody().asString();
+        return objectMapper.readValue(json, new TypeReference<List<Account>>() {
         });
     }
 }
