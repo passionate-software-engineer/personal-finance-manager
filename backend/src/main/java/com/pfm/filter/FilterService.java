@@ -2,7 +2,11 @@ package com.pfm.filter;
 
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +18,23 @@ public class FilterService {
   private AccountService accountService;
   private CategoryService categoryService;
 
-  public Filter addFilter(FilterRequest filterRequest) {
-
-    Filter filter = Filter.builder()
-        .accounts(
-            filterRequest.getAccountsIds().stream().map(accountId -> accountService.getAccountById(accountId).get()).collect(Collectors.toList()))
-        .categories(
-            filterRequest.getCategoryIds().stream().map(categoryId -> categoryService.getCategoryById(categoryId).get()).collect(Collectors.toList()))
-        .name(filterRequest.getName())
-        .description(filterRequest.getDescription())
-        .priceFrom(filterRequest.getPriceFrom())
-        .priceTo(filterRequest.getPriceTo())
-        .build();
+  public Filter addFilter(Filter filter) {
 
     return filterRepository.save(filter);
   }
 
-  public Filter getFilterById(long id) {
-    return filterRepository.findById(id).get();
+  public Optional<Filter> getFilterById(long id) {
+    return filterRepository.findById(id);
+  }
+
+  public void deleteFilter(long id) {
+    filterRepository.deleteById(id);
+  }
+
+  public List<Filter> getAllFilters() {
+    return StreamSupport.stream(filterRepository.findAll().spliterator(), false)
+        .sorted(Comparator.comparing(Filter::getId))
+        .collect(Collectors.toList());
   }
 
 }
