@@ -1,10 +1,11 @@
 package com.pfm.filter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.account.Account;
 import com.pfm.category.Category;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,14 +30,17 @@ public final class Filter {
 
   private String name;
 
-  @OneToMany
-  private List<Account> accounts;
+  @ElementCollection
+  private List<Long> accountsIds;
 
-  @OneToMany
-  private List<Category> categories;
+  @ElementCollection
+  private List<Long> categoriesIds;
 
   private BigDecimal priceFrom;
   private BigDecimal priceTo;
+
+  private LocalDate dateFrom;
+  private LocalDate dateTo;
 
   private String description;
 }
