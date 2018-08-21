@@ -26,6 +26,12 @@ public class MessagesProvider {
   public static final String ACCOUNT_ID_DOES_NOT_EXIST = "transactionValidator.accountIdNotExist";
   public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
 
+  public static final String FILTER_ACCOUNT_ID_DOES_NOT_EXIST = "filterValidator.accountIdNotExist";
+  public static final String FILTER_CATEGORY_ID_DOES_NOT_EXIST = "filterValidator.categoryIdNotExist";
+  public static final String FILTER_PRICE_FROM_BIGGER_THEN_PRICE_TO = "filterValidator.priceFromBiggerThenPriceTo";
+  public static final String FILTER_DATE_FROM_IS_AFTER_DATE_TO = "filterValidator.dateFromAfterDateTo";
+  public static final String FILTER_EMPTY_NAME = "filterValidator.emptyName";
+
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
   private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 
