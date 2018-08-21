@@ -1,13 +1,7 @@
 package com.pfm.filter;
 
-import com.pfm.account.Account;
-import com.pfm.account.AccountService;
-import com.pfm.category.Category;
-import com.pfm.category.CategoryService;
-import com.pfm.transaction.Transaction;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +15,6 @@ public class FilterController implements FilterApi {
 
   private FilterService filterService;
   private FilterValidator filterValidator;
-  private AccountService accountService;
-  private CategoryService categoryService;
 
   @Override
   public ResponseEntity<Filter> getFilterById(long id) {
@@ -56,20 +48,36 @@ public class FilterController implements FilterApi {
     Filter filter = convertFilterRequestToFilter(filterRequest);
 
     Filter createdFilter = filterService.addFilter(filter);
-    log.info("Saving transaction to the database was successful. Transaction id is {}", createdFilter.getId());
+    log.info("Saving filter to the database was successful. Filter id is {}", createdFilter.getId());
 
     return ResponseEntity.ok(createdFilter.getId());
   }
 
   @Override
-  public ResponseEntity<?> updateFilter(long id, FilterRequest filterRequest) {
-    return null;
+  public ResponseEntity<?> updateFilter(long id, @RequestBody FilterRequest filterRequest) {
+    if (!filterService.idExist(id)) {
+      log.info("No filter with id {} was found, not able to update", id);
+      return ResponseEntity.notFound().build();
+    }
+
+    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest);
+    if (!validationResult.isEmpty()) {
+      log.error("Filter is not valid {}", validationResult);
+      return ResponseEntity.badRequest().body(validationResult);
+    }
+
+    Filter filter = convertFilterRequestToFilter(filterRequest);
+
+    filterService.updateFilter(id, filter);
+    log.info("Filter with id {} was successfully updated", id);
+
+    return ResponseEntity.ok().build();
   }
 
   @Override
   public ResponseEntity<?> deleteFilter(long id) {
     if (!filterService.getFilterById(id).isPresent()) {
-      log.info("No transaction with id {} was found, not able to delete", id);
+      log.info("No filter with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }
     filterService.deleteFilter(id);
@@ -77,7 +85,6 @@ public class FilterController implements FilterApi {
   }
 
   private Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
-
     return Filter.builder()
         .name(filterRequest.getName())
         .dateFrom(filterRequest.getDateFrom())
