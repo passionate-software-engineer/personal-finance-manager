@@ -341,7 +341,7 @@ public class TransactionControllerIntegrationTest {
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
-    return getCategoriesFromResponse(response);
+    return getFiltersFromResponse(response);
   }
 
   private String json(Object object) throws Exception {
@@ -356,7 +356,7 @@ public class TransactionControllerIntegrationTest {
     return mapper.readValue(jsonTransaction, Transaction.class);
   }
 
-  private List<Transaction> getCategoriesFromResponse(String response) throws Exception {
+  private List<Transaction> getFiltersFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
