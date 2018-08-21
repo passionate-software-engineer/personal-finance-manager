@@ -84,7 +84,7 @@ public class FilterController implements FilterApi {
     return ResponseEntity.ok().build();
   }
 
-  private Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
+  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
     return Filter.builder()
         .name(filterRequest.getName())
         .dateFrom(filterRequest.getDateFrom())
