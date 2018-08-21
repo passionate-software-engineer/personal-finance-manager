@@ -37,4 +37,32 @@ public class FilterService {
         .collect(Collectors.toList());
   }
 
+  public void updateFilter(long id, Filter filter) {
+    Filter filterToUpdate = getFilterFromDatabase(id);
+
+    filterToUpdate.setAccountsIds(filter.getAccountsIds());
+    filterToUpdate.setCategoriesIds(filter.getCategoriesIds());
+    filterToUpdate.setDateFrom(filter.getDateFrom());
+    filterToUpdate.setDateTo(filter.getDateTo());
+    filterToUpdate.setPriceFrom(filter.getPriceFrom());
+    filterToUpdate.setPriceTo(filter.getPriceTo());
+    filterToUpdate.setDescription(filter.getDescription());
+    filterToUpdate.setName(filter.getName());
+
+    filterRepository.save(filterToUpdate);
+  }
+
+  public boolean idExist(long id) {
+    return filterRepository.existsById(id);
+  }
+
+  private Filter getFilterFromDatabase(long id) {
+    Optional<Filter> filterFromDb = getFilterById(id);
+
+    if (!filterFromDb.isPresent()) {
+      throw new IllegalStateException("Filter with id: " + id + " does not exist in database");
+    }
+
+    return filterFromDb.get();
+  }
 }
