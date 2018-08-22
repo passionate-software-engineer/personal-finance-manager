@@ -20,42 +20,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pfm.IntegrationTestsBase;
 import com.pfm.category.CategoryController.CategoryRequest;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.flywaydb.core.Flyway;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
-import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(JUnitParamsRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-public class CategoryControllerIntegrationTest {
+public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   //TODO Rewrite test to use helper class and add Category builder
 
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
-
-  private static final String CATEGORIES_SERVICE_PATH = "/categories";
-  private static final MediaType CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
-  private static final Long NOT_EXISTING_ID = 0L;
-
+  
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
+  //TODO remove setup methods where unneeded
   // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
   // those methods in // given part of the test
   private final CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
@@ -65,37 +54,10 @@ public class CategoryControllerIntegrationTest {
   private Category parentCategory;
   private Category childCategory;
 
-  @Autowired
-  private MockMvc mockMvc;
-
-  @Autowired
-  private ObjectMapper mapper;
-
-  @Autowired
-  private Flyway flyway;
-
-  @Before
-  public void before() throws Exception {
-    flyway.clean();
-    flyway.migrate();
-
-    // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
-    // those methods in // given part of the test
-    parentCategoryId = addCategory(parentCategoryRq);
-    childCategoryRq.setParentCategoryId(parentCategoryId);
-    childCategoryId = addCategory(childCategoryRq);
-
-    parentCategory = convertToCategory(parentCategoryRq);
-    parentCategory.setId(parentCategoryId);
-
-    childCategory = convertToCategory(childCategoryRq);
-    childCategory.setId(childCategoryId);
-    childCategory.getParentCategory().setName(parentCategory.getName());
-  }
-
   @Test
   public void shouldAddCategory() throws Exception {
     //given
+    setup();
     deleteCategoryById(childCategoryId); // TODO that should not be happening - you should start each test from clear state
     deleteCategoryById(parentCategoryId);
     CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car").build();
@@ -105,10 +67,10 @@ public class CategoryControllerIntegrationTest {
     Category expectedSubCategory = Category.builder().name("Oil").parentCategory(expectedParentCategory).build();
 
     //when
-    long addedParentCategoryId = addCategory(parentCategoryToAdd);
+    long addedParentCategoryId = addCategoryAndReturnId(parentCategoryToAdd);
     subCategoryToAdd.setParentCategoryId(addedParentCategoryId);
-    // TODO that can be hidden in addCategory method, just pass id of parent category to it, don't set it before
-    long addedSubCategoryId = addCategory(subCategoryToAdd);
+    // TODO that can be hidden in addCategoryAndReturnId method, just pass id of parent category to it, don't set it before
+    long addedSubCategoryId = addCategoryAndReturnId(subCategoryToAdd);
 
     //then
     expectedParentCategory.setId(addedParentCategoryId);
@@ -126,6 +88,7 @@ public class CategoryControllerIntegrationTest {
   @Parameters(method = "emptyAccountNameParameters")
   public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
     //given
+    setup();
     CategoryRequest categoryToAdd = CategoryRequest.builder().name(name).build();
 
     //when
@@ -133,7 +96,7 @@ public class CategoryControllerIntegrationTest {
         .perform(
             post(CATEGORIES_SERVICE_PATH)
                 .content(json(categoryToAdd))
-                .contentType(CONTENT_TYPE)
+                .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
@@ -148,6 +111,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
     //given
+    setup();
     CategoryRequest categoryToAdd = CategoryRequest.builder().name(parentCategoryRq.getName())
         .build();
 
@@ -156,7 +120,7 @@ public class CategoryControllerIntegrationTest {
         .perform(
             post(CATEGORIES_SERVICE_PATH)
                 .content(json(categoryToAdd))
-                .contentType(CONTENT_TYPE)
+                .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
@@ -166,6 +130,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldGetCategories() throws Exception {
     //when
+    setup();
     List<Category> categories = getAllCategoriesFromDatabase();
 
     //then
@@ -177,6 +142,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldGetCategoryById() throws Exception {
     //when // TODO that should be 2 separate tests
+    setup();
     Category resultParentCategory = getCategoryById(parentCategoryId);
     Category resultSubCategory = getCategoryById(childCategoryId);
 
@@ -187,6 +153,9 @@ public class CategoryControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedGetMethod() throws Exception {
+    //given
+    setup();
+
     //when
     mockMvc
         .perform(get(CATEGORIES_SERVICE_PATH + "/" + childCategoryId + 1))
@@ -196,6 +165,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldUpdateCategoryParentCategory() throws Exception {
     //given
+    setup();
     CategoryRequest categoryToUpdate = parentCategoryRq; // TODO such assignments does not make sense - maybe you wanted to copy?
     categoryToUpdate.setName("Changed Name"); // Please rethink how you handle objects - TestCategoryProvider will help you a lot.
 
@@ -206,7 +176,7 @@ public class CategoryControllerIntegrationTest {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
             .content(json(categoryToUpdate))
-            .contentType(CONTENT_TYPE)
+            .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isOk());
 
@@ -218,11 +188,12 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldUpdateSubCategory() throws Exception {
     //given
+    setup();
     CategoryRequest secondParentCategory = CategoryRequest.builder()
         .name("Second Parent Category")
         .build();
 
-    long secondParentCategoryId = addCategory(secondParentCategory);
+    long secondParentCategoryId = addCategoryAndReturnId(secondParentCategory);
     CategoryRequest categoryToUpdate = childCategoryRq;
     categoryToUpdate.setName("Changed Name");
     categoryToUpdate.setParentCategoryId(secondParentCategoryId);
@@ -234,7 +205,7 @@ public class CategoryControllerIntegrationTest {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + childCategoryId)
-            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+            .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk());
 
     //given
@@ -245,11 +216,12 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedUpdateMethod() throws Exception {
     //given
+    setup();
 
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .content(json(childCategoryRq)).contentType(CONTENT_TYPE))
+            .content(json(childCategoryRq)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
 
@@ -257,6 +229,7 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided()
       throws Exception {
     //given
+    setup();
     CategoryRequest categoryToUpdate = childCategoryRq;
     categoryToUpdate
         .setParentCategoryId(NOT_EXISTING_ID);
@@ -264,7 +237,7 @@ public class CategoryControllerIntegrationTest {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + childCategoryId)
-            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+            .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST))));
@@ -274,6 +247,7 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCausedByCycling()
       throws Exception {
     //given
+    setup();
     CategoryRequest categoryToUpdate = CategoryRequest.builder().name(parentCategoryRq.getName())
         .parentCategoryId(childCategoryId).build();
 
@@ -285,6 +259,7 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory()
       throws Exception {
     //given
+    setup();
     CategoryRequest categoryToUpdate = CategoryRequest.builder().name(parentCategoryRq.getName())
         .parentCategoryId(parentCategoryId).build();
 
@@ -296,7 +271,7 @@ public class CategoryControllerIntegrationTest {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId)
-            .content(json(categoryToUpdate)).contentType(CONTENT_TYPE))
+            .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(CATEGORIES_CYCLE_DETECTED))));
@@ -304,6 +279,8 @@ public class CategoryControllerIntegrationTest {
 
   @Test
   public void shouldDeleteCategory() throws Exception {
+    //given
+    setup();
     //when
     deleteCategoryById(childCategoryId);
 
@@ -317,7 +294,7 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldDeleteSubCategoryAndThenParentCategory() throws Exception {
     //given
-
+    setup();
     //when
     deleteCategoryById(childCategoryId);
     deleteCategoryById(parentCategoryId);
@@ -334,7 +311,7 @@ public class CategoryControllerIntegrationTest {
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
       throws Exception {
     //given
-
+    setup();
     //when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + parentCategoryId))
         .andExpect(status().isBadRequest())
@@ -344,53 +321,23 @@ public class CategoryControllerIntegrationTest {
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedDeleteMethod() throws Exception {
     //when
+    setup();
+    //when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
   }
 
-  private long addCategory(CategoryRequest category) throws Exception {
-    String response = mockMvc
-        .perform(
-            post(CATEGORIES_SERVICE_PATH)
-                .content(json(category))
-                .contentType(CONTENT_TYPE))
-        .andExpect(status().isOk()).andReturn()
-        .getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
+  private void setup() throws Exception {
+    parentCategoryId = addCategoryAndReturnId(parentCategoryRq);
+    childCategoryRq.setParentCategoryId(parentCategoryId);
+    childCategoryId = addCategoryAndReturnId(childCategoryRq);
 
-  private Category getCategoryById(long id) throws Exception {
-    String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + id))
-        .andExpect(content().contentType(CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return jsonToCategory(response);
-  }
+    parentCategory = convertToCategory(parentCategoryRq);
+    parentCategory.setId(parentCategoryId);
 
-  private List<Category> getAllCategoriesFromDatabase() throws Exception {
-    String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH))
-        .andExpect(content().contentType(CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return getCategoriesFromResponse(response);
-  }
-
-  private void deleteCategoryById(long id) throws Exception {
-    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + id))
-        .andExpect(status().isOk());
-  }
-
-  private String json(CategoryRequest category) throws Exception {
-    return mapper.writeValueAsString(category);
-  }
-
-  private Category jsonToCategory(String jsonCategory) throws Exception {
-    return mapper.readValue(jsonCategory, Category.class);
-  }
-
-  private List<Category> getCategoriesFromResponse(String response) throws Exception {
-    return mapper.readValue(response,
-        mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
+    childCategory = convertToCategory(childCategoryRq);
+    childCategory.setId(childCategoryId);
+    childCategory.getParentCategory().setName(parentCategory.getName());
   }
 
 }

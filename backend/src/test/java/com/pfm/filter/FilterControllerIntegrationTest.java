@@ -12,6 +12,7 @@ import com.pfm.category.Category;
 import java.util.List;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -45,8 +46,6 @@ public class FilterControllerIntegrationTest {
     flyway.clean();
     flyway.migrate();
   }
-
-  //just a template
 
   private long callRestServiceToAddAccountAndReturnId(Account account) throws Exception {
     String response =
