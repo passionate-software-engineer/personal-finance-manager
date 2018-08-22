@@ -36,7 +36,7 @@ public class CategoryController {
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
 
-  static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+  public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     if (parentCategoryId == null) {
@@ -139,7 +139,7 @@ public class CategoryController {
   @Builder
   @Setter
   @Getter
-  static class CategoryRequest {
+  public static class CategoryRequest {
 
     @ApiModelProperty(value = "Parent category id", example = "1")
     private Long parentCategoryId;
