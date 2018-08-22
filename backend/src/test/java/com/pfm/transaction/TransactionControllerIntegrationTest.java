@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pfm.IntegrationTestsBase;
 import com.pfm.account.Account;
 import com.pfm.category.Category;
 import java.math.BigDecimal;
@@ -46,31 +47,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-public class TransactionControllerIntegrationTest {
 
-  private static final String ACCOUNTS_SERVICE_PATH = "/accounts";
-  private static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
-  private static final String CATEGORIES_SERVICE_PATH = "/categories";
-  private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
-  private static final long NOT_EXISTING_ID = 0;
-
-  @Autowired
-  private MockMvc mockMvc;
-
-  @Autowired
-  private ObjectMapper mapper;
-
-  @Autowired
-  private Flyway flyway;
-
-  @Before
-  public void before() {
-    flyway.clean();
-    flyway.migrate();
-  }
+public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddTransaction() throws Exception {
@@ -267,97 +245,4 @@ public class TransactionControllerIntegrationTest {
         .andExpect(status().isNotFound());
 
   }
-
-  private long callRestServiceToAddAccountAndReturnId(Account account) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(ACCOUNTS_SERVICE_PATH)
-                .content(json(account))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  private BigDecimal callRestServiceAndReturnAccountBalance(long accountId) throws Exception {
-    String response =
-        mockMvc
-            .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return jsonToAccount(response).getBalance();
-  }
-
-  private long callRestServiceToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
-    transactionRequest.setCategoryId(categoryId);
-    transactionRequest.setAccountId(accountId);
-    String response =
-        mockMvc
-            .perform(post(TRANSACTIONS_SERVICE_PATH)
-                .content(json(transactionRequest))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  private long callRestServiceToAddCategoryAndReturnId(Category category) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(CATEGORIES_SERVICE_PATH)
-                .content(json(category))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  private Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
-    return Transaction.builder()
-        .id(transactionId)
-        .accountId(transactionRequest.getAccountId())
-        .categoryId(transactionRequest.getCategoryId())
-        .description(transactionRequest.getDescription())
-        .date(transactionRequest.getDate())
-        .price(transactionRequest.getPrice())
-        .build();
-  }
-
-  private Transaction getTransactionById(long id) throws Exception {
-    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + id))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return jsonToTransaction(response);
-  }
-
-  private void deleteTransactionById(long id) throws Exception {
-    mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id))
-        .andExpect(status().isOk());
-  }
-
-  private List<Transaction> getAllTransactionsFromDatabase() throws Exception {
-    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return getFiltersFromResponse(response);
-  }
-
-  private String json(Object object) throws Exception {
-    return mapper.writeValueAsString(object);
-  }
-
-  private Account jsonToAccount(String jsonAccount) throws Exception {
-    return mapper.readValue(jsonAccount, Account.class);
-  }
-
-  private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
-    return mapper.readValue(jsonTransaction, Transaction.class);
-  }
-
-  private List<Transaction> getFiltersFromResponse(String response) throws Exception {
-    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
-  }
-
 }
