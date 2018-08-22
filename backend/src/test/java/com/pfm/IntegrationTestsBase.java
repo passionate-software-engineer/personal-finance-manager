@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
+import com.pfm.account.AccountController.AccountRequest;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryController.CategoryRequest;
 import com.pfm.filter.Filter;
@@ -64,6 +65,17 @@ public abstract class IntegrationTestsBase {
         mockMvc
             .perform(post(ACCOUNTS_SERVICE_PATH)
                 .content(json(account))
+                .contentType(JSON_CONTENT_TYPE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return Long.parseLong(response);
+  }
+
+  protected long callRestServiceToAddAccountAndReturnId(AccountRequest accountRequest) throws Exception {
+    String response =
+        mockMvc
+            .perform(post(ACCOUNTS_SERVICE_PATH)
+                .content(json(accountRequest))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
@@ -192,7 +204,7 @@ public abstract class IntegrationTestsBase {
   }
 
   //filters
-  private long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, List<Long> accountIds, List<Long> categoriesIds) throws Exception {
+  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, List<Long> accountIds, List<Long> categoriesIds) throws Exception {
     filterRequest.setAccountsIds(accountIds);
     filterRequest.setCategoryIds(categoriesIds);
     String response =
@@ -205,7 +217,7 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  private Filter convertFilterRequestToFilterAndSetId(long filterId, FilterRequest filterRequest) {
+  protected Filter convertFilterRequestToFilterAndSetId(long filterId, FilterRequest filterRequest) {
     return Filter.builder()
         .id(filterId)
         .name(filterRequest.getName())
@@ -219,20 +231,21 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  private Filter getFilterById(long id) throws Exception {
-    String response = mockMvc.perform(get(FILTERS_SERVICE_PATH + "/" + id))
+  protected Filter getFilterById(long id) throws Exception {
+    String response = mockMvc
+        .perform(get(FILTERS_SERVICE_PATH + "/" + id))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
     return jsonToFilter(response);
   }
 
-  private void deleteFilterById(long id) throws Exception {
+  protected void deleteFilterById(long id) throws Exception {
     mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id))
         .andExpect(status().isOk());
   }
 
-  private List<Filter> getAllFiltersFromDatabase() throws Exception {
+  protected List<Filter> getAllFiltersFromDatabase() throws Exception {
     String response = mockMvc.perform(get(FILTERS_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
@@ -240,11 +253,11 @@ public abstract class IntegrationTestsBase {
     return getFiltersFromResponse(response);
   }
 
-  private Filter jsonToFilter(String jsonFilter) throws Exception {
+  protected Filter jsonToFilter(String jsonFilter) throws Exception {
     return mapper.readValue(jsonFilter, Filter.class);
   }
 
-  private List<Filter> getFiltersFromResponse(String response) throws Exception {
+  protected List<Filter> getFiltersFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Filter.class));
   }
 }
