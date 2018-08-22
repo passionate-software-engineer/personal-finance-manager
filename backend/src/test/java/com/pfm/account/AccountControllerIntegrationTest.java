@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pfm.IntegrationTestsBase;
 import java.math.BigDecimal;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
@@ -36,29 +37,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-public class AccountControllerIntegrationTest {
-
-  private static final String INVOICES_SERVICE_PATH = "/accounts";
-  private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
-  private static final long NOT_EXISTING_ID = 0;
-
-  @Autowired
-  private MockMvc mockMvc;
-
-  @Autowired
-  private ObjectMapper objectMapper;
-
-  @Autowired
-  private Flyway flyway;
-
-  @Before
-  public void before() {
-    flyway.clean();
-    flyway.migrate();
-  }
+public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddAccount() throws Exception {
@@ -250,18 +229,5 @@ public class AccountControllerIntegrationTest {
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }
 
-  private String json(Account account) throws Exception {
-    return objectMapper.writeValueAsString(account);
-  }
 
-  private long callRestServiceToAddAccountAndReturnId(Account account) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(INVOICES_SERVICE_PATH)
-                .content(json(account))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
 }
