@@ -23,25 +23,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.IntegrationTestsBase;
 import java.math.BigDecimal;
-import org.flywaydb.core.Flyway;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddAccount() throws Exception {
-    mockMvc.perform(post(INVOICES_SERVICE_PATH)
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(ACCOUNT_JACEK_BALANCE_1000)))
         .andExpect(status().isOk());
@@ -52,7 +42,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     Account accountWithoutName = new Account(null, null,
         null); // TODO should be using AccoutRequest not Account
 
-    mockMvc.perform(post(INVOICES_SERVICE_PATH)
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(accountWithoutName)))
         .andExpect(status().isBadRequest())
@@ -66,7 +56,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
 
     mockMvc
-        .perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
+        .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print())
         .andExpect(status().isOk())
@@ -76,7 +66,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedByNotExistingId() throws Exception {
     mockMvc
-        .perform(get(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+        .perform(get(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
   }
 
@@ -86,7 +76,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
 
     mockMvc
-        .perform(get(INVOICES_SERVICE_PATH))
+        .perform(get(ACCOUNTS_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
@@ -102,13 +92,13 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateAccount() throws Exception {
     long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
 
-    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
+    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(ACCOUNT_MATEUSZ_BALANCE_200)))
         .andDo(print())
         .andExpect(status().isOk());
 
-    mockMvc.perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
+    mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(jsonPath("$.id", is(1)))
@@ -122,13 +112,13 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     Account updatedAccount = Account.builder().name(ACCOUNT_ADAM_BALANCE_0.getName())
         .balance(ACCOUNT_ADAM_BALANCE_0.getBalance().add(BigDecimal.TEN)).build();
 
-    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
+    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedAccount)))
         .andDo(print())
         .andExpect(status().isOk());
 
-    mockMvc.perform(get(INVOICES_SERVICE_PATH + "/" + accountId))
+    mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(jsonPath("$.id", is(1)))
@@ -146,7 +136,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
         .build();
 
-    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountJacekId)
+    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedAccount)))
         .andExpect(status().isBadRequest())
@@ -165,7 +155,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
         .build();
 
-    mockMvc.perform(put(INVOICES_SERVICE_PATH + "/" + accountJacekId)
+    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedAccount)))
         .andExpect(status().isBadRequest())
@@ -178,7 +168,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
 
     mockMvc
-        .perform(put(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+        .perform(put(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .contentType(JSON_CONTENT_TYPE)
             .content(json(ACCOUNT_ADAM_BALANCE_0)))
         .andExpect(status().isNotFound());
@@ -193,7 +183,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .build();
 
     mockMvc
-        .perform(put(INVOICES_SERVICE_PATH + "/" + accountId)
+        .perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
             .contentType(JSON_CONTENT_TYPE)
             .content(json(accountToUpdate)))
         .andExpect(status().isBadRequest());
@@ -204,7 +194,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JUREK_BALANCE_10_99);
 
     mockMvc
-        .perform(delete(INVOICES_SERVICE_PATH + "/" + accountId))
+        .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk());
   }
 
@@ -213,7 +203,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     callRestServiceToAddAccountAndReturnId(ACCOUNT_JUREK_BALANCE_10_99);
 
     mockMvc
-        .perform(delete(INVOICES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+        .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
   }
 
@@ -221,7 +211,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByExistingAccountName() throws Exception {
     callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
 
-    mockMvc.perform(post(INVOICES_SERVICE_PATH)
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(ACCOUNT_LUKASZ_BALANCE_1124)))
         .andExpect(status().isBadRequest())
