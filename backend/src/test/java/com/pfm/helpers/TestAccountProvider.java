@@ -1,6 +1,7 @@
 package com.pfm.helpers;
 
 import com.pfm.account.Account;
+import com.pfm.account.AccountController.AccountRequest;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -56,4 +57,14 @@ public class TestAccountProvider {
           .name("Jurek BZWBK account")
           .balance(BigDecimal.valueOf(10.99))
           .build();
+
+  public static final AccountRequest ACCOUNT_DAMIAN_BALANCE_10_REQUEST =
+      AccountRequest.builder()
+          .name("Damian mBank account")
+          .balance(BigDecimal.TEN.setScale(2, RoundingMode.HALF_UP))
+          .build();
+
+  public static AccountRequest getAccountDamianBalance10Request() {
+    return ACCOUNT_DAMIAN_BALANCE_10_REQUEST;
+  }
 }
