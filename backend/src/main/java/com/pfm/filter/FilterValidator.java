@@ -19,9 +19,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterValidator {
 
-  FilterService filterService;
-  CategoryService categoryService;
-  AccountService accountService;
+  private FilterService filterService;
+  private CategoryService categoryService;
+  private AccountService accountService;
 
 
   public List<String> validateFilterRequest(FilterRequest filterRequest) {

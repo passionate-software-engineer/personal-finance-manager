@@ -19,14 +19,19 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FilterRequest {
 
-  @ApiModelProperty(value = "Filter Name", example = "Food Biedronka")
+  //TODO check how to add list as example
+
+  @ApiModelProperty(value = "Filter Name", example = "Expenses June")
   private String name;
 
   private List<Long> accountsIds;
 
   private List<Long> categoryIds;
 
+  @ApiModelProperty(value = "Price from", example = "100")
   private BigDecimal priceFrom;
+
+  @ApiModelProperty(value = "Price to", example = "300")
   private BigDecimal priceTo;
 
   @ApiModelProperty(value = "Date", example = "2018-06-15")
@@ -35,5 +40,6 @@ public class FilterRequest {
   @ApiModelProperty(value = "Date", example = "2018-07-16")
   private LocalDate dateTo;
 
+  @ApiModelProperty(value = "Description", example = "Food")
   private String description;
 }

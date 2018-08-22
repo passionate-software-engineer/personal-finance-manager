@@ -19,7 +19,6 @@ public class FilterService {
   private CategoryService categoryService;
 
   public Filter addFilter(Filter filter) {
-
     return filterRepository.save(filter);
   }
 
