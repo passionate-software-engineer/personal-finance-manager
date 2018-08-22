@@ -5,6 +5,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class FilterController implements FilterApi {
   private FilterValidator filterValidator;
 
   @Override
-  public ResponseEntity<Filter> getFilterById(long id) {
+  public ResponseEntity<Filter> getFilterById(@PathVariable long id) {
     log.info("Retrieving filter with id: {}", id);
     Optional<Filter> filter = filterService.getFilterById(id);
 
@@ -54,7 +55,7 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> updateFilter(long id, @RequestBody FilterRequest filterRequest) {
+  public ResponseEntity<?> updateFilter(@PathVariable long id, @RequestBody FilterRequest filterRequest) {
     if (!filterService.idExist(id)) {
       log.info("No filter with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
@@ -75,7 +76,7 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteFilter(long id) {
+  public ResponseEntity<?> deleteFilter(@PathVariable long id) {
     if (!filterService.getFilterById(id).isPresent()) {
       log.info("No filter with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
