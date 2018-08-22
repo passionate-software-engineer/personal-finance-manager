@@ -24,7 +24,7 @@ public interface FilterApi {
   @GetMapping
   ResponseEntity<List<Filter>> getFilters();
 
-  @ApiOperation(value = "Create a new filter", response = Long.class)
+  @ApiOperation(value = "Create new filter", response = Long.class)
   @PostMapping
   ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
