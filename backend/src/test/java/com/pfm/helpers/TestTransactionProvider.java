@@ -30,8 +30,6 @@ public class TestTransactionProvider {
         .build();
   }
 
-  public static BigDecimal convertDoubleToBigDecimal(double amount) {
-    return BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
-  }
+
 
 }

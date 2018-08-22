@@ -31,15 +31,19 @@ public class FilterValidator {
       validationResults.add(getMessage(FILTER_EMPTY_NAME));
     }
 
-    for (long id : filterRequest.getAccountsIds()) {
-      if (!accountService.getAccountById(id).isPresent()) {
-        validationResults.add(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + id);
+    if (filterRequest.getAccountsIds() != null) {
+      for (long id : filterRequest.getAccountsIds()) {
+        if (!accountService.getAccountById(id).isPresent()) {
+          validationResults.add(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + id);
+        }
       }
     }
 
-    for (long id : filterRequest.getCategoryIds()) {
-      if (!categoryService.getCategoryById(id).isPresent()) {
-        validationResults.add(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + id);
+    if (filterRequest.getCategoryIds() != null) {
+      for (long id : filterRequest.getCategoryIds()) {
+        if (!categoryService.getCategoryById(id).isPresent()) {
+          validationResults.add(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + id);
+        }
       }
     }
 
