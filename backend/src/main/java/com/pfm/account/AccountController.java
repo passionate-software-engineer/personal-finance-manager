@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -117,9 +118,11 @@ public class AccountController {
 
   @JsonIgnoreProperties(ignoreUnknown = true)
   @NoArgsConstructor
+  @AllArgsConstructor
   @Getter
   @Setter
-  private static class AccountRequest {
+  @Builder
+  public static class AccountRequest {
 
     @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
     private String name;
