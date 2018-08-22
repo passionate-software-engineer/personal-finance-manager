@@ -6,6 +6,7 @@ import {Account} from '../../account/account';
 import {Category} from '../../category/category';
 import {CategoryService} from '../../category/category-service/category.service';
 import {AccountService} from '../../account/account-service/account.service';
+import {TransactionFilter} from '../transaction-filter';
 
 @Component({
   selector: 'app-transactions',
@@ -20,6 +21,9 @@ export class TransactionsComponent implements OnInit {
   accounts: Account[];
   addingMode = false;
   newTransaction = new Transaction();
+  selectedFilter = new TransactionFilter();
+  originalFilter = new TransactionFilter();
+  transactionFilters: TransactionFilter[];
 
   constructor(private transactionService: TransactionService, private alertService: AlertsService, private categoryService: CategoryService,
               private accountService: AccountService) {
@@ -47,6 +51,12 @@ export class TransactionsComponent implements OnInit {
             this.getTransactions();
           });
       });
+
+    this.originalFilter.name = 'New';
+    this.selectedFilter = JSON.parse(JSON.stringify(this.originalFilter));
+
+    this.transactionFilters = [];
+    this.transactionFilters.push(this.originalFilter);
   }
 
   getTransactions(): void {
@@ -180,6 +190,29 @@ export class TransactionsComponent implements OnInit {
             this.newTransaction = new Transaction();
           });
       });
+  }
+
+  onFilterChange(selectedFilter) {
+    this.selectedFilter = JSON.parse(JSON.stringify(this.originalFilter));
+  }
+
+  addOrUpdateTransactionFilter() {
+    if (this.selectedFilter.id === undefined) {
+      this.addFilter();
+    } else {
+      this.updateFilter();
+    }
+  }
+
+  addFilter() {
+    const newFilter = JSON.parse(JSON.stringify(this.selectedFilter));
+    this.transactionFilters.push(newFilter);
+  }
+
+  updateFilter() {
+  }
+
+  deleteTransactionFilter() {
   }
 
   onRefreshTransactions() {

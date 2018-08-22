@@ -45,8 +45,61 @@
     <th>
     </th>
   </tr>
+
   </thead>
   <tbody>
+
+  <!-- Filters -->
+  <tr>
+
+    <!--Date-->
+    <td>
+      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateFrom">
+      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateTo">
+    </td>
+
+    <!--Description-->
+    <td>
+      <input class="form-control" type="text" [(ngModel)]="selectedFilter.description">
+    </td>
+
+    <!--Price-->
+    <td>
+      <input class="form-control" type="number" [(ngModel)]="selectedFilter.priceFrom">
+      <input class="form-control" type="number" [(ngModel)]="selectedFilter.priceTo">
+    </td>
+
+    <!--Account-->
+    <td>
+      <select multiple class="form-control" [(ngModel)]="selectedFilter.accounts">
+        <option *ngFor="let account of accounts" [ngValue]="account">
+          {{account.name}}
+        </option>
+      </select>
+    </td>
+
+    <!--Category-->
+    <td>
+      <select multiple class="form-control" [(ngModel)]="selectedFilter.categories">
+        <option *ngFor="let category of categories" [ngValue]="category">
+          {{category.name}}
+        </option>
+      </select>
+    </td>
+
+    <!-- Filter selection -->
+    <td>
+      <select class="form-control" [(ngModel)]="originalFilter" (ngModelChange)="onFilterChange($event)">
+        <option *ngFor="let filter of transactionFilters" [ngValue]="filter">
+          {{filter.name}}
+        </option>
+      </select>
+      <input class="form-control" type="text" [(ngModel)]="selectedFilter.name" />
+      <button class="btn btn-primary" (click)="addOrUpdateTransactionFilter()">Save</button>
+      <button class="btn btn-danger" (click)="deleteTransactionFilter()">Delete</button>
+    </td>
+  </tr>
+
   <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
 
     <!--Date-->
@@ -73,6 +126,7 @@
       <select class="form-control" [(ngModel)]="transaction.editedTransaction.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
+        </option>
       </select>
     </td>
 
@@ -82,6 +136,7 @@
       <select class="form-control" [(ngModel)]="transaction.editedTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
+        </option>
       </select>
     </td>
 
@@ -97,10 +152,10 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn-primary" (click)="deleteTransaction(transaction)">Delete</button>
+            <button class="btn btn-primary" (click)="deleteTransaction(transaction)">Delete</button>
           </li>
           <li>
-            <button class="btn-danger" (click)="onShowEditMode(transaction)">Edit</button>
+            <button class="btn btn-danger" (click)="onShowEditMode(transaction)">Edit</button>
           </li>
         </ul>
       </div>
@@ -130,6 +185,7 @@
       <select class="form-control" [(ngModel)]="newTransaction.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
+        </option>
       </select>
     </td>
 
@@ -138,6 +194,7 @@
       <select class="form-control" [(ngModel)]="newTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
+        </option>
       </select>
     </td>
 
