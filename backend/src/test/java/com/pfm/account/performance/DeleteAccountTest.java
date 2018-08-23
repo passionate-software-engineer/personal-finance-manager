@@ -14,7 +14,7 @@ public class DeleteAccountTest extends InvoicePerformanceTestBase {
 
   @Test
   @ThreadCount(THREAD_COUNT)
-  public void shouldDeleteSimultaneouslyAccountTest() throws Exception {
+  public void shouldDeleteSimultaneouslyMultipleAccounts() throws Exception {
 
     Account account = accounts.get(counter.getAndAdd(2));
     accounts.remove(account);
