@@ -7,6 +7,8 @@ import {Category} from '../../category/category';
 import {CategoryService} from '../../category/category-service/category.service';
 import {AccountService} from '../../account/account-service/account.service';
 import {TransactionFilter} from '../transaction-filter';
+import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
+import {FilterResponse} from '../transaction-filter-service/transaction-filter-response';
 
 @Component({
   selector: 'app-transactions',
@@ -23,10 +25,10 @@ export class TransactionsComponent implements OnInit {
   newTransaction = new Transaction();
   selectedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
-  transactionFilters: TransactionFilter[];
+  filters: TransactionFilter[];
 
   constructor(private transactionService: TransactionService, private alertService: AlertsService, private categoryService: CategoryService,
-              private accountService: AccountService) {
+              private accountService: AccountService, private filterService: TransactionFilterService) {
   }
 
   ngOnInit() {
@@ -40,6 +42,9 @@ export class TransactionsComponent implements OnInit {
     //   }
     // );
 
+    this.filters = [];
+    this.addShowAllFilter();
+
     // TODO do in parallel with forkJoin (not working for some reason)
     this.categoryService.getCategories()
       .subscribe(categories => {
@@ -49,14 +54,9 @@ export class TransactionsComponent implements OnInit {
           .subscribe(accounts => {
             this.accounts = accounts;
             this.getTransactions();
+            this.getFilters();
           });
       });
-
-    this.originalFilter.name = 'New';
-    this.selectedFilter = JSON.parse(JSON.stringify(this.originalFilter));
-
-    this.transactionFilters = [];
-    this.transactionFilters.push(this.originalFilter);
   }
 
   getTransactions(): void {
@@ -166,6 +166,7 @@ export class TransactionsComponent implements OnInit {
         this.transactionService.getTransaction(id)
           .subscribe(createdTransaction => {
 
+            // TODO duplicate with above method
             const returnedTransaction = new Transaction();
             returnedTransaction.date = createdTransaction.date;
             returnedTransaction.id = createdTransaction.id;
@@ -192,27 +193,148 @@ export class TransactionsComponent implements OnInit {
       });
   }
 
-  onFilterChange(selectedFilter) {
+  onFilterChange() {
     this.selectedFilter = JSON.parse(JSON.stringify(this.originalFilter));
-  }
 
-  addOrUpdateTransactionFilter() {
-    if (this.selectedFilter.id === undefined) {
-      this.addFilter();
-    } else {
-      this.updateFilter();
+    this.selectedFilter.accounts = [];
+    for (const account of this.originalFilter.accounts) {
+      this.selectedFilter.accounts.push(account);
+    }
+
+    this.selectedFilter.categories = [];
+    for (const category of this.originalFilter.categories) {
+      this.selectedFilter.categories.push(category);
     }
   }
 
+  getFilters(): void {
+    this.filterService.getFilters()
+      .subscribe(filters => {
+        for (const filter of filters) {
+          const processedFilter = this.processFilter(filter);
+          this.filters.push(processedFilter);
+        }
+        this.setCurrentFilter();
+      });
+  }
+
   addFilter() {
-    const newFilter = JSON.parse(JSON.stringify(this.selectedFilter));
-    this.transactionFilters.push(newFilter);
+    // if (!this.validateTransaction(this.newTransaction)) {
+    //   return;
+    // } // TODO validation
+
+    this.filterService.addFilter(this.selectedFilter)
+      .subscribe(id => {
+        this.alertService.success('Filter added');
+        this.filterService.getFilter(id)
+          .subscribe(createdFilter => {
+            const processedFilter = this.processFilter(createdFilter);
+            this.filters.push(processedFilter);
+            this.sortFilters();
+
+            this.originalFilter = processedFilter;
+            this.onFilterChange();
+          });
+      });
   }
 
   updateFilter() {
+    // if (!this.validateTransaction(this.newTransaction)) {
+    //   return;
+    // } // TODO validation
+
+    this.filterService.updateFilter(this.selectedFilter)
+      .subscribe(() => {
+        this.alertService.success('Filter updated');
+        this.filterService.getFilter(this.selectedFilter.id)
+          .subscribe(createdFilter => {
+            const processedFilter = this.processFilter(createdFilter);
+            this.filters = this.filters.filter(filter => filter !== this.originalFilter);
+            this.filters.push(processedFilter);
+            this.sortFilters();
+
+            this.originalFilter = processedFilter; // TODO sort alphabetically
+            this.onFilterChange();
+          });
+      });
   }
 
-  deleteTransactionFilter() {
+  deleteFilter() {
+    if (this.originalFilter.id === undefined) {
+      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be deleted');
+      return;
+    }
+
+    if (confirm('Are you sure You want to delete filter named "' + this.originalFilter.name + '"?')) {
+      this.filterService.deleteFilter(this.originalFilter.id)
+        .subscribe(() => {
+          this.alertService.success('Filter deleted');
+          this.filters = this.filters.filter(filter => filter !== this.originalFilter);
+
+          this.setCurrentFilter();
+        });
+    }
+  }
+
+  private setCurrentFilter() {
+    this.sortFilters();
+
+    this.originalFilter = this.filters[0];
+    this.onFilterChange();
+  }
+
+  private addShowAllFilter() {
+    if (this.filters.length === 0) {
+      const newFilter = new TransactionFilter();
+      newFilter.name = 'Show all';
+      newFilter.categories = [];
+      newFilter.accounts = [];
+
+      this.filters.push(newFilter);
+    }
+  }
+
+  private processFilter(filterResponse: FilterResponse): TransactionFilter {
+    const filter = new TransactionFilter();
+    filter.id = filterResponse.id;
+    filter.name = filterResponse.name;
+    filter.dateFrom = filterResponse.dateFrom;
+    filter.dateTo = filterResponse.dateTo;
+    filter.priceFrom = +filterResponse.priceFrom; // + added to convert to number
+    filter.priceTo = +filterResponse.priceTo; // + added to convert to number
+    filter.description = filterResponse.description;
+    filter.accounts = [];
+    filter.categories = [];
+
+    for (const accountId of filterResponse.accountIds) {
+      for (const account of this.accounts) {
+        if (account.id === accountId) {
+          filter.accounts.push(account);
+        }
+      }
+    }
+
+    for (const categoryId of filterResponse.categoryIds) {
+      for (const category of this.categories) {
+        if (category.id === categoryId) {
+          filter.categories.push(category);
+        }
+      }
+    }
+
+    return filter;
+  }
+
+  sortFilters() {
+    this.filters.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   onRefreshTransactions() {

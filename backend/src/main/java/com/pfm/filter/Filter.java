@@ -1,16 +1,15 @@
 package com.pfm.filter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.category.Category;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,15 +25,18 @@ public final class Filter {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(columnDefinition = "INTEGER")
   private Long id;
 
   private String name;
 
   @ElementCollection
-  private List<Long> accountsIds;
+  @Column(name = "account_id")
+  private List<Long> accountIds;
 
   @ElementCollection
-  private List<Long> categoriesIds;
+  @Column(name = "category_id")
+  private List<Long> categoryIds;
 
   private BigDecimal priceFrom;
   private BigDecimal priceTo;

@@ -1,7 +1,5 @@
 package com.pfm.filter;
 
-import com.pfm.account.AccountService;
-import com.pfm.category.CategoryService;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +13,6 @@ import org.springframework.stereotype.Service;
 public class FilterService {
 
   private FilterRepository filterRepository;
-  private AccountService accountService;
-  private CategoryService categoryService;
 
   public Filter addFilter(Filter filter) {
     return filterRepository.save(filter);
@@ -39,8 +35,8 @@ public class FilterService {
   public void updateFilter(long id, Filter filter) {
     Filter filterToUpdate = getFilterFromDatabase(id);
 
-    filterToUpdate.setAccountsIds(filter.getAccountsIds());
-    filterToUpdate.setCategoriesIds(filter.getCategoriesIds());
+    filterToUpdate.setAccountIds(filter.getAccountIds());
+    filterToUpdate.setCategoryIds(filter.getCategoryIds());
     filterToUpdate.setDateFrom(filter.getDateFrom());
     filterToUpdate.setDateTo(filter.getDateTo());
     filterToUpdate.setPriceFrom(filter.getPriceFrom());
