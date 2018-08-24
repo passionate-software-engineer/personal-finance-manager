@@ -29,14 +29,14 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, getFilterFoodExpenses());
-    expectedFilter.setAccountsIds(accountIds);
-    expectedFilter.setCategoriesIds(categoryIds);
+    expectedFilter.setAccountIds(accountIds);
+    expectedFilter.setCategoryIds(categoryIds);
     Filter actualFilter = getFilterById(filterId);
     assertThat(expectedFilter, is(equalTo(actualFilter)));
   }
 
   @Test
-  public void shouldGetFilterById() throws Exception{
+  public void shouldGetFilterById() throws Exception {
     Long categoryId = addCategoryAndReturnId(getCategoryFoodNoParentCategoryRequest());
     Long accountId = callRestServiceToAddAccountAndReturnId(getAccountDamianBalance10Request());
     List<Long> accountIds = Collections.singletonList(accountId);
@@ -45,13 +45,12 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
         categoryIds);
 
     //when
-    Filter outputFilter =getFilterById(filterId);
+    Filter outputFilter = getFilterById(filterId);
 
     //then
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, getFilterFoodExpenses());
     assertThat(expectedFilter, is(equalTo(outputFilter)));
   }
-
 
 }
 

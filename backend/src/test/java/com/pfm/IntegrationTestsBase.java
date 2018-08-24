@@ -204,8 +204,9 @@ public abstract class IntegrationTestsBase {
   }
 
   //filters
-  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, List<Long> accountIds, List<Long> categoriesIds) throws Exception {
-    filterRequest.setAccountsIds(accountIds);
+  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, List<Long> accountIds, List<Long> categoriesIds)
+      throws Exception {
+    filterRequest.setAccountIds(accountIds);
     filterRequest.setCategoryIds(categoriesIds);
     String response =
         mockMvc
@@ -223,8 +224,8 @@ public abstract class IntegrationTestsBase {
         .name(filterRequest.getName())
         .dateFrom(filterRequest.getDateFrom())
         .dateTo(filterRequest.getDateTo())
-        .accountsIds(filterRequest.getAccountsIds())
-        .categoriesIds(filterRequest.getCategoryIds())
+        .accountIds(filterRequest.getAccountIds())
+        .categoryIds(filterRequest.getCategoryIds())
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
@@ -253,11 +254,11 @@ public abstract class IntegrationTestsBase {
     return getFiltersFromResponse(response);
   }
 
-  protected Filter jsonToFilter(String jsonFilter) throws Exception {
+  private Filter jsonToFilter(String jsonFilter) throws Exception {
     return mapper.readValue(jsonFilter, Filter.class);
   }
 
-  protected List<Filter> getFiltersFromResponse(String response) throws Exception {
+  private List<Filter> getFiltersFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Filter.class));
   }
 }
