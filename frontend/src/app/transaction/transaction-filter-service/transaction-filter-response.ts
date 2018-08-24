@@ -5,8 +5,8 @@ export class FilterResponse {
   dateFrom: Date;
   dateTo: Date;
   description: string;
-  categories: number[];
-  accounts: number[];
+  categoryIds: number[];
+  accountIds: number[];
   priceFrom: number;
   priceTo: number;
 }

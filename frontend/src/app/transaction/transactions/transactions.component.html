@@ -90,13 +90,14 @@
     <!-- Filter selection -->
     <td>
       <select class="form-control" [(ngModel)]="originalFilter" (ngModelChange)="onFilterChange($event)">
-        <option *ngFor="let filter of transactionFilters" [ngValue]="filter">
+        <option *ngFor="let filter of filters" [ngValue]="filter">
           {{filter.name}}
         </option>
       </select>
       <input class="form-control" type="text" [(ngModel)]="selectedFilter.name" />
-      <button class="btn btn-primary" (click)="addOrUpdateTransactionFilter()">Save</button>
-      <button class="btn btn-danger" (click)="deleteTransactionFilter()">Delete</button>
+      <button class="btn btn-primary" (click)="updateFilter()">Update selected</button>
+      <button class="btn btn-primary" (click)="addFilter()">Save as new</button>
+      <button class="btn btn-danger" (click)="deleteFilter()">Delete</button>
     </td>
   </tr>
 

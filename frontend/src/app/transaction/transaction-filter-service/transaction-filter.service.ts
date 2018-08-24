@@ -7,6 +7,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 import {FilterResponse} from './transaction-filter-response';
+import {TransactionFilter} from '../transaction-filter';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -15,7 +16,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService {
+export class TransactionFilterService {
 
   private apiUrl = environment.appUrl + '/filters';
 
@@ -23,49 +24,62 @@ export class TransactionService {
               private alertService: AlertsService) {
   }
 
-  private static transactionToTransactionRequest(transaction: Transaction) {
+  private static filterToFilterRequest(filter: TransactionFilter) {
+    const accounts = [];
+    for (const account of filter.accounts) {
+      accounts.push(account.id);
+    }
+
+    const categories = [];
+    for (const category of filter.categories) {
+      categories.push(category.id);
+    }
+
     return {
-      description: transaction.description,
-      categoryId: transaction.category.id,
-      accountId: transaction.account.id,
-      price: transaction.price,
-      date: transaction.date
+      name: filter.name,
+      description: filter.description,
+      priceFrom: filter.priceFrom,
+      priceTo: filter.priceTo,
+      dateFrom: filter.dateFrom,
+      dateTo: filter.dateTo,
+      accountIds: accounts,
+      categoryIds: categories
     };
   }
 
-  getTransactions(): Observable<FilterResponse[]> {
-    return this.http.get<FilterResponse[]>(this.apiUrl).pipe(
-      tap(() => this.log(`fetched transactions`)),
-      catchError(this.handleError('getTransactions', [])));
+  getFilters(): Observable<FilterResponse[]> {
+    return this.http.get<FilterResponse[]>(this.apiUrl)
+      .pipe(tap(() => this.log(`fetched filters`)),
+        catchError(this.handleError('getFilters', [])));
   }
 
-  getTransaction(id: number): Observable<FilterResponse> {
+  getFilter(id: number): Observable<FilterResponse> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.get<FilterResponse>(url).pipe(
-      tap(() => this.log(`fetched transaction with id ` + id)),
-      catchError(this.handleError('getSingleTransaction', null)));
+    return this.http.get<FilterResponse>(url)
+      .pipe(tap(() => this.log(`fetched filter with id ` + id)),
+        catchError(this.handleError('getSingleFilter', null)));
   }
 
-  addTransaction(transaction: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
-    return this.http.post<any>(this.apiUrl, categoryRequest, httpOptions).pipe(
-      tap(any => this.log(`added transaction with id: ` + any)),
-      catchError(this.handleError('addTransaction', [])));
+  addFilter(filter: TransactionFilter): Observable<any> {
+    const filterRequest = TransactionFilterService.filterToFilterRequest(filter);
+    return this.http.post<any>(this.apiUrl, filterRequest, httpOptions)
+      .pipe(tap(any => this.log(`added transaction with id: ` + any)),
+        catchError(this.handleError('addFilter', [])));
   }
 
-  deleteTransaction(id: number): Observable<any> {
+  deleteFilter(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url).pipe(
-      tap(() => this.log(`deleted transaction with id: ` + id)),
-      catchError(this.handleError('deleteTransaction', [])));
+      tap(() => this.log(`deleted filter with id: ` + id)),
+      catchError(this.handleError('deleteFilter', [])));
   }
 
-  editTransaction(category: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.transactionToTransactionRequest(category);
-    const url = `${this.apiUrl}/${category.id}`;
-    return this.http.put<Transaction>(url, categoryRequest, httpOptions).pipe(
-      tap(() => this.log(`edited transaction with id: ` + category.id)),
-      catchError(this.handleError('editTransaction', [])));
+  updateFilter(filter: TransactionFilter): Observable<any> {
+    const categoryRequest = TransactionFilterService.filterToFilterRequest(filter);
+    const url = `${this.apiUrl}/${filter.id}`;
+    return this.http.put<Transaction>(url, categoryRequest, httpOptions)
+      .pipe(tap(() => this.log(`edited filter with id: ` + filter.id)),
+        catchError(this.handleError('updateFilter', [])));
   }
 
   private log(message: string) {
