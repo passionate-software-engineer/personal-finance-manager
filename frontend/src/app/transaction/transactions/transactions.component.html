@@ -5,6 +5,7 @@
     </option>
   </select>
   <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
+  <button class="btn btn-primary" (click)="resetFilter()">Reset selected filter</button>
   <button class="btn btn-primary" (click)="updateFilter()">Update selected filter</button>
   <button class="btn btn-primary" (click)="addFilter()">Save as new filter</button>
   <button class="btn btn-danger" (click)="deleteFilter()">Delete filter</button>
@@ -68,8 +69,10 @@
 
     <!--Date-->
     <td>
-      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateFrom" (ngModelChange)="filterTransactions()">
-      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateTo" (ngModelChange)="filterTransactions()">
+      <input class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="selectedFilter.dateFrom"
+             (ngModelChange)="filterTransactions()">
+      <input class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="selectedFilter.dateTo"
+             (ngModelChange)="filterTransactions()">
     </td>
 
     <!--Description-->
@@ -110,7 +113,7 @@
     <!--Date-->
     <td *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
     <td *ngIf="transaction.editMode">
-      <input class="form-control" type="date" [(ngModel)]="transaction.editedTransaction.date">
+      <input class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="transaction.editedTransaction.date">
     </td>
 
     <!--Description-->
@@ -171,7 +174,7 @@
   <tr *ngIf="addingMode">
     <!--Date-->
     <td>
-      <input class="form-control" type="date" [(ngModel)]="newTransaction.date">
+      <input class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="newTransaction.date">
     </td>
 
     <!--Description-->
