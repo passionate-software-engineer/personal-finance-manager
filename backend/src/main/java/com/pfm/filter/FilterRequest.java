@@ -24,7 +24,7 @@ public class FilterRequest {
   @ApiModelProperty(value = "Filter Name", example = "Expenses June")
   private String name;
 
-  private List<Long> accountsIds;
+  private List<Long> accountIds;
 
   private List<Long> categoryIds;
 
