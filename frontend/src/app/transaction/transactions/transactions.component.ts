@@ -18,6 +18,7 @@ import {FilterResponse} from '../transaction-filter-service/transaction-filter-r
 export class TransactionsComponent implements OnInit {
   order = 'date';
   reverse = false;
+  allTransactions: Transaction[];
   transactions: Transaction[];
   categories: Category[];
   accounts: Account[];
@@ -63,6 +64,7 @@ export class TransactionsComponent implements OnInit {
     this.transactionService.getTransactions()
       .subscribe(transactions => {
         this.transactions = [];
+        this.allTransactions = [];
         for (const transactionResponse of transactions) {
           const transaction = new Transaction();
           transaction.date = transactionResponse.date;
@@ -84,19 +86,20 @@ export class TransactionsComponent implements OnInit {
           }
 
           this.transactions.push(transaction);
+          this.allTransactions.push(transaction);
         }
+
+        this.filterTransactions();
       });
   }
 
-  deleteTransaction(transaction) {
+  deleteTransaction(transactionToDelete) {
     if (confirm('Are you sure You want to delete this transaction ?')) {
-      this.transactionService.deleteTransaction(transaction.id)
+      this.transactionService.deleteTransaction(transactionToDelete.id)
         .subscribe(() => {
           this.alertService.success('Transaction deleted');
-          const index: number = this.transactions.indexOf(transaction);
-          if (index !== -1) {
-            this.transactions.splice(index, 1);
-          }
+          this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
+          this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
         });
     }
   }
@@ -187,6 +190,7 @@ export class TransactionsComponent implements OnInit {
             }
 
             this.transactions.push(returnedTransaction);
+            this.allTransactions.push(returnedTransaction);
             this.addingMode = false;
             this.newTransaction = new Transaction();
           });
@@ -205,7 +209,10 @@ export class TransactionsComponent implements OnInit {
     for (const category of this.originalFilter.categories) {
       this.selectedFilter.categories.push(category);
     }
+
+    this.filterTransactions();
   }
+
 
   getFilters(): void {
     this.filterService.getFilters()
@@ -258,7 +265,7 @@ export class TransactionsComponent implements OnInit {
             this.filters.push(processedFilter);
             this.sortFilters();
 
-            this.originalFilter = processedFilter; // TODO sort alphabetically
+            this.originalFilter = processedFilter;
             this.onFilterChange();
           });
       });
@@ -342,8 +349,60 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  onRefreshTransactions() {
-    this.getTransactions();
+  private filterTransactions() {
+    this.transactions = [];
+    for (const transaction of this.allTransactions) {
+      this.transactions.push(transaction);
+    }
+
+    if (this.selectedFilter.priceFrom !== undefined && this.selectedFilter.priceFrom !== null) {
+      this.transactions = this.transactions.filter(transaction => transaction.price >= this.selectedFilter.priceFrom);
+    }
+
+    if (this.selectedFilter.priceTo !== undefined && this.selectedFilter.priceTo !== null) {
+      this.transactions = this.transactions.filter(transaction => transaction.price <= this.selectedFilter.priceTo);
+    }
+
+    if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null) {
+      this.transactions = this.transactions.filter(transaction => transaction.date >= this.selectedFilter.dateFrom);
+    }
+
+    if (this.selectedFilter.dateTo !== undefined && this.selectedFilter.dateTo !== null) {
+      this.transactions = this.transactions.filter(transaction => transaction.date <= this.selectedFilter.dateTo);
+    }
+
+    if (this.selectedFilter.description !== undefined && this.selectedFilter.description !== null) {
+      this.transactions = this.transactions
+        .filter(transaction => transaction.description.toLowerCase().indexOf(this.selectedFilter.description.toLowerCase()) !== -1);
+    }
+
+    if (this.selectedFilter.accounts !== undefined && this.selectedFilter.accounts.length > 0) {
+      this.transactions = this.transactions
+        .filter(transaction => this.selectedFilter.accounts.indexOf(transaction.account) !== -1);
+    }
+
+    if (this.selectedFilter.categories !== undefined && this.selectedFilter.categories.length > 0) {
+      const allCategories = this.getAllChildCategoriesIncludingParent(this.selectedFilter.categories[0]);
+      this.transactions = this.transactions
+        .filter(transaction => allCategories.indexOf(transaction.category) !== -1);
+    }
+  }
+
+  // TODO calculate once and keep in memory, it change only when we modify list of categories
+  private getAllChildCategoriesIncludingParent(filterCategory: Category) {
+    const allCategories = [];
+
+    for (const category of this.categories) {
+      let temporaryCategory = category;
+      while (temporaryCategory !== undefined && temporaryCategory !== null) {
+        if (temporaryCategory.id === filterCategory.id) {
+          allCategories.push(category);
+        }
+        temporaryCategory = temporaryCategory.parentCategory;
+      }
+    }
+
+    return allCategories;
   }
 
   validateTransaction(transaction: Transaction): boolean {
