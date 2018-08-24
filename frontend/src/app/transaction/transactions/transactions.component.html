@@ -1,7 +1,7 @@
 <button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
   Add Transaction
 </button>
-<button class="btn btn-primary" type="button" (click)="onRefreshTransactions()">Refresh</button>
+<button class="btn btn-primary" type="button" (click)="getTransactions()">Refresh</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -54,24 +54,24 @@
 
     <!--Date-->
     <td>
-      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateFrom">
-      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateTo">
+      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateFrom" (ngModelChange)="filterTransactions()">
+      <input class="form-control" type="date" [(ngModel)]="selectedFilter.dateTo" (ngModelChange)="filterTransactions()">
     </td>
 
     <!--Description-->
     <td>
-      <input class="form-control" type="text" [(ngModel)]="selectedFilter.description">
+      <input class="form-control" type="text" [(ngModel)]="selectedFilter.description" (ngModelChange)="filterTransactions()">
     </td>
 
     <!--Price-->
     <td>
-      <input class="form-control" type="number" [(ngModel)]="selectedFilter.priceFrom">
-      <input class="form-control" type="number" [(ngModel)]="selectedFilter.priceTo">
+      <input class="form-control" type="number" [(ngModel)]="selectedFilter.priceFrom" (ngModelChange)="filterTransactions()">
+      <input class="form-control" type="number" [(ngModel)]="selectedFilter.priceTo" (ngModelChange)="filterTransactions()">
     </td>
 
     <!--Account-->
     <td>
-      <select multiple class="form-control" [(ngModel)]="selectedFilter.accounts">
+      <select multiple class="form-control" [(ngModel)]="selectedFilter.accounts" (ngModelChange)="filterTransactions()">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
         </option>
@@ -80,7 +80,7 @@
 
     <!--Category-->
     <td>
-      <select multiple class="form-control" [(ngModel)]="selectedFilter.categories">
+      <select multiple class="form-control" [(ngModel)]="selectedFilter.categories" (ngModelChange)="filterTransactions()">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
         </option>
@@ -94,7 +94,7 @@
           {{filter.name}}
         </option>
       </select>
-      <input class="form-control" type="text" [(ngModel)]="selectedFilter.name" />
+      <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
       <button class="btn btn-primary" (click)="updateFilter()">Update selected</button>
       <button class="btn btn-primary" (click)="addFilter()">Save as new</button>
       <button class="btn btn-danger" (click)="deleteFilter()">Delete</button>
