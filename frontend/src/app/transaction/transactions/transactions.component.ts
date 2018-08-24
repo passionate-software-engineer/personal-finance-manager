@@ -213,7 +213,7 @@ export class TransactionsComponent implements OnInit {
     this.filterTransactions();
   }
 
-
+  // TODO separate filters logic to separate component
   getFilters(): void {
     this.filterService.getFilters()
       .subscribe(filters => {
@@ -226,9 +226,9 @@ export class TransactionsComponent implements OnInit {
   }
 
   addFilter() {
-    // if (!this.validateTransaction(this.newTransaction)) {
-    //   return;
-    // } // TODO validation
+    if (!this.validateFilter(this.selectedFilter)) {
+      return;
+    }
 
     this.filterService.addFilter(this.selectedFilter)
       .subscribe(id => {
@@ -245,15 +245,19 @@ export class TransactionsComponent implements OnInit {
       });
   }
 
+  resetFilter() {
+    this.onFilterChange();
+  }
+
   updateFilter() {
     if (this.originalFilter.id === undefined) {
-      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be updated. Please create new instead.');
+      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be updated. Please create new filter instead.');
       return;
     }
 
-    // if (!this.validateTransaction(this.newTransaction)) {
-    //   return;
-    // } // TODO validation
+    if (!this.validateFilter(this.selectedFilter, true)) {
+      return;
+    }
 
     this.filterService.updateFilter(this.selectedFilter)
       .subscribe(() => {
@@ -364,11 +368,11 @@ export class TransactionsComponent implements OnInit {
     }
 
     if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null) {
-      this.transactions = this.transactions.filter(transaction => transaction.date >= this.selectedFilter.dateFrom);
+      this.transactions = this.transactions.filter(transaction => transaction.date.getTime() >= this.selectedFilter.dateFrom.getTime());
     }
 
     if (this.selectedFilter.dateTo !== undefined && this.selectedFilter.dateTo !== null) {
-      this.transactions = this.transactions.filter(transaction => transaction.date <= this.selectedFilter.dateTo);
+      this.transactions = this.transactions.filter(transaction => transaction.date.getTime() <= this.selectedFilter.dateTo.getTime());
     }
 
     if (this.selectedFilter.description !== undefined && this.selectedFilter.description !== null) {
@@ -382,23 +386,25 @@ export class TransactionsComponent implements OnInit {
     }
 
     if (this.selectedFilter.categories !== undefined && this.selectedFilter.categories.length > 0) {
-      const allCategories = this.getAllChildCategoriesIncludingParent(this.selectedFilter.categories[0]);
+      const allCategories = this.getAllChildCategoriesIncludingParent(this.selectedFilter.categories);
       this.transactions = this.transactions
         .filter(transaction => allCategories.indexOf(transaction.category) !== -1);
     }
   }
 
   // TODO calculate once and keep in memory, it change only when we modify list of categories
-  private getAllChildCategoriesIncludingParent(filterCategory: Category) {
+  private getAllChildCategoriesIncludingParent(filterCategories: Category[]) {
     const allCategories = [];
 
-    for (const category of this.categories) {
-      let temporaryCategory = category;
-      while (temporaryCategory !== undefined && temporaryCategory !== null) {
-        if (temporaryCategory.id === filterCategory.id) {
-          allCategories.push(category);
+    for (const filterCategory of filterCategories) {
+      for (const category of this.categories) {
+        let temporaryCategory = category;
+        while (temporaryCategory !== undefined && temporaryCategory !== null) {
+          if (temporaryCategory.id === filterCategory.id) {
+            allCategories.push(category);
+          }
+          temporaryCategory = temporaryCategory.parentCategory;
         }
-        temporaryCategory = temporaryCategory.parentCategory;
       }
     }
 
@@ -437,6 +443,39 @@ export class TransactionsComponent implements OnInit {
       this.alertService.error('Account cannot be empty');
       status = false;
     }
+
+    return status;
+  }
+
+  validateFilter(filter: TransactionFilter, allowDuplicatedName = false): boolean {
+    let status = true;
+
+    if (filter.name == null || filter.name.trim() === '') {
+      this.alertService.error('Filter name cannot be empty');
+      status = false;
+    }
+
+    if (!allowDuplicatedName && filter.name != null) {
+      for (const existingFilter of this.filters) {
+        if (existingFilter.name.toLowerCase() === filter.name) {
+          this.alertService.error('Filter name already exists. Do you want to update existing filter?');
+          status = false;
+          break;
+        }
+      }
+    }
+
+    if (filter.priceFrom != null && filter.priceTo != null && filter.priceFrom > filter.priceTo) {
+      this.alertService.error('Filter "from price" cannot be higher then "to price"');
+      status = false;
+    }
+
+    if (filter.dateFrom != null && filter.dateTo != null && filter.dateFrom.getTime() > filter.dateTo.getTime()) {
+      this.alertService.error('Filter "from date" cannot be later then "to date"');
+      status = false;
+    }
+
+    // TODO date & price validations
 
     return status;
   }
