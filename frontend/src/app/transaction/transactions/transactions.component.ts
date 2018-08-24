@@ -239,6 +239,11 @@ export class TransactionsComponent implements OnInit {
   }
 
   updateFilter() {
+    if (this.originalFilter.id === undefined) {
+      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be updated. Please create new instead.');
+      return;
+    }
+
     // if (!this.validateTransaction(this.newTransaction)) {
     //   return;
     // } // TODO validation
