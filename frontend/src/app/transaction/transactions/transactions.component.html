@@ -1,14 +1,28 @@
-<button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
-  Add Transaction
-</button>
-<button class="btn btn-primary" type="button" (click)="getTransactions()">Refresh</button>
+<div class="form-inline pull-right">
+  <select class="form-control" [(ngModel)]="originalFilter" (ngModelChange)="onFilterChange($event)">
+    <option *ngFor="let filter of filters" [ngValue]="filter">
+      {{filter.name}}
+    </option>
+  </select>
+  <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
+  <button class="btn btn-primary" (click)="updateFilter()">Update selected filter</button>
+  <button class="btn btn-primary" (click)="addFilter()">Save as new filter</button>
+  <button class="btn btn-danger" (click)="deleteFilter()">Delete filter</button>
+</div>
+
+<div class="pull-left">
+  <button class="btn btn-danger" type="button" (click)="addingMode = !addingMode">
+    Add Transaction
+  </button>
+  <button class="btn btn-primary" type="button" (click)="getTransactions()">Refresh</button>
+</div>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
 
     <!--Date-->
-    <th [class.active]="order === 'date'" (click)="setOrder('date')">
+    <th class="width: 25%" [class.active]="order === 'date'" (click)="setOrder('date')">
       Date
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
@@ -87,17 +101,7 @@
       </select>
     </td>
 
-    <!-- Filter selection -->
     <td>
-      <select class="form-control" [(ngModel)]="originalFilter" (ngModelChange)="onFilterChange($event)">
-        <option *ngFor="let filter of filters" [ngValue]="filter">
-          {{filter.name}}
-        </option>
-      </select>
-      <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
-      <button class="btn btn-primary" (click)="updateFilter()">Update selected</button>
-      <button class="btn btn-primary" (click)="addFilter()">Save as new</button>
-      <button class="btn btn-danger" (click)="deleteFilter()">Delete</button>
     </td>
   </tr>
 
@@ -142,8 +146,8 @@
     </td>
 
     <td *ngIf="transaction.editMode">
-      <button class="btn-primary" (click)="onEditTransaction(transaction)">Save</button>
-      <button class="btn-danger" (click)="transaction.editMode=false">Exit</button>
+      <button class="btn btn-primary" (click)="onEditTransaction(transaction)">Save</button>
+      <button class="btn btn-danger" (click)="transaction.editMode=false">Exit</button>
     </td>
 
     <td *ngIf="!transaction.editMode">
@@ -200,8 +204,8 @@
     </td>
 
     <td>
-      <button class="btn-primary" (click)="onAddTransaction()">Save</button>
-      <button class="btn-danger" (click)="addingMode=false">Exit</button>
+      <button class="btn btn-primary" (click)="onAddTransaction()">Save</button>
+      <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
     </td>
   </tr>
 
