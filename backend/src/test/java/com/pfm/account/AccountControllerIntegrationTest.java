@@ -219,5 +219,4 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }
 
-
 }
