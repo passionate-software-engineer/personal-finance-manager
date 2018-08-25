@@ -81,5 +81,5 @@ echo "Added filter Significant expenses under id $FILTER_SIGNIFICANT"
 FILTER_CASH=$(curl -X POST "http://localhost:8088/filters" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"dateFrom\": \"2018-01-01\", \"dateTo\": \"2018-12-31\", \"name\": \"Cash payments 2018\", \"accountIds\": [ $ACCOUNT_CASH ]}")
 echo "Added filter cash expenses under id $FILTER_CASH"
 
-FILTER_CAR=$(curl -X POST "http://localhost:8088/filters" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"dateFrom\": \"2018-01-01\", \"dateTo\": \"2018-12-31\", \"name\": \"Car expenses < 500\", \"priceFrom\": 0, \"priceTo\": 500, \"categoryIds\": [ 1 ]}")
+FILTER_CAR=$(curl -X POST "http://localhost:8088/filters" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"dateFrom\": \"2017-01-01\", \"dateTo\": \"2018-12-31\", \"name\": \"Car expenses < 500\", \"priceFrom\": 0, \"priceTo\": 500, \"categoryIds\": [ 1 ]}")
 echo "Added filter car expenses under id $FILTER_CAR"
