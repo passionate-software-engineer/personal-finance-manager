@@ -9,27 +9,27 @@ import {AccountService} from '../../account/account-service/account.service';
 import {TransactionFilter} from '../transaction-filter';
 import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
 import {FilterResponse} from '../transaction-filter-service/transaction-filter-response';
+import {Sortable} from '../../sortable';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css']
 })
-export class TransactionsComponent implements OnInit {
-  order = 'date';
-  reverse = false;
-  allTransactions: Transaction[];
-  transactions: Transaction[];
-  categories: Category[];
-  accounts: Account[];
+export class TransactionsComponent extends Sortable implements OnInit {
+  allTransactions: Transaction[] = [];
+  transactions: Transaction[] = [];
+  categories: Category[] = [];
+  accounts: Account[] = [];
   addingMode = false;
   newTransaction = new Transaction();
   selectedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
-  filters: TransactionFilter[];
+  filters: TransactionFilter[] = [];
 
   constructor(private transactionService: TransactionService, private alertService: AlertsService, private categoryService: CategoryService,
               private accountService: AccountService, private filterService: TransactionFilterService) {
+    super('date');
   }
 
   ngOnInit() {
@@ -457,7 +457,7 @@ export class TransactionsComponent implements OnInit {
 
     if (!allowDuplicatedName && filter.name != null) {
       for (const existingFilter of this.filters) {
-        if (existingFilter.name.toLowerCase() === filter.name) {
+        if (existingFilter.name.toLowerCase() === filter.name.toLowerCase()) {
           this.alertService.error('Filter name already exists. Do you want to update existing filter?');
           status = false;
           break;
@@ -475,17 +475,7 @@ export class TransactionsComponent implements OnInit {
       status = false;
     }
 
-    // TODO date & price validations
-
     return status;
-  }
-
-  setOrder(value: string) {
-    if (this.order === value) {
-      this.reverse = !this.reverse;
-    }
-
-    this.order = value;
   }
 
 }
