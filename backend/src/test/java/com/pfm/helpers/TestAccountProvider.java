@@ -1,5 +1,7 @@
 package com.pfm.helpers;
 
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+
 import com.pfm.account.Account;
 import com.pfm.account.AccountController.AccountRequest;
 import java.math.BigDecimal;
@@ -58,13 +60,23 @@ public class TestAccountProvider {
           .balance(BigDecimal.valueOf(10.99))
           .build();
 
-  public static final AccountRequest ACCOUNT_DAMIAN_BALANCE_10_REQUEST =
+  public static final AccountRequest ACCOUNT_REQUEST_MBANK_BALANCE_1000 =
+      AccountRequest.builder()
+          .name("MBank")
+          .balance(convertDoubleToBigDecimal(1000))
+          .build();
+
+  public static final AccountRequest ACCOUNT_REQUEST_DAMIAN_BALANCE_10 =
       AccountRequest.builder()
           .name("Damian mBank account")
           .balance(BigDecimal.TEN.setScale(2, RoundingMode.HALF_UP))
           .build();
 
-  public static AccountRequest getAccountDamianBalance10Request() {
-    return ACCOUNT_DAMIAN_BALANCE_10_REQUEST;
+  public static AccountRequest getAccountRequestDamianBalance10() {
+    return ACCOUNT_REQUEST_DAMIAN_BALANCE_10;
+  }
+
+  public static AccountRequest getAccountRequestMbankBalance1000() {
+    return ACCOUNT_REQUEST_MBANK_BALANCE_1000;
   }
 }
