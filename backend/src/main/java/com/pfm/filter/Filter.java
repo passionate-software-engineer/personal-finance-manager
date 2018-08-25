@@ -45,4 +45,5 @@ public final class Filter {
   private LocalDate dateTo;
 
   private String description;
+
 }

@@ -14,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FilterRequest {
