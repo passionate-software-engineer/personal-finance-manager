@@ -133,7 +133,7 @@ export class TransactionsComponent extends Sortable implements OnInit {
         this.alertService.success('Transaction edited');
         this.transactionService.getTransaction(transaction.id)
           .subscribe(updatedTransaction => {
-            const returnedTransaction = new Transaction();
+            const returnedTransaction = new Transaction(); // TODO dupliated code
             returnedTransaction.date = updatedTransaction.date;
             returnedTransaction.id = updatedTransaction.id;
             returnedTransaction.price = +updatedTransaction.price; // + added to convert to number
@@ -213,7 +213,7 @@ export class TransactionsComponent extends Sortable implements OnInit {
     this.filterTransactions();
   }
 
-  // TODO separate filters logic to separate component
+  // TODO separate filters logic to separate class
   getFilters(): void {
     this.filterService.getFilters()
       .subscribe(filters => {
@@ -367,12 +367,14 @@ export class TransactionsComponent extends Sortable implements OnInit {
       this.transactions = this.transactions.filter(transaction => transaction.price <= this.selectedFilter.priceTo);
     }
 
-    if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null) {
-      this.transactions = this.transactions.filter(transaction => transaction.date.getTime() >= this.selectedFilter.dateFrom.getTime());
+    if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !== '') {
+      this.transactions = this.transactions
+        .filter(transaction => new Date(transaction.date).getTime() >= new Date(this.selectedFilter.dateFrom).getTime());
     }
 
-    if (this.selectedFilter.dateTo !== undefined && this.selectedFilter.dateTo !== null) {
-      this.transactions = this.transactions.filter(transaction => transaction.date.getTime() <= this.selectedFilter.dateTo.getTime());
+    if (this.selectedFilter.dateTo !== undefined && this.selectedFilter.dateTo !== null && this.selectedFilter.dateTo !== '') {
+      this.transactions = this.transactions
+        .filter(transaction => new Date(transaction.date).getTime() <= new Date(this.selectedFilter.dateTo).getTime());
     }
 
     if (this.selectedFilter.description !== undefined && this.selectedFilter.description !== null) {
@@ -470,7 +472,7 @@ export class TransactionsComponent extends Sortable implements OnInit {
       status = false;
     }
 
-    if (filter.dateFrom != null && filter.dateTo != null && filter.dateFrom.getTime() > filter.dateTo.getTime()) {
+    if (filter.dateFrom != null && filter.dateTo != null && new Date(filter.dateFrom).getTime() > new Date(filter.dateTo).getTime()) {
       this.alertService.error('Filter "from date" cannot be later then "to date"');
       status = false;
     }
