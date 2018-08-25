@@ -61,5 +61,4 @@ public class AccountTest {
         .testing(Method.TO_STRING)
         .areWellImplemented();
   }
-
 }

@@ -45,7 +45,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     //then
-    assertThat(callRestToGetTransactionById(transactionId), is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
+    assertThat(callRestToGetTransactionById(transactionId),
+        is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
     assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
   }
