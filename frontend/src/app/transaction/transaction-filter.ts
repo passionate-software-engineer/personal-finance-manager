@@ -5,8 +5,8 @@ export class TransactionFilter {
   id: number;
   name: string;
 
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: string; // date input is using string
+  dateTo: string; // date input is using string
   description: string;
   categories: Category[];
   accounts: Account[];
