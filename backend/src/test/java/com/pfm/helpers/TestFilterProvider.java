@@ -58,7 +58,7 @@ public class TestFilterProvider {
         .dateFrom(filterRequestToCopy.getDateFrom())
         .priceFrom(filterRequestToCopy.getPriceFrom())
         .priceTo(filterRequestToCopy.getPriceTo())
-        .description((filterRequestToCopy.getDescription()))
+        .description(filterRequestToCopy.getDescription())
         .name(filterRequestToCopy.getName())
         .build();
   }

@@ -71,7 +71,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetAllFilters() throws Exception {
 
     //given
-    long categoryFoodId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategoryRequest());
+    final long categoryFoodId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategoryRequest());
     long categoryCarId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     long categoryHomeId = callRestToaddCategoryAndReturnId(getCategoryRequestHomeNoParentCategory());
     long accountMbankId = callRestServiceToAddAccountAndReturnId(getAccountRequestMbankBalance1000());
@@ -79,12 +79,12 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     FilterRequest homeExpensesFilterToAdd = getFilterRequestHomeExpensesUpTo200();
     homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryHomeId));
-    long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd);
+    final long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd);
 
     FilterRequest carExpensesFilterToAdd = getFilterRequestCarExpenses();
     carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountDamianId, accountMbankId));
     carExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryCarId));
-    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd);
+    final long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd);
 
     FilterRequest foodExpensesFilterToAdd = getFilterRequestFoodExpenses();
     foodExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountMbankId));
@@ -181,8 +181,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
-        .accountIds(convertAccountIdsToList(1l))
-        .categoryIds(convertCategoryIdsToList(1l))
+        .accountIds(convertAccountIdsToList(1L))
+        .categoryIds(convertCategoryIdsToList(1L))
         .dateFrom(LocalDate.of(2018, 1, 1))
         .dateTo(LocalDate.of(2017, 1, 1))
         .priceFrom(convertDoubleToBigDecimal(100))
@@ -198,19 +198,36 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldReturnErrorCausedByValidationErrorsIdInAddMethodSecondCase() throws Exception {
+
+    //given
+    FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
+        .dateFrom(LocalDate.of(2018, 1, 1))
+        .priceFrom(convertDoubleToBigDecimal(100))
+        .build();
+
+    //when
+    mockMvc
+        .perform(post(FILTERS_SERVICE_PATH)
+            .content(json(filterRequestWithValidationErrors))
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInUpdateMethod() throws Exception {
 
     //given
-    long filterId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
-    FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
-        .name(" ")
-        .accountIds(convertAccountIdsToList(1l))
-        .categoryIds(convertCategoryIdsToList(1l))
-        .dateFrom(LocalDate.of(2018, 1, 1))
-        .dateTo(LocalDate.of(2017, 1, 1))
-        .priceFrom(convertDoubleToBigDecimal(100))
-        .priceTo(convertDoubleToBigDecimal(50))
-        .build();
+    final long filterId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
+    FilterRequest filterRequestWithValidationErrors = new FilterRequest();
+    filterRequestWithValidationErrors.setName(" ");
+    filterRequestWithValidationErrors.setAccountIds(convertAccountIdsToList(1L));
+    filterRequestWithValidationErrors.setCategoryIds(convertCategoryIdsToList(1L));
+    filterRequestWithValidationErrors.setDateFrom(LocalDate.of(2018, 1, 1));
+    filterRequestWithValidationErrors.setDateTo(LocalDate.of(2017, 1, 1));
+    filterRequestWithValidationErrors.setPriceFrom(convertDoubleToBigDecimal(100));
+    filterRequestWithValidationErrors.setPriceTo(convertDoubleToBigDecimal(50));
+    filterRequestWithValidationErrors.setDescription("description");
 
     //when
     mockMvc

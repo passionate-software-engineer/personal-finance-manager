@@ -10,8 +10,6 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -117,10 +115,8 @@ public class AccountController {
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
-  @NoArgsConstructor
   @AllArgsConstructor
   @Getter
-  @Setter
   @Builder
   public static class AccountRequest {
 
