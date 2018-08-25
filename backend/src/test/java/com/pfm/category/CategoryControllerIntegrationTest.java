@@ -37,6 +37,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   //TODO Rewrite test to use helper class and add Category builder
 
+  //TODO change JunitPArams to Junit5 to avoid CLASS RULE
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
@@ -57,8 +58,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldAddCategory() throws Exception {
     //given
     setup();
-    deleteCategoryById(childCategoryId); // TODO that should not be happening - you should start each test from clear state
-    deleteCategoryById(parentCategoryId);
+    callRestToDeleteCategoryById(childCategoryId); // TODO that should not be happening - you should start each test from clear state
+    callRestToDeleteCategoryById(parentCategoryId);
     CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car").build();
     // TODO move all that logic to TestCategoryProvider - tests will be cleaner
     CategoryRequest subCategoryToAdd = CategoryRequest.builder().name("Oil").build();
@@ -66,17 +67,17 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     Category expectedSubCategory = Category.builder().name("Oil").parentCategory(expectedParentCategory).build();
 
     //when
-    long addedParentCategoryId = addCategoryAndReturnId(parentCategoryToAdd);
+    long addedParentCategoryId = callRestToaddCategoryAndReturnId(parentCategoryToAdd);
     subCategoryToAdd.setParentCategoryId(addedParentCategoryId);
-    // TODO that can be hidden in addCategoryAndReturnId method, just pass id of parent category to it, don't set it before
-    long addedSubCategoryId = addCategoryAndReturnId(subCategoryToAdd);
+    // TODO that can be hidden in callRestToaddCategoryAndReturnId method, just pass id of parent category to it, don't set it before
+    long addedSubCategoryId = callRestToaddCategoryAndReturnId(subCategoryToAdd);
 
     //then
     expectedParentCategory.setId(addedParentCategoryId);
     expectedSubCategory.setId(addedSubCategoryId);
     expectedSubCategory.getParentCategory().setId(addedParentCategoryId);
 
-    List<Category> categories = getAllCategoriesFromDatabase();
+    List<Category> categories = callRestToGetAllCategories();
 
     assertThat(categories.size(), is(2));
     assertThat(categories.get(0), is(equalTo(expectedParentCategory)));
@@ -130,7 +131,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetCategories() throws Exception {
     //when
     setup();
-    List<Category> categories = getAllCategoriesFromDatabase();
+    List<Category> categories = callRestToGetAllCategories();
 
     //then
     assertThat(categories.size(), is(2));
@@ -142,8 +143,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetCategoryById() throws Exception {
     //when // TODO that should be 2 separate tests
     setup();
-    Category resultParentCategory = getCategoryById(parentCategoryId);
-    Category resultSubCategory = getCategoryById(childCategoryId);
+    Category resultParentCategory = callRestToGetCategoryById(parentCategoryId);
+    Category resultSubCategory = callRestToGetCategoryById(childCategoryId);
 
     //then
     assertThat(resultParentCategory, is(equalTo(parentCategory)));
@@ -180,7 +181,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isOk());
 
     //given
-    Category result = getCategoryById(parentCategoryId);
+    Category result = callRestToGetCategoryById(parentCategoryId);
     assertThat(result, is(equalTo(expectedCategory)));
   }
 
@@ -192,7 +193,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .name("Second Parent Category")
         .build();
 
-    long secondParentCategoryId = addCategoryAndReturnId(secondParentCategory);
+    long secondParentCategoryId = callRestToaddCategoryAndReturnId(secondParentCategory);
     CategoryRequest categoryToUpdate = childCategoryRq;
     categoryToUpdate.setName("Changed Name");
     categoryToUpdate.setParentCategoryId(secondParentCategoryId);
@@ -208,7 +209,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isOk());
 
     //given
-    Category result = getCategoryById(childCategoryId);
+    Category result = callRestToGetCategoryById(childCategoryId);
     assertThat(result, is(equalTo(expectedCategory)));
   }
 
@@ -281,10 +282,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //given
     setup();
     //when
-    deleteCategoryById(childCategoryId);
+    callRestToDeleteCategoryById(childCategoryId);
 
     //then
-    List<Category> categories = getAllCategoriesFromDatabase();
+    List<Category> categories = callRestToGetAllCategories();
     assertThat(categories.size(), is(equalTo(1)));
     assertFalse(
         categories.contains(childCategoryRq)); // TODO it will always be false as types don't match
@@ -295,11 +296,11 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //given
     setup();
     //when
-    deleteCategoryById(childCategoryId);
-    deleteCategoryById(parentCategoryId);
+    callRestToDeleteCategoryById(childCategoryId);
+    callRestToDeleteCategoryById(parentCategoryId);
 
     //then
-    List<Category> categories = getAllCategoriesFromDatabase();
+    List<Category> categories = callRestToGetAllCategories();
     assertThat(categories.size(), is(equalTo(0))); // TODO it will always be false as types don't match
     assertFalse(categories.contains(childCategoryRq));
     // TODO http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/core/IsCollectionContaining.html
@@ -327,9 +328,9 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   private void setup() throws Exception {
-    parentCategoryId = addCategoryAndReturnId(parentCategoryRq);
+    parentCategoryId = callRestToaddCategoryAndReturnId(parentCategoryRq);
     childCategoryRq.setParentCategoryId(parentCategoryId);
-    childCategoryId = addCategoryAndReturnId(childCategoryRq);
+    childCategoryId = callRestToaddCategoryAndReturnId(childCategoryRq);
 
     parentCategory = convertToCategory(parentCategoryRq);
     parentCategory.setId(parentCategoryId);

@@ -3,6 +3,7 @@ package com.pfm;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,6 +17,7 @@ import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
@@ -97,7 +99,7 @@ public abstract class IntegrationTestsBase {
 
 
   //category
-  protected long addCategoryAndReturnId(CategoryRequest category) throws Exception {
+  protected long callRestToaddCategoryAndReturnId(CategoryRequest category) throws Exception {
     String response = mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
@@ -108,7 +110,7 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected Category getCategoryById(long id) throws Exception {
+  protected Category callRestToGetCategoryById(long id) throws Exception {
     String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + id))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
@@ -116,7 +118,7 @@ public abstract class IntegrationTestsBase {
     return jsonToCategory(response);
   }
 
-  protected List<Category> getAllCategoriesFromDatabase() throws Exception {
+  protected List<Category> callRestToGetAllCategories() throws Exception {
     String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
@@ -124,7 +126,7 @@ public abstract class IntegrationTestsBase {
     return getCategoriesFromResponse(response);
   }
 
-  protected void deleteCategoryById(long id) throws Exception {
+  protected void callRestToDeleteCategoryById(long id) throws Exception {
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + id))
         .andExpect(status().isOk());
   }
@@ -174,7 +176,7 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  protected Transaction getTransactionById(long id) throws Exception {
+  protected Transaction callRestToGetTransactionById(long id) throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + id))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
@@ -187,7 +189,7 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected List<Transaction> getAllTransactionsFromDatabase() throws Exception {
+  protected List<Transaction> callRestToGetAllTransactionsFromDatabase() throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
@@ -204,10 +206,7 @@ public abstract class IntegrationTestsBase {
   }
 
   //filters
-  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, List<Long> accountIds, List<Long> categoriesIds)
-      throws Exception {
-    filterRequest.setAccountIds(accountIds);
-    filterRequest.setCategoryIds(categoriesIds);
+  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest) throws Exception {
     String response =
         mockMvc
             .perform(post(FILTERS_SERVICE_PATH)
@@ -218,7 +217,27 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
+  protected void callRestServiceToUpdateFilter(long id, FilterRequest filterRequest) throws Exception {
+    mockMvc
+        .perform(put(FILTERS_SERVICE_PATH + "/" + id)
+            .content(json(filterRequest))
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToDeleteFilterById(long id) throws Exception {
+    mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id))
+        .andExpect(status().isOk());
+  }
+
   protected Filter convertFilterRequestToFilterAndSetId(long filterId, FilterRequest filterRequest) {
+    if (filterRequest.getCategoryIds() == null) {
+      filterRequest.setCategoryIds(new ArrayList<>());
+    }
+
+    if (filterRequest.getAccountIds() == null) {
+      filterRequest.setAccountIds(new ArrayList<>());
+    }
     return Filter.builder()
         .id(filterId)
         .name(filterRequest.getName())
@@ -239,6 +258,14 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
     return jsonToFilter(response);
+  }
+
+  protected List<Filter> callRestToGetAllFilters() throws Exception {
+    String response = mockMvc.perform(get(FILTERS_SERVICE_PATH))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+    return getFiltersFromResponse(response);
   }
 
   protected void deleteFilterById(long id) throws Exception {

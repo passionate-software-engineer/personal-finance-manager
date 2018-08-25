@@ -45,7 +45,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     //then
-    assertThat(getTransactionById(transactionId), is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
+    assertThat(callRestToGetTransactionById(transactionId), is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
     assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
   }
@@ -62,7 +62,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     deleteTransactionById(transactionId);
     //then
-    List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(0));
     assertThat(allTransactionsInDb.contains(addedTransaction), is(false));
     BigDecimal jacekAccountBalanceAfterDeletingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
@@ -81,7 +81,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
     long carTransactionId = callRestServiceToAddTransactionAndReturnId(carTransactionRequest, jacekAccountId, carCategoryId);
     //when
-    List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
     //then
     assertThat(allTransactionsInDb.size(), is(2));
     Transaction foodTransaction = convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest);
@@ -116,7 +116,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
             .isOk());
 
     //then
-    List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(1));
     assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest)),
         is(true));
