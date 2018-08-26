@@ -3,6 +3,5 @@ export class Account {
   name: string;
   balance: number;
   editMode = false;
-  editedName: string;
-  editedBalance: number;
+  editedAccount: Account;
 }
