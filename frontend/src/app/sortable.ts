@@ -1,6 +1,6 @@
 export abstract class Sortable {
-  private order: string;
-  private reverse = false;
+  public order: string;
+  public reverse = false;
 
   constructor(order: string) {
     this.order = order;
