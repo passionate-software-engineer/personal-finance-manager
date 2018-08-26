@@ -30,8 +30,6 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  // TODO make nice looking confirmation popup
-
   deleteCategory(category) {
     if (confirm('Are you sure You want to delete this account ?')) {
       this.categoryService.deleteCategory(category.id)
@@ -51,12 +49,12 @@ export class CategoriesComponent implements OnInit {
     if (category.parentCategory == null) {
       category.editedParentCategory = null;
     } else {
-      category.editedParentCategory = category.parentCategory;
-    }
+      category.editedParentCategory = category.parentCategory
 
-    for (const categoryEntry of this.categories) {
-      if (categoryEntry.id === category.editedParentCategory.id) {
-        category.editedParentCategory = categoryEntry;
+      for (const categoryEntry of this.categories) {
+        if (categoryEntry.id === category.editedParentCategory.id) {
+          category.editedParentCategory = categoryEntry;
+        }
       }
     }
 
