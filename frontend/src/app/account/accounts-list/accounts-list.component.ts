@@ -3,7 +3,7 @@ import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {Sortable} from '../../sortable';
+import {Sortable} from '../../base/sortable';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
