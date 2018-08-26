@@ -1,7 +1,7 @@
 package com.pfm.filter;
 
-import static com.pfm.helpers.TestAccountProvider.getAccountRequestDamianBalance10;
-import static com.pfm.helpers.TestAccountProvider.getAccountRequestMbankBalance1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategoryRequest;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestHomeNoParentCategory;
@@ -31,13 +31,14 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddFilter() throws Exception {
-
     //given
     Long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategoryRequest());
-    Long accountId = callRestServiceToAddAccountAndReturnId(getAccountRequestDamianBalance10());
+    Long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+
     FilterRequest homeExpensesFilterToAdd = getFilterRequestFoodExpenses();
     homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
     homeExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
+
     //when
     Long filterId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd);
 
@@ -50,10 +51,10 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetFilterById() throws Exception {
-
     //given
     long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
-    long accountId = callRestServiceToAddAccountAndReturnId(getAccountRequestMbankBalance1000());
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+
     FilterRequest carExpensesFilterToAdd = getFilterRequestCarExpenses();
     carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
     carExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
@@ -69,13 +70,12 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAllFilters() throws Exception {
-
     //given
     final long categoryFoodId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategoryRequest());
     long categoryCarId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     long categoryHomeId = callRestToaddCategoryAndReturnId(getCategoryRequestHomeNoParentCategory());
-    long accountMbankId = callRestServiceToAddAccountAndReturnId(getAccountRequestMbankBalance1000());
-    long accountDamianId = callRestServiceToAddAccountAndReturnId(getAccountRequestDamianBalance10());
+    long accountMbankId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long accountDamianId = callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
 
     FilterRequest homeExpensesFilterToAdd = getFilterRequestHomeExpensesUpTo200();
     homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryHomeId));
@@ -105,7 +105,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteFilter() throws Exception {
-
     //given
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
     long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(getFilterRequestFoodExpenses());
@@ -123,11 +122,11 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateFilter() throws Exception {
-
     //given
     long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
-    long accountId = callRestServiceToAddAccountAndReturnId(getAccountRequestMbankBalance1000());
+    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
+
     FilterRequest filterCarExpensesToUpdate = FilterRequest.builder()
         .name("Car expenses between 1000$ and 2000$")
         .priceTo(convertDoubleToBigDecimal(2000))
@@ -149,7 +148,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingIdInGetMethod() throws Exception {
-
     //when
     mockMvc
         .perform(get(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
@@ -158,7 +156,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingIdInDeleteMethod() throws Exception {
-
     //when
     mockMvc
         .perform(delete(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
@@ -167,7 +164,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingIdInUpdateMethod() throws Exception {
-
     //when
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -178,7 +174,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInAddMethod() throws Exception {
-
     //given
     FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
         .accountIds(convertAccountIdsToList(1L))
@@ -199,7 +194,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInAddMethodSecondCase() throws Exception {
-
     //given
     FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
         .dateFrom(LocalDate.of(2018, 1, 1))
@@ -216,7 +210,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInUpdateMethod() throws Exception {
-
     //given
     final long filterId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
     FilterRequest filterRequestWithValidationErrors = new FilterRequest();

@@ -26,6 +26,7 @@ public class TestCategoryProvider {
           .name("Home")
           .build();
 
+  // TODO use approach from accounts where helper method is converting to request and here we have categories
   public static CategoryRequest getCategoryRequestFoodNoParentCategoryRequest() {
     return CATEGORY_REQUEST_FOOD_NO_PARENT_CATEGORY_REQUEST;
   }

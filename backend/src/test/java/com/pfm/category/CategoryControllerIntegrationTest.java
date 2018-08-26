@@ -48,7 +48,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
   // those methods in // given part of the test
   private final CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
-  private final CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers").build();
+  private final CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers")
+      .build();
   private Long parentCategoryId;
   private Long childCategoryId;
   private Category parentCategory;
@@ -167,7 +168,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //given
     setup();
     CategoryRequest categoryToUpdate = parentCategoryRq; // TODO such assignments does not make sense - maybe you wanted to copy?
-    categoryToUpdate.setName("Changed Name"); // Please rethink how you handle objects - TestCategoryProvider will help you a lot.
+    categoryToUpdate.setName("Changed Name"); // TODO Please rethink how you handle objects - TestCategoryProvider will help you a lot.
 
     Category expectedCategory = convertToCategory(categoryToUpdate);
     expectedCategory.setId(parentCategoryId);
@@ -226,8 +227,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided()
-      throws Exception {
+  public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided() throws Exception {
+
     //given
     setup();
     CategoryRequest categoryToUpdate = childCategoryRq;
