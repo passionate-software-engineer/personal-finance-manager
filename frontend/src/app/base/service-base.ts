@@ -8,6 +8,7 @@ export abstract class ServiceBase {
 
   protected httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
+    // TODO send correlation id in each request
   };
 
   constructor(protected http: HttpClient, protected alertService: AlertsService) {

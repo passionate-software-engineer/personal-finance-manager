@@ -4,13 +4,13 @@ import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 import {Sortable} from '../../base/sortable';
 
-@Component({
+@Component({ // TODO categories in dropdows should display with parent category e.g. Car > Parts (try using filter for it)
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent extends Sortable implements OnInit {
-  categories: Category[];
+  categories: Category[] = [];
   addingMode = false;
   newCategory: Category = new Category();
 
