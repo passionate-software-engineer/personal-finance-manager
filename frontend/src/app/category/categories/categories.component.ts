@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {Sortable} from '../../sortable';
+import {Sortable} from '../../base/sortable';
 
 @Component({
   selector: 'app-categories',

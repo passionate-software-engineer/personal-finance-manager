@@ -5,7 +5,7 @@ import {Account} from '../../account/account';
 import {TransactionFilter} from '../transaction-filter';
 import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
 import {FilterResponse} from '../transaction-filter-service/transaction-filter-response';
-import {Sortable} from '../../sortable';
+import {Sortable} from '../../base/sortable';
 
 export class FiltersComponentBase extends Sortable {
   allTransactions: Transaction[] = [];
