@@ -27,7 +27,6 @@ export class CategoriesComponent extends Sortable implements OnInit {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
-        this.sortByName('asc');
       });
   }
 
@@ -74,7 +73,6 @@ export class CategoriesComponent extends Sortable implements OnInit {
       .subscribe(() => {
         this.alertService.success('Category edited');
         Object.assign(category, editedCategory);
-        this.sortByName('asc');
       });
   }
 
@@ -93,48 +91,11 @@ export class CategoriesComponent extends Sortable implements OnInit {
         this.addingMode = false;
         this.newCategoryName = null;
         this.newCategoryParentCategory = null;
-        this.sortByName('asc');
       });
   }
 
   onRefreshCategories() {
     this.getCategories();
-  }
-
-  // TODO make sorting using pipes not methods below
-
-  sortByName(type: string) {
-    if (type === 'asc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-    }
-    if (type === 'dsc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-  }
-
-  sortByParentCategory(type: string) {
-    if (type === 'asc') {
-      this.categories.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return 1;
-        }
-        if (a2.parentCategory == null) {
-          return -1;
-        }
-        return a1.parentCategory.name.toLowerCase() > a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
-    if (type === 'dsc') {
-      this.categories.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return -1;
-        }
-        if (a2.parentCategory == null) {
-          return 1;
-        }
-        return a1.parentCategory.name.toLowerCase() < a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
   }
 
   getParentCategoryName(category): string {
