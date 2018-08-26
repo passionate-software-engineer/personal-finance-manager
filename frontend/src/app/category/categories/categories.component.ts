@@ -2,19 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
+import {Sortable} from '../../sortable';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent extends Sortable implements OnInit {
   categories: Category[];
   addingMode = false;
   newCategoryName: string;
   newCategoryParentCategory: Category = null;
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
+  super('name');
   }
 
   ngOnInit() {

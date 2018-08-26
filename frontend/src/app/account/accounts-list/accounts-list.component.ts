@@ -3,6 +3,7 @@ import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
+import {Sortable} from '../../sortable';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -13,13 +14,14 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
   styleUrls: ['./accounts-list.component.css']
 })
 
-export class AccountsListComponent implements OnInit {
+export class AccountsListComponent extends Sortable implements OnInit {
   accounts: Account[];
   addingMode = false;
   newAccountName: string;
   newAccountBalance: number;
 
   constructor(private accountService: AccountService, private alertService: AlertsService) {
+    super('name');
   }
 
   ngOnInit() {
