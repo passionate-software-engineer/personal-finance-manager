@@ -61,6 +61,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         {"", null},
         {" ", null},
         {"    ", null},
+        {null, null}
     });
   }
 
@@ -150,11 +151,12 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
     callRestServiceToAddAccountAndReturnId(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0));
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(
-        convertAccountToAccountRequest(ACCOUNT_JACEK_BALANCE_1000));
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(convertAccountToAccountRequest(ACCOUNT_JACEK_BALANCE_1000));
+
     AccountRequest updatedAccount = AccountRequest.builder()
-        .name(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0).getName())
-        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance()).build();
+        .name(ACCOUNT_RAFAL_BALANCE_0.getName())
+        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
+        .build();
 
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
         .contentType(JSON_CONTENT_TYPE)

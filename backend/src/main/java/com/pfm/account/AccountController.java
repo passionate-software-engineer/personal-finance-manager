@@ -41,7 +41,7 @@ public class AccountController implements AccountApi {
     // must copy as types do not match for Hibernate
     Account account = new Account(null, accountRequest.getName(), accountRequest.getBalance());
 
-    List<String> validationResult = accountValidator.validateAccountForAdd(account);
+    List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(account);
     if (!validationResult.isEmpty()) {
       log.info("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);

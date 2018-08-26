@@ -31,27 +31,32 @@ public class AccountValidator {
     return validationResults;
   }
 
-  public List<String> validateAccountForAdd(Account account) {
+  public List<String> validateAccountIncludingNameDuplication(Account account) {
     List<String> validationResults = validate(account);
+
     checkForDuplicatedName(validationResults, account);
+
     return validationResults;
   }
 
   public List<String> validateAccountForUpdate(long id, Account account) {
     Optional<Account> accountToUpdate = accountService.getAccountById(id);
+
     if (!accountToUpdate.isPresent()) {
       throw new IllegalStateException("Account with id: " + id + " does not exist in database");
     }
+
+    // it's ok when we keep name in updated account, it's not duplicate
     if (accountToUpdate.get().getName().equals(account.getName())) {
       return validate(account);
     }
-    List<String> validationResults = validateAccountForAdd(account);
-    return validationResults;
+
+    // it's not ok if account is duplicating name of other account
+    return validateAccountIncludingNameDuplication(account);
   }
 
-  public void checkForDuplicatedName(List<String> validationResults, Account account) {
-    if (account.getName() != null && !account.getName().trim().equals("")
-        && accountService.isAccountNameAlreadyUsed(account.getName())) {
+  private void checkForDuplicatedName(List<String> validationResults, Account account) {
+    if (account.getName() != null && !account.getName().trim().equals("") && accountService.isAccountNameAlreadyUsed(account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }

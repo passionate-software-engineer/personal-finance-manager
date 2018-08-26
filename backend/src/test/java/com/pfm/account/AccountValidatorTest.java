@@ -1,16 +1,20 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.getMessage;
+import static com.pfm.helpers.TestAccountProvider.ACCOUNT_LUKASZ_BALANCE_1124;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import com.pfm.helpers.TestAccountProvider;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -38,8 +42,7 @@ public class AccountValidatorTest {
         .thenReturn(Optional.empty());
 
     thrown.expect(IllegalStateException.class);
-    thrown.expectMessage(
-        "Account with id: " + ACCOUNT_RAFAL_BALANCE_0.getId() + " does not exist in database");
+    thrown.expectMessage("Account with id: " + ACCOUNT_RAFAL_BALANCE_0.getId() + " does not exist in database");
 
     //then
     accountValidator
@@ -47,23 +50,32 @@ public class AccountValidatorTest {
   }
 
   @Test
-  public void shouldValidateAccountIfAccountNameIsEmpty() {
+  public void shouldReturnValidationErrorIfAccountNameAndBalanceIsEmpty() {
     //given
-    Account account = Account.builder().id(10L).balance(BigDecimal.valueOf(100)).build();
+    long id = 10L;
+    when(accountService.getAccountById(id)).thenReturn(Optional.of(ACCOUNT_LUKASZ_BALANCE_1124));
+    Account account = Account.builder().id(id).name("").balance(null).build();
+
     //when
-    accountValidator.validate(account);
+    List<String> result = accountValidator.validateAccountForUpdate(id, account);
+
     //then
-    assertThat(accountValidator.validate(account).get(0), is(equalTo("Brak nazwy konta")));
+    assertThat(result.size(), is(2));
+    assertThat(result.get(0), is(equalTo(getMessage(EMPTY_ACCOUNT_NAME))));
+    assertThat(result.get(1), is(equalTo(getMessage(EMPTY_ACCOUNT_BALANCE))));
   }
 
   @Test
-  public void shouldCheckForDuplicatedName() {
+  public void shouldNotFindDuplicateWhenNoOtherAccountsExists() {
     //given
-    Account account = Account.builder().id(1L).balance(BigDecimal.valueOf(100)).build();
-    List<String> validationResults = new ArrayList<>();
+    Account account = TestAccountProvider.ACCOUNT_ANDRZEJ_BALANCE_1_000_000;
+    when(accountService.isAccountNameAlreadyUsed(any())).thenReturn(true);
+
     //when
-    accountValidator.checkForDuplicatedName(validationResults, account);
+    List<String> result = accountValidator.validateAccountIncludingNameDuplication(account);
+
     //then
-    Assert.assertThat(validationResults.size(), is(0));
+    assertThat(result.size(), is(1));
+    assertThat(result.get(0), is(equalTo(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }
 }
