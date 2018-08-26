@@ -77,22 +77,18 @@ public abstract class IntegrationTestsBase {
     String response =
         mockMvc
             .perform(post(ACCOUNTS_SERVICE_PATH)
-                .content(json(account))
+                .content(json(convertAccountToAccountRequest(account)))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
     return Long.parseLong(response);
   }
 
-  protected long callRestServiceToAddAccountAndReturnId(AccountRequest accountRequest) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(ACCOUNTS_SERVICE_PATH)
-                .content(json(accountRequest))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
+  protected AccountRequest convertAccountToAccountRequest(Account account) {
+    return AccountRequest.builder()
+        .name(account.getName())
+        .balance(account.getBalance())
+        .build();
   }
 
   protected BigDecimal callRestServiceAndReturnAccountBalance(long accountId) throws Exception {
@@ -249,6 +245,7 @@ public abstract class IntegrationTestsBase {
     if (filterRequest.getAccountIds() == null) {
       filterRequest.setAccountIds(new ArrayList<>());
     }
+
     return Filter.builder()
         .id(filterId)
         .name(filterRequest.getName())

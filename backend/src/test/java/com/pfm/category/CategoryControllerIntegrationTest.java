@@ -168,8 +168,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //given
     setup();
     CategoryRequest categoryToUpdate = parentCategoryRq; // TODO such assignments does not make sense - maybe you wanted to copy?
-    categoryToUpdate.setName(
-        "Changed Name"); // Please rethink how you handle objects - TestCategoryProvider will help you a lot.
+    categoryToUpdate.setName("Changed Name"); // TODO Please rethink how you handle objects - TestCategoryProvider will help you a lot.
 
     Category expectedCategory = convertToCategory(categoryToUpdate);
     expectedCategory.setId(parentCategoryId);
