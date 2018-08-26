@@ -216,7 +216,6 @@ export class FiltersComponentBase extends Sortable {
     }
   }
 
-  // TODO calculate once and keep in memory, it change only when we modify list of categories
   private getAllChildCategoriesIncludingParent(filterCategories: Category[]) {
     const allCategories = [];
 
@@ -235,43 +234,7 @@ export class FiltersComponentBase extends Sortable {
     return allCategories;
   }
 
-  validateTransaction(transaction: Transaction): boolean {
-    let status = true;
-
-    if (transaction.date == null || transaction.date.toString() === '') {
-      this.alertService.error('Date is empty or incomplete');
-      status = false;
-    }
-
-    if (transaction.description == null || transaction.description.trim() === '') {
-      this.alertService.error('Description cannot be empty');
-      status = false;
-    }
-
-    if (transaction.description != null && transaction.description.length > 100) {
-      this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
-      status = false;
-    }
-
-    if (transaction.price == null) {
-      this.alertService.error('Price is empty or price format is incorrect');
-      status = false;
-    }
-
-    if (transaction.category == null) {
-      this.alertService.error('Category cannot be empty');
-      status = false;
-    }
-
-    if (transaction.account == null) {
-      this.alertService.error('Account cannot be empty');
-      status = false;
-    }
-
-    return status;
-  }
-
-  validateFilter(filter: TransactionFilter, allowDuplicatedName = false): boolean {
+  private validateFilter(filter: TransactionFilter, allowDuplicatedName = false): boolean {
     let status = true;
 
     if (filter.name == null || filter.name.trim() === '') {

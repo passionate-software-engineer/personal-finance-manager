@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {ServiceBase} from '../../services/service-base';
+import {ServiceBase} from '../../base/service-base';
 
 const PATH = 'accounts';
 

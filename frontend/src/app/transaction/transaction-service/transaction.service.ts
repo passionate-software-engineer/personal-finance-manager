@@ -5,7 +5,7 @@ import {Transaction} from '../transaction';
 import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 import {TransactionResponse} from './transaction-response';
-import {ServiceBase} from '../../services/service-base';
+import {ServiceBase} from '../../base/service-base';
 
 const PATH = 'transactions';
 
