@@ -15,7 +15,7 @@
     </th>
 
     <!--Parent Category-->
-    <th [class.active]="order === 'category'" (click)="setOrder('category')">
+    <th [class.active]="order === 'category'" (click)="setOrder('parentCategory.name')">
       Parent Category
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
