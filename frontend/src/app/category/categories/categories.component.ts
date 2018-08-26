@@ -16,7 +16,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
   newCategoryParentCategory: Category = null;
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
-  super('name');
+    super('name');
   }
 
   ngOnInit() {
@@ -178,8 +178,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
       return false;
     }
 
-    if (this.categories.filter(category =>
-        category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
+    if (this.categories.filter(category => category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Category with provided name already exist');
       return false;
     }
