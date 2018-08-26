@@ -6,7 +6,7 @@
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
-    
+
     <!--Name-->
     <th [class.active]="order === 'name'" (click)="setOrder('name')">
       Name
@@ -22,19 +22,19 @@
     </th>
   </tr>
   <th>
-    </th>
+  </th>
   </thead>
 
   <tbody>
   <tr *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
 
-     <!--Name-->
+    <!--Name-->
     <td *ngIf="account.editMode">
       <input class="form-control" type="text" [(ngModel)]="account.editedName">
     </td>
     <td *ngIf="!account.editMode">{{account.name}}</td>
 
-     <!--Balance-->
+    <!--Balance-->
     <td *ngIf="account.editMode">
       <input class="form-control" type="number" [(ngModel)]="account.editedBalance"></td>
     <td *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
@@ -51,7 +51,7 @@
             <button class="btn-warning" (click)="onShowEditMode(account)">Edit</button>
           </li>
           <li>
-            <button class="btn-danger" (click)="deleteAccount(account)">Delete</button>  
+            <button class="btn-danger" (click)="deleteAccount(account)">Delete</button>
           </li>
         </ul>
       </div>
@@ -64,11 +64,11 @@
   </tr>
 
   <tr *ngIf="addingMode">
-     <!--Name-->
+    <!--Name-->
     <td>
       <input class="form-control" type="text" [(ngModel)]="newAccountName">
     </td>
-     <!--Balance-->
+    <!--Balance-->
     <td>
       <input class="form-control" type="number" [(ngModel)]="newAccountBalance"></td>
     <td>
