@@ -25,6 +25,7 @@ public class TestFilterProvider {
           .description("Food")
           .build();
 
+  // TODO it's better to write it as methods returning object rather than fields - now you can by accident modify this object and some tests will fail
   private static final FilterRequest FILTER_REQUEST_CAR_EXPENSES =
       FilterRequest.builder()
           .name("Car expenses")
