@@ -114,6 +114,7 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
+  // TODO deleting category used in transaction / filter fails with ugly error
   @ApiOperation(value = "Delete an existing category", response = Void.class)
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<?> deleteCategory(@PathVariable long id) {

@@ -101,7 +101,7 @@ public class AccountController {
 
   @ApiOperation(value = "Delete an existing account", response = Void.class)
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<?> deleteAccount(@PathVariable long id) {
+  public ResponseEntity<?> deleteAccount(@PathVariable long id) { // TODO deleting account used in transaction / filter throws ugly error
     if (!accountService.getAccountById(id).isPresent()) {
       log.info("No account with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
