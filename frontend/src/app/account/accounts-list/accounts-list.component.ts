@@ -159,8 +159,7 @@ export class AccountsListComponent extends Sortable implements OnInit {
       return false;
     }
 
-    if (this.accounts.filter(account => account.name.toLocaleLowerCase()
-      === accountName.toLocaleLowerCase()).length > 0) {
+    if (this.accounts.filter(account => account.name.toLocaleLowerCase() === accountName.toLocaleLowerCase()).length > 0) {
       this.alertService.error('Account with provided name already exist');
       return false;
     }
