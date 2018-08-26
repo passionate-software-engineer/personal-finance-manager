@@ -1,26 +1,21 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
-import {MessagesService} from '../../messages/messages.service';
-import {catchError, tap} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 import {TransactionResponse} from './transaction-response';
+import {ServiceBase} from '../../services/service-base';
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
+const PATH = 'transactions';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService {
+export class TransactionService extends ServiceBase {
 
-  private apiUrl = environment.appUrl + '/transactions';
-
-  constructor(private http: HttpClient, private messagesService: MessagesService,
-              private alertService: AlertsService) {
+  constructor(http: HttpClient, alertService: AlertsService) {
+    super(http, alertService);
   }
 
   private static transactionToTransactionRequest(transaction: Transaction) {
@@ -34,57 +29,29 @@ export class TransactionService {
   }
 
   getTransactions(): Observable<TransactionResponse[]> {
-    return this.http.get<TransactionResponse[]>(this.apiUrl).pipe(
-      tap(() => this.log(`fetched transactions`)),
-      catchError(this.handleError('getTransactions', [])));
+    return this.http.get<TransactionResponse[]>(TransactionService.apiUrl(PATH))
+      .pipe(catchError(this.handleError('getTransactions', [])));
   }
 
   getTransaction(id: number): Observable<TransactionResponse> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<TransactionResponse>(url).pipe(
-      tap(() => this.log(`fetched transaction with id ` + id)),
-      catchError(this.handleError('getSingleTransaction', null)));
+    return this.http.get<TransactionResponse>(ServiceBase.apiUrl(PATH, id))
+      .pipe(catchError(this.handleError('getSingleTransaction', null)));
   }
 
   addTransaction(transaction: Transaction): Observable<any> {
     const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
-    return this.http.post<any>(this.apiUrl, categoryRequest, httpOptions).pipe(
-      tap(any => this.log(`added transaction with id: ` + any)),
-      catchError(this.handleError('addTransaction', [])));
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.httpOptions)
+      .pipe(catchError(this.handleError('addTransaction', [])));
   }
 
   deleteTransaction(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<any>(url).pipe(
-      tap(() => this.log(`deleted transaction with id: ` + id)),
-      catchError(this.handleError('deleteTransaction', [])));
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
+      .pipe(catchError(this.handleError('deleteTransaction', [])));
   }
 
   editTransaction(category: Transaction): Observable<any> {
     const categoryRequest = TransactionService.transactionToTransactionRequest(category);
-    const url = `${this.apiUrl}/${category.id}`;
-    return this.http.put<Transaction>(url, categoryRequest, httpOptions).pipe(
-      tap(() => this.log(`edited transaction with id: ` + category.id)),
-      catchError(this.handleError('editTransaction', [])));
-  }
-
-  private log(message: string) {
-    this.messagesService.add('CategoryService: ' + message);
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      if (error.status === 400) {
-        this.alertService.error(error.error);
-      }
-      if (error.status === 0 || error.status === 500) {
-        this.alertService.error('Sth goes wrong, try again later');
-      }
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}  `);
-      this.log(`${operation} failed: ${JSON.stringify(error)}  `);
-
-      return throwError(error);
-    };
+    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.httpOptions)
+      .pipe(catchError(this.handleError('editTransaction', [])));
   }
 }
