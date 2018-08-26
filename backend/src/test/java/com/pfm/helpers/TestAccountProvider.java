@@ -3,14 +3,13 @@ package com.pfm.helpers;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 
 import com.pfm.account.Account;
-import com.pfm.account.AccountController.AccountRequest;
+import com.pfm.account.AccountRequest;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class TestAccountProvider {
 
   public static final Long MOCK_ACCOUNT_ID = 1L;
-  public static final BigDecimal ACCOUNT_BALANCE = BigDecimal.valueOf(100);
 
   public static final Account ACCOUNT_ANDRZEJ_BALANCE_1_000_000 =
       Account.builder()
@@ -50,7 +49,7 @@ public class TestAccountProvider {
   public static final Account ACCOUNT_RAFAL_BALANCE_0 =
       Account.builder()
           .id(Long.MAX_VALUE)
-          .name("Adam ALIOR account")
+          .name("Rafal ALIOR account")
           .balance(BigDecimal.valueOf(0))
           .build();
 

@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -24,6 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.IntegrationTestsBase;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
+import junitparams.Parameters;
 import org.junit.Test;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
@@ -159,25 +163,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]",
             is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
-  }
-
-  @Test
-  public void shouldReturnErrorCauseByNullName() throws Exception {
-    callRestServiceToAddAccountAndReturnId(ACCOUNT_ADAM_BALANCE_0);
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-
-    Account updatedAccount = Account.builder()
-        .name(null)
-        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
-        .build();
-
-    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedAccount)))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]",
-            is(getMessage(EMPTY_ACCOUNT_NAME))));
   }
 
   @Test

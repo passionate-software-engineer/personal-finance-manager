@@ -4,7 +4,6 @@ import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ANDRZEJ_BALANCE_1_000_
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARCIN_BALANCE_10_99;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARIUSZ_BALANCE_200;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
-
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SLAWEK_BALANCE_9;
 import static com.pfm.helpers.TestAccountProvider.MOCK_ACCOUNT_ID;
 import static junit.framework.TestCase.assertNotNull;

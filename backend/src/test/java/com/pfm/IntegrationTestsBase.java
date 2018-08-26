@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
-import com.pfm.account.AccountController.AccountRequest;
+import com.pfm.account.AccountRequest;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryController.CategoryRequest;
 import com.pfm.filter.Filter;
@@ -19,17 +19,21 @@ import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import junitparams.JUnitParamsRunner;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
+@RunWith(JUnitParamsRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public abstract class IntegrationTestsBase {
@@ -38,8 +42,15 @@ public abstract class IntegrationTestsBase {
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
+
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
+
+  @ClassRule
+  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+
+  @Rule
+  public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
   @Autowired
   protected MockMvc mockMvc;
