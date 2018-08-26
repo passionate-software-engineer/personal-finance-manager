@@ -15,7 +15,7 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 
 export class AccountsListComponent extends Sortable implements OnInit {
-  accounts: Account[];
+  accounts: Account[] = [];
   addingMode = false;
   newAccount: Account = new Account();
 

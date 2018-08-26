@@ -73,7 +73,7 @@ export class FiltersComponentBase extends Sortable {
 
   updateFilter() {
     if (this.originalFilter.id === undefined) {
-      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be updated. Please create new filter instead.');
+      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be updated. Try creating new filter instead.');
       return;
     }
 
@@ -129,6 +129,9 @@ export class FiltersComponentBase extends Sortable {
       newFilter.accounts = [];
 
       this.filters.push(newFilter);
+
+      this.originalFilter = newFilter;
+      this.onFilterChange();
     }
   }
 

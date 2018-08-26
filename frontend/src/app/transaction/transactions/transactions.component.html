@@ -155,15 +155,15 @@
 
     <td *ngIf="!transaction.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">Options
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning" (click)="onShowEditMode(transaction)">Edit</button>
+            <button class="btn btn-warning btn-block" (click)="onShowEditMode(transaction)">Edit</button>
           </li>
           <li>
-            <button class="btn btn-danger" (click)="deleteTransaction(transaction)">Delete</button>
+            <button class="btn btn-danger btn-block" (click)="deleteTransaction(transaction)">Delete</button>
           </li>
         </ul>
       </div>
