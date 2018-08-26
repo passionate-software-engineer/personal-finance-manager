@@ -1,4 +1,4 @@
-<div class="form-inline pull-right">
+<div class="form-inline float-right">
   <select class="form-control" [(ngModel)]="originalFilter" (ngModelChange)="onFilterChange($event)">
     <option *ngFor="let filter of filters" [ngValue]="filter">
       {{filter.name}}
@@ -11,7 +11,7 @@
   <button class="btn btn-danger" (click)="deleteFilter()">Delete filter</button>
 </div>
 
-<div class="pull-left">
+<div class="float-left">
   <button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
     Add Transaction
   </button>
@@ -149,7 +149,7 @@
     </td>
 
     <td *ngIf="transaction.editMode">
-      <button class="btn btn-success" (click)="onEditTransaction(transaction)">Save</button>
+      <button class="btn btn-success" (click)="updateTransaction(transaction)">Save</button>
       <button class="btn btn-danger" (click)="transaction.editMode=false">Exit</button>
     </td>
 
@@ -207,7 +207,7 @@
     </td>
 
     <td>
-      <button class="btn btn-success" (click)="onAddTransaction()">Save</button>
+      <button class="btn btn-success" (click)="addTransaction()">Save</button>
       <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
     </td>
   </tr>

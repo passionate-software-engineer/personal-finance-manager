@@ -103,26 +103,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
   }
 
-  onShowEditMode(transaction: Transaction) {
-    transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
-    transaction.editMode = true;
-
-    // need to have same object to allow dropdown to work correctly
-    for (const account of this.accounts) {
-      if (account.id === transaction.editedTransaction.account.id) {
-        transaction.editedTransaction.account = account;
-      }
-    }
-
-    for (const category of this.categories) {
-      if (category.id === transaction.editedTransaction.category.id) {
-        transaction.editedTransaction.category = category;
-      }
-    }
-
-  }
-
-  onEditTransaction(transaction: Transaction) {
+  updateTransaction(transaction: Transaction) {
     if (!this.validateTransaction(transaction.editedTransaction)) {
       return;
     }
@@ -157,7 +138,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       });
   }
 
-  onAddTransaction() {
+  addTransaction() {
     if (!this.validateTransaction(this.newTransaction)) {
       return;
     }
@@ -196,7 +177,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       });
   }
 
-  validateTransaction(transaction: Transaction): boolean {
+  private validateTransaction(transaction: Transaction): boolean {
     let status = true;
 
     if (transaction.date == null || transaction.date.toString() === '') {
@@ -230,6 +211,25 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
 
     return status;
+  }
+
+  onShowEditMode(transaction: Transaction) {
+    transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
+    transaction.editMode = true;
+
+    // need to have same object to allow dropdown to work correctly
+    for (const account of this.accounts) {
+      if (account.id === transaction.editedTransaction.account.id) {
+        transaction.editedTransaction.account = account;
+      }
+    }
+
+    for (const category of this.categories) {
+      if (category.id === transaction.editedTransaction.category.id) {
+        transaction.editedTransaction.category = category;
+      }
+    }
+
   }
 
 

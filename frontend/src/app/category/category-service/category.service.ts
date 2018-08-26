@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Category} from '../category';
 import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {ServiceBase} from '../../services/service-base';
+import {ServiceBase} from '../../base/service-base';
 
 const PATH = 'categories';
 

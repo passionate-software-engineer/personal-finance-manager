@@ -6,7 +6,7 @@ import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
 import {FilterResponse} from './transaction-filter-response';
 import {TransactionFilter} from '../transaction-filter';
-import {ServiceBase} from '../../services/service-base';
+import {ServiceBase} from '../../base/service-base';
 
 const PATH = 'filters';
 
