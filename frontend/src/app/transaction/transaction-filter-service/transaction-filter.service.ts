@@ -43,12 +43,12 @@ export class TransactionFilterService extends ServiceBase {
   }
 
   getFilters(): Observable<FilterResponse[]> {
-    return this.http.get<FilterResponse[]>(ServiceBase.apiUrl(PATH))
+    return this.http.get<FilterResponse[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getFilters', [])));
   }
 
   getFilter(id: number): Observable<FilterResponse> {
-    return this.http.get<FilterResponse>(ServiceBase.apiUrl(PATH, id))
+    return this.http.get<FilterResponse>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getSingleFilter', null)));
   }
 
@@ -59,7 +59,7 @@ export class TransactionFilterService extends ServiceBase {
   }
 
   deleteFilter(id: number): Observable<any> {
-    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
       .pipe(catchError(this.handleError('deleteFilter', [])));
   }
 

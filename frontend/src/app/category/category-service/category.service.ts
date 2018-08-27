@@ -25,7 +25,7 @@ export class CategoryService extends ServiceBase {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(ServiceBase.apiUrl(PATH))
+    return this.http.get<Category[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getCategories', [])));
   }
 
@@ -36,7 +36,7 @@ export class CategoryService extends ServiceBase {
   }
 
   deleteCategory(id: number): Observable<any> {
-    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
       .pipe(catchError(this.handleError('deleteCategory', [])));
   }
 
