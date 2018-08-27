@@ -2,21 +2,20 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {Sortable} from '../../sortable';
+import {Sortable} from '../../base/sortable';
 
-@Component({
+@Component({ // TODO categories in dropdows should display with parent category e.g. Car > Parts (try using filter for it)
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent extends Sortable implements OnInit {
-  categories: Category[];
+  categories: Category[] = [];
   addingMode = false;
-  newCategoryName: string;
-  newCategoryParentCategory: Category = null;
+  newCategory: Category = new Category();
 
   constructor(private categoryService: CategoryService, private alertService: AlertsService) {
-  super('name');
+    super('name');
   }
 
   ngOnInit() {
@@ -27,7 +26,6 @@ export class CategoriesComponent extends Sortable implements OnInit {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
-        this.sortByName('asc');
       });
   }
 
@@ -46,15 +44,17 @@ export class CategoriesComponent extends Sortable implements OnInit {
 
   onShowEditMode(category: Category) {
     category.editMode = true;
-    category.editedName = category.name;
-    if (category.parentCategory == null) {
-      category.editedParentCategory = null;
-    } else {
-      category.editedParentCategory = category.parentCategory;
+    category.editedCategory = new Category();
+    category.editedCategory.id = category.id;
+    category.editedCategory.name = category.name;
 
+    if (category.parentCategory != null) {
+      category.editedCategory.parentCategory = category.parentCategory;
+
+      // TODO that should not be needed if value in category is set correctly
       for (const categoryEntry of this.categories) {
-        if (categoryEntry.id === category.editedParentCategory.id) {
-          category.editedParentCategory = categoryEntry;
+        if (categoryEntry.id === category.editedCategory.parentCategory.id) {
+          category.editedCategory.parentCategory = categoryEntry;
         }
       }
     }
@@ -62,79 +62,38 @@ export class CategoriesComponent extends Sortable implements OnInit {
   }
 
   onEditCategory(category: Category) {
-    if (!this.validateCategory(category.editedName)) {
+    if (!this.validateCategory(category.editedCategory.name)) {
       return;
     }
 
-    const editedCategory: Category = new Category();
-    editedCategory.id = category.id;
-    editedCategory.name = category.editedName;
-    editedCategory.parentCategory = category.editedParentCategory;
-    this.categoryService.editCategory(editedCategory)
+    this.categoryService.editCategory(category.editedCategory)
       .subscribe(() => {
         this.alertService.success('Category edited');
-        Object.assign(category, editedCategory);
-        this.sortByName('asc');
+        Object.assign(category, category.editedCategory);
+        category.editedCategory = new Category();
+        // TODO get category from server
       });
   }
 
   onAddCategory() {
-    const categoryToAdd = new Category();
-    if (!this.validateAddingCategory(this.newCategoryName)) {
+    if (!this.validateAddingCategory(this.newCategory.name)) {
       return;
     }
-    categoryToAdd.name = this.newCategoryName;
-    categoryToAdd.parentCategory = this.newCategoryParentCategory;
-    this.categoryService.addCategory(categoryToAdd)
+
+    this.categoryService.addCategory(this.newCategory)
       .subscribe(id => {
-        categoryToAdd.id = id;
-        this.categories.push(categoryToAdd);
+        this.newCategory.id = id;
+        this.categories.push(this.newCategory);
+        this.newCategory = new Category();
         this.alertService.success('Category added');
         this.addingMode = false;
-        this.newCategoryName = null;
-        this.newCategoryParentCategory = null;
-        this.sortByName('asc');
+
+        // TODO get category from server
       });
   }
 
   onRefreshCategories() {
     this.getCategories();
-  }
-
-  // TODO make sorting using pipes not methods below
-
-  sortByName(type: string) {
-    if (type === 'asc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-    }
-    if (type === 'dsc') {
-      this.categories.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-  }
-
-  sortByParentCategory(type: string) {
-    if (type === 'asc') {
-      this.categories.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return 1;
-        }
-        if (a2.parentCategory == null) {
-          return -1;
-        }
-        return a1.parentCategory.name.toLowerCase() > a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
-    if (type === 'dsc') {
-      this.categories.sort((a1, a2) => {
-        if (a1.parentCategory == null) {
-          return -1;
-        }
-        if (a2.parentCategory == null) {
-          return 1;
-        }
-        return a1.parentCategory.name.toLowerCase() < a2.parentCategory.name.toLowerCase() ? -1 : 1;
-      });
-    }
   }
 
   getParentCategoryName(category): string {
@@ -161,12 +120,12 @@ export class CategoriesComponent extends Sortable implements OnInit {
     });
   }
 
-  validateCategory(categoryName: string): boolean {
+  validateCategory(categoryName: string): boolean { // TODO pass category object
     if (categoryName == null || categoryName.trim() === '') {
       this.alertService.error('Category name cannot be empty');
-      return false;
+      return false; // TODO validate all - not break on first failure
     }
-    if (categoryName.length > 70) {
+    if (categoryName.length > 100) {
       this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
       return false;
     }
@@ -178,8 +137,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
       return false;
     }
 
-    if (this.categories.filter(category =>
-        category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
+    if (this.categories.filter(category => category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
       this.alertService.error('Category with provided name already exist');
       return false;
     }

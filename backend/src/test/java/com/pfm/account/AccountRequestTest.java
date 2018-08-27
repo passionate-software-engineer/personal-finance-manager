@@ -9,8 +9,9 @@ public class AccountRequestTest {
 
   @Test
   public void shouldVerifyToStringInAccountRequestBuilder() {
+
     // given
-    final Class<?> classUnderTest = AccountController.AccountRequest.AccountRequestBuilder.class;
+    final Class<?> classUnderTest = AccountRequest.AccountRequestBuilder.class;
 
     // when
 

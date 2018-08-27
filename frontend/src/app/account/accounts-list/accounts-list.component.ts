@@ -3,7 +3,7 @@ import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alerts/alerts-service/alerts.service';
-import {Sortable} from '../../sortable';
+import {Sortable} from '../../base/sortable';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -15,10 +15,9 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 
 export class AccountsListComponent extends Sortable implements OnInit {
-  accounts: Account[];
+  accounts: Account[] = [];
   addingMode = false;
-  newAccountName: string;
-  newAccountBalance: number;
+  newAccount: Account = new Account();
 
   constructor(private accountService: AccountService, private alertService: AlertsService) {
     super('name');
@@ -32,7 +31,6 @@ export class AccountsListComponent extends Sortable implements OnInit {
     this.accountService.getAccounts()
       .subscribe(accounts => {
         this.accounts = accounts;
-        this.sortByName('asc');
       });
   }
 
@@ -51,43 +49,41 @@ export class AccountsListComponent extends Sortable implements OnInit {
 
   onShowEditMode(account: Account) {
     account.editMode = true;
-    account.editedName = account.name;
-    account.editedBalance = account.balance;
+    account.editedAccount = new Account();
+    account.editedAccount.name = account.name;
+    account.editedAccount.balance = account.balance;
   }
 
   onEditAccount(account: Account) {
-    if (!this.validateAccount(account.editedName, account.editedBalance)) {
+    if (!this.validateAccount(account.editedAccount)) {
       return;
     }
     const editedAccount: Account = new Account();
     editedAccount.id = account.id;
-    editedAccount.name = account.editedName;
-    editedAccount.balance = account.editedBalance;
+    editedAccount.name = account.editedAccount.name;
+    editedAccount.balance = account.editedAccount.balance;
     this.accountService.editAccount(editedAccount)
       .subscribe(() => {
         this.alertService.success('Account updated');
         Object.assign(account, editedAccount);
-        this.sortByName('asc');
+        // TODO - get object from server
       });
   }
 
   onAddAccount() {
-    const accountToAdd = new Account();
-    if (!this.validateAddingAccount(this.newAccountName, this.newAccountBalance)) {
+    if (!this.validateAddingAccount(this.newAccount)) {
       return;
     }
-    accountToAdd.name = this.newAccountName;
-    // @ts-ignore
-    accountToAdd.balance = this.newAccountBalance;
-    this.accountService.addAccount(accountToAdd)
+
+    this.accountService.addAccount(this.newAccount)
       .subscribe(id => {
         this.alertService.success('Account added');
-        accountToAdd.id = id;
-        this.accounts.push(accountToAdd);
+        this.newAccount.id = id;
+
+        // TODO - get object from server
+        this.accounts.push(this.newAccount);
         this.addingMode = false;
-        this.newAccountBalance = null;
-        this.newAccountName = null;
-        this.sortByName('asc');
+        this.newAccount = new Account();
       });
   }
 
@@ -95,72 +91,52 @@ export class AccountsListComponent extends Sortable implements OnInit {
     this.getAccounts();
   }
 
-  // TODO make sorting using pipes not methods below
-
-  sortByName(type: string) {
-    if (type === 'asc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? 1 : -1));
-    }
-    if (type === 'dsc') {
-      this.accounts.sort((a1, a2) => (a1.name.toLowerCase() > a2.name.toLowerCase() ? -1 : 1));
-    }
-  }
-
-  sortByBalance(sortingType: string) {
-    if (sortingType === 'asc') {
-      this.accounts.sort((a1, a2) => a1.balance - a2.balance);
-    }
-    if (sortingType === 'dsc') {
-      this.accounts.sort((a1, a2) => a2.balance - a1.balance);
-    }
-  }
-
-  validateAccount(accountName: string, accountBalance: number): boolean {
-    if ((accountName == null || accountName.trim() === '')
-      && (!accountBalance)) {
+  validateAccount(account: Account): boolean {
+    if ((account.name == null || account.name.trim() === '')
+      && (!account.balance)) { // TODO change validation to validate all at once, not break on error
       this.alertService.error('Name cannot be empty');
       this.alertService.error('Balance cannot be empty');
       return false;
     }
-    if (accountName == null || accountName === '') {
+    if (account.name == null || account.name === '') {
       this.alertService.error('Name cannot be empty');
       return false;
     }
-    if (accountName.length > 70) {
+    if (account.name.length > 100) {
       this.alertService.error('Account name too long. Account name can not be longer then 100 characters');
       return false;
     }
 
-    if (typeof accountBalance === 'undefined' || !accountBalance) {
+    if (typeof account.balance === 'undefined' || !account.balance) {
       this.alertService.error('Balance cannot be empty');
       return false;
     }
 
-    if (!isNumeric(accountBalance)) {
-      this.alertService.error('Provided balance is not correct number');
+    if (!isNumeric(account.balance)) {
+      this.alertService.error('Provided balance is not a correct number');
       return false;
     }
 
-    const newAccountBalance = Math.round(accountBalance * 100) / 100;
-    if (newAccountBalance > maxAccountBalance) {
+    if (account.balance > maxAccountBalance) {
       this.alertService.error('Balance number is too big.' +
         ' If You are so rich why do You need personal finance manager !? ');
       return false;
     }
-    if (newAccountBalance < minAccountBalance) {
+
+    if (account.balance < minAccountBalance) {
       this.alertService.error('Balance number is too low');
       return false;
     }
+
     return true;
   }
 
-  validateAddingAccount(accountName: string, accountBalance: number): boolean {
-    if (!this.validateAccount(accountName, accountBalance)) {
+  validateAddingAccount(accountToValidate: Account): boolean {
+    if (!this.validateAccount(accountToValidate)) {
       return false;
     }
 
-    if (this.accounts.filter(account => account.name.toLocaleLowerCase()
-      === accountName.toLocaleLowerCase()).length > 0) {
+    if (this.accounts.filter(account => account.name.toLocaleLowerCase() === accountToValidate.name.toLocaleLowerCase()).length > 0) {
       this.alertService.error('Account with provided name already exist');
       return false;
     }

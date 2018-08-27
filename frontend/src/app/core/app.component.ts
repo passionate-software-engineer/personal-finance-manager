@@ -8,5 +8,3 @@ import {Component} from '@angular/core';
 export class AppComponent {
   title = 'Personal Finance Manager ';
 }
-
-// TODO should be in separate catalog

@@ -3,6 +3,5 @@ export class Category {
   name: string;
   parentCategory: Category = null;
   editMode = false;
-  editedName: string; // TODO use object as in Transactions
-  editedParentCategory: Category;
+  editedCategory: Category;
 }
