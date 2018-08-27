@@ -3,7 +3,7 @@ package com.pfm.filter;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
-import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategoryRequest;
+import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategory;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestHomeNoParentCategory;
 import static com.pfm.helpers.TestFilterProvider.convertAccountIdsToList;
 import static com.pfm.helpers.TestFilterProvider.convertCategoryIdsToList;
@@ -32,7 +32,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldAddFilter() throws Exception {
     //given
-    Long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategoryRequest());
+    Long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     Long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
 
     FilterRequest homeExpensesFilterToAdd = getFilterRequestFoodExpenses();
@@ -71,7 +71,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldGetAllFilters() throws Exception {
     //given
-    final long categoryFoodId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategoryRequest());
+    final long categoryFoodId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     long categoryCarId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     long categoryHomeId = callRestToaddCategoryAndReturnId(getCategoryRequestHomeNoParentCategory());
     long accountMbankId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);

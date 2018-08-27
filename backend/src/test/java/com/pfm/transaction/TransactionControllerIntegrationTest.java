@@ -12,9 +12,13 @@ import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
 import static com.pfm.helpers.TestCategoryProvider.CATEGORY_CAR_NO_PARENT_CATEGORY;
 import static com.pfm.helpers.TestCategoryProvider.CATEGORY_FOOD_NO_PARENT_CATEGORY;
+import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
+import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategory;
+import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategory;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.getCarTransactionRequestWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.getFoodTransactionRequestWithNoAccountAndNoCategory;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +45,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
 
     //when
@@ -59,7 +63,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     Transaction addedTransaction = convertTransactionRequestToTransactionAndSetId(transactionId,
@@ -82,8 +86,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long carCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
     TransactionRequest carTransactionRequest = getCarTransactionRequestWithNoAccountAndNoCategory();
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
@@ -106,8 +110,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long piotrAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long carCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     final long foodTransactionId = callRestServiceToAddTransactionAndReturnId(getFoodTransactionRequestWithNoAccountAndNoCategory(), jacekAccountId,
         foodCategoryId);
 
@@ -142,8 +146,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
 
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
@@ -180,8 +183,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     TransactionRequest transactionToAdd = TransactionRequest.builder()
         .description(" ")
         .accountId(jacekAccountId)

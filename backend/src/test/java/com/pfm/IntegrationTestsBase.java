@@ -11,7 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.category.Category;
-import com.pfm.category.CategoryController.CategoryRequest;
+import com.pfm.category.CategoryRequest;
+import com.pfm.category.CategoryService;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
@@ -57,6 +58,9 @@ public abstract class IntegrationTestsBase {
 
   @Autowired
   protected ObjectMapper mapper;
+
+  @Autowired
+  protected CategoryService categoryService;
 
   @Autowired
   protected Flyway flyway;
@@ -117,6 +121,12 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
+  protected long callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(long parentCategoryId, CategoryRequest categoryRequest)
+      throws Exception {
+    categoryRequest.setParentCategoryId(parentCategoryId);
+    return callRestToaddCategoryAndReturnId(categoryRequest);
+  }
+
   protected Category callRestToGetCategoryById(long id) throws Exception {
     String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + id))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
@@ -147,6 +157,16 @@ public abstract class IntegrationTestsBase {
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
 
+  protected Category convertCategoryRequestToCategoryAndSetId(long categoryId, CategoryRequest categoryRequest) {
+    return Category.builder()
+        .id(categoryId)
+        .name(categoryRequest.getName())
+        .parentCategory(categoryRequest.getParentCategoryId() == null ? null : categoryService.getCategoryById(categoryRequest.getParentCategoryId())
+            .orElse(null))
+        .build();
+
+  }
+
   //transaction
   protected long callRestServiceToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
     transactionRequest.setCategoryId(categoryId);
@@ -155,17 +175,6 @@ public abstract class IntegrationTestsBase {
         mockMvc
             .perform(post(TRANSACTIONS_SERVICE_PATH)
                 .content(json(transactionRequest))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  protected long callRestServiceToAddCategoryAndReturnId(Category category) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(CATEGORIES_SERVICE_PATH)
-                .content(json(category))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
