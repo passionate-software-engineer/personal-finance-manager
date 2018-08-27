@@ -3,16 +3,11 @@ package com.pfm.category;
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -132,20 +127,5 @@ public class CategoryController {
 
     log.info("Category with id {} was deleted successfully", id);
     return ResponseEntity.ok().build();
-  }
-
-  // TODO separate class
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  @AllArgsConstructor
-  @Builder
-  @Setter
-  @Getter
-  public static class CategoryRequest {
-
-    @ApiModelProperty(value = "Parent category id", example = "1")
-    private Long parentCategoryId;
-
-    @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
-    private String name;
   }
 }

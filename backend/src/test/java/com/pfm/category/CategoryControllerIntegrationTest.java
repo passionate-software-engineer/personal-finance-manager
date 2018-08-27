@@ -7,9 +7,12 @@ import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREAD
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
+import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
+import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestOilNoParentCategory;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -21,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.IntegrationTestsBase;
-import com.pfm.category.CategoryController.CategoryRequest;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -55,31 +57,21 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldAddCategory() throws Exception {
     //given
-    setup();
-    callRestToDeleteCategoryById(childCategoryId); // TODO that should not be happening - you should start each test from clear state
-    callRestToDeleteCategoryById(parentCategoryId);
-    CategoryRequest parentCategoryToAdd = CategoryRequest.builder().name("Car").build();
-    // TODO move all that logic to TestCategoryProvider - tests will be cleaner
-    CategoryRequest subCategoryToAdd = CategoryRequest.builder().name("Oil").build();
-    Category expectedParentCategory = Category.builder().name("Car").build();
-    Category expectedSubCategory = Category.builder().name("Oil").parentCategory(expectedParentCategory).build();
 
     //when
-    long addedParentCategoryId = callRestToaddCategoryAndReturnId(parentCategoryToAdd);
-    subCategoryToAdd.setParentCategoryId(addedParentCategoryId);
-    // TODO that can be hidden in callRestToaddCategoryAndReturnId method, just pass id of parent category to it, don't set it before
-    long addedSubCategoryId = callRestToaddCategoryAndReturnId(subCategoryToAdd);
+    long carCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+
+    long oilCategoryId = callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(carCategoryId, getCategoryRequestOilNoParentCategory());
 
     //then
-    expectedParentCategory.setId(addedParentCategoryId);
-    expectedSubCategory.setId(addedSubCategoryId);
-    expectedSubCategory.getParentCategory().setId(addedParentCategoryId);
+    Category expectedCarCategory = convertCategoryRequestToCategoryAndSetId(carCategoryId, getCategoryRequestCarNoParentCategory());
+    Category expectedOilCategory = convertCategoryRequestToCategoryAndSetId(oilCategoryId,getCategoryRequestOilNoParentCategory());
+    expectedOilCategory.setParentCategory(expectedCarCategory);
 
     List<Category> categories = callRestToGetAllCategories();
 
     assertThat(categories.size(), is(2));
-    assertThat(categories.get(0), is(equalTo(expectedParentCategory)));
-    assertThat(categories.get(1), is(equalTo(expectedSubCategory)));
+    assertThat(categories, containsInAnyOrder(expectedCarCategory,expectedOilCategory));
   }
 
   @Test
