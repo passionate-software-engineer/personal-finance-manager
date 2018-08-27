@@ -44,9 +44,6 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
-  //TODO remove setup methods where unneeded
-  // TODO those global fields is not good idea - each test should initialize data in visible way, if needed wrap that logic into methods and call
-  // those methods in // given part of the test
   private final CategoryRequest parentCategoryRq = CategoryRequest.builder().name("Food").build();
   private final CategoryRequest childCategoryRq = CategoryRequest.builder().name("Snickers").build();
   private Long parentCategoryId;
