@@ -15,7 +15,7 @@
     </th>
 
     <!--Parent Category-->
-    <th [class.active]="order === 'category'" (click)="setOrder('parentCategory.name')">
+    <th [class.active]="order === 'parentCategory.name'" (click)="setOrder('parentCategory.name')">
       Parent Category
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
@@ -28,13 +28,13 @@
 
     <!--Name-->
     <td *ngIf="category.editMode">
-      <input class="form-control" type="text" [(ngModel)]="category.editedName">
+      <input class="form-control" type="text" [(ngModel)]="category.editedCategory.name">
     </td>
     <td *ngIf="!category.editMode">{{category.name}}</td>
 
     <!--Parent Category-->
     <td *ngIf="category.editMode">
-      <select class="form-control" [(ngModel)]="category.editedParentCategory">
+      <select class="form-control" [(ngModel)]="category.editedCategory.parentCategory">
         <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
           {{parCategory.name}}
         <option [ngValue]="null">Main Category</option>
@@ -44,22 +44,22 @@
 
     <td *ngIf="!category.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options
+        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">Options
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn-warning" (click)="onShowEditMode(category)">Edit</button>
+            <button class="btn btn-warning btn-block" (click)="onShowEditMode(category)">Edit</button>
           </li>
           <li>
-            <button class="btn-danger" (click)="deleteCategory(category)">Delete</button>
+            <button class="btn btn-danger btn-block" (click)="deleteCategory(category)">Delete</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="category.editMode">
-      <button class="btn-success" (click)="onEditCategory(category)">Save</button>
-      <button class="btn-danger" (click)="category.editMode=false">Exit</button>
+      <button class="btn btn-success" (click)="onEditCategory(category)">Save</button>
+      <button class="btn btn-danger" (click)="category.editMode=false">Exit</button>
     </td>
 
   </tr>
@@ -68,11 +68,11 @@
 
     <!--Name-->
     <td>
-      <input class="form-control" type="text" [(ngModel)]="newCategoryName">
+      <input class="form-control" type="text" [(ngModel)]="newCategory.name">
     </td>
     <td>
       <div class="form-group">
-        <select class="form-control" id="selectedParentCategory" [(ngModel)]="newCategoryParentCategory"
+        <select class="form-control" id="selectedParentCategory" [(ngModel)]="newCategory.parentCategory"
                 name="selectedParentCategory">
           <option [ngValue]="null">Main Category</option>
           <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
@@ -81,8 +81,8 @@
     </td>
 
     <td>
-      <button class="btn-success" (click)="onAddCategory()">Save</button>
-      <button class="btn-danger" (click)="addingMode=false">Exit</button>
+      <button class="btn btn-success" (click)="onAddCategory()">Save</button>
+      <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
     </td>
 
   </tr>
