@@ -38,12 +38,15 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddTransaction() throws Exception {
+
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
+
     //when
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
+
     //then
     assertThat(callRestToGetTransactionById(transactionId),
         is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
@@ -53,6 +56,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteTransaction() throws Exception {
+
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
@@ -60,8 +64,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     Transaction addedTransaction = convertTransactionRequestToTransactionAndSetId(transactionId,
         transactionToAdd);
+
     //when
     deleteTransactionById(transactionId);
+
     //then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(0));
@@ -73,6 +79,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetTransactions() throws Exception {
+
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
@@ -81,8 +88,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     TransactionRequest carTransactionRequest = getCarTransactionRequestWithNoAccountAndNoCategory();
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
     long carTransactionId = callRestServiceToAddTransactionAndReturnId(carTransactionRequest, jacekAccountId, carCategoryId);
+
     //when
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
+
     //then
     assertThat(allTransactionsInDb.size(), is(2));
     Transaction foodTransaction = convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest);
@@ -130,6 +139,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationErrorInUpdateMethod() throws Exception {
+
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
@@ -148,6 +158,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyFields() throws Exception {
+
     //given
     TransactionRequest transactionToAdd = new TransactionRequest();
 
@@ -166,6 +177,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyDescription() throws Exception {
+
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
@@ -189,6 +201,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingAccountAndNotExistingCategory() throws Exception {
+
     //given
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
     transactionToAdd.setCategoryId(NOT_EXISTING_ID);
@@ -210,7 +223,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
-
   }
 
   @Test
@@ -219,7 +231,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
-
   }
 
   @Test
@@ -230,6 +241,5 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .content(json(getCarTransactionRequestWithNoAccountAndNoCategory()))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
-
   }
 }
