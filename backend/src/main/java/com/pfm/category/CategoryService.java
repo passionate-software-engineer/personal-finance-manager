@@ -78,10 +78,6 @@ public class CategoryService {
     if (parentCategory == null) {
       return true;
     }
-    // TODO - why? if parent category don't have parent then it's some special case? should be handled in query below
-    if (parentCategory.getParentCategory() == null) {
-      return true;
-    }
 
     // TODO - I don't like this recursion - simply category can be parent category for other if it's not any of it's
     // children - we need to handle that with single query to db, can do some processing in java but not multiple calls to DB - hint DFS algorithm ;)

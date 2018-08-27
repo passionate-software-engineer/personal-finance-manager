@@ -16,11 +16,6 @@ public class TestCategoryProvider {
           .name("Food")
           .build();
 
-  public static final Category CATEGORY_CAR_NO_PARENT_CATEGORY =
-      Category.builder()
-          .name("Car")
-          .build();
-
   public static final CategoryRequest CATEGORY_REQUEST_CAR_NO_PARENT_CATEGORY =
       CategoryRequest.builder()
           .name("Car")
@@ -56,6 +51,30 @@ public class TestCategoryProvider {
     return CategoryRequest.builder()
         .name(categoryRequest.getName())
         .parentCategoryId(categoryRequest.getParentCategoryId())
+        .build();
+  }
+
+  public static Category categoryCar() {
+    return Category.builder()
+        .name("Car")
+        .build();
+  }
+
+  public static Category categoryFood() {
+    return Category.builder()
+        .name("Food")
+        .build();
+  }
+
+  public static Category categoryOil() {
+    return Category.builder()
+        .name("Oil")
+        .build();
+  }
+
+  public static Category categoryHome() {
+    return Category.builder()
+        .name("Home")
         .build();
   }
 }
