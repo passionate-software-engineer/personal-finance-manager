@@ -39,17 +39,14 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public abstract class IntegrationTestsBase {
 
+  @ClassRule
+  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
-
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
-
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
-
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
@@ -135,6 +132,15 @@ public abstract class IntegrationTestsBase {
     return jsonToCategory(response);
   }
 
+  protected void callRestToUpdateCategory(long id, CategoryRequest categoryRequest) throws Exception {
+    mockMvc
+        .perform(put(CATEGORIES_SERVICE_PATH + "/" + id)
+            .content(json(categoryRequest))
+            .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isOk());
+  }
+
   protected List<Category> callRestToGetAllCategories() throws Exception {
     String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
@@ -164,7 +170,13 @@ public abstract class IntegrationTestsBase {
         .parentCategory(categoryRequest.getParentCategoryId() == null ? null : categoryService.getCategoryById(categoryRequest.getParentCategoryId())
             .orElse(null))
         .build();
+  }
 
+  protected CategoryRequest categoryToCategoryRequest(Category category) {
+    return CategoryRequest.builder()
+        .name(category.getName())
+        .parentCategoryId(category.getParentCategory() == null ? null : category.getParentCategory().getId())
+        .build();
   }
 
   //transaction

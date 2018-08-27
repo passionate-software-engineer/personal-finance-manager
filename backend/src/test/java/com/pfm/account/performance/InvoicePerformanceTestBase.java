@@ -30,23 +30,17 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
 
-  private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
-
-  protected static final int THREAD_COUNT = 24;
-
-  @LocalServerPort
-  private int port;
-
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
-
+  protected static final int THREAD_COUNT = 24;
+  private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
-
   @Rule
   public final ErrorCollector collector = new ErrorCollector();
-
   protected List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
+  @LocalServerPort
+  private int port;
 
   protected Account[] getAccounts() throws Exception {
     return given()

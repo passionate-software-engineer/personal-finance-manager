@@ -30,9 +30,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
+  @Rule
+  public ExpectedException expectedEx = ExpectedException.none();
   @Mock
   private AccountRepository accountRepository;
-
   @InjectMocks
   private AccountService accountService;
 
@@ -147,9 +148,6 @@ public class AccountServiceTest {
     //then
     verify(accountRepository).existsById(MOCK_ACCOUNT_ID);
   }
-
-  @Rule
-  public ExpectedException expectedEx = ExpectedException.none();
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExist() {
