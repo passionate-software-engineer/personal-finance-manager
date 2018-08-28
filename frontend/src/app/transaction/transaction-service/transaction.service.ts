@@ -29,12 +29,12 @@ export class TransactionService extends ServiceBase {
   }
 
   getTransactions(): Observable<TransactionResponse[]> {
-    return this.http.get<TransactionResponse[]>(TransactionService.apiUrl(PATH))
+    return this.http.get<TransactionResponse[]>(TransactionService.apiUrl(PATH), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getTransactions', [])));
   }
 
   getTransaction(id: number): Observable<TransactionResponse> {
-    return this.http.get<TransactionResponse>(ServiceBase.apiUrl(PATH, id))
+    return this.http.get<TransactionResponse>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getSingleTransaction', null)));
   }
 
@@ -45,7 +45,7 @@ export class TransactionService extends ServiceBase {
   }
 
   deleteTransaction(id: number): Observable<any> {
-    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
       .pipe(catchError(this.handleError('deleteTransaction', [])));
   }
 
