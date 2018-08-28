@@ -39,14 +39,18 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public abstract class IntegrationTestsBase {
 
+  // TODO - MINOR - Try using multiple runners or Junit5 parametrized tests
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
+
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
+
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
@@ -105,9 +109,8 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(jsonAccount, Account.class);
   }
 
-
   //category
-  protected long callRestToaddCategoryAndReturnId(CategoryRequest category) throws Exception {
+  protected long callRestToAddCategoryAndReturnId(CategoryRequest category) throws Exception {
     String response = mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
@@ -121,7 +124,7 @@ public abstract class IntegrationTestsBase {
   protected long callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(long parentCategoryId, CategoryRequest categoryRequest)
       throws Exception {
     categoryRequest.setParentCategoryId(parentCategoryId);
-    return callRestToaddCategoryAndReturnId(categoryRequest);
+    return callRestToAddCategoryAndReturnId(categoryRequest);
   }
 
   protected Category callRestToGetCategoryById(long id) throws Exception {

@@ -32,7 +32,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldAddFilter() throws Exception {
     //given
-    Long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    Long categoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     Long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
 
     FilterRequest homeExpensesFilterToAdd = getFilterRequestFoodExpenses();
@@ -52,7 +52,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldGetFilterById() throws Exception {
     //given
-    long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+    long categoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
 
     FilterRequest carExpensesFilterToAdd = getFilterRequestCarExpenses();
@@ -71,9 +71,9 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldGetAllFilters() throws Exception {
     //given
-    final long categoryFoodId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
-    long categoryCarId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
-    long categoryHomeId = callRestToaddCategoryAndReturnId(getCategoryRequestHomeNoParentCategory());
+    final long categoryFoodId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long categoryCarId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+    long categoryHomeId = callRestToAddCategoryAndReturnId(getCategoryRequestHomeNoParentCategory());
     long accountMbankId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long accountDamianId = callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
 
@@ -123,7 +123,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldUpdateFilter() throws Exception {
     //given
-    long categoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+    long categoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
 

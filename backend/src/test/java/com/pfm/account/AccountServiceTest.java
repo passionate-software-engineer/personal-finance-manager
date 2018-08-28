@@ -32,8 +32,10 @@ public class AccountServiceTest {
 
   @Rule
   public ExpectedException expectedEx = ExpectedException.none();
+
   @Mock
   private AccountRepository accountRepository;
+
   @InjectMocks
   private AccountService accountService;
 
