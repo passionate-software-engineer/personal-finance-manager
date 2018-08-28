@@ -1,6 +1,6 @@
 CREATE TABLE transaction
 (
-  id          SERIAL PRIMARY KEY,
+  id          BIGSERIAL PRIMARY KEY,
   description VARCHAR(255)   NOT NULL,
   category_id BIGINT REFERENCES category (id),
   account_id  BIGINT REFERENCES account (id),
