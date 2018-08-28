@@ -14,7 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryValidatorTest {
 
-  @Rule
+  @Rule // TODO refactor to JUnit5 exception validation
   public ExpectedException thrown = ExpectedException.none();
 
   @Mock
