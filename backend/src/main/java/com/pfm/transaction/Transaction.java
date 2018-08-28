@@ -23,7 +23,6 @@ public final class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(columnDefinition = "INTEGER")
   private Long id;
 
   private String description;

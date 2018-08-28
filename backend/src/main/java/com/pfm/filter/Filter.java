@@ -25,7 +25,6 @@ public final class Filter {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(columnDefinition = "INTEGER")
   private Long id;
 
   private String name;
