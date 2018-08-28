@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("transactions")
 @CrossOrigin
 @Api(value = "Transactions", description = "Controller used to list / add / update / delete transaction.")
-public interface TransactionApi { // TODO extract API for other services
+public interface TransactionApi {
 
   @ApiOperation(value = "Find transaction by id", response = Transaction.class)
   @GetMapping(value = "/{id}")

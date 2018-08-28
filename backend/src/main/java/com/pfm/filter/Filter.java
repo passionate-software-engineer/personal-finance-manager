@@ -39,9 +39,11 @@ public final class Filter {
   private List<Long> categoryIds;
 
   private BigDecimal priceFrom;
+
   private BigDecimal priceTo;
 
   private LocalDate dateFrom;
+
   private LocalDate dateTo;
 
   private String description;

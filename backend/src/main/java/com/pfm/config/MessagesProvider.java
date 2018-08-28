@@ -26,6 +26,7 @@ public class MessagesProvider {
   public static final String ACCOUNT_ID_DOES_NOT_EXIST = "transactionValidator.accountIdNotExist";
   public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
 
+  // TODO does not exist - correct in all places
   public static final String FILTER_ACCOUNT_ID_DOES_NOT_EXIST = "filterValidator.accountIdNotExist";
   public static final String FILTER_CATEGORY_ID_DOES_NOT_EXIST = "filterValidator.categoryIdNotExist";
   public static final String FILTER_PRICE_FROM_BIGGER_THEN_PRICE_TO = "filterValidator.priceFromBiggerThenPriceTo";

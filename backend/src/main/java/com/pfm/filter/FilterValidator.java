@@ -49,8 +49,7 @@ public class FilterValidator {
       validationResults.add(getMessage(FILTER_PRICE_FROM_BIGGER_THEN_PRICE_TO));
     }
 
-    if (filterRequest.getDateFrom() != null
-        && filterRequest.getDateTo() != null
+    if (filterRequest.getDateFrom() != null && filterRequest.getDateTo() != null
         && filterRequest.getDateFrom().isAfter(filterRequest.getDateTo())) {
       validationResults.add(getMessage(FILTER_DATE_FROM_IS_AFTER_DATE_TO));
     }

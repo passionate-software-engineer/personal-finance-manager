@@ -19,13 +19,13 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FilterRequest {
 
-  //TODO check how to add list as example
-
   @ApiModelProperty(value = "Filter Name", example = "Expenses June")
   private String name;
 
+  // TODO check how to add list as example
   private List<Long> accountIds;
 
+  // TODO check how to add list as example
   private List<Long> categoryIds;
 
   @ApiModelProperty(value = "Price from", example = "100")

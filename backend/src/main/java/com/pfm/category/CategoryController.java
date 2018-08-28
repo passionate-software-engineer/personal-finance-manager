@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@CrossOrigin
+@CrossOrigin // TODO extract API for other services
 @Api(value = "Category", description = "Controller used to list / add / update / delete categories.")
 public class CategoryController {
 

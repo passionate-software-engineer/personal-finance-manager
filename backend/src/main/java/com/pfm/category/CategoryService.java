@@ -71,16 +71,22 @@ public class CategoryService {
 
   public boolean canBeParentCategory(long categoryId, long parentCategoryId) {
     if (categoryId == parentCategoryId) {
-      return false;
-    }
-    Category parentCategory = getCategoryById(parentCategoryId).orElse(null);
-    // TODO - this check does not make sense - if parent category don't exists we should throw illegalStateException
-    if (parentCategory == null) {
-      return true;
+      return false; // got cycle - one of the parents is trying to use it's child as parent
     }
 
-    // TODO - I don't like this recursion - simply category can be parent category for other if it's not any of it's
-    // children - we need to handle that with single query to db, can do some processing in java but not multiple calls to DB - hint DFS algorithm ;)
+    Optional<Category> parentCategoryOptional = getCategoryById(parentCategoryId);
+
+    if (!parentCategoryOptional.isPresent()) {
+      throw new IllegalStateException(String.format("Received parent category id (%d) which does not exists in database", parentCategoryId));
+    }
+
+    Category parentCategory = parentCategoryOptional.get();
+
+    if (parentCategory.getParentCategory() == null) {
+      return true; // we cannot continue as parent category is null but we need it's id. No parent is trying to use this category as parent so it's ok
+    }
+
+    // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare
     return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId());
   }
 

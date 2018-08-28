@@ -41,7 +41,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
 
     //when
@@ -59,7 +59,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
     Transaction addedTransaction = convertTransactionRequestToTransactionAndSetId(transactionId,
@@ -82,8 +82,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
-    long carCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long carCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
     TransactionRequest carTransactionRequest = getCarTransactionRequestWithNoAccountAndNoCategory();
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
@@ -106,8 +106,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
     long piotrAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
-    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
-    long carCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long carCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     final long foodTransactionId = callRestServiceToAddTransactionAndReturnId(getFoodTransactionRequestWithNoAccountAndNoCategory(), jacekAccountId,
         foodCategoryId);
 
@@ -142,7 +142,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
 
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
     long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
@@ -179,7 +179,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestToaddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     TransactionRequest transactionToAdd = TransactionRequest.builder()
         .description(" ")
         .accountId(jacekAccountId)

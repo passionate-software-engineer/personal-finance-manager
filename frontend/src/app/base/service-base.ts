@@ -10,7 +10,7 @@ export abstract class ServiceBase {
     headers: new HttpHeaders({'correlationId': uuid()})
   };
 
-  protected httpOptions = {
+  protected httpOptions = { // TODO Correlation-Id to keep format (correct in backend too)
     headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
   };
 

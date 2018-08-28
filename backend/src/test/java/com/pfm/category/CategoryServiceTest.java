@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,8 +32,7 @@ public class CategoryServiceTest {
   private static final Category mockCategory =
       new Category(MOCK_CATEGORY_ID, MOCK_CATEGORY_NAME, null);
   private static final Category mockCategoryWithParentCategory =
-      new Category(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, MOCK_CATEGORY_WITH_PARENT_CATEGORY_NAME,
-          mockCategory);
+      new Category(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, MOCK_CATEGORY_WITH_PARENT_CATEGORY_NAME, mockCategory);
 
   @Mock
   private CategoryRepository categoryRepository;
@@ -153,24 +153,20 @@ public class CategoryServiceTest {
   @Test(expected = IllegalStateException.class)
   public void shouldThrowExceptionCausedByIdNotExist() {
     //given
-    when(categoryRepository.findById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID))
-        .thenReturn(Optional.empty());
+    when(categoryRepository.findById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID)).thenReturn(Optional.empty());
 
     //when
-    categoryService
-        .updateCategory(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, mockCategoryWithParentCategory);
+    categoryService.updateCategory(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, mockCategoryWithParentCategory);
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test(expected = IllegalStateException.class) // TODO validate message :)
   public void shouldThrowExceptionCausedByIdOfParentCategoryNotExist() {
     //given
-    when(categoryRepository.findById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID))
-        .thenReturn(Optional.of(mockCategoryWithParentCategory));
+    when(categoryRepository.findById(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID)).thenReturn(Optional.of(mockCategoryWithParentCategory));
     when(categoryRepository.findById(MOCK_CATEGORY_ID)).thenReturn(Optional.empty());
 
     //when
-    categoryService
-        .updateCategory(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, mockCategoryWithParentCategory);
+    categoryService.updateCategory(MOCK_CATEGORY_WITH_PARENT_CATEGORY_ID, mockCategoryWithParentCategory);
   }
 
   @Test
@@ -183,6 +179,22 @@ public class CategoryServiceTest {
 
     //then
     verify(categoryRepository).existsById(MOCK_CATEGORY_ID);
+  }
+
+  @Test
+  public void shouldThrowExceptionWhenPassedParentCategoryWhichDoesNotExist() {
+    //given
+    long notExistingCategoryId = 5L;
+    when(categoryRepository.findById(notExistingCategoryId)).thenReturn(Optional.empty());
+
+    //then
+
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      // when
+      categoryService.canBeParentCategory(1, notExistingCategoryId);
+    });
+
+    assertThat(exception.getMessage(), is(equalTo("Received parent category id (" + notExistingCategoryId + ") which does not exists in database")));
   }
 
 }
