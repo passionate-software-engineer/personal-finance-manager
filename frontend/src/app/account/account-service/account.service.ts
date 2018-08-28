@@ -18,7 +18,7 @@ export class AccountService extends ServiceBase {
   }
 
   getAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(ServiceBase.apiUrl(PATH))
+    return this.http.get<Account[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getAccounts', [])));
   }
 
@@ -28,7 +28,7 @@ export class AccountService extends ServiceBase {
   }
 
   deleteAccount(id: number): Observable<any> {
-    return this.http.delete<Account>(ServiceBase.apiUrl(PATH, id))
+    return this.http.delete<Account>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
       .pipe(catchError(this.handleError('deleteAccount', [])));
   }
 

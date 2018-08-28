@@ -58,7 +58,6 @@ export class CategoriesComponent extends Sortable implements OnInit {
         }
       }
     }
-
   }
 
   onEditCategory(category: Category) {
@@ -143,5 +142,4 @@ export class CategoriesComponent extends Sortable implements OnInit {
     }
     return true;
   }
-
 }
