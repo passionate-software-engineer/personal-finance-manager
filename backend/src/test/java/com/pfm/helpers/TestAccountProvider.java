@@ -1,5 +1,7 @@
 package com.pfm.helpers;
 
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+
 import com.pfm.account.Account;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -29,13 +31,6 @@ public class TestAccountProvider {
           .balance(BigDecimal.valueOf(9))
           .build();
 
-  public static final Account ACCOUNT_JACEK_BALANCE_1000 =
-      Account.builder()
-          .id(2L)
-          .name("Jacek Millenium Bank savings")
-          .balance(BigDecimal.valueOf(1000).setScale(2, RoundingMode.HALF_UP))
-          .build();
-
   public static final Account ACCOUNT_LUKASZ_BALANCE_1124 =
       Account.builder()
           .id(122L)
@@ -63,4 +58,18 @@ public class TestAccountProvider {
           .name("Jurek BZWBK account")
           .balance(BigDecimal.valueOf(10.99))
           .build();
+
+  public static Account accountJacekBalance1000(){
+    return Account.builder()
+        .name("Jacek Millenium Bank savings")
+        .balance(convertDoubleToBigDecimal(1000))
+        .build();
+  }
+
+  public static Account accountMbankBalance10(){
+    return Account.builder()
+        .name("Mbank")
+        .balance(convertDoubleToBigDecimal(10))
+        .build();
+  }
 }

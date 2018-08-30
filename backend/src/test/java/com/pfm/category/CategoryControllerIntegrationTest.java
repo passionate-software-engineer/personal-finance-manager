@@ -244,7 +244,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory()
       throws Exception {
-    
+
     //given
     long oilCategoryId = callRestToAddCategoryAndReturnId(categoryOil());
     CategoryRequest categoryOilToUpdate = CategoryRequest.builder().name(categoryOil().getName())

@@ -1,6 +1,6 @@
 package com.pfm.filter;
 
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategory;
@@ -33,7 +33,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldAddFilter() throws Exception {
     //given
     Long categoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
-    Long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    Long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
 
     FilterRequest homeExpensesFilterToAdd = getFilterRequestFoodExpenses();
     homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
@@ -53,7 +53,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetFilterById() throws Exception {
     //given
     long categoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
 
     FilterRequest carExpensesFilterToAdd = getFilterRequestCarExpenses();
     carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
@@ -74,7 +74,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     final long categoryFoodId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     long categoryCarId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     long categoryHomeId = callRestToAddCategoryAndReturnId(getCategoryRequestHomeNoParentCategory());
-    long accountMbankId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long accountMbankId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long accountDamianId = callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
 
     FilterRequest homeExpensesFilterToAdd = getFilterRequestHomeExpensesUpTo200();
@@ -124,7 +124,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateFilter() throws Exception {
     //given
     long categoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(getFilterRequestCarExpenses());
 
     FilterRequest filterCarExpensesToUpdate = FilterRequest.builder()

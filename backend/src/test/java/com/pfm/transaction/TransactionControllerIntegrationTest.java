@@ -8,7 +8,7 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategory;
@@ -40,7 +40,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldAddTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
 
@@ -51,14 +51,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(callRestToGetTransactionById(transactionId),
         is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
-    assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
+    assertThat(jacekAccountBalanceAfterAddingTransaction, is(accountJacekBalance1000().getBalance().subtract(transactionToAdd.getPrice())));
   }
 
   @Test
   public void shouldDeleteTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
     long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
@@ -74,14 +74,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsInDb.contains(addedTransaction), is(false));
     BigDecimal jacekAccountBalanceAfterDeletingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
     assertThat(jacekAccountBalanceAfterDeletingTransaction,
-        is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
+        is(accountJacekBalance1000().getBalance()));
   }
 
   @Test
   public void shouldGetTransactions() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     long carCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
@@ -104,7 +104,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long piotrAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
     long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     long carCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestCarNoParentCategory());
@@ -131,7 +131,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest)),
         is(true));
     BigDecimal jacekAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(jacekAccountId);
-    assertThat(jacekAccountBalanceAfterTransactionUpdate, is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
+    assertThat(jacekAccountBalanceAfterTransactionUpdate, is(accountJacekBalance1000().getBalance()));
     BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(piotrAccountId);
     assertThat(piotrAccountBalanceAfterTransactionUpdate,
         is(ACCOUNT_PIOTR_BALANCE_9.getBalance().subtract(updatedFoodTransactionRequest.getPrice())));
@@ -141,7 +141,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnValidationErrorInUpdateMethod() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
 
     TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
@@ -178,7 +178,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByEmptyDescription() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(getCategoryRequestFoodNoParentCategory());
     TransactionRequest transactionToAdd = TransactionRequest.builder()
         .description(" ")
