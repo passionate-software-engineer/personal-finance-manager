@@ -39,19 +39,12 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   //TODO change JunitPArams to Junit5 to avoid CLASS RULE
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
-
-  @Rule
-  public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
   @Test
   public void shouldAddCategory() throws Exception {
-    //given
 
     //when
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
-
     long oilCategoryId = callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(carCategoryId, categoryOil());
 
     //then
@@ -70,8 +63,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   @Parameters(method = "emptyAccountNameParameters")
   public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
-    //given
 
+    //given
     CategoryRequest categoryToAdd = CategoryRequest.builder().name(name).build();
 
     //when
@@ -93,6 +86,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
+
     //given
     callRestToAddCategoryAndReturnId(categoryCar());
     CategoryRequest categoryToAdd = CategoryRequest.builder().name(categoryCar().getName())
@@ -112,6 +106,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetCategories() throws Exception {
+
     //when
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar());
     long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome());
@@ -170,6 +165,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateSubCategory() throws Exception {
+
     //given
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar());
     long categoryOilId = callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryCarId, categoryOil());
@@ -214,6 +210,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnTrueWhenNoCycleExistsAnd2CategoriesWereUsed() throws Exception {
+
     // given
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
@@ -231,6 +228,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedByCycling()
       throws Exception {
+
     //given
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
     long oilCategoryId = callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(carCategoryId, categoryOil());
@@ -246,6 +244,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory()
       throws Exception {
+    
     //given
     long oilCategoryId = callRestToAddCategoryAndReturnId(categoryOil());
     CategoryRequest categoryOilToUpdate = CategoryRequest.builder().name(categoryOil().getName())
