@@ -105,26 +105,36 @@ public abstract class IntegrationTestsBase {
     return jsonToAccount(response).getBalance();
   }
 
-  protected Account jsonToAccount(String jsonAccount) throws Exception {
+  private Account jsonToAccount(String jsonAccount) throws Exception {
     return mapper.readValue(jsonAccount, Account.class);
   }
 
   //category
-  protected long callRestToAddCategoryAndReturnId(CategoryRequest category) throws Exception {
+  protected long callRestToAddCategoryAndReturnId(Category category) throws Exception {
+    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    return addCategoryRequestAndReturnId(categoryRequest);
+  }
+
+  protected long callRestToAddCategoryAndReturnId(CategoryRequest categoryRequest) throws Exception {
+    return addCategoryRequestAndReturnId(categoryRequest);
+  }
+
+  protected long callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(long parentCategoryId, Category category)
+      throws Exception {
+    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    categoryRequest.setParentCategoryId(parentCategoryId);
+    return addCategoryRequestAndReturnId(categoryRequest);
+  }
+
+  private long addCategoryRequestAndReturnId(CategoryRequest categoryRequest) throws Exception {
     String response = mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
-                .content(json(category))
+                .content(json(categoryRequest))
                 .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk()).andReturn()
         .getResponse().getContentAsString();
     return Long.parseLong(response);
-  }
-
-  protected long callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(long parentCategoryId, CategoryRequest categoryRequest)
-      throws Exception {
-    categoryRequest.setParentCategoryId(parentCategoryId);
-    return callRestToAddCategoryAndReturnId(categoryRequest);
   }
 
   protected Category callRestToGetCategoryById(long id) throws Exception {
@@ -157,11 +167,11 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected Category jsonToCategory(String jsonCategory) throws Exception {
+  private Category jsonToCategory(String jsonCategory) throws Exception {
     return mapper.readValue(jsonCategory, Category.class);
   }
 
-  protected List<Category> getCategoriesFromResponse(String response) throws Exception {
+  private List<Category> getCategoriesFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
@@ -228,11 +238,11 @@ public abstract class IntegrationTestsBase {
     return getTransactionsFromResponse(response);
   }
 
-  protected Transaction jsonToTransaction(String jsonTransaction) throws Exception {
+  private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
     return mapper.readValue(jsonTransaction, Transaction.class);
   }
 
-  protected List<Transaction> getTransactionsFromResponse(String response) throws Exception {
+  private List<Transaction> getTransactionsFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
