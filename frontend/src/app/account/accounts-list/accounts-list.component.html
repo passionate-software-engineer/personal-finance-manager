@@ -1,21 +1,21 @@
-<button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
+<button id="AddAccountBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
   Add Account
 </button>
-<button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
+<button id="RefreshAccountsBtn" class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
 
     <!--Name-->
-    <th [class.active]="order === 'name'" (click)="setOrder('name')">
+    <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
       Name
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Balance-->
-    <th [class.active]="order === 'balance'" (click)="setOrder('balance')">
+    <th id="BalanceHeader" [class.active]="order === 'balance'" (click)="setOrder('balance')">
       Balance
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
@@ -25,38 +25,38 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
+  <tr id="AccountRow" *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
 
     <!--Name-->
     <td *ngIf="account.editMode">
-      <input class="form-control" type="text" [(ngModel)]="account.editedAccount.name">
+      <input id="EditAccountNameInput" class="form-control" type="text" [(ngModel)]="account.editedAccount.name">
     </td>
-    <td *ngIf="!account.editMode">{{account.name}}</td>
+    <td id="NameReadOnly" *ngIf="!account.editMode">{{account.name}}</td>
 
     <!--Balance-->
     <td *ngIf="account.editMode">
-      <input class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"></td>
-    <td *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
+      <input id="EditAccountBalanceInput" class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"></td>
+    <td id="BalanceReadOnly" *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
 
 
     <td *ngIf="!account.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary btn-block dropdown-toggle" id="accountScreenOptionsButton" type="button" data-toggle="dropdown">
+        <button id="OptionsBtn" class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">
           Options
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(account)">Edit</button>
+            <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(account)">Edit</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteAccount(account)">Delete</button>
+            <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteAccount(account)">Delete</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="account.editMode">
-      <button class="btn btn-success" (click)="onEditAccount(account)">Save</button>
+      <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">Save</button>
       <button class="btn btn-danger" (click)="account.editMode=false">Exit</button>
     </td>
 
@@ -65,13 +65,13 @@
   <tr *ngIf="addingMode">
     <!--Name-->
     <td>
-      <input class="form-control" type="text" [(ngModel)]="newAccount.name">
+      <input id="NewAccountNameInput" class="form-control" type="text" [(ngModel)]="newAccount.name">
     </td>
     <!--Balance-->
     <td>
-      <input class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
+      <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
     <td>
-      <button class="btn btn-success" (click)="onAddAccount()">Save</button>
+      <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">Save</button>
       <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
     </td>
   </tr>
