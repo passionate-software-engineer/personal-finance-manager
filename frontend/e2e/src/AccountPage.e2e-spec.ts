@@ -1,58 +1,63 @@
 import {AccountsPage} from './AccountPage.po';
-import {browser, by} from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AccountsPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new AccountsPage();
     page.navigateTo();
+    await page.removeAllAccounts();
   });
 
-  it('should display correct English descriptions on page elements', () => {
+  it('should display correct English descriptions', () => {
+    // given
+
+    // when
+
+    // then
     expect(page.addAccountButton().getText()).toEqual('Add Account');
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
     expect(page.balanceHeader().getText()).toEqual('Balance');
 
-    // page.refreshAccountsButton().click();
+    // TODO - add all remaining elements (including sort order, options etc)
+  });
 
-    page.accountRows().count().then((numberOfAccounts) => {
+  it('should add account', () => {
+    // given
+    const accountName = 'First Test Account';
 
-      for (let i = numberOfAccounts; i >= 1; i--) {
-        page.accountRows().first().element(by.id('OptionsBtn')).click();
-        page.accountRows().first().element(by.id('DeleteBtn')).click();
-        browser.switchTo().alert().accept();
-        expect(page.accountRows().count()).toEqual(i - 1);
-      }
+    // when
+    page.addAccount(accountName, '141231.53');
 
-      expect(page.accountRows().count()).toEqual(0);
+    // then
+    page.assertNumberOfAccounts(1);
+    page.assertAccountName(page.accountRows().first(), accountName);
+    page.assertAccountBalance(page.accountRows().first(), '141,231.53');
+  });
 
-      page.addAccountButton().click();
+  it('should update account', () => {
+    // when
+    const accountName = 'First Updated Test Account';
+    page.addAccount('First Test Account', '141231.53');
 
-      page.newAccountBalance().sendKeys('141231.53');
-      page.newAccountName().sendKeys('First Test Account');
-      page.newAccountSaveButton().click();
+    // given
+    page.updateAccount(accountName, '231.5');
 
-      expect(page.accountRows().count()).toEqual(1);
+    // then
+    page.assertNumberOfAccounts(1);
+    page.assertAccountName(page.accountRows().first(), accountName);
+    page.assertAccountBalance(page.accountRows().first(), '231.50');
+  });
 
-      expect(page.accountRows().first().element(by.id('NameReadOnly')).getText()).toEqual('First Test Account');
-      expect(page.accountRows().first().element(by.id('BalanceReadOnly')).getText()).toEqual('141,231.53');
+  it('should delete account', () => {
+    // when
+    page.addAccount('Account to delete', '0');
 
-      page.accountRows().first().element(by.id('OptionsBtn')).click();
-      page.accountRows().first().element(by.id('EditBtn')).click();
+    // given
+    page.deleteAccount(page.accountRows().first());
 
-      page.editAccountBalance().clear();
-      page.editAccountBalance().sendKeys('231.55');
-      page.editAccountName().clear();
-      page.editAccountName().sendKeys('First Updated Test Account');
-      page.editAccountSaveButton().click();
-
-      expect(page.accountRows().count()).toEqual(1);
-
-      expect(page.accountRows().first().element(by.id('NameReadOnly')).getText()).toEqual('First Updated Test Account');
-      expect(page.accountRows().first().element(by.id('BalanceReadOnly')).getText()).toEqual('231.55');
-    });
-
+    // then
+    page.assertNumberOfAccounts(0);
   });
 });

@@ -107,7 +107,7 @@ export class AccountsListComponent extends Sortable implements OnInit {
       return false;
     }
 
-    if (typeof account.balance === 'undefined' || !account.balance) {
+    if (account.balance == null) {
       this.alertService.error('Balance cannot be empty');
       return false;
     }
