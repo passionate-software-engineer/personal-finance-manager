@@ -28,12 +28,8 @@ import com.pfm.IntegrationTestsBase;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.rules.SpringClassRule;
-import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
 @RunWith(JUnitParamsRunner.class)
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {

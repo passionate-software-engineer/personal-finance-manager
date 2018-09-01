@@ -5,12 +5,6 @@ import com.pfm.category.CategoryRequest;
 
 public class TestCategoryProvider {
 
-  public static final Category CATEGORY_FOOD_NO_PARENT_CATEGORY =
-      Category.builder()
-          .id(1L)
-          .name("Food")
-          .build();
-
   public static final CategoryRequest CATEGORY_REQUEST_FOOD_NO_PARENT_CATEGORY =
       CategoryRequest.builder()
           .name("Food")
@@ -56,6 +50,7 @@ public class TestCategoryProvider {
 
   public static Category categoryCar() {
     return Category.builder()
+        .id(1L)
         .name("Car")
         .build();
   }
@@ -68,12 +63,14 @@ public class TestCategoryProvider {
 
   public static Category categoryOil() {
     return Category.builder()
+        .id(2L)
         .name("Oil")
         .build();
   }
 
   public static Category categoryHome() {
     return Category.builder()
+        .id(2L)
         .name("Home")
         .build();
   }

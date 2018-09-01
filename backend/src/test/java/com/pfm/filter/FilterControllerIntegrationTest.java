@@ -1,7 +1,7 @@
 package com.pfm.filter;
 
-import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestCarNoParentCategory;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestFoodNoParentCategory;
 import static com.pfm.helpers.TestCategoryProvider.getCategoryRequestHomeNoParentCategory;

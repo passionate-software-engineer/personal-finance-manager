@@ -193,7 +193,7 @@ public abstract class IntegrationTestsBase {
   }
 
   //transaction
-  protected long callRestServiceToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
+  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
     transactionRequest.setCategoryId(categoryId);
     transactionRequest.setAccountId(accountId);
     String response =
@@ -204,6 +204,28 @@ public abstract class IntegrationTestsBase {
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
     return Long.parseLong(response);
+  }
+
+  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId) throws Exception {
+    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId);
+  }
+
+  protected TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
+    return TransactionRequest.builder()
+        .description(transaction.getDescription())
+        .price(transaction.getPrice())
+        .date(transaction.getDate())
+        .categoryId(transaction.getCategoryId())
+        .accountId(transaction.getAccountId())
+        .build();
+  }
+
+  protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId, long accountId, long categoryId) {
+    transaction.setId(transactionId);
+    transaction.setCategoryId(categoryId);
+    transaction.setAccountId(accountId);
+    return transaction;
   }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {

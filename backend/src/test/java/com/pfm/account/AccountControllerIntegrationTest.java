@@ -4,9 +4,6 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_LUKASZ_BALANCE_1124;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARCIN_BALANCE_10_99;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
@@ -23,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.IntegrationTestsBase;
-import com.pfm.account.AccountRequest.AccountRequestBuilder;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
@@ -83,7 +79,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetAccountById() throws Exception {
 
     //given
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
+    long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
 
     //when
     mockMvc
@@ -92,8 +88,8 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is("Lukasz CreditBank")))
-        .andExpect(jsonPath("$.balance", is("1124.00")));
+        .andExpect(jsonPath("$.name", is("Mbank")))
+        .andExpect(jsonPath("$.balance", is("10.00")));
   }
 
   @Test
