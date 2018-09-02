@@ -280,6 +280,17 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
+  protected long callRestServiceToAddFilterAndReturnId(Filter filter) throws Exception {
+    String response =
+        mockMvc
+            .perform(post(FILTERS_SERVICE_PATH)
+                .content(json(convertFilterToFilterRequest(filter)))
+                .contentType(JSON_CONTENT_TYPE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return Long.parseLong(response);
+  }
+
   protected void callRestServiceToUpdateFilter(long id, FilterRequest filterRequest) throws Exception {
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + id)
@@ -291,6 +302,19 @@ public abstract class IntegrationTestsBase {
   protected void callRestToDeleteFilterById(long id) throws Exception {
     mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id))
         .andExpect(status().isOk());
+  }
+
+  protected FilterRequest convertFilterToFilterRequest(Filter filter) {
+    return FilterRequest.builder()
+        .name(filter.getName())
+        .categoryIds(filter.getCategoryIds())
+        .accountIds(filter.getAccountIds())
+        .description(filter.getDescription())
+        .dateFrom(filter.getDateFrom())
+        .dateTo(filter.getDateTo())
+        .priceFrom(filter.getPriceFrom())
+        .priceTo(filter.getPriceTo())
+        .build();
   }
 
   protected Filter convertFilterRequestToFilterAndSetId(long filterId, FilterRequest filterRequest) {
@@ -325,19 +349,6 @@ public abstract class IntegrationTestsBase {
   }
 
   protected List<Filter> callRestToGetAllFilters() throws Exception {
-    String response = mockMvc.perform(get(FILTERS_SERVICE_PATH))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return getFiltersFromResponse(response);
-  }
-
-  protected void deleteFilterById(long id) throws Exception {
-    mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id))
-        .andExpect(status().isOk());
-  }
-
-  protected List<Filter> getAllFiltersFromDatabase() throws Exception {
     String response = mockMvc.perform(get(FILTERS_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())

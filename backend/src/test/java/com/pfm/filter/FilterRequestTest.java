@@ -9,10 +9,9 @@ public class FilterRequestTest {
 
   @Test
   public void shouldVerifyToString() {
+
     // given
     final Class<?> classUnderTest = FilterRequest.FilterRequestBuilder.class;
-
-    // when
 
     // then
     assertPojoMethodsFor(classUnderTest)
