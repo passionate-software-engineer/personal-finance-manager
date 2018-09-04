@@ -7,11 +7,11 @@ import { v4 as uuid } from 'uuid';
 export abstract class ServiceBase {
 
   protected httpCorrelationId = {
-    headers: new HttpHeaders({'correlationId': uuid()})
+    headers: new HttpHeaders({'Correlation-Id': uuid()})
   };
 
-  protected httpOptions = { // TODO Correlation-Id to keep format (correct in backend too)
-    headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
+  protected httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json', 'Correlation-Id': uuid()})
   };
 
   constructor(protected http: HttpClient, protected alertService: AlertsService) {

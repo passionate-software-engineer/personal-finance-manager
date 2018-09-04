@@ -5,17 +5,17 @@
     </option>
   </select>
   <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
-  <button class="btn btn-success" (click)="addFilter()">Save as new filter</button>
-  <button class="btn btn-warning" (click)="updateFilter()">Update selected filter</button>
-  <button class="btn btn-primary" (click)="resetFilter()">Reset selected filter</button>
-  <button class="btn btn-danger" (click)="deleteFilter()">Delete filter</button>
+  <button class="btn btn-success" (click)="addFilter()">{{ 'tra.save' | translate }}</button>
+  <button class="btn btn-warning" (click)="updateFilter()">{{ 'tra.update' | translate }}</button>
+  <button class="btn btn-primary" (click)="resetFilter()">{{ 'tra.reset' | translate }}</button>
+  <button class="btn btn-danger" (click)="deleteFilter()">{{ 'tra.delete' | translate }}</button>
 </div>
 
 <div class="float-left">
   <button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
-    Add Transaction
+    {{ 'tra.addTransaction' | translate }}
   </button>
-  <button class="btn btn-primary" type="button" (click)="getTransactions()">Refresh</button>
+  <button class="btn btn-primary" type="button" (click)="getTransactions()">{{ 'option.refresh' | translate }}</button>
 </div>
 
 <table class="table table-bordered table-striped">
@@ -24,35 +24,35 @@
 
     <!--Date-->
     <th class="width: 25%" [class.active]="order === 'date'" (click)="setOrder('date')">
-      Date
+      {{ 'tra.date' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Description-->
     <th [class.active]="order === 'description'" (click)="setOrder('description')">
-      Description
+      {{ 'tra.description' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Price-->
     <th [class.active]="order === 'price'" (click)="setOrder('price')">
-      Price
+      {{ 'tra.price' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Account-->
     <th [class.active]="order === 'account.name'" (click)="setOrder('account.name')">
-      Account
+      {{ 'tra.account' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Category-->
     <th [class.active]="order === 'category.name'" (click)="setOrder('category.name')">
-      Category
+      {{ 'tra.category' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
@@ -149,21 +149,21 @@
     </td>
 
     <td *ngIf="transaction.editMode">
-      <button class="btn btn-success" (click)="updateTransaction(transaction)">Save</button>
-      <button class="btn btn-danger" (click)="transaction.editMode=false">Exit</button>
+      <button class="btn btn-success" (click)="updateTransaction(transaction)">{{ 'option.save' | translate }}</button>
+      <button class="btn btn-danger" (click)="transaction.editMode=false">{{ 'option.exit' | translate }}</button>
     </td>
 
     <td *ngIf="!transaction.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">Options
+        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">{{ 'option.options' | translate }}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(transaction)">Edit</button>
+            <button class="btn btn-warning btn-block" (click)="onShowEditMode(transaction)">{{ 'option.edit' | translate }}</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteTransaction(transaction)">Delete</button>
+            <button class="btn btn-danger btn-block" (click)="deleteTransaction(transaction)">{{ 'option.delete' | translate }}</button>
           </li>
         </ul>
       </div>
@@ -207,8 +207,8 @@
     </td>
 
     <td>
-      <button class="btn btn-success" (click)="addTransaction()">Save</button>
-      <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
+      <button class="btn btn-success" (click)="addTransaction()">{{ 'option.save' | translate }}</button>
+      <button class="btn btn-danger" (click)="addingMode=false">{{ 'option.exit' | translate }}</button>
     </td>
   </tr>
 

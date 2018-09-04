@@ -1,0 +1,34 @@
+{
+    "nav.transactions": "Transakcje",
+    "nav.categories": "Kategorie",
+    "nav.accounts": "Konta",
+    "nav.signUp": "Rejestracja",
+    "nav.login": "Zaloguj się",
+
+    "cat.addCategory" :"Dodaj Kategorie",
+    "cat.name" :"Nazwa",
+    "cat.parentCategory": "Kategoria Nadrzędna",
+    "cat.mainCategory": "Główna Kategoria",
+
+    "acc.addAccount": "Dodaj Konto",
+    "acc.name": "Nazwa",
+    "acc.balance": "Saldo",
+
+    "tra.save": "Zapisz jako nowy filter",
+    "tra.update": "Zmodyfikuj wybrany filter",
+    "tra.reset": "Zresetuj wybrany filter",
+    "tra.delete": "Skasuj filter",
+    "tra.addTransaction": "Dodaj Transakcje",
+    "tra.date": "Data",
+    "tra.description": "Opis",
+    "tra.price": "Kwota",
+    "tra.account": "Konto",
+    "tra.category": "Kategoria",
+
+    "option.save": "Zapisz",
+    "option.edit": "Edytuj",
+    "option.delete": "Skasuj",
+    "option.exit": "Wyjdź",
+    "option.refresh": "Odśwież",
+    "option.options" : "Opcje"
+  }

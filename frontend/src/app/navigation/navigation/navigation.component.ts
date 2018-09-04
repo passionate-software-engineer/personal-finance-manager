@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navigation',
@@ -7,7 +8,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() {
+constructor(public translate: TranslateService) {
+    translate.setDefaultLang('en');
+  }
+
+  switchLanguage = (lang: string) => {
+    this.translate.use(lang);
   }
 
   ngOnInit() {

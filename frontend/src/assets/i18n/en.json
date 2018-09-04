@@ -1,0 +1,34 @@
+{
+    "nav.transactions": "Transactions",
+    "nav.categories": "Categories",
+    "nav.accounts": "Accounts",
+    "nav.signUp": "Sign Up",
+    "nav.login": "Login",
+
+    "cat.addCategory" :"Add Category",
+    "cat.name" :"Name",
+    "cat.parentCategory": "Parent Category",
+    "cat.mainCategory": "Main Category",
+
+    "acc.addAccount": "Add Account",
+    "acc.name": "Name",
+    "acc.balance": "Balance",
+
+    "tra.save": "Save as new filter",
+    "tra.update": "Update selected filter",
+    "tra.reset": "Reset selected filter",
+    "tra.delete": "Delete filter",
+    "tra.addTransaction": "Add Transaction",
+    "tra.date": "Date",
+    "tra.description": "Description",
+    "tra.price": "Price",
+    "tra.account": "Account",
+    "tra.category": "Category",
+
+    "option.save": "Save",
+    "option.edit": "Edit",
+    "option.delete": "Delete",
+    "option.exit": "Exit",
+    "option.refresh": "Refresh",
+    "option.options" : "Options"
+  }

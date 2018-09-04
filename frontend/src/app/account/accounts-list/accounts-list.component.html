@@ -1,7 +1,7 @@
 <button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
-  Add Account
+  {{ 'acc.addAccount' | translate }}
 </button>
-<button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">{{ 'option.refresh' | translate }}</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -9,14 +9,14 @@
 
     <!--Name-->
     <th [class.active]="order === 'name'" (click)="setOrder('name')">
-      Name
+      {{ 'acc.name' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Balance-->
     <th [class.active]="order === 'balance'" (click)="setOrder('balance')">
-      Balance
+      {{ 'acc.balance' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
@@ -42,22 +42,22 @@
     <td *ngIf="!account.editMode">
       <div class="dropdown">
         <button class="btn btn-primary btn-block dropdown-toggle" id="accountScreenOptionsButton" type="button" data-toggle="dropdown">
-          Options
+          {{ 'option.options' | translate }}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(account)">Edit</button>
+            <button class="btn btn-warning btn-block" (click)="onShowEditMode(account)">{{ 'option.edit' | translate }}</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteAccount(account)">Delete</button>
+            <button class="btn btn-danger btn-block" (click)="deleteAccount(account)">{{ 'option.delete' | translate }}</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="account.editMode">
-      <button class="btn btn-success" (click)="onEditAccount(account)">Save</button>
-      <button class="btn btn-danger" (click)="account.editMode=false">Exit</button>
+      <button class="btn btn-success" (click)="onEditAccount(account)">{{ 'option.save' | translate }}</button>
+      <button class="btn btn-danger" (click)="account.editMode=false">{{ 'option.exit' | translate }}</button>
     </td>
 
   </tr>
@@ -71,8 +71,8 @@
     <td>
       <input class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
     <td>
-      <button class="btn btn-success" (click)="onAddAccount()">Save</button>
-      <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
+      <button class="btn btn-success" (click)="onAddAccount()">{{ 'option.save' | translate }}</button>
+      <button class="btn btn-danger" (click)="addingMode=false">{{ 'option.exit' | translate }}</button>
     </td>
   </tr>
   </tbody>

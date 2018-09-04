@@ -8,30 +8,31 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/transactions" routerLinkActive="active">Transactions
+        <a class="nav-link" routerLink="/transactions" routerLinkActive="active">{{ 'nav.transactions' | translate }}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/categories" routerLinkActive="active">Categories
+        <a class="nav-link" routerLink="/categories" routerLinkActive="active">{{ 'nav.categories' | translate }}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/accounts" routerLinkActive="active">Accounts
+        <a class="nav-link" routerLink="/accounts" routerLinkActive="active">{{ 'nav.accounts' | translate }}
         </a>
       </li>
     </ul>
     <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
       <li class="nav-item">
         <a class="nav-link" routerLink="/sign-up" routerLinkActive="active">
-          Sign Up
+          {{ 'nav.signUp' | translate }}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
         <a class="nav-link" routerLink="/login" routerLinkActive="active">
-          Login
+          {{ 'nav.login' | translate }}
         </a>
       </li>
-
+      <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
+      <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>
     </ul>
   </div>
 </nav>
