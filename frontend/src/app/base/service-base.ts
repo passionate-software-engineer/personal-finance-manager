@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {AlertsService} from '../alerts/alerts-service/alerts.service';
 import {environment} from '../../environments/environment';
-import { v4 as uuid } from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 export abstract class ServiceBase {
 
