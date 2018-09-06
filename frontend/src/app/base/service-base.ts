@@ -6,10 +6,12 @@ import {v4 as uuid} from 'uuid';
 
 export abstract class ServiceBase {
 
+  // TODO move to interceptor
   protected httpCorrelationId = {
     headers: new HttpHeaders({'correlationId': uuid()})
   };
 
+  // TODO move to interceptor
   protected httpOptions = { // TODO Correlation-Id to keep format (correct in backend too)
     headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
   };
@@ -23,6 +25,7 @@ export abstract class ServiceBase {
     return environment.appUrl + '/' + service + idInUrl;
   }
 
+  // TODO move to error interceptor
   protected handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 0) {

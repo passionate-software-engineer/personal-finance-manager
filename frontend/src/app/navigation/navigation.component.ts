@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = this.authenticationService.getLoggedInUser();
   }
 
   logout() {
@@ -27,7 +27,7 @@ export class NavigationComponent implements OnInit {
   }
 
   isUserLoggedIn() {
-    return this.currentUser != null && this.currentUser.id != null;
+    return this.authenticationService.isUserLoggedIn();
   }
 
 }

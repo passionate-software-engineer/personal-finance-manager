@@ -13,7 +13,6 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  // Observable string streams
   public currentUserObservable = this.currentUserSource.asObservable();
 
   private updateCurrentUser(user: User) {
@@ -38,5 +37,19 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.updateCurrentUser(new User());
+  }
+
+  public getLoggedInUser(): User {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser == null) {
+      return new User();
+    }
+
+    return currentUser;
+  }
+
+  public isUserLoggedIn(): boolean {
+    return this.getLoggedInUser().token != null;
   }
 }
