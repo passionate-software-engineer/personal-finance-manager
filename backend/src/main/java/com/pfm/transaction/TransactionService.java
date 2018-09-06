@@ -12,6 +12,8 @@ import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @AllArgsConstructor
@@ -31,6 +33,7 @@ public class TransactionService {
         .collect(Collectors.toList());
   }
 
+  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
   public Transaction addTransaction(Transaction transaction) {
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
       addAmountToAccount(entry.getAccountId(), entry.getPrice());
@@ -39,6 +42,7 @@ public class TransactionService {
     return transactionRepository.save(transaction);
   }
 
+  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
   public void updateTransaction(long id, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id);
 
@@ -63,6 +67,7 @@ public class TransactionService {
 
   }
 
+  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
   public void deleteTransaction(long id) {
     Transaction transactionToDelete = getTransactionFromDatabase(id);
     transactionRepository.deleteById(id);
@@ -95,7 +100,8 @@ public class TransactionService {
     updateAccountBalance(accountId, amountToSubtract, BigDecimal::add);
   }
 
-  private void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
+  @Transactional(propagation = Propagation.MANDATORY)
+  void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
     Optional<Account> account = accountService.getAccountById(accountId);
 
     if (!account.isPresent()) {
