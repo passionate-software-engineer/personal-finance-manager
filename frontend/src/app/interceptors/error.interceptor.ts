@@ -13,14 +13,23 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     return next.handle(request).pipe(catchError(err => {
+
       if (err.status === 401) {
         // auto logout if 401 response returned from api
         this.authenticationService.logout();
         location.reload(true);
       }
 
-      const error = err.error || 'Internal system error, please try again later';
-      return throwError(error);
+      if (err.status === 0) {
+        return throwError('No connectivity with server, please try again later');
+      }
+
+      if (err.status === 500) {
+        return throwError('Something went wrong, please try again later');
+      }
+
+      return throwError(err.error || 'Internal system error, please try again later');
+
     }));
   }
 }

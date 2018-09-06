@@ -28,17 +28,8 @@ export abstract class ServiceBase {
   // TODO move to error interceptor
   protected handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      if (error.status === 0) {
-        this.alertService.error('No connectivity with backend service, please try again later');
-      }
 
-      if (error.status === 400) {
-        this.alertService.error(error.error);
-      }
-
-      if (error.status === 500) {
-        this.alertService.error('Something went wrong, please try again later');
-      }
+      this.alertService.error(error);
 
       return throwError(error);
     };
