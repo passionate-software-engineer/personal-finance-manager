@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
-import {User} from '../_models';
 import {Subject} from 'rxjs';
+import {User} from '../_models/user';
 
 @Injectable()
 export class AuthenticationService {

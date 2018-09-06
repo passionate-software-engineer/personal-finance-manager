@@ -2,9 +2,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {CategoriesComponent} from './category/categories/categories.component';
 import {AccountsListComponent} from './account/accounts-list/accounts-list.component';
 import {TransactionsComponent} from './transaction/transactions/transactions.component';
-import {AuthGuard} from './_guards';
-import {RegisterComponent} from './register';
-import {LoginComponent} from './login';
+import {AuthGuard} from './_guards/auth.guard';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},

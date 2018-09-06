@@ -5,17 +5,20 @@ import {AccountsListComponent} from './account/accounts-list/accounts-list.compo
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CategoriesComponent} from './category/categories/categories.component';
-import {NavigationComponent} from './navigation/navigation/navigation.component';
+import {NavigationComponent} from './navigation/navigation.component';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AlertsService} from './alerts/alerts-service/alerts.service';
 import {TransactionsComponent} from './transaction/transactions/transactions.component';
 import {OrderModule} from 'ngx-order-pipe';
-import {AuthGuard} from './_guards';
-import {AuthenticationService, UserService} from './_services';
-import {ErrorInterceptor, fakeBackendProvider, JwtInterceptor} from './_helpers';
 import {routing} from './app-routing.module';
-import {LoginComponent} from './login';
-import {RegisterComponent} from './register';
+import {AuthenticationService} from './_services/authentication.service';
+import {UserService} from './_services/user.service';
+import {AuthGuard} from './_guards/auth.guard';
+import {JwtInterceptor} from './_helpers/jwt.interceptor';
+import {ErrorInterceptor} from './_helpers/error.interceptor';
+import {fakeBackendProvider} from './_helpers/fake-backend';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 @NgModule({
   declarations: [
