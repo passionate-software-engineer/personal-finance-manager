@@ -10,7 +10,7 @@ import {User} from '../_models/user';
 })
 export class NavigationComponent implements OnInit {
 
-  currentUser: User = new User();
+  private currentUser: User;
 
   constructor(private userService: UserService, private authenticationService: AuthenticationService) {
     authenticationService.currentUserObservable.subscribe(user => {
