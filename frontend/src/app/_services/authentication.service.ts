@@ -10,17 +10,17 @@ import {User} from '../_models/user';
 export class AuthenticationService {
   private currentUserSource = new Subject<User>();
 
-  // Observable string streams
-  userChanged = this.currentUserSource.asObservable();
-
   constructor(private http: HttpClient) {
   }
 
-  updateUser(user: User) {
+  // Observable string streams
+  public currentUserObservable = this.currentUserSource.asObservable();
+
+  private updateCurrentUser(user: User) {
     this.currentUserSource.next(user);
   }
 
-  login(username: string, password: string) {
+  public login(username: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, {username: username, password: password})
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
@@ -29,14 +29,14 @@ export class AuthenticationService {
           localStorage.setItem('currentUser', JSON.stringify(user));
         }
 
-        this.updateUser(user);
+        this.updateCurrentUser(user);
         return user;
       }));
   }
 
-  logout() {
+  public logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
-    this.updateUser(new User());
+    this.updateCurrentUser(new User());
   }
 }
