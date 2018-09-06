@@ -22,7 +22,7 @@ export abstract class ServiceBase {
   protected static apiUrl(service: string, id: number = null): string {
     const idInUrl = (id !== null ? '/' + id : '');
 
-    return environment.appUrl + '/' + service + idInUrl;
+    return environment.apiUrl + '/' + service + idInUrl;
   }
 
   // TODO move to error interceptor

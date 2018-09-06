@@ -29,6 +29,11 @@ export class LoginComponent implements OnInit {
 
   }
 
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -52,10 +57,11 @@ export class LoginComponent implements OnInit {
   }
 
   private password() {
-    return this.loginForm.controls.password.value;
+    return this.f.password.value;
   }
 
   private username() {
-    return this.loginForm.controls.username.value;
+    return this.f.username.value;
   }
+
 }

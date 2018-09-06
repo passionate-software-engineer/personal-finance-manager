@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         location.reload(true);
       }
 
-      const error = err.error.message || err.statusText;
+      const error = err.error || 'Internal system error, please try again later';
       return throwError(error);
     }));
   }

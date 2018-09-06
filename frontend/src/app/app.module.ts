@@ -16,7 +16,6 @@ import {UserService} from './authentication/user.service';
 import {AuthGuard} from './authentication/auth.guard';
 import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
-import {fakeBackendProvider} from './_fake/fake-backend';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 
@@ -45,10 +44,7 @@ import {RegisterComponent} from './components/register/register.component';
     AuthenticationService,
     UserService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-
-    // provider used to create fake backend
-    fakeBackendProvider
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [
     AppComponent
