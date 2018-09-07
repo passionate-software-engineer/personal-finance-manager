@@ -75,5 +75,15 @@
       <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
     </td>
   </tr>
+
+  <tr>
+    <!--Name-->
+    <td>
+    </td>
+    <!--Balance-->
+    <td id="BalanceOfAllAccounts">{{allAccountsBalance() | number:'0.2-2'}}</td>
+    <td>
+    </td>
+  </tr>
   </tbody>
 </table>
