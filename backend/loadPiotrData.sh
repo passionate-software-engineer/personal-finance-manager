@@ -40,6 +40,9 @@ echo "$ACCOUNT_ANIA_BALANCE"
 CATEGORY_INCOME=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Przychody\"}")
 echo "$CATEGORY_INCOME"
 
+CATEGORY_TRANSFER=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Przelewy między kontami\"}")
+echo "$CATEGORY_TRANSFER"
+
 CATEGORY_MONTH_SUMMARY=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Rozliczenie miesiąca\"}")
 echo "$CATEGORY_MONTH_SUMMARY"
 
@@ -119,10 +122,10 @@ echo "$TRANSACTION_VAT"
 TRANSACTION_CROSSOVER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_INCOME_CROSSOVER, \"date\": \"2018-01-18\", \"description\": \"Crossover Interviews - Grudzień\", \"price\": 985.19}")
 echo "$TRANSACTION_CROSSOVER"
 
-TRANSACTION_EXCHANGE=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-01-03\", \"description\": \"USD -> EUR\", \"price\": -3582.50}")
+TRANSACTION_EXCHANGE=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-01-03\", \"description\": \"USD -> EUR\", \"price\": -3582.51}")
 echo "$TRANSACTION_EXCHANGE"
 
-TRANSACTION_EXCHANGE=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_EUR, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-01-03\", \"description\": \"USD -> EUR\", \"price\": 3513.56}")
+TRANSACTION_EXCHANGE=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_EUR, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-01-03\", \"description\": \"USD -> EUR\", \"price\": 3513.57}")
 echo "$TRANSACTION_EXCHANGE"
 
 TRANSACTION_EXCHANGE=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-01-03\", \"description\": \"USD -> EUR - Ania zwrot\", \"price\": 34.47}")
@@ -205,6 +208,30 @@ echo "$TRANSACTION_DIVING"
 
 TRANSACTION_CROSSOVER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_INCOME_CROSSOVER, \"date\": \"2018-01-25\", \"description\": \"Crossover 08-14.01\", \"price\": 7165.00}")
 echo "$TRANSACTION_CROSSOVER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Przelew Alior PLN\", \"price\": -27.00}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_PLN, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Przelew Alior PLN\", \"price\": 27.00}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Przelew Ania PLN\", \"price\": -4398.50}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Przelew Ania PLN\", \"price\": 4398.50}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_EUR, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Przelew Ania PLN\", \"price\": 546.90}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Przelew Ania PLN\", \"price\": -546.9}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_CASH_EUR, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Gotowka Ania EUR\", \"price\": 21.57}")
+echo "$TRANSACTION_TRANSFER"
+
+TRANSACTION_TRANSFER=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-01-25\", \"description\": \"Gotowka Ania EUR\", \"price\": -21.57}")
+echo "$TRANSACTION_TRANSFER"
 
 # TODO split into categories
 TRANSACTION_MONTH=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_MONTH_SUMMARY, \"date\": \"2018-01-06\", \"description\": \"Jedzenie - Ania zwrot\", \"price\": -5865.25}")

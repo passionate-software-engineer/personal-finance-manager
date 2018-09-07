@@ -142,4 +142,14 @@ export class AccountsComponent extends Sortable implements OnInit {
     }
     return true;
   }
+
+  allAccountsBalance() {
+    let sum = 0;
+
+    for (let i = 0; i < this.accounts.length; ++i) {
+      sum += +this.accounts[i].balance;
+    }
+
+    return sum;
+  }
 }
