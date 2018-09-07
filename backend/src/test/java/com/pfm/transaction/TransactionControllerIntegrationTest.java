@@ -51,7 +51,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(callRestToGetTransactionById(transactionId),
         is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
-    assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
+    assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().add(transactionToAdd.getPrice())));
   }
 
   @Test
@@ -134,7 +134,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(jacekAccountBalanceAfterTransactionUpdate, is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
     BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(piotrAccountId);
     assertThat(piotrAccountBalanceAfterTransactionUpdate,
-        is(ACCOUNT_PIOTR_BALANCE_9.getBalance().subtract(updatedFoodTransactionRequest.getPrice())));
+        is(ACCOUNT_PIOTR_BALANCE_9.getBalance().add(updatedFoodTransactionRequest.getPrice())));
   }
 
   @Test
