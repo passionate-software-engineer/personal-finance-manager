@@ -46,6 +46,24 @@ echo "$CATEGORY_CHILD"
 CATEGORY_BILLS=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Rachunki\"}")
 echo "$CATEGORY_BILLS"
 
+CATEGORY_BILLS_TV=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"TV\", \"parentCategoryId\": $CATEGORY_BILLS}")
+echo "$CATEGORY_BILLS_TV"
+
+CATEGORY_BILLS_GAS=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Gaz\", \"parentCategoryId\": $CATEGORY_BILLS}")
+echo "$CATEGORY_BILLS_GAS"
+
+CATEGORY_BILLS_INTERNET=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Internet\", \"parentCategoryId\": $CATEGORY_BILLS}")
+echo "$CATEGORY_BILLS_INTERNET"
+
+CATEGORY_BILLS_ELECTRICITY=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Prąd\", \"parentCategoryId\": $CATEGORY_BILLS}")
+echo "$CATEGORY_BILLS_ELECTRICITY"
+
+CATEGORY_BILLS_GARBAGE=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Śmieci\", \"parentCategoryId\": $CATEGORY_BILLS}")
+echo "$CATEGORY_BILLS_GARBAGE"
+
+CATEGORY_BILLS_WATER=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Woda\", \"parentCategoryId\": $CATEGORY_BILLS}")
+echo "$CATEGORY_BILLS_WATER"
+
 CATEGORY_TRANSFER=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Przelewy między kontami\"}")
 echo "$CATEGORY_TRANSFER"
 
@@ -207,7 +225,17 @@ curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-T
 
 curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_CHILD, \"date\": \"2018-01-31\", \"description\": \"Wydatki na dziecko\", \"price\": -34.11}"
 
-curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS, \"date\": \"2018-01-31\", \"description\": \"Rachunki\", \"price\": -811.68}"
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS_TV, \"date\": \"2018-01-31\", \"description\": \"Abonament RTV\", \"price\": -122.57}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS_GAS, \"date\": \"2018-01-31\", \"description\": \"Gaz\", \"price\": -233.21}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS_INTERNET, \"date\": \"2018-01-31\", \"description\": \"Internet\", \"price\": -34.44}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS_ELECTRICITY, \"date\": \"2018-01-31\", \"description\": \"Prąd\", \"price\": -258.13}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS_GARBAGE, \"date\": \"2018-01-31\", \"description\": \"Śmieci\", \"price\": -15}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_BILLS_WATER, \"date\": \"2018-01-31\", \"description\": \"Woda\", \"price\": -148.32}"
 
 curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_CAR, \"date\": \"2018-01-31\", \"description\": \"Wymiana szyby\", \"price\": -1351.79}"
 
