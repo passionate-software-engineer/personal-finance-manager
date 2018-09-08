@@ -1,35 +1,54 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {AppComponent} from './core/app.component';
-import {AccountsListComponent} from './account/accounts-list/accounts-list.component';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import {CategoriesComponent} from './category/categories/categories.component';
-import {AppRoutingModule} from './app-routing.module';
-import {NavigationComponent} from './navigation/navigation/navigation.component';
-import {AlertsComponent} from './alerts/alerts.component';
-import {AlertsService} from './alerts/alerts-service/alerts.service';
-import {TransactionsComponent} from './transaction/transactions/transactions.component';
+import {AppComponent} from './components/app/app.component';
+import {AccountsComponent} from './components/account/accounts/accounts.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CategoriesComponent} from './components/category/categories/categories.component';
+import {NavigationComponent} from './components/navigation/navigation.component';
+import {AlertsComponent} from './components/alert/alerts/alerts.component';
+import {AlertsService} from './components/alert/alerts-service/alerts.service';
+import {TransactionsComponent} from './components/transaction/transactions/transactions.component';
 import {OrderModule} from 'ngx-order-pipe';
+import {routing} from './app-routing.module';
+import {AuthenticationService} from './authentication/authentication.service';
+import {UserService} from './authentication/user.service';
+import {AuthGuard} from './authentication/auth.guard';
+import {JwtInterceptor} from './interceptors/jwt.interceptor';
+import {ErrorInterceptor} from './interceptors/error.interceptor';
+import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountsListComponent,
+    AccountsComponent,
     CategoriesComponent,
     TransactionsComponent,
     NavigationComponent,
-    AlertsComponent
+    AlertsComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
+    routing,
     OrderModule
   ],
-  providers: [AlertsService],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthGuard,
+    AlertsService,
+    AuthenticationService,
+    UserService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }
