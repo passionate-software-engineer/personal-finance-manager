@@ -106,26 +106,36 @@ public abstract class IntegrationTestsBase {
     return jsonToAccount(response).getBalance();
   }
 
-  protected Account jsonToAccount(String jsonAccount) throws Exception {
+  private Account jsonToAccount(String jsonAccount) throws Exception {
     return mapper.readValue(jsonAccount, Account.class);
   }
 
   //category
-  protected long callRestToAddCategoryAndReturnId(CategoryRequest category) throws Exception {
+  protected long callRestToAddCategoryAndReturnId(Category category) throws Exception {
+    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    return addCategoryRequestAndReturnId(categoryRequest);
+  }
+
+  protected long callRestToAddCategoryAndReturnId(CategoryRequest categoryRequest) throws Exception {
+    return addCategoryRequestAndReturnId(categoryRequest);
+  }
+
+  protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category, long parentCategoryId)
+      throws Exception {
+    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    categoryRequest.setParentCategoryId(parentCategoryId);
+    return addCategoryRequestAndReturnId(categoryRequest);
+  }
+
+  private long addCategoryRequestAndReturnId(CategoryRequest categoryRequest) throws Exception {
     String response = mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
-                .content(json(category))
+                .content(json(categoryRequest))
                 .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk()).andReturn()
         .getResponse().getContentAsString();
     return Long.parseLong(response);
-  }
-
-  protected long callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(long parentCategoryId, CategoryRequest categoryRequest)
-      throws Exception {
-    categoryRequest.setParentCategoryId(parentCategoryId);
-    return callRestToAddCategoryAndReturnId(categoryRequest);
   }
 
   protected Category callRestToGetCategoryById(long id) throws Exception {
@@ -158,11 +168,11 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected Category jsonToCategory(String jsonCategory) throws Exception {
+  private Category jsonToCategory(String jsonCategory) throws Exception {
     return mapper.readValue(jsonCategory, Category.class);
   }
 
-  protected List<Category> getCategoriesFromResponse(String response) throws Exception {
+  private List<Category> getCategoriesFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
@@ -184,7 +194,7 @@ public abstract class IntegrationTestsBase {
   }
 
   //transaction
-  protected long callRestServiceToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
+  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
     transactionRequest.setCategoryId(categoryId);
     transactionRequest.setAccountId(accountId);
     String response =
@@ -195,6 +205,28 @@ public abstract class IntegrationTestsBase {
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
     return Long.parseLong(response);
+  }
+
+  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId) throws Exception {
+    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId);
+  }
+
+  protected TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
+    return TransactionRequest.builder()
+        .description(transaction.getDescription())
+        .price(transaction.getPrice())
+        .date(transaction.getDate())
+        .categoryId(transaction.getCategoryId())
+        .accountId(transaction.getAccountId())
+        .build();
+  }
+
+  protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId, long accountId, long categoryId) {
+    transaction.setId(transactionId);
+    transaction.setCategoryId(categoryId);
+    transaction.setAccountId(accountId);
+    return transaction;
   }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
@@ -229,11 +261,11 @@ public abstract class IntegrationTestsBase {
     return getTransactionsFromResponse(response);
   }
 
-  protected Transaction jsonToTransaction(String jsonTransaction) throws Exception {
+  private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
     return mapper.readValue(jsonTransaction, Transaction.class);
   }
 
-  protected List<Transaction> getTransactionsFromResponse(String response) throws Exception {
+  private List<Transaction> getTransactionsFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
@@ -243,6 +275,17 @@ public abstract class IntegrationTestsBase {
         mockMvc
             .perform(post(FILTERS_SERVICE_PATH)
                 .content(json(filterRequest))
+                .contentType(JSON_CONTENT_TYPE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return Long.parseLong(response);
+  }
+
+  protected long callRestServiceToAddFilterAndReturnId(Filter filter) throws Exception {
+    String response =
+        mockMvc
+            .perform(post(FILTERS_SERVICE_PATH)
+                .content(json(convertFilterToFilterRequest(filter)))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
@@ -260,6 +303,19 @@ public abstract class IntegrationTestsBase {
   protected void callRestToDeleteFilterById(long id) throws Exception {
     mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id))
         .andExpect(status().isOk());
+  }
+
+  protected FilterRequest convertFilterToFilterRequest(Filter filter) {
+    return FilterRequest.builder()
+        .name(filter.getName())
+        .categoryIds(filter.getCategoryIds())
+        .accountIds(filter.getAccountIds())
+        .description(filter.getDescription())
+        .dateFrom(filter.getDateFrom())
+        .dateTo(filter.getDateTo())
+        .priceFrom(filter.getPriceFrom())
+        .priceTo(filter.getPriceTo())
+        .build();
   }
 
   protected Filter convertFilterRequestToFilterAndSetId(long filterId, FilterRequest filterRequest) {
@@ -294,19 +350,6 @@ public abstract class IntegrationTestsBase {
   }
 
   protected List<Filter> callRestToGetAllFilters() throws Exception {
-    String response = mockMvc.perform(get(FILTERS_SERVICE_PATH))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return getFiltersFromResponse(response);
-  }
-
-  protected void deleteFilterById(long id) throws Exception {
-    mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id))
-        .andExpect(status().isOk());
-  }
-
-  protected List<Filter> getAllFiltersFromDatabase() throws Exception {
     String response = mockMvc.perform(get(FILTERS_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())

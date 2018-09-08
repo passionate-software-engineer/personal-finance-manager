@@ -4,13 +4,9 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ANDRZEJ_BALANCE_1_000_000;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_LUKASZ_BALANCE_1124;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARCIN_BALANCE_10_99;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARIUSZ_BALANCE_200;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SLAWEK_BALANCE_9;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -34,17 +30,39 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddAccount() throws Exception {
-    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(ACCOUNT_JACEK_BALANCE_1000))))
-        .andExpect(status().isOk());
+
+    //given
+    Account account = accountJacekBalance1000();
+
+    //when
+    String respone =
+        mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertAccountToAccountRequest(account))))
+            .andExpect(status().isOk()).andReturn()
+            .getResponse().getContentAsString();
+
+    //then
+    Long accountId = Long.parseLong(respone);
+
+    mockMvc
+        .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andDo(print()).andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())));
+
   }
 
   @Test
   @Parameters(method = "emptyAccountNameParameters")
   public void shouldReturnErrorCausedByEmptyNameField(String name, BigDecimal balance) throws Exception {
+
+    //given
     AccountRequest accountRequest = AccountRequest.builder().name(name).balance(balance).build();
 
+    //when
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(accountRequest)))
@@ -66,18 +84,26 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAccountById() throws Exception {
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
 
+    //given
+    Account account = accountMbankBalance10();
+    Long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+
+    //when
     mockMvc
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.id", is(1)));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())));
   }
 
   @Test
   public void shouldReturnErrorCausedByNotExistingId() throws Exception {
+
+    //when
     mockMvc
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
@@ -85,47 +111,60 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAllAccounts() throws Exception {
-    callRestServiceToAddAccountAndReturnId(ACCOUNT_ANDRZEJ_BALANCE_1_000_000);
-    callRestServiceToAddAccountAndReturnId(ACCOUNT_SLAWEK_BALANCE_9);
 
+    //given
+    Account accountJacek = accountJacekBalance1000();
+    Account accountMbank = accountMbankBalance10();
+
+    Long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek);
+    Long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank);
+
+    //when
     mockMvc
         .perform(get(ACCOUNTS_SERVICE_PATH))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].id", is(1)))
-        .andExpect(jsonPath("$[0].name", is("Sebastian Revolut USD")))
-        .andExpect(jsonPath("$[0].balance", is("1000000.00")))
-        .andExpect(jsonPath("$[1].id", is(2)))
-        .andExpect(jsonPath("$[1].name", is("Cash")))
-        .andExpect(jsonPath("$[1].balance", is("9.00")));
+        .andExpect(jsonPath("$[0].id", is(accountJacekId.intValue())))
+        .andExpect(jsonPath("$[0].name", is(accountJacek.getName())))
+        .andExpect(jsonPath("$[0].balance", is(accountJacek.getBalance().toString())))
+        .andExpect(jsonPath("$[1].id", is(accountMbankId.intValue())))
+        .andExpect(jsonPath("$[1].name", is(accountMbank.getName())))
+        .andExpect(jsonPath("$[1].balance", is(accountMbank.getBalance().toString())));
   }
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
 
+    //given
+    Account account = accountJacekBalance1000();
+    Long accountId = callRestServiceToAddAccountAndReturnId(account);
+    Account updatedAccount = accountMbankBalance10();
+
+    //when
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(ACCOUNT_MARIUSZ_BALANCE_200))))
+        .content(json(convertAccountToAccountRequest(updatedAccount))))
         .andDo(print())
         .andExpect(status().isOk());
 
+    //then
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is("Mateusz mBank saving account")))
-        .andExpect(jsonPath("$.balance", is(equalTo("200.00"))));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(updatedAccount.getName())))
+        .andExpect(jsonPath("$.balance", is(updatedAccount.getBalance().toString())));
   }
 
   @Test
   public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
+
+    //given
+    Long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
     AccountRequest updatedAccount = AccountRequest.builder()
-        .name(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0).getName())
-        .balance(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0).getBalance()
-            .add(BigDecimal.TEN)).build();
+        .name(accountMbankBalance10().getName())
+        .balance(convertDoubleToBigDecimal(666)).build();
 
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .contentType(JSON_CONTENT_TYPE)
@@ -136,22 +175,24 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name",
-            is(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0).getName())))
-        .andExpect(jsonPath("$.balance", is(equalTo("10.00"))));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(equalTo(updatedAccount.getName()))))
+        .andExpect(jsonPath("$.balance", is(equalTo(updatedAccount.getBalance().toString()))));
   }
 
   @Test
   public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
-    callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
+
+    //given
+    callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
 
     AccountRequest updatedAccount = AccountRequest.builder()
-        .name(ACCOUNT_RAFAL_BALANCE_0.getName())
-        .balance(ACCOUNT_JACEK_BALANCE_1000.getBalance())
+        .name(accountMbankBalance10().getName())
+        .balance(convertDoubleToBigDecimal(432))
         .build();
 
+    //when
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedAccount)))
@@ -164,32 +205,41 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
 
+    //when
     mockMvc
         .perform(put(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .contentType(JSON_CONTENT_TYPE)
-            .content(json(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0))))
+            .content(json(convertAccountToAccountRequest(accountMbankBalance10()))))
         .andExpect(status().isNotFound());
   }
 
   @Test
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_RAFAL_BALANCE_0);
+
+    //given
+    Account account = accountMbankBalance10();
+    long accountId = callRestServiceToAddAccountAndReturnId(account);
     AccountRequest accountToUpdate = AccountRequest.builder()
         .name("")
-        .balance(convertAccountToAccountRequest(ACCOUNT_RAFAL_BALANCE_0).getBalance())
+        .balance(account.getBalance())
         .build();
 
+    //when
     mockMvc
         .perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
             .contentType(JSON_CONTENT_TYPE)
             .content(json(accountToUpdate)))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_NAME))));
   }
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-    long accountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_MARCIN_BALANCE_10_99);
 
+    //given
+    long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+
+    //when
     mockMvc
         .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk());
@@ -197,8 +247,8 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
-    callRestServiceToAddAccountAndReturnId(ACCOUNT_MARCIN_BALANCE_10_99);
 
+    //when
     mockMvc
         .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
@@ -206,11 +256,19 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByExistingAccountName() throws Exception {
-    callRestServiceToAddAccountAndReturnId(ACCOUNT_LUKASZ_BALANCE_1124);
 
+    //given
+    Account account = accountMbankBalance10();
+    callRestServiceToAddAccountAndReturnId(account);
+    AccountRequest accountRequestToAdd = AccountRequest.builder()
+        .name(account.getName())
+        .balance(convertDoubleToBigDecimal(100))
+        .build();
+
+    //when
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(ACCOUNT_LUKASZ_BALANCE_1124))))
+        .content(json(accountRequestToAdd)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));

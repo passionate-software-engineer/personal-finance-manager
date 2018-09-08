@@ -1,16 +1,13 @@
 package com.pfm.account;
 
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_ANDRZEJ_BALANCE_1_000_000;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARCIN_BALANCE_10_99;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_MARIUSZ_BALANCE_200;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_RAFAL_BALANCE_0;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_SLAWEK_BALANCE_9;
-import static com.pfm.helpers.TestAccountProvider.MOCK_ACCOUNT_ID;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,29 +38,37 @@ public class AccountServiceTest {
 
   @Test
   public void shouldGetAccount() {
+
     //given
-    when(accountRepository.findById(ACCOUNT_RAFAL_BALANCE_0.getId()))
-        .thenReturn(Optional.of(ACCOUNT_RAFAL_BALANCE_0));
+    Account account = accountMbankBalance10();
+    account.setId(1L);
+
+    when(accountRepository.findById(account.getId()))
+        .thenReturn(Optional.of(account));
 
     //when
     Optional<Account> returnedAccount = accountService
-        .getAccountById(ACCOUNT_RAFAL_BALANCE_0.getId());
+        .getAccountById(account.getId());
 
     //then
-    assertNotNull(returnedAccount);
+    assertTrue(returnedAccount.isPresent());
 
-    Account account = returnedAccount.orElse(null);
-    assertNotNull(account);
-    assertThat(account.getId(), is(equalTo(ACCOUNT_RAFAL_BALANCE_0.getId())));
-    assertThat(account.getName(), is(equalTo(ACCOUNT_RAFAL_BALANCE_0.getName())));
-    assertThat(account.getBalance(), is(equalTo(ACCOUNT_RAFAL_BALANCE_0.getBalance())));
+    Account actualAccount = returnedAccount.get();
+
+    assertThat(actualAccount.getId(), is(equalTo(account.getId())));
+    assertThat(actualAccount.getName(), is(equalTo(account.getName())));
+    assertThat(actualAccount.getBalance(), is(equalTo(account.getBalance())));
   }
 
   @Test
   public void shouldGetAllAccounts() {
     //given
-    when(accountRepository.findAll()).thenReturn(
-        Arrays.asList(ACCOUNT_SLAWEK_BALANCE_9, ACCOUNT_ANDRZEJ_BALANCE_1_000_000));
+    Account accountJacek = accountJacekBalance1000();
+    accountJacek.setId(1L);
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setId(2L);
+
+    when(accountRepository.findAll()).thenReturn(Arrays.asList(accountMbank, accountJacek));
 
     //when
     List<Account> actualAccountsList = accountService.getAccounts();
@@ -72,35 +77,34 @@ public class AccountServiceTest {
     assertThat(actualAccountsList.size(), is(2));
 
     // accounts should be sorted by id
-    assertThat(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getId(),
-        lessThan(ACCOUNT_SLAWEK_BALANCE_9.getId()));
+    assertThat(accountJacek.getId(), lessThan(accountMbank.getId()));
 
     Account account1 = actualAccountsList.get(0);
-    assertThat(account1.getId(), is(equalTo(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getId())));
-    assertThat(account1.getName(), is(equalTo(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getName())));
-    assertThat(account1.getBalance(),
-        is(equalTo(ACCOUNT_ANDRZEJ_BALANCE_1_000_000.getBalance())));
+    assertThat(account1.getId(), is(equalTo(accountJacek.getId())));
+    assertThat(account1.getName(), is(equalTo(accountJacek.getName())));
+    assertThat(account1.getBalance(), is(equalTo(accountJacek.getBalance())));
 
     Account account2 = actualAccountsList.get(1);
-    assertThat(account2.getId(), is(equalTo(ACCOUNT_SLAWEK_BALANCE_9.getId())));
-    assertThat(account2.getName(), is(equalTo(ACCOUNT_SLAWEK_BALANCE_9.getName())));
-    assertThat(account2.getBalance(), is(equalTo(ACCOUNT_SLAWEK_BALANCE_9.getBalance())));
+    assertThat(account2.getId(), is(equalTo(accountMbank.getId())));
+    assertThat(account2.getName(), is(equalTo(accountMbank.getName())));
+    assertThat(account2.getBalance(), is(equalTo(accountMbank.getBalance())));
   }
 
   @Test
   public void shouldSaveAccount() {
     //given
-    when(accountRepository.save(ACCOUNT_MARCIN_BALANCE_10_99))
-        .thenReturn(ACCOUNT_MARCIN_BALANCE_10_99);
+    Account accountToSave = accountMbankBalance10();
+    accountToSave.setId(1L);
+    when(accountRepository.save(accountToSave)).thenReturn(accountToSave);
 
     //when
-    Account account = accountService.addAccount(ACCOUNT_MARCIN_BALANCE_10_99);
+    Account account = accountService.addAccount(accountToSave);
 
     //then
     assertNotNull(account);
-    assertThat(account.getId(), is(equalTo(ACCOUNT_MARCIN_BALANCE_10_99.getId())));
-    assertThat(account.getName(), is(equalTo(ACCOUNT_MARCIN_BALANCE_10_99.getName())));
-    assertThat(account.getBalance(), is(equalTo(ACCOUNT_MARCIN_BALANCE_10_99.getBalance())));
+    assertThat(account.getId(), is(equalTo(accountToSave.getId())));
+    assertThat(account.getName(), is(equalTo(accountToSave.getName())));
+    assertThat(account.getBalance(), is(equalTo(accountToSave.getBalance())));
   }
 
   @Test
@@ -123,44 +127,41 @@ public class AccountServiceTest {
         .name("Zaskurniaki")
         .build();
 
-    Account expectedAccount = Account.builder()
-        .balance(updatedAccount.getBalance())
-        .name(updatedAccount.getName())
-        .id(ACCOUNT_MARIUSZ_BALANCE_200.getId())
-        .build();
-
-    when(accountRepository.findById(expectedAccount.getId()))
-        .thenReturn(Optional.of(ACCOUNT_MARIUSZ_BALANCE_200));
+    when(accountRepository.findById(1L)).thenReturn(Optional.of(accountMbankBalance10()));
 
     //when
-    accountService.updateAccount(expectedAccount.getId(), updatedAccount);
+    accountService.updateAccount(1L, updatedAccount);
 
     //then
-    verify(accountRepository, times(1)).save(expectedAccount);
+    verify(accountRepository, times(1)).save(updatedAccount);
   }
 
   @Test
   public void shouldCheckIfAccountExists() {
+    //not changed to JUunit 5 to show difference with JUnit4
     //given
-    when(accountRepository.existsById(MOCK_ACCOUNT_ID)).thenReturn(true);
+    long id = 1;
+    when(accountRepository.existsById(id)).thenReturn(true);
 
     //when
-    accountService.idExist(MOCK_ACCOUNT_ID);
+    accountService.idExist(id);
 
     //then
-    verify(accountRepository).existsById(MOCK_ACCOUNT_ID);
+    verify(accountRepository).existsById(id);
   }
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExist() {
 
-    expectedEx.expect(IllegalStateException.class);
-    expectedEx.expectMessage("Account with id: " + MOCK_ACCOUNT_ID + " does not exist in database");
     //given
-    when(accountRepository.findById(MOCK_ACCOUNT_ID)).thenReturn(Optional.empty());
+    long id = 1;
+    expectedEx.expect(IllegalStateException.class);
+    expectedEx.expectMessage("Account with id: " + id + " does not exist in database");
+
+    when(accountRepository.findById(id)).thenReturn(Optional.empty());
 
     //when
-    accountService.updateAccount(MOCK_ACCOUNT_ID, ACCOUNT_MARCIN_BALANCE_10_99);
+    accountService.updateAccount(id, accountMbankBalance10());
 
   }
 }

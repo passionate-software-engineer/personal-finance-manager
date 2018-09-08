@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ApplicationTest {
 
   @Test
-  public void main() { // TODO this test is failing if app is running locally - configure to use different port
+  public void main() {
     Application.main(new String[]{});
   }
 }
