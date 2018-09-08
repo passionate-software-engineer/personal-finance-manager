@@ -79,11 +79,11 @@ public class TransactionService {
 
   // TODO now in add we subtract what is a bit not intuitive - it's coming from using -1000 for expenses, +1000 for income in the application
   private void addAmountToAccount(long accountId, BigDecimal amountToAdd) {
-    updateAccountBalance(accountId, amountToAdd, BigDecimal::subtract);
+    updateAccountBalance(accountId, amountToAdd, BigDecimal::add);
   }
 
   private void subtractAmountFromAccount(long accountId, BigDecimal amountToSubtract) {
-    updateAccountBalance(accountId, amountToSubtract, BigDecimal::add);
+    updateAccountBalance(accountId, amountToSubtract, BigDecimal::subtract);
   }
 
   private void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
