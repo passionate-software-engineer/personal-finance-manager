@@ -36,16 +36,17 @@ public class CategoryServiceTest {
   public void shouldGetCategoryById() {
 
     //given
-    when(categoryRepository.findById(categoryCar().getId())).thenReturn(Optional.of(categoryCar()));
+    Category categoryCar = categoryCar();
+    when(categoryRepository.findById(categoryCar.getId())).thenReturn(Optional.of(categoryCar));
 
     //when
-    Category result = categoryService.getCategoryById(categoryCar().getId()).orElse(null);
+    Category result = categoryService.getCategoryById(categoryCar.getId()).orElse(null);
 
     //then
-    verify(categoryRepository).findById(categoryCar().getId());
+    verify(categoryRepository).findById(categoryCar.getId());
     assertNotNull(result);
-    assertThat(result.getId(), is(equalTo(categoryCar().getId())));
-    assertThat(result.getName(), is(equalTo(categoryCar().getName())));
+    assertThat(result.getId(), is(equalTo(categoryCar.getId())));
+    assertThat(result.getName(), is(equalTo(categoryCar.getName())));
     assertThat(result.getParentCategory(), is(equalTo(null)));
   }
 
@@ -53,7 +54,9 @@ public class CategoryServiceTest {
   public void shouldGetCategories() {
 
     //given
-    when(categoryRepository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(categoryCar(), categoryHome())));
+    Category categoryCar = categoryCar();
+    Category categoryHome = categoryHome();
+    when(categoryRepository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(categoryCar, categoryHome)));
 
     //when
     List<Category> result = categoryService.getCategories();
@@ -62,38 +65,40 @@ public class CategoryServiceTest {
     verify(categoryRepository).findAll();
     assertNotNull(result);
     assertThat(result.size(), is(2));
-    assertThat(result, containsInAnyOrder(categoryCar(), categoryHome()));
+    assertThat(result, containsInAnyOrder(categoryCar, categoryHome));
   }
 
   @Test
   public void shouldAddCategory() {
 
     //given
-    when(categoryRepository.save(categoryCar())).thenReturn(categoryCar());
+    Category category = categoryCar();
+    when(categoryRepository.save(category)).thenReturn(category);
 
     //when
-    categoryService.addCategory(categoryCar());
+    categoryService.addCategory(category);
 
     //then
-    verify(categoryRepository).save(categoryCar());
+    verify(categoryRepository).save(category);
   }
 
   @Test
   public void shouldAddCategoryWithParentCategory() {
     //given
-    when(categoryRepository.save(categoryCar())).thenReturn(categoryCar());
-    when(categoryRepository.findById(categoryCar().getId())).thenReturn(Optional.of(categoryCar()));
+    Category categoryCar = categoryCar();
+    when(categoryRepository.save(categoryCar)).thenReturn(categoryCar);
+    when(categoryRepository.findById(categoryCar.getId())).thenReturn(Optional.of(categoryCar));
     Category categoryOil = categoryOil();
-    categoryOil.setParentCategory(categoryCar());
+    categoryOil.setParentCategory(categoryCar);
     when(categoryRepository.save(categoryOil)).thenReturn(categoryOil);
 
     //when
-    categoryService.addCategory(categoryCar());
+    categoryService.addCategory(categoryCar);
     categoryService.addCategory(categoryOil);
 
     //then
-    verify(categoryRepository).save(categoryCar());
-    verify(categoryRepository).findById(categoryCar().getId());
+    verify(categoryRepository).save(categoryCar);
+    verify(categoryRepository).findById(categoryCar.getId());
     verify(categoryRepository).save(categoryOil);
   }
 
@@ -115,15 +120,16 @@ public class CategoryServiceTest {
   public void shouldUpdateCategory() {
 
     //given
-    when(categoryRepository.findById(categoryCar().getId())).thenReturn(Optional.of(categoryCar()));
-    when(categoryRepository.save(categoryCar())).thenReturn(categoryCar());
+    Category category = categoryCar();
+    when(categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
+    when(categoryRepository.save(category)).thenReturn(category);
 
     //when
-    categoryService.updateCategory(categoryCar().getId(), categoryCar());
+    categoryService.updateCategory(category.getId(), category);
 
     //then
-    verify(categoryRepository).findById(categoryCar().getId());
-    verify(categoryRepository).save(categoryCar());
+    verify(categoryRepository).findById(category.getId());
+    verify(categoryRepository).save(category);
 
   }
 
@@ -166,15 +172,16 @@ public class CategoryServiceTest {
 
     //given
     Category categoryOil = categoryOil();
-    categoryOil.setParentCategory(categoryCar());
+    Category categoryCar = categoryCar();
+    categoryOil.setParentCategory(categoryCar);
     when(categoryRepository.findById(categoryOil.getId())).thenReturn(Optional.of(categoryOil));
-    when(categoryRepository.findById(categoryCar().getId())).thenReturn(Optional.empty());
+    when(categoryRepository.findById(categoryCar.getId())).thenReturn(Optional.empty());
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.updateCategory(categoryOil.getId(), categoryOil));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Category with id : " + categoryCar().getId() + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("Category with id : " + categoryCar.getId() + " does not exist in database")));
   }
 
   @Test

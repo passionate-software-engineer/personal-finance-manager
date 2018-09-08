@@ -31,20 +31,27 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldAddAccount() throws Exception {
 
+    //given
+    Account account = accountJacekBalance1000();
+
     //when
-    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(accountJacekBalance1000()))))
-        .andExpect(status().isOk());
+    String respone =
+        mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertAccountToAccountRequest(account))))
+            .andExpect(status().isOk()).andReturn()
+            .getResponse().getContentAsString();
 
     //then
+    Long accountId = Long.parseLong(respone);
+
     mockMvc
-        .perform(get(ACCOUNTS_SERVICE_PATH + "/" + 1))
+        .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is("Jacek Millenium Bank savings")))
-        .andExpect(jsonPath("$.balance", is("1000.00")));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())));
 
   }
 
@@ -79,7 +86,8 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetAccountById() throws Exception {
 
     //given
-    long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    Account account = accountMbankBalance10();
+    Long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
 
     //when
     mockMvc
@@ -87,9 +95,9 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is("Mbank")))
-        .andExpect(jsonPath("$.balance", is("10.00")));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())));
   }
 
   @Test
@@ -105,8 +113,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetAllAccounts() throws Exception {
 
     //given
-    callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
-    callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    Account accountJacek = accountJacekBalance1000();
+    Account accountMbank = accountMbankBalance10();
+
+    Long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek);
+    Long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank);
 
     //when
     mockMvc
@@ -114,24 +125,26 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andDo(print()).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].id", is(1)))
-        .andExpect(jsonPath("$[0].name", is("Jacek Millenium Bank savings")))
-        .andExpect(jsonPath("$[0].balance", is("1000.00")))
-        .andExpect(jsonPath("$[1].id", is(2)))
-        .andExpect(jsonPath("$[1].name", is("Mbank")))
-        .andExpect(jsonPath("$[1].balance", is("10.00")));
+        .andExpect(jsonPath("$[0].id", is(accountJacekId.intValue())))
+        .andExpect(jsonPath("$[0].name", is(accountJacek.getName())))
+        .andExpect(jsonPath("$[0].balance", is(accountJacek.getBalance().toString())))
+        .andExpect(jsonPath("$[1].id", is(accountMbankId.intValue())))
+        .andExpect(jsonPath("$[1].name", is(accountMbank.getName())))
+        .andExpect(jsonPath("$[1].balance", is(accountMbank.getBalance().toString())));
   }
 
   @Test
   public void shouldUpdateAccount() throws Exception {
 
     //given
-    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    Account account = accountJacekBalance1000();
+    Long accountId = callRestServiceToAddAccountAndReturnId(account);
+    Account updatedAccount = accountMbankBalance10();
 
     //when
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(accountMbankBalance10()))))
+        .content(json(convertAccountToAccountRequest(updatedAccount))))
         .andDo(print())
         .andExpect(status().isOk());
 
@@ -139,16 +152,16 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is(equalTo("Mbank"))))
-        .andExpect(jsonPath("$.balance", is(equalTo("10.00"))));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(updatedAccount.getName())))
+        .andExpect(jsonPath("$.balance", is(updatedAccount.getBalance().toString())));
   }
 
   @Test
   public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
 
     //given
-    long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    Long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(accountMbankBalance10().getName())
         .balance(convertDoubleToBigDecimal(666)).build();
@@ -162,9 +175,9 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.name", is(equalTo("Mbank"))))
-        .andExpect(jsonPath("$.balance", is(equalTo("666.00"))));
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(equalTo(updatedAccount.getName()))))
+        .andExpect(jsonPath("$.balance", is(equalTo(updatedAccount.getBalance().toString()))));
   }
 
   @Test
@@ -204,10 +217,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
 
     //given
-    long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    Account account = accountMbankBalance10();
+    long accountId = callRestServiceToAddAccountAndReturnId(account);
     AccountRequest accountToUpdate = AccountRequest.builder()
         .name("")
-        .balance(convertAccountToAccountRequest(accountMbankBalance10()).getBalance())
+        .balance(account.getBalance())
         .build();
 
     //when
@@ -244,9 +258,10 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByExistingAccountName() throws Exception {
 
     //given
-    callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    Account account = accountMbankBalance10();
+    callRestServiceToAddAccountAndReturnId(account);
     AccountRequest accountRequestToAdd = AccountRequest.builder()
-        .name(accountMbankBalance10().getName())
+        .name(account.getName())
         .balance(convertDoubleToBigDecimal(100))
         .build();
 

@@ -119,7 +119,7 @@ public abstract class IntegrationTestsBase {
     return addCategoryRequestAndReturnId(categoryRequest);
   }
 
-  protected long callRestToaddCategoryWithSpecifiedParentCategoryIdAndReturnId(long parentCategoryId, Category category)
+  protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category, long parentCategoryId)
       throws Exception {
     CategoryRequest categoryRequest = categoryToCategoryRequest(category);
     categoryRequest.setParentCategoryId(parentCategoryId);

@@ -14,8 +14,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -46,7 +44,7 @@ public class AccountValidatorTest {
     });
 
     //then
-    Assert.assertThat(exception.getMessage(), is(CoreMatchers.equalTo("Account with id: " + id + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("Account with id: " + id + " does not exist in database")));
   }
 
   @Test
