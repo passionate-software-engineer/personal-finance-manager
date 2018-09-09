@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private UserRespository userRespository;
+  private TokenService tokenService;
 
   public Optional<AuthResponse> authenticateUser(User userToAuthenticate) {
     User userFromDb = userRespository.findByUsername(userToAuthenticate.getUsername());
@@ -24,7 +25,7 @@ public class UserService {
     if (!userFromDb.getPassword().equals(get_SHA_512_SecurePassword(hashedPassword))) {
       return Optional.empty();
     }
-    String token = "fake-jwt-token";
+    String token = tokenService.generateToken();
 
     AuthResponse authResponse = new AuthResponse(userFromDb, token);
     return Optional.of(authResponse);
