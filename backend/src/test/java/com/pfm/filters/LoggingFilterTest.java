@@ -92,6 +92,7 @@ public class LoggingFilterTest {
 
     //when
     filter.doFilterInternal(request, response, mockFilterChain);
+
     //then
     verify(mockAppender, times(4)).doAppend(captorLoggingEvent.capture());
     final LoggingEvent loggingEvent = captorLoggingEvent.getValue();
@@ -118,6 +119,7 @@ public class LoggingFilterTest {
     //given
     when(request.getContentType()).thenReturn(MediaType.valueOf("TEST_MEDIA_TYPE/TEST").toString());
     when(request.getQueryString()).thenReturn(null);
+
     //when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
