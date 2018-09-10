@@ -3,6 +3,7 @@ import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({ // TODO categories in dropdows should display with parent category e.g. Car > Parts (try using filter for it)
   selector: 'app-categories',
@@ -14,7 +15,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
   addingMode = false;
   newCategory: Category = new Category();
 
-  constructor(private categoryService: CategoryService, private alertService: AlertsService) {
+  constructor(private categoryService: CategoryService, private alertService: AlertsService, private translate: TranslateService) {
     super('name');
   }
 
@@ -30,10 +31,10 @@ export class CategoriesComponent extends Sortable implements OnInit {
   }
 
   deleteCategory(category) {
-    if (confirm('Are you sure You want to delete this account ?')) {
+    if (confirm(this.translate.instant('error.wantDeleteCategory'))) {
       this.categoryService.deleteCategory(category.id)
         .subscribe(() => {
-          this.alertService.success('Category deleted');
+          this.alertService.success(this.translate.instant('error.categoryDeleted'));
           const index: number = this.categories.indexOf(category);
           if (index !== -1) {
             this.categories.splice(index, 1);
@@ -67,7 +68,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
 
     this.categoryService.editCategory(category.editedCategory)
       .subscribe(() => {
-        this.alertService.success('Category edited');
+        this.alertService.success(this.translate.instant('error.categoryEdited'));
         Object.assign(category, category.editedCategory);
         category.editedCategory = new Category();
         // TODO get category from server
@@ -84,7 +85,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
         this.newCategory.id = id;
         this.categories.push(this.newCategory);
         this.newCategory = new Category();
-        this.alertService.success('Category added');
+        this.alertService.success(this.translate.instant('error.categoryAdded'));
         this.addingMode = false;
 
         // TODO get category from server
@@ -99,7 +100,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
     if (category.parentCategory != null) {
       return category.parentCategory.name;
     }
-    return 'Main Category';
+    return this.translate.instant('cat.mainCategory');
   }
 
   getListOfPossibleParentCategories(cat: Category) {
@@ -121,11 +122,11 @@ export class CategoriesComponent extends Sortable implements OnInit {
 
   validateCategory(categoryName: string): boolean { // TODO pass category object
     if (categoryName == null || categoryName.trim() === '') {
-      this.alertService.error('Category name cannot be empty');
+      this.alertService.error(this.translate.instant('error.categoryNameEmpty'));
       return false; // TODO validate all - not break on first failure
     }
     if (categoryName.length > 100) {
-      this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
+      this.alertService.error((this.translate.instant('error.categoryTooLong')));
       return false;
     }
     return true;
@@ -137,7 +138,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
     }
 
     if (this.categories.filter(category => category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
-      this.alertService.error('Category with provided name already exist');
+      this.alertService.error(this.translate.instant('error.categoryAlreadyExists'));
       return false;
     }
     return true;

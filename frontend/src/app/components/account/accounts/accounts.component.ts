@@ -4,6 +4,7 @@ import {AccountService} from '../account-service/account.service';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
+import { TranslateService } from '@ngx-translate/core';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -19,7 +20,7 @@ export class AccountsComponent extends Sortable implements OnInit {
   addingMode = false;
   newAccount: Account = new Account();
 
-  constructor(private accountService: AccountService, private alertService: AlertsService) {
+  constructor(private accountService: AccountService, private alertService: AlertsService, private translate: TranslateService) {
     super('name');
   }
 
@@ -35,7 +36,7 @@ export class AccountsComponent extends Sortable implements OnInit {
   }
 
   deleteAccount(account) {
-    if (confirm('Are you sure You want to delete this account ?')) {
+    if (confirm(this.translate.instant('error.wantDeleteAccount'))) {
       this.accountService.deleteAccount(account.id)
         .subscribe(() => {
           this.alertService.success('Account deleted');
@@ -64,7 +65,7 @@ export class AccountsComponent extends Sortable implements OnInit {
     editedAccount.balance = account.editedAccount.balance;
     this.accountService.editAccount(editedAccount)
       .subscribe(() => {
-        this.alertService.success('Account updated');
+        this.alertService.success(this.translate.instant('error.accountEdited'));
         Object.assign(account, editedAccount);
         // TODO - get object from server
       });
@@ -77,7 +78,7 @@ export class AccountsComponent extends Sortable implements OnInit {
 
     this.accountService.addAccount(this.newAccount)
       .subscribe(id => {
-        this.alertService.success('Account added');
+        this.alertService.success(this.translate.instant('error.accountAdded'));
         this.newAccount.id = id;
 
         // TODO - get object from server
@@ -94,37 +95,36 @@ export class AccountsComponent extends Sortable implements OnInit {
   validateAccount(account: Account): boolean {
     if ((account.name == null || account.name.trim() === '')
       && (!account.balance)) { // TODO change validation to validate all at once, not break on error
-      this.alertService.error('Name cannot be empty');
-      this.alertService.error('Balance cannot be empty');
+      this.alertService.error(this.translate.instant('error.accountNameEmpty'));
+      this.alertService.error(this.translate.instant('error.accountBalanceEmpty'));
       return false;
     }
     if (account.name == null || account.name === '') {
-      this.alertService.error('Name cannot be empty');
+      this.alertService.error(this.translate.instant('error.accountNameEmpty'));
       return false;
     }
     if (account.name.length > 100) {
-      this.alertService.error('Account name too long. Account name can not be longer then 100 characters');
+      this.alertService.error(this.translate.instant('error.accountNameTooLong'));
       return false;
     }
 
     if (account.balance == null) {
-      this.alertService.error('Balance cannot be empty');
+      this.alertService.error(this.translate.instant('error.accountBalanceEmpty'));
       return false;
     }
 
     if (!isNumeric(account.balance)) {
-      this.alertService.error('Provided balance is not a correct number');
+      this.alertService.error(this.translate.instant('error.balanceNotCorrect'));
       return false;
     }
 
     if (account.balance > maxAccountBalance) {
-      this.alertService.error('Balance number is too big.' +
-        ' If You are so rich why do You need personal finance manager !? ');
+      this.alertService.error(this.translate.instant('error.balanceTooBig'));
       return false;
     }
 
     if (account.balance < minAccountBalance) {
-      this.alertService.error('Balance number is too low');
+      this.alertService.error(this.translate.instant('error.balanceTooLow'));
       return false;
     }
 
@@ -137,7 +137,7 @@ export class AccountsComponent extends Sortable implements OnInit {
     }
 
     if (this.accounts.filter(account => account.name.toLocaleLowerCase() === accountToValidate.name.toLocaleLowerCase()).length > 0) {
-      this.alertService.error('Account with provided name already exist');
+      this.alertService.error(this.translate.instant('error.accountNameExists'));
       return false;
     }
     return true;

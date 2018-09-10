@@ -1,7 +1,7 @@
 <button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
-  Add Category
+  {{ 'cat.addCategory' | translate }}
 </button>
-<button class="btn btn-primary" type="button" (click)="onRefreshCategories()">Refresh</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshCategories()">{{ 'option.refresh' | translate }}</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -9,14 +9,14 @@
 
     <!--Name-->
     <th [class.active]="order === 'name'" (click)="setOrder('name')">
-      Name
+      {{ 'cat.name' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Parent Category-->
     <th [class.active]="order === 'parentCategory.name'" (click)="setOrder('parentCategory.name')">
-      Parent Category
+      {{ 'cat.parentCategory' | translate }}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
@@ -37,29 +37,29 @@
       <select class="form-control" [(ngModel)]="category.editedCategory.parentCategory">
         <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
           {{parCategory.name}}
-        <option [ngValue]="null">Main Category</option>
+        <option [ngValue]="null">{{ 'cat.mainCategory' | translate }}</option>
       </select>
     </td>
     <td *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
 
     <td *ngIf="!category.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">Options
+        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">{{ 'option.options' | translate }}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(category)">Edit</button>
+            <button class="btn btn-warning btn-block" (click)="onShowEditMode(category)">{{ 'option.edit' | translate }}</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteCategory(category)">Delete</button>
+            <button class="btn btn-danger btn-block" (click)="deleteCategory(category)">{{ 'option.delete' | translate }}</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="category.editMode">
-      <button class="btn btn-success" (click)="onEditCategory(category)">Save</button>
-      <button class="btn btn-danger" (click)="category.editMode=false">Exit</button>
+      <button class="btn btn-success" (click)="onEditCategory(category)">{{ 'option.save' | translate }}</button>
+      <button class="btn btn-danger" (click)="category.editMode=false">{{ 'option.exit' | translate }}</button>
     </td>
 
   </tr>
@@ -74,15 +74,15 @@
       <div class="form-group">
         <select class="form-control" id="selectedParentCategory" [(ngModel)]="newCategory.parentCategory"
                 name="selectedParentCategory">
-          <option [ngValue]="null">Main Category</option>
+          <option [ngValue]="null">{{ 'cat.mainCategory' | translate }}</option>
           <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
         </select>
       </div>
     </td>
 
     <td>
-      <button class="btn btn-success" (click)="onAddCategory()">Save</button>
-      <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
+      <button class="btn btn-success" (click)="onAddCategory()">{{ 'option.save' | translate }}</button>
+      <button class="btn btn-danger" (click)="addingMode=false">{{ 'option.exit' | translate }}</button>
     </td>
 
   </tr>

@@ -8,12 +8,12 @@ export abstract class ServiceBase {
 
   // TODO move to interceptor
   protected httpCorrelationId = {
-    headers: new HttpHeaders({'correlationId': uuid()})
+    headers: new HttpHeaders({'Correlation-Id': uuid()})
   };
 
   // TODO move to interceptor
-  protected httpOptions = { // TODO Correlation-Id to keep format (correct in backend too)
-    headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
+  protected httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json', 'Correlation-Id': uuid()})
   };
 
   constructor(protected http: HttpClient, protected alertService: AlertsService) {
