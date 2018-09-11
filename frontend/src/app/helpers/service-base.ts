@@ -3,17 +3,18 @@ import {Observable, throwError} from 'rxjs';
 import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {environment} from '../../environments/environment';
 import {v4 as uuid} from 'uuid';
+import {TranslateService} from '@ngx-translate/core';
 
 export abstract class ServiceBase {
 
   // TODO move to interceptor
   protected httpCorrelationId = {
-    headers: new HttpHeaders({'Correlation-Id': uuid()})
+    headers: new HttpHeaders({'correlationId': uuid()})
   };
 
   // TODO move to interceptor
-  protected httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json', 'Correlation-Id': uuid()})
+  protected httpOptions = { // TODO Correlation-Id to keep format (correct in backend too)
+    headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
   };
 
   constructor(protected http: HttpClient, protected alertService: AlertsService) {

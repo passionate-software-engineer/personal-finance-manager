@@ -138,7 +138,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
     }
 
     if (this.categories.filter(category => category.name.toLowerCase() === categoryName.toLowerCase()).length > 0) {
-      this.alertService.error(this.translate.instant('error.categoryAlreadyExists'));
+      this.alertService.error(this.translate.instant('error.categoryNameExists'));
       return false;
     }
     return true;
