@@ -15,8 +15,8 @@ spring:
 
 logging:
   level:
+    com.pfm: INFO
     org.springframework.web: INFO
-    com.pfm: DEBUG
     org.hibernate: INFO
   pattern:
     console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"

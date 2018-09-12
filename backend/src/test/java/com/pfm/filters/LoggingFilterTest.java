@@ -56,8 +56,11 @@ public class LoggingFilterTest {
 
   @Before
   public void setup() throws ServletException, IOException {
+    // TODO why do you use logback? you should add appender to sl4j logger - there should be no dependencies to logback at all.
     final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
     logger.addAppender(mockAppender);
+
+    // TODO you can make it more readable by splitting that into multiple methods e.g. prepareHeaders(), preapareResponse() etc.
     Map<String, String> headers = new HashMap<>();
     headers.put("test1", "HTTP/1.1 200 OK");
     headers.put("Content-Type", "text/html");
@@ -95,11 +98,17 @@ public class LoggingFilterTest {
 
     //then
     verify(mockAppender, times(4)).doAppend(captorLoggingEvent.capture());
+
+    // TODO you capture 4 times and asser only once - are you missing something? :)
     final LoggingEvent loggingEvent = captorLoggingEvent.getValue();
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
+
+    // TODO is that all info written? shouldn't we assert more?
     assertThat(loggingEvent.getFormattedMessage(), containsString("|< 200 OK"));
   }
 
+  // TODO apply the comments from above to all methods below - you should do detailed assertions for each situation
+  // TODO coverage is still not passing - you need to change in some tests the logging level as you need to cover situation when debug is on and off
   @Test
   public void shouldFilterAndLogWrapped() throws ServletException, IOException {
     //given
