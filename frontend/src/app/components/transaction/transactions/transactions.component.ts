@@ -94,10 +94,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   deleteTransaction(transactionToDelete) {
-    if (confirm(this.translate.instant('error.wantDeleteTransaction'))) {
+    if (confirm(this.translate.instant('message.wantDeleteTransaction'))) {
       this.transactionService.deleteTransaction(transactionToDelete.id)
         .subscribe(() => {
-          this.alertService.success(this.translate.instant('error.transactionDeleted'));
+          this.alertService.success(this.translate.instant('message.transactionDeleted'));
           this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
           this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
         });
@@ -111,7 +111,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.editTransaction(transaction.editedTransaction)
       .subscribe(() => {
-        this.alertService.success(this.translate.instant('error.transactionEdited'));
+        this.alertService.success(this.translate.instant('message.transactionEdited'));
         this.transactionService.getTransaction(transaction.id)
           .subscribe(updatedTransaction => {
             const returnedTransaction = new Transaction(); // TODO dupliated code
@@ -146,7 +146,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.addTransaction(this.newTransaction)
       .subscribe(id => {
-        this.alertService.success(this.translate.instant('error.transactionAdded'));
+        this.alertService.success(this.translate.instant('message.transactionAdded'));
         this.transactionService.getTransaction(id)
           .subscribe(createdTransaction => {
 
@@ -182,32 +182,32 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     let status = true;
 
     if (transaction.date == null || transaction.date.toString() === '') {
-      this.alertService.error(this.translate.instant('error.dateEmpty'));
+      this.alertService.error(this.translate.instant('message.dateEmpty'));
       status = false;
     }
 
     if (transaction.description == null || transaction.description.trim() === '') {
-      this.alertService.error(this.translate.instant('error.descriptionEmpty'));
+      this.alertService.error(this.translate.instant('message.descriptionEmpty'));
       status = false;
     }
 
     if (transaction.description != null && transaction.description.length > 100) {
-      this.alertService.error(this.translate.instant('error.categoryNameTooLong'));
+      this.alertService.error(this.translate.instant('message.categoryNameTooLong'));
       status = false;
     }
 
     if (transaction.price == null) {
-      this.alertService.error(this.translate.instant('error.priceEmpty'));
+      this.alertService.error(this.translate.instant('message.priceEmpty'));
       status = false;
     }
 
     if (transaction.category == null) {
-      this.alertService.error(this.translate.instant('error.categoryNameEmpty'));
+      this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
       status = false;
     }
 
     if (transaction.account == null) {
-      this.alertService.error(this.translate.instant('error.accountNameEmpty'));
+      this.alertService.error(this.translate.instant('message.accountNameEmpty'));
       status = false;
     }
 

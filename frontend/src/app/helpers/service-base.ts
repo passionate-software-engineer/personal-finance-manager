@@ -3,7 +3,6 @@ import {Observable, throwError} from 'rxjs';
 import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {environment} from '../../environments/environment';
 import {v4 as uuid} from 'uuid';
-import {TranslateService} from '@ngx-translate/core';
 
 export abstract class ServiceBase {
 

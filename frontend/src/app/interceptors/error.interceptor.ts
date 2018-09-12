@@ -3,7 +3,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AuthenticationService} from '../authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -22,14 +22,14 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
 
       if (err.status === 0) {
-        return throwError(this.translate.instant('error.noConnectivity') );
+        return throwError(this.translate.instant('message.noConnectivity'));
       }
 
       if (err.status === 500) {
-        return throwError(this.translate.instant('error.wentWrong'));
+        return throwError(this.translate.instant('message.wentWrong'));
       }
 
-      return throwError(err.error || this.translate.instant('error.internalSysErr'));
+      return throwError(err.error || this.translate.instant('message.internalSysErr'));
 
     }));
   }

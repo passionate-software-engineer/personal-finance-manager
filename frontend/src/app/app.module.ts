@@ -18,8 +18,8 @@ import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export const createTranslateLoader = (http: HttpClient) => {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

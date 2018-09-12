@@ -1,7 +1,7 @@
 <button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
-  {{ 'cat.addCategory' | translate }}
+  {{'category.addCategory' | translate}}
 </button>
-<button class="btn btn-primary" type="button" (click)="onRefreshCategories()">{{ 'option.refresh' | translate }}</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshCategories()">{{'button.refresh' | translate}}</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -9,14 +9,14 @@
 
     <!--Name-->
     <th [class.active]="order === 'name'" (click)="setOrder('name')">
-      {{ 'cat.name' | translate }}
+      {{'category.name' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Parent Category-->
     <th [class.active]="order === 'parentCategory.name'" (click)="setOrder('parentCategory.name')">
-      {{ 'cat.parentCategory' | translate }}
+      {{'category.parentCategory' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
@@ -37,29 +37,29 @@
       <select class="form-control" [(ngModel)]="category.editedCategory.parentCategory">
         <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
           {{parCategory.name}}
-        <option [ngValue]="null">{{ 'cat.mainCategory' | translate }}</option>
+        <option [ngValue]="null">{{'category.mainCategory' | translate}}</option>
       </select>
     </td>
     <td *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
 
     <td *ngIf="!category.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">{{ 'option.options' | translate }}
+        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">{{'button.options' | translate}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(category)">{{ 'option.edit' | translate }}</button>
+            <button class="btn btn-warning btn-block" (click)="onShowEditMode(category)">{{'button.edit' | translate}}</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteCategory(category)">{{ 'option.delete' | translate }}</button>
+            <button class="btn btn-danger btn-block" (click)="deleteCategory(category)">{{'button.delete' | translate}}</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="category.editMode">
-      <button class="btn btn-success" (click)="onEditCategory(category)">{{ 'option.save' | translate }}</button>
-      <button class="btn btn-danger" (click)="category.editMode=false">{{ 'option.exit' | translate }}</button>
+      <button class="btn btn-success" (click)="onEditCategory(category)">{{'button.save' | translate}}</button>
+      <button class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>
@@ -74,15 +74,15 @@
       <div class="form-group">
         <select class="form-control" id="selectedParentCategory" [(ngModel)]="newCategory.parentCategory"
                 name="selectedParentCategory">
-          <option [ngValue]="null">{{ 'cat.mainCategory' | translate }}</option>
+          <option [ngValue]="null">{{'category.mainCategory' | translate}}</option>
           <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
         </select>
       </div>
     </td>
 
     <td>
-      <button class="btn btn-success" (click)="onAddCategory()">{{ 'option.save' | translate }}</button>
-      <button class="btn btn-danger" (click)="addingMode=false">{{ 'option.exit' | translate }}</button>
+      <button class="btn btn-success" (click)="onAddCategory()">{{'button.save' | translate}}</button>
+      <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>

@@ -6,7 +6,7 @@ import {TransactionFilter} from '../transaction-filter';
 import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
 import {FilterResponse} from '../transaction-filter-service/transaction-filter-response';
 import {Sortable} from '../../../helpers/sortable';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 export class FiltersComponentBase extends Sortable {
   allTransactions: Transaction[] = [];
@@ -55,7 +55,7 @@ export class FiltersComponentBase extends Sortable {
 
     this.filterService.addFilter(this.selectedFilter)
       .subscribe(id => {
-        this.alertService.success(this.translate.instant('error.filterAdded'));
+        this.alertService.success(this.translate.instant('message.filterAdded'));
         this.filterService.getFilter(id)
           .subscribe(createdFilter => {
             const processedFilter = this.processFilter(createdFilter);
@@ -74,7 +74,7 @@ export class FiltersComponentBase extends Sortable {
 
   updateFilter() {
     if (this.originalFilter.id === undefined) {
-      this.alertService.warn('Filter ' + this.originalFilter.name + this.translate.instant('error.filterCantUpdate'));
+      this.alertService.warn('Filter ' + this.originalFilter.name + this.translate.instant('message.filterCantUpdate'));
       return;
     }
 
@@ -84,7 +84,7 @@ export class FiltersComponentBase extends Sortable {
 
     this.filterService.updateFilter(this.selectedFilter)
       .subscribe(() => {
-        this.alertService.success(this.translate.instant('error.filterUpdated'));
+        this.alertService.success(this.translate.instant('message.filterUpdated'));
         this.filterService.getFilter(this.selectedFilter.id)
           .subscribe(createdFilter => {
             const processedFilter = this.processFilter(createdFilter);
@@ -100,14 +100,14 @@ export class FiltersComponentBase extends Sortable {
 
   deleteFilter() {
     if (this.originalFilter.id === undefined) {
-      this.alertService.warn('Filter "' + this.originalFilter.name + this.translate.instant('error.filterCantDelete'));
+      this.alertService.warn('Filter "' + this.originalFilter.name + this.translate.instant('message.filterCantDelete'));
       return;
     }
 
-    if (confirm(this.translate.instant('error.filterSureDelete') + this.originalFilter.name + '"?')) {
+    if (confirm(this.translate.instant('message.filterSureDelete') + this.originalFilter.name + '"?')) {
       this.filterService.deleteFilter(this.originalFilter.id)
         .subscribe(() => {
-          this.alertService.success(this.translate.instant('error.filterDelete'));
+          this.alertService.success(this.translate.instant('message.filterDelete'));
           this.filters = this.filters.filter(filter => filter !== this.originalFilter);
 
           this.setCurrentFilter();
@@ -242,14 +242,14 @@ export class FiltersComponentBase extends Sortable {
     let status = true;
 
     if (filter.name == null || filter.name.trim() === '') {
-      this.alertService.error(this.translate.instant('error.filterNameEmpty'));
+      this.alertService.error(this.translate.instant('message.filterNameEmpty'));
       status = false;
     }
 
     if (!allowDuplicatedName && filter.name != null) {
       for (const existingFilter of this.filters) {
         if (existingFilter.name.toLowerCase() === filter.name.toLowerCase()) {
-          this.alertService.error(this.translate.instant('error.filterNameExists'));
+          this.alertService.error(this.translate.instant('message.filterNameExists'));
           status = false;
           break;
         }
@@ -257,12 +257,12 @@ export class FiltersComponentBase extends Sortable {
     }
 
     if (filter.priceFrom != null && filter.priceTo != null && filter.priceFrom > filter.priceTo) {
-      this.alertService.error(this.translate.instant('error.filterWrongPriceRange'));
+      this.alertService.error(this.translate.instant('message.filterWrongPriceRange'));
       status = false;
     }
 
     if (filter.dateFrom != null && filter.dateTo != null && new Date(filter.dateFrom).getTime() > new Date(filter.dateTo).getTime()) {
-      this.alertService.error(this.translate.instant('error.filterWrongDateRange'));
+      this.alertService.error(this.translate.instant('message.filterWrongDateRange'));
       status = false;
     }
 

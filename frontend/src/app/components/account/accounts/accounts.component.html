@@ -1,22 +1,22 @@
-<button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
-  {{ 'acc.addAccount' | translate }}
+<button id="AddAccountBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
+  {{'account.addAccount' | translate}}
 </button>
-<button class="btn btn-primary" type="button" (click)="onRefreshAccounts()">{{ 'option.refresh' | translate }}</button>
+<button id="RefreshAccountsBtn" class="btn btn-primary" type="button" (click)="onRefreshAccounts()">{{'button.refresh' | translate}}</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
   <tr>
 
     <!--Name-->
-    <th [class.active]="order === 'name'" (click)="setOrder('name')">
-      {{ 'acc.name' | translate }}
+    <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
+      {{'account.name' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Balance-->
-    <th [class.active]="order === 'balance'" (click)="setOrder('balance')">
-      {{ 'acc.balance' | translate }}
+    <th id="BalanceHeader" [class.active]="order === 'balance'" (click)="setOrder('balance')">
+      {{'account.balance' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
@@ -25,39 +25,39 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
+    <tr id="AccountRow" *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
 
     <!--Name-->
     <td *ngIf="account.editMode">
-      <input class="form-control" type="text" [(ngModel)]="account.editedAccount.name">
+      <input id="EditAccountNameInput" class="form-control" type="text" [(ngModel)]="account.editedAccount.name">
     </td>
-    <td *ngIf="!account.editMode">{{account.name}}</td>
+    <td id="NameReadOnly" *ngIf="!account.editMode">{{account.name}}</td>
 
     <!--Balance-->
     <td *ngIf="account.editMode">
-      <input class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"></td>
-    <td *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
+      <input id="EditAccountBalanceInput" class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"></td>
+      <td id="BalanceReadOnly" *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
 
 
     <td *ngIf="!account.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary btn-block dropdown-toggle" id="accountScreenOptionsButton" type="button" data-toggle="dropdown">
-          {{ 'option.options' | translate }}
+        <button id="OptionsBtn" class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+          {{'button.options' | translate}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(account)">{{ 'option.edit' | translate }}</button>
+            <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(account)">{{'button.edit' | translate}}</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteAccount(account)">{{ 'option.delete' | translate }}</button>
+            <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteAccount(account)">{{'button.delete' | translate}}</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="account.editMode">
-      <button class="btn btn-success" (click)="onEditAccount(account)">{{ 'option.save' | translate }}</button>
-      <button class="btn btn-danger" (click)="account.editMode=false">{{ 'option.exit' | translate }}</button>
+      <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">{{'button.save' | translate}}</button>
+      <button class="btn btn-danger" (click)="account.editMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>
@@ -65,14 +65,14 @@
   <tr *ngIf="addingMode">
     <!--Name-->
     <td>
-      <input class="form-control" type="text" [(ngModel)]="newAccount.name">
+      <input id="NewAccountNameInput" class="form-control" type="text" [(ngModel)]="newAccount.name">
     </td>
     <!--Balance-->
     <td>
-      <input class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
+      <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
     <td>
-      <button class="btn btn-success" (click)="onAddAccount()">{{ 'option.save' | translate }}</button>
-      <button class="btn btn-danger" (click)="addingMode=false">{{ 'option.exit' | translate }}</button>
+      <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">{{'button.save' | translate}}</button>
+      <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
 </tr>
 
