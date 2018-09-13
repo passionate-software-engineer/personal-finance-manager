@@ -20,7 +20,7 @@ export class LoginPage {
   }
 
   loggedInUserButton() {
-    return element(by.id('NavigationBarLoggedInUser'));
+    return element(by.id('NavigationBarLoggedInUser2'));
   }
 
   async loginAs(username: string, password: string) {
