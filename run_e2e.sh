@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# set -e
 trap 'echo "ERROR: $BASH_SOURCE:$LINENO $BASH_COMMAND" >&2' ERR
 
 rm -f output.log
@@ -18,6 +17,7 @@ done
 
 echo "Starting E2E tests"
 
+set -e
 cd frontend
 ng e2e --port 4222
 
