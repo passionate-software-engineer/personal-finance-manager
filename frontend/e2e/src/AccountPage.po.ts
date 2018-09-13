@@ -2,7 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 
 export class AccountsPage {
 
-  navigateTo() {
+  async navigateTo() {
     return browser.get('/accounts');
   }
 

@@ -1,3 +1,4 @@
+/**/*.log
 /**/*.iml
 /**/.idea/
 /**/out/
@@ -35,5 +36,4 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 frontend/.scannerwork
-backend/application.log*
 .DS_Store
