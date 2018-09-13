@@ -16,6 +16,7 @@ public class UserService {
   private TokenService tokenService;
 
   public Optional<AuthResponse> authenticateUser(User userToAuthenticate) {
+    //Todo ask base to return Username by username and password
     User userFromDb = userRespository.findByUsername(userToAuthenticate.getUsername());
     if (userFromDb == null) {
       return Optional.empty();

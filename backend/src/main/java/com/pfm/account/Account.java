@@ -30,4 +30,6 @@ public final class Account {
 
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   private BigDecimal balance;
+
+
 }
