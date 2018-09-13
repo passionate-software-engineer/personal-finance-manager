@@ -37,7 +37,13 @@ pipeline {
                     }
                 }
             }
-
+        }
+        stage('E2E') {
+          steps {
+            sh '''
+               ./run_e2e.sh
+               '''
+          }
         }
         stage('Deploy') {
           when{

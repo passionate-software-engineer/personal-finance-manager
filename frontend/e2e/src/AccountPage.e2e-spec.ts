@@ -19,6 +19,7 @@ describe('workspace-project App', () => {
   beforeEach(async () => {
     page = new AccountsPage();
     await page.navigateTo();
+
     await page.removeAllAccounts();
   });
 
@@ -28,8 +29,8 @@ describe('workspace-project App', () => {
     // when
 
     // then
-    expect(page.addAccountButton().getText()).toEqual('Add Account');
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
+    expect(page.addAccountButton().getText()).toEqual('Add Account');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
     expect(page.balanceHeader().getText()).toEqual('Balance');
 
