@@ -8,27 +8,29 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/transactions" routerLinkActive="active">Transactions
+        <a class="nav-link" routerLink="/transactions" routerLinkActive="active">{{'navigation.transactions' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/categories" routerLinkActive="active">Categories
+        <a class="nav-link" routerLink="/categories" routerLinkActive="active">{{'navigation.categories' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/accounts" routerLinkActive="active">Accounts
+        <a class="nav-link" routerLink="/accounts" routerLinkActive="active">{{'navigation.accounts' | translate}}
         </a>
       </li>
     </ul>
+    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
+    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>
     <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
         <a class="nav-link" routerLink="/register" routerLinkActive="active">
-          Register
+          {{'navigation.register' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
         <a class="nav-link" routerLink="/login" routerLinkActive="active">
-          Login
+          {{'navigation.login' | translate}}
         </a>
       </li>
       <li id="NavigationBarLoggedInUser" class="nav-item dropdown" *ngIf="isUserLoggedIn()">
@@ -38,7 +40,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" routerLink="/login" (click)="logout()">
-            Logout
+            {{'navigation.logout' | translate}}
           </a>
         </div>
       </li>

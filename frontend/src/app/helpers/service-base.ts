@@ -16,6 +16,7 @@ export abstract class ServiceBase {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
   };
 
+  // TODO add passing language to backend so errors can be translated too
   constructor(protected http: HttpClient, protected alertService: AlertsService) {
   }
 

@@ -5,6 +5,7 @@ import {first} from 'rxjs/operators';
 
 import {AlertsService} from '../alert/alerts-service/alerts.service';
 import {UserService} from '../../authentication/user.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private alertService: AlertsService) {
+    private alertService: AlertsService,
+    private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Registration successful');
+          this.alertService.success(this.translate.instant('message.registrationWasSuccessful'));
           this.router.navigate(['/login']);
         },
         error => {

@@ -9,6 +9,7 @@ import {AccountService} from '../../account/account-service/account.service';
 import {TransactionFilter} from '../transaction-filter';
 import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
 import {FiltersComponentBase} from './transactions-filter.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-transactions',
@@ -27,8 +28,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   filters: TransactionFilter[] = [];
 
   constructor(private transactionService: TransactionService, alertService: AlertsService, private categoryService: CategoryService,
-              private accountService: AccountService, filterService: TransactionFilterService) {
-    super(alertService, filterService);
+              private accountService: AccountService, filterService: TransactionFilterService, translate: TranslateService) {
+    super(alertService, filterService, translate);
   }
 
   ngOnInit() {
@@ -93,10 +94,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   deleteTransaction(transactionToDelete) {
-    if (confirm('Are you sure You want to delete this transaction ?')) {
+    if (confirm(this.translate.instant('message.wantDeleteTransaction'))) {
       this.transactionService.deleteTransaction(transactionToDelete.id)
         .subscribe(() => {
-          this.alertService.success('Transaction deleted');
+          this.alertService.success(this.translate.instant('message.transactionDeleted'));
           this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
           this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
         });
@@ -110,7 +111,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.editTransaction(transaction.editedTransaction)
       .subscribe(() => {
-        this.alertService.success('Transaction edited');
+        this.alertService.success(this.translate.instant('message.transactionEdited'));
         this.transactionService.getTransaction(transaction.id)
           .subscribe(updatedTransaction => {
             const returnedTransaction = new Transaction(); // TODO dupliated code
@@ -145,7 +146,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.addTransaction(this.newTransaction)
       .subscribe(id => {
-        this.alertService.success('Transaction added');
+        this.alertService.success(this.translate.instant('message.transactionAdded'));
         this.transactionService.getTransaction(id)
           .subscribe(createdTransaction => {
 
@@ -181,32 +182,32 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     let status = true;
 
     if (transaction.date == null || transaction.date.toString() === '') {
-      this.alertService.error('Date is empty or incomplete');
+      this.alertService.error(this.translate.instant('message.dateEmpty'));
       status = false;
     }
 
     if (transaction.description == null || transaction.description.trim() === '') {
-      this.alertService.error('Description cannot be empty');
+      this.alertService.error(this.translate.instant('message.descriptionEmpty'));
       status = false;
     }
 
     if (transaction.description != null && transaction.description.length > 100) {
-      this.alertService.error('Category name too long. Category name can not be longer then 100 characters');
+      this.alertService.error(this.translate.instant('message.categoryNameTooLong'));
       status = false;
     }
 
     if (transaction.price == null) {
-      this.alertService.error('Price is empty or price format is incorrect');
+      this.alertService.error(this.translate.instant('message.priceEmpty'));
       status = false;
     }
 
     if (transaction.category == null) {
-      this.alertService.error('Category cannot be empty');
+      this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
       status = false;
     }
 
     if (transaction.account == null) {
-      this.alertService.error('Account cannot be empty');
+      this.alertService.error(this.translate.instant('message.accountNameEmpty'));
       status = false;
     }
 

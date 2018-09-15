@@ -1,7 +1,7 @@
 <button id="AddAccountBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
-  Add Account
+  {{'account.addAccount' | translate}}
 </button>
-<button id="RefreshAccountsBtn" class="btn btn-primary" type="button" (click)="onRefreshAccounts()">Refresh</button>
+<button id="RefreshAccountsBtn" class="btn btn-primary" type="button" (click)="onRefreshAccounts()">{{'button.refresh' | translate}}</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -9,14 +9,14 @@
 
     <!--Name-->
     <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
-      Name
+      {{'account.name' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Balance-->
     <th id="BalanceHeader" [class.active]="order === 'balance'" (click)="setOrder('balance')">
-      Balance
+      {{'account.balance' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
@@ -42,22 +42,22 @@
     <td *ngIf="!account.editMode">
       <div class="dropdown">
         <button id="OptionsBtn" class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">
-          Options
+          {{'button.options' | translate}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(account)">Edit</button>
+            <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(account)">{{'button.edit' | translate}}</button>
           </li>
           <li>
-            <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteAccount(account)">Delete</button>
+            <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteAccount(account)">{{'button.delete' | translate}}</button>
           </li>
         </ul>
       </div>
     </td>
     <td *ngIf="account.editMode">
-      <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">Save</button>
-      <button class="btn btn-danger" (click)="account.editMode=false">Exit</button>
+      <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">{{'button.save' | translate}}</button>
+      <button class="btn btn-danger" (click)="account.editMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>
@@ -71,8 +71,8 @@
     <td>
       <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
     <td>
-      <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">Save</button>
-      <button class="btn btn-danger" (click)="addingMode=false">Exit</button>
+      <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">{{'button.save' | translate}}</button>
+      <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
   </tr>
 

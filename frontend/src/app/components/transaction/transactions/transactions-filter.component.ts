@@ -6,6 +6,7 @@ import {TransactionFilter} from '../transaction-filter';
 import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
 import {FilterResponse} from '../transaction-filter-service/transaction-filter-response';
 import {Sortable} from '../../../helpers/sortable';
+import {TranslateService} from '@ngx-translate/core';
 
 export class FiltersComponentBase extends Sortable {
   allTransactions: Transaction[] = [];
@@ -16,7 +17,7 @@ export class FiltersComponentBase extends Sortable {
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
 
-  constructor(protected alertService: AlertsService, private filterService: TransactionFilterService) {
+  constructor(protected alertService: AlertsService, private filterService: TransactionFilterService, public translate: TranslateService) {
     super('date');
   }
 
@@ -54,7 +55,7 @@ export class FiltersComponentBase extends Sortable {
 
     this.filterService.addFilter(this.selectedFilter)
       .subscribe(id => {
-        this.alertService.success('Filter added');
+        this.alertService.success(this.translate.instant('message.filterAdded'));
         this.filterService.getFilter(id)
           .subscribe(createdFilter => {
             const processedFilter = this.processFilter(createdFilter);
@@ -73,7 +74,7 @@ export class FiltersComponentBase extends Sortable {
 
   updateFilter() {
     if (this.originalFilter.id === undefined) {
-      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be updated. Try creating new filter instead.');
+      this.alertService.warn('Filter ' + this.originalFilter.name + this.translate.instant('message.filterCantUpdate'));
       return;
     }
 
@@ -83,7 +84,7 @@ export class FiltersComponentBase extends Sortable {
 
     this.filterService.updateFilter(this.selectedFilter)
       .subscribe(() => {
-        this.alertService.success('Filter updated');
+        this.alertService.success(this.translate.instant('message.filterUpdated'));
         this.filterService.getFilter(this.selectedFilter.id)
           .subscribe(createdFilter => {
             const processedFilter = this.processFilter(createdFilter);
@@ -99,14 +100,14 @@ export class FiltersComponentBase extends Sortable {
 
   deleteFilter() {
     if (this.originalFilter.id === undefined) {
-      this.alertService.warn('Filter "' + this.originalFilter.name + '" cannot be deleted');
+      this.alertService.warn('Filter "' + this.originalFilter.name + this.translate.instant('message.filterCantDelete'));
       return;
     }
 
-    if (confirm('Are you sure You want to delete filter named "' + this.originalFilter.name + '"?')) {
+    if (confirm(this.translate.instant('message.filterSureDelete') + this.originalFilter.name + '"?')) {
       this.filterService.deleteFilter(this.originalFilter.id)
         .subscribe(() => {
-          this.alertService.success('Filter deleted');
+          this.alertService.success(this.translate.instant('message.filterDelete'));
           this.filters = this.filters.filter(filter => filter !== this.originalFilter);
 
           this.setCurrentFilter();
@@ -124,7 +125,9 @@ export class FiltersComponentBase extends Sortable {
   protected addShowAllFilter() {
     if (this.filters.length === 0) {
       const newFilter = new TransactionFilter();
-      newFilter.name = 'Show all';
+
+      // TODO not handled well - needs to reload page for language change to take effect - find way to refresh immediately
+      newFilter.name = 'All transactions'; // this.translate.instant('filters.showAllFilterName');
       newFilter.categories = [];
       newFilter.accounts = [];
 
@@ -241,14 +244,14 @@ export class FiltersComponentBase extends Sortable {
     let status = true;
 
     if (filter.name == null || filter.name.trim() === '') {
-      this.alertService.error('Filter name cannot be empty');
+      this.alertService.error(this.translate.instant('message.filterNameEmpty'));
       status = false;
     }
 
     if (!allowDuplicatedName && filter.name != null) {
       for (const existingFilter of this.filters) {
         if (existingFilter.name.toLowerCase() === filter.name.toLowerCase()) {
-          this.alertService.error('Filter name already exists. Do you want to update existing filter?');
+          this.alertService.error(this.translate.instant('message.filterNameExists'));
           status = false;
           break;
         }
@@ -256,12 +259,12 @@ export class FiltersComponentBase extends Sortable {
     }
 
     if (filter.priceFrom != null && filter.priceTo != null && filter.priceFrom > filter.priceTo) {
-      this.alertService.error('Filter "from price" cannot be higher then "to price"');
+      this.alertService.error(this.translate.instant('message.filterWrongPriceRange'));
       status = false;
     }
 
     if (filter.dateFrom != null && filter.dateTo != null && new Date(filter.dateFrom).getTime() > new Date(filter.dateTo).getTime()) {
-      this.alertService.error('Filter "from date" cannot be later then "to date"');
+      this.alertService.error(this.translate.instant('message.filterWrongDateRange'));
       status = false;
     }
 
