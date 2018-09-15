@@ -32,7 +32,8 @@ export class NavigationComponent implements OnInit {
     return this.authenticationService.isUserLoggedIn();
   }
 
-  switchLanguage = (lang: string) => {
-    this.translate.use(lang);
+  // TODO save language in local storage so it's persistent between application reloads
+  switchLanguage = (language: string) => {
+    this.translate.use(language);
   }
 }

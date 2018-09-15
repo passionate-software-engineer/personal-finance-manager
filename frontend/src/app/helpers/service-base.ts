@@ -3,6 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {environment} from '../../environments/environment';
 import {v4 as uuid} from 'uuid';
+import {TranslateService} from '@ngx-translate/core';
 
 export abstract class ServiceBase {
 
@@ -16,6 +17,7 @@ export abstract class ServiceBase {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'correlationId': uuid()})
   };
 
+  // TODO add passing language to backend so errors can be translated too
   constructor(protected http: HttpClient, protected alertService: AlertsService) {
   }
 

@@ -125,7 +125,9 @@ export class FiltersComponentBase extends Sortable {
   protected addShowAllFilter() {
     if (this.filters.length === 0) {
       const newFilter = new TransactionFilter();
-      newFilter.name = 'Show all';
+
+      // TODO not handled well - needs to reload page for language change to take effect - find way to refresh immediately
+      newFilter.name = this.translate.instant('filters.showAllFilterName');
       newFilter.categories = [];
       newFilter.accounts = [];
 
