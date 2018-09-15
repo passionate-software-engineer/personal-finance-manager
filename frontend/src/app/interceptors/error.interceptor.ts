@@ -26,10 +26,10 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
 
       if (err.status === 500) {
-        return throwError(this.translate.instant('message.wentWrong'));
+        return throwError(this.translate.instant('message.somethingWentWrong'));
       }
 
-      return throwError(err.error || this.translate.instant('message.internalSysErr'));
+      return throwError(err.error || this.translate.instant('message.internalSystemError'));
 
     }));
   }
