@@ -35,5 +35,5 @@ export class NavigationComponent implements OnInit {
   // TODO save language in local storage so it's persistent between application reloads
   switchLanguage = (language: string) => {
     this.translate.use(language);
-  }
+  };
 }

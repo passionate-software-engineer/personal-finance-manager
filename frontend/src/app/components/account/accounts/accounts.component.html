@@ -25,7 +25,7 @@
   </thead>
 
   <tbody>
-    <tr id="AccountRow" *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
+  <tr id="AccountRow" *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
 
     <!--Name-->
     <td *ngIf="account.editMode">
@@ -36,7 +36,7 @@
     <!--Balance-->
     <td *ngIf="account.editMode">
       <input id="EditAccountBalanceInput" class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"></td>
-      <td id="BalanceReadOnly" *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
+    <td id="BalanceReadOnly" *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
 
 
     <td *ngIf="!account.editMode">
@@ -74,7 +74,7 @@
       <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">{{'button.save' | translate}}</button>
       <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
-</tr>
+  </tr>
 
   <tr>
     <!--Name-->
