@@ -127,7 +127,7 @@ export class FiltersComponentBase extends Sortable {
       const newFilter = new TransactionFilter();
 
       // TODO not handled well - needs to reload page for language change to take effect - find way to refresh immediately
-      newFilter.name = this.translate.instant('filters.showAllFilterName');
+      newFilter.name = 'All transactions'; // this.translate.instant('filters.showAllFilterName');
       newFilter.categories = [];
       newFilter.accounts = [];
 
