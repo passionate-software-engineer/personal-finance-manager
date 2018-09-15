@@ -1,11 +1,11 @@
 ﻿<h2>{{'navigation.register' | translate}}</h2>
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="RegisterFirstNameInput">{{'register.firtsName' | translate}}</label>
+    <label for="RegisterFirstNameInput">{{'register.firstName' | translate}}</label>
     <input id="RegisterFirstNameInput" type="text" formControlName="firstName" class="form-control"
            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
     <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-      <div *ngIf="f.firstName.errors.required">{{'register.firtsNameReq' | translate}}</div>
+      <div *ngIf="f.firstName.errors.required">{{'register.firstNameIsRequired' | translate}}</div>
     </div>
   </div>
   <div class="form-group">
@@ -13,7 +13,7 @@
     <input id="RegisterLastNameInput" type="text" formControlName="lastName" class="form-control"
            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
     <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-      <div *ngIf="f.lastName.errors.required">{{'register.lastNameReq' | translate}}</div>
+      <div *ngIf="f.lastName.errors.required">{{'register.lastNameIsRequired' | translate}}</div>
     </div>
   </div>
   <div class="form-group">
@@ -21,7 +21,7 @@
     <input id="RegisterUsernameInput" type="text" formControlName="username" class="form-control"
            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-      <div *ngIf="f.username.errors.required">{{'register.usernameReq' | translate}}</div>
+      <div *ngIf="f.username.errors.required">{{'register.usernameIsRequired' | translate}}</div>
     </div>
   </div>
   <div class="form-group">
@@ -29,7 +29,7 @@
     <input id="RegisterPasswordInput" type="password" formControlName="password" class="form-control"
            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-      <div *ngIf="f.password.errors.required">{{'register.passwordReq' | translate}}</div>
+      <div *ngIf="f.password.errors.required">{{'register.passwordIsRequired' | translate}}</div>
       <div *ngIf="f.password.errors.minlength">{{'register.password6Chars' | translate}}</div>
     </div>
   </div>
