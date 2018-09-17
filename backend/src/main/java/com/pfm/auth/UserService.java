@@ -26,7 +26,7 @@ public class UserService {
     if (!userFromDb.getPassword().equals(get_SHA_512_SecurePassword(hashedPassword))) {
       return Optional.empty();
     }
-    String token = tokenService.generateToken();
+    String token = tokenService.generateToken(userFromDb);
 
     AuthResponse authResponse = new AuthResponse(userFromDb, token);
     return Optional.of(authResponse);

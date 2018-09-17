@@ -10,27 +10,43 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class TokenService {
 
-  private static HashMap<String, LocalDateTime> tokens = new HashMap<>();
+  private static HashMap<String, Token> tokens = new HashMap<>();
 
-  public String generateToken() {
+  public String generateToken(User user) {
+
     UUID uuid = UUID.randomUUID();
-    String token = uuid.toString();
-    tokens.put(token, LocalDateTime.now());
-    return token;
+    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now());
+    tokens.put(token.getToken(), token);
+    return token.getToken();
   }
 
   public boolean validateToken(String token) {
-    LocalDateTime creationDate = tokens.get(token);
+    Token tokenFromDb = tokens.get(token);
 
-    if (creationDate == null) {
+    if (tokenFromDb == null) {
       return false;
     }
 
-    if (!creationDate.plusMinutes(15).isAfter(LocalDateTime.now())) {
+    LocalDateTime creationTime = tokenFromDb.getCreationTime();
+    if (creationTime == null) {
+      throw new IllegalStateException();
+    }
+
+    if (!creationTime.plusMinutes(15).isAfter(LocalDateTime.now())) {
       return false;
     }
 
     return true;
+  }
+
+  public long getUserIdFromToken(String token) {
+    Token tokenFromDb = tokens.get(token);
+
+    if (tokenFromDb == null) {
+      throw new IllegalStateException();
+    }
+
+    return tokenFromDb.getUserId();
   }
 
 }

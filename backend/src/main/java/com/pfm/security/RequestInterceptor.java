@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-@Configuration
+@Component
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
   @Autowired
@@ -23,11 +23,11 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
   public boolean preHandle(HttpServletRequest request,
       HttpServletResponse response, Object object) throws Exception {
 
-    if (request.getRequestURL().toString().matches(pattern)) {
+    if (request.getRequestURI().matches(pattern)) {
       return true;
     }
 
-    String requestToken = request.getHeader("Authorization");
+    String requestToken = request.getHeader("authorization");
     if (requestToken == null || requestToken.isEmpty()) {
       logger.error("No request token.");
       response.getWriter().write("Incorrect Token");
