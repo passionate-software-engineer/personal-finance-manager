@@ -56,4 +56,8 @@ public class UserService {
     return generatedPassword;
   }
 
+  public boolean isUsernameAlreadyUsed(String username) {
+    return userRespository.numberOfUsersWithThisUsername(username) > 0;
+  }
+
 }

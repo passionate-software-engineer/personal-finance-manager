@@ -3,6 +3,7 @@ package com.pfm.category;
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.auth.TokenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +32,7 @@ public class CategoryController {
 
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
+  private TokenService tokenService;
 
   public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
@@ -59,8 +62,8 @@ public class CategoryController {
 
   @ApiOperation(value = "Get list of categories", response = Category.class, responseContainer = "List")
   @GetMapping
-  public ResponseEntity<List<Category>> getCategories() {
-
+  public ResponseEntity<List<Category>> getCategories(@RequestHeader(value = "Authorization") String token) {
+    long userID = tokenService.getUserIdFromToken(token);
     log.info("Retrieving categories from database");
     List<Category> categories = categoryService.getCategories();
     return ResponseEntity.ok(categories);
