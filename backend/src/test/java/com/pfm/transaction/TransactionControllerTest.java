@@ -1,6 +1,6 @@
 package com.pfm.transaction;
 
-import static com.pfm.helpers.TestTransactionProvider.getCarTransactionRequestWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestTransactionProvider.carTransactionRequestWithNoAccountAndNoCategory;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -37,7 +37,7 @@ public class TransactionControllerTest {
   @Test
   public void shouldReturnExceptionCausedByNotExistingCategoryIdAndNotExistingAccountId() {
     //given
-    TransactionRequest transactionRequestToAdd = getCarTransactionRequestWithNoAccountAndNoCategory();
+    TransactionRequest transactionRequestToAdd = carTransactionRequestWithNoAccountAndNoCategory();
     transactionRequestToAdd.setAccountId(1L);
     transactionRequestToAdd.setCategoryId(1L);
 
@@ -55,7 +55,7 @@ public class TransactionControllerTest {
   @Test
   public void shouldReturnExceptionCausedByNotExistingCategoryId() {
     //given
-    TransactionRequest transactionRequestToAdd = getCarTransactionRequestWithNoAccountAndNoCategory();
+    TransactionRequest transactionRequestToAdd = carTransactionRequestWithNoAccountAndNoCategory();
     transactionRequestToAdd.setAccountId(1L);
     transactionRequestToAdd.setCategoryId(1L);
 
@@ -73,7 +73,7 @@ public class TransactionControllerTest {
   @Test
   public void shouldReturnExceptionCausedByNotExistingExistingAccountId() {
     //given
-    TransactionRequest transactionRequestToAdd = getCarTransactionRequestWithNoAccountAndNoCategory();
+    TransactionRequest transactionRequestToAdd = carTransactionRequestWithNoAccountAndNoCategory();
     transactionRequestToAdd.setAccountId(1L);
     transactionRequestToAdd.setCategoryId(1L);
 

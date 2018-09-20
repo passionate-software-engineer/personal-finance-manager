@@ -1,37 +1,35 @@
 package com.pfm.helpers;
 
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+
+import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class TestTransactionProvider {
 
-  public static final TransactionRequest FOOD_TRANSACTION_REQUEST_WITH_NO_ACCOUNT_AND_NO_CATEGORY =
-      TransactionRequest.builder()
-          .date(LocalDate.of(2018, 8, 8))
-          .description("Food for birthday")
-          .price(BigDecimal.valueOf(10.00).setScale(2, BigDecimal.ROUND_HALF_UP))
-          .build();
-
-  public static TransactionRequest getFoodTransactionRequestWithNoAccountAndNoCategory() {
-    return TransactionRequest.builder()
-        .price(FOOD_TRANSACTION_REQUEST_WITH_NO_ACCOUNT_AND_NO_CATEGORY.getPrice())
-        .description(FOOD_TRANSACTION_REQUEST_WITH_NO_ACCOUNT_AND_NO_CATEGORY.getDescription())
-        .date(FOOD_TRANSACTION_REQUEST_WITH_NO_ACCOUNT_AND_NO_CATEGORY.getDate())
+  public static Transaction foodTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .price(convertDoubleToBigDecimal(10))
+        .description("Food for birthday")
+        .date(LocalDate.of(2018, 8, 8))
         .build();
   }
 
-  public static TransactionRequest getCarTransactionRequestWithNoAccountAndNoCategory() {
+  public static TransactionRequest carTransactionRequestWithNoAccountAndNoCategory() {
     return TransactionRequest.builder()
-        .price(BigDecimal.valueOf(20.00).setScale(2, RoundingMode.HALF_UP))
+        .price(convertDoubleToBigDecimal(20))
         .description("Oil")
         .date(LocalDate.of(2018, 8, 10))
         .build();
   }
 
-  public static BigDecimal convertDoubleToBigDecimal(double amount) {
-    return BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
+  public static Transaction carTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .price(convertDoubleToBigDecimal(20))
+        .description("Oil")
+        .date(LocalDate.of(2018, 8, 10))
+        .build();
   }
 
 }

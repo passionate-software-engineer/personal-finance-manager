@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/" routerLinkActive="active">Personal Finance Manager</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li [routerLinkActive]="['active']" class="nav-item">
+        <a class="nav-link" routerLink="/transactions" routerLinkActive="active">{{'navigation.transactions' | translate}}
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']" class="nav-item">
+        <a class="nav-link" routerLink="/categories" routerLinkActive="active">{{'navigation.categories' | translate}}
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']" class="nav-item">
+        <a class="nav-link" routerLink="/accounts" routerLinkActive="active">{{'navigation.accounts' | translate}}
+        </a>
+      </li>
+    </ul>
+    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
+    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>
+    <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
+      <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
+        <a class="nav-link" routerLink="/register" routerLinkActive="active">
+          {{'navigation.register' | translate}}
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">
+          {{'navigation.login' | translate}}
+        </a>
+      </li>
+      <li id="NavigationBarLoggedInUser" class="nav-item dropdown" *ngIf="isUserLoggedIn()">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+          {{currentUser.firstName}} {{currentUser.lastName}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/login" (click)="logout()">
+            {{'navigation.logout' | translate}}
+          </a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>

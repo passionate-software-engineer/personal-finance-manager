@@ -26,19 +26,17 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
+// TODO those tests takes lots of time - run it separetly not as Unit tests
 @RunWith(ConcurrentTestRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
 
-  private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
+  @ClassRule
+  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
   protected static final int THREAD_COUNT = 24;
 
-  @LocalServerPort
-  private int port;
-
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+  private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
 
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
@@ -47,6 +45,9 @@ public abstract class InvoicePerformanceTestBase {
   public final ErrorCollector collector = new ErrorCollector();
 
   protected List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
+
+  @LocalServerPort
+  private int port;
 
   protected Account[] getAccounts() throws Exception {
     return given()

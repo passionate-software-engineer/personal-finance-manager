@@ -1,3 +1,7 @@
 spring:
   h2:
-    console.enabled: true
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:pfm

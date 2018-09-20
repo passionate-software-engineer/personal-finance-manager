@@ -1,12 +1,13 @@
 package com.pfm.category;
 
-import static com.pfm.helpers.TestCategoryProvider.CATEGORY_FOOD_NO_PARENT_CATEGORY;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,9 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryValidatorTest {
-
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
 
   @Mock
   private CategoryService categoryService;
@@ -26,13 +24,17 @@ public class CategoryValidatorTest {
 
   @Test
   public void validateCategoryForUpdate() {
-    //when
-    when(categoryService.getCategoryById(CATEGORY_FOOD_NO_PARENT_CATEGORY.getId())).thenReturn(Optional.empty());
 
-    thrown.expect(IllegalStateException.class);
-    thrown.expectMessage("Category with id: " + CATEGORY_FOOD_NO_PARENT_CATEGORY.getId() + " does not exist in database");
+    //given
+    long id = 1L;
+    when(categoryService.getCategoryById(id)).thenReturn(Optional.empty());
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      categoryValidator.validateCategoryForUpdate(id, new Category());
+    });
 
     //then
-    categoryValidator.validateCategoryForUpdate(CATEGORY_FOOD_NO_PARENT_CATEGORY.getId(), CATEGORY_FOOD_NO_PARENT_CATEGORY);
+    assertThat(exception.getMessage(), is(equalTo("Category with id: " + id + " does not exist in database")));
   }
 }

@@ -1,17 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CategoriesComponent } from './category/categories/categories.component';
-import { AccountsListComponent } from './account/accounts-list/accounts-list.component';
-import {TransactionsComponent} from './transaction/transactions/transactions.component';
+import {RouterModule, Routes} from '@angular/router';
+import {CategoriesComponent} from './components/category/categories/categories.component';
+import {AccountsComponent} from './components/account/accounts/accounts.component';
+import {TransactionsComponent} from './components/transaction/transactions/transactions.component';
+import {AuthGuard} from './authentication/auth.guard';
+import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/transactions', pathMatch: 'full' },
-  { path: 'categories', component: CategoriesComponent },
-  { path: 'accounts', component: AccountsListComponent },
-  { path: 'transactions', component: TransactionsComponent }
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]},
+  {path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard]},
+  {path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]},
+
+  // otherwise redirect to home
+  {path: '**', redirectTo: '/transactions', canActivate: [AuthGuard]}
 ];
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+
+export const routing = RouterModule.forRoot(routes);

@@ -22,17 +22,22 @@ public class CategoryValidator {
 
   public List<String> validateCategoryForUpdate(long id, Category category) {
     List<String> validationResults = new ArrayList<>();
+
     validate(validationResults, category);
+
     Optional<Category> categoryToUpdate = categoryService.getCategoryById(id);
+
     if (!categoryToUpdate.isPresent()) {
       throw new IllegalStateException("Category with id: " + id + " does not exist in database");
     }
+
     if (!categoryToUpdate.get().getName().equals(category.getName())) {
       checkForDuplicatedName(validationResults, category);
     }
 
-    if (category.getParentCategory() != null && !categoryService
-        .canBeParentCategory(id, category.getParentCategory().getId())) {
+    // TODO check category.getParentCategory().getId() != null
+    if (category.getParentCategory() != null && categoryService.getCategoryById(category.getParentCategory().getId()).isPresent()
+        && !categoryService.canBeParentCategory(id, category.getParentCategory().getId())) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 
@@ -41,8 +46,11 @@ public class CategoryValidator {
 
   public List<String> validateCategoryForAdd(Category category) {
     List<String> validationResults = new ArrayList<>();
+
     validate(validationResults, category);
+
     checkForDuplicatedName(validationResults, category);
+
     return validationResults;
   }
 
@@ -50,6 +58,7 @@ public class CategoryValidator {
     if (category.getName() == null || category.getName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
     }
+
     if (category.getParentCategory() != null
         && !categoryService.idExist(category.getParentCategory().getId())) {
       validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST));

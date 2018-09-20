@@ -32,7 +32,7 @@ public class TransactionService {
   }
 
   public Transaction addTransaction(Transaction transaction) {
-    subtractAmountFromAccount(transaction.getAccountId(), transaction.getPrice());
+    addAmountToAccount(transaction.getAccountId(), transaction.getPrice());
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     return transactionRepository.save(transaction);
   }
@@ -40,7 +40,7 @@ public class TransactionService {
   public void updateTransaction(long id, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id);
 
-    addAmountToAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
+    subtractAmountFromAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
 
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategoryId(transaction.getCategoryId());
@@ -52,7 +52,7 @@ public class TransactionService {
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
 
-    subtractAmountFromAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
+    addAmountToAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
   }
 
   public void deleteTransaction(long id) {
@@ -60,7 +60,7 @@ public class TransactionService {
     transactionRepository.deleteById(id);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-    addAmountToAccount(transactionToDelete.getAccountId(), transactionToDelete.getPrice());
+    subtractAmountFromAccount(transactionToDelete.getAccountId(), transactionToDelete.getPrice());
   }
 
   private Transaction getTransactionFromDatabase(long id) {
@@ -77,12 +77,12 @@ public class TransactionService {
     return transactionRepository.existsById(id);
   }
 
-  private void addAmountToAccount(long accountId, BigDecimal amountToAdd) {
-    updateAccountBalance(accountId, amountToAdd, BigDecimal::add);
+  private void subtractAmountFromAccount(long accountId, BigDecimal amountToAdd) {
+    updateAccountBalance(accountId, amountToAdd, BigDecimal::subtract);
   }
 
-  private void subtractAmountFromAccount(long accountId, BigDecimal amountToSubtract) {
-    updateAccountBalance(accountId, amountToSubtract, BigDecimal::subtract);
+  private void addAmountToAccount(long accountId, BigDecimal amountToSubtract) {
+    updateAccountBalance(accountId, amountToSubtract, BigDecimal::add);
   }
 
   private void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {

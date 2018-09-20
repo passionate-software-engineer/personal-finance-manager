@@ -8,13 +8,14 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_JACEK_BALANCE_1000;
-import static com.pfm.helpers.TestAccountProvider.ACCOUNT_PIOTR_BALANCE_9;
-import static com.pfm.helpers.TestCategoryProvider.CATEGORY_CAR_NO_PARENT_CATEGORY;
-import static com.pfm.helpers.TestCategoryProvider.CATEGORY_FOOD_NO_PARENT_CATEGORY;
-import static com.pfm.helpers.TestTransactionProvider.convertDoubleToBigDecimal;
-import static com.pfm.helpers.TestTransactionProvider.getCarTransactionRequestWithNoAccountAndNoCategory;
-import static com.pfm.helpers.TestTransactionProvider.getFoodTransactionRequestWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,105 +25,89 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.account.Account;
-import com.pfm.category.Category;
+import com.pfm.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-public class TransactionControllerIntegrationTest {
-
-  private static final String ACCOUNTS_SERVICE_PATH = "/accounts";
-  private static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
-  private static final String CATEGORIES_SERVICE_PATH = "/categories";
-  private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
-  private static final long NOT_EXISTING_ID = 0;
-
-  @Autowired
-  private MockMvc mockMvc;
-
-  @Autowired
-  private ObjectMapper mapper;
-
-  @Autowired
-  private Flyway flyway;
-
-  @Before
-  public void before() {
-    flyway.clean();
-    flyway.migrate();
-  }
+public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddTransaction() throws Exception {
+
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+
     //when
-    long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
+    long transactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId);
+
     //then
-    assertThat(getTransactionById(transactionId), is(equalTo(convertTransactionRequestToTransactionAndSetId(transactionId, transactionToAdd))));
+    Transaction expectedTransaction =
+        setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), transactionId, jacekAccountId, foodCategoryId);
+
+    assertThat(callRestToGetTransactionById(transactionId), is(equalTo(expectedTransaction)));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
-    assertThat(jacekAccountBalanceAfterAddingTransaction, is(ACCOUNT_JACEK_BALANCE_1000.getBalance().subtract(transactionToAdd.getPrice())));
+    assertThat(jacekAccountBalanceAfterAddingTransaction,
+        is(accountJacekBalance1000().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getPrice())));
   }
 
   @Test
   public void shouldDeleteTransaction() throws Exception {
+
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    long transactionId = callRestServiceToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
-    Transaction addedTransaction = convertTransactionRequestToTransactionAndSetId(transactionId,
-        transactionToAdd);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+
+    Transaction transactionToAdd = foodTransactionWithNoAccountAndNoCategory();
+    long transactionId = callRestToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
+
+    Transaction addedTransaction = foodTransactionWithNoAccountAndNoCategory();
+    addedTransaction.setId(transactionId);
+    addedTransaction.setAccountId(jacekAccountId);
+    addedTransaction.setCategoryId(foodCategoryId);
+
     //when
     deleteTransactionById(transactionId);
+
     //then
-    List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
+
     assertThat(allTransactionsInDb.size(), is(0));
     assertThat(allTransactionsInDb.contains(addedTransaction), is(false));
+
     BigDecimal jacekAccountBalanceAfterDeletingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId);
     assertThat(jacekAccountBalanceAfterDeletingTransaction,
-        is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
+        is(accountJacekBalance1000().getBalance()));
   }
 
   @Test
   public void shouldGetTransactions() throws Exception {
+
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
-    TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    TransactionRequest carTransactionRequest = getCarTransactionRequestWithNoAccountAndNoCategory();
-    long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
-    long carTransactionId = callRestServiceToAddTransactionAndReturnId(carTransactionRequest, jacekAccountId, carCategoryId);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
+    long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId);
+    long carTransactionId = callRestToAddTransactionAndReturnId(carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId);
+
     //when
-    List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
+
     //then
+    Transaction foodTransactionExpected =
+        setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), foodTransactionId, jacekAccountId, foodCategoryId);
+    Transaction carTransactionExpected =
+        setTransactionIdAccountIdCategoryId(carTransactionWithNoAccountAndNoCategory(), carTransactionId, jacekAccountId, carCategoryId);
+
     assertThat(allTransactionsInDb.size(), is(2));
-    Transaction foodTransaction = convertTransactionRequestToTransactionAndSetId(foodTransactionId, foodTransactionRequest);
-    Transaction carTransaction = convertTransactionRequestToTransactionAndSetId(carTransactionId, carTransactionRequest);
-    assertThat(allTransactionsInDb, containsInAnyOrder(foodTransaction, carTransaction));
+    assertThat(allTransactionsInDb, containsInAnyOrder(foodTransactionExpected, carTransactionExpected));
 
   }
 
@@ -130,15 +115,14 @@ public class TransactionControllerIntegrationTest {
   public void shouldUpdateTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long piotrAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_PIOTR_BALANCE_9);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_FOOD_NO_PARENT_CATEGORY);
-    long carCategoryId = callRestServiceToAddCategoryAndReturnId(CATEGORY_CAR_NO_PARENT_CATEGORY);
-    final long foodTransactionId = callRestServiceToAddTransactionAndReturnId(getFoodTransactionRequestWithNoAccountAndNoCategory(), jacekAccountId,
-        foodCategoryId);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
+    final long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId);
 
-    TransactionRequest updatedFoodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    updatedFoodTransactionRequest.setAccountId(piotrAccountId);
+    TransactionRequest updatedFoodTransactionRequest = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    updatedFoodTransactionRequest.setAccountId(mbankAccountId);
     updatedFoodTransactionRequest.setCategoryId(carCategoryId);
     updatedFoodTransactionRequest.setDate(updatedFoodTransactionRequest.getDate().plusDays(1));
     updatedFoodTransactionRequest.setPrice(convertDoubleToBigDecimal(25));
@@ -152,29 +136,33 @@ public class TransactionControllerIntegrationTest {
             .isOk());
 
     //then
-    List<Transaction> allTransactionsInDb = getAllTransactionsFromDatabase();
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase();
     assertThat(allTransactionsInDb.size(), is(1));
-    assertThat(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest)),
-        is(true));
+    assertTrue(allTransactionsInDb.contains(convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest)));
+
     BigDecimal jacekAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(jacekAccountId);
-    assertThat(jacekAccountBalanceAfterTransactionUpdate, is(ACCOUNT_JACEK_BALANCE_1000.getBalance()));
-    BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(piotrAccountId);
+    assertThat(jacekAccountBalanceAfterTransactionUpdate, is(accountJacekBalance1000().getBalance()));
+
+    BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(mbankAccountId);
     assertThat(piotrAccountBalanceAfterTransactionUpdate,
-        is(ACCOUNT_PIOTR_BALANCE_9.getBalance().subtract(updatedFoodTransactionRequest.getPrice())));
+        is(accountMbankBalance10().getBalance().add(updatedFoodTransactionRequest.getPrice())));
   }
 
   @Test
   public void shouldReturnValidationErrorInUpdateMethod() throws Exception {
-    //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
 
-    TransactionRequest foodTransactionRequest = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    long foodTransactionId = callRestServiceToAddTransactionAndReturnId(foodTransactionRequest, jacekAccountId, foodCategoryId);
-    foodTransactionRequest.setDate(null);
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+
+    final long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId);
+    TransactionRequest updateFoodTransaction = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    updateFoodTransaction.setCategoryId(foodCategoryId);
+    updateFoodTransaction.setAccountId(jacekAccountId);
+    updateFoodTransaction.setDate(null);
+
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + foodTransactionId)
-        .content(json(foodTransactionRequest))
+        .content(json(updateFoodTransaction))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
@@ -183,6 +171,7 @@ public class TransactionControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedByEmptyFields() throws Exception {
+
     //given
     TransactionRequest transactionToAdd = new TransactionRequest();
 
@@ -201,14 +190,12 @@ public class TransactionControllerIntegrationTest {
 
   @Test
   public void shouldReturnErrorCausedByEmptyDescription() throws Exception {
+
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(ACCOUNT_JACEK_BALANCE_1000);
-    long foodCategoryId = callRestServiceToAddCategoryAndReturnId(
-        CATEGORY_FOOD_NO_PARENT_CATEGORY);
     TransactionRequest transactionToAdd = TransactionRequest.builder()
         .description(" ")
-        .accountId(jacekAccountId)
-        .categoryId(foodCategoryId)
+        .accountId(NOT_EXISTING_ID)
+        .categoryId(NOT_EXISTING_ID)
         .date(LocalDate.of(2018, 10, 10))
         .price(convertDoubleToBigDecimal(10))
         .build();
@@ -218,25 +205,10 @@ public class TransactionControllerIntegrationTest {
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME))));
-  }
-
-  @Test
-  public void shouldReturnErrorCausedByNotExistingAccountAndNotExistingCategory() throws Exception {
-    //given
-    TransactionRequest transactionToAdd = getFoodTransactionRequestWithNoAccountAndNoCategory();
-    transactionToAdd.setCategoryId(NOT_EXISTING_ID);
-    transactionToAdd.setAccountId(NOT_EXISTING_ID);
-
-    //when
-    mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(transactionToAdd)))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(CATEGORY_ID_DOES_NOT_EXIST))))
-        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST))));
+        .andExpect(jsonPath("$", hasSize(3)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME))))
+        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(CATEGORY_ID_DOES_NOT_EXIST))))
+        .andExpect(jsonPath("$[2]", Matchers.is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST))));
   }
 
   @Test
@@ -245,7 +217,6 @@ public class TransactionControllerIntegrationTest {
     //when
     mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
-
   }
 
   @Test
@@ -254,7 +225,6 @@ public class TransactionControllerIntegrationTest {
     //when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
         .andExpect(status().isNotFound());
-
   }
 
   @Test
@@ -262,102 +232,8 @@ public class TransactionControllerIntegrationTest {
 
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .content(json(getCarTransactionRequestWithNoAccountAndNoCategory()))
+        .content(json(foodTransactionWithNoAccountAndNoCategory()))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
-
   }
-
-  private long callRestServiceToAddAccountAndReturnId(Account account) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(ACCOUNTS_SERVICE_PATH)
-                .content(json(account))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  private BigDecimal callRestServiceAndReturnAccountBalance(long accountId) throws Exception {
-    String response =
-        mockMvc
-            .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return jsonToAccount(response).getBalance();
-  }
-
-  private long callRestServiceToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
-    transactionRequest.setCategoryId(categoryId);
-    transactionRequest.setAccountId(accountId);
-    String response =
-        mockMvc
-            .perform(post(TRANSACTIONS_SERVICE_PATH)
-                .content(json(transactionRequest))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  private long callRestServiceToAddCategoryAndReturnId(Category category) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(CATEGORIES_SERVICE_PATH)
-                .content(json(category))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  private Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
-    return Transaction.builder()
-        .id(transactionId)
-        .accountId(transactionRequest.getAccountId())
-        .categoryId(transactionRequest.getCategoryId())
-        .description(transactionRequest.getDescription())
-        .date(transactionRequest.getDate())
-        .price(transactionRequest.getPrice())
-        .build();
-  }
-
-  private Transaction getTransactionById(long id) throws Exception {
-    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + id))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return jsonToTransaction(response);
-  }
-
-  private void deleteTransactionById(long id) throws Exception {
-    mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id))
-        .andExpect(status().isOk());
-  }
-
-  private List<Transaction> getAllTransactionsFromDatabase() throws Exception {
-    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return getCategoriesFromResponse(response);
-  }
-
-  private String json(Object object) throws Exception {
-    return mapper.writeValueAsString(object);
-  }
-
-  private Account jsonToAccount(String jsonAccount) throws Exception {
-    return mapper.readValue(jsonAccount, Account.class);
-  }
-
-  private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
-    return mapper.readValue(jsonTransaction, Transaction.class);
-  }
-
-  private List<Transaction> getCategoriesFromResponse(String response) throws Exception {
-    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
-  }
-
 }

@@ -17,7 +17,7 @@ public class AccountValidator {
 
   private AccountService accountService;
 
-  private List<String> validate(Account account) {
+  public List<String> validate(Account account) {
     List<String> validationResults = new ArrayList<>();
 
     if (account.getName() == null || account.getName().trim().equals("")) {
@@ -31,26 +31,33 @@ public class AccountValidator {
     return validationResults;
   }
 
-  public List<String> validateAccountForAdd(Account account) {
+  public List<String> validateAccountIncludingNameDuplication(Account account) {
     List<String> validationResults = validate(account);
-    if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
-      validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
-    }
+
+    checkForDuplicatedName(validationResults, account);
+
     return validationResults;
   }
 
   public List<String> validateAccountForUpdate(long id, Account account) {
     Optional<Account> accountToUpdate = accountService.getAccountById(id);
+
     if (!accountToUpdate.isPresent()) {
       throw new IllegalStateException("Account with id: " + id + " does not exist in database");
     }
+
+    // it's ok when we keep name in updated account, it's not duplicate
     if (accountToUpdate.get().getName().equals(account.getName())) {
       return validate(account);
     }
-    List<String> validationResults = validate(account);
-    if (account.getName() != null && accountService.isAccountNameAlreadyUsed(account.getName())) {
+
+    // it's not ok if account is duplicating name of other account
+    return validateAccountIncludingNameDuplication(account);
+  }
+
+  private void checkForDuplicatedName(List<String> validationResults, Account account) {
+    if (account.getName() != null && !account.getName().trim().equals("") && accountService.isAccountNameAlreadyUsed(account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
-    return validationResults;
   }
 }
