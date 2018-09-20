@@ -18,7 +18,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
-@Component // TODO not working for bad request (HTTP 400) caused by invalid request and handled by Spring
+@Component
 public class LoggingFilter extends OncePerRequestFilter {
 
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
@@ -142,5 +142,5 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestBody(request);
       logResponse(response);
     }
-  } // TODO cover class with tests verifying how it logs information
+  }
 }
