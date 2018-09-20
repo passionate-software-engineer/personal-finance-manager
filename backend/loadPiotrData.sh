@@ -85,6 +85,9 @@ echo "$CATEGORY_DIVING"
 CATEGORY_HEALTH=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Leki i lekarze\"}")
 echo "$CATEGORY_HEALTH"
 
+CATEGORY_SPORT=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Sport\"}")
+echo "$CATEGORY_SPORT"
+
 CATEGORY_COSMETICS=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Kosmetyki\"}")
 echo "$CATEGORY_COSMETICS"
 
@@ -102,6 +105,9 @@ echo "$CATEGORY_ENTERTAINMENT"
 
 CATEGORY_PHONE=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Telefon\"}")
 echo "$CATEGORY_PHONE"
+
+CATEGORY_EDUCATION=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Edukacja\"}")
+echo "$CATEGORY_EDUCATION"
 
 CATEGORY_SHOPPING=$(curl -X POST "http://localhost:8088/categories" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"Zakupy\"}")
 echo "$CATEGORY_SHOPPING"
@@ -430,3 +436,76 @@ curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-T
 curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_CASH_EUR, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-03-25\", \"description\": \"Przelew Ania PLN\", \"price\": -60.76}"
 
 curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-03-25\", \"description\": \"Przelew Ania PLN\", \"price\": 60.76}"
+
+# Transactions - April
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_COMPANY_ACCOUNTANT, \"date\": \"2018-04-09\", \"description\": \"Księgowy - Kwiecien\", \"price\": -123.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_INCOME_OTHER, \"date\": \"2018-04-04\", \"description\": \"Idea Bank Premia\", \"price\": 50.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_INCOME_CROSSOVER, \"date\": \"2018-04-04\", \"description\": \"Crossover 19-25.03\", \"price\": 7165.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_COMPANY_INCOME_TAX, \"date\": \"2018-04-15\", \"description\": \"Podatek dochodowy Q1 2018\", \"price\": -21369.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_COMPANY_VAT, \"date\": \"2018-04-15\", \"description\": \"VAT Q1 2018\", \"price\": -7320}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_COMPANY_ZUS, \"date\": \"2018-04-05\", \"description\": \"ZUS - marzec\", \"price\": -504.66}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_ENTERTAINMENT, \"date\": \"2018-04-08\", \"description\": \"Audioteka\", \"price\": -19.90}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_EUR, \"categoryId\": $CATEGORY_SHOPPING, \"date\": \"2018-04-06\", \"description\": \"Zakupy\", \"price\": -191.90}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_SHOPPING, \"date\": \"2018-04-06\", \"description\": \"Zakupy - Ania zwrot\", \"price\": 105.90}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSPORT, \"date\": \"2018-04-10\", \"description\": \"Bilety Warszawa\", \"price\": -289}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-04-13\", \"description\": \"USD -> EUR\", \"price\": -28659.96}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_EUR, \"categoryId\": $CATEGORY_CURRENCY_EXCHANGE, \"date\": \"2018-04-13\", \"description\": \"USD -> EUR\", \"price\": 27279.68}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_INCOME_CODERSTRUST, \"date\": \"2018-04-15\", \"description\": \"CT - marzec\", \"price\": 11433}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_INCOME_CROSSOVER, \"date\": \"2018-04-12\", \"description\": \"Crossover 26.03-1.04\", \"price\": 7165.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2018-04-16\", \"description\": \"Paliwo\", \"price\": -286.32}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2018-04-16\", \"description\": \"Paliwo - Ania zwrot\", \"price\": 143.16}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSPORT, \"date\": \"2018-04-10\", \"description\": \"Bilety Warszawa - nowe\", \"price\": -135}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSPORT, \"date\": \"2018-04-10\", \"description\": \"Bilety Warszawa - zwroty\", \"price\": 360.40}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_COMPANY_LEASING, \"date\": \"2018-04-26\", \"description\": \"Leasing - kwiecien\", \"price\": -2308.97}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_COMPANY_LEASING, \"date\": \"2018-04-26\", \"description\": \"Leasing - kwiecien - Ania zwrot\", \"price\": 1154.49}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_PHONE, \"date\": \"2018-04-18\", \"description\": \"Telefon\", \"price\": -19.89}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_EDUCATION, \"date\": \"2018-04-18\", \"description\": \"Ksiazki\", \"price\": -89.80}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_HOME_RENOVATION, \"date\": \"2018-03-25\", \"description\": \"Wizualizacja projektu\", \"price\": -1500}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_HOME_RENOVATION, \"date\": \"2018-04-25\", \"description\": \"Wizualizacja projektu\", \"price\": 750}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_INCOME_CROSSOVER, \"date\": \"2018-04-19\", \"description\": \"Crossover 02.04-08.04\", \"price\": 7165.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2018-04-26\", \"description\": \"Paliwo\", \"price\": -278.36}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2018-04-26\", \"description\": \"Paliwo - Ania zwrot\", \"price\": 139.18}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_SPORT, \"date\": \"2018-04-26\", \"description\": \"Bieg po puszczy\", \"price\": -65}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_EDUCATION, \"date\": \"2018-04-28\", \"description\": \"Szkolenie - Motopark\", \"price\": -499.00}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_USD, \"categoryId\": $CATEGORY_INCOME_CROSSOVER, \"date\": \"2018-04-26\", \"description\": \"Crossover 09.04-15.04\", \"price\": 7165.00}"
+
+#TODO split (zycie, rozliczenie miesiaca)
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_ENTERTAINMENT, \"date\": \"2018-03-15\", \"description\": \"Rozliczenie miesiaca - marzec\", \"price\": -5183.4}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ALIOR_EUR, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-03-10\", \"description\": \"Przelew Ania PLN\", \"price\": -27079.30}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-03-10\", \"description\": \"Przelew Ania PLN\", \"price\": 27079.30}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_ANIA_BALANCE, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-04-30\", \"description\": \"Przelew Ania PLN\", \"price\": -1174.5}"
+
+curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_TRANSFER, \"date\": \"2018-03-30\", \"description\": \"Przelew Ania PLN\", \"price\": 1174.5}"
