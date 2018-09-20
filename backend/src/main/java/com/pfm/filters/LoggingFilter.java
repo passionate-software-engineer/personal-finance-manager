@@ -106,7 +106,11 @@ public class LoggingFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-    doFilterWrapped(wrapRequest(request), wrapResponse(response), filterChain);
+    if (isAsyncDispatch(request)) {
+      filterChain.doFilter(request, response);
+    } else {
+      doFilterWrapped(wrapRequest(request), wrapResponse(response), filterChain);
+    }
   }
 
   private void doFilterWrapped(ContentCachingRequestWrapper request, ContentCachingResponseWrapper response, FilterChain filterChain)
