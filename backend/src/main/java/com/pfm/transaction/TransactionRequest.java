@@ -27,7 +27,7 @@ public class TransactionRequest {
   @ApiModelProperty(value = "Account id", required = true, example = "1")
   protected Long accountId;
 
-  @ApiModelProperty(value = "Price", required = true, example = "15.99")
+  @ApiModelProperty(value = "Price", required = true, example = "-15.99")
   protected BigDecimal price;
 
   @ApiModelProperty(value = "Date", required = true, example = "2018-12-31")
