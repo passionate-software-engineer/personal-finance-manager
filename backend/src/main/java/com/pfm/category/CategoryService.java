@@ -16,22 +16,27 @@ public class CategoryService {
 
   private CategoryRepository categoryRepository;
 
+  public Optional<Category> getCategoryById(long id, long userId) {
+    return categoryRepository.findByIdAndUserId(id, userId);
+  }
+
+  //leave this method for transactionApi to work now
   public Optional<Category> getCategoryById(long id) {
     return categoryRepository.findById(id);
   }
 
-  public List<Category> getCategories() {
-    return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+  public List<Category> getCategories(long userId) {
+    return StreamSupport.stream(categoryRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Category::getId))
         .collect(Collectors.toList());
   }
 
-  public Category addCategory(Category category) {
+  public Category addCategory(Category category, long userId) {
     if (category.getParentCategory() == null) {
       return categoryRepository.save(category);
     }
     // TODO - if parent category returned by DB is null then throw IllegalStateException
-    Category parentCategory = getCategoryById(category.getParentCategory().getId()).orElse(null);
+    Category parentCategory = getCategoryById(category.getParentCategory().getId(), userId).orElse(null);
     category.setParentCategory(parentCategory);
     return categoryRepository.save(category);
   }
@@ -40,8 +45,8 @@ public class CategoryService {
     categoryRepository.deleteById(id);
   }
 
-  public void updateCategory(long id, Category category) {
-    Optional<Category> receivedCategory = getCategoryById(id);
+  public void updateCategory(long id, Category category, long userId) {
+    Optional<Category> receivedCategory = getCategoryById(id, userId);
     if (!receivedCategory.isPresent()) {
       throw new IllegalStateException("Category with id : " + id + " does not exist in database");
     }
@@ -51,7 +56,7 @@ public class CategoryService {
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
     } else {
-      Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId());
+      Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId(), userId);
       if (!parentCategory.isPresent()) {
         throw new IllegalStateException("Category with id : " + category.getParentCategory().getId()
             + " does not exist in database");

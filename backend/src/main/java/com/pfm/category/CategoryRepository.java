@@ -1,6 +1,7 @@
 package com.pfm.category;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +14,8 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
   Integer numberOfEntriesUsingThisCategoryAsParentId(@Param("id") long id);
 
   List<Category> findByNameIgnoreCase(String name);
+
+  List<Category> findByUserId(long userId);
+
+  Optional<Category> findByIdAndUserId(long id, long userId);
 }

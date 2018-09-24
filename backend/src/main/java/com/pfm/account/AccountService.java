@@ -20,8 +20,12 @@ public class AccountService {
     return accountRepository.findById(id);
   }
 
-  public List<Account> getAccounts() {
-    return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
+  public Optional<Account> getAccountById(long id, long userId) {
+    return accountRepository.findByIdAndUserId(id, userId);
+  }
+
+  public List<Account> getAccounts(long userId) {
+    return StreamSupport.stream(accountRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Account::getId))
         .collect(Collectors.toList());
   }
@@ -30,8 +34,8 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public void updateAccount(long id, Account account) {
-    Optional<Account> accountFromDb = getAccountById(id);
+  public void updateAccount(long id, Account account, long userId) {
+    Optional<Account> accountFromDb = getAccountById(id, userId);
 
     if (!accountFromDb.isPresent()) {
       throw new IllegalStateException("Account with id: " + id + " does not exist in database");

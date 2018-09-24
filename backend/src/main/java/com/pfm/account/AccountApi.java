@@ -18,22 +18,22 @@ public interface AccountApi {
 
   @ApiOperation(value = "Find account by id", response = Account.class)
   @GetMapping(value = "/{id}")
-  ResponseEntity<?> getAccountById(long id);
+  ResponseEntity<?> getAccountById(long id,String token);
 
   @ApiOperation(value = "Get list of all accounts", response = Account.class, responseContainer = "List")
   @GetMapping
-  public ResponseEntity<List<Account>> getAccounts();
+  public ResponseEntity<List<Account>> getAccounts(String token);
 
   @ApiOperation(value = "Create a new account", response = Long.class)
   @PostMapping
-  public ResponseEntity<?> addAccount(AccountRequest accountRequest);
+  public ResponseEntity<?> addAccount(AccountRequest accountRequest, String token);
 
   @ApiOperation(value = "Update an existing account", response = Void.class)
   @PutMapping(value = "/{id}")
-  public ResponseEntity<?> updateAccount(Long id, AccountRequest accountRequest);
+  public ResponseEntity<?> updateAccount(Long id, AccountRequest accountRequest, String token);
 
   @ApiOperation(value = "Delete an existing account", response = Void.class)
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<?> deleteAccount(long id);
+  public ResponseEntity<?> deleteAccount(long id, String token);
 }
 
