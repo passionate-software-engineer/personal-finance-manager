@@ -18,6 +18,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
+@Component
 // TODO not working for bad request (HTTP 400) caused by invalid request and handled by Spring
 public class LoggingFilter extends OncePerRequestFilter {
 
@@ -47,7 +48,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     Collections.list(request.getHeaderNames())
         .forEach(headerName -> Collections.list(request.getHeaders(headerName))
             .forEach(headerValue ->
-                log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
+                log.info("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
   }
 
   private void logRequestBody(ContentCachingRequestWrapper request) {
@@ -130,9 +131,9 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestMethod(request);
     }
 
-    if (log.isDebugEnabled()) {
+//    if (log.isDebugEnabled()) {
       logRequestHeaders(request);
-    }
+//    }
   }
 
   private void afterRequest(ContentCachingRequestWrapper request,
