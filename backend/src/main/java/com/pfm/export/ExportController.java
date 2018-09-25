@@ -42,6 +42,7 @@ public class ExportController implements ExportApi {
 
       monthToTransactionMap.computeIfAbsent(key, k -> new ArrayList<>());
 
+      transaction.setId(null);
       monthToTransactionMap.get(key).add(transaction);
     }
 
