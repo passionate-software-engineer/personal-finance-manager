@@ -54,13 +54,18 @@
       "id": 11,
       "name": "Monika - pożyczka",
       "balance": "0.00"
+    },
+    {
+      "id": 12,
+      "name": "Seba - pożyczka",
+      "balance": "0.00"
     }
   ],
   "finalAccountsState": [
     {
       "id": 1,
       "name": "kantor Alior - PLN",
-      "balance": "67212.34"
+      "balance": "62402.37"
     },
     {
       "id": 2,
@@ -111,6 +116,11 @@
       "id": 11,
       "name": "Monika - pożyczka",
       "balance": "8400.00"
+    },
+    {
+      "id": 12,
+      "name": "Seba - pożyczka",
+      "balance": "4809.97"
     }
   ],
   "periods": [
@@ -121,7 +131,7 @@
         {
           "id": 1,
           "name": "kantor Alior - PLN",
-          "balance": "67212.34"
+          "balance": "62402.37"
         },
         {
           "id": 2,
@@ -172,13 +182,18 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "4809.97"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
           "id": 1,
           "name": "kantor Alior - PLN",
-          "balance": "67212.34"
+          "balance": "62402.37"
         },
         {
           "id": 2,
@@ -229,6 +244,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "4809.97"
         }
       ],
       "transactions": [
@@ -299,13 +319,18 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
           "id": 1,
           "name": "kantor Alior - PLN",
-          "balance": "67212.34"
+          "balance": "62402.37"
         },
         {
           "id": 2,
@@ -356,6 +381,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "4809.97"
         }
       ],
       "transactions": [
@@ -638,6 +668,20 @@
           "accountId": 10,
           "price": "-4146.78",
           "date": "2018-06-30"
+        },
+        {
+          "description": "Seba - pozyczka",
+          "categoryId": 1,
+          "accountId": 1,
+          "price": "-4809.97",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Seba - pozyczka",
+          "categoryId": 1,
+          "accountId": 12,
+          "price": "4809.97",
+          "date": "2018-06-30"
         }
       ]
     },
@@ -699,6 +743,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -756,6 +805,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -1099,6 +1153,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1156,6 +1215,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -1464,6 +1528,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1521,6 +1590,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -1836,6 +1910,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1893,6 +1972,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -2243,6 +2327,11 @@
           "id": 11,
           "name": "Monika - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2299,6 +2388,11 @@
         {
           "id": 11,
           "name": "Monika - pożyczka",
+          "balance": "0.00"
+        },
+        {
+          "id": 12,
+          "name": "Seba - pożyczka",
           "balance": "0.00"
         }
       ],
