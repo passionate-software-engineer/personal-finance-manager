@@ -59,6 +59,16 @@
       "id": 12,
       "name": "Seba - pożyczka",
       "balance": "0.00"
+    },
+    {
+      "id": 13,
+      "name": "Revolut - PLN",
+      "balance": "0.00"
+    },
+    {
+      "id": 14,
+      "name": "mBank",
+      "balance": "0.00"
     }
   ],
   "finalAccountsState": [
@@ -70,12 +80,12 @@
     {
       "id": 2,
       "name": "kantor Alior - USD",
-      "balance": "114944.50"
+      "balance": "111362.01"
     },
     {
       "id": 3,
       "name": "kantor Alior - EUR",
-      "balance": "2240.18"
+      "balance": "2075.78"
     },
     {
       "id": 4,
@@ -85,7 +95,7 @@
     {
       "id": 5,
       "name": "Idea Bank",
-      "balance": "43239.36"
+      "balance": "30419.25"
     },
     {
       "id": 6,
@@ -100,7 +110,7 @@
     {
       "id": 8,
       "name": "Gotówka",
-      "balance": "43.42"
+      "balance": "121.42"
     },
     {
       "id": 9,
@@ -110,7 +120,7 @@
     {
       "id": 10,
       "name": "Ania - rozliczenie",
-      "balance": "-2175.37"
+      "balance": "-4522.40"
     },
     {
       "id": 11,
@@ -120,7 +130,17 @@
     {
       "id": 12,
       "name": "Seba - pożyczka",
-      "balance": "4809.97"
+      "balance": "20000.00"
+    },
+    {
+      "id": 13,
+      "name": "Revolut - PLN",
+      "balance": "3646.00"
+    },
+    {
+      "id": 14,
+      "name": "mBank",
+      "balance": "0.00"
     }
   ],
   "periods": [
@@ -136,12 +156,12 @@
         {
           "id": 2,
           "name": "kantor Alior - USD",
-          "balance": "107833.24"
+          "balance": "104250.75"
         },
         {
           "id": 3,
           "name": "kantor Alior - EUR",
-          "balance": "2240.18"
+          "balance": "2075.78"
         },
         {
           "id": 4,
@@ -151,7 +171,7 @@
         {
           "id": 5,
           "name": "Idea Bank",
-          "balance": "43239.36"
+          "balance": "30419.25"
         },
         {
           "id": 6,
@@ -166,7 +186,7 @@
         {
           "id": 8,
           "name": "Gotówka",
-          "balance": "43.42"
+          "balance": "121.42"
         },
         {
           "id": 9,
@@ -176,7 +196,7 @@
         {
           "id": 10,
           "name": "Ania - rozliczenie",
-          "balance": "-2175.37"
+          "balance": "-4522.40"
         },
         {
           "id": 11,
@@ -186,7 +206,17 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
-          "balance": "4809.97"
+          "balance": "20000.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "3646.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -198,12 +228,12 @@
         {
           "id": 2,
           "name": "kantor Alior - USD",
-          "balance": "114944.50"
+          "balance": "111362.01"
         },
         {
           "id": 3,
           "name": "kantor Alior - EUR",
-          "balance": "2240.18"
+          "balance": "2075.78"
         },
         {
           "id": 4,
@@ -213,7 +243,7 @@
         {
           "id": 5,
           "name": "Idea Bank",
-          "balance": "43239.36"
+          "balance": "30419.25"
         },
         {
           "id": 6,
@@ -228,7 +258,7 @@
         {
           "id": 8,
           "name": "Gotówka",
-          "balance": "43.42"
+          "balance": "121.42"
         },
         {
           "id": 9,
@@ -238,7 +268,7 @@
         {
           "id": 10,
           "name": "Ania - rozliczenie",
-          "balance": "-2175.37"
+          "balance": "-4522.40"
         },
         {
           "id": 11,
@@ -248,7 +278,17 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
-          "balance": "4809.97"
+          "balance": "20000.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "3646.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -324,6 +364,16 @@
           "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -335,12 +385,12 @@
         {
           "id": 2,
           "name": "kantor Alior - USD",
-          "balance": "107833.24"
+          "balance": "104250.75"
         },
         {
           "id": 3,
           "name": "kantor Alior - EUR",
-          "balance": "2240.18"
+          "balance": "2075.78"
         },
         {
           "id": 4,
@@ -350,7 +400,7 @@
         {
           "id": 5,
           "name": "Idea Bank",
-          "balance": "43239.36"
+          "balance": "30419.25"
         },
         {
           "id": 6,
@@ -365,7 +415,7 @@
         {
           "id": 8,
           "name": "Gotówka",
-          "balance": "43.42"
+          "balance": "121.42"
         },
         {
           "id": 9,
@@ -375,7 +425,7 @@
         {
           "id": 10,
           "name": "Ania - rozliczenie",
-          "balance": "-2175.37"
+          "balance": "-4522.40"
         },
         {
           "id": 11,
@@ -385,7 +435,17 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
-          "balance": "4809.97"
+          "balance": "20000.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "3646.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -670,17 +730,101 @@
           "date": "2018-06-30"
         },
         {
-          "description": "Seba - pozyczka",
-          "categoryId": 1,
+          "description": "Seba - pozyczka - Alior PLN",
+          "categoryId": 11,
           "accountId": 1,
           "price": "-4809.97",
           "date": "2018-06-30"
         },
         {
-          "description": "Seba - pozyczka",
-          "categoryId": 1,
+          "description": "Seba - pozyczka - Alior PLN",
+          "categoryId": 11,
           "accountId": 12,
           "price": "4809.97",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Seba - pozyczka - Alior USD",
+          "categoryId": 11,
+          "accountId": 2,
+          "price": "-3582.49",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Seba - pozyczka - Alior USD",
+          "categoryId": 11,
+          "accountId": 12,
+          "price": "3582.49",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Seba - pozyczka - Idea",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "-11607.54",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Seba - pozyczka - Idea",
+          "categoryId": 11,
+          "accountId": 12,
+          "price": "11607.54",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Revolut - przelew",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "-1212.57",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Revolut - przelew",
+          "categoryId": 11,
+          "accountId": 13,
+          "price": "1212.57",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Gotowka ",
+          "categoryId": 11,
+          "accountId": 8,
+          "price": "78.00",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Gotowka",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-78.00",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Przelew revolut",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-2433.43",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Revolut - przelew",
+          "categoryId": 11,
+          "accountId": 13,
+          "price": "2433.43",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Przelew",
+          "categoryId": 11,
+          "accountId": 3,
+          "price": "-164.40",
+          "date": "2018-06-30"
+        },
+        {
+          "description": "Przelew - euro",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "164.40",
           "date": "2018-06-30"
         }
       ]
@@ -748,6 +892,16 @@
           "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -809,6 +963,16 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
+          "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
           "balance": "0.00"
         }
       ],
@@ -1158,6 +1322,16 @@
           "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1219,6 +1393,16 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
+          "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
           "balance": "0.00"
         }
       ],
@@ -1533,6 +1717,16 @@
           "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1594,6 +1788,16 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
+          "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
           "balance": "0.00"
         }
       ],
@@ -1915,6 +2119,16 @@
           "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1976,6 +2190,16 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
+          "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
           "balance": "0.00"
         }
       ],
@@ -2332,6 +2556,16 @@
           "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2393,6 +2627,16 @@
         {
           "id": 12,
           "name": "Seba - pożyczka",
+          "balance": "0.00"
+        },
+        {
+          "id": 13,
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "id": 14,
+          "name": "mBank",
           "balance": "0.00"
         }
       ],
