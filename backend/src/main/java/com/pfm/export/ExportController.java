@@ -2,6 +2,7 @@ package com.pfm.export;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -17,6 +18,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -29,8 +31,10 @@ public class ExportController implements ExportApi {
   private CategoryService categoryService;
 
   @Override
-  public List<ExportPeriod> exportData() {
-    ArrayList<ExportPeriod> result = new ArrayList<>();
+  public ExportResult exportData() {
+    ExportResult result = new ExportResult();
+    result.setPeriods(new ArrayList<>());
+    result.setCategories(categoryService.getCategories());
 
     Map<String, Set<Transaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
 
@@ -42,7 +46,9 @@ public class ExportController implements ExportApi {
       monthToTransactionMap.get(key).add(transaction);
     }
 
-    List<Account> accountsStateAtTheEndOfPeriod = accountService.getAccounts();
+    result.setFinalAccountsState(copyAccounts(accountService.getAccounts()));
+
+    List<Account> accountsStateAtTheEndOfPeriod = copyAccounts(accountService.getAccounts());
 
     for (Entry<String, Set<Transaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
 
@@ -58,7 +64,6 @@ public class ExportController implements ExportApi {
       }
 
       ExportPeriod period = ExportPeriod.builder()
-          //    .categories(categoryService.getCategories()) // TODO 1 summaric list of categories in the response object
           .accountStateAtTheBeginingOfPeriod(accounts)
           .accountStateAtTheEndOfPeriod(accountsStateAtTheEndOfPeriod)
           .startDate(LocalDate.parse(transactionsInMonth.getKey()))
@@ -66,12 +71,32 @@ public class ExportController implements ExportApi {
           .transactions(transactionsInMonth.getValue())
           .build();
 
-      result.add(period);
+      result.getPeriods().add(period);
 
       accountsStateAtTheEndOfPeriod = copyAccounts(accounts);
     }
 
+    result.setInitialAccountsState(accountsStateAtTheEndOfPeriod);
+
     return result;
+  }
+
+  @Override
+  public void importData(@RequestBody ExportResult inputData) {
+    for (Category category : inputData.getCategories()) {
+      categoryService.addCategory(category);
+    }
+
+    for (Account account : inputData.getInitialAccountsState()) {
+      accountService.addAccount(account);
+    }
+
+    for (ExportPeriod period : inputData.getPeriods()) {
+      for (Transaction transaction : period.getTransactions()) {
+        transaction.setId(null);
+        transactionService.addTransaction(transaction);
+      }
+    }
   }
 
   private List<Account> copyAccounts(List<Account> accounts) {
