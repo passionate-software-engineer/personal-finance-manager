@@ -9,11 +9,10 @@ import com.pfm.transaction.TransactionService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -36,12 +35,12 @@ public class ExportController implements ExportApi {
     result.setPeriods(new ArrayList<>());
     result.setCategories(categoryService.getCategories());
 
-    Map<String, Set<Transaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
+    Map<String, List<Transaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
 
     for (Transaction transaction : transactionService.getTransactions()) {
       String key = getKey(transaction.getDate());
 
-      monthToTransactionMap.computeIfAbsent(key, k -> new HashSet<>());
+      monthToTransactionMap.computeIfAbsent(key, k -> new ArrayList<>());
 
       monthToTransactionMap.get(key).add(transaction);
     }
@@ -50,7 +49,7 @@ public class ExportController implements ExportApi {
 
     List<Account> accountsStateAtTheEndOfPeriod = copyAccounts(accountService.getAccounts());
 
-    for (Entry<String, Set<Transaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
+    for (Entry<String, List<Transaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
 
       List<Account> accounts = copyAccounts(accountsStateAtTheEndOfPeriod);
 
@@ -70,6 +69,8 @@ public class ExportController implements ExportApi {
           .endDate(LocalDate.parse(transactionsInMonth.getKey()).plusMonths(1).minusDays(1))
           .transactions(transactionsInMonth.getValue())
           .build();
+
+      transactionsInMonth.getValue().sort(Comparator.comparing(Transaction::getDate));
 
       result.getPeriods().add(period);
 
