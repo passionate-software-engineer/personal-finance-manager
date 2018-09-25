@@ -1,144 +1,116 @@
 {
   "initialAccountsState": [
     {
-      "id": 1,
       "name": "kantor Alior - PLN",
       "balance": "0.00"
     },
     {
-      "id": 2,
       "name": "kantor Alior - USD",
       "balance": "85980.00"
     },
     {
-      "id": 3,
       "name": "kantor Alior - EUR",
       "balance": "2617.22"
     },
     {
-      "id": 4,
       "name": "kantor Alior - GBP",
       "balance": "0.00"
     },
     {
-      "id": 5,
       "name": "Idea Bank",
       "balance": "14374.23"
     },
     {
-      "id": 6,
       "name": "IKE",
       "balance": "12789.00"
     },
     {
-      "id": 7,
       "name": "IKZE",
       "balance": "5115.60"
     },
     {
-      "id": 8,
       "name": "Gotówka",
       "balance": "193.42"
     },
     {
-      "id": 9,
       "name": "Gotówka - euro",
       "balance": "84.43"
     },
     {
-      "id": 10,
       "name": "Ania - rozliczenie",
       "balance": "-6411.46"
     },
     {
-      "id": 11,
       "name": "Monika - pożyczka",
       "balance": "0.00"
     },
     {
-      "id": 12,
       "name": "Seba - pożyczka",
       "balance": "0.00"
     },
     {
-      "id": 13,
       "name": "Revolut - PLN",
       "balance": "0.00"
     },
     {
-      "id": 14,
       "name": "mBank",
       "balance": "0.00"
     }
   ],
   "finalAccountsState": [
     {
-      "id": 1,
       "name": "kantor Alior - PLN",
       "balance": "62402.37"
     },
     {
-      "id": 2,
       "name": "kantor Alior - USD",
       "balance": "111362.01"
     },
     {
-      "id": 3,
       "name": "kantor Alior - EUR",
       "balance": "2075.78"
     },
     {
-      "id": 4,
       "name": "kantor Alior - GBP",
       "balance": "0.00"
     },
     {
-      "id": 5,
       "name": "Idea Bank",
       "balance": "6666.41"
     },
     {
-      "id": 6,
       "name": "IKE",
       "balance": "12789.00"
     },
     {
-      "id": 7,
       "name": "IKZE",
       "balance": "5115.60"
     },
     {
-      "id": 8,
       "name": "Gotówka",
       "balance": "121.42"
     },
     {
-      "id": 9,
       "name": "Gotówka - euro",
       "balance": "17.68"
     },
     {
-      "id": 10,
       "name": "Ania - rozliczenie",
       "balance": "-4382.40"
     },
     {
-      "id": 11,
       "name": "Monika - pożyczka",
       "balance": "8400.00"
     },
     {
-      "id": 12,
       "name": "Seba - pożyczka",
       "balance": "20000.00"
     },
     {
-      "id": 13,
       "name": "Revolut - PLN",
       "balance": "3632.50"
     },
     {
-      "id": 14,
       "name": "mBank",
       "balance": "13.50"
     }
@@ -149,144 +121,116 @@
       "endDate": "2018-07-31",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "62402.37"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "104250.75"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2075.78"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "30419.25"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "121.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "17.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4522.40"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "20000.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "3646.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "62402.37"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "111362.01"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2075.78"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "6666.41"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "121.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "17.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4382.40"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "20000.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "3632.50"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "13.50"
         }
@@ -362,144 +306,116 @@
       "endDate": "2018-06-30",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "171960.00"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2330.18"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "17025.78"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "43.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "17.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "1577.43"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "62402.37"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "104250.75"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2075.78"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "30419.25"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "121.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "17.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4522.40"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "20000.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "3646.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
@@ -890,144 +806,116 @@
       "endDate": "2018-05-31",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "154047.54"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "481.88"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "13030.19"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "73.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "21.92"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-3647.56"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "171960.00"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2330.18"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "17025.78"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "43.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "17.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "1577.43"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
@@ -1320,144 +1208,116 @@
       "endDate": "2018-04-30",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "154047.50"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "473.40"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "7740.89"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "73.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "21.92"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "417.61"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "154047.54"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "481.88"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "13030.19"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "73.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "21.92"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-3647.56"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
@@ -1715,144 +1575,116 @@
       "endDate": "2018-03-31",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "128970.00"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2230.37"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "7605.16"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "193.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "82.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4078.95"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "154047.50"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "473.40"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "7740.89"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "73.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "21.92"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "417.61"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
@@ -2117,144 +1949,116 @@
       "endDate": "2018-02-28",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "103892.50"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "764.30"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "547.32"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "193.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "106.00"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4405.67"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "128970.00"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2230.37"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "7605.16"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "193.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "82.68"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4078.95"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "8400.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
@@ -2554,144 +2358,116 @@
       "endDate": "2018-01-31",
       "accountStateAtTheBeginingOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "0.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "85980.00"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "2617.22"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "14374.23"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "193.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "84.43"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-6411.46"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
-          "id": 1,
           "name": "kantor Alior - PLN",
           "balance": "27.00"
         },
         {
-          "id": 2,
           "name": "kantor Alior - USD",
           "balance": "103892.50"
         },
         {
-          "id": 3,
           "name": "kantor Alior - EUR",
           "balance": "764.30"
         },
         {
-          "id": 4,
           "name": "kantor Alior - GBP",
           "balance": "0.00"
         },
         {
-          "id": 5,
           "name": "Idea Bank",
           "balance": "547.32"
         },
         {
-          "id": 6,
           "name": "IKE",
           "balance": "12789.00"
         },
         {
-          "id": 7,
           "name": "IKZE",
           "balance": "5115.60"
         },
         {
-          "id": 8,
           "name": "Gotówka",
           "balance": "193.42"
         },
         {
-          "id": 9,
           "name": "Gotówka - euro",
           "balance": "106.00"
         },
         {
-          "id": 10,
           "name": "Ania - rozliczenie",
           "balance": "-4405.67"
         },
         {
-          "id": 11,
           "name": "Monika - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 12,
           "name": "Seba - pożyczka",
           "balance": "0.00"
         },
         {
-          "id": 13,
           "name": "Revolut - PLN",
           "balance": "0.00"
         },
         {
-          "id": 14,
           "name": "mBank",
           "balance": "0.00"
         }
