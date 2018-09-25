@@ -95,7 +95,7 @@
     {
       "id": 5,
       "name": "Idea Bank",
-      "balance": "30419.25"
+      "balance": "6666.41"
     },
     {
       "id": 6,
@@ -120,7 +120,7 @@
     {
       "id": 10,
       "name": "Ania - rozliczenie",
-      "balance": "-4522.40"
+      "balance": "-4382.40"
     },
     {
       "id": 11,
@@ -135,12 +135,12 @@
     {
       "id": 13,
       "name": "Revolut - PLN",
-      "balance": "3646.00"
+      "balance": "3632.50"
     },
     {
       "id": 14,
       "name": "mBank",
-      "balance": "0.00"
+      "balance": "13.50"
     }
   ],
   "periods": [
@@ -243,7 +243,7 @@
         {
           "id": 5,
           "name": "Idea Bank",
-          "balance": "30419.25"
+          "balance": "6666.41"
         },
         {
           "id": 6,
@@ -268,7 +268,7 @@
         {
           "id": 10,
           "name": "Ania - rozliczenie",
-          "balance": "-4522.40"
+          "balance": "-4382.40"
         },
         {
           "id": 11,
@@ -283,12 +283,12 @@
         {
           "id": 13,
           "name": "Revolut - PLN",
-          "balance": "3646.00"
+          "balance": "3632.50"
         },
         {
           "id": 14,
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "13.50"
         }
       ],
       "transactions": [
@@ -298,6 +298,62 @@
           "accountId": 2,
           "price": "7111.26",
           "date": "2018-07-05"
+        },
+        {
+          "description": "Remont - panele",
+          "categoryId": 26,
+          "accountId": 5,
+          "price": "-280.00",
+          "date": "2018-07-06"
+        },
+        {
+          "description": "Remont - panele",
+          "categoryId": 26,
+          "accountId": 10,
+          "price": "140.00",
+          "date": "2018-07-06"
+        },
+        {
+          "description": "Podatek dochodowy",
+          "categoryId": 34,
+          "accountId": 5,
+          "price": "-17167.00",
+          "date": "2018-07-07"
+        },
+        {
+          "description": "VAT",
+          "categoryId": 35,
+          "accountId": 5,
+          "price": "-5124.00",
+          "date": "2018-07-07"
+        },
+        {
+          "description": "Ksiegowy - doplata",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-18.45",
+          "date": "2018-07-07"
+        },
+        {
+          "description": "ZUS",
+          "categoryId": 32,
+          "accountId": 5,
+          "price": "-1163.39",
+          "date": "2018-07-07"
+        },
+        {
+          "description": "Revolut - test",
+          "categoryId": 11,
+          "accountId": 13,
+          "price": "-13.50",
+          "date": "2018-07-07"
+        },
+        {
+          "description": "Revolut - test",
+          "categoryId": 11,
+          "accountId": 14,
+          "price": "13.50",
+          "date": "2018-07-07"
         }
       ]
     },
