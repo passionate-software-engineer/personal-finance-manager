@@ -41,8 +41,8 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     }
 
     if (isTokenCorrect(requestToken)) {
-      ThreadLocal<Long> userId = new ThreadLocal<>();
-      userId.set(tokenService.getUserIdFromToken(requestToken));
+      Long userIdFromToken = tokenService.getUserIdFromToken(requestToken);
+      request.setAttribute("userId",userIdFromToken);
       return true;
     } else {
       logger.error("Request token is incorrect.");

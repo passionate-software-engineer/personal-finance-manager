@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,21 +34,19 @@ public class CategoryController {
   private CategoryValidator categoryValidator;
   private TokenService tokenService;
 
-  public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, Long userID) {
+  public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, Long userId) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     if (parentCategoryId == null) {
-      return new Category(null, categoryRequest.getName(), null, userID);
+      return new Category(null, categoryRequest.getName(), null, userId);
     }
 
-    return new Category(null, categoryRequest.getName(), new Category(parentCategoryId, null, null, null), userID);
+    return new Category(null, categoryRequest.getName(), new Category(parentCategoryId, null, null, null), userId);
   }
 
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{id}")
-  public ResponseEntity<Category> getCategoryById(@PathVariable long id, @RequestHeader(value = "Authorization") String token) {
-
-    long userId = getUserIdFromToken(token);
+  public ResponseEntity<Category> getCategoryById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
 
     log.info("Retrieving category with id: {}", id);
     Optional<Category> category = categoryService.getCategoryById(id, userId);
@@ -64,8 +62,7 @@ public class CategoryController {
 
   @ApiOperation(value = "Get list of categories", response = Category.class, responseContainer = "List")
   @GetMapping
-  public ResponseEntity<List<Category>> getCategories(@RequestHeader(value = "Authorization") String token) {
-    long userId = getUserIdFromToken(token);
+  public ResponseEntity<List<Category>> getCategories(@RequestAttribute(value = "userId") Long userId) {
 
     log.info("Retrieving categories from database");
     List<Category> categories = categoryService.getCategories(userId);
@@ -75,9 +72,8 @@ public class CategoryController {
 
   @ApiOperation(value = "Create a new category", response = Long.class)
   @PostMapping
-  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestHeader(value = "Authorization") String token) {
+  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") Long userId) {
 
-    long userId = tokenService.getUserIdFromToken(token);
     log.info("Saving category {} to the database", categoryRequest.getName());
     Category category = convertToCategory(categoryRequest, userId);
 
@@ -96,16 +92,14 @@ public class CategoryController {
   @ApiOperation(value = "Update an existing category", response = Void.class)
   @PutMapping(value = "/{id}")
   public ResponseEntity<?> updateCategory(@PathVariable long id, @RequestBody CategoryRequest categoryRequest,
-      @RequestHeader(value = "Authorization") String token) {
-
-    long userId = tokenService.getUserIdFromToken(token);
+      @RequestAttribute(value = "userId") Long userId) {
 
     if (!categoryService.idExist(id)) {
       log.info("No category with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
 
-    Category category = convertToCategory(categoryRequest,userId);
+    Category category = convertToCategory(categoryRequest, userId);
     category.setId(id);
 
     List<String> validationResult = categoryValidator.validateCategoryForUpdate(id, category);
@@ -114,7 +108,7 @@ public class CategoryController {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    categoryService.updateCategory(id, category,userId);
+    categoryService.updateCategory(id, category, userId);
     log.info("Category with id {} was successfully updated", id);
     return ResponseEntity.ok().build();
   }
@@ -122,9 +116,7 @@ public class CategoryController {
   // TODO deleting category used in transaction / filter fails with ugly error
   @ApiOperation(value = "Delete an existing category", response = Void.class)
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<?> deleteCategory(@PathVariable long id, @RequestHeader(value = "Authorization") String token) {
-
-    long userId = tokenService.getUserIdFromToken(token);
+  public ResponseEntity<?> deleteCategory(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
 
     if (!categoryService.getCategoryById(id, userId).isPresent()) {
       log.info("No category with id {} was found, not able to delete", id);
@@ -139,11 +131,6 @@ public class CategoryController {
 
     log.info("Category with id {} was deleted successfully", id);
     return ResponseEntity.ok().build();
-  }
-
-  private long getUserIdFromToken(String token) {
-    long id = tokenService.getUserIdFromToken(token);
-    return id;
   }
 
 }
