@@ -4,7 +4,9 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
-import com.pfm.export.ExportPeriod.ExportTransaction;
+import com.pfm.export.ExportResult.ExportAccount;
+import com.pfm.export.ExportResult.ExportPeriod;
+import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
 import java.time.LocalDate;
@@ -55,16 +57,16 @@ public class ExportController implements ExportApi {
       );
     }
 
-    result.setFinalAccountsState(copyAccounts(accountService.getAccounts()));
+    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts()));
 
-    List<Account> accountsStateAtTheEndOfPeriod = copyAccounts(accountService.getAccounts());
+    List<ExportAccount> accountsStateAtTheEndOfPeriod = convertToExportAccounts(accountService.getAccounts());
 
     for (Entry<String, List<ExportTransaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
 
-      List<Account> accounts = copyAccounts(accountsStateAtTheEndOfPeriod);
+      List<ExportAccount> accounts = copyAccounts(accountsStateAtTheEndOfPeriod);
 
       for (ExportTransaction transaction : transactionsInMonth.getValue()) {
-        for (Account account : accounts) { // TODO replace with faster Hashmap
+        for (ExportAccount account : accounts) { // TODO replace with faster Hashmap
           if (transaction.getAccount().equals(account.getName())) {
             account.setBalance(account.getBalance().subtract(transaction.getPrice()));
             break;
@@ -102,8 +104,13 @@ public class ExportController implements ExportApi {
     }
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
-    for (Account account : inputData.getInitialAccountsState()) {
-      Account savedAccount = accountService.addAccount(account);
+    for (ExportAccount account : inputData.getInitialAccountsState()) {
+      Account accountToSave = Account.builder()
+          .name(account.getName())
+          .balance(account.getBalance())
+          .build();
+
+      Account savedAccount = accountService.addAccount(accountToSave);
       accountNameToIdMap.put(savedAccount.getName(), savedAccount.getId());
     }
 
@@ -120,12 +127,23 @@ public class ExportController implements ExportApi {
         );
       }
     }
+
+    // TODO add checking account state during import based on period start and end balances
   }
 
-  private List<Account> copyAccounts(List<Account> accounts) {
+  private List<ExportAccount> convertToExportAccounts(List<Account> accounts) {
     return accounts.stream()
-        .map(account -> Account.builder()
-            .id(account.getId())
+        .map(account -> ExportAccount.builder()
+            .name(account.getName())
+            .balance(account.getBalance())
+            .build()
+        )
+        .collect(Collectors.toList());
+  }
+
+  private List<ExportAccount> copyAccounts(List<ExportAccount> accounts) {
+    return accounts.stream()
+        .map(account -> ExportAccount.builder()
             .name(account.getName())
             .balance(account.getBalance())
             .build()
