@@ -3,6 +3,7 @@ package com.pfm.export;
 import com.pfm.account.Account;
 import com.pfm.transaction.Transaction;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class ExportPeriod {
   private List<Account> accountStateAtTheBeginingOfPeriod;
   private List<Account> accountStateAtTheEndOfPeriod;
 
-  private Set<Transaction> transactions;
+  private Collection<Transaction> transactions;
 
   // TODO add sum of all money
 }

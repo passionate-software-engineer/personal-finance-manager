@@ -361,12 +361,36 @@
       ],
       "transactions": [
         {
-          "id": 246,
-          "description": "Paliwo - Ania zwrot",
-          "categoryId": 38,
+          "id": 216,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
           "accountId": 10,
-          "price": "147.12",
-          "date": "2018-06-26"
+          "price": "-1577.42",
+          "date": "2018-06-01"
+        },
+        {
+          "id": 217,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "1577.42",
+          "date": "2018-06-01"
+        },
+        {
+          "id": 215,
+          "description": "ZUS - Maj",
+          "categoryId": 32,
+          "accountId": 5,
+          "price": "-1163.39",
+          "date": "2018-06-05"
+        },
+        {
+          "id": 213,
+          "description": "Paliwo",
+          "categoryId": 38,
+          "accountId": 5,
+          "price": "-268.46",
+          "date": "2018-06-06"
         },
         {
           "id": 214,
@@ -385,70 +409,6 @@
           "date": "2018-06-06"
         },
         {
-          "id": 229,
-          "description": "Sluchawki",
-          "categoryId": 31,
-          "accountId": 5,
-          "price": "-530.69",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 251,
-          "description": "Crossover (11-17.06)",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7111.26",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 235,
-          "description": "Domeny",
-          "categoryId": 31,
-          "accountId": 5,
-          "price": "-55.92",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 249,
-          "description": "USD -> PLN",
-          "categoryId": 19,
-          "accountId": 2,
-          "price": "-64073.02",
-          "date": "2018-06-13"
-        },
-        {
-          "id": 216,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-1577.42",
-          "date": "2018-06-01"
-        },
-        {
-          "id": 245,
-          "description": "Paliwo",
-          "categoryId": 38,
-          "accountId": 5,
-          "price": "-294.23",
-          "date": "2018-06-26"
-        },
-        {
-          "id": 239,
-          "description": "Ladowarka USB",
-          "categoryId": 31,
-          "accountId": 5,
-          "price": "-97.60",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 215,
-          "description": "ZUS - Maj",
-          "categoryId": 32,
-          "accountId": 5,
-          "price": "-1163.39",
-          "date": "2018-06-05"
-        },
-        {
           "id": 225,
           "description": "Paliwo - Ania zwrot",
           "categoryId": 38,
@@ -457,172 +417,20 @@
           "date": "2018-06-06"
         },
         {
-          "id": 243,
-          "description": "USD -> PLN",
-          "categoryId": 19,
-          "accountId": 5,
-          "price": "22376.28",
-          "date": "2018-06-13"
-        },
-        {
-          "id": 228,
-          "description": "CT - maj",
-          "categoryId": 28,
-          "accountId": 5,
-          "price": "9724.68",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 227,
-          "description": "Szkolenie - Motopark - 2 stopien",
-          "categoryId": 23,
-          "accountId": 5,
-          "price": "-499.00",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 244,
-          "description": "Nurkowanie - Zakrzowek",
-          "categoryId": 14,
-          "accountId": 3,
-          "price": "-90.00",
-          "date": "2018-06-07"
-        },
-        {
-          "id": 217,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "1577.42",
-          "date": "2018-06-01"
-        },
-        {
-          "id": 233,
-          "description": "Leasing - czerwiec - Ania zwrot",
-          "categoryId": 36,
-          "accountId": 10,
-          "price": "1154.49",
-          "date": "2018-06-26"
-        },
-        {
-          "id": 220,
-          "description": "Ksiazki",
-          "categoryId": 23,
-          "accountId": 5,
-          "price": "-179.52",
-          "date": "2018-06-18"
-        },
-        {
-          "id": 247,
-          "description": "Nozbe",
-          "categoryId": 31,
-          "accountId": 5,
-          "price": "-288.00",
-          "date": "2018-06-26"
-        },
-        {
-          "id": 226,
-          "description": "Księgowy - czerwiec",
-          "categoryId": 33,
-          "accountId": 5,
-          "price": "-123.00",
-          "date": "2018-06-09"
-        },
-        {
-          "id": 218,
-          "description": "Audioteka",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "-19.90",
-          "date": "2018-06-08"
-        },
-        {
-          "id": 222,
-          "description": "Kluczyk do szafki Kinarps",
-          "categoryId": 3,
-          "accountId": 5,
-          "price": "-30.75",
-          "date": "2018-06-18"
-        },
-        {
-          "id": 231,
-          "description": "Crossover (28.05-03.06)",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-06-14"
-        },
-        {
-          "id": 223,
-          "description": "Crossover Lodz Meetup - zwrot za paliwo",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "32.00",
-          "date": "2018-06-18"
-        },
-        {
-          "id": 213,
+          "id": 236,
           "description": "Paliwo",
           "categoryId": 38,
           "accountId": 5,
-          "price": "-268.46",
+          "price": "-311.31",
           "date": "2018-06-06"
         },
         {
-          "id": 232,
-          "description": "Leasing - czerwiec",
-          "categoryId": 36,
-          "accountId": 5,
-          "price": "-2308.97",
-          "date": "2018-06-26"
-        },
-        {
-          "id": 219,
-          "description": "Zawody - bieg 3 kopcow, Cracovia Polmaraton",
-          "categoryId": 16,
-          "accountId": 5,
-          "price": "-100.00",
-          "date": "2018-06-28"
-        },
-        {
-          "id": 221,
-          "description": "Ksiazki - Ania",
-          "categoryId": 23,
+          "id": 237,
+          "description": "Paliwo - Ania zwrot",
+          "categoryId": 38,
           "accountId": 10,
-          "price": "89.76",
-          "date": "2018-06-18"
-        },
-        {
-          "id": 250,
-          "description": "USD -> PLN",
-          "categoryId": 19,
-          "accountId": 1,
-          "price": "67185.34",
-          "date": "2018-06-13"
-        },
-        {
-          "id": 252,
-          "description": "Rozliczenie miesiaca - czerwiec",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "-4146.78",
-          "date": "2018-06-30"
-        },
-        {
-          "id": 241,
-          "description": "Crossover (04-10.06)",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-06-21"
-        },
-        {
-          "id": 248,
-          "description": "Nozbe - Ania zwrot",
-          "categoryId": 31,
-          "accountId": 10,
-          "price": "144.00",
-          "date": "2018-06-26"
+          "price": "155.66",
+          "date": "2018-06-06"
         },
         {
           "id": 240,
@@ -641,20 +449,28 @@
           "date": "2018-06-07"
         },
         {
-          "id": 238,
-          "description": "Szkolenie - KPP",
-          "categoryId": 23,
-          "accountId": 5,
-          "price": "-650.00",
-          "date": "2018-06-28"
+          "id": 244,
+          "description": "Nurkowanie - Zakrzowek",
+          "categoryId": 14,
+          "accountId": 3,
+          "price": "-90.00",
+          "date": "2018-06-07"
         },
         {
-          "id": 236,
-          "description": "Paliwo",
-          "categoryId": 38,
+          "id": 218,
+          "description": "Audioteka",
+          "categoryId": 21,
           "accountId": 5,
-          "price": "-311.31",
-          "date": "2018-06-06"
+          "price": "-19.90",
+          "date": "2018-06-08"
+        },
+        {
+          "id": 226,
+          "description": "Księgowy - czerwiec",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-123.00",
+          "date": "2018-06-09"
         },
         {
           "id": 242,
@@ -665,6 +481,70 @@
           "date": "2018-06-13"
         },
         {
+          "id": 243,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 5,
+          "price": "22376.28",
+          "date": "2018-06-13"
+        },
+        {
+          "id": 249,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 2,
+          "price": "-64073.02",
+          "date": "2018-06-13"
+        },
+        {
+          "id": 250,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 1,
+          "price": "67185.34",
+          "date": "2018-06-13"
+        },
+        {
+          "id": 231,
+          "description": "Crossover (28.05-03.06)",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-06-14"
+        },
+        {
+          "id": 220,
+          "description": "Ksiazki",
+          "categoryId": 23,
+          "accountId": 5,
+          "price": "-179.52",
+          "date": "2018-06-18"
+        },
+        {
+          "id": 221,
+          "description": "Ksiazki - Ania",
+          "categoryId": 23,
+          "accountId": 10,
+          "price": "89.76",
+          "date": "2018-06-18"
+        },
+        {
+          "id": 222,
+          "description": "Kluczyk do szafki Kinarps",
+          "categoryId": 3,
+          "accountId": 5,
+          "price": "-30.75",
+          "date": "2018-06-18"
+        },
+        {
+          "id": 223,
+          "description": "Crossover Lodz Meetup - zwrot za paliwo",
+          "categoryId": 21,
+          "accountId": 5,
+          "price": "32.00",
+          "date": "2018-06-18"
+        },
+        {
           "id": 234,
           "description": "Telefon",
           "categoryId": 22,
@@ -673,12 +553,132 @@
           "date": "2018-06-18"
         },
         {
-          "id": 237,
+          "id": 241,
+          "description": "Crossover (04-10.06)",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-06-21"
+        },
+        {
+          "id": 232,
+          "description": "Leasing - czerwiec",
+          "categoryId": 36,
+          "accountId": 5,
+          "price": "-2308.97",
+          "date": "2018-06-26"
+        },
+        {
+          "id": 233,
+          "description": "Leasing - czerwiec - Ania zwrot",
+          "categoryId": 36,
+          "accountId": 10,
+          "price": "1154.49",
+          "date": "2018-06-26"
+        },
+        {
+          "id": 245,
+          "description": "Paliwo",
+          "categoryId": 38,
+          "accountId": 5,
+          "price": "-294.23",
+          "date": "2018-06-26"
+        },
+        {
+          "id": 246,
           "description": "Paliwo - Ania zwrot",
           "categoryId": 38,
           "accountId": 10,
-          "price": "155.66",
-          "date": "2018-06-06"
+          "price": "147.12",
+          "date": "2018-06-26"
+        },
+        {
+          "id": 247,
+          "description": "Nozbe",
+          "categoryId": 31,
+          "accountId": 5,
+          "price": "-288.00",
+          "date": "2018-06-26"
+        },
+        {
+          "id": 248,
+          "description": "Nozbe - Ania zwrot",
+          "categoryId": 31,
+          "accountId": 10,
+          "price": "144.00",
+          "date": "2018-06-26"
+        },
+        {
+          "id": 219,
+          "description": "Zawody - bieg 3 kopcow, Cracovia Polmaraton",
+          "categoryId": 16,
+          "accountId": 5,
+          "price": "-100.00",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 227,
+          "description": "Szkolenie - Motopark - 2 stopien",
+          "categoryId": 23,
+          "accountId": 5,
+          "price": "-499.00",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 228,
+          "description": "CT - maj",
+          "categoryId": 28,
+          "accountId": 5,
+          "price": "9724.68",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 229,
+          "description": "Sluchawki",
+          "categoryId": 31,
+          "accountId": 5,
+          "price": "-530.69",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 235,
+          "description": "Domeny",
+          "categoryId": 31,
+          "accountId": 5,
+          "price": "-55.92",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 238,
+          "description": "Szkolenie - KPP",
+          "categoryId": 23,
+          "accountId": 5,
+          "price": "-650.00",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 239,
+          "description": "Ladowarka USB",
+          "categoryId": 31,
+          "accountId": 5,
+          "price": "-97.60",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 251,
+          "description": "Crossover (11-17.06)",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7111.26",
+          "date": "2018-06-28"
+        },
+        {
+          "id": 252,
+          "description": "Rozliczenie miesiaca - czerwiec",
+          "categoryId": 21,
+          "accountId": 10,
+          "price": "-4146.78",
+          "date": "2018-06-30"
         }
       ]
     },
@@ -801,164 +801,12 @@
       ],
       "transactions": [
         {
-          "id": 196,
-          "description": "Egipt - paliwo, parking, jedzenie - Ania zwrot",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "162.69",
-          "date": "2018-05-15"
-        },
-        {
-          "id": 185,
-          "description": "Egipt - Euro",
-          "categoryId": 21,
-          "accountId": 3,
-          "price": "-3392.00",
-          "date": "2018-05-09"
-        },
-        {
-          "id": 202,
-          "description": "Rozliczenie miesiaca - maj",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "-4050.15",
-          "date": "2018-05-15"
-        },
-        {
-          "id": 180,
-          "description": "Balkony - zaliczka",
-          "categoryId": 26,
-          "accountId": 10,
-          "price": "2840.00",
-          "date": "2018-05-26"
-        },
-        {
-          "id": 178,
-          "description": "USD -> PLN",
-          "categoryId": 19,
+          "id": 181,
+          "description": "ZUS - Maj",
+          "categoryId": 32,
           "accountId": 5,
-          "price": "12450.55",
-          "date": "2018-05-13"
-        },
-        {
-          "id": 197,
-          "description": "Jedzenie dla kota",
-          "categoryId": 24,
-          "accountId": 10,
-          "price": "109.44",
-          "date": "2018-05-15"
-        },
-        {
-          "id": 201,
-          "description": "Crossover 14-20.05",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-05-31"
-        },
-        {
-          "id": 183,
-          "description": "Księgowy - Maj",
-          "categoryId": 33,
-          "accountId": 5,
-          "price": "-132.23",
-          "date": "2018-05-09"
-        },
-        {
-          "id": 193,
-          "description": "Leasing - maj",
-          "categoryId": 36,
-          "accountId": 5,
-          "price": "-2308.97",
-          "date": "2018-05-26"
-        },
-        {
-          "id": 211,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 9,
-          "price": "-4.24",
-          "date": "2018-05-30"
-        },
-        {
-          "id": 187,
-          "description": "Badania i leki",
-          "categoryId": 15,
-          "accountId": 5,
-          "price": "-107.00",
-          "date": "2018-05-19"
-        },
-        {
-          "id": 176,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 3,
-          "price": "5290.75",
-          "date": "2018-05-13"
-        },
-        {
-          "id": 206,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-63.87",
-          "date": "2018-05-30"
-        },
-        {
-          "id": 177,
-          "description": "USD -> PLN",
-          "categoryId": 19,
-          "accountId": 2,
-          "price": "-12602.66",
-          "date": "2018-05-13"
-        },
-        {
-          "id": 195,
-          "description": "Egipt - paliwo, parking, jedzenie",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "-441.09",
-          "date": "2018-05-15"
-        },
-        {
-          "id": 200,
-          "description": "Crossover 07-13.05",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-05-24"
-        },
-        {
-          "id": 199,
-          "description": "CT - licencja - kurs Java",
-          "categoryId": 29,
-          "accountId": 5,
-          "price": "1633.44",
-          "date": "2018-05-15"
-        },
-        {
-          "id": 205,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 2,
-          "price": "63.87",
-          "date": "2018-05-30"
-        },
-        {
-          "id": 174,
-          "description": "Fryzjer",
-          "categoryId": 15,
-          "accountId": 8,
-          "price": "33.00",
-          "date": "2018-05-09"
-        },
-        {
-          "id": 179,
-          "description": "Balkony - zaliczka",
-          "categoryId": 26,
-          "accountId": 5,
-          "price": "-5680.00",
-          "date": "2018-05-26"
+          "price": "-1163.39",
+          "date": "2018-05-05"
         },
         {
           "id": 182,
@@ -969,38 +817,6 @@
           "date": "2018-05-08"
         },
         {
-          "id": 208,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-640.81",
-          "date": "2018-05-30"
-        },
-        {
-          "id": 188,
-          "description": "Decathlon - zele energetyczne itp",
-          "categoryId": 16,
-          "accountId": 5,
-          "price": "-129.97",
-          "date": "2018-05-28"
-        },
-        {
-          "id": 181,
-          "description": "ZUS - Maj",
-          "categoryId": 32,
-          "accountId": 5,
-          "price": "-1163.39",
-          "date": "2018-05-05"
-        },
-        {
-          "id": 189,
-          "description": "Okna - zaliczka",
-          "categoryId": 26,
-          "accountId": 5,
-          "price": "-13500.00",
-          "date": "2018-05-26"
-        },
-        {
           "id": 173,
           "description": "Crossover 16-22.04",
           "categoryId": 27,
@@ -1009,11 +825,139 @@
           "date": "2018-05-09"
         },
         {
+          "id": 174,
+          "description": "Fryzjer",
+          "categoryId": 15,
+          "accountId": 8,
+          "price": "33.00",
+          "date": "2018-05-09"
+        },
+        {
+          "id": 183,
+          "description": "Księgowy - Maj",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-132.23",
+          "date": "2018-05-09"
+        },
+        {
+          "id": 184,
+          "description": "Crossover 23-29.04",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-05-09"
+        },
+        {
+          "id": 185,
+          "description": "Egipt - Euro",
+          "categoryId": 21,
+          "accountId": 3,
+          "price": "-3392.00",
+          "date": "2018-05-09"
+        },
+        {
+          "id": 203,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 3,
+          "price": "-50.45",
+          "date": "2018-05-10"
+        },
+        {
+          "id": 204,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "50.45",
+          "date": "2018-05-10"
+        },
+        {
+          "id": 175,
+          "description": "USD -> EUR",
+          "categoryId": 19,
+          "accountId": 2,
+          "price": "-5373.75",
+          "date": "2018-05-13"
+        },
+        {
+          "id": 176,
+          "description": "USD -> EUR",
+          "categoryId": 19,
+          "accountId": 3,
+          "price": "5290.75",
+          "date": "2018-05-13"
+        },
+        {
+          "id": 177,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 2,
+          "price": "-12602.66",
+          "date": "2018-05-13"
+        },
+        {
+          "id": 178,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 5,
+          "price": "12450.55",
+          "date": "2018-05-13"
+        },
+        {
           "id": 192,
           "description": "Klub wysokogorski - skladka",
           "categoryId": 21,
           "accountId": 5,
           "price": "-100.00",
+          "date": "2018-05-15"
+        },
+        {
+          "id": 195,
+          "description": "Egipt - paliwo, parking, jedzenie",
+          "categoryId": 21,
+          "accountId": 5,
+          "price": "-441.09",
+          "date": "2018-05-15"
+        },
+        {
+          "id": 196,
+          "description": "Egipt - paliwo, parking, jedzenie - Ania zwrot",
+          "categoryId": 21,
+          "accountId": 10,
+          "price": "162.69",
+          "date": "2018-05-15"
+        },
+        {
+          "id": 197,
+          "description": "Jedzenie dla kota",
+          "categoryId": 24,
+          "accountId": 10,
+          "price": "109.44",
+          "date": "2018-05-15"
+        },
+        {
+          "id": 198,
+          "description": "Jedzenie dla kota",
+          "categoryId": 24,
+          "accountId": 5,
+          "price": "-109.44",
+          "date": "2018-05-15"
+        },
+        {
+          "id": 199,
+          "description": "CT - licencja - kurs Java",
+          "categoryId": 29,
+          "accountId": 5,
+          "price": "1633.44",
+          "date": "2018-05-15"
+        },
+        {
+          "id": 202,
+          "description": "Rozliczenie miesiaca - maj",
+          "categoryId": 21,
+          "accountId": 10,
+          "price": "-4050.15",
           "date": "2018-05-15"
         },
         {
@@ -1025,12 +969,100 @@
           "date": "2018-05-17"
         },
         {
-          "id": 198,
-          "description": "Jedzenie dla kota",
-          "categoryId": 24,
+          "id": 194,
+          "description": "Telefon",
+          "categoryId": 22,
           "accountId": 5,
-          "price": "-109.44",
-          "date": "2018-05-15"
+          "price": "-19.72",
+          "date": "2018-05-18"
+        },
+        {
+          "id": 187,
+          "description": "Badania i leki",
+          "categoryId": 15,
+          "accountId": 5,
+          "price": "-107.00",
+          "date": "2018-05-19"
+        },
+        {
+          "id": 200,
+          "description": "Crossover 07-13.05",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-05-24"
+        },
+        {
+          "id": 179,
+          "description": "Balkony - zaliczka",
+          "categoryId": 26,
+          "accountId": 5,
+          "price": "-5680.00",
+          "date": "2018-05-26"
+        },
+        {
+          "id": 180,
+          "description": "Balkony - zaliczka",
+          "categoryId": 26,
+          "accountId": 10,
+          "price": "2840.00",
+          "date": "2018-05-26"
+        },
+        {
+          "id": 189,
+          "description": "Okna - zaliczka",
+          "categoryId": 26,
+          "accountId": 5,
+          "price": "-13500.00",
+          "date": "2018-05-26"
+        },
+        {
+          "id": 190,
+          "description": "Okna - zaliczka",
+          "categoryId": 26,
+          "accountId": 10,
+          "price": "6750.00",
+          "date": "2018-05-26"
+        },
+        {
+          "id": 193,
+          "description": "Leasing - maj",
+          "categoryId": 36,
+          "accountId": 5,
+          "price": "-2308.97",
+          "date": "2018-05-26"
+        },
+        {
+          "id": 186,
+          "description": "CT - kwiecien",
+          "categoryId": 28,
+          "accountId": 5,
+          "price": "12982.50",
+          "date": "2018-05-28"
+        },
+        {
+          "id": 188,
+          "description": "Decathlon - zele energetyczne itp",
+          "categoryId": 16,
+          "accountId": 5,
+          "price": "-129.97",
+          "date": "2018-05-28"
+        },
+        {
+          "id": 205,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 2,
+          "price": "63.87",
+          "date": "2018-05-30"
+        },
+        {
+          "id": 206,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-63.87",
+          "date": "2018-05-30"
         },
         {
           "id": 207,
@@ -1038,6 +1070,22 @@
           "categoryId": 11,
           "accountId": 5,
           "price": "640.81",
+          "date": "2018-05-30"
+        },
+        {
+          "id": 208,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-640.81",
+          "date": "2018-05-30"
+        },
+        {
+          "id": 209,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 8,
+          "price": "-63.00",
           "date": "2018-05-30"
         },
         {
@@ -1049,28 +1097,12 @@
           "date": "2018-05-30"
         },
         {
-          "id": 175,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 2,
-          "price": "-5373.75",
-          "date": "2018-05-13"
-        },
-        {
-          "id": 203,
+          "id": 211,
           "description": "Przelew Ania PLN",
           "categoryId": 11,
-          "accountId": 3,
-          "price": "-50.45",
-          "date": "2018-05-10"
-        },
-        {
-          "id": 190,
-          "description": "Okna - zaliczka",
-          "categoryId": 26,
-          "accountId": 10,
-          "price": "6750.00",
-          "date": "2018-05-26"
+          "accountId": 9,
+          "price": "-4.24",
+          "date": "2018-05-30"
         },
         {
           "id": 212,
@@ -1081,44 +1113,12 @@
           "date": "2018-05-30"
         },
         {
-          "id": 186,
-          "description": "CT - kwiecien",
-          "categoryId": 28,
-          "accountId": 5,
-          "price": "12982.50",
-          "date": "2018-05-28"
-        },
-        {
-          "id": 194,
-          "description": "Telefon",
-          "categoryId": 22,
-          "accountId": 5,
-          "price": "-19.72",
-          "date": "2018-05-18"
-        },
-        {
-          "id": 204,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "50.45",
-          "date": "2018-05-10"
-        },
-        {
-          "id": 209,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 8,
-          "price": "-63.00",
-          "date": "2018-05-30"
-        },
-        {
-          "id": 184,
-          "description": "Crossover 23-29.04",
+          "id": 201,
+          "description": "Crossover 14-20.05",
           "categoryId": 27,
           "accountId": 2,
           "price": "7165.00",
-          "date": "2018-05-09"
+          "date": "2018-05-31"
         }
       ]
     },
@@ -1241,36 +1241,12 @@
       ],
       "transactions": [
         {
-          "id": 170,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
+          "id": 139,
+          "description": "Idea Bank Premia",
+          "categoryId": 30,
           "accountId": 5,
-          "price": "-200.38",
-          "date": "2018-04-10"
-        },
-        {
-          "id": 167,
-          "description": "Crossover 09.04-15.04",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-04-26"
-        },
-        {
-          "id": 169,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 3,
-          "price": "200.38",
-          "date": "2018-04-10"
-        },
-        {
-          "id": 172,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "1174.50",
-          "date": "2018-04-30"
+          "price": "50.00",
+          "date": "2018-04-04"
         },
         {
           "id": 140,
@@ -1281,12 +1257,140 @@
           "date": "2018-04-04"
         },
         {
-          "id": 153,
-          "description": "Paliwo - Ania zwrot",
-          "categoryId": 38,
+          "id": 143,
+          "description": "ZUS - marzec",
+          "categoryId": 32,
+          "accountId": 5,
+          "price": "-504.66",
+          "date": "2018-04-05"
+        },
+        {
+          "id": 145,
+          "description": "Zakupy",
+          "categoryId": 24,
+          "accountId": 3,
+          "price": "-191.90",
+          "date": "2018-04-06"
+        },
+        {
+          "id": 146,
+          "description": "Zakupy - Ania zwrot",
+          "categoryId": 24,
           "accountId": 10,
-          "price": "143.16",
-          "date": "2018-04-16"
+          "price": "105.90",
+          "date": "2018-04-06"
+        },
+        {
+          "id": 144,
+          "description": "Audioteka",
+          "categoryId": 21,
+          "accountId": 5,
+          "price": "-19.90",
+          "date": "2018-04-08"
+        },
+        {
+          "id": 138,
+          "description": "Księgowy - Kwiecien",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-123.00",
+          "date": "2018-04-09"
+        },
+        {
+          "id": 147,
+          "description": "Bilety Warszawa",
+          "categoryId": 18,
+          "accountId": 5,
+          "price": "-289.00",
+          "date": "2018-04-10"
+        },
+        {
+          "id": 154,
+          "description": "Bilety Warszawa - nowe",
+          "categoryId": 18,
+          "accountId": 5,
+          "price": "-135.00",
+          "date": "2018-04-10"
+        },
+        {
+          "id": 155,
+          "description": "Bilety Warszawa - zwroty",
+          "categoryId": 18,
+          "accountId": 5,
+          "price": "360.40",
+          "date": "2018-04-10"
+        },
+        {
+          "id": 169,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 3,
+          "price": "200.38",
+          "date": "2018-04-10"
+        },
+        {
+          "id": 170,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "-200.38",
+          "date": "2018-04-10"
+        },
+        {
+          "id": 151,
+          "description": "Crossover 26.03-1.04",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-04-12"
+        },
+        {
+          "id": 148,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 2,
+          "price": "-28659.96",
+          "date": "2018-04-13"
+        },
+        {
+          "id": 149,
+          "description": "USD -> PLN",
+          "categoryId": 19,
+          "accountId": 5,
+          "price": "27279.68",
+          "date": "2018-04-13"
+        },
+        {
+          "id": 141,
+          "description": "Podatek dochodowy Q1 2018",
+          "categoryId": 34,
+          "accountId": 5,
+          "price": "-21369.00",
+          "date": "2018-04-15"
+        },
+        {
+          "id": 142,
+          "description": "VAT Q1 2018",
+          "categoryId": 35,
+          "accountId": 5,
+          "price": "-7320.00",
+          "date": "2018-04-15"
+        },
+        {
+          "id": 150,
+          "description": "CT - marzec",
+          "categoryId": 28,
+          "accountId": 5,
+          "price": "11433.00",
+          "date": "2018-04-15"
+        },
+        {
+          "id": 168,
+          "description": "Rozliczenie miesiaca - marzec",
+          "categoryId": 21,
+          "accountId": 10,
+          "price": "-5183.40",
+          "date": "2018-04-15"
         },
         {
           "id": 152,
@@ -1295,6 +1399,70 @@
           "accountId": 5,
           "price": "-286.32",
           "date": "2018-04-16"
+        },
+        {
+          "id": 153,
+          "description": "Paliwo - Ania zwrot",
+          "categoryId": 38,
+          "accountId": 10,
+          "price": "143.16",
+          "date": "2018-04-16"
+        },
+        {
+          "id": 158,
+          "description": "Telefon",
+          "categoryId": 22,
+          "accountId": 5,
+          "price": "-19.89",
+          "date": "2018-04-18"
+        },
+        {
+          "id": 159,
+          "description": "Ksiazki",
+          "categoryId": 23,
+          "accountId": 5,
+          "price": "-89.80",
+          "date": "2018-04-18"
+        },
+        {
+          "id": 162,
+          "description": "Crossover 02.04-08.04",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-04-19"
+        },
+        {
+          "id": 160,
+          "description": "Wizualizacja projektu",
+          "categoryId": 26,
+          "accountId": 5,
+          "price": "-1500.00",
+          "date": "2018-04-25"
+        },
+        {
+          "id": 161,
+          "description": "Wizualizacja projektu",
+          "categoryId": 26,
+          "accountId": 10,
+          "price": "750.00",
+          "date": "2018-04-25"
+        },
+        {
+          "id": 156,
+          "description": "Leasing - kwiecien",
+          "categoryId": 36,
+          "accountId": 5,
+          "price": "-2308.97",
+          "date": "2018-04-26"
+        },
+        {
+          "id": 157,
+          "description": "Leasing - kwiecien - Ania zwrot",
+          "categoryId": 36,
+          "accountId": 10,
+          "price": "1154.49",
+          "date": "2018-04-26"
         },
         {
           "id": 163,
@@ -1313,92 +1481,20 @@
           "date": "2018-04-26"
         },
         {
-          "id": 138,
-          "description": "Księgowy - Kwiecien",
-          "categoryId": 33,
+          "id": 165,
+          "description": "Bieg po puszczy",
+          "categoryId": 16,
           "accountId": 5,
-          "price": "-123.00",
-          "date": "2018-04-09"
-        },
-        {
-          "id": 139,
-          "description": "Idea Bank Premia",
-          "categoryId": 30,
-          "accountId": 5,
-          "price": "50.00",
-          "date": "2018-04-04"
-        },
-        {
-          "id": 154,
-          "description": "Bilety Warszawa - nowe",
-          "categoryId": 18,
-          "accountId": 5,
-          "price": "-135.00",
-          "date": "2018-04-10"
-        },
-        {
-          "id": 159,
-          "description": "Ksiazki",
-          "categoryId": 23,
-          "accountId": 5,
-          "price": "-89.80",
-          "date": "2018-04-18"
-        },
-        {
-          "id": 156,
-          "description": "Leasing - kwiecien",
-          "categoryId": 36,
-          "accountId": 5,
-          "price": "-2308.97",
+          "price": "-65.00",
           "date": "2018-04-26"
         },
         {
-          "id": 155,
-          "description": "Bilety Warszawa - zwroty",
-          "categoryId": 18,
-          "accountId": 5,
-          "price": "360.40",
-          "date": "2018-04-10"
-        },
-        {
-          "id": 162,
-          "description": "Crossover 02.04-08.04",
+          "id": 167,
+          "description": "Crossover 09.04-15.04",
           "categoryId": 27,
           "accountId": 2,
           "price": "7165.00",
-          "date": "2018-04-19"
-        },
-        {
-          "id": 158,
-          "description": "Telefon",
-          "categoryId": 22,
-          "accountId": 5,
-          "price": "-19.89",
-          "date": "2018-04-18"
-        },
-        {
-          "id": 157,
-          "description": "Leasing - kwiecien - Ania zwrot",
-          "categoryId": 36,
-          "accountId": 10,
-          "price": "1154.49",
           "date": "2018-04-26"
-        },
-        {
-          "id": 149,
-          "description": "USD -> PLN",
-          "categoryId": 19,
-          "accountId": 5,
-          "price": "27279.68",
-          "date": "2018-04-13"
-        },
-        {
-          "id": 148,
-          "description": "USD -> PLN",
-          "categoryId": 19,
-          "accountId": 2,
-          "price": "-28659.96",
-          "date": "2018-04-13"
         },
         {
           "id": 166,
@@ -1409,115 +1505,19 @@
           "date": "2018-04-28"
         },
         {
-          "id": 142,
-          "description": "VAT Q1 2018",
-          "categoryId": 35,
-          "accountId": 5,
-          "price": "-7320.00",
-          "date": "2018-04-15"
-        },
-        {
-          "id": 143,
-          "description": "ZUS - marzec",
-          "categoryId": 32,
-          "accountId": 5,
-          "price": "-504.66",
-          "date": "2018-04-05"
-        },
-        {
-          "id": 147,
-          "description": "Bilety Warszawa",
-          "categoryId": 18,
-          "accountId": 5,
-          "price": "-289.00",
-          "date": "2018-04-10"
-        },
-        {
-          "id": 151,
-          "description": "Crossover 26.03-1.04",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-04-12"
-        },
-        {
-          "id": 168,
-          "description": "Rozliczenie miesiaca - marzec",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "-5183.40",
-          "date": "2018-04-15"
-        },
-        {
-          "id": 146,
-          "description": "Zakupy - Ania zwrot",
-          "categoryId": 24,
-          "accountId": 10,
-          "price": "105.90",
-          "date": "2018-04-06"
-        },
-        {
-          "id": 161,
-          "description": "Wizualizacja projektu",
-          "categoryId": 26,
-          "accountId": 10,
-          "price": "750.00",
-          "date": "2018-04-25"
-        },
-        {
-          "id": 165,
-          "description": "Bieg po puszczy",
-          "categoryId": 16,
-          "accountId": 5,
-          "price": "-65.00",
-          "date": "2018-04-26"
-        },
-        {
-          "id": 144,
-          "description": "Audioteka",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "-19.90",
-          "date": "2018-04-08"
-        },
-        {
-          "id": 160,
-          "description": "Wizualizacja projektu",
-          "categoryId": 26,
-          "accountId": 5,
-          "price": "-1500.00",
-          "date": "2018-04-25"
-        },
-        {
-          "id": 145,
-          "description": "Zakupy",
-          "categoryId": 24,
-          "accountId": 3,
-          "price": "-191.90",
-          "date": "2018-04-06"
-        },
-        {
-          "id": 141,
-          "description": "Podatek dochodowy Q1 2018",
-          "categoryId": 34,
-          "accountId": 5,
-          "price": "-21369.00",
-          "date": "2018-04-15"
-        },
-        {
-          "id": 150,
-          "description": "CT - marzec",
-          "categoryId": 28,
-          "accountId": 5,
-          "price": "11433.00",
-          "date": "2018-04-15"
-        },
-        {
           "id": 171,
           "description": "Przelew Ania PLN",
           "categoryId": 11,
           "accountId": 10,
           "price": "-1174.50",
+          "date": "2018-04-30"
+        },
+        {
+          "id": 172,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "1174.50",
           "date": "2018-04-30"
         }
       ]
@@ -1641,124 +1641,12 @@
       ],
       "transactions": [
         {
-          "id": 105,
-          "description": "Audioteka",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "-19.90",
-          "date": "2018-03-08"
-        },
-        {
-          "id": 136,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 9,
-          "price": "-60.76",
-          "date": "2018-03-25"
-        },
-        {
-          "id": 106,
-          "description": "Zwrot podatku (IKZE)",
-          "categoryId": 34,
-          "accountId": 5,
-          "price": "972.00",
-          "date": "2018-03-08"
-        },
-        {
-          "id": 113,
-          "description": "Paliwo, promy itp",
-          "categoryId": 21,
-          "accountId": 3,
-          "price": "-4031.18",
-          "date": "2018-03-15"
-        },
-        {
-          "id": 121,
-          "description": "Księgowy - rozliczenie drugi PIT",
-          "categoryId": 33,
-          "accountId": 5,
-          "price": "-61.50",
-          "date": "2018-03-19"
-        },
-        {
-          "id": 123,
-          "description": "Crossover 12-18.03",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-03-29"
-        },
-        {
-          "id": 127,
-          "description": "Projekt przebudowy domu",
-          "categoryId": 26,
-          "accountId": 5,
-          "price": "-9500.00",
-          "date": "2018-03-25"
-        },
-        {
           "id": 102,
           "description": "Idea Bank Premia",
           "categoryId": 30,
           "accountId": 5,
           "price": "30.00",
           "date": "2018-03-04"
-        },
-        {
-          "id": 109,
-          "description": "CT - luty",
-          "categoryId": 28,
-          "accountId": 5,
-          "price": "14041.20",
-          "date": "2018-03-15"
-        },
-        {
-          "id": 112,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 3,
-          "price": "3460.07",
-          "date": "2018-03-07"
-        },
-        {
-          "id": 124,
-          "description": "kominiarz",
-          "categoryId": 3,
-          "accountId": 8,
-          "price": "-120.00",
-          "date": "2018-03-25"
-        },
-        {
-          "id": 134,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "-363.29",
-          "date": "2018-03-25"
-        },
-        {
-          "id": 103,
-          "description": "Księgowy - marzec",
-          "categoryId": 33,
-          "accountId": 5,
-          "price": "-123.00",
-          "date": "2018-03-09"
-        },
-        {
-          "id": 132,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 3,
-          "price": "1442.26",
-          "date": "2018-03-25"
-        },
-        {
-          "id": 130,
-          "description": "Decathlon - zele energetyczne itp",
-          "categoryId": 16,
-          "accountId": 5,
-          "price": "-150.00",
-          "date": "2018-03-28"
         },
         {
           "id": 104,
@@ -1777,30 +1665,6 @@
           "date": "2018-03-06"
         },
         {
-          "id": 117,
-          "description": "Telefon",
-          "categoryId": 22,
-          "accountId": 5,
-          "price": "-24.31",
-          "date": "2018-03-18"
-        },
-        {
-          "id": 133,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-1442.26",
-          "date": "2018-03-25"
-        },
-        {
-          "id": 128,
-          "description": "Projekt przebudowy domu",
-          "categoryId": 26,
-          "accountId": 10,
-          "price": "4750.00",
-          "date": "2018-03-25"
-        },
-        {
           "id": 116,
           "description": "Jedzenie - Ania zwrot",
           "categoryId": 25,
@@ -1809,12 +1673,36 @@
           "date": "2018-03-06"
         },
         {
-          "id": 118,
-          "description": "Crossover 16.02-04.03",
-          "categoryId": 27,
+          "id": 111,
+          "description": "USD -> EUR",
+          "categoryId": 19,
           "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-03-15"
+          "price": "-3582.50",
+          "date": "2018-03-07"
+        },
+        {
+          "id": 112,
+          "description": "USD -> EUR",
+          "categoryId": 19,
+          "accountId": 3,
+          "price": "3460.07",
+          "date": "2018-03-07"
+        },
+        {
+          "id": 105,
+          "description": "Audioteka",
+          "categoryId": 21,
+          "accountId": 5,
+          "price": "-19.90",
+          "date": "2018-03-08"
+        },
+        {
+          "id": 106,
+          "description": "Zwrot podatku (IKZE)",
+          "categoryId": 34,
+          "accountId": 5,
+          "price": "972.00",
+          "date": "2018-03-08"
         },
         {
           "id": 110,
@@ -1825,6 +1713,30 @@
           "date": "2018-03-08"
         },
         {
+          "id": 103,
+          "description": "Księgowy - marzec",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-123.00",
+          "date": "2018-03-09"
+        },
+        {
+          "id": 109,
+          "description": "CT - luty",
+          "categoryId": 28,
+          "accountId": 5,
+          "price": "14041.20",
+          "date": "2018-03-15"
+        },
+        {
+          "id": 113,
+          "description": "Paliwo, promy itp",
+          "categoryId": 21,
+          "accountId": 3,
+          "price": "-4031.18",
+          "date": "2018-03-15"
+        },
+        {
           "id": 114,
           "description": "Paliwo, promy itp",
           "categoryId": 21,
@@ -1833,11 +1745,11 @@
           "date": "2018-03-15"
         },
         {
-          "id": 120,
-          "description": "zakupy, paliwo itp",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "1257.06",
+          "id": 118,
+          "description": "Crossover 16.02-04.03",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
           "date": "2018-03-15"
         },
         {
@@ -1849,12 +1761,12 @@
           "date": "2018-03-15"
         },
         {
-          "id": 126,
-          "description": "Safari Egipt zaliczka",
+          "id": 120,
+          "description": "zakupy, paliwo itp",
           "categoryId": 21,
-          "accountId": 5,
-          "price": "-1660.00",
-          "date": "2018-03-28"
+          "accountId": 10,
+          "price": "1257.06",
+          "date": "2018-03-15"
         },
         {
           "id": 131,
@@ -1865,20 +1777,12 @@
           "date": "2018-03-15"
         },
         {
-          "id": 125,
-          "description": "kominiarz",
-          "categoryId": 3,
-          "accountId": 10,
-          "price": "60.00",
-          "date": "2018-03-25"
-        },
-        {
-          "id": 122,
-          "description": "Crossover 05-11.03",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-03-22"
+          "id": 107,
+          "description": "Leasing - marzec",
+          "categoryId": 36,
+          "accountId": 5,
+          "price": "-2308.97",
+          "date": "2018-03-16"
         },
         {
           "id": 108,
@@ -1889,12 +1793,100 @@
           "date": "2018-03-16"
         },
         {
-          "id": 129,
-          "description": "Kabel HDMI",
-          "categoryId": 31,
+          "id": 117,
+          "description": "Telefon",
+          "categoryId": 22,
           "accountId": 5,
-          "price": "-191.84",
-          "date": "2018-03-28"
+          "price": "-24.31",
+          "date": "2018-03-18"
+        },
+        {
+          "id": 121,
+          "description": "Księgowy - rozliczenie drugi PIT",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-61.50",
+          "date": "2018-03-19"
+        },
+        {
+          "id": 122,
+          "description": "Crossover 05-11.03",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-03-22"
+        },
+        {
+          "id": 124,
+          "description": "kominiarz",
+          "categoryId": 3,
+          "accountId": 8,
+          "price": "-120.00",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 125,
+          "description": "kominiarz",
+          "categoryId": 3,
+          "accountId": 10,
+          "price": "60.00",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 127,
+          "description": "Projekt przebudowy domu",
+          "categoryId": 26,
+          "accountId": 5,
+          "price": "-9500.00",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 128,
+          "description": "Projekt przebudowy domu",
+          "categoryId": 26,
+          "accountId": 10,
+          "price": "4750.00",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 132,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 3,
+          "price": "1442.26",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 133,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-1442.26",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 134,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "-363.29",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 135,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "363.29",
+          "date": "2018-03-25"
+        },
+        {
+          "id": 136,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 9,
+          "price": "-60.76",
+          "date": "2018-03-25"
         },
         {
           "id": 137,
@@ -1905,28 +1897,36 @@
           "date": "2018-03-25"
         },
         {
-          "id": 107,
-          "description": "Leasing - marzec",
-          "categoryId": 36,
+          "id": 126,
+          "description": "Safari Egipt zaliczka",
+          "categoryId": 21,
           "accountId": 5,
-          "price": "-2308.97",
-          "date": "2018-03-16"
+          "price": "-1660.00",
+          "date": "2018-03-28"
         },
         {
-          "id": 111,
-          "description": "USD -> EUR",
-          "categoryId": 19,
+          "id": 129,
+          "description": "Kabel HDMI",
+          "categoryId": 31,
+          "accountId": 5,
+          "price": "-191.84",
+          "date": "2018-03-28"
+        },
+        {
+          "id": 130,
+          "description": "Decathlon - zele energetyczne itp",
+          "categoryId": 16,
+          "accountId": 5,
+          "price": "-150.00",
+          "date": "2018-03-28"
+        },
+        {
+          "id": 123,
+          "description": "Crossover 12-18.03",
+          "categoryId": 27,
           "accountId": 2,
-          "price": "-3582.50",
-          "date": "2018-03-07"
-        },
-        {
-          "id": 135,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "363.29",
-          "date": "2018-03-25"
+          "price": "7165.00",
+          "date": "2018-03-29"
         }
       ]
     },
@@ -2049,52 +2049,12 @@
       ],
       "transactions": [
         {
-          "id": 90,
-          "description": "paliwo noclegi itp",
-          "categoryId": 21,
+          "id": 61,
+          "description": "Zakupy",
+          "categoryId": 25,
           "accountId": 3,
-          "price": "-2336.79",
-          "date": "2018-02-28"
-        },
-        {
-          "id": 100,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 9,
-          "price": "-23.32",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 66,
-          "description": "Idea Bank Premia",
-          "categoryId": 30,
-          "accountId": 5,
-          "price": "30.00",
-          "date": "2018-02-04"
-        },
-        {
-          "id": 64,
-          "description": "Zwrot za wymiane szyby",
-          "categoryId": 37,
-          "accountId": 10,
-          "price": "-1337.82",
-          "date": "2018-02-20"
-        },
-        {
-          "id": 67,
-          "description": "Nurkowanie - Fuertaventura",
-          "categoryId": 14,
-          "accountId": 3,
-          "price": "-763.20",
-          "date": "2018-02-07"
-        },
-        {
-          "id": 95,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-490.94",
-          "date": "2018-02-25"
+          "price": "-142.51",
+          "date": "2018-02-01"
         },
         {
           "id": 62,
@@ -2105,28 +2065,12 @@
           "date": "2018-02-01"
         },
         {
-          "id": 73,
-          "description": "Crossover 15-21.01",
-          "categoryId": 27,
+          "id": 71,
+          "description": "USD -> EUR",
+          "categoryId": 19,
           "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-02-04"
-        },
-        {
-          "id": 97,
-          "description": "Monika pożyczka",
-          "categoryId": 11,
-          "accountId": 11,
-          "price": "8400.00",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 81,
-          "description": "paliwo noclegi itp",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "1557.50",
-          "date": "2018-02-08"
+          "price": "-10747.50",
+          "date": "2018-02-03"
         },
         {
           "id": 72,
@@ -2137,6 +2081,94 @@
           "date": "2018-02-03"
         },
         {
+          "id": 66,
+          "description": "Idea Bank Premia",
+          "categoryId": 30,
+          "accountId": 5,
+          "price": "30.00",
+          "date": "2018-02-04"
+        },
+        {
+          "id": 73,
+          "description": "Crossover 15-21.01",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-02-04"
+        },
+        {
+          "id": 65,
+          "description": "ZUS - Luty",
+          "categoryId": 32,
+          "accountId": 5,
+          "price": "-504.66",
+          "date": "2018-02-05"
+        },
+        {
+          "id": 67,
+          "description": "Nurkowanie - Fuertaventura",
+          "categoryId": 14,
+          "accountId": 3,
+          "price": "-763.20",
+          "date": "2018-02-07"
+        },
+        {
+          "id": 70,
+          "description": "Nurkowanie - ubezpieczenie",
+          "categoryId": 14,
+          "accountId": 3,
+          "price": "-364.64",
+          "date": "2018-02-07"
+        },
+        {
+          "id": 84,
+          "description": "Nurkowanie ",
+          "categoryId": 14,
+          "accountId": 3,
+          "price": "-279.94",
+          "date": "2018-02-07"
+        },
+        {
+          "id": 75,
+          "description": "Audioteka",
+          "categoryId": 21,
+          "accountId": 5,
+          "price": "-19.90",
+          "date": "2018-02-08"
+        },
+        {
+          "id": 76,
+          "description": "Zwiedzanie - Papagayo, kaktusy, prom itp",
+          "categoryId": 21,
+          "accountId": 3,
+          "price": "-1911.71",
+          "date": "2018-02-08"
+        },
+        {
+          "id": 77,
+          "description": "Zwiedzanie - Papagayo, kaktusy itp",
+          "categoryId": 21,
+          "accountId": 10,
+          "price": "955.85",
+          "date": "2018-02-08"
+        },
+        {
+          "id": 80,
+          "description": "paliwo noclegi itp",
+          "categoryId": 21,
+          "accountId": 3,
+          "price": "-3114.99",
+          "date": "2018-02-08"
+        },
+        {
+          "id": 81,
+          "description": "paliwo noclegi itp",
+          "categoryId": 21,
+          "accountId": 10,
+          "price": "1557.50",
+          "date": "2018-02-08"
+        },
+        {
           "id": 74,
           "description": "Księgowy - Luty",
           "categoryId": 33,
@@ -2145,12 +2177,60 @@
           "date": "2018-02-09"
         },
         {
-          "id": 101,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
+          "id": 83,
+          "description": "Księgowy - rozliczenie roku",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-61.50",
+          "date": "2018-02-09"
+        },
+        {
+          "id": 78,
+          "description": "Crossover 22-28.01",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-02-14"
+        },
+        {
+          "id": 79,
+          "description": "Crossover 29.01-04.02",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-02-14"
+        },
+        {
+          "id": 86,
+          "description": "Crossover 05-11.02",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-02-14"
+        },
+        {
+          "id": 68,
+          "description": "Paliwo",
+          "categoryId": 38,
+          "accountId": 3,
+          "price": "-274.24",
+          "date": "2018-02-16"
+        },
+        {
+          "id": 69,
+          "description": "Paliwo - Ania zwrot",
+          "categoryId": 38,
           "accountId": 10,
-          "price": "23.32",
-          "date": "2018-02-25"
+          "price": "137.12",
+          "date": "2018-02-16"
+        },
+        {
+          "id": 82,
+          "description": "Telefon",
+          "categoryId": 22,
+          "accountId": 5,
+          "price": "-22.75",
+          "date": "2018-02-18"
         },
         {
           "id": 63,
@@ -2161,12 +2241,92 @@
           "date": "2018-02-20"
         },
         {
-          "id": 77,
-          "description": "Zwiedzanie - Papagayo, kaktusy itp",
+          "id": 64,
+          "description": "Zwrot za wymiane szyby",
+          "categoryId": 37,
+          "accountId": 10,
+          "price": "-1337.82",
+          "date": "2018-02-20"
+        },
+        {
+          "id": 93,
+          "description": "Rozliczenie miesiaca",
           "categoryId": 21,
           "accountId": 10,
-          "price": "955.85",
-          "date": "2018-02-08"
+          "price": "-1202.78",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 94,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 3,
+          "price": "490.94",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 95,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-490.94",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 96,
+          "description": "Monika pożyczka",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "-8400.00",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 97,
+          "description": "Monika pożyczka",
+          "categoryId": 11,
+          "accountId": 11,
+          "price": "8400.00",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 98,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "1709.68",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 99,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-1709.68",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 100,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 9,
+          "price": "-23.32",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 101,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "23.32",
+          "date": "2018-02-25"
+        },
+        {
+          "id": 87,
+          "description": "Leasing - luty",
+          "categoryId": 36,
+          "accountId": 5,
+          "price": "-2308.97",
+          "date": "2018-02-26"
         },
         {
           "id": 88,
@@ -2185,94 +2345,6 @@
           "date": "2018-02-27"
         },
         {
-          "id": 68,
-          "description": "Paliwo",
-          "categoryId": 38,
-          "accountId": 3,
-          "price": "-274.24",
-          "date": "2018-02-16"
-        },
-        {
-          "id": 70,
-          "description": "Nurkowanie - ubezpieczenie",
-          "categoryId": 14,
-          "accountId": 3,
-          "price": "-364.64",
-          "date": "2018-02-07"
-        },
-        {
-          "id": 94,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 3,
-          "price": "490.94",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 61,
-          "description": "Zakupy",
-          "categoryId": 25,
-          "accountId": 3,
-          "price": "-142.51",
-          "date": "2018-02-01"
-        },
-        {
-          "id": 99,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-1709.68",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 87,
-          "description": "Leasing - luty",
-          "categoryId": 36,
-          "accountId": 5,
-          "price": "-2308.97",
-          "date": "2018-02-26"
-        },
-        {
-          "id": 84,
-          "description": "Nurkowanie ",
-          "categoryId": 14,
-          "accountId": 3,
-          "price": "-279.94",
-          "date": "2018-02-07"
-        },
-        {
-          "id": 69,
-          "description": "Paliwo - Ania zwrot",
-          "categoryId": 38,
-          "accountId": 10,
-          "price": "137.12",
-          "date": "2018-02-16"
-        },
-        {
-          "id": 93,
-          "description": "Rozliczenie miesiaca",
-          "categoryId": 21,
-          "accountId": 10,
-          "price": "-1202.78",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 76,
-          "description": "Zwiedzanie - Papagayo, kaktusy, prom itp",
-          "categoryId": 21,
-          "accountId": 3,
-          "price": "-1911.71",
-          "date": "2018-02-08"
-        },
-        {
-          "id": 79,
-          "description": "Crossover 29.01-04.02",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-02-14"
-        },
-        {
           "id": 85,
           "description": "CT - styczen",
           "categoryId": 28,
@@ -2281,44 +2353,20 @@
           "date": "2018-02-28"
         },
         {
-          "id": 96,
-          "description": "Monika pożyczka",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "-8400.00",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 80,
-          "description": "paliwo noclegi itp",
-          "categoryId": 21,
-          "accountId": 3,
-          "price": "-3114.99",
-          "date": "2018-02-08"
-        },
-        {
-          "id": 65,
-          "description": "ZUS - Luty",
-          "categoryId": 32,
-          "accountId": 5,
-          "price": "-504.66",
-          "date": "2018-02-05"
-        },
-        {
-          "id": 78,
-          "description": "Crossover 22-28.01",
+          "id": 89,
+          "description": "Crossover 12-18.02",
           "categoryId": 27,
           "accountId": 2,
           "price": "7165.00",
-          "date": "2018-02-14"
+          "date": "2018-02-28"
         },
         {
-          "id": 82,
-          "description": "Telefon",
-          "categoryId": 22,
-          "accountId": 5,
-          "price": "-22.75",
-          "date": "2018-02-18"
+          "id": 90,
+          "description": "paliwo noclegi itp",
+          "categoryId": 21,
+          "accountId": 3,
+          "price": "-2336.79",
+          "date": "2018-02-28"
         },
         {
           "id": 91,
@@ -2326,54 +2374,6 @@
           "categoryId": 21,
           "accountId": 10,
           "price": "1168.40",
-          "date": "2018-02-28"
-        },
-        {
-          "id": 71,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 2,
-          "price": "-10747.50",
-          "date": "2018-02-03"
-        },
-        {
-          "id": 75,
-          "description": "Audioteka",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "-19.90",
-          "date": "2018-02-08"
-        },
-        {
-          "id": 98,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "1709.68",
-          "date": "2018-02-25"
-        },
-        {
-          "id": 83,
-          "description": "Księgowy - rozliczenie roku",
-          "categoryId": 33,
-          "accountId": 5,
-          "price": "-61.50",
-          "date": "2018-02-09"
-        },
-        {
-          "id": 86,
-          "description": "Crossover 05-11.02",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-02-14"
-        },
-        {
-          "id": 89,
-          "description": "Crossover 12-18.02",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
           "date": "2018-02-28"
         }
       ]
@@ -2497,12 +2497,76 @@
       ],
       "transactions": [
         {
-          "id": 47,
-          "description": "Internet",
-          "categoryId": 7,
+          "id": 7,
+          "description": "USD -> EUR",
+          "categoryId": 19,
+          "accountId": 2,
+          "price": "-3582.51",
+          "date": "2018-01-03"
+        },
+        {
+          "id": 8,
+          "description": "USD -> EUR",
+          "categoryId": 19,
+          "accountId": 3,
+          "price": "3513.57",
+          "date": "2018-01-03"
+        },
+        {
+          "id": 9,
+          "description": "USD -> EUR - Ania zwrot",
+          "categoryId": 19,
           "accountId": 10,
-          "price": "-34.44",
-          "date": "2018-01-31"
+          "price": "34.47",
+          "date": "2018-01-03"
+        },
+        {
+          "id": 1,
+          "description": "Crossover 18-24.12",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-01-04"
+        },
+        {
+          "id": 2,
+          "description": "Idea Bank Premia",
+          "categoryId": 30,
+          "accountId": 5,
+          "price": "50.00",
+          "date": "2018-01-04"
+        },
+        {
+          "id": 3,
+          "description": "ZUS - Styczeń",
+          "categoryId": 32,
+          "accountId": 5,
+          "price": "-473.20",
+          "date": "2018-01-05"
+        },
+        {
+          "id": 10,
+          "description": "Noclegi Gran Canaria",
+          "categoryId": 20,
+          "accountId": 3,
+          "price": "-4418.60",
+          "date": "2018-01-06"
+        },
+        {
+          "id": 11,
+          "description": "Noclegi Gran Canaria - Ania zwrot",
+          "categoryId": 20,
+          "accountId": 10,
+          "price": "2209.30",
+          "date": "2018-01-06"
+        },
+        {
+          "id": 13,
+          "description": "Jedzenie",
+          "categoryId": 13,
+          "accountId": 3,
+          "price": "-195.04",
+          "date": "2018-01-06"
         },
         {
           "id": 14,
@@ -2513,11 +2577,91 @@
           "date": "2018-01-06"
         },
         {
+          "id": 18,
+          "description": "Prom Fuerteventura",
+          "categoryId": 20,
+          "accountId": 10,
+          "price": "282.64",
+          "date": "2018-01-06"
+        },
+        {
+          "id": 31,
+          "description": "Jedzenie",
+          "categoryId": 13,
+          "accountId": 3,
+          "price": "-135.68",
+          "date": "2018-01-06"
+        },
+        {
+          "id": 32,
+          "description": "Jedzenie - Ania zwrot",
+          "categoryId": 13,
+          "accountId": 10,
+          "price": "67.84",
+          "date": "2018-01-06"
+        },
+        {
+          "id": 12,
+          "description": "Nurkowanie - Top Diving Gran Canaria",
+          "categoryId": 14,
+          "accountId": 3,
+          "price": "-542.72",
+          "date": "2018-01-07"
+        },
+        {
+          "id": 15,
+          "description": "Audioteka",
+          "categoryId": 21,
+          "accountId": 5,
+          "price": "-19.90",
+          "date": "2018-01-08"
+        },
+        {
+          "id": 22,
+          "description": "Księgowy - Styczeń",
+          "categoryId": 33,
+          "accountId": 5,
+          "price": "-123.00",
+          "date": "2018-01-09"
+        },
+        {
+          "id": 16,
+          "description": "Noclegi Fuerteventura - zaliczka",
+          "categoryId": 20,
+          "accountId": 10,
+          "price": "979.23",
+          "date": "2018-01-10"
+        },
+        {
+          "id": 17,
+          "description": "Prom Fuerteventura",
+          "categoryId": 18,
+          "accountId": 3,
+          "price": "-565.28",
+          "date": "2018-01-10"
+        },
+        {
+          "id": 33,
+          "description": "Noclegi Fuerteventura ",
+          "categoryId": 20,
+          "accountId": 10,
+          "price": "-979.23",
+          "date": "2018-01-10"
+        },
+        {
           "id": 20,
           "description": "USD -> EUR",
           "categoryId": 19,
           "accountId": 2,
           "price": "-985.18",
+          "date": "2018-01-13"
+        },
+        {
+          "id": 21,
+          "description": "USD -> EUR",
+          "categoryId": 19,
+          "accountId": 3,
+          "price": "950.14",
           "date": "2018-01-13"
         },
         {
@@ -2537,108 +2681,12 @@
           "date": "2018-01-15"
         },
         {
-          "id": 57,
-          "description": "Jedzenie - restauracje",
-          "categoryId": 13,
-          "accountId": 10,
-          "price": "-342.33",
-          "date": "2018-01-31"
-        },
-        {
-          "id": 24,
-          "description": "Leasing - styczeń - Ania zwrot",
-          "categoryId": 36,
-          "accountId": 10,
-          "price": "1154.49",
-          "date": "2018-01-26"
-        },
-        {
-          "id": 22,
-          "description": "Księgowy - Styczeń",
-          "categoryId": 33,
-          "accountId": 5,
-          "price": "-123.00",
-          "date": "2018-01-09"
-        },
-        {
-          "id": 3,
-          "description": "ZUS - Styczeń",
-          "categoryId": 32,
-          "accountId": 5,
-          "price": "-473.20",
-          "date": "2018-01-05"
-        },
-        {
-          "id": 15,
-          "description": "Audioteka",
-          "categoryId": 21,
-          "accountId": 5,
-          "price": "-19.90",
-          "date": "2018-01-08"
-        },
-        {
-          "id": 41,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 10,
-          "price": "-546.90",
-          "date": "2018-01-25"
-        },
-        {
-          "id": 1,
-          "description": "Crossover 18-24.12",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-01-04"
-        },
-        {
           "id": 5,
           "description": "VAT Q4 2017",
           "categoryId": 35,
           "accountId": 5,
           "price": "-759.00",
           "date": "2018-01-15"
-        },
-        {
-          "id": 11,
-          "description": "Noclegi Gran Canaria - Ania zwrot",
-          "categoryId": 20,
-          "accountId": 10,
-          "price": "2209.30",
-          "date": "2018-01-06"
-        },
-        {
-          "id": 10,
-          "description": "Noclegi Gran Canaria",
-          "categoryId": 20,
-          "accountId": 3,
-          "price": "-4418.60",
-          "date": "2018-01-06"
-        },
-        {
-          "id": 29,
-          "description": "Zakupy - Ania zwrot",
-          "categoryId": 24,
-          "accountId": 10,
-          "price": "75.00",
-          "date": "2018-01-26"
-        },
-        {
-          "id": 28,
-          "description": "Zakupy",
-          "categoryId": 24,
-          "accountId": 3,
-          "price": "-150.00",
-          "date": "2018-01-26"
-        },
-        {
-          "id": 21,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 3,
-          "price": "950.14",
-          "date": "2018-01-13"
         },
         {
           "id": 6,
@@ -2649,36 +2697,20 @@
           "date": "2018-01-18"
         },
         {
-          "id": 50,
-          "description": "Woda",
-          "categoryId": 10,
-          "accountId": 10,
-          "price": "-148.32",
-          "date": "2018-01-31"
+          "id": 25,
+          "description": "Telefon",
+          "categoryId": 22,
+          "accountId": 5,
+          "price": "-21.34",
+          "date": "2018-01-18"
         },
         {
-          "id": 48,
-          "description": "Prąd",
-          "categoryId": 8,
-          "accountId": 10,
-          "price": "-258.13",
-          "date": "2018-01-31"
-        },
-        {
-          "id": 8,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 3,
-          "price": "3513.57",
-          "date": "2018-01-03"
-        },
-        {
-          "id": 12,
-          "description": "Nurkowanie - Top Diving Gran Canaria",
-          "categoryId": 14,
-          "accountId": 3,
-          "price": "-542.72",
-          "date": "2018-01-07"
+          "id": 30,
+          "description": "Crossover 01-07.01",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-01-18"
         },
         {
           "id": 34,
@@ -2689,28 +2721,36 @@
           "date": "2018-01-21"
         },
         {
-          "id": 2,
-          "description": "Idea Bank Premia",
-          "categoryId": 30,
-          "accountId": 5,
-          "price": "50.00",
-          "date": "2018-01-04"
+          "id": 35,
+          "description": "Crossover 08-14.01",
+          "categoryId": 27,
+          "accountId": 2,
+          "price": "7165.00",
+          "date": "2018-01-25"
         },
         {
-          "id": 60,
-          "description": "Kosmetyki",
-          "categoryId": 15,
-          "accountId": 10,
-          "price": "-10.97",
-          "date": "2018-01-31"
+          "id": 36,
+          "description": "Przelew Alior PLN",
+          "categoryId": 11,
+          "accountId": 5,
+          "price": "-27.00",
+          "date": "2018-01-25"
         },
         {
-          "id": 25,
-          "description": "Telefon",
-          "categoryId": 22,
+          "id": 37,
+          "description": "Przelew Alior PLN",
+          "categoryId": 11,
+          "accountId": 1,
+          "price": "27.00",
+          "date": "2018-01-25"
+        },
+        {
+          "id": 38,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
           "accountId": 5,
-          "price": "-21.34",
-          "date": "2018-01-18"
+          "price": "-4398.50",
+          "date": "2018-01-25"
         },
         {
           "id": 39,
@@ -2718,6 +2758,30 @@
           "categoryId": 11,
           "accountId": 10,
           "price": "4398.50",
+          "date": "2018-01-25"
+        },
+        {
+          "id": 40,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 3,
+          "price": "546.90",
+          "date": "2018-01-25"
+        },
+        {
+          "id": 41,
+          "description": "Przelew Ania PLN",
+          "categoryId": 11,
+          "accountId": 10,
+          "price": "-546.90",
+          "date": "2018-01-25"
+        },
+        {
+          "id": 42,
+          "description": "Gotowka Ania EUR",
+          "categoryId": 11,
+          "accountId": 9,
+          "price": "21.57",
           "date": "2018-01-25"
         },
         {
@@ -2729,28 +2793,28 @@
           "date": "2018-01-25"
         },
         {
-          "id": 52,
-          "description": "Inne wydatki",
-          "categoryId": 37,
-          "accountId": 10,
-          "price": "-20.15",
-          "date": "2018-01-31"
+          "id": 23,
+          "description": "Leasing - styczeń",
+          "categoryId": 36,
+          "accountId": 5,
+          "price": "-2308.97",
+          "date": "2018-01-26"
         },
         {
-          "id": 42,
-          "description": "Gotowka Ania EUR",
-          "categoryId": 11,
-          "accountId": 9,
-          "price": "21.57",
-          "date": "2018-01-25"
+          "id": 24,
+          "description": "Leasing - styczeń - Ania zwrot",
+          "categoryId": 36,
+          "accountId": 10,
+          "price": "1154.49",
+          "date": "2018-01-26"
         },
         {
-          "id": 18,
-          "description": "Prom Fuerteventura",
-          "categoryId": 20,
-          "accountId": 10,
-          "price": "282.64",
-          "date": "2018-01-06"
+          "id": 26,
+          "description": "Paliwo",
+          "categoryId": 38,
+          "accountId": 3,
+          "price": "-239.50",
+          "date": "2018-01-26"
         },
         {
           "id": 27,
@@ -2758,6 +2822,22 @@
           "categoryId": 38,
           "accountId": 10,
           "price": "119.75",
+          "date": "2018-01-26"
+        },
+        {
+          "id": 28,
+          "description": "Zakupy",
+          "categoryId": 24,
+          "accountId": 3,
+          "price": "-150.00",
+          "date": "2018-01-26"
+        },
+        {
+          "id": 29,
+          "description": "Zakupy - Ania zwrot",
+          "categoryId": 24,
+          "accountId": 10,
+          "price": "75.00",
           "date": "2018-01-26"
         },
         {
@@ -2769,75 +2849,35 @@
           "date": "2018-01-31"
         },
         {
-          "id": 31,
-          "description": "Jedzenie",
-          "categoryId": 13,
-          "accountId": 3,
-          "price": "-135.68",
-          "date": "2018-01-06"
-        },
-        {
-          "id": 9,
-          "description": "USD -> EUR - Ania zwrot",
-          "categoryId": 19,
+          "id": 45,
+          "description": "Abonament RTV",
+          "categoryId": 5,
           "accountId": 10,
-          "price": "34.47",
-          "date": "2018-01-03"
-        },
-        {
-          "id": 55,
-          "description": "Promy",
-          "categoryId": 18,
-          "accountId": 10,
-          "price": "-254.36",
+          "price": "-122.57",
           "date": "2018-01-31"
         },
         {
-          "id": 26,
-          "description": "Paliwo",
-          "categoryId": 38,
-          "accountId": 3,
-          "price": "-239.50",
-          "date": "2018-01-26"
-        },
-        {
-          "id": 30,
-          "description": "Crossover 01-07.01",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-01-18"
-        },
-        {
-          "id": 23,
-          "description": "Leasing - styczeń",
-          "categoryId": 36,
-          "accountId": 5,
-          "price": "-2308.97",
-          "date": "2018-01-26"
-        },
-        {
-          "id": 13,
-          "description": "Jedzenie",
-          "categoryId": 13,
-          "accountId": 3,
-          "price": "-195.04",
-          "date": "2018-01-06"
-        },
-        {
-          "id": 35,
-          "description": "Crossover 08-14.01",
-          "categoryId": 27,
-          "accountId": 2,
-          "price": "7165.00",
-          "date": "2018-01-25"
-        },
-        {
-          "id": 59,
-          "description": "Lekarstwa",
-          "categoryId": 15,
+          "id": 46,
+          "description": "Gaz",
+          "categoryId": 6,
           "accountId": 10,
-          "price": "-166.72",
+          "price": "-233.21",
+          "date": "2018-01-31"
+        },
+        {
+          "id": 47,
+          "description": "Internet",
+          "categoryId": 7,
+          "accountId": 10,
+          "price": "-34.44",
+          "date": "2018-01-31"
+        },
+        {
+          "id": 48,
+          "description": "Prąd",
+          "categoryId": 8,
+          "accountId": 10,
+          "price": "-258.13",
           "date": "2018-01-31"
         },
         {
@@ -2849,12 +2889,12 @@
           "date": "2018-01-31"
         },
         {
-          "id": 17,
-          "description": "Prom Fuerteventura",
-          "categoryId": 18,
-          "accountId": 3,
-          "price": "-565.28",
-          "date": "2018-01-10"
+          "id": 50,
+          "description": "Woda",
+          "categoryId": 10,
+          "accountId": 10,
+          "price": "-148.32",
+          "date": "2018-01-31"
         },
         {
           "id": 51,
@@ -2862,6 +2902,22 @@
           "categoryId": 37,
           "accountId": 10,
           "price": "-1351.79",
+          "date": "2018-01-31"
+        },
+        {
+          "id": 52,
+          "description": "Inne wydatki",
+          "categoryId": 37,
+          "accountId": 10,
+          "price": "-20.15",
+          "date": "2018-01-31"
+        },
+        {
+          "id": 53,
+          "description": "Paliwo",
+          "categoryId": 38,
+          "accountId": 10,
+          "price": "-125.25",
           "date": "2018-01-31"
         },
         {
@@ -2873,20 +2929,12 @@
           "date": "2018-01-31"
         },
         {
-          "id": 36,
-          "description": "Przelew Alior PLN",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "-27.00",
-          "date": "2018-01-25"
-        },
-        {
-          "id": 7,
-          "description": "USD -> EUR",
-          "categoryId": 19,
-          "accountId": 2,
-          "price": "-3582.51",
-          "date": "2018-01-03"
+          "id": 55,
+          "description": "Promy",
+          "categoryId": 18,
+          "accountId": 10,
+          "price": "-254.36",
+          "date": "2018-01-31"
         },
         {
           "id": 56,
@@ -2894,6 +2942,14 @@
           "categoryId": 20,
           "accountId": 10,
           "price": "-2064.96",
+          "date": "2018-01-31"
+        },
+        {
+          "id": 57,
+          "description": "Jedzenie - restauracje",
+          "categoryId": 13,
+          "accountId": 10,
+          "price": "-342.33",
           "date": "2018-01-31"
         },
         {
@@ -2905,76 +2961,20 @@
           "date": "2018-01-31"
         },
         {
-          "id": 37,
-          "description": "Przelew Alior PLN",
-          "categoryId": 11,
-          "accountId": 1,
-          "price": "27.00",
-          "date": "2018-01-25"
-        },
-        {
-          "id": 53,
-          "description": "Paliwo",
-          "categoryId": 38,
+          "id": 59,
+          "description": "Lekarstwa",
+          "categoryId": 15,
           "accountId": 10,
-          "price": "-125.25",
+          "price": "-166.72",
           "date": "2018-01-31"
         },
         {
-          "id": 45,
-          "description": "Abonament RTV",
-          "categoryId": 5,
+          "id": 60,
+          "description": "Kosmetyki",
+          "categoryId": 15,
           "accountId": 10,
-          "price": "-122.57",
+          "price": "-10.97",
           "date": "2018-01-31"
-        },
-        {
-          "id": 32,
-          "description": "Jedzenie - Ania zwrot",
-          "categoryId": 13,
-          "accountId": 10,
-          "price": "67.84",
-          "date": "2018-01-06"
-        },
-        {
-          "id": 46,
-          "description": "Gaz",
-          "categoryId": 6,
-          "accountId": 10,
-          "price": "-233.21",
-          "date": "2018-01-31"
-        },
-        {
-          "id": 40,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 3,
-          "price": "546.90",
-          "date": "2018-01-25"
-        },
-        {
-          "id": 16,
-          "description": "Noclegi Fuerteventura - zaliczka",
-          "categoryId": 20,
-          "accountId": 10,
-          "price": "979.23",
-          "date": "2018-01-10"
-        },
-        {
-          "id": 38,
-          "description": "Przelew Ania PLN",
-          "categoryId": 11,
-          "accountId": 5,
-          "price": "-4398.50",
-          "date": "2018-01-25"
-        },
-        {
-          "id": 33,
-          "description": "Noclegi Fuerteventura ",
-          "categoryId": 20,
-          "accountId": 10,
-          "price": "-979.23",
-          "date": "2018-01-10"
         }
       ]
     }
