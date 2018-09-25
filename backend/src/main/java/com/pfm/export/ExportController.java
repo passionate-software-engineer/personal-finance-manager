@@ -37,7 +37,7 @@ public class ExportController implements ExportApi {
   public ExportResult exportData() {
     ExportResult result = new ExportResult();
     result.setPeriods(new ArrayList<>());
-    result.setCategories(categoryService.getCategories());
+    result.setCategories(categoryService.getCategories()); // TODO remove category id from RS
 
     Map<String, List<ExportTransaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
 
