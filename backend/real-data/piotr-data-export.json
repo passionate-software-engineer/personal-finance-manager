@@ -55,20 +55,24 @@
     {
       "name": "mBank",
       "balance": "0.00"
+    },
+    {
+      "name": "Idea Bank - lokaty",
+      "balance": "0.00"
     }
   ],
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "43863.32"
+      "balance": "5416.74"
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "141544.58"
+      "balance": "27755.78"
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "1759.90"
+      "balance": "1570.79"
     },
     {
       "name": "kantor Alior - GBP",
@@ -76,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "10570.36"
+      "balance": "9075.67"
     },
     {
       "name": "IKE",
@@ -88,7 +92,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "2.42"
+      "balance": "40.00"
     },
     {
       "name": "Gotówka - euro",
@@ -96,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "-6782.22"
+      "balance": "-50.00"
     },
     {
       "name": "Monika - pożyczka",
@@ -108,11 +112,15 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "1851.25"
+      "balance": "0.00"
     },
     {
       "name": "mBank",
-      "balance": "369.05"
+      "balance": "21208.91"
+    },
+    {
+      "name": "Idea Bank - lokaty",
+      "balance": "150000.00"
     }
   ],
   "periods": [
@@ -175,20 +183,24 @@
         {
           "name": "mBank",
           "balance": "13.50"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "43863.32"
+          "balance": "5416.74"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "141544.58"
+          "balance": "27755.78"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1759.90"
+          "balance": "1570.79"
         },
         {
           "name": "kantor Alior - GBP",
@@ -196,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "10570.36"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -208,7 +220,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "2.42"
+          "balance": "40.00"
         },
         {
           "name": "Gotówka - euro",
@@ -216,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6782.22"
+          "balance": "-50.00"
         },
         {
           "name": "Monika - pożyczka",
@@ -228,11 +240,15 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "1851.25"
+          "balance": "0.00"
         },
         {
           "name": "mBank",
-          "balance": "369.05"
+          "balance": "21208.91"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00"
         }
       ],
       "transactions": [
@@ -354,6 +370,412 @@
           "account": "Ania - rozliczenie",
           "price": "22.98",
           "date": "2018-08-03"
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Księgowość",
+          "account": "Idea Bank",
+          "price": "-123.00",
+          "date": "2018-08-04"
+        },
+        {
+          "description": "Bilety Gdansk",
+          "category": "Transport",
+          "account": "Idea Bank",
+          "price": "-477.10",
+          "date": "2018-08-05"
+        },
+        {
+          "description": "Nurkowanie",
+          "category": "Nurkowanie",
+          "account": "Gotówka",
+          "price": "-215.00",
+          "date": "2018-08-05"
+        },
+        {
+          "description": "Biedronka - zakupy",
+          "category": "Zakupy",
+          "account": "mBank",
+          "price": "-128.24",
+          "date": "2018-08-06"
+        },
+        {
+          "description": "Biedronka - zakupy",
+          "category": "Zakupy",
+          "account": "Ania - rozliczenie",
+          "price": "64.12",
+          "date": "2018-08-06"
+        },
+        {
+          "description": "Zmywarka - doplata",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-2755.00",
+          "date": "2018-08-07"
+        },
+        {
+          "description": "Zmywarka - doplata",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "1377.50",
+          "date": "2018-08-07"
+        },
+        {
+          "description": "mBank promocja",
+          "category": "Przychody",
+          "account": "mBank",
+          "price": "20.00",
+          "date": "2018-08-08"
+        },
+        {
+          "description": "Crossover (23-29.07)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7111.26",
+          "date": "2018-08-09"
+        },
+        {
+          "description": "Remont (materialy, worki, smieci, gruz)",
+          "category": "Remont domu",
+          "account": "Gotówka",
+          "price": "-1456.90",
+          "date": "2018-08-10"
+        },
+        {
+          "description": "Remont (materialy, worki, smieci, gruz)",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "728.45",
+          "date": "2018-08-10"
+        },
+        {
+          "description": "Swietliki",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-4647.66",
+          "date": "2018-08-11"
+        },
+        {
+          "description": "Swietliki",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "2323.83",
+          "date": "2018-08-11"
+        },
+        {
+          "description": "Crossover (30.07-05.08)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-08-16"
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "account": "Idea Bank",
+          "price": "-2308.97",
+          "date": "2018-08-20"
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "account": "Ania - rozliczenie",
+          "price": "1154.49",
+          "date": "2018-08-20"
+        },
+        {
+          "description": "Motopark - tor",
+          "category": "Rozrywka",
+          "account": "mBank",
+          "price": "-169.00",
+          "date": "2018-08-21"
+        },
+        {
+          "description": "Silesia Maraton",
+          "category": "Sport",
+          "account": "mBank",
+          "price": "-120.00",
+          "date": "2018-08-21"
+        },
+        {
+          "description": "Wroclaw - nocleg",
+          "category": "Sport",
+          "account": "kantor Alior - EUR",
+          "price": "-125.21",
+          "date": "2018-08-21"
+        },
+        {
+          "description": "Meble",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-4015.00",
+          "date": "2018-08-22"
+        },
+        {
+          "description": "Meble",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "2007.50",
+          "date": "2018-08-22"
+        },
+        {
+          "description": "Lampa do kuchni",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-159.00",
+          "date": "2018-08-23"
+        },
+        {
+          "description": "Lampa do kuchni",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "79.50",
+          "date": "2018-08-23"
+        },
+        {
+          "description": "Spozywcze",
+          "category": "Zakupy - jedzenie",
+          "account": "mBank",
+          "price": "-329.59",
+          "date": "2018-08-23"
+        },
+        {
+          "description": "Spozywcze",
+          "category": "Zakupy - jedzenie",
+          "account": "Ania - rozliczenie",
+          "price": "164.80",
+          "date": "2018-08-23"
+        },
+        {
+          "description": "Crossover (6-12.08)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-08-23"
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "account": "mBank",
+          "price": "-313.35",
+          "date": "2018-08-24"
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "account": "Ania - rozliczenie",
+          "price": "156.68",
+          "date": "2018-08-24"
+        },
+        {
+          "description": "Balast",
+          "category": "Nurkowanie",
+          "account": "mBank",
+          "price": "-309.00",
+          "date": "2018-08-25"
+        },
+        {
+          "description": "Telefon",
+          "category": "Telefon",
+          "account": "Idea Bank",
+          "price": "-20.73",
+          "date": "2018-08-26"
+        },
+        {
+          "description": "Remont",
+          "category": "Remont domu",
+          "account": "Idea Bank",
+          "price": "-1350.00",
+          "date": "2018-08-28"
+        },
+        {
+          "description": "Remont",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "675.00",
+          "date": "2018-08-28"
+        },
+        {
+          "description": "Wymiana walut",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - USD",
+          "price": "-142395.06",
+          "date": "2018-08-29"
+        },
+        {
+          "description": "Wymiana walut",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - PLN",
+          "price": "151115.62",
+          "date": "2018-08-29"
+        },
+        {
+          "description": "Konsultacje Prywatne",
+          "category": "Przychody",
+          "account": "Idea Bank",
+          "price": "240.00",
+          "date": "2018-08-29"
+        },
+        {
+          "description": "Niania",
+          "category": "Dziecko",
+          "account": "Idea Bank",
+          "price": "-1900.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Niania",
+          "category": "Dziecko",
+          "account": "Ania - rozliczenie",
+          "price": "950.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "CT - konsultacje",
+          "category": "CodersTrust - szkolenia",
+          "account": "Idea Bank",
+          "price": "5076.21",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "CT - konsultacje - Ani",
+          "category": "CodersTrust - szkolenia",
+          "account": "Ania - rozliczenie",
+          "price": "-783.27",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Kosmetyki",
+          "account": "Gotówka",
+          "price": "-20.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Crossover (13-19.08)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Rozliczenie miesiaca",
+          "category": "Rozliczenie miesiąca",
+          "account": "Ania - rozliczenie",
+          "price": "-6779.65",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Meble w kuchni",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "-4000.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Meble w kuchni",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "2000.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Lokaty - Idea Bank",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - PLN",
+          "price": "-150000.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Lokaty - Idea Bank",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank - lokaty",
+          "price": "150000.00",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Kantor PLN -> mbank",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - PLN",
+          "price": "-33765.70",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Kantor PLN -> mBank",
+          "category": "Przelewy między kontami",
+          "account": "mBank",
+          "price": "33765.70",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Kantor PLN -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - PLN",
+          "price": "-5796.50",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Kantor PLN -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "5796.50",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Kantor EUR -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - EUR",
+          "price": "-63.90",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "kantor Eur -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "63.90",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Idea -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "-631.10",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Idea -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "631.10",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Revolut -> Gotowka",
+          "category": "Przelewy między kontami",
+          "account": "Gotówka",
+          "price": "1729.48",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Revolut -> Gotowka",
+          "category": "Przelewy między kontami",
+          "account": "Revolut - PLN",
+          "price": "-1729.48",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Revolut -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "Revolut - PLN",
+          "price": "-121.77",
+          "date": "2018-08-30"
+        },
+        {
+          "description": "Revolut -> Ania",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "121.77",
+          "date": "2018-08-30"
         }
       ]
     },
@@ -416,6 +838,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -474,6 +900,10 @@
         {
           "name": "mBank",
           "balance": "13.50"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -825,6 +1255,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -882,6 +1316,10 @@
         },
         {
           "name": "mBank",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
           "balance": "0.00"
         }
       ],
@@ -1325,6 +1763,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1382,6 +1824,10 @@
         },
         {
           "name": "mBank",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
           "balance": "0.00"
         }
       ],
@@ -1727,6 +2173,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1784,6 +2234,10 @@
         },
         {
           "name": "mBank",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
           "balance": "0.00"
         }
       ],
@@ -2094,6 +2548,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2151,6 +2609,10 @@
         },
         {
           "name": "mBank",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
           "balance": "0.00"
         }
       ],
@@ -2468,6 +2930,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2525,6 +2991,10 @@
         },
         {
           "name": "mBank",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
           "balance": "0.00"
         }
       ],
@@ -2877,6 +3347,10 @@
         {
           "name": "mBank",
           "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2934,6 +3408,10 @@
         },
         {
           "name": "mBank",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank - lokaty",
           "balance": "0.00"
         }
       ],
