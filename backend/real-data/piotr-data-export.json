@@ -64,15 +64,15 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "5416.74"
+      "balance": "0.00"
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "27755.78"
+      "balance": "46572.50"
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "1570.79"
+      "balance": "432.35"
     },
     {
       "name": "kantor Alior - GBP",
@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "9075.67"
+      "balance": "8739.30"
     },
     {
       "name": "IKE",
@@ -92,7 +92,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "40.00"
+      "balance": "380.00"
     },
     {
       "name": "Gotówka - euro",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "-50.00"
+      "balance": "7107.81"
     },
     {
       "name": "Monika - pożyczka",
@@ -116,7 +116,7 @@
     },
     {
       "name": "mBank",
-      "balance": "21208.91"
+      "balance": "14445.63"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -124,6 +124,549 @@
     }
   ],
   "periods": [
+    {
+      "startDate": "2018-09-01",
+      "endDate": "2018-09-30",
+      "accountStateAtTheBeginingOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "5416.74"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "27755.78"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "1570.79"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "9075.67"
+        },
+        {
+          "name": "IKE",
+          "balance": "12789.00"
+        },
+        {
+          "name": "IKZE",
+          "balance": "5115.60"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "40.00"
+        },
+        {
+          "name": "Gotówka - euro",
+          "balance": "17.68"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "-50.00"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "8400.00"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "name": "mBank",
+          "balance": "21208.91"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "46572.50"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "432.35"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "8739.30"
+        },
+        {
+          "name": "IKE",
+          "balance": "12789.00"
+        },
+        {
+          "name": "IKZE",
+          "balance": "5115.60"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "380.00"
+        },
+        {
+          "name": "Gotówka - euro",
+          "balance": "17.68"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "7107.81"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "8400.00"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00"
+        },
+        {
+          "name": "mBank",
+          "balance": "14445.63"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "Toner do drukarki",
+          "category": "Koszty prowadzenia firmy",
+          "account": "mBank",
+          "price": "-79.95",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Toner do drukarki",
+          "category": "Koszty prowadzenia firmy",
+          "account": "Ania - rozliczenie",
+          "price": "39.98",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Drukarka",
+          "category": "Koszty prowadzenia firmy",
+          "account": "Idea Bank",
+          "price": "-262.40",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Drukarka",
+          "category": "Koszty prowadzenia firmy",
+          "account": "Ania - rozliczenie",
+          "price": "131.20",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Nowy numer domu (tabliczka)",
+          "category": "Remont domu",
+          "account": "Idea Bank",
+          "price": "-140.00",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Nowy numer domu (tabliczka)",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "70.00",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "account": "mBank",
+          "price": "-283.88",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "account": "Ania - rozliczenie",
+          "price": "141.94",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Niania",
+          "category": "Dziecko",
+          "account": "Gotówka",
+          "price": "-300.00",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Niania",
+          "category": "Dziecko",
+          "account": "Ania - rozliczenie",
+          "price": "150.00",
+          "date": "2018-09-01"
+        },
+        {
+          "description": "Kraken - wejsciowka",
+          "category": "Nurkowanie",
+          "account": "mBank",
+          "price": "-30.00",
+          "date": "2018-09-02"
+        },
+        {
+          "description": "Wyplata Gotowki",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "-1100.00",
+          "date": "2018-09-03"
+        },
+        {
+          "description": "Wyplata Gotowki",
+          "category": "Przelewy między kontami",
+          "account": "Gotówka",
+          "price": "1100.00",
+          "date": "2018-09-03"
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "account": "mBank",
+          "price": "-19.90",
+          "date": "2018-09-04"
+        },
+        {
+          "description": "crossover (20-26.08)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-09-06"
+        },
+        {
+          "description": "Drzwi - rozliczenie",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-2350.00",
+          "date": "2018-09-06"
+        },
+        {
+          "description": "Drzwi - rozliczenie",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "1175.00",
+          "date": "2018-09-06"
+        },
+        {
+          "description": "ZUS",
+          "category": "ZUS",
+          "account": "Idea Bank",
+          "price": "-1163.39",
+          "date": "2018-09-06"
+        },
+        {
+          "description": "ksiegowy (doplata)",
+          "category": "Księgowość",
+          "account": "Idea Bank",
+          "price": "-3.08",
+          "date": "2018-09-07"
+        },
+        {
+          "description": "Paliwo ",
+          "category": "Paliwo",
+          "account": "mBank",
+          "price": "-169.24",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "account": "Ania - rozliczenie",
+          "price": "84.62",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Paliwo (Wroclaw)",
+          "category": "Paliwo",
+          "account": "mBank",
+          "price": "-49.98",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Paliwo (Wroclaw)",
+          "category": "Paliwo",
+          "account": "Ania - rozliczenie",
+          "price": "24.99",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Ksiazka - Trening Biegowy",
+          "category": "Edukacja",
+          "account": "Gotówka",
+          "price": "-50.00",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Jedzenie - Wroclaw",
+          "category": "Jedzenie",
+          "account": "mBank",
+          "price": "-70.23",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Jedzenie - Wroclaw",
+          "category": "Jedzenie",
+          "account": "Ania - rozliczenie",
+          "price": "35.11",
+          "date": "2018-09-08"
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "account": "Idea Bank",
+          "price": "-2308.97",
+          "date": "2018-09-10"
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "account": "Ania - rozliczenie",
+          "price": "1154.49",
+          "date": "2018-09-10"
+        },
+        {
+          "description": "Zegarek - nagroda za maraton",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-3550.00",
+          "date": "2018-09-11"
+        },
+        {
+          "description": "Zdjecia z Maratonu",
+          "category": "Sport",
+          "account": "mBank",
+          "price": "-44.00",
+          "date": "2018-09-13"
+        },
+        {
+          "description": "Zdjecia z Maratonu",
+          "category": "Sport",
+          "account": "Ania - rozliczenie",
+          "price": "22.00",
+          "date": "2018-09-13"
+        },
+        {
+          "description": "Crossover (27.08-02.09)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-09-13"
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Księgowość",
+          "account": "Idea Bank",
+          "price": "-123.00",
+          "date": "2018-09-14"
+        },
+        {
+          "description": "Kantor PLN -> Idea",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - PLN",
+          "price": "-5416.74",
+          "date": "2018-09-14"
+        },
+        {
+          "description": "Kantor PLN -> Idea",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "5416.74",
+          "date": "2018-09-14"
+        },
+        {
+          "description": "Remont",
+          "category": "Remont domu",
+          "account": "Gotówka",
+          "price": "-280.00",
+          "date": "2018-09-14"
+        },
+        {
+          "description": "Remont",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "140.00",
+          "date": "2018-09-14"
+        },
+        {
+          "description": "Wyplata Gotowki",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "-400.00",
+          "date": "2018-09-16"
+        },
+        {
+          "description": "Wyplata Gotowki",
+          "category": "Przelewy między kontami",
+          "account": "Gotówka",
+          "price": "400.00",
+          "date": "2018-09-16"
+        },
+        {
+          "description": "Rysy - parking i park",
+          "category": "Rozrywka",
+          "account": "Gotówka",
+          "price": "-30.00",
+          "date": "2018-09-16"
+        },
+        {
+          "description": "Wymiana walut USD -> EUR",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - USD",
+          "price": "-528.78",
+          "date": "2018-09-17"
+        },
+        {
+          "description": "Wymiana walut USD -> EUR",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - EUR",
+          "price": "532.93",
+          "date": "2018-09-17"
+        },
+        {
+          "description": "Wymiana walut USD -> EUR",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - USD",
+          "price": "-2149.50",
+          "date": "2018-09-17"
+        },
+        {
+          "description": "Wymiana walut USD -> EUR",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - EUR",
+          "price": "2151.75",
+          "date": "2018-09-17"
+        },
+        {
+          "description": "Telefon",
+          "category": "Telefon",
+          "account": "Idea Bank",
+          "price": "-23.27",
+          "date": "2018-09-17"
+        },
+        {
+          "description": "Wieszak na medale",
+          "category": "Zakupy",
+          "account": "mBank",
+          "price": "-108.50",
+          "date": "2018-09-17"
+        },
+        {
+          "description": "CodersTrust - konsultacje",
+          "category": "CodersTrust - szkolenia",
+          "account": "Idea Bank",
+          "price": "3321.00",
+          "date": "2018-09-18"
+        },
+        {
+          "description": "Brama garazowa - zaliczka",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-2000.00",
+          "date": "2018-09-18"
+        },
+        {
+          "description": "Brama garazowa - zaliczka",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "1000.00",
+          "date": "2018-09-18"
+        },
+        {
+          "description": "Gotowka - Ania",
+          "category": "Przelewy między kontami",
+          "account": "mBank",
+          "price": "-1500.00",
+          "date": "2018-09-18"
+        },
+        {
+          "description": "Gotowka - Ania",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "1500.00",
+          "date": "2018-09-18"
+        },
+        {
+          "description": "Crossover (03-09.09)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-09-20"
+        },
+        {
+          "description": "Kable (katowy i spirala)",
+          "category": "Remont domu",
+          "account": "mBank",
+          "price": "-57.60",
+          "date": "2018-09-20"
+        },
+        {
+          "description": "Kable (katowy i spirala)",
+          "category": "Remont domu",
+          "account": "Ania - rozliczenie",
+          "price": "28.80",
+          "date": "2018-09-20"
+        },
+        {
+          "description": "Ania - gotowka",
+          "category": "Przelewy między kontami",
+          "account": "Gotówka",
+          "price": "-500.00",
+          "date": "2018-09-20"
+        },
+        {
+          "description": "Ania - gotowka",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "500.00",
+          "date": "2018-09-20"
+        },
+        {
+          "description": "AirBnb sylwester zaliczka",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-1919.36",
+          "date": "2018-09-22"
+        },
+        {
+          "description": "AirBnb sylwester zaliczka",
+          "category": "Wyjazdy - noclegi",
+          "account": "Ania - rozliczenie",
+          "price": "959.68",
+          "date": "2018-09-22"
+        },
+        {
+          "description": "GoPass - Season Pass",
+          "category": "Sport",
+          "account": "kantor Alior - EUR",
+          "price": "-1903.76",
+          "date": "2018-09-22"
+        }
+      ]
+    },
     {
       "startDate": "2018-08-01",
       "endDate": "2018-08-31",
