@@ -91,6 +91,8 @@ public class ExportController implements ExportApi {
 
     result.setInitialAccountsState(accountsStateAtTheEndOfPeriod);
 
+    // TODO - export, import filters
+
     return result;
   }
 
