@@ -21,7 +21,7 @@ public class FilterValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public List<String> validateFilterRequest(FilterRequest filterRequest) {
+  public List<String> validateFilterRequest(FilterRequest filterRequest, long userId) {
     List<String> validationResults = new ArrayList<>();
 
     if (filterRequest.getName() == null || filterRequest.getName().trim().equals("")) {
@@ -30,7 +30,7 @@ public class FilterValidator {
 
     if (filterRequest.getAccountIds() != null) {
       for (long id : filterRequest.getAccountIds()) {
-        if (!accountService.getAccountById(id).isPresent()) {
+        if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
           validationResults.add(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + id);
         }
       }
@@ -38,7 +38,7 @@ public class FilterValidator {
 
     if (filterRequest.getCategoryIds() != null) {
       for (long id : filterRequest.getCategoryIds()) {
-        if (!categoryService.getCategoryById(id).isPresent()) {
+        if (!categoryService.getCategoryByIdAndUserId(id, userId).isPresent()) {
           validationResults.add(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + id);
         }
       }

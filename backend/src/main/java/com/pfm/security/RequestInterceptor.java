@@ -41,7 +41,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     }
 
     if (isTokenCorrect(requestToken)) {
-      Long userIdFromToken = tokenService.getUserIdFromToken(requestToken);
+      long userIdFromToken = tokenService.getUserIdFromToken(requestToken);
       request.setAttribute("userId",userIdFromToken);
       return true;
     } else {

@@ -49,7 +49,7 @@ public class CategoryController {
   public ResponseEntity<Category> getCategoryById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
 
     log.info("Retrieving category with id: {}", id);
-    Optional<Category> category = categoryService.getCategoryById(id, userId);
+    Optional<Category> category = categoryService.getCategoryByIdAndUserId(id, userId);
 
     if (!category.isPresent()) {
       log.info("Category with id {} was not found", id);
@@ -94,7 +94,7 @@ public class CategoryController {
   public ResponseEntity<?> updateCategory(@PathVariable long id, @RequestBody CategoryRequest categoryRequest,
       @RequestAttribute(value = "userId") Long userId) {
 
-    if (!categoryService.getCategoryById(id,userId).isPresent()) {
+    if (!categoryService.getCategoryByIdAndUserId(id,userId).isPresent()) {
       log.info("No category with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
@@ -118,7 +118,7 @@ public class CategoryController {
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<?> deleteCategory(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
 
-    if (!categoryService.getCategoryById(id, userId).isPresent()) {
+    if (!categoryService.getCategoryByIdAndUserId(id, userId).isPresent()) {
       log.info("No category with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }

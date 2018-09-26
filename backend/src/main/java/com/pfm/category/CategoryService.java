@@ -16,7 +16,7 @@ public class CategoryService {
 
   private CategoryRepository categoryRepository;
 
-  public Optional<Category> getCategoryById(long id, long userId) {
+  public Optional<Category> getCategoryByIdAndUserId(long id, long userId) {
     return categoryRepository.findByIdAndUserId(id, userId);
   }
 
@@ -36,7 +36,7 @@ public class CategoryService {
       return categoryRepository.save(category);
     }
     // TODO - if parent category returned by DB is null then throw IllegalStateException
-    Category parentCategory = getCategoryById(category.getParentCategory().getId(), userId).orElse(null);
+    Category parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).orElse(null);
     category.setParentCategory(parentCategory);
     return categoryRepository.save(category);
   }
@@ -46,7 +46,7 @@ public class CategoryService {
   }
 
   public void updateCategory(long id, Category category, long userId) {
-    Optional<Category> receivedCategory = getCategoryById(id, userId);
+    Optional<Category> receivedCategory = getCategoryByIdAndUserId(id, userId);
     if (!receivedCategory.isPresent()) {
       throw new IllegalStateException("Category with id : " + id + " does not exist in database");
     }
@@ -56,7 +56,7 @@ public class CategoryService {
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
     } else {
-      Optional<Category> parentCategory = getCategoryById(category.getParentCategory().getId(), userId);
+      Optional<Category> parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId);
       if (!parentCategory.isPresent()) {
         throw new IllegalStateException("Category with id : " + category.getParentCategory().getId()
             + " does not exist in database");

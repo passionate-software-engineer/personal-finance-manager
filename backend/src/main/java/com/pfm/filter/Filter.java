@@ -47,4 +47,6 @@ public final class Filter {
 
   private String description;
 
+  private long userId;
+
 }

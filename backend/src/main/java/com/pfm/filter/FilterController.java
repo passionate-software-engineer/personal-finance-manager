@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class FilterController implements FilterApi {
   private FilterService filterService;
   private FilterValidator filterValidator;
 
-  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
+  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest, long userId) {
     return Filter.builder()
         .name(filterRequest.getName())
         .dateFrom(filterRequest.getDateFrom())
@@ -27,13 +28,14 @@ public class FilterController implements FilterApi {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
+        .userId(userId)
         .build();
   }
 
   @Override
-  public ResponseEntity<Filter> getFilterById(@PathVariable long id) {
+  public ResponseEntity<Filter> getFilterById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
     log.info("Retrieving filter with id: {}", id);
-    Optional<Filter> filter = filterService.getFilterById(id);
+    Optional<Filter> filter = filterService.getFilterByIdAndByUserId(id, userId);
 
     if (!filter.isPresent()) {
       log.info("Filter with id {} was not found", id);
@@ -45,21 +47,21 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<List<Filter>> getFilters() {
-    return ResponseEntity.ok(filterService.getAllFilters());
+  public ResponseEntity<List<Filter>> getFilters(@RequestAttribute(value = "userId") Long userId) {
+    return ResponseEntity.ok(filterService.getAllFilters(userId));
   }
 
   @Override
-  public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest) {
+  public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest, @RequestAttribute(value = "userId") Long userId) {
     log.info("Adding filter to the database");
 
-    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest);
+    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest, userId);
     if (!validationResult.isEmpty()) {
       log.info("Filter is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Filter filter = convertFilterRequestToFilter(filterRequest);
+    Filter filter = convertFilterRequestToFilter(filterRequest, userId);
 
     Filter createdFilter = filterService.addFilter(filter);
     log.info("Saving filter to the database was successful. Filter id is {}", createdFilter.getId());
@@ -68,19 +70,20 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> updateFilter(@PathVariable long id, @RequestBody FilterRequest filterRequest) {
-    if (!filterService.idExist(id)) {
+  public ResponseEntity<?> updateFilter(@PathVariable long id, @RequestBody FilterRequest filterRequest,
+      @RequestAttribute(value = "userId") Long userId) {
+    if (!filterService.getFilterByIdAndByUserId(id, userId).isPresent()) {
       log.info("No filter with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
 
-    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest);
+    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest, userId);
     if (!validationResult.isEmpty()) {
       log.error("Filter is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Filter filter = convertFilterRequestToFilter(filterRequest);
+    Filter filter = convertFilterRequestToFilter(filterRequest, userId);
 
     filterService.updateFilter(id, filter);
     log.info("Filter with id {} was successfully updated", id);
@@ -89,8 +92,8 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteFilter(@PathVariable long id) {
-    if (!filterService.getFilterById(id).isPresent()) {
+  public ResponseEntity<?> deleteFilter(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+    if (!filterService.getFilterByIdAndByUserId(id,userId).isPresent()) {
       log.info("No filter with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }

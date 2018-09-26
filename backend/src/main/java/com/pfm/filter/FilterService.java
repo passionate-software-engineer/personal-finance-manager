@@ -22,12 +22,16 @@ public class FilterService {
     return filterRepository.findById(id);
   }
 
+  public Optional<Filter> getFilterByIdAndByUserId(long id, long userId) {
+    return filterRepository.findByIdAndUserId(id, userId);
+  }
+
   public void deleteFilter(long id) {
     filterRepository.deleteById(id);
   }
 
-  public List<Filter> getAllFilters() {
-    return StreamSupport.stream(filterRepository.findAll().spliterator(), false)
+  public List<Filter> getAllFilters(long userId) {
+    return StreamSupport.stream(filterRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Filter::getId))
         .collect(Collectors.toList());
   }

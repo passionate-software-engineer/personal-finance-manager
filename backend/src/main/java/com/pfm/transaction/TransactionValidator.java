@@ -32,7 +32,7 @@ public class TransactionValidator {
 
     if (transactionRequest.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
-    } else if (!categoryService.getCategoryById(transactionRequest.getCategoryId(), userId).isPresent()) {
+    } else if (!categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId).isPresent()) {
       validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST));
     }
 

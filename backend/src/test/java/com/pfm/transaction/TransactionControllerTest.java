@@ -42,7 +42,7 @@
 //    transactionRequestToAdd.setCategoryId(1L);
 //
 //    when(transactionValidator.validate(transactionRequestToAdd)).thenReturn(new ArrayList<>());
-//    when(categoryService.getCategoryById(1L)).thenReturn(Optional.empty());
+//    when(categoryService.getCategoryByIdAndUserId(1L)).thenReturn(Optional.empty());
 //    when(accountService.getAccountById(1L)).thenReturn(Optional.empty());
 //
 //    //when
@@ -60,7 +60,7 @@
 //    transactionRequestToAdd.setCategoryId(1L);
 //
 //    when(transactionValidator.validate(transactionRequestToAdd)).thenReturn(new ArrayList<>());
-//    when(categoryService.getCategoryById(1L)).thenReturn(Optional.empty());
+//    when(categoryService.getCategoryByIdAndUserId(1L)).thenReturn(Optional.empty());
 //    when(accountService.getAccountById(1L)).thenReturn(Optional.of(new Account()));
 //
 //    //when
@@ -78,7 +78,7 @@
 //    transactionRequestToAdd.setCategoryId(1L);
 //
 //    when(transactionValidator.validate(transactionRequestToAdd)).thenReturn(new ArrayList<>());
-//    when(categoryService.getCategoryById(1L)).thenReturn(Optional.of(new Category()));
+//    when(categoryService.getCategoryByIdAndUserId(1L)).thenReturn(Optional.of(new Category()));
 //    when(accountService.getAccountById(1L)).thenReturn(Optional.empty());
 //
 //    //when
