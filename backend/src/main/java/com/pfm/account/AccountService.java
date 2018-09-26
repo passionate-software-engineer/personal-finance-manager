@@ -20,7 +20,7 @@ public class AccountService {
     return accountRepository.findById(id);
   }
 
-  public Optional<Account> getAccountById(long id, long userId) {
+  public Optional<Account> getAccountByIdAndUserId(long id, long userId) {
     return accountRepository.findByIdAndUserId(id, userId);
   }
 
@@ -34,8 +34,8 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public void updateAccount(long id, Account account, long userId) {
-    Optional<Account> accountFromDb = getAccountById(id, userId);
+  public void updateAccount(long id, Account account) {
+    Optional<Account> accountFromDb = getAccountById(id);
 
     if (!accountFromDb.isPresent()) {
       throw new IllegalStateException("Account with id: " + id + " does not exist in database");

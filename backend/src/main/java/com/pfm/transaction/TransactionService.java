@@ -25,8 +25,12 @@ public class TransactionService {
     return transactionRepository.findById(id);
   }
 
-  public List<Transaction> getTransactions() {
-    return StreamSupport.stream(transactionRepository.findAll().spliterator(), false)
+  public Optional<Transaction> getTransactionByIdAndUserId(long id, long userId) {
+    return transactionRepository.findByIdAndUserId(id, userId);
+  }
+
+  public List<Transaction> getTransactions(long userId) {
+    return StreamSupport.stream(transactionRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Transaction::getId))
         .collect(Collectors.toList());
   }
@@ -98,7 +102,7 @@ public class TransactionService {
     accountToUpdate.setBalance(operation.apply(accountToUpdate.getBalance(), amount));
 
     //set user id only to run application for testing account api
-    accountService.updateAccount(accountToUpdate.getId(), accountToUpdate,-1);
+    accountService.updateAccount(accountToUpdate.getId(), accountToUpdate);
   }
 
 }

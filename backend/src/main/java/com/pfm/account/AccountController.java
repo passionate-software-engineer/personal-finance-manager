@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -26,7 +25,7 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> getAccountById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
     log.info("Retrieving account with id: {}", id);
 
-    Optional<Account> account = accountService.getAccountById(id, userId);
+    Optional<Account> account = accountService.getAccountByIdAndUserId(id, userId);
 
     if (!account.isPresent()) {
       log.info("Account with id {} was not found", id);
@@ -64,7 +63,7 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> updateAccount(@PathVariable("id") Long id,
       @RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") Long userId) {
 
-    if (!accountService.idExist(id)) {
+    if (!accountService.getAccountByIdAndUserId(id,userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
@@ -79,14 +78,14 @@ public class AccountController implements AccountApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    accountService.updateAccount(id, account, userId);
+    accountService.updateAccount(id, account);
     log.info("Account with id {} was successfully updated", id);
     return ResponseEntity.ok().build();
   }
 
   public ResponseEntity<?> deleteAccount(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) { // TODO deleting account used in transaction / filter throws ugly error
 
-    if (!accountService.getAccountById(id, userId).isPresent()) {
+    if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }

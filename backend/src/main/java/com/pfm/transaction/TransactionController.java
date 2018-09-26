@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +25,9 @@ public class TransactionController implements TransactionApi {
   private AccountService accountService;
 
   @Override
-  public ResponseEntity<Transaction> getTransactionById(@PathVariable long id) {
+  public ResponseEntity<Transaction> getTransactionById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
     log.info("Retrieving transaction with id: {}", id);
-    Optional<Transaction> transaction = transactionService.getTransactionById(id);
+    Optional<Transaction> transaction = transactionService.getTransactionByIdAndUserId(id, userId);
 
     if (!transaction.isPresent()) {
       log.info("Transaction with id {} was not found", id);
@@ -38,23 +39,23 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<List<Transaction>> getTransactions() {
+  public ResponseEntity<List<Transaction>> getTransactions(@RequestAttribute(value = "userId") Long userId) {
     log.info("Retrieving all transactions");
 
-    return ResponseEntity.ok(transactionService.getTransactions());
+    return ResponseEntity.ok(transactionService.getTransactions(userId));
   }
 
   @Override
-  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
+  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") Long userId) {
     log.info("Adding transaction to the database");
 
-    List<String> validationResult = transactionValidator.validate(transactionRequest);
+    List<String> validationResult = transactionValidator.validate(transactionRequest,userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
     Transaction createdTransaction = transactionService.addTransaction(transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
@@ -63,19 +64,20 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> updateTransaction(@PathVariable long id, @RequestBody TransactionRequest transactionRequest) {
-    if (!transactionService.idExist(id)) {
+  public ResponseEntity<?> updateTransaction(@PathVariable long id, @RequestBody TransactionRequest transactionRequest,
+      @RequestAttribute(value = "userId") Long userId) {
+    if (!transactionService.getTransactionByIdAndUserId(id, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
 
-    List<String> validationResult = transactionValidator.validate(transactionRequest);
+    List<String> validationResult = transactionValidator.validate(transactionRequest,userId);
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
     transactionService.updateTransaction(id, transaction);
     log.info("Transaction with id {} was successfully updated", id);
@@ -84,8 +86,8 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteTransaction(@PathVariable long id) {
-    if (!transactionService.getTransactionById(id).isPresent()) {
+  public ResponseEntity<?> deleteTransaction(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+    if (!transactionService.getTransactionByIdAndUserId(id,userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }
@@ -97,7 +99,7 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok().build();
   }
 
-  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
+  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest, long userId) {
     Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
     Optional<Category> transactionCategory = categoryService.getCategoryById(transactionRequest.getCategoryId());
 
@@ -112,6 +114,7 @@ public class TransactionController implements TransactionApi {
         .accountId(transactionRequest.getAccountId())
         .categoryId(transactionRequest.getCategoryId())
         .date(transactionRequest.getDate())
+        .userId(userId)
         .build();
   }
 

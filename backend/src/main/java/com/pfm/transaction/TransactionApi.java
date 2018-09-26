@@ -18,21 +18,21 @@ public interface TransactionApi {
 
   @ApiOperation(value = "Find transaction by id", response = Transaction.class)
   @GetMapping(value = "/{id}")
-  ResponseEntity<Transaction> getTransactionById(long id);
+  ResponseEntity<Transaction> getTransactionById(long id,Long userId);
 
   @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List")
   @GetMapping
-  ResponseEntity<List<Transaction>> getTransactions();
+  ResponseEntity<List<Transaction>> getTransactions(Long userId);
 
   @ApiOperation(value = "Create a new transaction", response = Long.class)
   @PostMapping
-  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
+  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest,Long userId);
 
   @ApiOperation(value = "Update an existing transaction", response = Void.class)
   @PutMapping(value = "/{id}")
-  ResponseEntity<?> updateTransaction(long id, TransactionRequest transactionRequest);
+  ResponseEntity<?> updateTransaction(long id, TransactionRequest transactionRequest,Long userId);
 
   @ApiOperation(value = "Delete an existing transaction", response = Void.class)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<?> deleteTransaction(long id);
+  ResponseEntity<?> deleteTransaction(long id,Long userId);
 }
