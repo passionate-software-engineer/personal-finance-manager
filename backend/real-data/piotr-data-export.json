@@ -68,11 +68,11 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "46572.50"
+      "balance": "53737.50"
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "432.35"
+      "balance": "306.00"
     },
     {
       "name": "kantor Alior - GBP",
@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "8739.30"
+      "balance": "10168.56"
     },
     {
       "name": "IKE",
@@ -92,7 +92,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "380.00"
+      "balance": "298.00"
     },
     {
       "name": "Gotówka - euro",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "7107.81"
+      "balance": "7275.04"
     },
     {
       "name": "Monika - pożyczka",
@@ -116,7 +116,7 @@
     },
     {
       "name": "mBank",
-      "balance": "14445.63"
+      "balance": "13953.99"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -196,11 +196,11 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "46572.50"
+          "balance": "53737.50"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "432.35"
+          "balance": "306.00"
         },
         {
           "name": "kantor Alior - GBP",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "8739.30"
+          "balance": "10168.56"
         },
         {
           "name": "IKE",
@@ -220,7 +220,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "380.00"
+          "balance": "298.00"
         },
         {
           "name": "Gotówka - euro",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "7107.81"
+          "balance": "7275.04"
         },
         {
           "name": "Monika - pożyczka",
@@ -244,7 +244,7 @@
         },
         {
           "name": "mBank",
-          "balance": "14445.63"
+          "balance": "13953.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -664,6 +664,104 @@
           "account": "kantor Alior - EUR",
           "price": "-1903.76",
           "date": "2018-09-22"
+        },
+        {
+          "description": "Sudety - jedzenie - kolacja",
+          "category": "Jedzenie",
+          "account": "mBank",
+          "price": "-25.00",
+          "date": "2018-09-22"
+        },
+        {
+          "description": "Sudety - jedzenie - schronisko",
+          "category": "Jedzenie",
+          "account": "mBank",
+          "price": "-18.00",
+          "date": "2018-09-22"
+        },
+        {
+          "description": "Sudety - nocleg - Bukowy Dworek",
+          "category": "Wyjazdy - noclegi",
+          "account": "mBank",
+          "price": "-115.00",
+          "date": "2018-09-22"
+        },
+        {
+          "description": "Wieża widokowa Chelmiec",
+          "category": "Wyjazdy",
+          "account": "Gotówka",
+          "price": "-4.00",
+          "date": "2018-09-23"
+        },
+        {
+          "description": "Sudety paliwo",
+          "category": "Paliwo",
+          "account": "mBank",
+          "price": "-152.61",
+          "date": "2018-09-23"
+        },
+        {
+          "description": "Sudety paliwo",
+          "category": "Paliwo",
+          "account": "Ania - rozliczenie",
+          "price": "76.31",
+          "date": "2018-09-23"
+        },
+        {
+          "description": "Lekarstwa",
+          "category": "Zdrowie",
+          "account": "mBank",
+          "price": "-55.48",
+          "date": "2018-09-24"
+        },
+        {
+          "description": "Lekarstwa",
+          "category": "Zdrowie",
+          "account": "Ania - rozliczenie",
+          "price": "27.74",
+          "date": "2018-09-24"
+        },
+        {
+          "description": "Silesia Maraton - hotel",
+          "category": "Wyjazdy",
+          "account": "mBank",
+          "price": "-125.55",
+          "date": "2018-09-24"
+        },
+        {
+          "description": "Badania",
+          "category": "Zdrowie",
+          "account": "Gotówka",
+          "price": "-78.00",
+          "date": "2018-09-25"
+        },
+        {
+          "description": "Tatralandia - sylwester",
+          "category": "Rozrywka",
+          "account": "kantor Alior - EUR",
+          "price": "-126.35",
+          "date": "2018-09-26"
+        },
+        {
+          "description": "Tatralandia - sylwester",
+          "category": "Rozrywka",
+          "account": "Ania - rozliczenie",
+          "price": "63.18",
+          "date": "2018-09-26"
+        },
+        {
+          "description": "Crossover (10-16.09)",
+          "category": "Crossover",
+          "account": "kantor Alior - USD",
+          "price": "7165.00",
+          "date": "2018-09-27"
+        },
+        {
+          "description": "Coderstrust - licencja",
+          "category": "CodersTrust - licencja",
+          "account": "Idea Bank",
+          "price": "1429.26",
+          "date": "2018-09-27"
         }
       ]
     },
@@ -4598,6 +4696,14 @@
         "id": 37,
         "name": "Samochód"
       }
+    },
+    {
+      "id": 39,
+      "name": "Zdrowie"
+    },
+    {
+      "id": 40,
+      "name": "Wyjazdy"
     }
   ]
 }
