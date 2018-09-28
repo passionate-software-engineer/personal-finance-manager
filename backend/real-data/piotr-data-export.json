@@ -3263,13 +3263,27 @@
           "category": "Inne Przychody",
           "account": "Idea Bank",
           "price": "30.00",
-          "date": "2018-03-04"
+          "date": "2018-03-02"
         },
         {
           "description": "ZUS - marzec",
           "category": "ZUS",
           "account": "Idea Bank",
           "price": "-504.66",
+          "date": "2018-03-03"
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "account": "Idea Bank",
+          "price": "-19.90",
+          "date": "2018-03-04"
+        },
+        {
+          "description": "Zwrot podatku (IKZE)",
+          "category": "Podatek dochodowy",
+          "account": "Idea Bank",
+          "price": "972.00",
           "date": "2018-03-05"
         },
         {
@@ -3301,18 +3315,11 @@
           "date": "2018-03-07"
         },
         {
-          "description": "Audioteka",
-          "category": "Rozrywka",
+          "description": "Leasing - marzec",
+          "category": "Leasing samochodu",
           "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-03-08"
-        },
-        {
-          "description": "Zwrot podatku (IKZE)",
-          "category": "Podatek dochodowy",
-          "account": "Idea Bank",
-          "price": "972.00",
-          "date": "2018-03-08"
+          "price": "-2308.97",
+          "date": "2018-03-07"
         },
         {
           "description": "Crossover 19-25.02",
@@ -3332,8 +3339,22 @@
           "description": "CT - luty",
           "category": "CodersTrust - szkolenia",
           "account": "Idea Bank",
-          "price": "14041.20",
-          "date": "2018-03-15"
+          "price": "14932.20",
+          "date": "2018-03-09"
+        },
+        {
+          "description": "Zakupy - La Restinga",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-66.96",
+          "date": "2018-03-09"
+        },
+        {
+          "description": "Zakupy - La Resting",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-47.03",
+          "date": "2018-03-10"
         },
         {
           "description": "Paliwo, promy itp",
@@ -3378,11 +3399,11 @@
           "date": "2018-03-15"
         },
         {
-          "description": "Leasing - marzec",
-          "category": "Leasing samochodu",
+          "description": "Telefon",
+          "category": "Telefon",
           "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-03-16"
+          "price": "-24.32",
+          "date": "2018-03-15"
         },
         {
           "description": "Leasing - marzec - Ania zwrot",
@@ -3392,18 +3413,32 @@
           "date": "2018-03-16"
         },
         {
-          "description": "Telefon",
-          "category": "Telefon",
+          "description": "Zakupy - Las Galletas",
+          "category": "Zakupy",
           "account": "Idea Bank",
-          "price": "-24.31",
-          "date": "2018-03-18"
+          "price": "-117.91",
+          "date": "2018-03-16"
         },
         {
-          "description": "Księgowy - rozliczenie drugi PIT",
-          "category": "Księgowość",
+          "description": "Zakupy Costa del Sil",
+          "category": "Zakupy",
           "account": "Idea Bank",
-          "price": "-61.50",
-          "date": "2018-03-19"
+          "price": "-127.83",
+          "date": "2018-03-17"
+        },
+        {
+          "description": "Paliwo - costa silencio",
+          "category": "Paliwo",
+          "account": "Idea Bank",
+          "price": "-201.62",
+          "date": "2018-03-17"
+        },
+        {
+          "description": "Zakupy Arona",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-54.13",
+          "date": "2018-03-17"
         },
         {
           "description": "Crossover 05-11.03",
@@ -3424,13 +3459,6 @@
           "category": "Utrzymanie domu",
           "account": "Ania - rozliczenie",
           "price": "60.00",
-          "date": "2018-03-25"
-        },
-        {
-          "description": "Projekt przebudowy domu",
-          "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-9500.00",
           "date": "2018-03-25"
         },
         {
@@ -3457,13 +3485,6 @@
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-363.29",
-          "date": "2018-03-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
           "account": "Ania - rozliczenie",
           "price": "363.29",
           "date": "2018-03-25"
@@ -3483,24 +3504,66 @@
           "date": "2018-03-25"
         },
         {
-          "description": "Safari Egipt zaliczka",
-          "category": "Rozrywka",
+          "description": "Zgorzelec - Hot dogi :)",
+          "category": "Jedzenie",
           "account": "Idea Bank",
-          "price": "-1660.00",
-          "date": "2018-03-28"
+          "price": "-4.00",
+          "date": "2018-03-25"
         },
         {
-          "description": "Kabel HDMI",
-          "category": "Koszty prowadzenia firmy",
+          "description": "Zgorzelec - paliwo",
+          "category": "Paliwo",
           "account": "Idea Bank",
-          "price": "-191.84",
-          "date": "2018-03-28"
+          "price": "-240.38",
+          "date": "2018-03-25"
+        },
+        {
+          "description": "A4 oplata",
+          "category": "Transport",
+          "account": "Idea Bank",
+          "price": "-16.20",
+          "date": "2018-03-25"
+        },
+        {
+          "description": "Beaune - Francja - paliwo",
+          "category": "Paliwo",
+          "account": "Idea Bank",
+          "price": "-378.22",
+          "date": "2018-03-25"
+        },
+        {
+          "description": "Księgowy - rozliczenie drugi PIT",
+          "category": "Księgowość",
+          "account": "Idea Bank",
+          "price": "-61.50",
+          "date": "2018-03-26"
         },
         {
           "description": "Decathlon - zele energetyczne itp",
           "category": "Sport",
           "account": "Idea Bank",
-          "price": "-150.00",
+          "price": "-140.86",
+          "date": "2018-03-26"
+        },
+        {
+          "description": "Safari Egipt zaliczka",
+          "category": "Rozrywka",
+          "account": "Idea Bank",
+          "price": "-1660.00",
+          "date": "2018-03-27"
+        },
+        {
+          "description": "Kabel HDMI",
+          "category": "Koszty prowadzenia firmy",
+          "account": "Idea Bank",
+          "price": "-200.98",
+          "date": "2018-03-27"
+        },
+        {
+          "description": "Projekt przebudowy domu",
+          "category": "Remont domu",
+          "account": "Idea Bank",
+          "price": "-9500.00",
           "date": "2018-03-28"
         },
         {
