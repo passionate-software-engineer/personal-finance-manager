@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "10096.94"
+      "balance": "10168.56"
     },
     {
       "name": "IKE",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9004.05"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "10096.94"
+          "balance": "10168.56"
         },
         {
           "name": "IKE",
@@ -787,7 +787,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "4966.14"
+          "balance": "5037.76"
         },
         {
           "name": "IKE",
@@ -849,7 +849,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9004.05"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -1442,7 +1442,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "30347.63"
+          "balance": "30419.25"
         },
         {
           "name": "IKE",
@@ -1504,7 +1504,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "4966.14"
+          "balance": "5037.76"
         },
         {
           "name": "IKE",
@@ -1859,7 +1859,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "16954.16"
+          "balance": "17025.78"
         },
         {
           "name": "IKE",
@@ -1921,7 +1921,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "30347.63"
+          "balance": "30419.25"
         },
         {
           "name": "IKE",
@@ -2367,7 +2367,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "12958.57"
+          "balance": "13030.19"
         },
         {
           "name": "IKE",
@@ -2429,7 +2429,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "16954.16"
+          "balance": "17025.78"
         },
         {
           "name": "IKE",
@@ -2777,7 +2777,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7669.27"
+          "balance": "7740.89"
         },
         {
           "name": "IKE",
@@ -2839,7 +2839,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "12958.57"
+          "balance": "13030.19"
         },
         {
           "name": "IKE",
@@ -3152,7 +3152,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7533.54"
+          "balance": "7605.16"
         },
         {
           "name": "IKE",
@@ -3214,7 +3214,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7669.27"
+          "balance": "7740.89"
         },
         {
           "name": "IKE",
@@ -3596,7 +3596,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7533.54"
+          "balance": "7605.16"
         },
         {
           "name": "IKE",
@@ -3655,6 +3655,27 @@
           "date": "2018-02-01"
         },
         {
+          "description": "ZUS - Luty",
+          "category": "ZUS",
+          "account": "Idea Bank",
+          "price": "-504.66",
+          "date": "2018-02-01"
+        },
+        {
+          "description": "Zwrot za wymiane szyby",
+          "category": "Samochód",
+          "account": "Idea Bank",
+          "price": "2675.64",
+          "date": "2018-02-01"
+        },
+        {
+          "description": "Idea Bank Premia",
+          "category": "Inne Przychody",
+          "account": "Idea Bank",
+          "price": "30.00",
+          "date": "2018-02-02"
+        },
+        {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
           "account": "kantor Alior - USD",
@@ -3669,11 +3690,11 @@
           "date": "2018-02-03"
         },
         {
-          "description": "Idea Bank Premia",
-          "category": "Inne Przychody",
+          "description": "Jardin de Cactus",
+          "category": "Wyjazdy",
           "account": "Idea Bank",
-          "price": "30.00",
-          "date": "2018-02-04"
+          "price": "-31.31",
+          "date": "2018-02-03"
         },
         {
           "description": "Crossover 15-21.01",
@@ -3683,11 +3704,11 @@
           "date": "2018-02-04"
         },
         {
-          "description": "ZUS - Luty",
-          "category": "ZUS",
+          "description": "Audioteka",
+          "category": "Rozrywka",
           "account": "Idea Bank",
-          "price": "-504.66",
-          "date": "2018-02-05"
+          "price": "-19.90",
+          "date": "2018-02-04"
         },
         {
           "description": "Nurkowanie - Fuertaventura",
@@ -3709,13 +3730,6 @@
           "account": "kantor Alior - EUR",
           "price": "-279.94",
           "date": "2018-02-07"
-        },
-        {
-          "description": "Audioteka",
-          "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-02-08"
         },
         {
           "description": "Zwiedzanie - Papagayo, kaktusy, prom itp",
@@ -3753,11 +3767,18 @@
           "date": "2018-02-09"
         },
         {
-          "description": "Księgowy - rozliczenie roku",
-          "category": "Księgowość",
+          "description": "Restauracja",
+          "category": "Jedzenie",
           "account": "Idea Bank",
-          "price": "-61.50",
-          "date": "2018-02-09"
+          "price": "-84.75",
+          "date": "2018-02-10"
+        },
+        {
+          "description": "Nurkowanie",
+          "category": "Nurkowanie",
+          "account": "Idea Bank",
+          "price": "-279.94",
+          "date": "2018-02-10"
         },
         {
           "description": "Crossover 22-28.01",
@@ -3781,6 +3802,20 @@
           "date": "2018-02-14"
         },
         {
+          "description": "Telefon",
+          "category": "Telefon",
+          "account": "Idea Bank",
+          "price": "-22.75",
+          "date": "2018-02-15"
+        },
+        {
+          "description": "Księgowy - rozliczenie roku",
+          "category": "Księgowość",
+          "account": "Idea Bank",
+          "price": "-61.50",
+          "date": "2018-02-16"
+        },
+        {
           "description": "Paliwo",
           "category": "Paliwo",
           "account": "kantor Alior - EUR",
@@ -3795,24 +3830,31 @@
           "date": "2018-02-16"
         },
         {
-          "description": "Telefon",
-          "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-22.75",
-          "date": "2018-02-18"
-        },
-        {
-          "description": "Zwrot za wymiane szyby",
-          "category": "Samochód",
-          "account": "Idea Bank",
-          "price": "2675.64",
-          "date": "2018-02-20"
-        },
-        {
           "description": "Zwrot za wymiane szyby",
           "category": "Samochód",
           "account": "Ania - rozliczenie",
           "price": "-1337.82",
+          "date": "2018-02-20"
+        },
+        {
+          "description": "Monika pożyczka",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "-8400.00",
+          "date": "2018-02-20"
+        },
+        {
+          "description": "Leasing - luty",
+          "category": "Leasing samochodu",
+          "account": "Idea Bank",
+          "price": "-2308.97",
+          "date": "2018-02-20"
+        },
+        {
+          "description": "CT - styczen",
+          "category": "CodersTrust - szkolenia",
+          "account": "Idea Bank",
+          "price": "16260.60",
           "date": "2018-02-20"
         },
         {
@@ -3839,22 +3881,8 @@
         {
           "description": "Monika pożyczka",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-8400.00",
-          "date": "2018-02-25"
-        },
-        {
-          "description": "Monika pożyczka",
-          "category": "Przelewy między kontami",
           "account": "Monika - pożyczka",
           "price": "8400.00",
-          "date": "2018-02-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "1709.68",
           "date": "2018-02-25"
         },
         {
@@ -3879,13 +3907,6 @@
           "date": "2018-02-25"
         },
         {
-          "description": "Leasing - luty",
-          "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-02-26"
-        },
-        {
           "description": "Leasing - luty - Ania zwrot",
           "category": "Leasing samochodu",
           "account": "Ania - rozliczenie",
@@ -3898,13 +3919,6 @@
           "account": "kantor Alior - EUR",
           "price": "-118.72",
           "date": "2018-02-27"
-        },
-        {
-          "description": "CT - styczen",
-          "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "14083.30",
-          "date": "2018-02-28"
         },
         {
           "description": "Crossover 12-18.02",
