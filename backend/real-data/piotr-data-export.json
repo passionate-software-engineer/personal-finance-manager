@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "10168.56"
+      "balance": "10096.94"
     },
     {
       "name": "IKE",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9075.67"
+          "balance": "9004.05"
         },
         {
           "name": "IKE",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "10168.56"
+          "balance": "10096.94"
         },
         {
           "name": "IKE",
@@ -787,7 +787,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5037.76"
+          "balance": "4966.14"
         },
         {
           "name": "IKE",
@@ -849,7 +849,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9075.67"
+          "balance": "9004.05"
         },
         {
           "name": "IKE",
@@ -1442,7 +1442,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "30419.25"
+          "balance": "30347.63"
         },
         {
           "name": "IKE",
@@ -1504,7 +1504,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5037.76"
+          "balance": "4966.14"
         },
         {
           "name": "IKE",
@@ -1859,7 +1859,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "17025.78"
+          "balance": "16954.16"
         },
         {
           "name": "IKE",
@@ -1921,7 +1921,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "30419.25"
+          "balance": "30347.63"
         },
         {
           "name": "IKE",
@@ -2367,7 +2367,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "13030.19"
+          "balance": "12958.57"
         },
         {
           "name": "IKE",
@@ -2429,7 +2429,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "17025.78"
+          "balance": "16954.16"
         },
         {
           "name": "IKE",
@@ -2777,7 +2777,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7740.89"
+          "balance": "7669.27"
         },
         {
           "name": "IKE",
@@ -2839,7 +2839,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "13030.19"
+          "balance": "12958.57"
         },
         {
           "name": "IKE",
@@ -3152,7 +3152,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7605.16"
+          "balance": "7533.54"
         },
         {
           "name": "IKE",
@@ -3214,7 +3214,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7740.89"
+          "balance": "7669.27"
         },
         {
           "name": "IKE",
@@ -3534,7 +3534,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "547.32"
+          "balance": "475.70"
         },
         {
           "name": "IKE",
@@ -3596,7 +3596,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7605.16"
+          "balance": "7533.54"
         },
         {
           "name": "IKE",
@@ -4013,7 +4013,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "547.32"
+          "balance": "475.70"
         },
         {
           "name": "IKE",
@@ -4058,6 +4058,13 @@
       ],
       "transactions": [
         {
+          "description": "Idea Bank Premia",
+          "category": "Inne Przychody",
+          "account": "Idea Bank",
+          "price": "50.00",
+          "date": "2018-01-02"
+        },
+        {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
           "account": "kantor Alior - USD",
@@ -4079,6 +4086,27 @@
           "date": "2018-01-03"
         },
         {
+          "description": "ZUS - Styczeń",
+          "category": "ZUS",
+          "account": "Idea Bank",
+          "price": "-473.20",
+          "date": "2018-01-03"
+        },
+        {
+          "description": "Podatek dochodowy Q4 2017",
+          "category": "Podatek dochodowy",
+          "account": "Idea Bank",
+          "price": "-5746.00",
+          "date": "2018-01-03"
+        },
+        {
+          "description": "VAT Q4 2017",
+          "category": "VAT",
+          "account": "Idea Bank",
+          "price": "-759.00",
+          "date": "2018-01-03"
+        },
+        {
           "description": "Crossover 18-24.12",
           "category": "Crossover",
           "account": "kantor Alior - USD",
@@ -4086,18 +4114,11 @@
           "date": "2018-01-04"
         },
         {
-          "description": "Idea Bank Premia",
-          "category": "Inne Przychody",
+          "description": "Audioteka",
+          "category": "Rozrywka",
           "account": "Idea Bank",
-          "price": "50.00",
+          "price": "-19.90",
           "date": "2018-01-04"
-        },
-        {
-          "description": "ZUS - Styczeń",
-          "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-473.20",
-          "date": "2018-01-05"
         },
         {
           "description": "Noclegi Gran Canaria",
@@ -4149,25 +4170,18 @@
           "date": "2018-01-06"
         },
         {
+          "description": "Alior - na prowizje",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "-36.00",
+          "date": "2018-01-06"
+        },
+        {
           "description": "Nurkowanie - Top Diving Gran Canaria",
           "category": "Nurkowanie",
           "account": "kantor Alior - EUR",
           "price": "-542.72",
           "date": "2018-01-07"
-        },
-        {
-          "description": "Audioteka",
-          "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-01-08"
-        },
-        {
-          "description": "Księgowy - Styczeń",
-          "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-01-09"
         },
         {
           "description": "Noclegi Fuerteventura - zaliczka",
@@ -4191,6 +4205,13 @@
           "date": "2018-01-10"
         },
         {
+          "description": "Księgowy - Styczeń",
+          "category": "Księgowość",
+          "account": "Idea Bank",
+          "price": "-123.00",
+          "date": "2018-01-13"
+        },
+        {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
           "account": "kantor Alior - USD",
@@ -4212,18 +4233,32 @@
           "date": "2018-01-14"
         },
         {
-          "description": "Podatek dochodowy Q4 2017",
-          "category": "Podatek dochodowy",
+          "description": "Telefon",
+          "category": "Telefon",
           "account": "Idea Bank",
-          "price": "-5746.00",
+          "price": "-21.34",
           "date": "2018-01-15"
         },
         {
-          "description": "VAT Q4 2017",
-          "category": "VAT",
+          "description": "Leasing - styczeń",
+          "category": "Leasing samochodu",
           "account": "Idea Bank",
-          "price": "-759.00",
+          "price": "-2308.97",
           "date": "2018-01-15"
+        },
+        {
+          "description": "Zakupy - Gran Canaria",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-250.04",
+          "date": "2018-01-16"
+        },
+        {
+          "description": "Zakupy - Gran Canaria",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-95.14",
+          "date": "2018-01-17"
         },
         {
           "description": "Crossover Interviews - Grudzień",
@@ -4233,18 +4268,32 @@
           "date": "2018-01-18"
         },
         {
-          "description": "Telefon",
-          "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-21.34",
-          "date": "2018-01-18"
-        },
-        {
           "description": "Crossover 01-07.01",
           "category": "Crossover",
           "account": "kantor Alior - USD",
           "price": "7165.00",
           "date": "2018-01-18"
+        },
+        {
+          "description": "Przelew Ania PLN",
+          "category": "Przelewy między kontami",
+          "account": "Idea Bank",
+          "price": "-4000.00",
+          "date": "2018-01-18"
+        },
+        {
+          "description": "Zakupy - Gran Canaria",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-4.74",
+          "date": "2018-01-18"
+        },
+        {
+          "description": "Zakupy - Gran Canaria",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-39.58",
+          "date": "2018-01-19"
         },
         {
           "description": "Nurkowanie - North Gran Canaria",
@@ -4263,22 +4312,8 @@
         {
           "description": "Przelew Alior PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-27.00",
-          "date": "2018-01-25"
-        },
-        {
-          "description": "Przelew Alior PLN",
-          "category": "Przelewy między kontami",
           "account": "kantor Alior - PLN",
           "price": "27.00",
-          "date": "2018-01-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-4398.50",
           "date": "2018-01-25"
         },
         {
@@ -4317,13 +4352,6 @@
           "date": "2018-01-25"
         },
         {
-          "description": "Leasing - styczeń",
-          "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-01-26"
-        },
-        {
           "description": "Leasing - styczeń - Ania zwrot",
           "category": "Leasing samochodu",
           "account": "Ania - rozliczenie",
@@ -4357,6 +4385,13 @@
           "account": "Ania - rozliczenie",
           "price": "75.00",
           "date": "2018-01-26"
+        },
+        {
+          "description": "Zakupy - Gran Canaria",
+          "category": "Zakupy",
+          "account": "Idea Bank",
+          "price": "-71.62",
+          "date": "2018-01-29"
         },
         {
           "description": "Wydatki na dziecko",
