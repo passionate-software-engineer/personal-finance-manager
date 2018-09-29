@@ -7,6 +7,7 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
+import static com.pfm.config.MessagesProvider.PROVIDED_CONNECTED_TRANSACTION_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.AccountService;
@@ -22,6 +23,7 @@ public class TransactionValidator {
 
   private CategoryService categoryService;
   private AccountService accountService;
+  private TransactionService transactionService;
 
   public List<String> validate(TransactionRequest transactionRequest) {
     List<String> validationErrors = new ArrayList<>();
@@ -36,19 +38,19 @@ public class TransactionValidator {
       validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST));
     }
 
-    if (transactionRequest.getAccountId() == null) {
-      validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
-    } else if (!accountService.idExist(transactionRequest.getAccountId())) {
-      validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST));
-    }
+//    if (transactionRequest.getAccountId() == null) {
+//      validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
+//    } else if (!accountService.idExist(transactionRequest.getAccountId())) {
+//      validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST));
+//    }
 
     if (transactionRequest.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
 
-    if (transactionRequest.getPrice() == null) {
-      validationErrors.add(getMessage(EMPTY_TRANSACTION_PRICE));
-    }
+//    if (transactionRequest.getPrice() == null) {
+//      validationErrors.add(getMessage(EMPTY_TRANSACTION_PRICE));
+//    }
 
     return validationErrors;
   }

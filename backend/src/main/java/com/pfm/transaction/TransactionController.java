@@ -1,6 +1,5 @@
 package com.pfm.transaction;
 
-import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
@@ -98,20 +97,19 @@ public class TransactionController implements TransactionApi {
   }
 
   private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
-    Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
+//    Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
     Optional<Category> transactionCategory = categoryService.getCategoryById(transactionRequest.getCategoryId());
 
     // just double check - it should be already verified by validator
-    if (!(transactionAccount.isPresent() && transactionCategory.isPresent())) {
-      throw new IllegalStateException("Account or category was not provided");
-    }
+//    if (!(transactionAccount.isPresent() && transactionCategory.isPresent())) {
+//      throw new IllegalStateException("Account or category was not provided");
+//    } // TODO add validation
 
     return Transaction.builder()
         .description(transactionRequest.getDescription())
-        .price(transactionRequest.getPrice())
-        .accountId(transactionRequest.getAccountId())
         .categoryId(transactionRequest.getCategoryId())
         .date(transactionRequest.getDate())
+        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .build();
   }
 

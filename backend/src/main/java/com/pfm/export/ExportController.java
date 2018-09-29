@@ -5,8 +5,10 @@ import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.export.ExportResult.ExportAccount;
+import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
+import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
 import java.time.LocalDate;
@@ -46,15 +48,23 @@ public class ExportController implements ExportApi {
 
       monthToTransactionMap.computeIfAbsent(key, k -> new ArrayList<>());
 
-      monthToTransactionMap.get(key).add(
-          ExportTransaction.builder()
-              .description(transaction.getDescription())
-              .price(transaction.getPrice())
-              .date(transaction.getDate())
-              .account(accountService.getAccountById(transaction.getAccountId()).orElse(new Account()).getName())
-              .category(categoryService.getCategoryById(transaction.getCategoryId()).orElse(new Category()).getName())
-              .build()
-      );
+      ExportTransaction exportTransaction = ExportTransaction.builder()
+          .description(transaction.getDescription())
+          .date(transaction.getDate())
+          .accountPriceEntries(new ArrayList<>())
+          .category(categoryService.getCategoryById(transaction.getCategoryId()).orElse(new Category()).getName())
+          .build();
+
+      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+        exportTransaction.getAccountPriceEntries().add(
+            ExportAccountPriceEntry.builder()
+                .account(accountService.getAccountById(entry.getAccountId()).orElse(new Account()).getName())
+                .price(entry.getPrice())
+                .build()
+        );
+      }
+
+      monthToTransactionMap.get(key).add(exportTransaction);
     }
 
     result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts()));
@@ -65,11 +75,14 @@ public class ExportController implements ExportApi {
 
       List<ExportAccount> accounts = copyAccounts(accountsStateAtTheEndOfPeriod);
 
+      // subtract transaction value from account state to calculate state before transaction
       for (ExportTransaction transaction : transactionsInMonth.getValue()) {
-        for (ExportAccount account : accounts) { // TODO replace with faster Hashmap
-          if (transaction.getAccount().equals(account.getName())) {
-            account.setBalance(account.getBalance().subtract(transaction.getPrice()));
-            break;
+        for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+          for (ExportAccount account : accounts) { // TODO replace with faster Hashmap
+            if (entry.getAccount().equals(account.getName())) {
+              account.setBalance(account.getBalance().subtract(entry.getPrice()));
+              break;
+            }
           }
         }
       }
@@ -118,15 +131,34 @@ public class ExportController implements ExportApi {
 
     for (ExportPeriod period : inputData.getPeriods()) {
       for (ExportTransaction transaction : period.getTransactions()) {
-        transactionService.addTransaction(
-            Transaction.builder()
-                .description(transaction.getDescription())
-                .price(transaction.getPrice())
-                .date(transaction.getDate())
-                .accountId(accountNameToIdMap.get(transaction.getAccount()))
-                .categoryId(categoryNameToIdMap.get(transaction.getCategory()))
-                .build()
-        );
+        Transaction newTransaction = Transaction.builder()
+            .description(transaction.getDescription())
+            .accountPriceEntries(new ArrayList<>())
+            .date(transaction.getDate())
+            .categoryId(categoryNameToIdMap.get(transaction.getCategory()))
+            .build();
+
+        if (transaction.getAccountPriceEntries() != null) {
+          for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+            newTransaction.getAccountPriceEntries().add(
+                AccountPriceEntry.builder()
+                    .accountId(accountNameToIdMap.get(entry.getAccount()))
+                    .price(entry.getPrice())
+                    .build()
+            );
+          }
+        }
+
+        if (transaction.getAccount() != null && transaction.getPrice() != null) { // TODO remove after migration
+          newTransaction.getAccountPriceEntries().add(
+              AccountPriceEntry.builder()
+                  .accountId(accountNameToIdMap.get(transaction.getAccount()))
+                  .price(transaction.getPrice())
+                  .build()
+          );
+        }
+
+        transactionService.addTransaction(newTransaction);
       }
     }
 
