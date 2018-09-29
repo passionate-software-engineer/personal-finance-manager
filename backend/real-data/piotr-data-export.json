@@ -3539,14 +3539,14 @@
           "date": "2018-03-25"
         },
         {
-          "description": "Przelew Ania PLN",
+          "description": "Ania Gotowka EUR",
           "category": "Przelewy między kontami",
           "account": "Gotówka - euro",
           "price": "-60.76",
           "date": "2018-03-25"
         },
         {
-          "description": "Przelew Ania PLN",
+          "description": "Ania Gotowka EUR",
           "category": "Przelewy między kontami",
           "account": "Ania - rozliczenie",
           "price": "60.76",
@@ -4012,6 +4012,13 @@
           "date": "2018-02-20"
         },
         {
+          "description": "Monika pożyczka",
+          "category": "Przelewy między kontami",
+          "account": "Monika - pożyczka",
+          "price": "8400.00",
+          "date": "2018-02-20"
+        },
+        {
           "description": "Crossover 05-11.02",
           "category": "Crossover",
           "account": "kantor Alior - USD",
@@ -4044,13 +4051,6 @@
           "category": "Przelewy między kontami",
           "account": "Ania - rozliczenie",
           "price": "-490.94",
-          "date": "2018-02-25"
-        },
-        {
-          "description": "Monika pożyczka",
-          "category": "Przelewy między kontami",
-          "account": "Monika - pożyczka",
-          "price": "8400.00",
           "date": "2018-02-25"
         },
         {
@@ -4096,8 +4096,8 @@
           "date": "2018-02-28"
         },
         {
-          "description": "wyrownanie",
-          "category": "Przelewy między kontami",
+          "description": "Drobne wydatki",
+          "category": "Inne Koszty",
           "account": "Gotówka - euro",
           "price": "-23.32",
           "date": "2018-02-28"
