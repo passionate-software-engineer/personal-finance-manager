@@ -72,7 +72,7 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "366.21"
+      "balance": "306.00"
     },
     {
       "name": "kantor Alior - GBP",
@@ -138,7 +138,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1631.00"
+          "balance": "1570.79"
         },
         {
           "name": "kantor Alior - GBP",
@@ -200,7 +200,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "366.21"
+          "balance": "306.00"
         },
         {
           "name": "kantor Alior - GBP",
@@ -779,7 +779,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2135.99"
+          "balance": "2075.78"
         },
         {
           "name": "kantor Alior - GBP",
@@ -841,7 +841,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1631.00"
+          "balance": "1570.79"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1434,7 +1434,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2135.99"
+          "balance": "2075.78"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1496,7 +1496,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2135.99"
+          "balance": "2075.78"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1851,7 +1851,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2390.39"
+          "balance": "2330.18"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1913,7 +1913,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2135.99"
+          "balance": "2075.78"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2359,7 +2359,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "542.09"
+          "balance": "481.88"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2421,7 +2421,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2390.39"
+          "balance": "2330.18"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2769,7 +2769,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "533.61"
+          "balance": "481.88"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2831,7 +2831,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "542.09"
+          "balance": "481.88"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2905,13 +2905,6 @@
           "date": "2018-04-05"
         },
         {
-          "description": "Zakupy",
-          "category": "Zakupy",
-          "account": "kantor Alior - EUR",
-          "price": "-191.90",
-          "date": "2018-04-06"
-        },
-        {
           "description": "Zakupy - Ania zwrot",
           "category": "Zakupy",
           "account": "Ania - rozliczenie",
@@ -2951,13 +2944,6 @@
           "category": "Transport",
           "account": "Idea Bank",
           "price": "360.40",
-          "date": "2018-04-10"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "200.38",
           "date": "2018-04-10"
         },
         {
@@ -3206,7 +3192,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "533.61"
+          "balance": "481.88"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3273,6 +3259,13 @@
           "date": "2018-03-02"
         },
         {
+          "description": "BAR RESTAURANTE LA GAVBARLOVENTO ESP",
+          "category": "Zakupy - jedzenie",
+          "account": "kantor Alior - EUR",
+          "price": "-60.21",
+          "date": "2018-03-02"
+        },
+        {
           "description": "ZUS - marzec",
           "category": "ZUS",
           "account": "Idea Bank",
@@ -3294,11 +3287,11 @@
           "date": "2018-03-05"
         },
         {
-          "description": "Jedzenie",
-          "category": "Zakupy - jedzenie",
+          "description": "Naviera Armas: Teneryfa - Hiszpania (Huelva)",
+          "category": "Transport",
           "account": "kantor Alior - EUR",
-          "price": "-113.99",
-          "date": "2018-03-06"
+          "price": "-1690.87",
+          "date": "2018-03-05"
         },
         {
           "description": "Jedzenie - Ania zwrot",
@@ -3318,7 +3311,7 @@
           "description": "USD -> EUR",
           "category": "Wymiana walut",
           "account": "kantor Alior - EUR",
-          "price": "3460.07",
+          "price": "3399.89",
           "date": "2018-03-07"
         },
         {
@@ -3333,6 +3326,13 @@
           "category": "Crossover",
           "account": "kantor Alior - USD",
           "price": "7165.00",
+          "date": "2018-03-08"
+        },
+        {
+          "description": "Noclegi - Teneryfa - Costa del Silencio",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-2232.40",
           "date": "2018-03-08"
         },
         {
@@ -3366,13 +3366,6 @@
         {
           "description": "Paliwo, promy itp",
           "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-4031.18",
-          "date": "2018-03-15"
-        },
-        {
-          "description": "Paliwo, promy itp",
-          "category": "Rozrywka",
           "account": "Ania - rozliczenie",
           "price": "2015.59",
           "date": "2018-03-15"
@@ -3382,13 +3375,6 @@
           "category": "Crossover",
           "account": "kantor Alior - USD",
           "price": "7165.00",
-          "date": "2018-03-15"
-        },
-        {
-          "description": "zakupy, paliwo itp",
-          "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-2514.13",
           "date": "2018-03-15"
         },
         {
@@ -3448,11 +3434,67 @@
           "date": "2018-03-17"
         },
         {
+          "description": "Pico Teide - Tenerife",
+          "category": "Rozrywka",
+          "account": "kantor Alior - EUR",
+          "price": "-130.38",
+          "date": "2018-03-17"
+        },
+        {
           "description": "Crossover 05-11.03",
           "category": "Crossover",
           "account": "kantor Alior - USD",
           "price": "7165.00",
           "date": "2018-03-22"
+        },
+        {
+          "description": "Noclegi - Teneryfa - Costa del Silencio - rabat",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "381.60",
+          "date": "2018-03-23"
+        },
+        {
+          "description": "E S LAS PALMERAS CORDO ALCOLEA",
+          "category": "Paliwo",
+          "account": "kantor Alior - EUR",
+          "price": "-324.61",
+          "date": "2018-03-23"
+        },
+        {
+          "description": "Zakupy SUPERMERCAT CERVOL JONQUERA",
+          "category": "Zakupy",
+          "account": "kantor Alior - EUR",
+          "price": "-31.55",
+          "date": "2018-03-24"
+        },
+        {
+          "description": "CEDIPSA BENICARLO I BENICARLO",
+          "category": "Paliwo",
+          "account": "kantor Alior - EUR",
+          "price": "-334.79",
+          "date": "2018-03-24"
+        },
+        {
+          "description": "Autostrada oplata (E0424 JONQUERA - AS24 LAJONQUERA ESP)",
+          "category": "Transport",
+          "account": "kantor Alior - EUR",
+          "price": "-199.83",
+          "date": "2018-03-24"
+        },
+        {
+          "description": "Autostrada - Francja - oplaty",
+          "category": "Transport",
+          "account": "kantor Alior - EUR",
+          "price": "-129.32",
+          "date": "2018-03-24"
+        },
+        {
+          "description": "Autostrada poludnie - Francja",
+          "category": "Transport",
+          "account": "kantor Alior - EUR",
+          "price": "-189.95",
+          "date": "2018-03-24"
         },
         {
           "description": "kominiarz",
@@ -3476,10 +3518,10 @@
           "date": "2018-03-25"
         },
         {
-          "description": "Przelew Ania PLN",
+          "description": "Przelew Ania ",
           "category": "Przelewy między kontami",
           "account": "kantor Alior - EUR",
-          "price": "1442.26",
+          "price": "127.20",
           "date": "2018-03-25"
         },
         {
@@ -3536,6 +3578,20 @@
           "category": "Paliwo",
           "account": "Idea Bank",
           "price": "-378.22",
+          "date": "2018-03-25"
+        },
+        {
+          "description": "ESSO STAT. SATTELDORFSATTELDORF DEU",
+          "category": "Paliwo",
+          "account": "kantor Alior - EUR",
+          "price": "-329.20",
+          "date": "2018-03-25"
+        },
+        {
+          "description": "MCDONALD'S SATTELDORF DEU",
+          "category": "Jedzenie",
+          "account": "kantor Alior - EUR",
+          "price": "-64.28",
           "date": "2018-03-25"
         },
         {
