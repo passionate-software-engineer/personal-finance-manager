@@ -72,7 +72,7 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "3021.55"
+      "balance": "366.21"
     },
     {
       "name": "kantor Alior - GBP",
@@ -138,7 +138,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4286.34"
+          "balance": "1631.00"
         },
         {
           "name": "kantor Alior - GBP",
@@ -200,7 +200,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3021.55"
+          "balance": "366.21"
         },
         {
           "name": "kantor Alior - GBP",
@@ -779,7 +779,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4791.33"
+          "balance": "2135.99"
         },
         {
           "name": "kantor Alior - GBP",
@@ -841,7 +841,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4286.34"
+          "balance": "1631.00"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1434,7 +1434,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4791.33"
+          "balance": "2135.99"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1496,7 +1496,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4791.33"
+          "balance": "2135.99"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1851,7 +1851,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "5045.73"
+          "balance": "2390.39"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1913,7 +1913,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4791.33"
+          "balance": "2135.99"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2359,7 +2359,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3197.43"
+          "balance": "542.09"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2421,7 +2421,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "5045.73"
+          "balance": "2390.39"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2769,7 +2769,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3188.95"
+          "balance": "533.61"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2831,7 +2831,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3197.43"
+          "balance": "542.09"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3144,7 +3144,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4945.92"
+          "balance": "2290.58"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3206,7 +3206,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3188.95"
+          "balance": "533.61"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3658,7 +3658,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "4945.92"
+          "balance": "2290.58"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3711,13 +3711,6 @@
       ],
       "transactions": [
         {
-          "description": "Zakupy",
-          "category": "Zakupy - jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-142.51",
-          "date": "2018-02-01"
-        },
-        {
           "description": "Zakupy - Ania zwrot",
           "category": "Zakupy - jedzenie",
           "account": "Ania - rozliczenie",
@@ -3746,6 +3739,13 @@
           "date": "2018-02-01"
         },
         {
+          "description": "Nurkowanie - ubezpieczenie",
+          "category": "Nurkowanie",
+          "account": "kantor Alior - EUR",
+          "price": "-364.64",
+          "date": "2018-02-01"
+        },
+        {
           "description": "Idea Bank Premia",
           "category": "Inne Przychody",
           "account": "Idea Bank",
@@ -3753,17 +3753,31 @@
           "date": "2018-02-02"
         },
         {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
+          "description": "AQUATICS DIVINGCENTER COSTATEGUISE ESP",
+          "category": "Nurkowanie",
           "account": "kantor Alior - EUR",
-          "price": "10281.87",
-          "date": "2018-02-03"
+          "price": "-424.00",
+          "date": "2018-02-02"
+        },
+        {
+          "description": "Casa EGO - San Sebastian de la Gomera",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-1334.58",
+          "date": "2018-02-02"
         },
         {
           "description": "Jardin de Cactus",
           "category": "Wyjazdy",
           "account": "Idea Bank",
           "price": "-31.31",
+          "date": "2018-02-03"
+        },
+        {
+          "description": "JARDIN DE CACTUS TAQUI TEGUISE",
+          "category": "Wyjazdy",
+          "account": "kantor Alior - EUR",
+          "price": "-49.18",
           "date": "2018-02-03"
         },
         {
@@ -3774,45 +3788,24 @@
           "date": "2018-02-04"
         },
         {
-          "description": "Nurkowanie - Fuertaventura",
-          "category": "Nurkowanie",
+          "description": "Naviera Armas: Teneryfa - La Gomera",
+          "category": "Transport",
           "account": "kantor Alior - EUR",
-          "price": "-763.20",
-          "date": "2018-02-07"
+          "price": "-305.28",
+          "date": "2018-02-04"
         },
         {
-          "description": "Nurkowanie - ubezpieczenie",
-          "category": "Nurkowanie",
+          "description": "AirBnb - nocleg na Teneryfie - 1 noc",
+          "category": "Wyjazdy - noclegi",
           "account": "kantor Alior - EUR",
-          "price": "-364.64",
-          "date": "2018-02-07"
-        },
-        {
-          "description": "Nurkowanie ",
-          "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-279.94",
-          "date": "2018-02-07"
-        },
-        {
-          "description": "Zwiedzanie - Papagayo, kaktusy, prom itp",
-          "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-1911.71",
-          "date": "2018-02-08"
+          "price": "-180.75",
+          "date": "2018-02-04"
         },
         {
           "description": "Zwiedzanie - Papagayo, kaktusy itp",
           "category": "Rozrywka",
           "account": "Ania - rozliczenie",
           "price": "955.85",
-          "date": "2018-02-08"
-        },
-        {
-          "description": "paliwo noclegi itp",
-          "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-3114.99",
           "date": "2018-02-08"
         },
         {
@@ -3844,6 +3837,13 @@
           "date": "2018-02-09"
         },
         {
+          "description": "USD -> EUR",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - EUR",
+          "price": "6881.99",
+          "date": "2018-02-09"
+        },
+        {
           "description": "Restauracja",
           "category": "Jedzenie",
           "account": "Idea Bank",
@@ -3856,6 +3856,34 @@
           "account": "Idea Bank",
           "price": "-279.94",
           "date": "2018-02-10"
+        },
+        {
+          "description": "Zakupy - La Oliwa",
+          "category": "Zakupy",
+          "account": "kantor Alior - EUR",
+          "price": "-149.51",
+          "date": "2018-02-11"
+        },
+        {
+          "description": "Casa EGO - San Sebastian de la Gomera - rabat",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "186.56",
+          "date": "2018-02-13"
+        },
+        {
+          "description": "Santa Cruz de La Palma - noclegi",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-2230.58",
+          "date": "2018-02-13"
+        },
+        {
+          "description": "T GAS EL MEDANO SAN ISIDRO DEESP",
+          "category": "Paliwo",
+          "account": "kantor Alior - EUR",
+          "price": "-176.13",
+          "date": "2018-02-14"
         },
         {
           "description": "Crossover 29.01-04.02",
@@ -3872,17 +3900,17 @@
           "date": "2018-02-15"
         },
         {
+          "description": "Naviera Armas: La Gomera - La Palma",
+          "category": "Transport",
+          "account": "kantor Alior - EUR",
+          "price": "-233.20",
+          "date": "2018-02-15"
+        },
+        {
           "description": "Księgowy - rozliczenie roku",
           "category": "Księgowość",
           "account": "Idea Bank",
           "price": "-61.50",
-          "date": "2018-02-16"
-        },
-        {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-274.24",
           "date": "2018-02-16"
         },
         {
@@ -3891,6 +3919,13 @@
           "account": "Ania - rozliczenie",
           "price": "137.12",
           "date": "2018-02-16"
+        },
+        {
+          "description": "Naviera Armas: La Palma - Teneryfa",
+          "category": "Transport",
+          "account": "kantor Alior - EUR",
+          "price": "-414.67",
+          "date": "2018-02-17"
         },
         {
           "description": "Zwrot za wymiane szyby",
@@ -3928,17 +3963,24 @@
           "date": "2018-02-22"
         },
         {
+          "description": "Naviera Armas: Teneryfa - El Hierro - Teneryfa",
+          "category": "Transport",
+          "account": "kantor Alior - EUR",
+          "price": "-912.02",
+          "date": "2018-02-24"
+        },
+        {
+          "description": "El Hierro - La Restinga",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-1113.34",
+          "date": "2018-02-24"
+        },
+        {
           "description": "Rozliczenie miesiaca",
           "category": "Rozrywka",
           "account": "Ania - rozliczenie",
           "price": "-1202.78",
-          "date": "2018-02-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "490.94",
           "date": "2018-02-25"
         },
         {
@@ -3965,15 +4007,22 @@
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Gotówka - euro",
-          "price": "-23.32",
+          "account": "Ania - rozliczenie",
+          "price": "23.32",
           "date": "2018-02-25"
         },
         {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "23.32",
+          "description": "LA PALMA DIVING CENTER BRENABAJA",
+          "category": "Nurkowanie",
+          "account": "kantor Alior - EUR",
+          "price": "-118.72",
+          "date": "2018-02-25"
+        },
+        {
+          "description": "CEPSA BRENA ALTA BAJAMAR",
+          "category": "Paliwo",
+          "account": "kantor Alior - EUR",
+          "price": "-251.22",
           "date": "2018-02-25"
         },
         {
@@ -3984,24 +4033,17 @@
           "date": "2018-02-26"
         },
         {
-          "description": "Nurkowanie",
-          "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-118.72",
-          "date": "2018-02-27"
-        },
-        {
-          "description": "paliwo noclegi itp",
-          "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-2336.79",
-          "date": "2018-02-28"
-        },
-        {
           "description": "paliwo noclegi itp",
           "category": "Rozrywka",
           "account": "Ania - rozliczenie",
           "price": "1168.40",
+          "date": "2018-02-28"
+        },
+        {
+          "description": "wyrownanie",
+          "category": "Przelewy między kontami",
+          "account": "Gotówka - euro",
+          "price": "-23.32",
           "date": "2018-02-28"
         }
       ]
