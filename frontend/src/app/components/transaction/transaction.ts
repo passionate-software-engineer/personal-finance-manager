@@ -6,8 +6,12 @@ export class Transaction {
   date: Date;
   description: string;
   category: Category;
-  account: Account;
-  price: number;
+  accountPriceEntries: AccountPriceEntry[] = [];
   editMode = false;
   editedTransaction: Transaction;
+}
+
+export class AccountPriceEntry {
+  account: Account;
+  price: number;
 }

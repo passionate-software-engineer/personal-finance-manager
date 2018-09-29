@@ -255,513 +255,805 @@
         {
           "description": "Toner do drukarki",
           "category": "Koszty prowadzenia firmy",
-          "account": "mBank",
-          "price": "-79.95",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-79.95"
+            }
+          ]
         },
         {
           "description": "Toner do drukarki",
           "category": "Koszty prowadzenia firmy",
-          "account": "Ania - rozliczenie",
-          "price": "39.98",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "39.98"
+            }
+          ]
         },
         {
           "description": "Drukarka",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-262.40",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-262.40"
+            }
+          ]
         },
         {
           "description": "Drukarka",
           "category": "Koszty prowadzenia firmy",
-          "account": "Ania - rozliczenie",
-          "price": "131.20",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "131.20"
+            }
+          ]
         },
         {
           "description": "Nowy numer domu (tabliczka)",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-140.00",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-140.00"
+            }
+          ]
         },
         {
           "description": "Nowy numer domu (tabliczka)",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "70.00",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "70.00"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "mBank",
-          "price": "-283.88",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-283.88"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "141.94",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "141.94"
+            }
+          ]
         },
         {
           "description": "Niania",
           "category": "Dziecko",
-          "account": "Gotówka",
-          "price": "-300.00",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-300.00"
+            }
+          ]
         },
         {
           "description": "Niania",
           "category": "Dziecko",
-          "account": "Ania - rozliczenie",
-          "price": "150.00",
-          "date": "2018-09-01"
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "150.00"
+            }
+          ]
         },
         {
           "description": "Kraken - wejsciowka",
           "category": "Nurkowanie",
-          "account": "mBank",
-          "price": "-30.00",
-          "date": "2018-09-02"
+          "date": "2018-09-02",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30.00"
+            }
+          ]
         },
         {
           "description": "Wyplata Gotowki",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-1100.00",
-          "date": "2018-09-03"
+          "date": "2018-09-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1100.00"
+            }
+          ]
         },
         {
           "description": "Wyplata Gotowki",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "1100.00",
-          "date": "2018-09-03"
+          "date": "2018-09-03",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "1100.00"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "mBank",
-          "price": "-19.90",
-          "date": "2018-09-04"
+          "date": "2018-09-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "crossover (20-26.08)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-09-06"
+          "date": "2018-09-06",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Drzwi - rozliczenie",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-2350.00",
-          "date": "2018-09-06"
+          "date": "2018-09-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2350.00"
+            }
+          ]
         },
         {
           "description": "Drzwi - rozliczenie",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "1175.00",
-          "date": "2018-09-06"
+          "date": "2018-09-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1175.00"
+            }
+          ]
         },
         {
           "description": "ZUS",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-1163.39",
-          "date": "2018-09-06"
+          "date": "2018-09-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
         },
         {
           "description": "ksiegowy (doplata)",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-3.08",
-          "date": "2018-09-07"
+          "date": "2018-09-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-3.08"
+            }
+          ]
         },
         {
           "description": "Paliwo ",
           "category": "Paliwo",
-          "account": "mBank",
-          "price": "-169.24",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-169.24"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "84.62",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "84.62"
+            }
+          ]
         },
         {
           "description": "Paliwo (Wroclaw)",
           "category": "Paliwo",
-          "account": "mBank",
-          "price": "-49.98",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-49.98"
+            }
+          ]
         },
         {
           "description": "Paliwo (Wroclaw)",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "24.99",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "24.99"
+            }
+          ]
         },
         {
           "description": "Ksiazka - Trening Biegowy",
           "category": "Edukacja",
-          "account": "Gotówka",
-          "price": "-50.00",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-50.00"
+            }
+          ]
         },
         {
           "description": "Jedzenie - Wroclaw",
           "category": "Jedzenie",
-          "account": "mBank",
-          "price": "-70.23",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-70.23"
+            }
+          ]
         },
         {
           "description": "Jedzenie - Wroclaw",
           "category": "Jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "35.11",
-          "date": "2018-09-08"
+          "date": "2018-09-08",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "35.11"
+            }
+          ]
         },
         {
           "description": "Leasing",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-09-10"
+          "date": "2018-09-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Leasing",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-09-10"
+          "date": "2018-09-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "Zegarek - nagroda za maraton",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-3550.00",
-          "date": "2018-09-11"
+          "date": "2018-09-11",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-3550.00"
+            }
+          ]
         },
         {
           "description": "Zdjecia z Maratonu",
           "category": "Sport",
-          "account": "mBank",
-          "price": "-44.00",
-          "date": "2018-09-13"
+          "date": "2018-09-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-44.00"
+            }
+          ]
         },
         {
           "description": "Zdjecia z Maratonu",
           "category": "Sport",
-          "account": "Ania - rozliczenie",
-          "price": "22.00",
-          "date": "2018-09-13"
+          "date": "2018-09-13",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "22.00"
+            }
+          ]
         },
         {
           "description": "Crossover (27.08-02.09)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-09-13"
+          "date": "2018-09-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Ksiegowy",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-09-14"
+          "date": "2018-09-14",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> Idea",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "-5416.74",
-          "date": "2018-09-14"
+          "date": "2018-09-14",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-5416.74"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> Idea",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "5416.74",
-          "date": "2018-09-14"
+          "date": "2018-09-14",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "5416.74"
+            }
+          ]
         },
         {
           "description": "Remont",
           "category": "Remont domu",
-          "account": "Gotówka",
-          "price": "-280.00",
-          "date": "2018-09-14"
+          "date": "2018-09-14",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-280.00"
+            }
+          ]
         },
         {
           "description": "Remont",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "140.00",
-          "date": "2018-09-14"
+          "date": "2018-09-14",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "140.00"
+            }
+          ]
         },
         {
           "description": "Wyplata Gotowki",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-400.00",
-          "date": "2018-09-16"
+          "date": "2018-09-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-400.00"
+            }
+          ]
         },
         {
           "description": "Wyplata Gotowki",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "400.00",
-          "date": "2018-09-16"
+          "date": "2018-09-16",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "400.00"
+            }
+          ]
         },
         {
           "description": "Rysy - parking i park",
           "category": "Rozrywka",
-          "account": "Gotówka",
-          "price": "-30.00",
-          "date": "2018-09-16"
+          "date": "2018-09-16",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-30.00"
+            }
+          ]
         },
         {
           "description": "Wymiana walut USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-528.78",
-          "date": "2018-09-17"
+          "date": "2018-09-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-528.78"
+            }
+          ]
         },
         {
           "description": "Wymiana walut USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "532.93",
-          "date": "2018-09-17"
+          "date": "2018-09-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "532.93"
+            }
+          ]
         },
         {
           "description": "Wymiana walut USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-2149.50",
-          "date": "2018-09-17"
+          "date": "2018-09-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2149.50"
+            }
+          ]
         },
         {
           "description": "Wymiana walut USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "2151.75",
-          "date": "2018-09-17"
+          "date": "2018-09-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "2151.75"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-23.27",
-          "date": "2018-09-17"
+          "date": "2018-09-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-23.27"
+            }
+          ]
         },
         {
           "description": "Wieszak na medale",
           "category": "Zakupy",
-          "account": "mBank",
-          "price": "-108.50",
-          "date": "2018-09-17"
+          "date": "2018-09-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-108.50"
+            }
+          ]
         },
         {
           "description": "CodersTrust - konsultacje",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "3321.00",
-          "date": "2018-09-18"
+          "date": "2018-09-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "3321.00"
+            }
+          ]
         },
         {
           "description": "Brama garazowa - zaliczka",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-2000.00",
-          "date": "2018-09-18"
+          "date": "2018-09-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2000.00"
+            }
+          ]
         },
         {
           "description": "Brama garazowa - zaliczka",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "1000.00",
-          "date": "2018-09-18"
+          "date": "2018-09-18",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1000.00"
+            }
+          ]
         },
         {
           "description": "Gotowka - Ania",
           "category": "Przelewy między kontami",
-          "account": "mBank",
-          "price": "-1500.00",
-          "date": "2018-09-18"
+          "date": "2018-09-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1500.00"
+            }
+          ]
         },
         {
           "description": "Gotowka - Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "1500.00",
-          "date": "2018-09-18"
+          "date": "2018-09-18",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1500.00"
+            }
+          ]
         },
         {
           "description": "Crossover (03-09.09)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-09-20"
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Kable (katowy i spirala)",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-57.60",
-          "date": "2018-09-20"
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-57.60"
+            }
+          ]
         },
         {
           "description": "Kable (katowy i spirala)",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "28.80",
-          "date": "2018-09-20"
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "28.80"
+            }
+          ]
         },
         {
           "description": "Ania - gotowka",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "-500.00",
-          "date": "2018-09-20"
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-500.00"
+            }
+          ]
         },
         {
           "description": "Ania - gotowka",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "500.00",
-          "date": "2018-09-20"
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "500.00"
+            }
+          ]
         },
         {
           "description": "AirBnb sylwester zaliczka",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-1919.36",
-          "date": "2018-09-22"
+          "date": "2018-09-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1919.36"
+            }
+          ]
         },
         {
           "description": "AirBnb sylwester zaliczka",
           "category": "Wyjazdy - noclegi",
-          "account": "Ania - rozliczenie",
-          "price": "959.68",
-          "date": "2018-09-22"
+          "date": "2018-09-22",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "959.68"
+            }
+          ]
         },
         {
           "description": "GoPass - Season Pass",
           "category": "Sport",
-          "account": "kantor Alior - EUR",
-          "price": "-1903.76",
-          "date": "2018-09-22"
+          "date": "2018-09-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1903.76"
+            }
+          ]
         },
         {
           "description": "Sudety - jedzenie - kolacja",
           "category": "Jedzenie",
-          "account": "mBank",
-          "price": "-25.00",
-          "date": "2018-09-22"
+          "date": "2018-09-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-25.00"
+            }
+          ]
         },
         {
           "description": "Sudety - jedzenie - schronisko",
           "category": "Jedzenie",
-          "account": "mBank",
-          "price": "-18.00",
-          "date": "2018-09-22"
+          "date": "2018-09-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-18.00"
+            }
+          ]
         },
         {
           "description": "Sudety - nocleg - Bukowy Dworek",
           "category": "Wyjazdy - noclegi",
-          "account": "mBank",
-          "price": "-115.00",
-          "date": "2018-09-22"
+          "date": "2018-09-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-115.00"
+            }
+          ]
         },
         {
           "description": "Wieża widokowa Chelmiec",
           "category": "Wyjazdy",
-          "account": "Gotówka",
-          "price": "-4.00",
-          "date": "2018-09-23"
+          "date": "2018-09-23",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-4.00"
+            }
+          ]
         },
         {
           "description": "Sudety paliwo",
           "category": "Paliwo",
-          "account": "mBank",
-          "price": "-152.61",
-          "date": "2018-09-23"
+          "date": "2018-09-23",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-152.61"
+            }
+          ]
         },
         {
           "description": "Sudety paliwo",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "76.31",
-          "date": "2018-09-23"
+          "date": "2018-09-23",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "76.31"
+            }
+          ]
         },
         {
           "description": "Lekarstwa",
           "category": "Zdrowie",
-          "account": "mBank",
-          "price": "-55.48",
-          "date": "2018-09-24"
+          "date": "2018-09-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-55.48"
+            }
+          ]
         },
         {
           "description": "Lekarstwa",
           "category": "Zdrowie",
-          "account": "Ania - rozliczenie",
-          "price": "27.74",
-          "date": "2018-09-24"
+          "date": "2018-09-24",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "27.74"
+            }
+          ]
         },
         {
           "description": "Silesia Maraton - hotel",
           "category": "Wyjazdy",
-          "account": "mBank",
-          "price": "-125.55",
-          "date": "2018-09-24"
+          "date": "2018-09-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-125.55"
+            }
+          ]
         },
         {
           "description": "Badania",
           "category": "Zdrowie",
-          "account": "Gotówka",
-          "price": "-78.00",
-          "date": "2018-09-25"
+          "date": "2018-09-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-78.00"
+            }
+          ]
         },
         {
           "description": "Tatralandia - sylwester",
           "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-126.35",
-          "date": "2018-09-26"
+          "date": "2018-09-26",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-126.35"
+            }
+          ]
         },
         {
           "description": "Tatralandia - sylwester",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "63.18",
-          "date": "2018-09-26"
+          "date": "2018-09-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "63.18"
+            }
+          ]
         },
         {
           "description": "Crossover (10-16.09)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-09-27"
+          "date": "2018-09-27",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Coderstrust - licencja",
           "category": "CodersTrust - licencja",
-          "account": "Idea Bank",
-          "price": "1429.26",
-          "date": "2018-09-27"
+          "date": "2018-09-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1429.26"
+            }
+          ]
         }
       ]
     },
@@ -896,527 +1188,827 @@
         {
           "description": "Ksiegowy doplata",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-18.45",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-18.45"
+            }
+          ]
         },
         {
           "description": "ZUS",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-1163.39",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "IntelliJ",
           "category": "Koszty prowadzenia firmy",
-          "account": "kantor Alior - EUR",
-          "price": "-315.88",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-315.88"
+            }
+          ]
         },
         {
           "description": "Crossover (16-22.07)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7111.27",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.27"
+            }
+          ]
         },
         {
           "description": "Tablica budowlana",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-27.50",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-27.50"
+            }
+          ]
         },
         {
           "description": "Tablica budowlana",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "13.75",
-          "date": "2018-08-02"
+          "date": "2018-08-02",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "13.75"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> Idea",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "-5395.12",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-5395.12"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> Idea",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "5395.12",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "5395.12"
+            }
+          ]
         },
         {
           "description": "Revolut -> Idea",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-1339.22",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-1339.22"
+            }
+          ]
         },
         {
           "description": "Revolut -> Idea",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "1339.22",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1339.22"
+            }
+          ]
         },
         {
           "description": "Revolut -> Gotowka",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "36.00",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "36.00"
+            }
+          ]
         },
         {
           "description": "Revolut -> Gotowka ",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-36.00",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-36.00"
+            }
+          ]
         },
         {
           "description": "Revolut -> mBank",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-383.05",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-383.05"
+            }
+          ]
         },
         {
           "description": "Revolut -> mBank",
           "category": "Przelewy między kontami",
-          "account": "mBank",
-          "price": "383.05",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "383.05"
+            }
+          ]
         },
         {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-22.98",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-22.98"
+            }
+          ]
         },
         {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "22.98",
-          "date": "2018-08-03"
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "22.98"
+            }
+          ]
         },
         {
           "description": "Ksiegowy",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-08-04"
+          "date": "2018-08-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "Bilety Gdansk",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "-477.10",
-          "date": "2018-08-05"
+          "date": "2018-08-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-477.10"
+            }
+          ]
         },
         {
           "description": "Nurkowanie",
           "category": "Nurkowanie",
-          "account": "Gotówka",
-          "price": "-215.00",
-          "date": "2018-08-05"
+          "date": "2018-08-05",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-215.00"
+            }
+          ]
         },
         {
           "description": "Biedronka - zakupy",
           "category": "Zakupy",
-          "account": "mBank",
-          "price": "-128.24",
-          "date": "2018-08-06"
+          "date": "2018-08-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-128.24"
+            }
+          ]
         },
         {
           "description": "Biedronka - zakupy",
           "category": "Zakupy",
-          "account": "Ania - rozliczenie",
-          "price": "64.12",
-          "date": "2018-08-06"
+          "date": "2018-08-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "64.12"
+            }
+          ]
         },
         {
           "description": "Zmywarka - doplata",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-2755.00",
-          "date": "2018-08-07"
+          "date": "2018-08-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2755.00"
+            }
+          ]
         },
         {
           "description": "Zmywarka - doplata",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "1377.50",
-          "date": "2018-08-07"
+          "date": "2018-08-07",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1377.50"
+            }
+          ]
         },
         {
           "description": "mBank promocja",
           "category": "Przychody",
-          "account": "mBank",
-          "price": "20.00",
-          "date": "2018-08-08"
+          "date": "2018-08-08",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "20.00"
+            }
+          ]
         },
         {
           "description": "Crossover (23-29.07)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7111.26",
-          "date": "2018-08-09"
+          "date": "2018-08-09",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
         },
         {
           "description": "Remont (materialy, worki, smieci, gruz)",
           "category": "Remont domu",
-          "account": "Gotówka",
-          "price": "-1456.90",
-          "date": "2018-08-10"
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-1456.90"
+            }
+          ]
         },
         {
           "description": "Remont (materialy, worki, smieci, gruz)",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "728.45",
-          "date": "2018-08-10"
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "728.45"
+            }
+          ]
         },
         {
           "description": "Swietliki",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-4647.66",
-          "date": "2018-08-11"
+          "date": "2018-08-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-4647.66"
+            }
+          ]
         },
         {
           "description": "Swietliki",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "2323.83",
-          "date": "2018-08-11"
+          "date": "2018-08-11",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2323.83"
+            }
+          ]
         },
         {
           "description": "Crossover (30.07-05.08)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-08-16"
+          "date": "2018-08-16",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Leasing",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-08-20"
+          "date": "2018-08-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Leasing",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-08-20"
+          "date": "2018-08-20",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "Motopark - tor",
           "category": "Rozrywka",
-          "account": "mBank",
-          "price": "-169.00",
-          "date": "2018-08-21"
+          "date": "2018-08-21",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-169.00"
+            }
+          ]
         },
         {
           "description": "Silesia Maraton",
           "category": "Sport",
-          "account": "mBank",
-          "price": "-120.00",
-          "date": "2018-08-21"
+          "date": "2018-08-21",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-120.00"
+            }
+          ]
         },
         {
           "description": "Wroclaw - nocleg",
           "category": "Sport",
-          "account": "kantor Alior - EUR",
-          "price": "-125.21",
-          "date": "2018-08-21"
+          "date": "2018-08-21",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-125.21"
+            }
+          ]
         },
         {
           "description": "Meble",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-4015.00",
-          "date": "2018-08-22"
+          "date": "2018-08-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-4015.00"
+            }
+          ]
         },
         {
           "description": "Meble",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "2007.50",
-          "date": "2018-08-22"
+          "date": "2018-08-22",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2007.50"
+            }
+          ]
         },
         {
           "description": "Lampa do kuchni",
           "category": "Remont domu",
-          "account": "mBank",
-          "price": "-159.00",
-          "date": "2018-08-23"
+          "date": "2018-08-23",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-159.00"
+            }
+          ]
         },
         {
           "description": "Lampa do kuchni",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "79.50",
-          "date": "2018-08-23"
+          "date": "2018-08-23",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "79.50"
+            }
+          ]
         },
         {
           "description": "Spozywcze",
           "category": "Zakupy - jedzenie",
-          "account": "mBank",
-          "price": "-329.59",
-          "date": "2018-08-23"
+          "date": "2018-08-23",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-329.59"
+            }
+          ]
         },
         {
           "description": "Spozywcze",
           "category": "Zakupy - jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "164.80",
-          "date": "2018-08-23"
+          "date": "2018-08-23",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "164.80"
+            }
+          ]
         },
         {
           "description": "Crossover (6-12.08)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-08-23"
+          "date": "2018-08-23",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "mBank",
-          "price": "-313.35",
-          "date": "2018-08-24"
+          "date": "2018-08-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-313.35"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "156.68",
-          "date": "2018-08-24"
+          "date": "2018-08-24",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "156.68"
+            }
+          ]
         },
         {
           "description": "Balast",
           "category": "Nurkowanie",
-          "account": "mBank",
-          "price": "-309.00",
-          "date": "2018-08-25"
+          "date": "2018-08-25",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-309.00"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-20.73",
-          "date": "2018-08-26"
+          "date": "2018-08-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-20.73"
+            }
+          ]
         },
         {
           "description": "Remont",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-1350.00",
-          "date": "2018-08-28"
+          "date": "2018-08-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1350.00"
+            }
+          ]
         },
         {
           "description": "Remont",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "675.00",
-          "date": "2018-08-28"
+          "date": "2018-08-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "675.00"
+            }
+          ]
         },
         {
           "description": "Wymiana walut",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-142395.06",
-          "date": "2018-08-29"
+          "date": "2018-08-29",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-142395.06"
+            }
+          ]
         },
         {
           "description": "Wymiana walut",
           "category": "Wymiana walut",
-          "account": "kantor Alior - PLN",
-          "price": "151115.62",
-          "date": "2018-08-29"
+          "date": "2018-08-29",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "151115.62"
+            }
+          ]
         },
         {
           "description": "Konsultacje Prywatne",
           "category": "Przychody",
-          "account": "Idea Bank",
-          "price": "240.00",
-          "date": "2018-08-29"
+          "date": "2018-08-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "240.00"
+            }
+          ]
         },
         {
           "description": "Niania",
           "category": "Dziecko",
-          "account": "Idea Bank",
-          "price": "-1900.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1900.00"
+            }
+          ]
         },
         {
           "description": "Niania",
           "category": "Dziecko",
-          "account": "Ania - rozliczenie",
-          "price": "950.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "950.00"
+            }
+          ]
         },
         {
           "description": "CT - konsultacje",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "5076.21",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "5076.21"
+            }
+          ]
         },
         {
           "description": "CT - konsultacje - Ani",
           "category": "CodersTrust - szkolenia",
-          "account": "Ania - rozliczenie",
-          "price": "-783.27",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-783.27"
+            }
+          ]
         },
         {
           "description": "Fryzjer",
           "category": "Kosmetyki",
-          "account": "Gotówka",
-          "price": "-20.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
         },
         {
           "description": "Crossover (13-19.08)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca",
           "category": "Rozliczenie miesiąca",
-          "account": "Ania - rozliczenie",
-          "price": "-6779.65",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-6779.65"
+            }
+          ]
         },
         {
           "description": "Meble w kuchni",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "-4000.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-4000.00"
+            }
+          ]
         },
         {
           "description": "Meble w kuchni",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "2000.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2000.00"
+            }
+          ]
         },
         {
           "description": "Lokaty - Idea Bank",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "-150000.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-150000.00"
+            }
+          ]
         },
         {
           "description": "Lokaty - Idea Bank",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank - lokaty",
-          "price": "150000.00",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank - lokaty",
+              "price": "150000.00"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> mbank",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "-33765.70",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-33765.70"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> mBank",
           "category": "Przelewy między kontami",
-          "account": "mBank",
-          "price": "33765.70",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "33765.70"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> Ania",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "-5796.50",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-5796.50"
+            }
+          ]
         },
         {
           "description": "Kantor PLN -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "5796.50",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "5796.50"
+            }
+          ]
         },
         {
           "description": "Kantor EUR -> Ania",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "-63.90",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-63.90"
+            }
+          ]
         },
         {
           "description": "kantor Eur -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "63.90",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "63.90"
+            }
+          ]
         },
         {
           "description": "Idea -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-631.10",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-631.10"
+            }
+          ]
         },
         {
           "description": "Idea -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "631.10",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "631.10"
+            }
+          ]
         },
         {
           "description": "Revolut -> Gotowka",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "1729.48",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "1729.48"
+            }
+          ]
         },
         {
           "description": "Revolut -> Gotowka",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-1729.48",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-1729.48"
+            }
+          ]
         },
         {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-121.77",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-121.77"
+            }
+          ]
         },
         {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "121.77",
-          "date": "2018-08-30"
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "121.77"
+            }
+          ]
         }
       ]
     },
@@ -1551,289 +2143,453 @@
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-07-02"
+          "date": "2018-07-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Crossover (18-24.06)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7111.26",
-          "date": "2018-07-05"
+          "date": "2018-07-05",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
         },
         {
           "description": "Ksiegowy",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-07-05"
+          "date": "2018-07-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "bilety",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "-10.00",
-          "date": "2018-07-05"
+          "date": "2018-07-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-10.00"
+            }
+          ]
         },
         {
           "description": "Jedzenie",
           "category": "Jedzenie",
-          "account": "Idea Bank",
-          "price": "-100.64",
-          "date": "2018-07-05"
+          "date": "2018-07-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-100.64"
+            }
+          ]
         },
         {
           "description": "Remont - panele",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-280.00",
-          "date": "2018-07-06"
+          "date": "2018-07-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-280.00"
+            }
+          ]
         },
         {
           "description": "Remont - panele",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "140.00",
-          "date": "2018-07-06"
+          "date": "2018-07-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "140.00"
+            }
+          ]
         },
         {
           "description": "Fryzjer",
           "category": "Kosmetyki",
-          "account": "Gotówka",
-          "price": "-20.00",
-          "date": "2018-07-06"
+          "date": "2018-07-06",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
         },
         {
           "description": "Podatek dochodowy",
           "category": "Podatek dochodowy",
-          "account": "Idea Bank",
-          "price": "-17167.00",
-          "date": "2018-07-07"
+          "date": "2018-07-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-17167.00"
+            }
+          ]
         },
         {
           "description": "VAT",
           "category": "VAT",
-          "account": "Idea Bank",
-          "price": "-5124.00",
-          "date": "2018-07-07"
+          "date": "2018-07-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5124.00"
+            }
+          ]
         },
         {
           "description": "Ksiegowy - doplata",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-18.45",
-          "date": "2018-07-07"
+          "date": "2018-07-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-18.45"
+            }
+          ]
         },
         {
           "description": "ZUS",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-1163.39",
-          "date": "2018-07-07"
+          "date": "2018-07-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
         },
         {
           "description": "Revolut - test",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "-13.50",
-          "date": "2018-07-07"
+          "date": "2018-07-07",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-13.50"
+            }
+          ]
         },
         {
           "description": "Revolut - test",
           "category": "Przelewy między kontami",
-          "account": "mBank",
-          "price": "13.50",
-          "date": "2018-07-07"
+          "date": "2018-07-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "13.50"
+            }
+          ]
         },
         {
           "description": "Okna - zaliczka",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-5880.00",
-          "date": "2018-07-10"
+          "date": "2018-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5880.00"
+            }
+          ]
         },
         {
           "description": "Okna - zaliczka",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "2940.00",
-          "date": "2018-07-10"
+          "date": "2018-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2940.00"
+            }
+          ]
         },
         {
           "description": "Leasing",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-07-10"
+          "date": "2018-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Leasing - Ania zwrot",
           "category": "Koszty prowadzenia firmy",
-          "account": "Ania - rozliczenie",
-          "price": "1154.50",
-          "date": "2018-07-10"
+          "date": "2018-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.50"
+            }
+          ]
         },
         {
           "description": "Crossover (25.06-01.07)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7111.26",
-          "date": "2018-07-15"
+          "date": "2018-07-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
         },
         {
           "description": "CodersTrust (czerwiec)",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "6590.34",
-          "date": "2018-07-15"
+          "date": "2018-07-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "6590.34"
+            }
+          ]
         },
         {
           "description": "CodersTrust (czerwiec) - Ania",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-789.75",
-          "date": "2018-07-15"
+          "date": "2018-07-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-789.75"
+            }
+          ]
         },
         {
           "description": "Crossover (02-08.07)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7111.26",
-          "date": "2018-07-19"
+          "date": "2018-07-19",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-20.20",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-20.20"
+            }
+          ]
         },
         {
           "description": "Malediwy - zaliczka",
           "category": "Rozrywka",
-          "account": "kantor Alior - PLN",
-          "price": "-4291.25",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-4291.25"
+            }
+          ]
         },
         {
           "description": "Suchy skafander",
           "category": "Nurkowanie",
-          "account": "kantor Alior - PLN",
-          "price": "-7352.68",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-7352.68"
+            }
+          ]
         },
         {
           "description": "Suchy Skafander - prezent",
           "category": "Nurkowanie",
-          "account": "Ania - rozliczenie",
-          "price": "3676.34",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "3676.34"
+            }
+          ]
         },
         {
           "description": "Rescue Diver + serwis automatu",
           "category": "Nurkowanie",
-          "account": "kantor Alior - PLN",
-          "price": "-1500.00",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-1500.00"
+            }
+          ]
         },
         {
           "description": "Żele energetyczne ",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-24.99",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-24.99"
+            }
+          ]
         },
         {
           "description": "Viatoll, a4go - doladowanie",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "-260.00",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-260.00"
+            }
+          ]
         },
         {
           "description": "Viatoll, a4go - doladowanie",
           "category": "Transport",
-          "account": "Ania - rozliczenie",
-          "price": "130.00",
-          "date": "2018-07-20"
+          "date": "2018-07-20",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "130.00"
+            }
+          ]
         },
         {
           "description": "Zakupy Ani",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-139.67",
-          "date": "2018-07-21"
+          "date": "2018-07-21",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-139.67"
+            }
+          ]
         },
         {
           "description": "Zakupy Ani",
           "category": "Zakupy",
-          "account": "Ania - rozliczenie",
-          "price": "139.67",
-          "date": "2018-07-21"
+          "date": "2018-07-21",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "139.67"
+            }
+          ]
         },
         {
           "description": "Crossover (09-15.07)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "8848.78",
-          "date": "2018-07-26"
+          "date": "2018-07-26",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "8848.78"
+            }
+          ]
         },
         {
           "description": "Zakrzowek - nurkowanie",
           "category": "Nurkowanie",
-          "account": "Gotówka",
-          "price": "-135.00",
-          "date": "2018-07-26"
+          "date": "2018-07-26",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-135.00"
+            }
+          ]
         },
         {
           "description": "Maraton Wroclaw",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-130.00",
-          "date": "2018-07-29"
+          "date": "2018-07-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-130.00"
+            }
+          ]
         },
         {
           "description": "Rescue Diver - podrecznik",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-140.00",
-          "date": "2018-07-29"
+          "date": "2018-07-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-140.00"
+            }
+          ]
         },
         {
           "description": "Prywatne konsultacje",
           "category": "Przychody",
-          "account": "Idea Bank",
-          "price": "225.00",
-          "date": "2018-07-29"
+          "date": "2018-07-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "225.00"
+            }
+          ]
         },
         {
           "description": "Lodowka",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-3599.00",
-          "date": "2018-07-30"
+          "date": "2018-07-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-3599.00"
+            }
+          ]
         },
         {
           "description": "Lodowka - Ania zwrot ",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "1799.50",
-          "date": "2018-07-30"
+          "date": "2018-07-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1799.50"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca",
           "category": "Rozliczenie miesiąca",
-          "account": "Ania - rozliczenie",
-          "price": "-11486.81",
-          "date": "2018-07-31"
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-11486.81"
+            }
+          ]
         },
         {
           "description": "CT - licencja",
           "category": "CodersTrust - licencja",
-          "account": "Idea Bank",
-          "price": "4312.38",
-          "date": "2018-07-31"
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "4312.38"
+            }
+          ]
         }
       ]
     },
@@ -1968,380 +2724,596 @@
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-1577.42",
-          "date": "2018-06-01"
+          "date": "2018-06-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1577.42"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "1577.42",
-          "date": "2018-06-01"
+          "date": "2018-06-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1577.42"
+            }
+          ]
         },
         {
           "description": "ZUS - Maj",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-1163.39",
-          "date": "2018-06-05"
+          "date": "2018-06-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-268.46",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-268.46"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "134.23",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "134.23"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-292.27",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-292.27"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "146.14",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "146.14"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-311.31",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-311.31"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "155.66",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "155.66"
+            }
+          ]
         },
         {
           "description": "Mandat - Francja",
           "category": "Samochód",
-          "account": "Idea Bank",
-          "price": "-252.30",
-          "date": "2018-06-06"
+          "date": "2018-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-252.30"
+            }
+          ]
         },
         {
           "description": "Crossover (21-27.05) - urlop",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "0.00",
-          "date": "2018-06-07"
+          "date": "2018-06-07",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "0.00"
+            }
+          ]
         },
         {
           "description": "Nurkowanie - Zakrzowek",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-90.00",
-          "date": "2018-06-07"
+          "date": "2018-06-07",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-90.00"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-06-08"
+          "date": "2018-06-08",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Księgowy - czerwiec",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-06-09"
+          "date": "2018-06-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-21495.00",
-          "date": "2018-06-13"
+          "date": "2018-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-21495.00"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "Idea Bank",
-          "price": "22376.28",
-          "date": "2018-06-13"
+          "date": "2018-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "22376.28"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-64073.02",
-          "date": "2018-06-13"
+          "date": "2018-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-64073.02"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "kantor Alior - PLN",
-          "price": "67185.34",
-          "date": "2018-06-13"
+          "date": "2018-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "67185.34"
+            }
+          ]
         },
         {
           "description": "Crossover (28.05-03.06)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-06-14"
+          "date": "2018-06-14",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Ksiazki",
           "category": "Edukacja",
-          "account": "Idea Bank",
-          "price": "-179.52",
-          "date": "2018-06-18"
+          "date": "2018-06-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-179.52"
+            }
+          ]
         },
         {
           "description": "Ksiazki - Ania",
           "category": "Edukacja",
-          "account": "Ania - rozliczenie",
-          "price": "89.76",
-          "date": "2018-06-18"
+          "date": "2018-06-18",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "89.76"
+            }
+          ]
         },
         {
           "description": "Kluczyk do szafki Kinarps",
           "category": "Utrzymanie domu",
-          "account": "Idea Bank",
-          "price": "-30.75",
-          "date": "2018-06-18"
+          "date": "2018-06-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-30.75"
+            }
+          ]
         },
         {
           "description": "Crossover Lodz Meetup - zwrot za paliwo",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "32.00",
-          "date": "2018-06-18"
+          "date": "2018-06-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "32.00"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-31.49",
-          "date": "2018-06-18"
+          "date": "2018-06-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-31.49"
+            }
+          ]
         },
         {
           "description": "Crossover (04-10.06)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-06-21"
+          "date": "2018-06-21",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Leasing - czerwiec",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-06-26"
+          "date": "2018-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Leasing - czerwiec - Ania zwrot",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-06-26"
+          "date": "2018-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-294.23",
-          "date": "2018-06-26"
+          "date": "2018-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-294.23"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "147.12",
-          "date": "2018-06-26"
+          "date": "2018-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "147.12"
+            }
+          ]
         },
         {
           "description": "Nozbe",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-288.00",
-          "date": "2018-06-26"
+          "date": "2018-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-288.00"
+            }
+          ]
         },
         {
           "description": "Nozbe - Ania zwrot",
           "category": "Koszty prowadzenia firmy",
-          "account": "Ania - rozliczenie",
-          "price": "144.00",
-          "date": "2018-06-26"
+          "date": "2018-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "144.00"
+            }
+          ]
         },
         {
           "description": "Zawody - bieg 3 kopcow, Cracovia Polmaraton",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-100.00",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-100.00"
+            }
+          ]
         },
         {
           "description": "Szkolenie - Motopark - 2 stopien",
           "category": "Edukacja",
-          "account": "Idea Bank",
-          "price": "-499.00",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-499.00"
+            }
+          ]
         },
         {
           "description": "CT - maj",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "9724.68",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "9724.68"
+            }
+          ]
         },
         {
           "description": "Sluchawki",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-530.69",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-530.69"
+            }
+          ]
         },
         {
           "description": "Domeny",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-55.92",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-55.92"
+            }
+          ]
         },
         {
           "description": "Szkolenie - KPP",
           "category": "Edukacja",
-          "account": "Idea Bank",
-          "price": "-650.00",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-650.00"
+            }
+          ]
         },
         {
           "description": "Ladowarka USB",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-97.60",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-97.60"
+            }
+          ]
         },
         {
           "description": "Crossover (11-17.06)",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7111.26",
-          "date": "2018-06-28"
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca - czerwiec",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "-4146.78",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-4146.78"
+            }
+          ]
         },
         {
           "description": "Seba - pozyczka - Alior PLN",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "-4809.97",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-4809.97"
+            }
+          ]
         },
         {
           "description": "Seba - pozyczka - Alior PLN",
           "category": "Przelewy między kontami",
-          "account": "Seba - pożyczka",
-          "price": "4809.97",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Seba - pożyczka",
+              "price": "4809.97"
+            }
+          ]
         },
         {
           "description": "Seba - pozyczka - Alior USD",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - USD",
-          "price": "-3582.49",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.49"
+            }
+          ]
         },
         {
           "description": "Seba - pozyczka - Alior USD",
           "category": "Przelewy między kontami",
-          "account": "Seba - pożyczka",
-          "price": "3582.49",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Seba - pożyczka",
+              "price": "3582.49"
+            }
+          ]
         },
         {
           "description": "Seba - pozyczka - Idea",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-11607.54",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-11607.54"
+            }
+          ]
         },
         {
           "description": "Seba - pozyczka - Idea",
           "category": "Przelewy między kontami",
-          "account": "Seba - pożyczka",
-          "price": "11607.54",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Seba - pożyczka",
+              "price": "11607.54"
+            }
+          ]
         },
         {
           "description": "Revolut - przelew",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-1212.57",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1212.57"
+            }
+          ]
         },
         {
           "description": "Revolut - przelew",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "1212.57",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "1212.57"
+            }
+          ]
         },
         {
           "description": "Gotowka ",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "78.00",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "78.00"
+            }
+          ]
         },
         {
           "description": "Gotowka",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-78.00",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-78.00"
+            }
+          ]
         },
         {
           "description": "Przelew revolut",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-2433.43",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2433.43"
+            }
+          ]
         },
         {
           "description": "Revolut - przelew",
           "category": "Przelewy między kontami",
-          "account": "Revolut - PLN",
-          "price": "2433.43",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "2433.43"
+            }
+          ]
         },
         {
           "description": "Przelew",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "-164.40",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-164.40"
+            }
+          ]
         },
         {
           "description": "Przelew - euro",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "164.40",
-          "date": "2018-06-30"
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "164.40"
+            }
+          ]
         }
       ]
     },
@@ -2476,282 +3448,442 @@
         {
           "description": "ZUS - Maj",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-1163.39",
-          "date": "2018-05-05"
+          "date": "2018-05-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-05-08"
+          "date": "2018-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Crossover 16-22.04",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-05-09"
+          "date": "2018-05-09",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Fryzjer",
           "category": "Leki, lekarze, higiena",
-          "account": "Gotówka",
-          "price": "33.00",
-          "date": "2018-05-09"
+          "date": "2018-05-09",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "33.00"
+            }
+          ]
         },
         {
           "description": "Księgowy - Maj",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-132.23",
-          "date": "2018-05-09"
+          "date": "2018-05-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-132.23"
+            }
+          ]
         },
         {
           "description": "Crossover 23-29.04",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-05-09"
+          "date": "2018-05-09",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Egipt - Euro",
           "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-3392.00",
-          "date": "2018-05-09"
+          "date": "2018-05-09",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-3392.00"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "-50.45",
-          "date": "2018-05-10"
+          "date": "2018-05-10",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-50.45"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "50.45",
-          "date": "2018-05-10"
+          "date": "2018-05-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "50.45"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-5373.75",
-          "date": "2018-05-13"
+          "date": "2018-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-5373.75"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "5290.75",
-          "date": "2018-05-13"
+          "date": "2018-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "5290.75"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-12602.66",
-          "date": "2018-05-13"
+          "date": "2018-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-12602.66"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "Idea Bank",
-          "price": "12450.55",
-          "date": "2018-05-13"
+          "date": "2018-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "12450.55"
+            }
+          ]
         },
         {
           "description": "Klub wysokogorski - skladka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-100.00",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-100.00"
+            }
+          ]
         },
         {
           "description": "Egipt - paliwo, parking, jedzenie",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-441.09",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-441.09"
+            }
+          ]
         },
         {
           "description": "Egipt - paliwo, parking, jedzenie - Ania zwrot",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "162.69",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "162.69"
+            }
+          ]
         },
         {
           "description": "Jedzenie dla kota",
           "category": "Zakupy",
-          "account": "Ania - rozliczenie",
-          "price": "109.44",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "109.44"
+            }
+          ]
         },
         {
           "description": "Jedzenie dla kota",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-109.44",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-109.44"
+            }
+          ]
         },
         {
           "description": "CT - licencja - kurs Java",
           "category": "CodersTrust - licencja",
-          "account": "Idea Bank",
-          "price": "1633.44",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1633.44"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca - maj",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "-4050.15",
-          "date": "2018-05-15"
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-4050.15"
+            }
+          ]
         },
         {
           "description": "Crossover 30.04-06.05",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-05-17"
+          "date": "2018-05-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-19.72",
-          "date": "2018-05-18"
+          "date": "2018-05-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.72"
+            }
+          ]
         },
         {
           "description": "Badania i leki",
           "category": "Leki, lekarze, higiena",
-          "account": "Idea Bank",
-          "price": "-107.00",
-          "date": "2018-05-19"
+          "date": "2018-05-19",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-107.00"
+            }
+          ]
         },
         {
           "description": "Crossover 07-13.05",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-05-24"
+          "date": "2018-05-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Balkony - zaliczka",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-5680.00",
-          "date": "2018-05-26"
+          "date": "2018-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5680.00"
+            }
+          ]
         },
         {
           "description": "Balkony - zaliczka",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "2840.00",
-          "date": "2018-05-26"
+          "date": "2018-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2840.00"
+            }
+          ]
         },
         {
           "description": "Okna - zaliczka",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-13500.00",
-          "date": "2018-05-26"
+          "date": "2018-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-13500.00"
+            }
+          ]
         },
         {
           "description": "Okna - zaliczka",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "6750.00",
-          "date": "2018-05-26"
+          "date": "2018-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "6750.00"
+            }
+          ]
         },
         {
           "description": "Leasing - maj",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-05-26"
+          "date": "2018-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "CT - kwiecien",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "12982.50",
-          "date": "2018-05-28"
+          "date": "2018-05-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "12982.50"
+            }
+          ]
         },
         {
           "description": "Decathlon - zele energetyczne itp",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-129.97",
-          "date": "2018-05-28"
+          "date": "2018-05-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-129.97"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - USD",
-          "price": "63.87",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "63.87"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-63.87",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-63.87"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "640.81",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "640.81"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-640.81",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-640.81"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Gotówka",
-          "price": "-63.00",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-63.00"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "63.00",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "63.00"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Gotówka - euro",
-          "price": "-4.24",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - euro",
+              "price": "-4.24"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "4.24",
-          "date": "2018-05-30"
+          "date": "2018-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4.24"
+            }
+          ]
         },
         {
           "description": "Crossover 14-20.05",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-05-31"
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         }
       ]
     },
@@ -2886,233 +4018,365 @@
         {
           "description": "Idea Bank Premia",
           "category": "Inne Przychody",
-          "account": "Idea Bank",
-          "price": "50.00",
-          "date": "2018-04-04"
+          "date": "2018-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "50.00"
+            }
+          ]
         },
         {
           "description": "Crossover 19-25.03",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-04-04"
+          "date": "2018-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "ZUS - marzec",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-504.66",
-          "date": "2018-04-05"
+          "date": "2018-04-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-504.66"
+            }
+          ]
         },
         {
           "description": "Zakupy - Ania zwrot",
           "category": "Zakupy",
-          "account": "Ania - rozliczenie",
-          "price": "105.90",
-          "date": "2018-04-06"
+          "date": "2018-04-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "105.90"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-04-08"
+          "date": "2018-04-08",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Księgowy - Kwiecien",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-04-09"
+          "date": "2018-04-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "Bilety Warszawa",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "-289.00",
-          "date": "2018-04-10"
+          "date": "2018-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-289.00"
+            }
+          ]
         },
         {
           "description": "Bilety Warszawa - nowe",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "-135.00",
-          "date": "2018-04-10"
+          "date": "2018-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-135.00"
+            }
+          ]
         },
         {
           "description": "Bilety Warszawa - zwroty",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "360.40",
-          "date": "2018-04-10"
+          "date": "2018-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "360.40"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-200.38",
-          "date": "2018-04-10"
+          "date": "2018-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-200.38"
+            }
+          ]
         },
         {
           "description": "Crossover 26.03-1.04",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-04-12"
+          "date": "2018-04-12",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-28659.96",
-          "date": "2018-04-13"
+          "date": "2018-04-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-28659.96"
+            }
+          ]
         },
         {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
-          "account": "Idea Bank",
-          "price": "27279.68",
-          "date": "2018-04-13"
+          "date": "2018-04-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "27279.68"
+            }
+          ]
         },
         {
           "description": "Podatek dochodowy Q1 2018",
           "category": "Podatek dochodowy",
-          "account": "Idea Bank",
-          "price": "-21369.00",
-          "date": "2018-04-15"
+          "date": "2018-04-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-21369.00"
+            }
+          ]
         },
         {
           "description": "VAT Q1 2018",
           "category": "VAT",
-          "account": "Idea Bank",
-          "price": "-7320.00",
-          "date": "2018-04-15"
+          "date": "2018-04-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-7320.00"
+            }
+          ]
         },
         {
           "description": "CT - marzec",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "11433.00",
-          "date": "2018-04-15"
+          "date": "2018-04-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "11433.00"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca - marzec",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "-5183.40",
-          "date": "2018-04-15"
+          "date": "2018-04-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-5183.40"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-286.32",
-          "date": "2018-04-16"
+          "date": "2018-04-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-286.32"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "143.16",
-          "date": "2018-04-16"
+          "date": "2018-04-16",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "143.16"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-19.89",
-          "date": "2018-04-18"
+          "date": "2018-04-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.89"
+            }
+          ]
         },
         {
           "description": "Ksiazki",
           "category": "Edukacja",
-          "account": "Idea Bank",
-          "price": "-89.80",
-          "date": "2018-04-18"
+          "date": "2018-04-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-89.80"
+            }
+          ]
         },
         {
           "description": "Crossover 02.04-08.04",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-04-19"
+          "date": "2018-04-19",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Wizualizacja projektu",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-1500.00",
-          "date": "2018-04-25"
+          "date": "2018-04-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1500.00"
+            }
+          ]
         },
         {
           "description": "Wizualizacja projektu",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "750.00",
-          "date": "2018-04-25"
+          "date": "2018-04-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "750.00"
+            }
+          ]
         },
         {
           "description": "Leasing - kwiecien",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-04-26"
+          "date": "2018-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Leasing - kwiecien - Ania zwrot",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-04-26"
+          "date": "2018-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-278.36",
-          "date": "2018-04-26"
+          "date": "2018-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-278.36"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "139.18",
-          "date": "2018-04-26"
+          "date": "2018-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "139.18"
+            }
+          ]
         },
         {
           "description": "Bieg po puszczy",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-65.00",
-          "date": "2018-04-26"
+          "date": "2018-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-65.00"
+            }
+          ]
         },
         {
           "description": "Crossover 09.04-15.04",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-04-26"
+          "date": "2018-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Szkolenie - Motopark",
           "category": "Edukacja",
-          "account": "Idea Bank",
-          "price": "-499.00",
-          "date": "2018-04-28"
+          "date": "2018-04-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-499.00"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-1174.50",
-          "date": "2018-04-30"
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1174.50"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "1174.50",
-          "date": "2018-04-30"
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1174.50"
+            }
+          ]
         }
       ]
     },
@@ -3247,394 +4511,618 @@
         {
           "description": "Crossover 12-18.02",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-03-01"
+          "date": "2018-03-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Idea Bank Premia",
           "category": "Inne Przychody",
-          "account": "Idea Bank",
-          "price": "30.00",
-          "date": "2018-03-02"
+          "date": "2018-03-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "30.00"
+            }
+          ]
         },
         {
           "description": "BAR RESTAURANTE LA GAVBARLOVENTO ESP",
           "category": "Zakupy - jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-60.21",
-          "date": "2018-03-02"
+          "date": "2018-03-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-60.21"
+            }
+          ]
         },
         {
           "description": "ZUS - marzec",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-504.66",
-          "date": "2018-03-03"
+          "date": "2018-03-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-504.66"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-03-04"
+          "date": "2018-03-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Zwrot podatku (IKZE)",
           "category": "Podatek dochodowy",
-          "account": "Idea Bank",
-          "price": "972.00",
-          "date": "2018-03-05"
+          "date": "2018-03-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "972.00"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: Teneryfa - Hiszpania (Huelva)",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-1690.87",
-          "date": "2018-03-05"
+          "date": "2018-03-05",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1690.87"
+            }
+          ]
         },
         {
           "description": "Jedzenie - Ania zwrot",
           "category": "Zakupy - jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "57.00",
-          "date": "2018-03-06"
+          "date": "2018-03-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "57.00"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-3582.50",
-          "date": "2018-03-07"
+          "date": "2018-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "3399.89",
-          "date": "2018-03-07"
+          "date": "2018-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "3399.89"
+            }
+          ]
         },
         {
           "description": "Leasing - marzec",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-03-07"
+          "date": "2018-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Crossover 19-25.02",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-03-08"
+          "date": "2018-03-08",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Noclegi - Teneryfa - Costa del Silencio",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-2232.40",
-          "date": "2018-03-08"
+          "date": "2018-03-08",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-2232.40"
+            }
+          ]
         },
         {
           "description": "Księgowy - marzec",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-03-09"
+          "date": "2018-03-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "CT - luty",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "14932.20",
-          "date": "2018-03-09"
+          "date": "2018-03-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "14932.20"
+            }
+          ]
         },
         {
           "description": "Zakupy - La Restinga",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-66.96",
-          "date": "2018-03-09"
+          "date": "2018-03-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-66.96"
+            }
+          ]
         },
         {
           "description": "Zakupy - La Resting",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-47.03",
-          "date": "2018-03-10"
+          "date": "2018-03-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-47.03"
+            }
+          ]
         },
         {
           "description": "Paliwo, promy itp",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "2015.59",
-          "date": "2018-03-15"
+          "date": "2018-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2015.59"
+            }
+          ]
         },
         {
           "description": "Crossover 16.02-04.03",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-03-15"
+          "date": "2018-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "zakupy, paliwo itp",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "1257.06",
-          "date": "2018-03-15"
+          "date": "2018-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1257.06"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca - marzec",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "-3779.37",
-          "date": "2018-03-15"
+          "date": "2018-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-3779.37"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-24.32",
-          "date": "2018-03-15"
+          "date": "2018-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-24.32"
+            }
+          ]
         },
         {
           "description": "Leasing - marzec - Ania zwrot",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-03-16"
+          "date": "2018-03-16",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "Zakupy - Las Galletas",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-117.91",
-          "date": "2018-03-16"
+          "date": "2018-03-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-117.91"
+            }
+          ]
         },
         {
           "description": "Zakupy Costa del Sil",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-127.83",
-          "date": "2018-03-17"
+          "date": "2018-03-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-127.83"
+            }
+          ]
         },
         {
           "description": "Paliwo - costa silencio",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-201.62",
-          "date": "2018-03-17"
+          "date": "2018-03-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-201.62"
+            }
+          ]
         },
         {
           "description": "Zakupy Arona",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-54.13",
-          "date": "2018-03-17"
+          "date": "2018-03-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-54.13"
+            }
+          ]
         },
         {
           "description": "Pico Teide - Tenerife",
           "category": "Rozrywka",
-          "account": "kantor Alior - EUR",
-          "price": "-130.38",
-          "date": "2018-03-17"
+          "date": "2018-03-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-130.38"
+            }
+          ]
         },
         {
           "description": "Crossover 05-11.03",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-03-22"
+          "date": "2018-03-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Noclegi - Teneryfa - Costa del Silencio - rabat",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "381.60",
-          "date": "2018-03-23"
+          "date": "2018-03-23",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "381.60"
+            }
+          ]
         },
         {
           "description": "E S LAS PALMERAS CORDO ALCOLEA",
           "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-324.61",
-          "date": "2018-03-23"
+          "date": "2018-03-23",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-324.61"
+            }
+          ]
         },
         {
           "description": "Zakupy SUPERMERCAT CERVOL JONQUERA",
           "category": "Zakupy",
-          "account": "kantor Alior - EUR",
-          "price": "-31.55",
-          "date": "2018-03-24"
+          "date": "2018-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-31.55"
+            }
+          ]
         },
         {
           "description": "CEDIPSA BENICARLO I BENICARLO",
           "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-334.79",
-          "date": "2018-03-24"
+          "date": "2018-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-334.79"
+            }
+          ]
         },
         {
           "description": "Autostrada oplata (E0424 JONQUERA - AS24 LAJONQUERA ESP)",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-199.83",
-          "date": "2018-03-24"
+          "date": "2018-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-199.83"
+            }
+          ]
         },
         {
           "description": "Autostrada - Francja - oplaty",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-129.32",
-          "date": "2018-03-24"
+          "date": "2018-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-129.32"
+            }
+          ]
         },
         {
           "description": "Autostrada poludnie - Francja",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-189.95",
-          "date": "2018-03-24"
+          "date": "2018-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-189.95"
+            }
+          ]
         },
         {
           "description": "kominiarz",
           "category": "Utrzymanie domu",
-          "account": "Gotówka",
-          "price": "-120.00",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-120.00"
+            }
+          ]
         },
         {
           "description": "kominiarz",
           "category": "Utrzymanie domu",
-          "account": "Ania - rozliczenie",
-          "price": "60.00",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "60.00"
+            }
+          ]
         },
         {
           "description": "Projekt przebudowy domu",
           "category": "Remont domu",
-          "account": "Ania - rozliczenie",
-          "price": "4750.00",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4750.00"
+            }
+          ]
         },
         {
           "description": "Przelew Ania ",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "127.20",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "127.20"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-1442.26",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1442.26"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "363.29",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "363.29"
+            }
+          ]
         },
         {
           "description": "Ania Gotowka EUR",
           "category": "Przelewy między kontami",
-          "account": "Gotówka - euro",
-          "price": "-60.76",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - euro",
+              "price": "-60.76"
+            }
+          ]
         },
         {
           "description": "Ania Gotowka EUR",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "60.76",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "60.76"
+            }
+          ]
         },
         {
           "description": "Zgorzelec - Hot dogi :)",
           "category": "Jedzenie",
-          "account": "Idea Bank",
-          "price": "-4.00",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-4.00"
+            }
+          ]
         },
         {
           "description": "Zgorzelec - paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-240.38",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-240.38"
+            }
+          ]
         },
         {
           "description": "A4 oplata",
           "category": "Transport",
-          "account": "Idea Bank",
-          "price": "-16.20",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-16.20"
+            }
+          ]
         },
         {
           "description": "Beaune - Francja - paliwo",
           "category": "Paliwo",
-          "account": "Idea Bank",
-          "price": "-378.22",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-378.22"
+            }
+          ]
         },
         {
           "description": "ESSO STAT. SATTELDORFSATTELDORF DEU",
           "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-329.20",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-329.20"
+            }
+          ]
         },
         {
           "description": "MCDONALD'S SATTELDORF DEU",
           "category": "Jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-64.28",
-          "date": "2018-03-25"
+          "date": "2018-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-64.28"
+            }
+          ]
         },
         {
           "description": "Księgowy - rozliczenie drugi PIT",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-61.50",
-          "date": "2018-03-26"
+          "date": "2018-03-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-61.50"
+            }
+          ]
         },
         {
           "description": "Decathlon - zele energetyczne itp",
           "category": "Sport",
-          "account": "Idea Bank",
-          "price": "-140.86",
-          "date": "2018-03-26"
+          "date": "2018-03-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-140.86"
+            }
+          ]
         },
         {
           "description": "Safari Egipt zaliczka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-1660.00",
-          "date": "2018-03-27"
+          "date": "2018-03-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1660.00"
+            }
+          ]
         },
         {
           "description": "Kabel HDMI",
           "category": "Koszty prowadzenia firmy",
-          "account": "Idea Bank",
-          "price": "-200.98",
-          "date": "2018-03-27"
+          "date": "2018-03-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-200.98"
+            }
+          ]
         },
         {
           "description": "Projekt przebudowy domu",
           "category": "Remont domu",
-          "account": "Idea Bank",
-          "price": "-9500.00",
-          "date": "2018-03-28"
+          "date": "2018-03-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-9500.00"
+            }
+          ]
         },
         {
           "description": "Crossover 12-18.03",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-03-29"
+          "date": "2018-03-29",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         }
       ]
     },
@@ -3769,338 +5257,530 @@
         {
           "description": "Zakupy - Ania zwrot",
           "category": "Zakupy - jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "71.26",
-          "date": "2018-02-01"
+          "date": "2018-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "71.26"
+            }
+          ]
         },
         {
           "description": "ZUS - Luty",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-504.66",
-          "date": "2018-02-01"
+          "date": "2018-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-504.66"
+            }
+          ]
         },
         {
           "description": "Zwrot za wymiane szyby",
           "category": "Samochód",
-          "account": "Idea Bank",
-          "price": "2675.64",
-          "date": "2018-02-01"
+          "date": "2018-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "2675.64"
+            }
+          ]
         },
         {
           "description": "Crossover 15-21.01",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-02-01"
+          "date": "2018-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Nurkowanie - ubezpieczenie",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-364.64",
-          "date": "2018-02-01"
+          "date": "2018-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-364.64"
+            }
+          ]
         },
         {
           "description": "Idea Bank Premia",
           "category": "Inne Przychody",
-          "account": "Idea Bank",
-          "price": "30.00",
-          "date": "2018-02-02"
+          "date": "2018-02-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "30.00"
+            }
+          ]
         },
         {
           "description": "AQUATICS DIVINGCENTER COSTATEGUISE ESP",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-424.00",
-          "date": "2018-02-02"
+          "date": "2018-02-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-424.00"
+            }
+          ]
         },
         {
           "description": "Casa EGO - San Sebastian de la Gomera",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-1334.58",
-          "date": "2018-02-02"
+          "date": "2018-02-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1334.58"
+            }
+          ]
         },
         {
           "description": "Jardin de Cactus",
           "category": "Wyjazdy",
-          "account": "Idea Bank",
-          "price": "-31.31",
-          "date": "2018-02-03"
+          "date": "2018-02-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-31.31"
+            }
+          ]
         },
         {
           "description": "JARDIN DE CACTUS TAQUI TEGUISE",
           "category": "Wyjazdy",
-          "account": "kantor Alior - EUR",
-          "price": "-49.18",
-          "date": "2018-02-03"
+          "date": "2018-02-03",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-49.18"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-02-04"
+          "date": "2018-02-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: Teneryfa - La Gomera",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-305.28",
-          "date": "2018-02-04"
+          "date": "2018-02-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-305.28"
+            }
+          ]
         },
         {
           "description": "AirBnb - nocleg na Teneryfie - 1 noc",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-180.75",
-          "date": "2018-02-04"
+          "date": "2018-02-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-180.75"
+            }
+          ]
         },
         {
           "description": "Zwiedzanie - Papagayo, kaktusy itp",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "955.85",
-          "date": "2018-02-08"
+          "date": "2018-02-08",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "955.85"
+            }
+          ]
         },
         {
           "description": "paliwo noclegi itp",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "1557.50",
-          "date": "2018-02-08"
+          "date": "2018-02-08",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1557.50"
+            }
+          ]
         },
         {
           "description": "Crossover 22-28.01",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-02-08"
+          "date": "2018-02-08",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-7165.00",
-          "date": "2018-02-09"
+          "date": "2018-02-09",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-7165.00"
+            }
+          ]
         },
         {
           "description": "Księgowy - Luty",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-02-09"
+          "date": "2018-02-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "6881.99",
-          "date": "2018-02-09"
+          "date": "2018-02-09",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "6881.99"
+            }
+          ]
         },
         {
           "description": "Restauracja",
           "category": "Jedzenie",
-          "account": "Idea Bank",
-          "price": "-84.75",
-          "date": "2018-02-10"
+          "date": "2018-02-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-84.75"
+            }
+          ]
         },
         {
           "description": "Nurkowanie",
           "category": "Nurkowanie",
-          "account": "Idea Bank",
-          "price": "-279.94",
-          "date": "2018-02-10"
+          "date": "2018-02-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-279.94"
+            }
+          ]
         },
         {
           "description": "Zakupy - La Oliwa",
           "category": "Zakupy",
-          "account": "kantor Alior - EUR",
-          "price": "-149.51",
-          "date": "2018-02-11"
+          "date": "2018-02-11",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-149.51"
+            }
+          ]
         },
         {
           "description": "Casa EGO - San Sebastian de la Gomera - rabat",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "186.56",
-          "date": "2018-02-13"
+          "date": "2018-02-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "186.56"
+            }
+          ]
         },
         {
           "description": "Santa Cruz de La Palma - noclegi",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-2230.58",
-          "date": "2018-02-13"
+          "date": "2018-02-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-2230.58"
+            }
+          ]
         },
         {
           "description": "T GAS EL MEDANO SAN ISIDRO DEESP",
           "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-176.13",
-          "date": "2018-02-14"
+          "date": "2018-02-14",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-176.13"
+            }
+          ]
         },
         {
           "description": "Crossover 29.01-04.02",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-02-15"
+          "date": "2018-02-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-22.75",
-          "date": "2018-02-15"
+          "date": "2018-02-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-22.75"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: La Gomera - La Palma",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-233.20",
-          "date": "2018-02-15"
+          "date": "2018-02-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-233.20"
+            }
+          ]
         },
         {
           "description": "Księgowy - rozliczenie roku",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-61.50",
-          "date": "2018-02-16"
+          "date": "2018-02-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-61.50"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "137.12",
-          "date": "2018-02-16"
+          "date": "2018-02-16",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "137.12"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: La Palma - Teneryfa",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-414.67",
-          "date": "2018-02-17"
+          "date": "2018-02-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-414.67"
+            }
+          ]
         },
         {
           "description": "Zwrot za wymiane szyby",
           "category": "Samochód",
-          "account": "Ania - rozliczenie",
-          "price": "-1337.82",
-          "date": "2018-02-20"
+          "date": "2018-02-20",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1337.82"
+            }
+          ]
         },
         {
           "description": "Monika pożyczka",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-8400.00",
-          "date": "2018-02-20"
+          "date": "2018-02-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-8400.00"
+            }
+          ]
         },
         {
           "description": "Leasing - luty",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-02-20"
+          "date": "2018-02-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "CT - styczen",
           "category": "CodersTrust - szkolenia",
-          "account": "Idea Bank",
-          "price": "16260.60",
-          "date": "2018-02-20"
+          "date": "2018-02-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "16260.60"
+            }
+          ]
         },
         {
           "description": "Monika pożyczka",
           "category": "Przelewy między kontami",
-          "account": "Monika - pożyczka",
-          "price": "8400.00",
-          "date": "2018-02-20"
+          "date": "2018-02-20",
+          "accountPriceEntries": [
+            {
+              "account": "Monika - pożyczka",
+              "price": "8400.00"
+            }
+          ]
         },
         {
           "description": "Crossover 05-11.02",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-02-22"
+          "date": "2018-02-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: Teneryfa - El Hierro - Teneryfa",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-912.02",
-          "date": "2018-02-24"
+          "date": "2018-02-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-912.02"
+            }
+          ]
         },
         {
           "description": "El Hierro - La Restinga",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-1113.34",
-          "date": "2018-02-24"
+          "date": "2018-02-24",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1113.34"
+            }
+          ]
         },
         {
           "description": "Rozliczenie miesiaca",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "-1202.78",
-          "date": "2018-02-25"
+          "date": "2018-02-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1202.78"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-490.94",
-          "date": "2018-02-25"
+          "date": "2018-02-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-490.94"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-1709.68",
-          "date": "2018-02-25"
+          "date": "2018-02-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1709.68"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "23.32",
-          "date": "2018-02-25"
+          "date": "2018-02-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "23.32"
+            }
+          ]
         },
         {
           "description": "LA PALMA DIVING CENTER BRENABAJA",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-118.72",
-          "date": "2018-02-25"
+          "date": "2018-02-25",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-118.72"
+            }
+          ]
         },
         {
           "description": "CEPSA BRENA ALTA BAJAMAR",
           "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-251.22",
-          "date": "2018-02-25"
+          "date": "2018-02-25",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-251.22"
+            }
+          ]
         },
         {
           "description": "Leasing - luty - Ania zwrot",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-02-26"
+          "date": "2018-02-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "paliwo noclegi itp",
           "category": "Rozrywka",
-          "account": "Ania - rozliczenie",
-          "price": "1168.40",
-          "date": "2018-02-28"
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1168.40"
+            }
+          ]
         },
         {
           "description": "Drobne wydatki",
           "category": "Inne Koszty",
-          "account": "Gotówka - euro",
-          "price": "-23.32",
-          "date": "2018-02-28"
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - euro",
+              "price": "-23.32"
+            }
+          ]
         }
       ]
     },
@@ -4235,534 +5915,838 @@
         {
           "description": "Idea Bank Premia",
           "category": "Inne Przychody",
-          "account": "Idea Bank",
-          "price": "50.00",
-          "date": "2018-01-02"
+          "date": "2018-01-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "50.00"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-3582.50",
-          "date": "2018-01-03"
+          "date": "2018-01-03",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "3513.73",
-          "date": "2018-01-03"
+          "date": "2018-01-03",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "3513.73"
+            }
+          ]
         },
         {
           "description": "ZUS - Styczeń",
           "category": "ZUS",
-          "account": "Idea Bank",
-          "price": "-473.20",
-          "date": "2018-01-03"
+          "date": "2018-01-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-473.20"
+            }
+          ]
         },
         {
           "description": "Podatek dochodowy Q4 2017",
           "category": "Podatek dochodowy",
-          "account": "Idea Bank",
-          "price": "-5746.00",
-          "date": "2018-01-03"
+          "date": "2018-01-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5746.00"
+            }
+          ]
         },
         {
           "description": "VAT Q4 2017",
           "category": "VAT",
-          "account": "Idea Bank",
-          "price": "-759.00",
-          "date": "2018-01-03"
+          "date": "2018-01-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-759.00"
+            }
+          ]
         },
         {
           "description": "Crossover 18-24.12",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-01-04"
+          "date": "2018-01-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Audioteka",
           "category": "Rozrywka",
-          "account": "Idea Bank",
-          "price": "-19.90",
-          "date": "2018-01-04"
+          "date": "2018-01-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
         },
         {
           "description": "Crossover Interviews - Grudzień",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "985.19",
-          "date": "2018-01-04"
+          "date": "2018-01-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "985.19"
+            }
+          ]
         },
         {
           "description": "Wyplata EUR",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "-4240.00",
-          "date": "2018-01-04"
+          "date": "2018-01-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-4240.00"
+            }
+          ]
         },
         {
           "description": "Wyplata EUR",
           "category": "Przelewy między kontami",
-          "account": "Gotówka - euro",
-          "price": "4240.00",
-          "date": "2018-01-04"
+          "date": "2018-01-04",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - euro",
+              "price": "4240.00"
+            }
+          ]
         },
         {
           "description": "RESTAURANTE PUERTO ESC PUERTO",
           "category": "Jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "42.40",
-          "date": "2018-01-05"
+          "date": "2018-01-05",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "42.40"
+            }
+          ]
         },
         {
           "description": "RESTAURANTE PUERTO ESC PUERTO",
           "category": "Jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-84.80",
-          "date": "2018-01-05"
+          "date": "2018-01-05",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-84.80"
+            }
+          ]
         },
         {
           "description": "Noclegi Gran Canaria",
           "category": "Wyjazdy - noclegi",
-          "account": "Gotówka - euro",
-          "price": "-4240.00",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - euro",
+              "price": "-4240.00"
+            }
+          ]
         },
         {
           "description": "Noclegi Gran Canaria",
           "category": "Wyjazdy - noclegi",
-          "account": "Ania - rozliczenie",
-          "price": "2120.00",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2120.00"
+            }
+          ]
         },
         {
           "description": "RESTAURANTE ARIZONA PUERTO",
           "category": "Jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-110.24",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-110.24"
+            }
+          ]
         },
         {
           "description": "Alior - na prowizje",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-36.00",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-36.00"
+            }
+          ]
         },
         {
           "description": "Alior - na prowizje",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "36.00",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "36.00"
+            }
+          ]
         },
         {
           "description": "Prowizja za 2 wyplate",
           "category": "Opłaty i prowizje",
-          "account": "kantor Alior - PLN",
-          "price": "-9.00",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-9.00"
+            }
+          ]
         },
         {
           "description": "RESTAURANTE ARIZONA PUERTO",
           "category": "Jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "55.12",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "55.12"
+            }
+          ]
         },
         {
           "description": "Prowizja za 2 wyplate",
           "category": "Opłaty i prowizje",
-          "account": "Ania - rozliczenie",
-          "price": "4.50",
-          "date": "2018-01-06"
+          "date": "2018-01-06",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4.50"
+            }
+          ]
         },
         {
           "description": "Nurkowanie - TOP DIVING PUERTO RICO PUERTORICO",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-542.72",
-          "date": "2018-01-07"
+          "date": "2018-01-07",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-542.72"
+            }
+          ]
         },
         {
           "description": "Origo Mare - Fuerteventura - noclegi - zaliczka",
           "category": "Wyjazdy - noclegi",
-          "account": "Ania - rozliczenie",
-          "price": "510.45",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "510.45"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: Gran Canaria - Lanzarote",
           "category": "Transport",
-          "account": "kantor Alior - EUR",
-          "price": "-565.28",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-565.28"
+            }
+          ]
         },
         {
           "description": "Naviera Armas: Gran Canaria - Lanzarote",
           "category": "Transport",
-          "account": "Ania - rozliczenie",
-          "price": "282.64",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "282.64"
+            }
+          ]
         },
         {
           "description": "Przelew Ania EUR",
           "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "4137.10",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "4137.10"
+            }
+          ]
         },
         {
           "description": "Lanzarote - Costa Teguise (noclegi)",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-2136.96",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-2136.96"
+            }
+          ]
         },
         {
           "description": "Origo Mare - Fuerteventura - noclegi - zaliczka",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-1020.91",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1020.91"
+            }
+          ]
         },
         {
           "description": "Przelew Ania EUR",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-4137.10",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-4137.10"
+            }
+          ]
         },
         {
           "description": "Lanzarote - Costa Teguise (noclegi)",
           "category": "Wyjazdy - noclegi",
-          "account": "Ania - rozliczenie",
-          "price": "1068.48",
-          "date": "2018-01-10"
+          "date": "2018-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1068.48"
+            }
+          ]
         },
         {
           "description": "Spar - zakupy",
           "category": "Zakupy",
-          "account": "kantor Alior - EUR",
-          "price": "-1.90",
-          "date": "2018-01-12"
+          "date": "2018-01-12",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1.90"
+            }
+          ]
         },
         {
           "description": "Księgowy - Styczeń",
           "category": "Księgowość",
-          "account": "Idea Bank",
-          "price": "-123.00",
-          "date": "2018-01-13"
+          "date": "2018-01-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-985.19",
-          "date": "2018-01-13"
+          "date": "2018-01-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-985.19"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "950.14",
-          "date": "2018-01-13"
+          "date": "2018-01-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "950.14"
+            }
+          ]
         },
         {
           "description": "Nurkowanie - 7 MARES LAS CANTERAS S LASPALMAS DE ESP",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-466.40",
-          "date": "2018-01-13"
+          "date": "2018-01-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-466.40"
+            }
+          ]
         },
         {
           "description": "CUEVA DEL MOLINO ARTENARA ESP",
           "category": "Jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-135.68",
-          "date": "2018-01-14"
+          "date": "2018-01-14",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-135.68"
+            }
+          ]
         },
         {
           "description": "Telefon",
           "category": "Telefon",
-          "account": "Idea Bank",
-          "price": "-21.34",
-          "date": "2018-01-15"
+          "date": "2018-01-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-21.34"
+            }
+          ]
         },
         {
           "description": "Leasing - styczeń",
           "category": "Leasing samochodu",
-          "account": "Idea Bank",
-          "price": "-2308.97",
-          "date": "2018-01-15"
+          "date": "2018-01-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
         },
         {
           "description": "Zakupy - Gran Canaria",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-250.04",
-          "date": "2018-01-16"
+          "date": "2018-01-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-250.04"
+            }
+          ]
         },
         {
           "description": "Zakupy - Gran Canaria",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-95.14",
-          "date": "2018-01-17"
+          "date": "2018-01-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-95.14"
+            }
+          ]
         },
         {
           "description": "Crossover 01-07.01",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-01-18"
+          "date": "2018-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Idea Bank",
-          "price": "-4000.00",
-          "date": "2018-01-18"
+          "date": "2018-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-4000.00"
+            }
+          ]
         },
         {
           "description": "Zakupy - Gran Canaria",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-4.74",
-          "date": "2018-01-18"
+          "date": "2018-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-4.74"
+            }
+          ]
         },
         {
           "description": "Przelew Ania PLN",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "4000.00",
-          "date": "2018-01-18"
+          "date": "2018-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4000.00"
+            }
+          ]
         },
         {
           "description": "Zakupy - Gran Canaria",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-39.58",
-          "date": "2018-01-19"
+          "date": "2018-01-19",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-39.58"
+            }
+          ]
         },
         {
           "description": "Origo Mare - Fuerteventura - noclegi - reszta",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-979.23",
-          "date": "2018-01-20"
+          "date": "2018-01-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-979.23"
+            }
+          ]
         },
         {
           "description": "Nurkowanie - CENTRO DE BUCEO BUCEO GALDARESP",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-169.60",
-          "date": "2018-01-21"
+          "date": "2018-01-21",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-169.60"
+            }
+          ]
         },
         {
           "description": "Crossover 08-14.01",
           "category": "Crossover",
-          "account": "kantor Alior - USD",
-          "price": "7165.00",
-          "date": "2018-01-25"
+          "date": "2018-01-25",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
         },
         {
           "description": "Gotowka Ania EUR",
           "category": "Przelewy między kontami",
-          "account": "Gotówka - euro",
-          "price": "21.57",
-          "date": "2018-01-25"
+          "date": "2018-01-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - euro",
+              "price": "21.57"
+            }
+          ]
         },
         {
           "description": "Gotowka Ania EUR",
           "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-21.57",
-          "date": "2018-01-25"
+          "date": "2018-01-25",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-21.57"
+            }
+          ]
         },
         {
           "description": "Leasing - styczeń - Ania zwrot",
           "category": "Leasing samochodu",
-          "account": "Ania - rozliczenie",
-          "price": "1154.49",
-          "date": "2018-01-26"
+          "date": "2018-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
         },
         {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "119.75",
-          "date": "2018-01-26"
+          "date": "2018-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "119.75"
+            }
+          ]
         },
         {
           "description": "Zakupy - Ania zwrot",
           "category": "Zakupy",
-          "account": "Ania - rozliczenie",
-          "price": "75.00",
-          "date": "2018-01-26"
+          "date": "2018-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "75.00"
+            }
+          ]
         },
         {
           "description": "Zakupy",
           "category": "Zakupy",
-          "account": "kantor Alior - EUR",
-          "price": "-70.89",
-          "date": "2018-01-27"
+          "date": "2018-01-27",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-70.89"
+            }
+          ]
         },
         {
           "description": "AQUATICS DIVINGCENTER COSTATEGUISE ESP",
           "category": "Nurkowanie",
-          "account": "kantor Alior - EUR",
-          "price": "-339.20",
-          "date": "2018-01-27"
+          "date": "2018-01-27",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-339.20"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-274.24",
-          "date": "2018-01-28"
+          "date": "2018-01-28",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-274.24"
+            }
+          ]
         },
         {
           "description": "Zakupy - Gran Canaria",
           "category": "Zakupy",
-          "account": "Idea Bank",
-          "price": "-71.62",
-          "date": "2018-01-29"
+          "date": "2018-01-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-71.62"
+            }
+          ]
         },
         {
           "description": "Wydatki na dziecko",
           "category": "Dziecko",
-          "account": "Ania - rozliczenie",
-          "price": "-34.11",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-34.11"
+            }
+          ]
         },
         {
           "description": "Abonament RTV",
           "category": "TV",
-          "account": "Ania - rozliczenie",
-          "price": "-122.57",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-122.57"
+            }
+          ]
         },
         {
           "description": "Gaz",
           "category": "Gaz",
-          "account": "Ania - rozliczenie",
-          "price": "-233.21",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-233.21"
+            }
+          ]
         },
         {
           "description": "Internet",
           "category": "Internet",
-          "account": "Ania - rozliczenie",
-          "price": "-34.44",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-34.44"
+            }
+          ]
         },
         {
           "description": "Prąd",
           "category": "Prąd",
-          "account": "Ania - rozliczenie",
-          "price": "-258.13",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-258.13"
+            }
+          ]
         },
         {
           "description": "Śmieci",
           "category": "Śmieci",
-          "account": "Ania - rozliczenie",
-          "price": "-15.00",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-15.00"
+            }
+          ]
         },
         {
           "description": "Woda",
           "category": "Woda",
-          "account": "Ania - rozliczenie",
-          "price": "-148.32",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-148.32"
+            }
+          ]
         },
         {
           "description": "Wymiana szyby",
           "category": "Samochód",
-          "account": "Ania - rozliczenie",
-          "price": "-1351.79",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1351.79"
+            }
+          ]
         },
         {
           "description": "Inne wydatki",
           "category": "Samochód",
-          "account": "Ania - rozliczenie",
-          "price": "-20.15",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-20.15"
+            }
+          ]
         },
         {
           "description": "Paliwo",
           "category": "Paliwo",
-          "account": "Ania - rozliczenie",
-          "price": "-125.25",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-125.25"
+            }
+          ]
         },
         {
           "description": "Parkingi",
           "category": "Samochód",
-          "account": "Ania - rozliczenie",
-          "price": "-15.42",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-15.42"
+            }
+          ]
         },
         {
           "description": "Promy",
           "category": "Transport",
-          "account": "Ania - rozliczenie",
-          "price": "-254.36",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-254.36"
+            }
+          ]
         },
         {
           "description": "Noclegi Fuerta",
           "category": "Wyjazdy - noclegi",
-          "account": "Ania - rozliczenie",
-          "price": "-2064.96",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2064.96"
+            }
+          ]
         },
         {
           "description": "Jedzenie - restauracje",
           "category": "Jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "-342.33",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-342.33"
+            }
+          ]
         },
         {
           "description": "Jedzenie - zakupy",
           "category": "Zakupy - jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "-667.52",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-667.52"
+            }
+          ]
         },
         {
           "description": "Lekarstwa",
           "category": "Leki, lekarze, higiena",
-          "account": "Ania - rozliczenie",
-          "price": "-166.72",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-166.72"
+            }
+          ]
         },
         {
           "description": "Kosmetyki",
           "category": "Leki, lekarze, higiena",
-          "account": "Ania - rozliczenie",
-          "price": "-10.97",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-10.97"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - USD",
-          "price": "-3582.50",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            }
+          ]
         },
         {
           "description": "USD -> EUR",
           "category": "Wymiana walut",
-          "account": "kantor Alior - EUR",
-          "price": "3399.71",
-          "date": "2018-01-31"
+          "date": "2018-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "3399.71"
+            }
+          ]
         }
       ]
     }

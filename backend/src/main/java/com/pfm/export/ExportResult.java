@@ -45,29 +45,42 @@ public class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @JsonIgnoreProperties(ignoreUnknown = true) // TODO remove
   static class ExportTransaction {
 
     private String description;
 
     private String category;
 
-    private String account;
-
-    private BigDecimal price;
-
     private LocalDate date;
+
+    private String account; // TODO remove
+
+    private BigDecimal price; // TODO remove
+
+    private List<ExportAccountPriceEntry> accountPriceEntries;
   }
 
   @Data
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  @JsonIgnoreProperties(ignoreUnknown = true) // TODO remove
   static class ExportAccount {
 
     private String name;
 
     private BigDecimal balance;
 
+  }
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  static class ExportAccountPriceEntry {
+
+    private String account;
+
+    private BigDecimal price;
   }
 }
