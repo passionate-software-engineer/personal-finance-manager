@@ -251,6 +251,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     }
 
+    // TODO allow to do it dynamically from UI
+    transaction.editedTransaction.accountPriceEntries.push(new AccountPriceEntry());
+
     for (const category of this.categories) {
       if (category.id === transaction.editedTransaction.category.id) {
         transaction.editedTransaction.category = category;
