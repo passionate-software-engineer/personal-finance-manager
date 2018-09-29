@@ -72,7 +72,7 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "306.00"
+      "balance": "3021.55"
     },
     {
       "name": "kantor Alior - GBP",
@@ -138,7 +138,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1570.79"
+          "balance": "4286.34"
         },
         {
           "name": "kantor Alior - GBP",
@@ -200,7 +200,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00"
+          "balance": "3021.55"
         },
         {
           "name": "kantor Alior - GBP",
@@ -779,7 +779,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78"
+          "balance": "4791.33"
         },
         {
           "name": "kantor Alior - GBP",
@@ -841,7 +841,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1570.79"
+          "balance": "4286.34"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1434,7 +1434,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78"
+          "balance": "4791.33"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1496,7 +1496,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78"
+          "balance": "4791.33"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1851,7 +1851,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2330.18"
+          "balance": "5045.73"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1913,7 +1913,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78"
+          "balance": "4791.33"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2359,7 +2359,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "481.88"
+          "balance": "3197.43"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2421,7 +2421,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2330.18"
+          "balance": "5045.73"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2769,7 +2769,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "473.40"
+          "balance": "3188.95"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2831,7 +2831,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "481.88"
+          "balance": "3197.43"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3144,7 +3144,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2230.37"
+          "balance": "4945.92"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3206,7 +3206,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "473.40"
+          "balance": "3188.95"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3596,7 +3596,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "764.30"
+          "balance": "3479.85"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3658,7 +3658,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2230.37"
+          "balance": "4945.92"
         },
         {
           "name": "kantor Alior - GBP",
@@ -4082,7 +4082,7 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "764.30"
+          "balance": "3479.85"
         },
         {
           "name": "kantor Alior - GBP",
@@ -4152,7 +4152,7 @@
           "description": "USD -> EUR",
           "category": "Wymiana walut",
           "account": "kantor Alior - EUR",
-          "price": "3513.57",
+          "price": "3513.73",
           "date": "2018-01-03"
         },
         {
@@ -4205,10 +4205,31 @@
           "date": "2018-01-04"
         },
         {
+          "description": "Wyplata w bankomacie",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - EUR",
+          "price": "-4240.00",
+          "date": "2018-01-04"
+        },
+        {
+          "description": "Wyplata",
+          "category": "Przelewy między kontami",
+          "account": "Gotówka - euro",
+          "price": "4409.60",
+          "date": "2018-01-04"
+        },
+        {
+          "description": "RESTAURANTE PUERTO ESC PUERTO",
+          "category": "Jedzenie",
+          "account": "kantor Alior - EUR",
+          "price": "-84.80",
+          "date": "2018-01-05"
+        },
+        {
           "description": "Noclegi Gran Canaria",
           "category": "Wyjazdy - noclegi",
-          "account": "kantor Alior - EUR",
-          "price": "-4418.60",
+          "account": "Gotówka - euro",
+          "price": "-4409.60",
           "date": "2018-01-06"
         },
         {
@@ -4219,10 +4240,10 @@
           "date": "2018-01-06"
         },
         {
-          "description": "Jedzenie",
+          "description": "RESTAURANTE ARIZONA PUERTO",
           "category": "Jedzenie",
           "account": "kantor Alior - EUR",
-          "price": "-195.04",
+          "price": "-110.24",
           "date": "2018-01-06"
         },
         {
@@ -4237,13 +4258,6 @@
           "category": "Wyjazdy - noclegi",
           "account": "Ania - rozliczenie",
           "price": "282.64",
-          "date": "2018-01-06"
-        },
-        {
-          "description": "Jedzenie",
-          "category": "Jedzenie",
-          "account": "kantor Alior - EUR",
-          "price": "-135.68",
           "date": "2018-01-06"
         },
         {
@@ -4268,7 +4282,7 @@
           "date": "2018-01-06"
         },
         {
-          "description": "Nurkowanie - Top Diving Gran Canaria",
+          "description": "Nurkowanie - TOP DIVING PUERTO RICO PUERTORICO",
           "category": "Nurkowanie",
           "account": "kantor Alior - EUR",
           "price": "-542.72",
@@ -4303,6 +4317,34 @@
           "date": "2018-01-10"
         },
         {
+          "description": "Przelew Ania EUR",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - EUR",
+          "price": "4137.10",
+          "date": "2018-01-10"
+        },
+        {
+          "description": "AirBnb - noclegi Lanzarote - Costa Teguise",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-2136.96",
+          "date": "2018-01-10"
+        },
+        {
+          "description": "Origo Mare - Fuerteventura - noclegi - zaliczka",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-1020.91",
+          "date": "2018-01-10"
+        },
+        {
+          "description": "Spar - zakupy",
+          "category": "Zakupy",
+          "account": "kantor Alior - EUR",
+          "price": "-1.90",
+          "date": "2018-01-12"
+        },
+        {
           "description": "Księgowy - Styczeń",
           "category": "Księgowość",
           "account": "Idea Bank",
@@ -4324,10 +4366,17 @@
           "date": "2018-01-13"
         },
         {
-          "description": "Nurkowanie - Las Palmas Gran Canaria",
+          "description": "Nurkowanie - 7 MARES LAS CANTERAS S LASPALMAS DE ESP",
           "category": "Nurkowanie",
           "account": "kantor Alior - EUR",
-          "price": "-468.31",
+          "price": "-466.40",
+          "date": "2018-01-13"
+        },
+        {
+          "description": "CUEVA DEL MOLINO ARTENARA ESP",
+          "category": "Jedzenie",
+          "account": "kantor Alior - EUR",
+          "price": "-135.68",
           "date": "2018-01-14"
         },
         {
@@ -4387,10 +4436,17 @@
           "date": "2018-01-19"
         },
         {
-          "description": "Nurkowanie - North Gran Canaria",
+          "description": "Origo Mare - Fuerteventura - noclegi - reszta",
+          "category": "Wyjazdy - noclegi",
+          "account": "kantor Alior - EUR",
+          "price": "-979.23",
+          "date": "2018-01-20"
+        },
+        {
+          "description": "Nurkowanie - CENTRO DE BUCEO BUCEO GALDARESP",
           "category": "Nurkowanie",
           "account": "kantor Alior - EUR",
-          "price": "-148.40",
+          "price": "-169.60",
           "date": "2018-01-21"
         },
         {
@@ -4405,13 +4461,6 @@
           "category": "Przelewy między kontami",
           "account": "Ania - rozliczenie",
           "price": "4398.50",
-          "date": "2018-01-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "kantor Alior - EUR",
-          "price": "546.90",
           "date": "2018-01-25"
         },
         {
@@ -4443,24 +4492,10 @@
           "date": "2018-01-26"
         },
         {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "account": "kantor Alior - EUR",
-          "price": "-239.50",
-          "date": "2018-01-26"
-        },
-        {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
           "account": "Ania - rozliczenie",
           "price": "119.75",
-          "date": "2018-01-26"
-        },
-        {
-          "description": "Zakupy",
-          "category": "Zakupy",
-          "account": "kantor Alior - EUR",
-          "price": "-150.00",
           "date": "2018-01-26"
         },
         {
@@ -4469,6 +4504,27 @@
           "account": "Ania - rozliczenie",
           "price": "75.00",
           "date": "2018-01-26"
+        },
+        {
+          "description": "Zakupy",
+          "category": "Zakupy",
+          "account": "kantor Alior - EUR",
+          "price": "-70.89",
+          "date": "2018-01-27"
+        },
+        {
+          "description": "AQUATICS DIVINGCENTER COSTATEGUISE ESP",
+          "category": "Nurkowanie",
+          "account": "kantor Alior - EUR",
+          "price": "-339.20",
+          "date": "2018-01-27"
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "account": "kantor Alior - EUR",
+          "price": "-274.24",
+          "date": "2018-01-28"
         },
         {
           "description": "Zakupy - Gran Canaria",
@@ -4601,6 +4657,13 @@
           "category": "Wymiana walut",
           "account": "kantor Alior - USD",
           "price": "-3582.50",
+          "date": "2018-01-31"
+        },
+        {
+          "description": "USD -> EUR",
+          "category": "Wymiana walut",
+          "account": "kantor Alior - EUR",
+          "price": "3399.71",
           "date": "2018-01-31"
         }
       ]
