@@ -4254,11 +4254,25 @@
           "date": "2018-01-06"
         },
         {
+          "description": "Prowizja z bankomat",
+          "category": "Opłaty i prowizje",
+          "account": "kantor Alior - PLN",
+          "price": "-9.00",
+          "date": "2018-01-06"
+        },
+        {
           "description": "Nurkowanie - Top Diving Gran Canaria",
           "category": "Nurkowanie",
           "account": "kantor Alior - EUR",
           "price": "-542.72",
           "date": "2018-01-07"
+        },
+        {
+          "description": "Przelew Alior PLN",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - PLN",
+          "price": "36.00",
+          "date": "2018-01-08"
         },
         {
           "description": "Noclegi Fuerteventura - zaliczka",
@@ -4384,13 +4398,6 @@
           "category": "Crossover",
           "account": "kantor Alior - USD",
           "price": "7165.00",
-          "date": "2018-01-25"
-        },
-        {
-          "description": "Przelew Alior PLN",
-          "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "27.00",
           "date": "2018-01-25"
         },
         {
@@ -4816,6 +4823,14 @@
     {
       "id": 40,
       "name": "Wyjazdy"
+    },
+    {
+      "id": 41,
+      "name": "Inne Koszty"
+    },
+    {
+      "id": 42,
+      "name": "Opłaty i prowizje"
     }
   ]
 }
