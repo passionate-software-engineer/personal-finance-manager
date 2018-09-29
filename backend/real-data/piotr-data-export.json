@@ -5929,19 +5929,12 @@
           "date": "2018-01-03",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-3582.50"
-            }
-          ]
-        },
-        {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-01-03",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - EUR",
               "price": "3513.73"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
             }
           ]
         },

@@ -27,6 +27,10 @@ export class TransactionService extends ServiceBase {
     };
 
     for (const entry of transaction.accountPriceEntries) {
+      if (entry.account === undefined || entry.price === undefined) {
+        continue;
+      }
+
       result.accountPriceEntries.push(
         {
           accountId: entry.account.id,
