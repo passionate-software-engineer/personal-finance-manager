@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "7275.04"
+      "balance": "4678.16"
     },
     {
       "name": "Monika - pożyczka",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-50.00"
+          "balance": "-2646.88"
         },
         {
           "name": "Monika - pożyczka",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "7275.04"
+          "balance": "4678.16"
         },
         {
           "name": "Monika - pożyczka",
@@ -807,7 +807,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6818.95"
+          "balance": "-9415.83"
         },
         {
           "name": "Monika - pożyczka",
@@ -869,7 +869,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-50.00"
+          "balance": "-2646.88"
         },
         {
           "name": "Monika - pożyczka",
@@ -1462,7 +1462,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4522.40"
+          "balance": "-7119.28"
         },
         {
           "name": "Monika - pożyczka",
@@ -1524,7 +1524,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6818.95"
+          "balance": "-9415.83"
         },
         {
           "name": "Monika - pożyczka",
@@ -1879,7 +1879,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "1577.43"
+          "balance": "-1019.45"
         },
         {
           "name": "Monika - pożyczka",
@@ -1941,7 +1941,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4522.40"
+          "balance": "-7119.28"
         },
         {
           "name": "Monika - pożyczka",
@@ -2387,7 +2387,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-3647.56"
+          "balance": "-6244.44"
         },
         {
           "name": "Monika - pożyczka",
@@ -2449,7 +2449,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "1577.43"
+          "balance": "-1019.45"
         },
         {
           "name": "Monika - pożyczka",
@@ -2797,7 +2797,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "417.61"
+          "balance": "-2179.27"
         },
         {
           "name": "Monika - pożyczka",
@@ -2859,7 +2859,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-3647.56"
+          "balance": "-6244.44"
         },
         {
           "name": "Monika - pożyczka",
@@ -3158,7 +3158,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4078.95"
+          "balance": "-6675.83"
         },
         {
           "name": "Monika - pożyczka",
@@ -3220,7 +3220,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "417.61"
+          "balance": "-2179.27"
         },
         {
           "name": "Monika - pożyczka",
@@ -3680,7 +3680,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4405.67"
+          "balance": "-7002.55"
         },
         {
           "name": "Monika - pożyczka",
@@ -3742,7 +3742,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4078.95"
+          "balance": "-6675.83"
         },
         {
           "name": "Monika - pożyczka",
@@ -4208,7 +4208,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4405.67"
+          "balance": "-7002.55"
         },
         {
           "name": "Monika - pożyczka",
@@ -4254,13 +4254,6 @@
           "date": "2018-01-03"
         },
         {
-          "description": "USD -> EUR - Ania zwrot",
-          "category": "Wymiana walut",
-          "account": "Ania - rozliczenie",
-          "price": "34.47",
-          "date": "2018-01-03"
-        },
-        {
           "description": "ZUS - Styczeń",
           "category": "ZUS",
           "account": "Idea Bank",
@@ -4303,18 +4296,25 @@
           "date": "2018-01-04"
         },
         {
-          "description": "Wyplata w bankomacie",
+          "description": "Wyplata EUR",
           "category": "Przelewy między kontami",
           "account": "kantor Alior - EUR",
           "price": "-4240.00",
           "date": "2018-01-04"
         },
         {
-          "description": "Wyplata",
+          "description": "Wyplata EUR",
           "category": "Przelewy między kontami",
           "account": "Gotówka - euro",
-          "price": "4409.60",
+          "price": "4240.00",
           "date": "2018-01-04"
+        },
+        {
+          "description": "RESTAURANTE PUERTO ESC PUERTO",
+          "category": "Jedzenie",
+          "account": "Ania - rozliczenie",
+          "price": "42.40",
+          "date": "2018-01-05"
         },
         {
           "description": "RESTAURANTE PUERTO ESC PUERTO",
@@ -4327,14 +4327,14 @@
           "description": "Noclegi Gran Canaria",
           "category": "Wyjazdy - noclegi",
           "account": "Gotówka - euro",
-          "price": "-4409.60",
+          "price": "-4240.00",
           "date": "2018-01-06"
         },
         {
-          "description": "Noclegi Gran Canaria - Ania zwrot",
+          "description": "Noclegi Gran Canaria",
           "category": "Wyjazdy - noclegi",
           "account": "Ania - rozliczenie",
-          "price": "2209.30",
+          "price": "2120.00",
           "date": "2018-01-06"
         },
         {
@@ -4345,27 +4345,6 @@
           "date": "2018-01-06"
         },
         {
-          "description": "Jedzenie - Ania zwrot",
-          "category": "Jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "97.52",
-          "date": "2018-01-06"
-        },
-        {
-          "description": "Prom Fuerteventura",
-          "category": "Wyjazdy - noclegi",
-          "account": "Ania - rozliczenie",
-          "price": "282.64",
-          "date": "2018-01-06"
-        },
-        {
-          "description": "Jedzenie - Ania zwrot",
-          "category": "Jedzenie",
-          "account": "Ania - rozliczenie",
-          "price": "67.84",
-          "date": "2018-01-06"
-        },
-        {
           "description": "Alior - na prowizje",
           "category": "Przelewy między kontami",
           "account": "Idea Bank",
@@ -4373,10 +4352,31 @@
           "date": "2018-01-06"
         },
         {
-          "description": "Prowizja z bankomat",
+          "description": "Alior - na prowizje",
+          "category": "Przelewy między kontami",
+          "account": "kantor Alior - PLN",
+          "price": "36.00",
+          "date": "2018-01-06"
+        },
+        {
+          "description": "Prowizja za 2 wyplate",
           "category": "Opłaty i prowizje",
           "account": "kantor Alior - PLN",
           "price": "-9.00",
+          "date": "2018-01-06"
+        },
+        {
+          "description": "RESTAURANTE ARIZONA PUERTO",
+          "category": "Jedzenie",
+          "account": "Ania - rozliczenie",
+          "price": "55.12",
+          "date": "2018-01-06"
+        },
+        {
+          "description": "Prowizja za 2 wyplate",
+          "category": "Opłaty i prowizje",
+          "account": "Ania - rozliczenie",
+          "price": "4.50",
           "date": "2018-01-06"
         },
         {
@@ -4387,31 +4387,24 @@
           "date": "2018-01-07"
         },
         {
-          "description": "Przelew Alior PLN",
-          "category": "Przelewy między kontami",
-          "account": "kantor Alior - PLN",
-          "price": "36.00",
-          "date": "2018-01-08"
-        },
-        {
-          "description": "Noclegi Fuerteventura - zaliczka",
+          "description": "Origo Mare - Fuerteventura - noclegi - zaliczka",
           "category": "Wyjazdy - noclegi",
           "account": "Ania - rozliczenie",
-          "price": "979.23",
+          "price": "510.45",
           "date": "2018-01-10"
         },
         {
-          "description": "Prom Fuerteventura",
+          "description": "Naviera Armas: Gran Canaria - Lanzarote",
           "category": "Transport",
           "account": "kantor Alior - EUR",
           "price": "-565.28",
           "date": "2018-01-10"
         },
         {
-          "description": "Noclegi Fuerteventura ",
-          "category": "Wyjazdy - noclegi",
+          "description": "Naviera Armas: Gran Canaria - Lanzarote",
+          "category": "Transport",
           "account": "Ania - rozliczenie",
-          "price": "-979.23",
+          "price": "282.64",
           "date": "2018-01-10"
         },
         {
@@ -4422,7 +4415,7 @@
           "date": "2018-01-10"
         },
         {
-          "description": "AirBnb - noclegi Lanzarote - Costa Teguise",
+          "description": "Lanzarote - Costa Teguise (noclegi)",
           "category": "Wyjazdy - noclegi",
           "account": "kantor Alior - EUR",
           "price": "-2136.96",
@@ -4433,6 +4426,20 @@
           "category": "Wyjazdy - noclegi",
           "account": "kantor Alior - EUR",
           "price": "-1020.91",
+          "date": "2018-01-10"
+        },
+        {
+          "description": "Przelew Ania EUR",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "-4137.10",
+          "date": "2018-01-10"
+        },
+        {
+          "description": "Lanzarote - Costa Teguise (noclegi)",
+          "category": "Wyjazdy - noclegi",
+          "account": "Ania - rozliczenie",
+          "price": "1068.48",
           "date": "2018-01-10"
         },
         {
@@ -4527,6 +4534,13 @@
           "date": "2018-01-18"
         },
         {
+          "description": "Przelew Ania PLN",
+          "category": "Przelewy między kontami",
+          "account": "Ania - rozliczenie",
+          "price": "4000.00",
+          "date": "2018-01-18"
+        },
+        {
           "description": "Zakupy - Gran Canaria",
           "category": "Zakupy",
           "account": "Idea Bank",
@@ -4552,20 +4566,6 @@
           "category": "Crossover",
           "account": "kantor Alior - USD",
           "price": "7165.00",
-          "date": "2018-01-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "4398.50",
-          "date": "2018-01-25"
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "account": "Ania - rozliczenie",
-          "price": "-546.90",
           "date": "2018-01-25"
         },
         {
