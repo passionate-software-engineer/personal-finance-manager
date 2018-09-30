@@ -218,6 +218,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
 
     for (const entry of transaction.accountPriceEntries) {
+      if (entry.price == null && entry.account == null && transaction.accountPriceEntries.length > 1) {
+        continue;
+      }
+
       if (entry.price == null) {
         this.alertService.error(this.translate.instant('message.priceEmpty'));
         status = false;

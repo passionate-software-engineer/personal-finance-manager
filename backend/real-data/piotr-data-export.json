@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "4678.16"
+      "balance": "7275.04"
     },
     {
       "name": "Monika - pożyczka",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-2646.88"
+          "balance": "-50.00"
         },
         {
           "name": "Monika - pożyczka",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "4678.16"
+          "balance": "7275.04"
         },
         {
           "name": "Monika - pożyczka",
@@ -1085,7 +1085,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-9415.83"
+          "balance": "-6818.95"
         },
         {
           "name": "Monika - pożyczka",
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-2646.88"
+          "balance": "-50.00"
         },
         {
           "name": "Monika - pożyczka",
@@ -2033,7 +2033,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7119.28"
+          "balance": "-4522.40"
         },
         {
           "name": "Monika - pożyczka",
@@ -2095,7 +2095,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-9415.83"
+          "balance": "-6818.95"
         },
         {
           "name": "Monika - pożyczka",
@@ -2614,7 +2614,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1019.45"
+          "balance": "1577.43"
         },
         {
           "name": "Monika - pożyczka",
@@ -2676,7 +2676,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7119.28"
+          "balance": "-4522.40"
         },
         {
           "name": "Monika - pożyczka",
@@ -3324,7 +3324,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6244.44"
+          "balance": "-3647.56"
         },
         {
           "name": "Monika - pożyczka",
@@ -3386,7 +3386,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1019.45"
+          "balance": "1577.43"
         },
         {
           "name": "Monika - pożyczka",
@@ -3880,7 +3880,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-2179.27"
+          "balance": "417.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -3942,7 +3942,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6244.44"
+          "balance": "-3647.56"
         },
         {
           "name": "Monika - pożyczka",
@@ -4366,7 +4366,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6675.83"
+          "balance": "-6147.50"
         },
         {
           "name": "Monika - pożyczka",
@@ -4428,7 +4428,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-2179.27"
+          "balance": "417.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -4482,6 +4482,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-60.21"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "30.11"
             }
           ]
         },
@@ -4526,17 +4530,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-1690.87"
-            }
-          ]
-        },
-        {
-          "description": "Jedzenie - Ania zwrot",
-          "category": "Zakupy - jedzenie",
-          "date": "2018-03-06",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "57.00"
+              "price": "845.44"
             }
           ]
         },
@@ -4563,6 +4560,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
             }
           ]
         },
@@ -4585,6 +4586,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-2232.40"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1116.20"
             }
           ]
         },
@@ -4607,6 +4612,10 @@
             {
               "account": "Idea Bank",
               "price": "14932.20"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-891.00"
             }
           ]
         },
@@ -4618,6 +4627,10 @@
             {
               "account": "Idea Bank",
               "price": "-66.96"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "33.48"
             }
           ]
         },
@@ -4629,17 +4642,10 @@
             {
               "account": "Idea Bank",
               "price": "-47.03"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo, promy itp",
-          "category": "Rozrywka",
-          "date": "2018-03-15",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "2015.59"
+              "price": "23.52"
             }
           ]
         },
@@ -4655,28 +4661,6 @@
           ]
         },
         {
-          "description": "zakupy, paliwo itp",
-          "category": "Rozrywka",
-          "date": "2018-03-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1257.06"
-            }
-          ]
-        },
-        {
-          "description": "Rozliczenie miesiaca - marzec",
-          "category": "Rozrywka",
-          "date": "2018-03-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-3779.37"
-            }
-          ]
-        },
-        {
           "description": "Telefon",
           "category": "Telefon",
           "date": "2018-03-15",
@@ -4688,17 +4672,6 @@
           ]
         },
         {
-          "description": "Leasing - marzec - Ania zwrot",
-          "category": "Leasing samochodu",
-          "date": "2018-03-16",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.49"
-            }
-          ]
-        },
-        {
           "description": "Zakupy - Las Galletas",
           "category": "Zakupy",
           "date": "2018-03-16",
@@ -4706,6 +4679,10 @@
             {
               "account": "Idea Bank",
               "price": "-117.91"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "58.95"
             }
           ]
         },
@@ -4717,6 +4694,10 @@
             {
               "account": "Idea Bank",
               "price": "-127.83"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "63.92"
             }
           ]
         },
@@ -4728,6 +4709,10 @@
             {
               "account": "Idea Bank",
               "price": "-201.62"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "100.81"
             }
           ]
         },
@@ -4739,6 +4724,10 @@
             {
               "account": "Idea Bank",
               "price": "-54.13"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "27.06"
             }
           ]
         },
@@ -4772,6 +4761,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "381.60"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-190.80"
             }
           ]
         },
@@ -4783,6 +4776,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-324.61"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "162.30"
             }
           ]
         },
@@ -4794,6 +4791,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-31.55"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "15.77"
             }
           ]
         },
@@ -4805,6 +4806,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-334.79"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "167.40"
             }
           ]
         },
@@ -4816,6 +4821,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-199.83"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "99.92"
             }
           ]
         },
@@ -4827,6 +4836,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-129.32"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "64.66"
             }
           ]
         },
@@ -4838,6 +4851,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-189.95"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "94.97"
             }
           ]
         },
@@ -4849,28 +4866,10 @@
             {
               "account": "Gotówka",
               "price": "-120.00"
-            }
-          ]
-        },
-        {
-          "description": "kominiarz",
-          "category": "Utrzymanie domu",
-          "date": "2018-03-25",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
               "price": "60.00"
-            }
-          ]
-        },
-        {
-          "description": "Projekt przebudowy domu",
-          "category": "Remont domu",
-          "date": "2018-03-25",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "4750.00"
             }
           ]
         },
@@ -4882,28 +4881,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "127.20"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-03-25",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "-1442.26"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-03-25",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "363.29"
+              "price": "-127.20"
             }
           ]
         },
@@ -4930,6 +4911,10 @@
             {
               "account": "Idea Bank",
               "price": "-4.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2.00"
             }
           ]
         },
@@ -4941,6 +4926,10 @@
             {
               "account": "Idea Bank",
               "price": "-240.38"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "120.19"
             }
           ]
         },
@@ -4952,6 +4941,10 @@
             {
               "account": "Idea Bank",
               "price": "-16.20"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "8.10"
             }
           ]
         },
@@ -4963,6 +4956,10 @@
             {
               "account": "Idea Bank",
               "price": "-378.22"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "189.11"
             }
           ]
         },
@@ -4985,6 +4982,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-64.28"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "32.14"
             }
           ]
         },
@@ -5012,7 +5013,7 @@
         },
         {
           "description": "Safari Egipt zaliczka",
-          "category": "Rozrywka",
+          "category": "Wyjazdy",
           "date": "2018-03-27",
           "accountPriceEntries": [
             {
@@ -5040,6 +5041,10 @@
             {
               "account": "Idea Bank",
               "price": "-9500.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4750.00"
             }
           ]
         },
@@ -5051,6 +5056,28 @@
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - marzec",
+          "category": "Rozliczenie miesiąca",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-3779.37"
+            }
+          ]
+        },
+        {
+          "description": "Wyrownanie rachunkow",
+          "category": "Rozliczenie miesiąca",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2272.18"
             }
           ]
         }
@@ -5098,7 +5125,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7002.55"
+          "balance": "-6235.76"
         },
         {
           "name": "Monika - pożyczka",
@@ -5160,7 +5187,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6675.83"
+          "balance": "-6147.50"
         },
         {
           "name": "Monika - pożyczka",
@@ -5185,17 +5212,6 @@
       ],
       "transactions": [
         {
-          "description": "Zakupy - Ania zwrot",
-          "category": "Zakupy - jedzenie",
-          "date": "2018-02-01",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "71.26"
-            }
-          ]
-        },
-        {
           "description": "ZUS - Luty",
           "category": "ZUS",
           "date": "2018-02-01",
@@ -5214,6 +5230,10 @@
             {
               "account": "Idea Bank",
               "price": "2675.64"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1337.82"
             }
           ]
         },
@@ -5269,6 +5289,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-1334.58"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "667.29"
             }
           ]
         },
@@ -5280,6 +5304,10 @@
             {
               "account": "Idea Bank",
               "price": "-31.31"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "15.66"
             }
           ]
         },
@@ -5291,6 +5319,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-49.18"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "24.59"
             }
           ]
         },
@@ -5313,6 +5345,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-305.28"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "152.64"
             }
           ]
         },
@@ -5324,28 +5360,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-180.75"
-            }
-          ]
-        },
-        {
-          "description": "Zwiedzanie - Papagayo, kaktusy itp",
-          "category": "Rozrywka",
-          "date": "2018-02-08",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "955.85"
-            }
-          ]
-        },
-        {
-          "description": "paliwo noclegi itp",
-          "category": "Rozrywka",
-          "date": "2018-02-08",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1557.50"
+              "price": "90.38"
             }
           ]
         },
@@ -5394,6 +5412,10 @@
             {
               "account": "Idea Bank",
               "price": "-84.75"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "42.38"
             }
           ]
         },
@@ -5416,6 +5438,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-149.51"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "74.75"
             }
           ]
         },
@@ -5427,6 +5453,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "186.56"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-93.28"
             }
           ]
         },
@@ -5438,6 +5468,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-2230.58"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1115.29"
             }
           ]
         },
@@ -5449,6 +5483,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-176.13"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "88.07"
             }
           ]
         },
@@ -5482,6 +5520,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-233.20"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "116.60"
             }
           ]
         },
@@ -5497,17 +5539,6 @@
           ]
         },
         {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-02-16",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "137.12"
-            }
-          ]
-        },
-        {
           "description": "Naviera Armas: La Palma - Teneryfa",
           "category": "Transport",
           "date": "2018-02-17",
@@ -5515,17 +5546,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-414.67"
-            }
-          ]
-        },
-        {
-          "description": "Zwrot za wymiane szyby",
-          "category": "Samochód",
-          "date": "2018-02-20",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "-1337.82"
+              "price": "207.33"
             }
           ]
         },
@@ -5552,6 +5576,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
             }
           ]
         },
@@ -5563,6 +5591,10 @@
             {
               "account": "Idea Bank",
               "price": "16260.60"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2177.28"
             }
           ]
         },
@@ -5585,61 +5617,25 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-912.02"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "456.01"
             }
           ]
         },
         {
-          "description": "El Hierro - La Restinga",
+          "description": "Noclegi - El Hierro - La Restinga",
           "category": "Wyjazdy - noclegi",
           "date": "2018-02-24",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - EUR",
               "price": "-1113.34"
-            }
-          ]
-        },
-        {
-          "description": "Rozliczenie miesiaca",
-          "category": "Rozrywka",
-          "date": "2018-02-25",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "-1202.78"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-02-25",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-490.94"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-02-25",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-1709.68"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-02-25",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "23.32"
+              "price": "556.67"
             }
           ]
         },
@@ -5662,39 +5658,36 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-251.22"
-            }
-          ]
-        },
-        {
-          "description": "Leasing - luty - Ania zwrot",
-          "category": "Leasing samochodu",
-          "date": "2018-02-26",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
-              "price": "1154.49"
-            }
-          ]
-        },
-        {
-          "description": "paliwo noclegi itp",
-          "category": "Rozrywka",
-          "date": "2018-02-28",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1168.40"
+              "price": "125.61"
             }
           ]
         },
         {
           "description": "Drobne wydatki",
           "category": "Inne Koszty",
-          "date": "2018-02-28",
+          "date": "2018-02-27",
           "accountPriceEntries": [
             {
               "account": "Gotówka - euro",
               "price": "-23.32"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "11.66"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca (TODO rozbic)",
+          "category": "Rozliczenie miesiąca",
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1202.78"
             }
           ]
         }
@@ -5804,7 +5797,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7002.55"
+          "balance": "-6235.76"
         },
         {
           "name": "Monika - pożyczka",
@@ -5941,19 +5934,12 @@
           "date": "2018-01-05",
           "accountPriceEntries": [
             {
-              "account": "Ania - rozliczenie",
-              "price": "42.40"
-            }
-          ]
-        },
-        {
-          "description": "RESTAURANTE PUERTO ESC PUERTO",
-          "category": "Jedzenie",
-          "date": "2018-01-05",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - EUR",
               "price": "-84.80"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "42.40"
             }
           ]
         },
@@ -5965,14 +5951,7 @@
             {
               "account": "Gotówka - euro",
               "price": "-4240.00"
-            }
-          ]
-        },
-        {
-          "description": "Noclegi Gran Canaria",
-          "category": "Wyjazdy - noclegi",
-          "date": "2018-01-06",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
               "price": "2120.00"
@@ -5987,6 +5966,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-110.24"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "55.12"
             }
           ]
         },
@@ -6013,25 +5996,7 @@
             {
               "account": "kantor Alior - PLN",
               "price": "-9.00"
-            }
-          ]
-        },
-        {
-          "description": "RESTAURANTE ARIZONA PUERTO",
-          "category": "Jedzenie",
-          "date": "2018-01-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "55.12"
-            }
-          ]
-        },
-        {
-          "description": "Prowizja za 2 wyplate",
-          "category": "Opłaty i prowizje",
-          "date": "2018-01-06",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
               "price": "4.50"
@@ -6050,17 +6015,6 @@
           ]
         },
         {
-          "description": "Origo Mare - Fuerteventura - noclegi - zaliczka",
-          "category": "Wyjazdy - noclegi",
-          "date": "2018-01-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "510.45"
-            }
-          ]
-        },
-        {
           "description": "Naviera Armas: Gran Canaria - Lanzarote",
           "category": "Transport",
           "date": "2018-01-10",
@@ -6068,14 +6022,7 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-565.28"
-            }
-          ]
-        },
-        {
-          "description": "Naviera Armas: Gran Canaria - Lanzarote",
-          "category": "Transport",
-          "date": "2018-01-10",
-          "accountPriceEntries": [
+            },
             {
               "account": "Ania - rozliczenie",
               "price": "282.64"
@@ -6090,6 +6037,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-2136.96"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1068.48"
             }
           ]
         },
@@ -6101,6 +6052,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-1020.91"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "510.45"
             }
           ]
         },
@@ -6120,17 +6075,6 @@
           ]
         },
         {
-          "description": "Lanzarote - Costa Teguise (noclegi)",
-          "category": "Wyjazdy - noclegi",
-          "date": "2018-01-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1068.48"
-            }
-          ]
-        },
-        {
           "description": "Spar - zakupy",
           "category": "Zakupy",
           "date": "2018-01-12",
@@ -6138,6 +6082,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-1.90"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "0.95"
             }
           ]
         },
@@ -6186,6 +6134,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-135.68"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "67.84"
             }
           ]
         },
@@ -6208,6 +6160,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
             }
           ]
         },
@@ -6219,6 +6175,10 @@
             {
               "account": "Idea Bank",
               "price": "-250.04"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "125.02"
             }
           ]
         },
@@ -6230,6 +6190,10 @@
             {
               "account": "Idea Bank",
               "price": "-95.14"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "47.57"
             }
           ]
         },
@@ -6267,6 +6231,10 @@
             {
               "account": "Idea Bank",
               "price": "-4.74"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2.37"
             }
           ]
         },
@@ -6278,6 +6246,10 @@
             {
               "account": "Idea Bank",
               "price": "-39.58"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "19.79"
             }
           ]
         },
@@ -6289,6 +6261,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-979.23"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "489.62"
             }
           ]
         },
@@ -6330,39 +6306,6 @@
           ]
         },
         {
-          "description": "Leasing - styczeń - Ania zwrot",
-          "category": "Leasing samochodu",
-          "date": "2018-01-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.49"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-01-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "119.75"
-            }
-          ]
-        },
-        {
-          "description": "Zakupy - Ania zwrot",
-          "category": "Zakupy",
-          "date": "2018-01-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "75.00"
-            }
-          ]
-        },
-        {
           "description": "Zakupy",
           "category": "Zakupy",
           "date": "2018-01-27",
@@ -6370,6 +6313,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-70.89"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "35.45"
             }
           ]
         },
@@ -6392,6 +6339,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-274.24"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "137.12"
             }
           ]
         },
@@ -6403,6 +6354,10 @@
             {
               "account": "Idea Bank",
               "price": "-71.62"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "35.81"
             }
           ]
         },
