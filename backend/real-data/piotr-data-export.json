@@ -698,6 +698,10 @@
           "date": "2018-09-17",
           "accountPriceEntries": [
             {
+              "account": "kantor Alior - EUR",
+              "price": "532.93"
+            },
+            {
               "account": "kantor Alior - USD",
               "price": "-528.78"
             }
@@ -709,27 +713,9 @@
           "date": "2018-09-17",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - EUR",
-              "price": "532.93"
-            }
-          ]
-        },
-        {
-          "description": "Wymiana walut USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-09-17",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - USD",
               "price": "-2149.50"
-            }
-          ]
-        },
-        {
-          "description": "Wymiana walut USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-09-17",
-          "accountPriceEntries": [
+            },
             {
               "account": "kantor Alior - EUR",
               "price": "2151.75"
@@ -1730,19 +1716,12 @@
           "date": "2018-08-29",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-142395.06"
-            }
-          ]
-        },
-        {
-          "description": "Wymiana walut",
-          "category": "Wymiana walut",
-          "date": "2018-08-29",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - PLN",
               "price": "151115.62"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-142395.06"
             }
           ]
         },
@@ -2883,14 +2862,7 @@
             {
               "account": "kantor Alior - USD",
               "price": "-21495.00"
-            }
-          ]
-        },
-        {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-06-13",
-          "accountPriceEntries": [
+            },
             {
               "account": "Idea Bank",
               "price": "22376.28"
@@ -2903,19 +2875,12 @@
           "date": "2018-06-13",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-64073.02"
-            }
-          ]
-        },
-        {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-06-13",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - PLN",
               "price": "67185.34"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-64073.02"
             }
           ]
         },
@@ -3550,30 +3515,12 @@
           "date": "2018-05-13",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-5373.75"
-            }
-          ]
-        },
-        {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-05-13",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - EUR",
               "price": "5290.75"
-            }
-          ]
-        },
-        {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-05-13",
-          "accountPriceEntries": [
+            },
             {
               "account": "kantor Alior - USD",
-              "price": "-12602.66"
+              "price": "-5373.75"
             }
           ]
         },
@@ -3585,6 +3532,10 @@
             {
               "account": "Idea Bank",
               "price": "12450.55"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-12602.66"
             }
           ]
         },
@@ -4142,19 +4093,12 @@
           "date": "2018-04-13",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-28659.96"
-            }
-          ]
-        },
-        {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-04-13",
-          "accountPriceEntries": [
-            {
               "account": "Idea Bank",
               "price": "27279.68"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-28659.96"
             }
           ]
         },
@@ -4602,19 +4546,12 @@
           "date": "2018-03-07",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-3582.50"
-            }
-          ]
-        },
-        {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-03-07",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - EUR",
               "price": "3399.89"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
             }
           ]
         },
@@ -5431,17 +5368,6 @@
           ]
         },
         {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-02-09",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "-7165.00"
-            }
-          ]
-        },
-        {
           "description": "Księgowy - Luty",
           "category": "Księgowość",
           "date": "2018-02-09",
@@ -5460,6 +5386,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "6881.99"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-7165.00"
             }
           ]
         },
@@ -6263,19 +6193,12 @@
           "date": "2018-01-13",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-985.19"
-            }
-          ]
-        },
-        {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-01-13",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - EUR",
               "price": "950.14"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-985.19"
             }
           ]
         },
@@ -6725,19 +6648,12 @@
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-3582.50"
-            }
-          ]
-        },
-        {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-01-31",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - EUR",
               "price": "3399.71"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
             }
           ]
         }

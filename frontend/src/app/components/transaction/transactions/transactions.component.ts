@@ -217,18 +217,20 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       status = false;
     }
 
-    if (transaction.accountPriceEntries[0].price == null) {
-      this.alertService.error(this.translate.instant('message.priceEmpty'));
-      status = false;
+    for (const entry of transaction.accountPriceEntries) {
+      if (entry.price == null) {
+        this.alertService.error(this.translate.instant('message.priceEmpty'));
+        status = false;
+      }
+
+      if (entry.account == null) {
+        this.alertService.error(this.translate.instant('message.accountNameEmpty'));
+        status = false;
+      }
     }
 
     if (transaction.category == null) {
       this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
-      status = false;
-    }
-
-    if (transaction.accountPriceEntries[0].account == null) {
-      this.alertService.error(this.translate.instant('message.accountNameEmpty'));
       status = false;
     }
 
