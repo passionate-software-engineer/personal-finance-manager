@@ -34,7 +34,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .lastName("Malik")
         .username("Seba")
         .password("123456")
-        .token("token")
         .build();
 
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")

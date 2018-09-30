@@ -118,20 +118,4 @@ public class UserTest {
     assertTrue(user.equals(other));
   }
 
-  @Test
-  public void shouldVerifyMissingCaseInToken() {
-    User user = User.builder().token("token").build();
-    User other = User.builder().token(null).build();
-
-    assertFalse(user.equals(other));
-  }
-
-  @Test
-  public void shouldVerifyMissingCaseInTokenWhenBothAreEqual() {
-    User user = User.builder().token("token").build();
-    User other = User.builder().token("token").build();
-
-    assertTrue(user.equals(other));
-  }
-
 }

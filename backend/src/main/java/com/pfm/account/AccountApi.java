@@ -18,7 +18,7 @@ public interface AccountApi {
 
   @ApiOperation(value = "Find account by id", response = Account.class)
   @GetMapping(value = "/{id}")
-  ResponseEntity<?> getAccountById(long id,Long userId);
+  ResponseEntity<?> getAccountById(long id, Long userId);
 
   @ApiOperation(value = "Get list of all accounts", response = Account.class, responseContainer = "List")
   @GetMapping

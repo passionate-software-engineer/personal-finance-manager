@@ -32,6 +32,8 @@ public class CategoryServiceTest {
   @InjectMocks
   private CategoryService categoryService;
 
+  private static long FAKE_USER_ID = -1;
+
   @Test
   public void shouldGetCategoryById() {
 
@@ -56,13 +58,13 @@ public class CategoryServiceTest {
     //given
     Category categoryCar = categoryCar();
     Category categoryHome = categoryHome();
-    when(categoryRepository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(categoryCar, categoryHome)));
+    when(categoryRepository.findByUserId(FAKE_USER_ID)).thenReturn(new ArrayList<>(Arrays.asList(categoryCar, categoryHome)));
 
     //when
-    List<Category> result = categoryService.getCategories();
+    List<Category> result = categoryService.getCategories(FAKE_USER_ID);
 
     //then
-    verify(categoryRepository).findAll();
+    verify(categoryRepository).findByUserId(FAKE_USER_ID);
     assertNotNull(result);
     assertThat(result.size(), is(2));
     assertThat(result, containsInAnyOrder(categoryCar, categoryHome));
@@ -72,11 +74,12 @@ public class CategoryServiceTest {
   public void shouldAddCategory() {
 
     //given
+
     Category category = categoryCar();
     when(categoryRepository.save(category)).thenReturn(category);
 
     //when
-    categoryService.addCategory(category);
+    categoryService.addCategory(category, FAKE_USER_ID);
 
     //then
     verify(categoryRepository).save(category);
@@ -87,18 +90,18 @@ public class CategoryServiceTest {
     //given
     Category categoryCar = categoryCar();
     when(categoryRepository.save(categoryCar)).thenReturn(categoryCar);
-    when(categoryRepository.findById(categoryCar.getId())).thenReturn(Optional.of(categoryCar));
+    when(categoryRepository.findByIdAndUserId(categoryCar.getId(), FAKE_USER_ID)).thenReturn(Optional.of(categoryCar));
     Category categoryOil = categoryOil();
     categoryOil.setParentCategory(categoryCar);
     when(categoryRepository.save(categoryOil)).thenReturn(categoryOil);
 
     //when
-    categoryService.addCategory(categoryCar);
-    categoryService.addCategory(categoryOil);
+    categoryService.addCategory(categoryCar, FAKE_USER_ID);
+    categoryService.addCategory(categoryOil, FAKE_USER_ID);
 
     //then
     verify(categoryRepository).save(categoryCar);
-    verify(categoryRepository).findById(categoryCar.getId());
+    verify(categoryRepository).findByIdAndUserId(categoryCar.getId(), FAKE_USER_ID);
     verify(categoryRepository).save(categoryOil);
   }
 
@@ -121,14 +124,14 @@ public class CategoryServiceTest {
 
     //given
     Category category = categoryCar();
-    when(categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
+    when(categoryRepository.findByIdAndUserId(category.getId(), FAKE_USER_ID)).thenReturn(Optional.of(category));
     when(categoryRepository.save(category)).thenReturn(category);
 
     //when
-    categoryService.updateCategory(category.getId(), category);
+    categoryService.updateCategory(category.getId(), category, FAKE_USER_ID);
 
     //then
-    verify(categoryRepository).findById(category.getId());
+    verify(categoryRepository).findByIdAndUserId(category.getId(), FAKE_USER_ID);
     verify(categoryRepository).save(category);
 
   }
@@ -140,16 +143,16 @@ public class CategoryServiceTest {
     Category categoryCar = categoryCar();
     Category categoryOil = categoryOil();
     categoryOil.setParentCategory(categoryCar);
-    when(categoryRepository.findById(categoryOil.getId())).thenReturn(Optional.of(categoryOil));
-    when(categoryRepository.findById(categoryCar.getId())).thenReturn(Optional.of(categoryCar));
+    when(categoryRepository.findByIdAndUserId(categoryOil.getId(), FAKE_USER_ID)).thenReturn(Optional.of(categoryOil));
+    when(categoryRepository.findByIdAndUserId(categoryCar.getId(), FAKE_USER_ID)).thenReturn(Optional.of(categoryCar));
     when(categoryRepository.save(categoryOil)).thenReturn(categoryOil);
 
     //when
-    categoryService.updateCategory(categoryOil.getId(), categoryOil);
+    categoryService.updateCategory(categoryOil.getId(), categoryOil, FAKE_USER_ID);
 
     //then
-    verify(categoryRepository).findById(categoryOil.getId());
-    verify(categoryRepository).findById(categoryCar.getId());
+    verify(categoryRepository).findByIdAndUserId(categoryOil.getId(), FAKE_USER_ID);
+    verify(categoryRepository).findByIdAndUserId(categoryCar.getId(), FAKE_USER_ID);
     verify(categoryRepository).save(categoryOil);
   }
 
@@ -158,10 +161,10 @@ public class CategoryServiceTest {
 
     //given
     long id = 1;
-    when(categoryRepository.findById(id)).thenReturn(Optional.empty());
+    when(categoryRepository.findByIdAndUserId(id, FAKE_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.updateCategory(id, new Category()));
+    Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.updateCategory(id, new Category(), FAKE_USER_ID));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Category with id : " + id + " does not exist in database")));
@@ -174,11 +177,12 @@ public class CategoryServiceTest {
     Category categoryOil = categoryOil();
     Category categoryCar = categoryCar();
     categoryOil.setParentCategory(categoryCar);
-    when(categoryRepository.findById(categoryOil.getId())).thenReturn(Optional.of(categoryOil));
-    when(categoryRepository.findById(categoryCar.getId())).thenReturn(Optional.empty());
+    when(categoryRepository.findByIdAndUserId(categoryOil.getId(), FAKE_USER_ID)).thenReturn(Optional.of(categoryOil));
+    when(categoryRepository.findByIdAndUserId(categoryCar.getId(), FAKE_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.updateCategory(categoryOil.getId(), categoryOil));
+    Throwable exception = assertThrows(IllegalStateException.class,
+        () -> categoryService.updateCategory(categoryOil.getId(), categoryOil, FAKE_USER_ID));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Category with id : " + categoryCar.getId() + " does not exist in database")));

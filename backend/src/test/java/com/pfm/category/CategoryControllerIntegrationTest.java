@@ -10,6 +10,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,6 +29,7 @@ import com.pfm.IntegrationTestsBase;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,23 +38,34 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   //TODO change JunitPArams to Junit5 to avoid CLASS RULE
 
+  private static String token;
+  private static long userId;
+
+  @Before
+  public void setup() throws Exception {
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = autheticateUserAndReturnUserToken(userMarian());
+  }
+
   @Test
   public void shouldAddCategory() throws Exception {
 
     //when
     Category categoryCar = categoryCar();
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar, token);
     Category categoryOil = categoryOil();
-    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil, carCategoryId);
+    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil, carCategoryId, token);
 
     //then
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(carCategoryId);
+    expectedCarCategory.setUserId(userId);
     Category expectedOilCategory = categoryOil;
     expectedOilCategory.setId(oilCategoryId);
     expectedOilCategory.setParentCategory(expectedCarCategory);
+    expectedOilCategory.setUserId(userId);
 
-    List<Category> categories = callRestToGetAllCategories();
+    List<Category> categories = callRestToGetAllCategories(token);
 
     assertThat(categories.size(), is(2));
     assertThat(categories, containsInAnyOrder(expectedCarCategory, expectedOilCategory));
@@ -69,6 +82,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
+                .header("Authorization", token)
                 .content(json(categoryToAdd))
                 .contentType(JSON_CONTENT_TYPE)
         )
@@ -86,7 +100,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
 
     //given
-    callRestToAddCategoryAndReturnId(categoryCar());
+    callRestToAddCategoryAndReturnId(categoryCar(), token);
     CategoryRequest categoryToAdd = CategoryRequest.builder().name(categoryCar().getName())
         .build();
 
@@ -94,6 +108,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
+                .header("Authorization", token)
                 .content(json(categoryToAdd))
                 .contentType(JSON_CONTENT_TYPE)
         )
@@ -107,18 +122,20 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     Category categoryCar = categoryCar();
-    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar);
+    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
 
     Category categoryHome = categoryHome();
-    long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome);
+    long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome, token);
 
-    List<Category> categories = callRestToGetAllCategories();
+    List<Category> categories = callRestToGetAllCategories(token);
 
     //then
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(categoryCarId);
+    expectedCarCategory.setUserId(userId);
     Category expectedHomeCategory = categoryHome;
     expectedHomeCategory.setId(categoryHomeId);
+    expectedHomeCategory.setUserId(userId);
 
     assertThat(categories.size(), is(2));
     assertThat(categories, containsInAnyOrder(expectedCarCategory, expectedHomeCategory));
@@ -129,12 +146,13 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Category categoryCar = categoryCar();
-    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar);
+    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
 
     //when
-    Category actualCarCategory = callRestToGetCategoryById(categoryCarId);
+    Category actualCarCategory = callRestToGetCategoryById(categoryCarId, token);
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(categoryCarId);
+    expectedCarCategory.setUserId(userId);
 
     assertThat(actualCarCategory, is(equalTo(expectedCarCategory)));
   }
@@ -144,7 +162,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc
-        .perform(get(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+        .perform(get(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header("Authorization", token))
         .andExpect(status().isNotFound());
   }
 
@@ -152,17 +171,18 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateCategory() throws Exception {
 
     //given
-    long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome());
+    long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome(), token);
     Category categoryToUpdate = categoryHome();
     categoryToUpdate.setName("Second Home");
 
     //when
-    callRestToUpdateCategory(homeCategoryId, categoryToCategoryRequest(categoryToUpdate));
+    callRestToUpdateCategory(homeCategoryId, categoryToCategoryRequest(categoryToUpdate), token);
 
     //then
     Category expectedCategory = categoryToUpdate;
     expectedCategory.setId(homeCategoryId);
-    Category result = callRestToGetCategoryById(homeCategoryId);
+    expectedCategory.setUserId(userId);
+    Category result = callRestToGetCategoryById(homeCategoryId, token);
     assertThat(result, is(equalTo(expectedCategory)));
   }
 
@@ -170,18 +190,22 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateSubCategory() throws Exception {
 
     //given
-    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar());
-    long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId);
+    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId, token);
     CategoryRequest categoryOilToUpdate = CategoryRequest.builder()
         .name("Mannol Oil")
         .build();
 
     //when
-    callRestToUpdateCategory(categoryOilId, categoryOilToUpdate);
+    callRestToUpdateCategory(categoryOilId, categoryOilToUpdate, token);
 
     //given
-    Category result = callRestToGetCategoryById(categoryOilId);
-    assertThat(result, is(equalTo(convertCategoryRequestToCategoryAndSetId(categoryOilId, categoryOilToUpdate))));
+    Category result = callRestToGetCategoryById(categoryOilId, token);
+
+    final Category expected = convertCategoryRequestToCategoryAndSetId(categoryOilId, categoryOilToUpdate);
+    expected.setUserId(userId);
+
+    assertThat(result, is(equalTo(expected)));
   }
 
   @Test
@@ -190,6 +214,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header("Authorization", token)
             .content(json(categoryToCategoryRequest(categoryOil()))).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
@@ -198,13 +223,14 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided() throws Exception {
 
     //given
-    long categoryId = callRestToAddCategoryAndReturnId(categoryCar());
+    long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     CategoryRequest categoryToUpdate = categoryToCategoryRequest(categoryCar());
     categoryToUpdate.setParentCategoryId(NOT_EXISTING_ID);
 
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + categoryId)
+            .header("Authorization", token)
             .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
@@ -215,8 +241,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnTrueWhenNoCycleExistsAnd2CategoriesWereUsed() throws Exception {
 
     // given
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
     CategoryRequest newCategoryContent = categoryToCategoryRequest(categoryCar());
     newCategoryContent.setParentCategoryId(foodCategoryId);
@@ -224,24 +250,24 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     // when // TODO require space after comment start (checkstyle) :)
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
+            .header("Authorization", token)
             .content(json(newCategoryContent)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk());
   }
 
   @Test
-  public void shouldReturnErrorCausedByCycling()
-      throws Exception {
+  public void shouldReturnErrorCausedByCycling() throws Exception {
 
     //given
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
-    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
     CategoryRequest carCategoryToUpdate = CategoryRequest.builder()
         .parentCategoryId(oilCategoryId)
         .build();
     carCategoryToUpdate.setName("Car");
 
     //when
-    performUpdateRequestAndAssertCycleErrorIsReturned(carCategoryId, carCategoryToUpdate);
+    performUpdateRequestAndAssertCycleErrorIsReturned(carCategoryId, carCategoryToUpdate, token);
   }
 
   @Test
@@ -250,18 +276,19 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Category categoryOil = categoryOil();
-    long oilCategoryId = callRestToAddCategoryAndReturnId(categoryOil);
+    long oilCategoryId = callRestToAddCategoryAndReturnId(categoryOil, token);
     CategoryRequest categoryOilToUpdate = CategoryRequest.builder().name(categoryOil.getName())
         .parentCategoryId(oilCategoryId).build();
 
     //when
-    performUpdateRequestAndAssertCycleErrorIsReturned(oilCategoryId, categoryOilToUpdate);
+    performUpdateRequestAndAssertCycleErrorIsReturned(oilCategoryId, categoryOilToUpdate, token);
   }
 
-  private void performUpdateRequestAndAssertCycleErrorIsReturned(long id, CategoryRequest categoryToUpdate) throws Exception {
+  private void performUpdateRequestAndAssertCycleErrorIsReturned(long id, CategoryRequest categoryToUpdate, String token) throws Exception {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + id)
-            .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
+            .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE)
+            .header("Authorization", token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(CATEGORIES_CYCLE_DETECTED))));
@@ -273,14 +300,14 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Category categoryHome = categoryHome();
-    long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome);
-    callRestToAddCategoryAndReturnId(categoryOil());
+    long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome, token);
+    callRestToAddCategoryAndReturnId(categoryOil(), token);
 
     //when
-    callRestToDeleteCategoryById(homeCategoryId);
+    callRestToDeleteCategoryById(homeCategoryId, token);
 
     //then
-    List<Category> categories = callRestToGetAllCategories();
+    List<Category> categories = callRestToGetAllCategories(token);
     Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, categoryToCategoryRequest(categoryHome));
     assertThat(categories.size(), is(equalTo(1)));
     assertFalse(categories.contains(deletedCategory));
@@ -290,15 +317,15 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldDeleteSubCategoryAndThenParentCategory() throws Exception {
 
     //given
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
-    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
 
     //when
-    callRestToDeleteCategoryById(oilCategoryId);
-    callRestToDeleteCategoryById(carCategoryId);
+    callRestToDeleteCategoryById(oilCategoryId, token);
+    callRestToDeleteCategoryById(carCategoryId, token);
 
     //then
-    List<Category> categories = callRestToGetAllCategories();
+    List<Category> categories = callRestToGetAllCategories(token);
     assertThat(categories.size(), is(0));
   }
 
@@ -307,11 +334,12 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
       throws Exception {
 
     //given
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar());
-    callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
 
     //when
-    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId))
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
+        .header("Authorization", token))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
   }
@@ -320,7 +348,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedWrongIdProvidedDeleteMethod() throws Exception {
 
     //when
-    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+        .header("Authorization", token))
         .andExpect(status().isNotFound());
   }
 }

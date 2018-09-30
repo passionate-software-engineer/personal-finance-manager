@@ -36,7 +36,7 @@ public abstract class InvoicePerformanceTestBase {
 
   protected static final int THREAD_COUNT = 24;
 
-  private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
+  private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
 
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
@@ -66,7 +66,7 @@ public abstract class InvoicePerformanceTestBase {
   }
 
   protected String invoiceServicePath() {
-    return String.format(INVOICES_SERVICE_PATH, port);
+    return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
   protected String invoiceServicePath(long id) {
