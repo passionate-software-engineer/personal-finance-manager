@@ -4913,19 +4913,12 @@
           "date": "2018-03-25",
           "accountPriceEntries": [
             {
-              "account": "Gotówka - euro",
-              "price": "-60.76"
-            }
-          ]
-        },
-        {
-          "description": "Ania Gotowka EUR",
-          "category": "Przelewy między kontami",
-          "date": "2018-03-25",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "60.76"
+            },
+            {
+              "account": "Gotówka - euro",
+              "price": "-60.76"
             }
           ]
         },
@@ -5544,6 +5537,10 @@
             {
               "account": "Idea Bank",
               "price": "-8400.00"
+            },
+            {
+              "account": "Monika - pożyczka",
+              "price": "8400.00"
             }
           ]
         },
@@ -5566,17 +5563,6 @@
             {
               "account": "Idea Bank",
               "price": "16260.60"
-            }
-          ]
-        },
-        {
-          "description": "Monika pożyczka",
-          "category": "Przelewy między kontami",
-          "date": "2018-02-20",
-          "accountPriceEntries": [
-            {
-              "account": "Monika - pożyczka",
-              "price": "8400.00"
             }
           ]
         },
@@ -5940,19 +5926,12 @@
           "date": "2018-01-04",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - EUR",
-              "price": "-4240.00"
-            }
-          ]
-        },
-        {
-          "description": "Wyplata EUR",
-          "category": "Przelewy między kontami",
-          "date": "2018-01-04",
-          "accountPriceEntries": [
-            {
               "account": "Gotówka - euro",
               "price": "4240.00"
+            },
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-4240.00"
             }
           ]
         },
@@ -6017,19 +5996,12 @@
           "date": "2018-01-06",
           "accountPriceEntries": [
             {
-              "account": "Idea Bank",
-              "price": "-36.00"
-            }
-          ]
-        },
-        {
-          "description": "Alior - na prowizje",
-          "category": "Przelewy między kontami",
-          "date": "2018-01-06",
-          "accountPriceEntries": [
-            {
               "account": "kantor Alior - PLN",
               "price": "36.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "-36.00"
             }
           ]
         },
@@ -6111,17 +6083,6 @@
           ]
         },
         {
-          "description": "Przelew Ania EUR",
-          "category": "Przelewy między kontami",
-          "date": "2018-01-10",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "4137.10"
-            }
-          ]
-        },
-        {
           "description": "Lanzarote - Costa Teguise (noclegi)",
           "category": "Wyjazdy - noclegi",
           "date": "2018-01-10",
@@ -6151,6 +6112,10 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-4137.10"
+            },
+            {
+              "account": "kantor Alior - EUR",
+              "price": "4137.10"
             }
           ]
         },
@@ -6287,6 +6252,10 @@
             {
               "account": "Idea Bank",
               "price": "-4000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4000.00"
             }
           ]
         },
@@ -6298,17 +6267,6 @@
             {
               "account": "Idea Bank",
               "price": "-4.74"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-01-18",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "4000.00"
             }
           ]
         },
@@ -6362,19 +6320,12 @@
           "date": "2018-01-25",
           "accountPriceEntries": [
             {
-              "account": "Gotówka - euro",
-              "price": "21.57"
-            }
-          ]
-        },
-        {
-          "description": "Gotowka Ania EUR",
-          "category": "Przelewy między kontami",
-          "date": "2018-01-25",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "-21.57"
+            },
+            {
+              "account": "Gotówka - euro",
+              "price": "21.57"
             }
           ]
         },
