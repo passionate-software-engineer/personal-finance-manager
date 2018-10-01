@@ -33,4 +33,5 @@ public final class Account {
 
   @ApiModelProperty(value = "Account owner id", required = true, example = "1")
   private Long userId;
+
 }

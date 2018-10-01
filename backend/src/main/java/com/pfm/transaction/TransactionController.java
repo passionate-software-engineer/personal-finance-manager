@@ -49,7 +49,7 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") Long userId) {
     log.info("Adding transaction to the database");
 
-    List<String> validationResult = transactionValidator.validate(transactionRequest,userId);
+    List<String> validationResult = transactionValidator.validate(transactionRequest, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -71,7 +71,7 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.notFound().build();
     }
 
-    List<String> validationResult = transactionValidator.validate(transactionRequest,userId);
+    List<String> validationResult = transactionValidator.validate(transactionRequest, userId);
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -87,7 +87,7 @@ public class TransactionController implements TransactionApi {
 
   @Override
   public ResponseEntity<?> deleteTransaction(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
-    if (!transactionService.getTransactionByIdAndUserId(id,userId).isPresent()) {
+    if (!transactionService.getTransactionByIdAndUserId(id, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }
@@ -100,8 +100,8 @@ public class TransactionController implements TransactionApi {
   }
 
   private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest, long userId) {
-    Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
-    Optional<Category> transactionCategory = categoryService.getCategoryById(transactionRequest.getCategoryId());
+    Optional<Account> transactionAccount = accountService.getAccountByIdAndUserId(transactionRequest.getAccountId(), userId);
+    Optional<Category> transactionCategory = categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId);
 
     // just double check - it should be already verified by validator
     if (!(transactionAccount.isPresent() && transactionCategory.isPresent())) {

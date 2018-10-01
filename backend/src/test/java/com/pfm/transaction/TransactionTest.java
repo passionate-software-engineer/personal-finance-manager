@@ -59,6 +59,14 @@ public class TransactionTest {
   }
 
   @Test
+  public void shouldVerifyMissingCaseInUserId() {
+    Transaction transaction = Transaction.builder().userId(1L).build();
+    Transaction other = Transaction.builder().userId(null).build();
+
+    assertFalse(transaction.equals(other));
+  }
+
+  @Test
   public void shouldVerifyToStringInTransactionRequestBuilder() {
     // given
     final Class<?> classUnderTest = Transaction.TransactionBuilder.class;

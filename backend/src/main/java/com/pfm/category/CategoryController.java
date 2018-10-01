@@ -95,7 +95,7 @@ public class CategoryController {
   public ResponseEntity<?> updateCategory(@PathVariable long id, @RequestBody CategoryRequest categoryRequest,
       @RequestAttribute(value = "userId") Long userId) {
 
-    if (!categoryService.getCategoryByIdAndUserId(id,userId).isPresent()) {
+    if (!categoryService.getCategoryByIdAndUserId(id, userId).isPresent()) {
       log.info("No category with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }

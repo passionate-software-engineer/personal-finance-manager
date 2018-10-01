@@ -127,7 +127,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     Category categoryHome = categoryHome();
     long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome, token);
 
-    List<Category> categories = callRestToGetAllCategories(token);
+    final List<Category> categories = callRestToGetAllCategories(token);
 
     //then
     Category expectedCarCategory = categoryCar;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthResponse {
+public final class AuthResponse {
 
   private Long id;
   private String username;
@@ -24,4 +24,5 @@ public class AuthResponse {
     this.lastName = user.getLastName();
     this.token = token;
   }
+
 }

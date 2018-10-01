@@ -93,7 +93,7 @@ public class FilterController implements FilterApi {
 
   @Override
   public ResponseEntity<?> deleteFilter(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
-    if (!filterService.getFilterByIdAndByUserId(id,userId).isPresent()) {
+    if (!filterService.getFilterByIdAndByUserId(id, userId).isPresent()) {
       log.info("No filter with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }

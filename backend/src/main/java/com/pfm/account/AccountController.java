@@ -63,7 +63,7 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> updateAccount(@PathVariable("id") Long id,
       @RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") Long userId) {
 
-    if (!accountService.getAccountByIdAndUserId(id,userId).isPresent()) {
+    if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
@@ -83,7 +83,8 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  public ResponseEntity<?> deleteAccount(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) { // TODO deleting account used in transaction / filter throws ugly error
+  public ResponseEntity<?> deleteAccount(@PathVariable long id,
+      @RequestAttribute(value = "userId") Long userId) { // TODO deleting account used in transaction / filter throws ugly error
 
     if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", id);

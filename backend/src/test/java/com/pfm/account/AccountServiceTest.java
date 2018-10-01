@@ -68,12 +68,12 @@ public class AccountServiceTest {
     Account account = accountMbankBalance10();
     account.setId(1L);
 
-    when(accountRepository.findByIdAndUserId(account.getId(),mockUserId))
+    when(accountRepository.findByIdAndUserId(account.getId(), mockUserId))
         .thenReturn(Optional.of(account));
 
     //when
     Optional<Account> returnedAccount = accountService
-        .getAccountByIdAndUserId(account.getId(),mockUserId);
+        .getAccountByIdAndUserId(account.getId(), mockUserId);
 
     //then
     assertTrue(returnedAccount.isPresent());

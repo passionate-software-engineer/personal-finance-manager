@@ -23,7 +23,7 @@ public class UserService {
     }
 
     String hashedPassword = userToAuthenticate.getPassword();
-    if (!userFromDb.getPassword().equals(get_SHA_512_SecurePassword(hashedPassword))) {
+    if (!userFromDb.getPassword().equals(get_Sha_512_SecurePassword(hashedPassword))) {
       return Optional.empty();
     }
     String token = tokenService.generateToken(userFromDb);
@@ -33,12 +33,12 @@ public class UserService {
   }
 
   public User registerUser(User user) {
-    String hashedPassword = get_SHA_512_SecurePassword(user.getPassword());
+    String hashedPassword = get_Sha_512_SecurePassword(user.getPassword());
     user.setPassword(hashedPassword);
     return userRespository.save(user);
   }
 
-  private static String get_SHA_512_SecurePassword(String passwordToHash) {
+  private static String get_Sha_512_SecurePassword(String passwordToHash) {
     String salt = "salt";
     String generatedPassword = null;
     try {

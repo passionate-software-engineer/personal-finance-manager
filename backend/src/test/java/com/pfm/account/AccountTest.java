@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
@@ -26,6 +27,14 @@ public class AccountTest {
   }
 
   @Test
+  public void shouldVerifyMissingCaseInEquals() {
+    Account account = Account.builder().id(5L).userId(1L).build();
+    Account other = Account.builder().id(5L).userId(1L).build();
+
+    assertTrue(account.equals(other));
+  }
+
+  @Test
   public void shouldVerifyMissingCaseInEqualsId() {
     Account account = Account.builder().id(5L).build();
     Account other = Account.builder().id(null).build();
@@ -45,6 +54,14 @@ public class AccountTest {
   public void shouldVerifyMissingCaseInEqualsBalance() {
     Account account = Account.builder().balance(BigDecimal.ONE).build();
     Account other = Account.builder().balance(null).build();
+
+    assertFalse(account.equals(other));
+  }
+
+  @Test
+  public void shouldVerifyMissingCaseInEqualsUserId() {
+    Account account = Account.builder().userId(1L).build();
+    Account other = Account.builder().userId(null).build();
 
     assertFalse(account.equals(other));
   }

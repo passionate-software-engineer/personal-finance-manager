@@ -42,7 +42,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     if (isTokenCorrect(requestToken)) {
       long userIdFromToken = tokenService.getUserIdFromToken(requestToken);
-      request.setAttribute("userId",userIdFromToken);
+      request.setAttribute("userId", userIdFromToken);
       return true;
     } else {
       logger.error("Request token is incorrect.");
@@ -56,7 +56,4 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     return tokenService.validateToken(token);
   }
 
-  private static boolean isOkRequest(String pattern, String stringToCheck) {
-    return pattern.matches(stringToCheck);
-  }
 }

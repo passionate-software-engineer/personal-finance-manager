@@ -1,6 +1,5 @@
 package com.pfm.helpers;
 
-
 import com.pfm.auth.User;
 
 public class TestUsersProvider {

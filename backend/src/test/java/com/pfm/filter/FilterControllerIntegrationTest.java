@@ -108,7 +108,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(foodExpensesFilterToAdd, token);
 
     //when
-    List<Filter> actualListOfFilters = callRestToGetAllFilters(token);
+    final List<Filter> actualListOfFilters = callRestToGetAllFilters(token);
 
     //then
     final Filter expectedCarExpensesFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, carExpensesFilterToAdd);

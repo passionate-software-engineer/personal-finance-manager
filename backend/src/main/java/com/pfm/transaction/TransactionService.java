@@ -77,10 +77,6 @@ public class TransactionService {
     return transactionFromDb.get();
   }
 
-  public boolean idExist(long id) {
-    return transactionRepository.existsById(id);
-  }
-
   private void subtractAmountFromAccount(long accountId, BigDecimal amountToAdd) {
     updateAccountBalance(accountId, amountToAdd, BigDecimal::subtract);
   }

@@ -51,10 +51,6 @@ public class FilterService {
     filterRepository.save(filterToUpdate);
   }
 
-  public boolean idExist(long id) {
-    return filterRepository.existsById(id);
-  }
-
   private Filter getFilterFromDatabase(long id) {
     Optional<Filter> filterFromDb = getFilterById(id);
 

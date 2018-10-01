@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
-@Component
+
 // TODO not working for bad request (HTTP 400) caused by invalid request and handled by Spring
 public class LoggingFilter extends OncePerRequestFilter {
 
@@ -131,9 +130,9 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestMethod(request);
     }
 
-//    if (log.isDebugEnabled()) {
+    if (log.isDebugEnabled()) {
       logRequestHeaders(request);
-//    }
+    }
   }
 
   private void afterRequest(ContentCachingRequestWrapper request,

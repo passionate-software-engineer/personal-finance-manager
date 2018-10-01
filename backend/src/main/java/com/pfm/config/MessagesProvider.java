@@ -33,6 +33,8 @@ public class MessagesProvider {
   public static final String FILTER_DATE_FROM_IS_AFTER_DATE_TO = "filterValidator.dateFromAfterDateTo";
   public static final String FILTER_EMPTY_NAME = "filterValidator.emptyName";
 
+  public static final String USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST = "userValidator.userWithProvidedUsernameAlreadyExists";
+
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
   private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 

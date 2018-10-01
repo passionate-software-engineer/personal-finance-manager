@@ -49,6 +49,14 @@ public class CategoryTest {
   }
 
   @Test
+  public void shouldVerifyMissingCaseInEqualsUserId() {
+    Category category = Category.builder().userId(1L).build();
+    Category other = Category.builder().userId(null).build();
+
+    assertFalse(category.equals(other));
+  }
+
+  @Test
   public void shouldVerifyToString() {
     // given
     final Class<?> classUnderTest = Category.CategoryBuilder.class;

@@ -1,5 +1,8 @@
 package com.pfm.auth;
 
+import static com.pfm.config.MessagesProvider.USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -15,11 +18,10 @@ public class UserValidator {
     List<String> validationResults = new ArrayList<>();
 
     if (userService.isUsernameAlreadyUsed(user.getUsername())) {
-      validationResults.add("Username already used");
+      validationResults.add(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST));
     }
 
     return validationResults;
   }
-
 
 }
