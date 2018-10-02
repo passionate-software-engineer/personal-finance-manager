@@ -24,7 +24,7 @@ plugins {
 
     // core
     id 'checkstyle'
-//    id 'findbugs'
+    id 'findbugs'
     id 'idea'
     id "jacoco"
     id 'java'
@@ -127,12 +127,12 @@ jacocoTestCoverageVerification {
     }
 }
 
-//tasks.withType(FindBugs) {
-//    reports {
-//        xml.enabled false
-//        html.enabled true
-//    }
-//}
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"

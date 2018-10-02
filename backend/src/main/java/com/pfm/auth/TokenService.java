@@ -4,13 +4,16 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class TokenService {
 
-  private static HashMap<String, Token> tokens = new HashMap<>();
+  //is this correct or this field should be static?
+  private HashMap<String, Token> tokens = new HashMap<>();
 
   public String generateToken(User user) {
 
@@ -27,9 +30,10 @@ public class TokenService {
       return false;
     }
 
+    //TODO should return false or throw exepction ?
     LocalDateTime creationTime = tokenFromDb.getCreationTime();
     if (creationTime == null) {
-      throw new IllegalStateException();
+      throw new IllegalStateException("Token creation time does not exist");
     }
 
     if (!creationTime.plusMinutes(15).isAfter(LocalDateTime.now())) {
@@ -43,7 +47,7 @@ public class TokenService {
     Token tokenFromDb = tokens.get(token);
 
     if (tokenFromDb == null) {
-      throw new IllegalStateException();
+      throw new IllegalStateException("Provided token does not exist");
     }
 
     return tokenFromDb.getUserId();

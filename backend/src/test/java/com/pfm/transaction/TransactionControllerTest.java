@@ -7,9 +7,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import java.util.ArrayList;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,8 +36,6 @@ public class TransactionControllerTest {
   @InjectMocks
   private TransactionController transactionController;
 
-  //TODO check duplicated code and reasons for this tests
-
   @Test
   public void shouldReturnExceptionCausedByNotExistingCategoryId() {
     //given
@@ -42,6 +43,8 @@ public class TransactionControllerTest {
     transactionRequestToAdd.setAccountId(1L);
     transactionRequestToAdd.setCategoryId(1L);
 
+    when(categoryService.getCategoryByIdAndUserId(1L, mockUserId)).thenReturn(Optional.empty());
+    when(accountService.getAccountByIdAndUserId(1L, mockUserId)).thenReturn(Optional.of(new Account()));
     when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
 
     //when
@@ -52,12 +55,14 @@ public class TransactionControllerTest {
   }
 
   @Test
-  public void shouldReturnExceptionCausedByNotExistingExistingAccountId() {
+  public void shouldReturnExceptionCausedByNotExistingAccountId() {
     //given
     TransactionRequest transactionRequestToAdd = carTransactionRequestWithNoAccountAndNoCategory();
     transactionRequestToAdd.setAccountId(1L);
     transactionRequestToAdd.setCategoryId(1L);
 
+    when(categoryService.getCategoryByIdAndUserId(1L, mockUserId)).thenReturn(Optional.of(new Category()));
+    when(accountService.getAccountByIdAndUserId(1L, mockUserId)).thenReturn(Optional.empty());
     when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
 
     //when
@@ -65,7 +70,6 @@ public class TransactionControllerTest {
       transactionController.addTransaction(transactionRequestToAdd, mockUserId);
     });
     assertThat(exception.getMessage(), is(equalTo("Account or category was not provided")));
-
   }
 
 }

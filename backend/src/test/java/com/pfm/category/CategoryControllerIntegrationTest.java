@@ -38,8 +38,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   //TODO change JunitPArams to Junit5 to avoid CLASS RULE
 
-  private static String token;
-  private static long userId;
+  private String token;
+  private long userId;
 
   @Before
   public void setup() throws Exception {

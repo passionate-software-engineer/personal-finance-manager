@@ -39,8 +39,8 @@ import org.junit.Test;
 
 public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
-  private static String token;
-  private static long userId;
+  private String token;
+  private long userId;
 
   @Before
   public void setup() throws Exception {

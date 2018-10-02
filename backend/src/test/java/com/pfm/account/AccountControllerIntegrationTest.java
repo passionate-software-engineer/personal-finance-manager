@@ -30,8 +30,8 @@ import org.junit.Test;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
-  private static String token;
-  private static Long userId;
+  private String token;
+  private Long userId;
 
   @Before
   public void setup() throws Exception {
