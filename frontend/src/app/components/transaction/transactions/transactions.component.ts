@@ -59,8 +59,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           });
       });
 
+    // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
     this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-    this.newTransaction.accountPriceEntries.push(new AccountPriceEntry()); // TODO add option to add multiple entries dynamically
+    this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
   }
 
   getTransactions(): void {
@@ -257,7 +258,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     }
 
-    // TODO allow to do it dynamically from UI
+    // Adds empty entry, thanks to that new value can be added on the UI
     transaction.editedTransaction.accountPriceEntries.push(new AccountPriceEntry());
 
     for (const category of this.categories) {
