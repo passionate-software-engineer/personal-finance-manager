@@ -8,13 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
-@Component
-@Order(value = 3)
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
   public static final String CORRELATION_ID = "correlationId";

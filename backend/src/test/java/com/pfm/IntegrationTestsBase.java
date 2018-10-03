@@ -110,6 +110,20 @@ public abstract class IntegrationTestsBase {
     return jsonToAccount(response).getBalance();
   }
 
+  protected List<Account> callRestToGetAllAccounts(String token) throws Exception {
+    String response = mockMvc.perform(get(ACCOUNTS_SERVICE_PATH)
+        .header("Authorization", token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+    return getAccountsFromResponse(response);
+  }
+
+  private List<Account> getAccountsFromResponse(String response) throws Exception {
+    return mapper.readValue(response,
+        mapper.getTypeFactory().constructCollectionType(List.class, Account.class));
+  }
+
   private Account jsonToAccount(String jsonAccount) throws Exception {
     return mapper.readValue(jsonAccount, Account.class);
   }
@@ -394,15 +408,19 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  public String autheticateUserAndReturnUserToken(User user) throws Exception {
-    String response =
-        mockMvc
-            .perform(post(USERS_SERVICE_PATH + "/authenticate")
-                .content(json(user))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
+  public String callRestToAuthenticateUserAndReturnToken(User user) throws Exception {
+    String response = mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(user)))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+
     return jsonToAuthResponse(response).getToken();
+  }
+
+  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {
+    callRestToRegisterUserAndReturnUserId(user);
+    return callRestToAuthenticateUserAndReturnToken(user);
   }
 
   private AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {

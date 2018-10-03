@@ -30,5 +30,12 @@ public class TestCategoryProvider {
         .name("Home")
         .build();
   }
+
+  public static Category categoryAnimals() {
+    return Category.builder()
+        .id(2L)
+        .name("Animals")
+        .build();
+  }
 }
 

@@ -1,12 +1,16 @@
 //package com.pfm.account.performance;
 //
+//import static com.pfm.helpers.TestUsersProvider.userMarian;
 //import static io.restassured.RestAssured.given;
 //import static org.hamcrest.CoreMatchers.equalTo;
 //import static org.hamcrest.CoreMatchers.is;
 //import static org.junit.Assert.assertThat;
 //
 //import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.pfm.account.Account;
+//import com.pfm.auth.AuthResponse;
+//import com.pfm.auth.User;
 //import io.restassured.http.ContentType;
 //import java.math.BigDecimal;
 //import java.math.RoundingMode;
@@ -20,6 +24,7 @@
 //import org.junit.Rule;
 //import org.junit.rules.ErrorCollector;
 //import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 //import org.springframework.boot.web.server.LocalServerPort;
@@ -38,6 +43,11 @@
 //
 //  private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
 //
+//  private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
+//
+//  @Autowired
+//  protected ObjectMapper mapper;
+//
 //  @Rule
 //  public final SpringMethodRule springMethodRule = new SpringMethodRule();
 //
@@ -50,6 +60,22 @@
 //  private int port;
 //
 //  protected Account[] getAccounts() throws Exception {
+//
+//    User user = userMarian();
+//    given()
+//        .contentType(ContentType.JSON)
+//        .body(user)
+//        .when()
+//        .post(usersServicePath() + "/register");
+//
+//    String token = given()
+//        .contentType(ContentType.JSON)
+//        .body(user)
+//        .when()
+//        .post(usersServicePath() + "/autheticate")
+//        .getBody()
+//        .asString();
+//
 //    return given()
 //        .when()
 //        .get(invoiceServicePath())
@@ -69,6 +95,10 @@
 //    return String.format(ACCOUNTS_SERVICE_PATH, port);
 //  }
 //
+//  protected String usersServicePath() {
+//    return String.format(USERS_SERVICE_PATH, port);
+//  }
+//
 //  protected String invoiceServicePath(long id) {
 //    return invoiceServicePath() + "/" + id;
 //  }
@@ -76,6 +106,27 @@
 //  @PostConstruct
 //  public void before() {
 //    for (int i = 0; i < 10; ++i) {
+//      User user = userMarian();
+//      given()
+//          .contentType(ContentType.JSON)
+//          .body(user)
+//          .when()
+//          .post(usersServicePath() + "/register");
+//
+//      String authResponse = given()
+//          .contentType(ContentType.JSON)
+//          .body(user)
+//          .when()
+//          .post(usersServicePath() + "/authenticate")
+//          .getBody()
+//          .asString();
+//
+//      try {
+//        final String token = jsonToAuthResponse(authResponse).getToken();
+//      } catch (Exception e) {
+//        e.printStackTrace();
+//      }
+//
 //      Account account = Account.builder()
 //          .name(getRandomName())
 //          .balance(getRandomBalance())
@@ -115,5 +166,9 @@
 //    }
 //
 //    assertThat(getAccounts().length, is(0));
+//  }
+//
+//  private AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {
+//    return mapper.readValue(jsonAuthResponse, AuthResponse.class);
 //  }
 //}

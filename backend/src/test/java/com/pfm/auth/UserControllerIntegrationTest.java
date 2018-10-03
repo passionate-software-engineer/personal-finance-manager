@@ -31,10 +31,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     //given
     User user = userMarian();
 
-    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
-        .andExpect(status().isOk());
+    callRestToRegisterUserAndReturnUserId(user);
 
     //then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
@@ -51,10 +48,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     //given
     User user = userMarian();
 
-    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
-        .andExpect(status().isOk());
+    callRestToRegisterUserAndReturnUserId(user);
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
@@ -82,10 +76,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     //given
     User user = userMarian();
 
-    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
-        .andExpect(status().isOk());
+    callRestToRegisterUserAndReturnUserId(user);
 
     //when
     user.setPassword("Wrong password");

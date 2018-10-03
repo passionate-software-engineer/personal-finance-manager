@@ -13,4 +13,13 @@ public class TestUsersProvider {
         .build();
   }
 
+  public static User userZdzislaw() {
+    return User.builder()
+        .firstName("Zdzislaw")
+        .lastName("Krecina")
+        .username("Zdzislaw")
+        .password("Zdzislaw")
+        .build();
+  }
+
 }
