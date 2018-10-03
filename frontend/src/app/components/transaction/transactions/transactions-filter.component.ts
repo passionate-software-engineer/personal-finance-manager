@@ -188,11 +188,25 @@ export class FiltersComponentBase extends Sortable {
     }
 
     if (this.selectedFilter.priceFrom !== undefined && this.selectedFilter.priceFrom !== null) {
-      this.transactions = this.transactions.filter(transaction => transaction.price >= this.selectedFilter.priceFrom);
+      this.transactions = this.transactions.filter(transaction => {
+        for (const accountPriceEntry of transaction.accountPriceEntries) {
+          if (accountPriceEntry.price >= this.selectedFilter.priceFrom) {
+            return true;
+          }
+        }
+        return false;
+      });
     }
 
     if (this.selectedFilter.priceTo !== undefined && this.selectedFilter.priceTo !== null) {
-      this.transactions = this.transactions.filter(transaction => transaction.price <= this.selectedFilter.priceTo);
+      this.transactions = this.transactions.filter(transaction => {
+        for (const accountPriceEntry of transaction.accountPriceEntries) {
+          if (accountPriceEntry.price <= this.selectedFilter.priceTo) {
+            return true;
+          }
+        }
+        return false;
+      });
     }
 
     if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !== '') {
@@ -212,7 +226,16 @@ export class FiltersComponentBase extends Sortable {
 
     if (this.selectedFilter.accounts !== undefined && this.selectedFilter.accounts.length > 0) {
       this.transactions = this.transactions
-        .filter(transaction => this.selectedFilter.accounts.indexOf(transaction.account) !== -1);
+        .filter(transaction => {
+            for (const accountPriceEntry of transaction.accountPriceEntries) {
+              if (this.selectedFilter.accounts.indexOf(accountPriceEntry.account) !== -1) {
+                return true;
+              }
+            }
+            return false;
+          }
+        )
+      ;
     }
 
     if (this.selectedFilter.categories !== undefined && this.selectedFilter.categories.length > 0) {
