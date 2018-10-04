@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "3200.69"
+      "balance": "7275.04"
     },
     {
       "name": "Monika - pożyczka",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4124.35"
+          "balance": "-50.00"
         },
         {
           "name": "Monika - pożyczka",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "3200.69"
+          "balance": "7275.04"
         },
         {
           "name": "Monika - pożyczka",
@@ -1085,7 +1085,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-10893.30"
+          "balance": "-6818.95"
         },
         {
           "name": "Monika - pożyczka",
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4124.35"
+          "balance": "-50.00"
         },
         {
           "name": "Monika - pożyczka",
@@ -2033,7 +2033,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-8596.75"
+          "balance": "-4522.40"
         },
         {
           "name": "Monika - pożyczka",
@@ -2095,7 +2095,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-10893.30"
+          "balance": "-6818.95"
         },
         {
           "name": "Monika - pożyczka",
@@ -2621,15 +2621,15 @@
         },
         {
           "name": "Gotówka",
-          "balance": "43.42"
+          "balance": "106.42"
         },
         {
           "name": "Gotówka - euro",
-          "balance": "17.68"
+          "balance": "21.92"
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "581.85"
+          "balance": "2882.34"
         },
         {
           "name": "Monika - pożyczka",
@@ -2691,7 +2691,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-8596.75"
+          "balance": "-4522.40"
         },
         {
           "name": "Monika - pożyczka",
@@ -2715,17 +2715,6 @@
         }
       ],
       "transactions": [
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-01",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-1577.42"
-            }
-          ]
-        },
         {
           "description": "Crossover 14-20.05",
           "category": "Crossover",
@@ -2812,39 +2801,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "89.76"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-06-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "134.23"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-06-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "146.14"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-06-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "155.66"
             }
           ]
         },
@@ -3007,6 +2963,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.48"
             }
           ]
         },
@@ -3018,6 +2978,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-190.80"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "95.40"
             }
           ]
         },
@@ -3054,7 +3018,7 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka",
-              "price": "-102.00"
+              "price": "-100.00"
             }
           ]
         },
@@ -3074,17 +3038,6 @@
           ]
         },
         {
-          "description": "Ksiazki - Ania",
-          "category": "Edukacja",
-          "date": "2018-06-18",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "89.76"
-            }
-          ]
-        },
-        {
           "description": "Szkolenie - KPP",
           "category": "Edukacja",
           "date": "2018-06-20",
@@ -3092,6 +3045,17 @@
             {
               "account": "Idea Bank",
               "price": "-650.00"
+            }
+          ]
+        },
+        {
+          "description": "Drobne wydatki",
+          "category": "Inne Koszty",
+          "date": "2018-06-20",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-65.00"
             }
           ]
         },
@@ -3163,13 +3127,17 @@
           ]
         },
         {
-          "description": "Leasing - czerwiec - Ania zwrot",
-          "category": "Leasing samochodu",
-          "date": "2018-06-26",
+          "description": "Ania Euro - drobne",
+          "category": "Przelewy między kontami",
+          "date": "2018-06-22",
           "accountPriceEntries": [
             {
+              "account": "Gotówka - euro",
+              "price": "-4.24"
+            },
+            {
               "account": "Ania - rozliczenie",
-              "price": "1154.49"
+              "price": "4.24"
             }
           ]
         },
@@ -3185,28 +3153,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "147.11"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-06-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "147.12"
-            }
-          ]
-        },
-        {
-          "description": "Nozbe - Ania zwrot",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-06-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "144.00"
             }
           ]
         },
@@ -3283,7 +3229,7 @@
         },
         {
           "description": "Rozliczenie miesiaca - czerwiec",
-          "category": "Rozrywka",
+          "category": "Rozliczenie miesiąca",
           "date": "2018-06-30",
           "accountPriceEntries": [
             {
@@ -3300,39 +3246,21 @@
             {
               "account": "Idea Bank",
               "price": "-280.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "140.00"
             }
           ]
         },
         {
-          "description": "Gotowka",
-          "category": "Przelewy między kontami",
+          "description": "Wyrownanie rachunkow",
+          "category": "Rozliczenie miesiąca",
           "date": "2018-06-30",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-78.00"
-            }
-          ]
-        },
-        {
-          "description": "Przelew revolut",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-2433.43"
-            }
-          ]
-        },
-        {
-          "description": "Przelew - euro",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "164.40"
+              "price": "-1573.31"
             }
           ]
         }
@@ -3380,7 +3308,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4443.77"
+          "balance": "-3612.62"
         },
         {
           "name": "Monika - pożyczka",
@@ -3434,15 +3362,15 @@
         },
         {
           "name": "Gotówka",
-          "balance": "43.42"
+          "balance": "106.42"
         },
         {
           "name": "Gotówka - euro",
-          "balance": "17.68"
+          "balance": "21.92"
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "581.85"
+          "balance": "2882.34"
         },
         {
           "name": "Monika - pożyczka",
@@ -3474,6 +3402,10 @@
             {
               "account": "Idea Bank",
               "price": "-5680.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2840.00"
             }
           ]
         },
@@ -3615,17 +3547,6 @@
           ]
         },
         {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "50.45"
-            }
-          ]
-        },
-        {
           "description": "Egipt - Euro",
           "category": "Wyjazdy",
           "date": "2018-05-11",
@@ -3644,6 +3565,10 @@
             {
               "account": "Idea Bank",
               "price": "-13500.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "6750.00"
             }
           ]
         },
@@ -3655,39 +3580,6 @@
             {
               "account": "Idea Bank",
               "price": "-100.00"
-            }
-          ]
-        },
-        {
-          "description": "Egipt - paliwo, parking, jedzenie - Ania zwrot",
-          "category": "Rozrywka",
-          "date": "2018-05-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "162.69"
-            }
-          ]
-        },
-        {
-          "description": "Jedzenie dla kota",
-          "category": "Zakupy",
-          "date": "2018-05-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "109.44"
-            }
-          ]
-        },
-        {
-          "description": "Rozliczenie miesiaca - maj",
-          "category": "Rozrywka",
-          "date": "2018-05-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-4050.15"
             }
           ]
         },
@@ -3710,6 +3602,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.48"
             }
           ]
         },
@@ -3799,28 +3695,6 @@
           ]
         },
         {
-          "description": "Balkony - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-05-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "2840.00"
-            }
-          ]
-        },
-        {
-          "description": "Okna - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-05-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "6750.00"
-            }
-          ]
-        },
-        {
           "description": "Parking - lotnisko",
           "category": "Samochód",
           "date": "2018-05-26",
@@ -3836,68 +3710,13 @@
           ]
         },
         {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
+          "description": "Rozliczenie miesiaca - maj",
+          "category": "Rozliczenie miesiąca",
+          "date": "2018-05-31",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-63.87"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-640.81"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
-              "account": "Gotówka",
-              "price": "-63.00"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "63.00"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
-              "account": "Gotówka - euro",
-              "price": "-4.24"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "4.24"
+              "price": "-4050.15"
             }
           ]
         }
@@ -4007,7 +3826,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4443.77"
+          "balance": "-3612.62"
         },
         {
           "name": "Monika - pożyczka",
@@ -4154,17 +3973,6 @@
           ]
         },
         {
-          "description": "Zakupy - Ania zwrot",
-          "category": "Zakupy",
-          "date": "2018-04-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "105.90"
-            }
-          ]
-        },
-        {
           "description": "Paliwo",
           "category": "Paliwo",
           "date": "2018-04-08",
@@ -4224,28 +4032,6 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - marzec",
-          "category": "Rozrywka",
-          "date": "2018-04-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-5183.40"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-04-16",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "143.16"
-            }
-          ]
-        },
-        {
           "description": "Telefon",
           "category": "Telefon",
           "date": "2018-04-16",
@@ -4264,6 +4050,10 @@
             {
               "account": "Idea Bank",
               "price": "-89.80"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "44.90"
             }
           ]
         },
@@ -4275,6 +4065,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.48"
             }
           ]
         },
@@ -4297,6 +4091,10 @@
             {
               "account": "Idea Bank",
               "price": "-1500.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "750.00"
             }
           ]
         },
@@ -4338,39 +4136,6 @@
           ]
         },
         {
-          "description": "Wizualizacja projektu",
-          "category": "Remont domu",
-          "date": "2018-04-25",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "750.00"
-            }
-          ]
-        },
-        {
-          "description": "Leasing - kwiecien - Ania zwrot",
-          "category": "Leasing samochodu",
-          "date": "2018-04-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.49"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo - Ania zwrot",
-          "category": "Paliwo",
-          "date": "2018-04-26",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "139.18"
-            }
-          ]
-        },
-        {
           "description": "Crossover 09.04-15.04",
           "category": "Crossover",
           "date": "2018-04-26",
@@ -4382,13 +4147,13 @@
           ]
         },
         {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
+          "description": "Rozliczenie miesiaca - kwiecien",
+          "category": "Rozliczenie miesiąca",
           "date": "2018-04-30",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-1174.50"
+              "price": "-5183.40"
             }
           ]
         }
