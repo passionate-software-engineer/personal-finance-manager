@@ -2045,11 +2045,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "50.00"
+          "balance": "63.50"
         },
         {
           "name": "mBank",
-          "balance": "13.50"
+          "balance": "0.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2127,6 +2127,21 @@
             {
               "account": "Idea Bank",
               "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "Przelew",
+          "category": "Przelewy między kontami",
+          "date": "2018-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-13.50"
+            },
+            {
+              "account": "mBank",
+              "price": "13.50"
             }
           ]
         },
@@ -2688,11 +2703,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "50.00"
+          "balance": "63.50"
         },
         {
           "name": "mBank",
-          "balance": "13.50"
+          "balance": "0.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -3263,21 +3278,6 @@
             {
               "account": "kantor Alior - PLN",
               "price": "15053.60"
-            }
-          ]
-        },
-        {
-          "description": "Przelew",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-29",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-13.50"
-            },
-            {
-              "account": "mBank",
-              "price": "13.50"
             }
           ]
         },
