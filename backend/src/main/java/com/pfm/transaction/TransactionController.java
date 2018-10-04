@@ -1,5 +1,6 @@
 package com.pfm.transaction;
 
+import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
@@ -97,13 +98,20 @@ public class TransactionController implements TransactionApi {
   }
 
   private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
-//    Optional<Account> transactionAccount = accountService.getAccountById(transactionRequest.getAccountId());
+    // TODO - why do we need that check if it's done in validator?
     Optional<Category> transactionCategory = categoryService.getCategoryById(transactionRequest.getCategoryId());
 
-    // just double check - it should be already verified by validator
-//    if (!(transactionAccount.isPresent() && transactionCategory.isPresent())) {
-//      throw new IllegalStateException("Account or category was not provided");
-//    } // TODO add validation
+    // just double check - it should be already verified by validator (if method is called without checking with validator)
+    if (!transactionCategory.isPresent()) {
+      throw new IllegalStateException("Provided category does not exists in the database");
+    }
+
+    for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
+      Optional<Account> transactionAccount = accountService.getAccountById(entry.getAccountId());
+      if (!transactionAccount.isPresent()) {
+        throw new IllegalStateException("Provided account does not exists in the database");
+      }
+    }
 
     return Transaction.builder()
         .description(transactionRequest.getDescription())
