@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "6478.83"
+      "balance": "6211.46"
     },
     {
       "name": "Monika - pożyczka",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-846.21"
+          "balance": "-1113.58"
         },
         {
           "name": "Monika - pożyczka",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "6478.83"
+          "balance": "6211.46"
         },
         {
           "name": "Monika - pożyczka",
@@ -1085,7 +1085,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7615.16"
+          "balance": "-7882.53"
         },
         {
           "name": "Monika - pożyczka",
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-846.21"
+          "balance": "-1113.58"
         },
         {
           "name": "Monika - pożyczka",
@@ -2033,7 +2033,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5318.61"
+          "balance": "-5585.98"
         },
         {
           "name": "Monika - pożyczka",
@@ -2095,7 +2095,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7615.16"
+          "balance": "-7882.53"
         },
         {
           "name": "Monika - pożyczka",
@@ -2614,7 +2614,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "781.22"
+          "balance": "513.85"
         },
         {
           "name": "Monika - pożyczka",
@@ -2676,7 +2676,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5318.61"
+          "balance": "-5585.98"
         },
         {
           "name": "Monika - pożyczka",
@@ -3380,7 +3380,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "781.22"
+          "balance": "513.85"
         },
         {
           "name": "Monika - pożyczka",
@@ -3404,6 +3404,17 @@
         }
       ],
       "transactions": [
+        {
+          "description": "Balkony - zaliczka",
+          "category": "Remont domu",
+          "date": "2018-05-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5680.00"
+            }
+          ]
+        },
         {
           "description": "Crossover 16-22.04",
           "category": "Crossover",
@@ -3468,6 +3479,36 @@
           ]
         },
         {
+          "description": "CT - kwiecien",
+          "category": "CodersTrust - szkolenia",
+          "date": "2018-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "13468.50"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-486.00"
+            }
+          ]
+        },
+        {
+          "description": "Leki",
+          "category": "Zdrowie",
+          "date": "2018-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-29.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "14.50"
+            }
+          ]
+        },
+        {
           "description": "Fryzjer",
           "category": "Leki, lekarze, higiena",
           "date": "2018-05-09",
@@ -3486,6 +3527,17 @@
             {
               "account": "Idea Bank",
               "price": "-132.23"
+            }
+          ]
+        },
+        {
+          "description": "Decathlon - zele energetyczne itp",
+          "category": "Sport",
+          "date": "2018-05-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-129.97"
             }
           ]
         },
@@ -3523,24 +3575,24 @@
           ]
         },
         {
-          "description": "Klub wysokogorski - skladka",
-          "category": "Rozrywka",
-          "date": "2018-05-15",
+          "description": "Okna - zaliczka",
+          "category": "Remont domu",
+          "date": "2018-05-11",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-100.00"
+              "price": "-13500.00"
             }
           ]
         },
         {
-          "description": "Egipt - paliwo, parking, jedzenie",
+          "description": "Klub wysokogorski - skladka",
           "category": "Rozrywka",
-          "date": "2018-05-15",
+          "date": "2018-05-14",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-441.09"
+              "price": "-100.00"
             }
           ]
         },
@@ -3567,28 +3619,6 @@
           ]
         },
         {
-          "description": "Jedzenie dla kota",
-          "category": "Zakupy",
-          "date": "2018-05-15",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-109.44"
-            }
-          ]
-        },
-        {
-          "description": "CT - licencja - kurs Java",
-          "category": "CodersTrust - licencja",
-          "date": "2018-05-15",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "1633.44"
-            }
-          ]
-        },
-        {
           "description": "Rozliczenie miesiaca - maj",
           "category": "Rozrywka",
           "date": "2018-05-15",
@@ -3596,6 +3626,28 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-4050.15"
+            }
+          ]
+        },
+        {
+          "description": "Telefon",
+          "category": "Telefon",
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.72"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - maj",
+          "category": "Leasing samochodu",
+          "date": "2018-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
             }
           ]
         },
@@ -3611,24 +3663,43 @@
           ]
         },
         {
-          "description": "Telefon",
-          "category": "Telefon",
+          "description": "Jedzenie dla kota",
+          "category": "Zakupy",
           "date": "2018-05-18",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-19.72"
+              "price": "-109.44"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "109.44"
             }
           ]
         },
         {
-          "description": "Badania i leki",
-          "category": "Leki, lekarze, higiena",
+          "description": "Zakupy lotnisko",
+          "category": "Zakupy",
           "date": "2018-05-19",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-107.00"
+              "price": "-38.90"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2018-05-19",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-189.38"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "94.69"
             }
           ]
         },
@@ -3640,6 +3711,17 @@
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "CT - licencja - kurs Java",
+          "category": "CodersTrust - licencja",
+          "date": "2018-05-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1633.44"
             }
           ]
         },
@@ -3660,30 +3742,8 @@
           "date": "2018-05-26",
           "accountPriceEntries": [
             {
-              "account": "Idea Bank",
-              "price": "-5680.00"
-            }
-          ]
-        },
-        {
-          "description": "Balkony - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-05-26",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "2840.00"
-            }
-          ]
-        },
-        {
-          "description": "Okna - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-05-26",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-13500.00"
             }
           ]
         },
@@ -3699,35 +3759,13 @@
           ]
         },
         {
-          "description": "Leasing - maj",
-          "category": "Leasing samochodu",
+          "description": "Parking - lotnisko",
+          "category": "Samochód",
           "date": "2018-05-26",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-2308.97"
-            }
-          ]
-        },
-        {
-          "description": "CT - kwiecien",
-          "category": "CodersTrust - szkolenia",
-          "date": "2018-05-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "12982.50"
-            }
-          ]
-        },
-        {
-          "description": "Decathlon - zele energetyczne itp",
-          "category": "Sport",
-          "date": "2018-05-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-129.97"
+              "price": "-136.00"
             }
           ]
         },
@@ -3739,17 +3777,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-63.87"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "640.81"
             }
           ]
         },
