@@ -68,7 +68,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "53737.50"
+      "balance": "143393.01"
     },
     {
       "name": "kantor Alior - EUR",
@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "10168.56"
+      "balance": "21776.10"
     },
     {
       "name": "IKE",
@@ -134,7 +134,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "27755.78"
+          "balance": "117411.29"
         },
         {
           "name": "kantor Alior - EUR",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9075.67"
+          "balance": "20683.21"
         },
         {
           "name": "IKE",
@@ -196,7 +196,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "53737.50"
+          "balance": "143393.01"
         },
         {
           "name": "kantor Alior - EUR",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "10168.56"
+          "balance": "21776.10"
         },
         {
           "name": "IKE",
@@ -1053,7 +1053,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "134433.31"
+          "balance": "224088.82"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1065,7 +1065,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5037.76"
+          "balance": "16645.30"
         },
         {
           "name": "IKE",
@@ -1115,7 +1115,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "27755.78"
+          "balance": "117411.29"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1127,7 +1127,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9075.67"
+          "balance": "20683.21"
         },
         {
           "name": "IKE",
@@ -2001,7 +2001,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "104250.75"
+          "balance": "193906.26"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2013,7 +2013,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "30419.25"
+          "balance": "42026.79"
         },
         {
           "name": "IKE",
@@ -2063,7 +2063,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "134433.31"
+          "balance": "224088.82"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2075,7 +2075,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5037.76"
+          "balance": "16645.30"
         },
         {
           "name": "IKE",
@@ -2644,7 +2644,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "104250.75"
+          "balance": "193906.26"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2656,7 +2656,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "30419.25"
+          "balance": "42026.79"
         },
         {
           "name": "IKE",
@@ -2870,21 +2870,6 @@
           ]
         },
         {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-06-13",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "67185.34"
-            },
-            {
-              "account": "kantor Alior - USD",
-              "price": "-64073.02"
-            }
-          ]
-        },
-        {
           "description": "Crossover (28.05-03.06)",
           "category": "Crossover",
           "date": "2018-06-14",
@@ -2962,6 +2947,36 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-06-21",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "6000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "22376.40"
+            }
+          ]
+        },
+        {
+          "description": "Seba - pozyczka",
+          "category": "Przelewy między kontami",
+          "date": "2018-06-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-20000.00"
+            },
+            {
+              "account": "Seba - pożyczka",
+              "price": "20000.00"
+            }
+          ]
+        },
+        {
           "description": "Leasing - czerwiec",
           "category": "Leasing samochodu",
           "date": "2018-06-26",
@@ -3024,6 +3039,36 @@
             {
               "account": "Ania - rozliczenie",
               "price": "144.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-06-27",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "8000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "29935.77"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-06-27",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "4000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "15009.60"
             }
           ]
         },
@@ -3116,6 +3161,21 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "4000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "15053.60"
+            }
+          ]
+        },
+        {
           "description": "Rozliczenie miesiaca - czerwiec",
           "category": "Rozrywka",
           "date": "2018-06-30",
@@ -3123,72 +3183,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-4146.78"
-            }
-          ]
-        },
-        {
-          "description": "Seba - pozyczka - Alior PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-4809.97"
-            }
-          ]
-        },
-        {
-          "description": "Seba - pozyczka - Alior PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Seba - pożyczka",
-              "price": "4809.97"
-            }
-          ]
-        },
-        {
-          "description": "Seba - pozyczka - Alior USD",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "-3582.49"
-            }
-          ]
-        },
-        {
-          "description": "Seba - pozyczka - Alior USD",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Seba - pożyczka",
-              "price": "3582.49"
-            }
-          ]
-        },
-        {
-          "description": "Seba - pozyczka - Idea",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-11607.54"
-            }
-          ]
-        },
-        {
-          "description": "Seba - pozyczka - Idea",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Seba - pożyczka",
-              "price": "11607.54"
             }
           ]
         },
