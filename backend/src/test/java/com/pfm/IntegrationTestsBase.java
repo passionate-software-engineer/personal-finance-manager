@@ -196,7 +196,7 @@ public abstract class IntegrationTestsBase {
   //transaction
   private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId) throws Exception {
     transactionRequest.setCategoryId(categoryId);
-    transactionRequest.setAccountId(accountId);
+    transactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
     String response =
         mockMvc
             .perform(post(TRANSACTIONS_SERVICE_PATH)
@@ -215,28 +215,26 @@ public abstract class IntegrationTestsBase {
   protected TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
     return TransactionRequest.builder()
         .description(transaction.getDescription())
-        .price(transaction.getPrice())
+        .accountPriceEntries(transaction.getAccountPriceEntries())
         .date(transaction.getDate())
         .categoryId(transaction.getCategoryId())
-        .accountId(transaction.getAccountId())
         .build();
   }
 
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId, long accountId, long categoryId) {
     transaction.setId(transactionId);
     transaction.setCategoryId(categoryId);
-    transaction.setAccountId(accountId);
+    transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
     return transaction;
   }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
-        .accountId(transactionRequest.getAccountId())
+        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .categoryId(transactionRequest.getCategoryId())
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
-        .price(transactionRequest.getPrice())
         .build();
   }
 

@@ -178,8 +178,8 @@ public class ExportController implements ExportApi {
   private List<ExportAccount> copyAccounts(List<ExportAccount> accounts) {
     return accounts.stream()
         .map(account -> ExportAccount.builder()
-            .name(account.getName())
             .balance(account.getBalance())
+            .name(account.getName())
             .build()
         )
         .collect(Collectors.toList());
