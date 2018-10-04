@@ -68,7 +68,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "143393.01"
+      "balance": "64126.75"
     },
     {
       "name": "kantor Alior - EUR",
@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "21776.10"
+      "balance": "-608.66"
     },
     {
       "name": "IKE",
@@ -112,7 +112,7 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "0.00"
+      "balance": "63.50"
     },
     {
       "name": "mBank",
@@ -134,7 +134,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "117411.29"
+          "balance": "38145.03"
         },
         {
           "name": "kantor Alior - EUR",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "20683.21"
+          "balance": "-1701.55"
         },
         {
           "name": "IKE",
@@ -178,7 +178,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "0.00"
+          "balance": "63.50"
         },
         {
           "name": "mBank",
@@ -196,7 +196,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "143393.01"
+          "balance": "64126.75"
         },
         {
           "name": "kantor Alior - EUR",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "21776.10"
+          "balance": "-608.66"
         },
         {
           "name": "IKE",
@@ -240,7 +240,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "0.00"
+          "balance": "63.50"
         },
         {
           "name": "mBank",
@@ -1053,7 +1053,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "224088.82"
+          "balance": "144822.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1065,7 +1065,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "16645.30"
+          "balance": "-5739.46"
         },
         {
           "name": "IKE",
@@ -1097,7 +1097,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3632.50"
+          "balance": "3696.00"
         },
         {
           "name": "mBank",
@@ -1115,7 +1115,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "117411.29"
+          "balance": "38145.03"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1127,7 +1127,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "20683.21"
+          "balance": "-1701.55"
         },
         {
           "name": "IKE",
@@ -1159,7 +1159,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "0.00"
+          "balance": "63.50"
         },
         {
           "name": "mBank",
@@ -2001,7 +2001,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "193906.26"
+          "balance": "114640.00"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2013,7 +2013,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "42026.79"
+          "balance": "19642.03"
         },
         {
           "name": "IKE",
@@ -2045,7 +2045,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3646.00"
+          "balance": "3709.50"
         },
         {
           "name": "mBank",
@@ -2063,7 +2063,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "224088.82"
+          "balance": "144822.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2075,7 +2075,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "16645.30"
+          "balance": "-5739.46"
         },
         {
           "name": "IKE",
@@ -2107,7 +2107,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3632.50"
+          "balance": "3696.00"
         },
         {
           "name": "mBank",
@@ -2582,7 +2582,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "171960.00"
+          "balance": "164795.00"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2594,7 +2594,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "17025.78"
+          "balance": "17017.30"
         },
         {
           "name": "IKE",
@@ -2644,7 +2644,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "193906.26"
+          "balance": "114640.00"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2656,7 +2656,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "42026.79"
+          "balance": "19642.03"
         },
         {
           "name": "IKE",
@@ -2688,7 +2688,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3646.00"
+          "balance": "3709.50"
         },
         {
           "name": "mBank",
@@ -2719,6 +2719,17 @@
             {
               "account": "Idea Bank",
               "price": "1577.42"
+            }
+          ]
+        },
+        {
+          "description": "Crossover 14-20.05",
+          "category": "Crossover",
+          "date": "2018-06-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
             }
           ]
         },
@@ -2822,17 +2833,6 @@
           ]
         },
         {
-          "description": "Nurkowanie - Zakrzowek",
-          "category": "Nurkowanie",
-          "date": "2018-06-07",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "-90.00"
-            }
-          ]
-        },
-        {
           "description": "Audioteka",
           "category": "Rozrywka",
           "date": "2018-06-08",
@@ -2855,28 +2855,24 @@
           ]
         },
         {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
+          "description": "Crossover (28.05-03.06)",
+          "category": "Crossover",
           "date": "2018-06-13",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-21495.00"
-            },
-            {
-              "account": "Idea Bank",
-              "price": "22376.28"
+              "price": "7165.00"
             }
           ]
         },
         {
-          "description": "Crossover (28.05-03.06)",
-          "category": "Crossover",
-          "date": "2018-06-14",
+          "description": "Mandat - Francja",
+          "category": "Samochód",
+          "date": "2018-06-16",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "account": "kantor Alior - EUR",
+              "price": "-190.80"
             }
           ]
         },
@@ -2947,13 +2943,28 @@
           ]
         },
         {
+          "description": "Przelew",
+          "category": "Przelewy między kontami",
+          "date": "2018-06-21",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-63.60"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "63.50"
+            }
+          ]
+        },
+        {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
           "date": "2018-06-21",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "6000.00"
+              "price": "-21495.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -3043,13 +3054,24 @@
           ]
         },
         {
+          "description": "Crossover (11-17.06)",
+          "category": "Crossover",
+          "date": "2018-06-27",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
+        },
+        {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
           "date": "2018-06-27",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "8000.00"
+              "price": "-28606.26"
             },
             {
               "account": "kantor Alior - PLN",
@@ -3064,7 +3086,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "4000.00"
+              "price": "-14330.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -3150,24 +3172,13 @@
           ]
         },
         {
-          "description": "Crossover (11-17.06)",
-          "category": "Crossover",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7111.26"
-            }
-          ]
-        },
-        {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
           "date": "2018-06-28",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "4000.00"
+              "price": "-14330.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -3253,17 +3264,6 @@
           ]
         },
         {
-          "description": "Przelew",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "-164.40"
-            }
-          ]
-        },
-        {
           "description": "Przelew - euro",
           "category": "Przelewy między kontami",
           "date": "2018-06-30",
@@ -3298,7 +3298,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "13030.19"
+          "balance": "13021.71"
         },
         {
           "name": "IKE",
@@ -3348,7 +3348,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "171960.00"
+          "balance": "164795.00"
         },
         {
           "name": "kantor Alior - EUR",
@@ -3360,7 +3360,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "17025.78"
+          "balance": "17017.30"
         },
         {
           "name": "IKE",
@@ -3405,6 +3405,47 @@
       ],
       "transactions": [
         {
+          "description": "Crossover 16-22.04",
+          "category": "Crossover",
+          "date": "2018-05-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-05-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-12538.75"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "12450.55"
+            }
+          ]
+        },
+        {
+          "description": "USD -> EUR",
+          "category": "Wymiana walut",
+          "date": "2018-05-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-5373.79"
+            },
+            {
+              "account": "kantor Alior - EUR",
+              "price": "5290.76"
+            }
+          ]
+        },
+        {
           "description": "ZUS - Maj",
           "category": "ZUS",
           "date": "2018-05-05",
@@ -3423,17 +3464,6 @@
             {
               "account": "Idea Bank",
               "price": "-19.90"
-            }
-          ]
-        },
-        {
-          "description": "Crossover 16-22.04",
-          "category": "Crossover",
-          "date": "2018-05-09",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7165.00"
             }
           ]
         },
@@ -3462,33 +3492,11 @@
         {
           "description": "Crossover 23-29.04",
           "category": "Crossover",
-          "date": "2018-05-09",
+          "date": "2018-05-10",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
-            }
-          ]
-        },
-        {
-          "description": "Egipt - Euro",
-          "category": "Rozrywka",
-          "date": "2018-05-09",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "-3392.00"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-10",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "-50.45"
             }
           ]
         },
@@ -3504,32 +3512,13 @@
           ]
         },
         {
-          "description": "USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-05-13",
+          "description": "Egipt - Euro",
+          "category": "Wyjazdy",
+          "date": "2018-05-11",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - EUR",
-              "price": "5290.75"
-            },
-            {
-              "account": "kantor Alior - USD",
-              "price": "-5373.75"
-            }
-          ]
-        },
-        {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-05-13",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "12450.55"
-            },
-            {
-              "account": "kantor Alior - USD",
-              "price": "-12602.66"
+              "price": "-3392.00"
             }
           ]
         },
@@ -3655,6 +3644,17 @@
           ]
         },
         {
+          "description": "Pizza - Hurghada",
+          "category": "Jedzenie",
+          "date": "2018-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-50.46"
+            }
+          ]
+        },
+        {
           "description": "Balkony - zaliczka",
           "category": "Remont domu",
           "date": "2018-05-26",
@@ -3737,17 +3737,6 @@
           "date": "2018-05-30",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "63.87"
-            }
-          ]
-        },
-        {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-05-30",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "-63.87"
             }
@@ -3816,17 +3805,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "4.24"
-            }
-          ]
-        },
-        {
-          "description": "Crossover 14-20.05",
-          "category": "Crossover",
-          "date": "2018-05-31",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7165.00"
             }
           ]
         }
@@ -3916,7 +3894,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "13030.19"
+          "balance": "13021.71"
         },
         {
           "name": "IKE",
@@ -3972,9 +3950,24 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-28660.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "27271.20"
+            }
+          ]
+        },
+        {
           "description": "Crossover 19-25.03",
           "category": "Crossover",
-          "date": "2018-04-04",
+          "date": "2018-04-05",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
@@ -4082,21 +4075,6 @@
           ]
         },
         {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2018-04-13",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "27279.68"
-            },
-            {
-              "account": "kantor Alior - USD",
-              "price": "-28659.96"
-            }
-          ]
-        },
-        {
           "description": "Podatek dochodowy Q1 2018",
           "category": "Podatek dochodowy",
           "date": "2018-04-15",
@@ -4191,7 +4169,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "7165.04"
             }
           ]
         },
