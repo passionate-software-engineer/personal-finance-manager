@@ -112,11 +112,11 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "63.50"
+      "balance": "-3596.00"
     },
     {
       "name": "mBank",
-      "balance": "13953.99"
+      "balance": "13967.49"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -178,11 +178,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "63.50"
+          "balance": "-3596.00"
         },
         {
           "name": "mBank",
-          "balance": "21208.91"
+          "balance": "21222.41"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -240,11 +240,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "63.50"
+          "balance": "-3596.00"
         },
         {
           "name": "mBank",
-          "balance": "13953.99"
+          "balance": "13967.49"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1097,11 +1097,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3696.00"
+          "balance": "36.50"
         },
         {
           "name": "mBank",
-          "balance": "13.50"
+          "balance": "27.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1159,11 +1159,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "63.50"
+          "balance": "-3596.00"
         },
         {
           "name": "mBank",
-          "balance": "21208.91"
+          "balance": "21222.41"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2045,11 +2045,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3709.50"
+          "balance": "50.00"
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "13.50"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2107,11 +2107,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3696.00"
+          "balance": "36.50"
         },
         {
           "name": "mBank",
-          "balance": "13.50"
+          "balance": "27.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2688,11 +2688,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "3709.50"
+          "balance": "50.00"
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "13.50"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -3267,6 +3267,21 @@
           ]
         },
         {
+          "description": "Przelew",
+          "category": "Przelewy między kontami",
+          "date": "2018-06-29",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-13.50"
+            },
+            {
+              "account": "mBank",
+              "price": "13.50"
+            }
+          ]
+        },
+        {
           "description": "Rozliczenie miesiaca - czerwiec",
           "category": "Rozrywka",
           "date": "2018-06-30",
@@ -3289,17 +3304,6 @@
           ]
         },
         {
-          "description": "Revolut - przelew",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "1212.57"
-            }
-          ]
-        },
-        {
           "description": "Gotowka",
           "category": "Przelewy między kontami",
           "date": "2018-06-30",
@@ -3318,17 +3322,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-2433.43"
-            }
-          ]
-        },
-        {
-          "description": "Revolut - przelew",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "2433.43"
             }
           ]
         },
