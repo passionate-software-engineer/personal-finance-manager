@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "-600.18"
+      "balance": "2702.19"
     },
     {
       "name": "IKE",
@@ -92,7 +92,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "298.00"
+      "balance": "478.00"
     },
     {
       "name": "Gotówka - euro",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "6211.46"
+      "balance": "3200.69"
     },
     {
       "name": "Monika - pożyczka",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-1693.07"
+          "balance": "1609.30"
         },
         {
           "name": "IKE",
@@ -158,7 +158,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "40.00"
+          "balance": "220.00"
         },
         {
           "name": "Gotówka - euro",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1113.58"
+          "balance": "-4124.35"
         },
         {
           "name": "Monika - pożyczka",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-600.18"
+          "balance": "2702.19"
         },
         {
           "name": "IKE",
@@ -220,7 +220,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "298.00"
+          "balance": "478.00"
         },
         {
           "name": "Gotówka - euro",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "6211.46"
+          "balance": "3200.69"
         },
         {
           "name": "Monika - pożyczka",
@@ -1065,7 +1065,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-5730.98"
+          "balance": "-2428.61"
         },
         {
           "name": "IKE",
@@ -1077,7 +1077,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "-33.58"
+          "balance": "146.42"
         },
         {
           "name": "Gotówka - euro",
@@ -1085,7 +1085,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7882.53"
+          "balance": "-10893.30"
         },
         {
           "name": "Monika - pożyczka",
@@ -1127,7 +1127,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-1693.07"
+          "balance": "1609.30"
         },
         {
           "name": "IKE",
@@ -1139,7 +1139,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "40.00"
+          "balance": "220.00"
         },
         {
           "name": "Gotówka - euro",
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1113.58"
+          "balance": "-4124.35"
         },
         {
           "name": "Monika - pożyczka",
@@ -2013,7 +2013,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "19650.51"
+          "balance": "22952.88"
         },
         {
           "name": "IKE",
@@ -2025,7 +2025,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "121.42"
+          "balance": "301.42"
         },
         {
           "name": "Gotówka - euro",
@@ -2033,7 +2033,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5585.98"
+          "balance": "-8596.75"
         },
         {
           "name": "Monika - pożyczka",
@@ -2075,7 +2075,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-5730.98"
+          "balance": "-2428.61"
         },
         {
           "name": "IKE",
@@ -2087,7 +2087,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "-33.58"
+          "balance": "146.42"
         },
         {
           "name": "Gotówka - euro",
@@ -2095,7 +2095,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-7882.53"
+          "balance": "-10893.30"
         },
         {
           "name": "Monika - pożyczka",
@@ -2614,7 +2614,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "513.85"
+          "balance": "581.85"
         },
         {
           "name": "Monika - pożyczka",
@@ -2656,7 +2656,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "19650.51"
+          "balance": "22952.88"
         },
         {
           "name": "IKE",
@@ -2668,7 +2668,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "121.42"
+          "balance": "301.42"
         },
         {
           "name": "Gotówka - euro",
@@ -2676,7 +2676,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5585.98"
+          "balance": "-8596.75"
         },
         {
           "name": "Monika - pożyczka",
@@ -2712,17 +2712,6 @@
           ]
         },
         {
-          "description": "Przelew Ania PLN",
-          "category": "Przelewy między kontami",
-          "date": "2018-06-01",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "1577.42"
-            }
-          ]
-        },
-        {
           "description": "Crossover 14-20.05",
           "category": "Crossover",
           "date": "2018-06-01",
@@ -2734,9 +2723,39 @@
           ]
         },
         {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2018-06-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-268.46"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "134.23"
+            }
+          ]
+        },
+        {
+          "description": "Przelew Ania PLN",
+          "category": "Przelewy między kontami",
+          "date": "2018-06-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1577.42"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1577.42"
+            }
+          ]
+        },
+        {
           "description": "ZUS - Maj",
           "category": "ZUS",
-          "date": "2018-06-05",
+          "date": "2018-06-04",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
@@ -2745,13 +2764,39 @@
           ]
         },
         {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-06-06",
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2018-06-04",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-268.46"
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "Zawody - bieg 3 kopcow, Cracovia Polmaraton",
+          "category": "Sport",
+          "date": "2018-06-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-100.00"
+            }
+          ]
+        },
+        {
+          "description": "Ksiazki",
+          "category": "Edukacja",
+          "date": "2018-06-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-179.52"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "89.76"
             }
           ]
         },
@@ -2767,17 +2812,6 @@
           ]
         },
         {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-06-06",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-292.27"
-            }
-          ]
-        },
-        {
           "description": "Paliwo - Ania zwrot",
           "category": "Paliwo",
           "date": "2018-06-06",
@@ -2785,17 +2819,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "146.14"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-06-06",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-311.31"
             }
           ]
         },
@@ -2811,17 +2834,6 @@
           ]
         },
         {
-          "description": "Mandat - Francja",
-          "category": "Samochód",
-          "date": "2018-06-06",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-252.30"
-            }
-          ]
-        },
-        {
           "description": "Crossover (21-27.05) - urlop",
           "category": "Crossover",
           "date": "2018-06-07",
@@ -2833,24 +2845,94 @@
           ]
         },
         {
-          "description": "Audioteka",
-          "category": "Rozrywka",
-          "date": "2018-06-08",
+          "description": "Kluczyk do szafki Kinarps",
+          "category": "Utrzymanie domu",
+          "date": "2018-06-07",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-19.90"
+              "price": "-30.75"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2018-06-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-292.27"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "146.14"
+            }
+          ]
+        },
+        {
+          "description": "Crossover Lodz Meetup - zwrot za paliwo",
+          "category": "Samochód",
+          "date": "2018-06-09",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "180.00"
+            }
+          ]
+        },
+        {
+          "description": "Lodz - parking",
+          "category": "Samochód",
+          "date": "2018-06-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-60.00"
+            }
+          ]
+        },
+        {
+          "description": "Burger",
+          "category": "Jedzenie",
+          "date": "2018-06-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-49.00"
+            }
+          ]
+        },
+        {
+          "description": "Lasery - lodz",
+          "category": "Rozrywka",
+          "date": "2018-06-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-29.00"
             }
           ]
         },
         {
           "description": "Księgowy - czerwiec",
           "category": "Księgowość",
-          "date": "2018-06-09",
+          "date": "2018-06-11",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
               "price": "-123.00"
+            }
+          ]
+        },
+        {
+          "description": "Szkolenie - Motopark - 2 stopien",
+          "category": "Edukacja",
+          "date": "2018-06-12",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-499.00"
             }
           ]
         },
@@ -2866,6 +2948,54 @@
           ]
         },
         {
+          "description": "CT - maj",
+          "category": "CodersTrust - szkolenia",
+          "date": "2018-06-14",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "12073.68"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2349.00"
+            }
+          ]
+        },
+        {
+          "description": "Sluchawki",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2018-06-14",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-530.69"
+            }
+          ]
+        },
+        {
+          "description": "Telefon",
+          "category": "Telefon",
+          "date": "2018-06-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-31.49"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - czerwiec",
+          "category": "Leasing samochodu",
+          "date": "2018-06-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            }
+          ]
+        },
+        {
           "description": "Mandat - Francja",
           "category": "Samochód",
           "date": "2018-06-16",
@@ -2877,13 +3007,43 @@
           ]
         },
         {
-          "description": "Ksiazki",
-          "category": "Edukacja",
-          "date": "2018-06-18",
+          "description": "Domeny",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2018-06-16",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-179.52"
+              "price": "-55.92"
+            }
+          ]
+        },
+        {
+          "description": "Idea - mandat",
+          "category": "Samochód",
+          "date": "2018-06-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-61.50"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "30.75"
+            }
+          ]
+        },
+        {
+          "description": "paliwo",
+          "category": "Paliwo",
+          "date": "2018-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-311.31"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "155.66"
             }
           ]
         },
@@ -2899,35 +3059,13 @@
           ]
         },
         {
-          "description": "Kluczyk do szafki Kinarps",
-          "category": "Utrzymanie domu",
-          "date": "2018-06-18",
+          "description": "Szkolenie - KPP",
+          "category": "Edukacja",
+          "date": "2018-06-20",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-30.75"
-            }
-          ]
-        },
-        {
-          "description": "Crossover Lodz Meetup - zwrot za paliwo",
-          "category": "Rozrywka",
-          "date": "2018-06-18",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "32.00"
-            }
-          ]
-        },
-        {
-          "description": "Telefon",
-          "category": "Telefon",
-          "date": "2018-06-18",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-31.49"
+              "price": "-650.00"
             }
           ]
         },
@@ -2939,6 +3077,17 @@
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Ladowarka USB",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2018-06-21",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-97.60"
             }
           ]
         },
@@ -2988,17 +3137,6 @@
           ]
         },
         {
-          "description": "Leasing - czerwiec",
-          "category": "Leasing samochodu",
-          "date": "2018-06-26",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-2308.97"
-            }
-          ]
-        },
-        {
           "description": "Leasing - czerwiec - Ania zwrot",
           "category": "Leasing samochodu",
           "date": "2018-06-26",
@@ -3017,6 +3155,10 @@
             {
               "account": "Idea Bank",
               "price": "-294.23"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "147.11"
             }
           ]
         },
@@ -3028,17 +3170,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "147.12"
-            }
-          ]
-        },
-        {
-          "description": "Nozbe",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-06-26",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-288.00"
             }
           ]
         },
@@ -3095,79 +3226,17 @@
           ]
         },
         {
-          "description": "Zawody - bieg 3 kopcow, Cracovia Polmaraton",
-          "category": "Sport",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-100.00"
-            }
-          ]
-        },
-        {
-          "description": "Szkolenie - Motopark - 2 stopien",
-          "category": "Edukacja",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-499.00"
-            }
-          ]
-        },
-        {
-          "description": "CT - maj",
-          "category": "CodersTrust - szkolenia",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "9724.68"
-            }
-          ]
-        },
-        {
-          "description": "Sluchawki",
+          "description": "Nozbe",
           "category": "Koszty prowadzenia firmy",
           "date": "2018-06-28",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-530.69"
-            }
-          ]
-        },
-        {
-          "description": "Domeny",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
+              "price": "-288.00"
+            },
             {
-              "account": "Idea Bank",
-              "price": "-55.92"
-            }
-          ]
-        },
-        {
-          "description": "Szkolenie - KPP",
-          "category": "Edukacja",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-650.00"
-            }
-          ]
-        },
-        {
-          "description": "Ladowarka USB",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-06-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-97.60"
+              "account": "Ania - rozliczenie",
+              "price": "144.00"
             }
           ]
         },
@@ -3198,13 +3267,13 @@
           ]
         },
         {
-          "description": "Revolut - przelew",
-          "category": "Przelewy między kontami",
+          "description": "Panele",
+          "category": "Remont domu",
           "date": "2018-06-30",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-1212.57"
+              "price": "-280.00"
             }
           ]
         },
@@ -3380,7 +3449,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "513.85"
+          "balance": "581.85"
         },
         {
           "name": "Monika - pożyczka",
@@ -3766,6 +3835,10 @@
             {
               "account": "Idea Bank",
               "price": "-136.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "68.00"
             }
           ]
         },
