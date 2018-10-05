@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "42917.00"
+      "balance": "-1745.86"
     },
     {
       "name": "Monika - pożyczka",
@@ -182,7 +182,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "41536.50"
+          "balance": "-3126.36"
         },
         {
           "name": "Monika - pożyczka",
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "42917.00"
+          "balance": "-1745.86"
         },
         {
           "name": "Monika - pożyczka",
@@ -652,7 +652,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17973.68"
+          "balance": "-4765.18"
         },
         {
           "name": "Monika - pożyczka",
@@ -722,7 +722,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "41536.50"
+          "balance": "-3126.36"
         },
         {
           "name": "Monika - pożyczka",
@@ -770,43 +770,6 @@
           ]
         },
         {
-          "description": "Toner do drukarki",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "39.98"
-            }
-          ]
-        },
-        {
-          "description": "Drukarka",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-262.40"
-            },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "131.20"
-            }
-          ]
-        },
-        {
-          "description": "Drukarka",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "131.20"
-            }
-          ]
-        },
-        {
           "description": "Nowy numer domu (tabliczka)",
           "category": "Remont domu",
           "date": "2018-09-01",
@@ -815,17 +778,6 @@
               "account": "Idea Bank",
               "price": "-140.00"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "70.00"
-            }
-          ]
-        },
-        {
-          "description": "Nowy numer domu (tabliczka)",
-          "category": "Remont domu",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "70.00"
@@ -848,28 +800,6 @@
           ]
         },
         {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "141.94"
-            }
-          ]
-        },
-        {
-          "description": "Niania",
-          "category": "Dziecko",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "150.00"
-            }
-          ]
-        },
-        {
           "description": "ksiegowy ",
           "category": "Księgowość",
           "date": "2018-09-01",
@@ -877,6 +807,21 @@
             {
               "account": "Idea Bank",
               "price": "-126.08"
+            }
+          ]
+        },
+        {
+          "description": "Drukarka",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-262.40"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "131.20"
             }
           ]
         },
@@ -959,17 +904,6 @@
           ]
         },
         {
-          "description": "Drzwi - rozliczenie",
-          "category": "Remont domu",
-          "date": "2018-09-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1175.00"
-            }
-          ]
-        },
-        {
           "description": "crossover (20-26.08)",
           "category": "Crossover",
           "date": "2018-09-07",
@@ -996,17 +930,6 @@
           ]
         },
         {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-09-08",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "84.62"
-            }
-          ]
-        },
-        {
           "description": "Paliwo (Wroclaw)",
           "category": "Paliwo",
           "date": "2018-09-08",
@@ -1015,17 +938,6 @@
               "account": "mBank",
               "price": "-49.98"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "24.99"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo (Wroclaw)",
-          "category": "Paliwo",
-          "date": "2018-09-08",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "24.99"
@@ -1059,17 +971,6 @@
           ]
         },
         {
-          "description": "Jedzenie - Wroclaw",
-          "category": "Jedzenie",
-          "date": "2018-09-08",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "35.11"
-            }
-          ]
-        },
-        {
           "description": "Leasing",
           "category": "Leasing samochodu",
           "date": "2018-09-10",
@@ -1081,17 +982,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1154.48"
-            }
-          ]
-        },
-        {
-          "description": "Leasing",
-          "category": "Leasing samochodu",
-          "date": "2018-09-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.49"
             }
           ]
         },
@@ -1115,17 +1005,6 @@
               "account": "mBank",
               "price": "-44.00"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "22.00"
-            }
-          ]
-        },
-        {
-          "description": "Zdjecia z Maratonu",
-          "category": "Sport",
-          "date": "2018-09-13",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "22.00"
@@ -1167,17 +1046,6 @@
               "account": "Gotówka",
               "price": "-280.00"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "140.00"
-            }
-          ]
-        },
-        {
-          "description": "Remont",
-          "category": "Remont domu",
-          "date": "2018-09-14",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "140.00"
@@ -1274,17 +1142,6 @@
           ]
         },
         {
-          "description": "Brama garazowa - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-09-18",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1000.00"
-            }
-          ]
-        },
-        {
           "description": "Gotowka - Ania",
           "category": "Przelewy między kontami",
           "date": "2018-09-18",
@@ -1293,17 +1150,6 @@
               "account": "mBank",
               "price": "-1500.00"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1500.00"
-            }
-          ]
-        },
-        {
-          "description": "Gotowka - Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-09-18",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "1500.00"
@@ -1341,28 +1187,6 @@
           ]
         },
         {
-          "description": "Kable (katowy i spirala)",
-          "category": "Remont domu",
-          "date": "2018-09-20",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "28.80"
-            }
-          ]
-        },
-        {
-          "description": "Ania - gotowka",
-          "category": "Przelewy między kontami",
-          "date": "2018-09-20",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "500.00"
-            }
-          ]
-        },
-        {
           "description": "AirBnb sylwester zaliczka",
           "category": "Wyjazdy - noclegi",
           "date": "2018-09-20",
@@ -1396,17 +1220,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
-            }
-          ]
-        },
-        {
-          "description": "AirBnb sylwester zaliczka",
-          "category": "Wyjazdy - noclegi",
-          "date": "2018-09-22",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "959.68"
             }
           ]
         },
@@ -1470,17 +1283,6 @@
           ]
         },
         {
-          "description": "Sudety paliwo",
-          "category": "Paliwo",
-          "date": "2018-09-23",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "76.31"
-            }
-          ]
-        },
-        {
           "description": "Lekarstwa",
           "category": "Zdrowie",
           "date": "2018-09-24",
@@ -1489,17 +1291,6 @@
               "account": "mBank",
               "price": "-55.48"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "27.74"
-            }
-          ]
-        },
-        {
-          "description": "Lekarstwa",
-          "category": "Zdrowie",
-          "date": "2018-09-24",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "27.74"
@@ -1537,17 +1328,6 @@
               "account": "kantor Alior - EUR",
               "price": "-126.35"
             },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "63.18"
-            }
-          ]
-        },
-        {
-          "description": "Tatralandia - sylwester",
-          "category": "Rozrywka",
-          "date": "2018-09-26",
-          "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
               "price": "63.18"
@@ -1616,6 +1396,28 @@
               "price": "-10.00"
             }
           ]
+        },
+        {
+          "description": "Rozliczenie miesiaca",
+          "category": "Rozliczenie miesiąca",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-12471.39"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie",
+          "category": "Rozliczenie miesiąca",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2127.57"
+            }
+          ]
         }
       ]
     },
@@ -1661,7 +1463,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "2257.65"
+          "balance": "-6932.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -1731,7 +1533,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17973.68"
+          "balance": "-4765.18"
         },
         {
           "name": "Monika - pożyczka",
@@ -1812,17 +1614,6 @@
           ]
         },
         {
-          "description": "Tablica budowlana",
-          "category": "Remont domu",
-          "date": "2018-08-02",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "13.75"
-            }
-          ]
-        },
-        {
           "description": "ZUS",
           "category": "ZUS",
           "date": "2018-08-03",
@@ -1845,17 +1636,6 @@
             {
               "account": "mBank",
               "price": "8863.32"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "22.98"
             }
           ]
         },
@@ -1897,17 +1677,6 @@
           ]
         },
         {
-          "description": "Biedronka - zakupy",
-          "category": "Zakupy",
-          "date": "2018-08-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "64.12"
-            }
-          ]
-        },
-        {
           "description": "Zmywarka - doplata",
           "category": "Remont domu",
           "date": "2018-08-06",
@@ -1934,17 +1703,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "14.35"
-            }
-          ]
-        },
-        {
-          "description": "Zmywarka - doplata",
-          "category": "Remont domu",
-          "date": "2018-08-07",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1377.50"
             }
           ]
         },
@@ -2008,17 +1766,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "763.21"
-            }
-          ]
-        },
-        {
-          "description": "Remont (materialy, worki, smieci, gruz)",
-          "category": "Remont domu",
-          "date": "2018-08-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "728.45"
             }
           ]
         },
@@ -2094,17 +1841,6 @@
             {
               "account": "Revolut - PLN",
               "price": "1881.60"
-            }
-          ]
-        },
-        {
-          "description": "Swietliki",
-          "category": "Remont domu",
-          "date": "2018-08-11",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "2323.83"
             }
           ]
         },
@@ -2442,17 +2178,6 @@
           ]
         },
         {
-          "description": "Leasing",
-          "category": "Leasing samochodu",
-          "date": "2018-08-20",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.49"
-            }
-          ]
-        },
-        {
           "description": "mc donalds",
           "category": "Jedzenie",
           "date": "2018-08-20",
@@ -2538,28 +2263,6 @@
           ]
         },
         {
-          "description": "Meble",
-          "category": "Remont domu",
-          "date": "2018-08-22",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "2007.50"
-            }
-          ]
-        },
-        {
-          "description": "Lampa do kuchni",
-          "category": "Remont domu",
-          "date": "2018-08-23",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "79.50"
-            }
-          ]
-        },
-        {
           "description": "Lampki + sterownik do gabinetu",
           "category": "Remont domu",
           "date": "2018-08-23",
@@ -2575,17 +2278,6 @@
           ]
         },
         {
-          "description": "Spozywcze",
-          "category": "Zakupy - jedzenie",
-          "date": "2018-08-23",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "164.80"
-            }
-          ]
-        },
-        {
           "description": "Crossover (6-12.08)",
           "category": "Crossover",
           "date": "2018-08-24",
@@ -2597,17 +2289,6 @@
           ]
         },
         {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-08-24",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "156.68"
-            }
-          ]
-        },
-        {
           "description": "Balast",
           "category": "Nurkowanie",
           "date": "2018-08-25",
@@ -2615,17 +2296,6 @@
             {
               "account": "mBank",
               "price": "-309.00"
-            }
-          ]
-        },
-        {
-          "description": "Remont",
-          "category": "Remont domu",
-          "date": "2018-08-28",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "675.00"
             }
           ]
         },
@@ -2652,28 +2322,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "950.00"
-            }
-          ]
-        },
-        {
-          "description": "Niania",
-          "category": "Dziecko",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "950.00"
-            }
-          ]
-        },
-        {
-          "description": "CT - konsultacje - Ani",
-          "category": "CodersTrust - szkolenia",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-783.27"
             }
           ]
         },
@@ -2707,72 +2355,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-6779.65"
-            }
-          ]
-        },
-        {
-          "description": "Meble w kuchni",
-          "category": "Remont domu",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-4000.00"
-            }
-          ]
-        },
-        {
-          "description": "Meble w kuchni",
-          "category": "Remont domu",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "2000.00"
-            }
-          ]
-        },
-        {
-          "description": "Kantor PLN -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "5796.50"
-            }
-          ]
-        },
-        {
-          "description": "kantor Eur -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "63.90"
-            }
-          ]
-        },
-        {
-          "description": "Idea -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "631.10"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "121.77"
             }
           ]
         },
@@ -2920,7 +2502,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "2257.65"
+          "balance": "-6932.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -3064,17 +2646,6 @@
           ]
         },
         {
-          "description": "Remont - panele",
-          "category": "Remont domu",
-          "date": "2018-07-06",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "140.00"
-            }
-          ]
-        },
-        {
           "description": "Fryzjer",
           "category": "Kosmetyki",
           "date": "2018-07-06",
@@ -3153,28 +2724,6 @@
           ]
         },
         {
-          "description": "Okna - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-07-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "2940.00"
-            }
-          ]
-        },
-        {
-          "description": "Leasing - Ania zwrot",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-07-10",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.50"
-            }
-          ]
-        },
-        {
           "description": "Crossover (25.06-01.07)",
           "category": "Crossover",
           "date": "2018-07-11",
@@ -3242,17 +2791,6 @@
           ]
         },
         {
-          "description": "CodersTrust (czerwiec) - Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-07-15",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-789.75"
-            }
-          ]
-        },
-        {
           "description": "Leasing",
           "category": "Koszty prowadzenia firmy",
           "date": "2018-07-16",
@@ -3286,39 +2824,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7111.26"
-            }
-          ]
-        },
-        {
-          "description": "Suchy Skafander - prezent",
-          "category": "Nurkowanie",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "3676.34"
-            }
-          ]
-        },
-        {
-          "description": "Viatoll, a4go - doladowanie",
-          "category": "Transport",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "130.00"
-            }
-          ]
-        },
-        {
-          "description": "Zakupy Ani",
-          "category": "Zakupy",
-          "date": "2018-07-21",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "139.67"
             }
           ]
         },
@@ -3489,17 +2994,6 @@
             {
               "account": "Idea Bank",
               "price": "-140.00"
-            }
-          ]
-        },
-        {
-          "description": "Lodowka - Ania zwrot ",
-          "category": "Remont domu",
-          "date": "2018-07-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1799.50"
             }
           ]
         },
