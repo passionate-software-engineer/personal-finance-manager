@@ -33,7 +33,7 @@
       "balance": "193.42"
     },
     {
-      "name": "Gotówka - euro",
+      "name": "Gotówka - EUR",
       "balance": "84.43"
     },
     {
@@ -58,6 +58,10 @@
     },
     {
       "name": "Idea Bank - lokaty",
+      "balance": "0.00"
+    },
+    {
+      "name": "Revolut - USD",
       "balance": "0.00"
     }
   ],
@@ -95,7 +99,7 @@
       "balance": "2548.00"
     },
     {
-      "name": "Gotówka - euro",
+      "name": "Gotówka - EUR",
       "balance": "17.68"
     },
     {
@@ -121,6 +125,10 @@
     {
       "name": "Idea Bank - lokaty",
       "balance": "150000.00"
+    },
+    {
+      "name": "Revolut - USD",
+      "balance": "0.00"
     }
   ],
   "periods": [
@@ -161,7 +169,7 @@
           "balance": "2548.00"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -187,6 +195,10 @@
         {
           "name": "Idea Bank - lokaty",
           "balance": "150000.00"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -223,7 +235,7 @@
           "balance": "2548.00"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -249,6 +261,10 @@
         {
           "name": "Idea Bank - lokaty",
           "balance": "150000.00"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -421,7 +437,7 @@
           "balance": "790.00"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -447,6 +463,10 @@
         {
           "name": "Idea Bank - lokaty",
           "balance": "150000.00"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -483,7 +503,7 @@
           "balance": "2548.00"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -509,6 +529,10 @@
         {
           "name": "Idea Bank - lokaty",
           "balance": "150000.00"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -1365,7 +1389,7 @@
           "balance": "-33.58"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -1390,6 +1414,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -1427,7 +1455,7 @@
           "balance": "790.00"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -1453,6 +1481,10 @@
         {
           "name": "Idea Bank - lokaty",
           "balance": "150000.00"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -2376,7 +2408,7 @@
           "balance": "121.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -2401,6 +2433,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -2438,7 +2474,7 @@
           "balance": "-33.58"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -2463,6 +2499,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -3027,7 +3067,7 @@
           "balance": "106.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "21.92"
         },
         {
@@ -3052,6 +3092,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -3089,7 +3133,7 @@
           "balance": "121.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "17.68"
         },
         {
@@ -3114,6 +3158,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -3535,7 +3583,7 @@
           "date": "2018-06-22",
           "accountPriceEntries": [
             {
-              "account": "Gotówka - euro",
+              "account": "Gotówka - EUR",
               "price": "-4.24"
             },
             {
@@ -3706,7 +3754,7 @@
           "balance": "73.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "21.92"
         },
         {
@@ -3731,6 +3779,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -3768,7 +3820,7 @@
           "balance": "106.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "21.92"
         },
         {
@@ -3793,6 +3845,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -4162,7 +4218,7 @@
           "balance": "73.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "21.92"
         },
         {
@@ -4187,6 +4243,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -4224,7 +4284,7 @@
           "balance": "73.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "21.92"
         },
         {
@@ -4249,6 +4309,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -4599,7 +4663,7 @@
           "balance": "193.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "82.68"
         },
         {
@@ -4624,6 +4688,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -4661,7 +4729,7 @@
           "balance": "73.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "21.92"
         },
         {
@@ -4686,6 +4754,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -5136,7 +5208,7 @@
               "price": "60.76"
             },
             {
-              "account": "Gotówka - euro",
+              "account": "Gotówka - EUR",
               "price": "-60.76"
             }
           ]
@@ -5358,7 +5430,7 @@
           "balance": "193.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "106.00"
         },
         {
@@ -5383,6 +5455,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -5420,7 +5496,7 @@
           "balance": "193.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "82.68"
         },
         {
@@ -5445,6 +5521,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -5909,7 +5989,7 @@
           "date": "2018-02-27",
           "accountPriceEntries": [
             {
-              "account": "Gotówka - euro",
+              "account": "Gotówka - EUR",
               "price": "-23.32"
             },
             {
@@ -5968,7 +6048,7 @@
           "balance": "193.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "84.43"
         },
         {
@@ -5993,6 +6073,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -6030,7 +6114,7 @@
           "balance": "193.42"
         },
         {
-          "name": "Gotówka - euro",
+          "name": "Gotówka - EUR",
           "balance": "106.00"
         },
         {
@@ -6055,6 +6139,10 @@
         },
         {
           "name": "Idea Bank - lokaty",
+          "balance": "0.00"
+        },
+        {
+          "name": "Revolut - USD",
           "balance": "0.00"
         }
       ],
@@ -6157,7 +6245,7 @@
           "date": "2018-01-04",
           "accountPriceEntries": [
             {
-              "account": "Gotówka - euro",
+              "account": "Gotówka - EUR",
               "price": "4240.00"
             },
             {
@@ -6187,7 +6275,7 @@
           "date": "2018-01-06",
           "accountPriceEntries": [
             {
-              "account": "Gotówka - euro",
+              "account": "Gotówka - EUR",
               "price": "-4240.00"
             },
             {
@@ -6538,7 +6626,7 @@
               "price": "-21.57"
             },
             {
-              "account": "Gotówka - euro",
+              "account": "Gotówka - EUR",
               "price": "21.57"
             }
           ]
