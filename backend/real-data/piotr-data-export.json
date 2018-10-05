@@ -100,7 +100,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "2548.00"
+      "balance": "228.00"
     },
     {
       "name": "Gotówka - EUR",
@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "42013.79"
+      "balance": "42917.00"
     },
     {
       "name": "Monika - pożyczka",
@@ -174,7 +174,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "2548.00"
+          "balance": "228.00"
         },
         {
           "name": "Gotówka - EUR",
@@ -182,7 +182,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "40633.29"
+          "balance": "41536.50"
         },
         {
           "name": "Monika - pożyczka",
@@ -244,7 +244,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "2548.00"
+          "balance": "228.00"
         },
         {
           "name": "Gotówka - EUR",
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "42013.79"
+          "balance": "42917.00"
         },
         {
           "name": "Monika - pożyczka",
@@ -644,7 +644,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "790.00"
+          "balance": "-830.00"
         },
         {
           "name": "Gotówka - EUR",
@@ -652,7 +652,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17210.47"
+          "balance": "17973.68"
         },
         {
           "name": "Monika - pożyczka",
@@ -714,7 +714,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "2548.00"
+          "balance": "228.00"
         },
         {
           "name": "Gotówka - EUR",
@@ -722,7 +722,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "40633.29"
+          "balance": "41536.50"
         },
         {
           "name": "Monika - pożyczka",
@@ -864,17 +864,6 @@
           "date": "2018-09-01",
           "accountPriceEntries": [
             {
-              "account": "Gotówka",
-              "price": "-300.00"
-            }
-          ]
-        },
-        {
-          "description": "Niania",
-          "category": "Dziecko",
-          "date": "2018-09-01",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "150.00"
             }
@@ -911,17 +900,6 @@
               "account": "Idea Bank",
               "price": "-1100.00"
             },
-            {
-              "account": "Gotówka",
-              "price": "1100.00"
-            }
-          ]
-        },
-        {
-          "description": "Wyplata Gotowki",
-          "category": "Przelewy między kontami",
-          "date": "2018-09-03",
-          "accountPriceEntries": [
             {
               "account": "Gotówka",
               "price": "1100.00"
@@ -1188,6 +1166,10 @@
             {
               "account": "Gotówka",
               "price": "-280.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "140.00"
             }
           ]
         },
@@ -1211,17 +1193,6 @@
               "account": "Idea Bank",
               "price": "-400.00"
             },
-            {
-              "account": "Gotówka",
-              "price": "400.00"
-            }
-          ]
-        },
-        {
-          "description": "Wyplata Gotowki",
-          "category": "Przelewy między kontami",
-          "date": "2018-09-16",
-          "accountPriceEntries": [
             {
               "account": "Gotówka",
               "price": "400.00"
@@ -1377,17 +1348,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "28.80"
-            }
-          ]
-        },
-        {
-          "description": "Ania - gotowka",
-          "category": "Przelewy między kontami",
-          "date": "2018-09-20",
-          "accountPriceEntries": [
-            {
-              "account": "Gotówka",
-              "price": "-500.00"
             }
           ]
         },
@@ -1763,7 +1723,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "790.00"
+          "balance": "-830.00"
         },
         {
           "name": "Gotówka - EUR",
@@ -1771,7 +1731,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17210.47"
+          "balance": "17973.68"
         },
         {
           "name": "Monika - pożyczka",
@@ -1889,17 +1849,6 @@
           ]
         },
         {
-          "description": "Revolut -> Gotowka",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Gotówka",
-              "price": "36.00"
-            }
-          ]
-        },
-        {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
@@ -1933,17 +1882,6 @@
             {
               "account": "Idea Bank",
               "price": "-19.90"
-            }
-          ]
-        },
-        {
-          "description": "Nurkowanie",
-          "category": "Nurkowanie",
-          "date": "2018-08-05",
-          "accountPriceEntries": [
-            {
-              "account": "Gotówka",
-              "price": "-215.00"
             }
           ]
         },
@@ -2065,7 +2003,11 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka",
-              "price": "-1456.90"
+              "price": "-1526.42"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "763.21"
             }
           ]
         },
@@ -2820,17 +2762,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "631.10"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> Gotowka",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Gotówka",
-              "price": "1729.48"
             }
           ]
         },
