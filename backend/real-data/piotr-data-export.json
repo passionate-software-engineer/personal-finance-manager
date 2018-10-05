@@ -64,7 +64,7 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "-5416.74"
+      "balance": "-7103.34"
     },
     {
       "name": "kantor Alior - USD",
@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "10168.56"
+      "balance": "6886.32"
     },
     {
       "name": "IKE",
@@ -104,7 +104,7 @@
     },
     {
       "name": "Monika - pożyczka",
-      "balance": "8400.00"
+      "balance": "5400.00"
     },
     {
       "name": "Seba - pożyczka",
@@ -116,7 +116,7 @@
     },
     {
       "name": "mBank",
-      "balance": "14467.49"
+      "balance": "4467.49"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -124,6 +124,236 @@
     }
   ],
   "periods": [
+    {
+      "startDate": "2018-10-01",
+      "endDate": "2018-10-31",
+      "accountStateAtTheBeginingOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "-5416.74"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "60126.75"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "306.00"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "10168.56"
+        },
+        {
+          "name": "IKE",
+          "balance": "12789.00"
+        },
+        {
+          "name": "IKZE",
+          "balance": "5115.60"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "2548.00"
+        },
+        {
+          "name": "Gotówka - euro",
+          "balance": "17.68"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "16027.19"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "8400.00"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "-3596.00"
+        },
+        {
+          "name": "mBank",
+          "balance": "14467.49"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "-7103.34"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "60126.75"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "306.00"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "6886.32"
+        },
+        {
+          "name": "IKE",
+          "balance": "12789.00"
+        },
+        {
+          "name": "IKZE",
+          "balance": "5115.60"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "2548.00"
+        },
+        {
+          "name": "Gotówka - euro",
+          "balance": "17.68"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "16027.19"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "5400.00"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "-3596.00"
+        },
+        {
+          "name": "mBank",
+          "balance": "4467.49"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-10000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "10000.00"
+            }
+          ]
+        },
+        {
+          "description": "VAT",
+          "category": "VAT",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-440.00"
+            }
+          ]
+        },
+        {
+          "description": "Podatek dochodowy",
+          "category": "Podatek dochodowy",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-17946.00"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy - doplata",
+          "category": "Księgowość",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-18.45"
+            }
+          ]
+        },
+        {
+          "description": "alior -> idea",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-1686.60"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "1686.60"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "ZUS",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
+        },
+        {
+          "description": "CT - wrzesien",
+          "category": "CodersTrust - szkolenia",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1599.00"
+            }
+          ]
+        },
+        {
+          "description": "Monika - splata",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "Monika - pożyczka",
+              "price": "-3000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "3000.00"
+            }
+          ]
+        }
+      ]
+    },
     {
       "startDate": "2018-09-01",
       "endDate": "2018-09-30",
