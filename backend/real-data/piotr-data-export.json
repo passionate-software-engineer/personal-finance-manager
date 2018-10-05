@@ -63,6 +63,10 @@
     {
       "name": "Revolut - USD",
       "balance": "0.00"
+    },
+    {
+      "name": "Santander",
+      "balance": "0.00"
     }
   ],
   "finalAccountsState": [
@@ -128,6 +132,10 @@
     },
     {
       "name": "Revolut - USD",
+      "balance": "0.00"
+    },
+    {
+      "name": "Santander",
       "balance": "0.00"
     }
   ],
@@ -199,6 +207,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -264,6 +276,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -583,6 +599,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -648,6 +668,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -1535,6 +1559,10 @@
         {
           "name": "Revolut - USD",
           "balance": "1791.25"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1600,6 +1628,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -2668,6 +2700,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2734,6 +2770,10 @@
         {
           "name": "Revolut - USD",
           "balance": "1791.25"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -3372,6 +3412,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -3437,6 +3481,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -4059,6 +4107,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -4124,6 +4176,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -4523,6 +4579,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -4588,6 +4648,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -4968,6 +5032,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -5033,6 +5101,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -5735,6 +5807,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -5800,6 +5876,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
@@ -6353,6 +6433,10 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -6418,6 +6502,10 @@
         },
         {
           "name": "Revolut - USD",
+          "balance": "0.00"
+        },
+        {
+          "name": "Santander",
           "balance": "0.00"
         }
       ],
