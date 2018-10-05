@@ -116,11 +116,11 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "14381.36"
+      "balance": "0.00"
     },
     {
       "name": "mBank",
-      "balance": "13683.15"
+      "balance": "53717.76"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -128,7 +128,7 @@
     },
     {
       "name": "Revolut - USD",
-      "balance": "21908.42"
+      "balance": "1737.26"
     }
   ],
   "periods": [
@@ -186,11 +186,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "14381.36"
+          "balance": "0.00"
         },
         {
           "name": "mBank",
-          "balance": "23683.15"
+          "balance": "43723.43"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -198,7 +198,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "2677.56"
+          "balance": "1737.26"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -252,11 +252,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "14381.36"
+          "balance": "0.00"
         },
         {
           "name": "mBank",
-          "balance": "13683.15"
+          "balance": "53717.76"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -264,7 +264,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "21908.42"
+          "balance": "1737.26"
         }
       ],
       "transactions": [
@@ -399,6 +399,36 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-14330.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "14863.90"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-14863.90"
+            },
+            {
+              "account": "mBank",
+              "price": "14863.90"
+            }
+          ]
+        },
+        {
           "description": "Monika - splata",
           "category": "Przelewy między kontami",
           "date": "2018-10-04",
@@ -436,6 +466,36 @@
             {
               "account": "Revolut - USD",
               "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-4900.86"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "5130.43"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-5130.43"
+            },
+            {
+              "account": "mBank",
+              "price": "5130.43"
             }
           ]
         },
@@ -510,11 +570,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "14381.36"
+          "balance": "0.00"
         },
         {
           "name": "mBank",
-          "balance": "30938.07"
+          "balance": "50978.35"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -522,7 +582,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "2677.56"
+          "balance": "1737.26"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -576,11 +636,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "14381.36"
+          "balance": "0.00"
         },
         {
           "name": "mBank",
-          "balance": "23683.15"
+          "balance": "43723.43"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -588,7 +648,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "2677.56"
+          "balance": "1737.26"
         }
       ],
       "transactions": [
@@ -1462,11 +1522,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "36.50"
+          "balance": "60.00"
         },
         {
           "name": "mBank",
-          "balance": "527.00"
+          "balance": "517.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1528,11 +1588,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "14381.36"
+          "balance": "0.00"
         },
         {
           "name": "mBank",
-          "balance": "30938.07"
+          "balance": "50978.35"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1540,7 +1600,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "2677.56"
+          "balance": "1737.26"
         }
       ],
       "transactions": [
@@ -1626,17 +1686,6 @@
           ]
         },
         {
-          "description": "Revolut -> Idea",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-1339.22"
-            }
-          ]
-        },
-        {
           "description": "Revolut -> Gotowka",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
@@ -1648,28 +1697,6 @@
           ]
         },
         {
-          "description": "Revolut -> Gotowka ",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-36.00"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> mBank",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-383.05"
-            }
-          ]
-        },
-        {
           "description": "Revolut -> mBank",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
@@ -1677,17 +1704,6 @@
             {
               "account": "mBank",
               "price": "383.05"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-22.98"
             }
           ]
         },
@@ -1869,6 +1885,21 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1791.25"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "1881.60"
+            }
+          ]
+        },
+        {
           "description": "Swietliki",
           "category": "Remont domu",
           "date": "2018-08-11",
@@ -1921,6 +1952,21 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-13",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-698.59"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "737.97"
+            }
+          ]
+        },
+        {
           "description": "EUR -> Revolut PLN",
           "category": "Wymiana walut",
           "date": "2018-08-14",
@@ -1947,6 +1993,21 @@
             {
               "account": "Revolut - USD",
               "price": "1074.75"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-14",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-4711.24"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "4934.32"
             }
           ]
         },
@@ -2061,8 +2122,38 @@
               "price": "-17912.50"
             },
             {
-              "account": "Revolut - PLN",
+              "account": "Revolut - USD",
               "price": "17912.50"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-11651.72"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "12371.53"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-20050.28"
+            },
+            {
+              "account": "mBank",
+              "price": "20050.28"
             }
           ]
         },
@@ -2468,28 +2559,6 @@
           ]
         },
         {
-          "description": "Revolut -> Gotowka",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-1729.48"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - PLN",
-              "price": "-121.77"
-            }
-          ]
-        },
-        {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
           "date": "2018-08-30",
@@ -2652,11 +2721,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "36.50"
+          "balance": "60.00"
         },
         {
           "name": "mBank",
-          "balance": "527.00"
+          "balance": "517.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2843,13 +2912,17 @@
           ]
         },
         {
-          "description": "Revolut - test",
+          "description": "Revolut -> mBank",
           "category": "Przelewy między kontami",
-          "date": "2018-07-07",
+          "date": "2018-07-06",
           "accountPriceEntries": [
             {
               "account": "Revolut - PLN",
-              "price": "-13.50"
+              "price": "-50.00"
+            },
+            {
+              "account": "mBank",
+              "price": "50.00"
             }
           ]
         },
@@ -2909,6 +2982,21 @@
             {
               "account": "mBank",
               "price": "500.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Revolut",
+          "category": "Przelewy między kontami",
+          "date": "2018-07-12",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-60.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "60.00"
             }
           ]
         },
@@ -3710,7 +3798,7 @@
         },
         {
           "description": "Przelew",
-          "category": "Przelewy między kontami",
+          "category": "Wymiana walut",
           "date": "2018-06-21",
           "accountPriceEntries": [
             {
