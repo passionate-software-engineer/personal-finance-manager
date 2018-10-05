@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "52717.76"
+      "balance": "52597.31"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -198,7 +198,7 @@
         },
         {
           "name": "mBank",
-          "balance": "43723.43"
+          "balance": "43602.98"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "52717.76"
+          "balance": "52597.31"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -631,7 +631,7 @@
         },
         {
           "name": "mBank",
-          "balance": "50978.35"
+          "balance": "50857.90"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -701,7 +701,7 @@
         },
         {
           "name": "mBank",
-          "balance": "43723.43"
+          "balance": "43602.98"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1591,7 +1591,7 @@
         },
         {
           "name": "mBank",
-          "balance": "517.00"
+          "balance": "396.55"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1661,7 +1661,7 @@
         },
         {
           "name": "mBank",
-          "balance": "50978.35"
+          "balance": "50857.90"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2802,7 +2802,7 @@
         },
         {
           "name": "mBank",
-          "balance": "517.00"
+          "balance": "396.55"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -3008,13 +3008,13 @@
           ]
         },
         {
-          "description": "Revolut - test",
-          "category": "Przelewy między kontami",
-          "date": "2018-07-07",
+          "description": "KFC",
+          "category": "Jedzenie",
+          "date": "2018-07-06",
           "accountPriceEntries": [
             {
               "account": "mBank",
-              "price": "13.50"
+              "price": "-5.45"
             }
           ]
         },
@@ -3093,6 +3093,17 @@
             {
               "account": "Ania - rozliczenie",
               "price": "2940.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-07-14",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-11.50"
             }
           ]
         },
@@ -3178,6 +3189,17 @@
           ]
         },
         {
+          "description": "Kraken",
+          "category": "Nurkowanie",
+          "date": "2018-07-21",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30.00"
+            }
+          ]
+        },
+        {
           "description": "Malediwy - zaliczka - PLN",
           "category": "Wyjazdy",
           "date": "2018-07-22",
@@ -3222,6 +3244,17 @@
             {
               "account": "Revolut - USD",
               "price": "-1791.25"
+            }
+          ]
+        },
+        {
+          "description": "Kraken",
+          "category": "Nurkowanie",
+          "date": "2018-07-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30.00"
             }
           ]
         },
@@ -3300,6 +3333,17 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1799.50"
+            }
+          ]
+        },
+        {
+          "description": "Kraken",
+          "category": "Nurkowanie",
+          "date": "2018-07-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30.00"
             }
           ]
         },
