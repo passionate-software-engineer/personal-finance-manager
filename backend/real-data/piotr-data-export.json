@@ -64,11 +64,11 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "-12498.46"
+      "balance": "459.42"
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "62126.75"
+      "balance": "194521.81"
     },
     {
       "name": "kantor Alior - EUR",
@@ -116,7 +116,7 @@
     },
     {
       "name": "mBank",
-      "balance": "4467.49"
+      "balance": "13683.15"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -130,11 +130,11 @@
       "accountStateAtTheBeginingOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "-10811.86"
+          "balance": "2146.02"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "62126.75"
+          "balance": "194521.81"
         },
         {
           "name": "kantor Alior - EUR",
@@ -182,7 +182,7 @@
         },
         {
           "name": "mBank",
-          "balance": "14467.49"
+          "balance": "23683.15"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -192,11 +192,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "-12498.46"
+          "balance": "459.42"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "62126.75"
+          "balance": "194521.81"
         },
         {
           "name": "kantor Alior - EUR",
@@ -244,7 +244,7 @@
         },
         {
           "name": "mBank",
-          "balance": "4467.49"
+          "balance": "13683.15"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -360,11 +360,11 @@
       "accountStateAtTheBeginingOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "21.62"
+          "balance": "12979.50"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "36145.03"
+          "balance": "168540.09"
         },
         {
           "name": "kantor Alior - EUR",
@@ -412,7 +412,7 @@
         },
         {
           "name": "mBank",
-          "balance": "21722.41"
+          "balance": "30938.07"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -422,11 +422,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "-10811.86"
+          "balance": "2146.02"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "62126.75"
+          "balance": "194521.81"
         },
         {
           "name": "kantor Alior - EUR",
@@ -474,7 +474,7 @@
         },
         {
           "name": "mBank",
-          "balance": "14467.49"
+          "balance": "23683.15"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1354,11 +1354,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "21.62"
+          "balance": "12979.50"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "36145.03"
+          "balance": "168540.09"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1406,7 +1406,7 @@
         },
         {
           "name": "mBank",
-          "balance": "21722.41"
+          "balance": "30938.07"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1481,13 +1481,17 @@
           ]
         },
         {
-          "description": "Kantor PLN -> Idea",
+          "description": "Kantor PLN -> mBank",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - PLN",
-              "price": "-5395.12"
+              "price": "-8863.32"
+            },
+            {
+              "account": "mBank",
+              "price": "8863.32"
             }
           ]
         },
@@ -1742,6 +1746,118 @@
           ]
         },
         {
+          "description": "Swietliki - maksbud",
+          "category": "Remont domu",
+          "date": "2018-08-11",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-4647.66"
+            }
+          ]
+        },
+        {
+          "description": "Lokaty - Idea Bank",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-150000.00"
+            }
+          ]
+        },
+        {
+          "description": "Kantor -> mbank",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-352.34"
+            },
+            {
+              "account": "mBank",
+              "price": "352.34"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "18976.50"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "18980.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "18993.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "38008.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "38022.00"
+            }
+          ]
+        },
+        {
           "description": "Crossover (30.07-05.08)",
           "category": "Crossover",
           "date": "2018-08-16",
@@ -1955,21 +2071,6 @@
           ]
         },
         {
-          "description": "Wymiana walut",
-          "category": "Wymiana walut",
-          "date": "2018-08-29",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "151115.62"
-            },
-            {
-              "account": "kantor Alior - USD",
-              "price": "-142395.06"
-            }
-          ]
-        },
-        {
           "description": "Niania",
           "category": "Dziecko",
           "date": "2018-08-30",
@@ -2067,30 +2168,8 @@
           "date": "2018-08-30",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - PLN",
-              "price": "-150000.00"
-            }
-          ]
-        },
-        {
-          "description": "Lokaty - Idea Bank",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
               "account": "Idea Bank - lokaty",
               "price": "150000.00"
-            }
-          ]
-        },
-        {
-          "description": "Kantor PLN -> mbank",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-33765.70"
             }
           ]
         },
@@ -2102,17 +2181,6 @@
             {
               "account": "mBank",
               "price": "33765.70"
-            }
-          ]
-        },
-        {
-          "description": "Kantor PLN -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-5796.50"
             }
           ]
         },
@@ -2812,7 +2880,7 @@
           ]
         },
         {
-          "description": "USD -> PLN",
+          "description": "Alior -> Idea",
           "category": "Przelewy między kontami",
           "date": "2018-07-30",
           "accountPriceEntries": [
