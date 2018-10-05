@@ -64,11 +64,11 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "459.42"
+      "balance": "0.00"
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "194521.81"
+      "balance": "193521.81"
     },
     {
       "name": "kantor Alior - EUR",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "19703.53"
+      "balance": "30590.12"
     },
     {
       "name": "Monika - pożyczka",
@@ -130,7 +130,7 @@
       "accountStateAtTheBeginingOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "2146.02"
+          "balance": "0.00"
         },
         {
           "name": "kantor Alior - USD",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "19703.53"
+          "balance": "29590.12"
         },
         {
           "name": "Monika - pożyczka",
@@ -192,11 +192,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "459.42"
+          "balance": "0.00"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "194521.81"
+          "balance": "193521.81"
         },
         {
           "name": "kantor Alior - EUR",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "19703.53"
+          "balance": "30590.12"
         },
         {
           "name": "Monika - pożyczka",
@@ -303,7 +303,7 @@
         {
           "description": "alior -> idea",
           "category": "Przelewy między kontami",
-          "date": "2018-10-02",
+          "date": "2018-10-01",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - PLN",
@@ -312,6 +312,36 @@
             {
               "account": "Idea Bank",
               "price": "1686.60"
+            }
+          ]
+        },
+        {
+          "description": "usd -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-1000.00"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "3686.60"
+            }
+          ]
+        },
+        {
+          "description": "zaliczka na barierki",
+          "category": "Remont domu",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1000.00"
             }
           ]
         },
@@ -396,7 +426,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "11022.81"
+          "balance": "13346.64"
         },
         {
           "name": "Monika - pożyczka",
@@ -422,7 +452,7 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "2146.02"
+          "balance": "0.00"
         },
         {
           "name": "kantor Alior - USD",
@@ -458,7 +488,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "19703.53"
+          "balance": "29590.12"
         },
         {
           "name": "Monika - pożyczka",
@@ -671,6 +701,21 @@
           ]
         },
         {
+          "description": "Kantor PLN -> Ania",
+          "category": "Przelewy między kontami",
+          "date": "2018-09-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-7562.76"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "7562.76"
+            }
+          ]
+        },
+        {
           "description": "crossover (20-26.08)",
           "category": "Crossover",
           "date": "2018-09-06",
@@ -847,17 +892,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
-            }
-          ]
-        },
-        {
-          "description": "Kantor PLN -> Idea",
-          "category": "Przelewy między kontami",
-          "date": "2018-09-14",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-5416.74"
             }
           ]
         },
@@ -1390,7 +1424,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "11022.81"
+          "balance": "13346.64"
         },
         {
           "name": "Monika - pożyczka",
@@ -1753,6 +1787,10 @@
             {
               "account": "kantor Alior - PLN",
               "price": "-4647.66"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2323.83"
             }
           ]
         },
