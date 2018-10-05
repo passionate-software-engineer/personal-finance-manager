@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "41962.79"
+      "balance": "42013.79"
     },
     {
       "name": "Monika - pożyczka",
@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "20938.32"
+      "balance": "20362.07"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "41962.79"
+          "balance": "42013.79"
         },
         {
           "name": "Monika - pożyczka",
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "20938.32"
+          "balance": "20362.07"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -471,6 +471,32 @@
           ]
         },
         {
+          "description": "Buty - salomon",
+          "category": "Zakupy",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-454.35"
+            }
+          ]
+        },
+        {
+          "description": "Skrzynka na listy",
+          "category": "Remont domu",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-102.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "51.00"
+            }
+          ]
+        },
+        {
           "description": "Monika - splata",
           "category": "Przelewy między kontami",
           "date": "2018-10-04",
@@ -553,6 +579,17 @@
             {
               "account": "Santander",
               "price": "-229.99"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
             }
           ]
         }
