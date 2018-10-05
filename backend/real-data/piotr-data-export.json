@@ -740,17 +740,6 @@
           ]
         },
         {
-          "description": "crossover (20-26.08)",
-          "category": "Crossover",
-          "date": "2018-09-06",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7165.00"
-            }
-          ]
-        },
-        {
           "description": "Drzwi - rozliczenie",
           "category": "Remont domu",
           "date": "2018-09-06",
@@ -769,6 +758,17 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1175.00"
+            }
+          ]
+        },
+        {
+          "description": "crossover (20-26.08)",
+          "category": "Crossover",
+          "date": "2018-09-07",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
             }
           ]
         },
@@ -1101,17 +1101,6 @@
           ]
         },
         {
-          "description": "Crossover (03-09.09)",
-          "category": "Crossover",
-          "date": "2018-09-20",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7165.00"
-            }
-          ]
-        },
-        {
           "description": "Kable (katowy i spirala)",
           "category": "Remont domu",
           "date": "2018-09-20",
@@ -1178,6 +1167,17 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-1903.76"
+            }
+          ]
+        },
+        {
+          "description": "Crossover (03-09.09)",
+          "category": "Crossover",
+          "date": "2018-09-21",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
             }
           ]
         },
