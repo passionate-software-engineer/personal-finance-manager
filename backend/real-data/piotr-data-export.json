@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "31942.48"
+      "balance": "35806.31"
     },
     {
       "name": "Monika - pożyczka",
@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "52597.31"
+      "balance": "22948.32"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -182,7 +182,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "30612.98"
+          "balance": "34476.81"
         },
         {
           "name": "Monika - pożyczka",
@@ -198,7 +198,7 @@
         },
         {
           "name": "mBank",
-          "balance": "43602.98"
+          "balance": "13953.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "31942.48"
+          "balance": "35806.31"
         },
         {
           "name": "Monika - pożyczka",
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "52597.31"
+          "balance": "22948.32"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -615,7 +615,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "13346.64"
+          "balance": "17210.47"
         },
         {
           "name": "Monika - pożyczka",
@@ -631,7 +631,7 @@
         },
         {
           "name": "mBank",
-          "balance": "50857.90"
+          "balance": "21208.91"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -685,7 +685,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "30612.98"
+          "balance": "34476.81"
         },
         {
           "name": "Monika - pożyczka",
@@ -701,7 +701,7 @@
         },
         {
           "name": "mBank",
-          "balance": "43602.98"
+          "balance": "13953.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1645,7 +1645,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "13346.64"
+          "balance": "17210.47"
         },
         {
           "name": "Monika - pożyczka",
@@ -1661,7 +1661,7 @@
         },
         {
           "name": "mBank",
-          "balance": "50857.90"
+          "balance": "21208.91"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1718,6 +1718,10 @@
             {
               "account": "mBank",
               "price": "-27.50"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "13.75"
             }
           ]
         },
@@ -1770,17 +1774,6 @@
           ]
         },
         {
-          "description": "Revolut -> mBank",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "mBank",
-              "price": "383.05"
-            }
-          ]
-        },
-        {
           "description": "Revolut -> Ania",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
@@ -1788,6 +1781,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "22.98"
+            }
+          ]
+        },
+        {
+          "description": "Biedronka - zakupy",
+          "category": "Zakupy",
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-36.22"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "18.11"
             }
           ]
         },
@@ -1814,13 +1822,13 @@
           ]
         },
         {
-          "description": "Biedronka - zakupy",
-          "category": "Zakupy",
-          "date": "2018-08-06",
+          "description": "Kraken",
+          "category": "Nurkowanie",
+          "date": "2018-08-05",
           "accountPriceEntries": [
             {
               "account": "mBank",
-              "price": "-128.24"
+              "price": "-30.00"
             }
           ]
         },
@@ -1838,11 +1846,30 @@
         {
           "description": "Zmywarka - doplata",
           "category": "Remont domu",
-          "date": "2018-08-07",
+          "date": "2018-08-06",
           "accountPriceEntries": [
             {
               "account": "mBank",
               "price": "-2755.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1377.50"
+            }
+          ]
+        },
+        {
+          "description": "Mrowka - worki",
+          "category": "Remont domu",
+          "date": "2018-08-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-28.71"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "14.35"
             }
           ]
         },
@@ -1858,17 +1885,6 @@
           ]
         },
         {
-          "description": "mBank promocja",
-          "category": "Przychody",
-          "date": "2018-08-08",
-          "accountPriceEntries": [
-            {
-              "account": "mBank",
-              "price": "20.00"
-            }
-          ]
-        },
-        {
           "description": "Crossover (23-29.07)",
           "category": "Crossover",
           "date": "2018-08-08",
@@ -1880,6 +1896,21 @@
           ]
         },
         {
+          "description": "Biedronka - zakupy",
+          "category": "Zakupy",
+          "date": "2018-08-08",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-34.14"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "17.07"
+            }
+          ]
+        },
+        {
           "description": "Bilety Gdansk",
           "category": "Transport",
           "date": "2018-08-09",
@@ -1887,6 +1918,17 @@
             {
               "account": "Idea Bank",
               "price": "-358.20"
+            }
+          ]
+        },
+        {
+          "description": "mBank promocja",
+          "category": "Przychody",
+          "date": "2018-08-09",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "20.00"
             }
           ]
         },
@@ -1924,6 +1966,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1154.48"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-313.35"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "156.68"
             }
           ]
         },
@@ -1978,17 +2035,6 @@
           "date": "2018-08-11",
           "accountPriceEntries": [
             {
-              "account": "mBank",
-              "price": "-4647.66"
-            }
-          ]
-        },
-        {
-          "description": "Swietliki",
-          "category": "Remont domu",
-          "date": "2018-08-11",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "2323.83"
             }
@@ -2006,6 +2052,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "2323.83"
+            }
+          ]
+        },
+        {
+          "description": "Lewiatan - zakupy",
+          "category": "Zakupy",
+          "date": "2018-08-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-40.93"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "20.46"
             }
           ]
         },
@@ -2036,6 +2097,21 @@
             {
               "account": "Revolut - PLN",
               "price": "737.97"
+            }
+          ]
+        },
+        {
+          "description": "Lampa do kuchni",
+          "category": "Remont domu",
+          "date": "2018-08-14",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-136.83"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "68.41"
             }
           ]
         },
@@ -2092,6 +2168,10 @@
             {
               "account": "kantor Alior - PLN",
               "price": "-150000.00"
+            },
+            {
+              "account": "Idea Bank - lokaty",
+              "price": "150000.00"
             }
           ]
         },
@@ -2283,6 +2363,17 @@
           ]
         },
         {
+          "description": "Schabowy Raz!",
+          "category": "Jedzenie",
+          "date": "2018-08-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-90.00"
+            }
+          ]
+        },
+        {
           "description": "Leasing",
           "category": "Leasing samochodu",
           "date": "2018-08-20",
@@ -2290,6 +2381,28 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1154.49"
+            }
+          ]
+        },
+        {
+          "description": "mc donalds",
+          "category": "Jedzenie",
+          "date": "2018-08-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-11.90"
+            }
+          ]
+        },
+        {
+          "description": "Skycash - bilety",
+          "category": "Transport",
+          "date": "2018-08-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-16.00"
             }
           ]
         },
@@ -2342,13 +2455,17 @@
           ]
         },
         {
-          "description": "Meble",
+          "description": "Meble - gabinet",
           "category": "Remont domu",
           "date": "2018-08-22",
           "accountPriceEntries": [
             {
               "account": "mBank",
               "price": "-4015.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2007.50"
             }
           ]
         },
@@ -2369,30 +2486,23 @@
           "date": "2018-08-23",
           "accountPriceEntries": [
             {
-              "account": "mBank",
-              "price": "-159.00"
-            }
-          ]
-        },
-        {
-          "description": "Lampa do kuchni",
-          "category": "Remont domu",
-          "date": "2018-08-23",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "79.50"
             }
           ]
         },
         {
-          "description": "Spozywcze",
-          "category": "Zakupy - jedzenie",
+          "description": "Lampki + sterownik do gabinetu",
+          "category": "Remont domu",
           "date": "2018-08-23",
           "accountPriceEntries": [
             {
               "account": "mBank",
-              "price": "-329.59"
+              "price": "-340.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "170.00"
             }
           ]
         },
@@ -2415,17 +2525,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7165.00"
-            }
-          ]
-        },
-        {
-          "description": "Paliwo",
-          "category": "Paliwo",
-          "date": "2018-08-24",
-          "accountPriceEntries": [
-            {
-              "account": "mBank",
-              "price": "-313.35"
             }
           ]
         },
@@ -2562,28 +2661,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "2000.00"
-            }
-          ]
-        },
-        {
-          "description": "Lokaty - Idea Bank",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank - lokaty",
-              "price": "150000.00"
-            }
-          ]
-        },
-        {
-          "description": "Kantor PLN -> mBank",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "mBank",
-              "price": "33765.70"
             }
           ]
         },
