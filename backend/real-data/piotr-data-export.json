@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "35806.31"
+      "balance": "41962.79"
     },
     {
       "name": "Monika - pożyczka",
@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "22948.32"
+      "balance": "20938.32"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -182,7 +182,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "34476.81"
+          "balance": "40633.29"
         },
         {
           "name": "Monika - pożyczka",
@@ -198,7 +198,7 @@
         },
         {
           "name": "mBank",
-          "balance": "13953.99"
+          "balance": "10943.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -210,7 +210,7 @@
         },
         {
           "name": "Santander",
-          "balance": "0.00"
+          "balance": "1000.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "35806.31"
+          "balance": "41962.79"
         },
         {
           "name": "Monika - pożyczka",
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "22948.32"
+          "balance": "20938.32"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -373,21 +373,6 @@
             },
             {
               "account": "Ania - rozliczenie",
-              "price": "1000.00"
-            }
-          ]
-        },
-        {
-          "description": "zasilenie zegarka :)",
-          "category": "Przelewy między kontami",
-          "date": "2018-10-01",
-          "accountPriceEntries": [
-            {
-              "account": "mBank",
-              "price": "-1000.00"
-            },
-            {
-              "account": "Santander",
               "price": "1000.00"
             }
           ]
@@ -685,7 +670,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "34476.81"
+          "balance": "40633.29"
         },
         {
           "name": "Monika - pożyczka",
@@ -701,7 +686,7 @@
         },
         {
           "name": "mBank",
-          "balance": "13953.99"
+          "balance": "10943.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -713,7 +698,7 @@
         },
         {
           "name": "Santander",
-          "balance": "0.00"
+          "balance": "1000.00"
         }
       ],
       "transactions": [
@@ -725,6 +710,10 @@
             {
               "account": "mBank",
               "price": "-79.95"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "39.97"
             }
           ]
         },
@@ -799,6 +788,10 @@
             {
               "account": "mBank",
               "price": "-283.88"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "141.94"
             }
           ]
         },
@@ -928,6 +921,10 @@
             {
               "account": "mBank",
               "price": "-2350.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1175.00"
             }
           ]
         },
@@ -961,6 +958,10 @@
             {
               "account": "mBank",
               "price": "-169.24"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "84.62"
             }
           ]
         },
@@ -983,6 +984,10 @@
             {
               "account": "mBank",
               "price": "-49.98"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "24.99"
             }
           ]
         },
@@ -1016,6 +1021,10 @@
             {
               "account": "mBank",
               "price": "-70.23"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "35.12"
             }
           ]
         },
@@ -1075,6 +1084,10 @@
             {
               "account": "mBank",
               "price": "-44.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "22.00"
             }
           ]
         },
@@ -1230,6 +1243,10 @@
             {
               "account": "mBank",
               "price": "-2000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1000.00"
             }
           ]
         },
@@ -1252,6 +1269,10 @@
             {
               "account": "mBank",
               "price": "-1500.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1500.00"
             }
           ]
         },
@@ -1289,6 +1310,10 @@
             {
               "account": "mBank",
               "price": "-57.60"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "28.80"
             }
           ]
         },
@@ -1425,6 +1450,10 @@
             {
               "account": "mBank",
               "price": "-152.61"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "76.30"
             }
           ]
         },
@@ -1447,6 +1476,10 @@
             {
               "account": "mBank",
               "price": "-55.48"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "27.74"
             }
           ]
         },
@@ -1528,6 +1561,47 @@
             {
               "account": "Idea Bank",
               "price": "1429.26"
+            }
+          ]
+        },
+        {
+          "description": "zasilenie zegarka :)",
+          "category": "Przelewy między kontami",
+          "date": "2018-09-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Santander",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Ania - gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2018-09-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Parking - Bieg 3 kopcow",
+          "category": "Samochód",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-10.00"
             }
           ]
         }
