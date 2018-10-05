@@ -72,7 +72,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "52737.50"
+      "balance": "38089.14"
     },
     {
       "name": "kantor Alior - EUR",
@@ -128,7 +128,7 @@
     },
     {
       "name": "Revolut - USD",
-      "balance": "2677.56"
+      "balance": "21908.42"
     }
   ],
   "periods": [
@@ -208,7 +208,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "52737.50"
+          "balance": "38089.14"
         },
         {
           "name": "kantor Alior - EUR",
@@ -264,7 +264,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "2677.56"
+          "balance": "21908.42"
         }
       ],
       "transactions": [
@@ -338,7 +338,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-1000.00"
+              "price": "-3582.50"
             },
             {
               "account": "kantor Alior - PLN",
@@ -358,6 +358,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Alior USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-7165.00"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "7165.00"
             }
           ]
         },
@@ -395,6 +410,47 @@
             {
               "account": "Idea Bank",
               "price": "3000.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover (17-23.09)",
+          "category": "Crossover",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Alior USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-7165.00"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut USD -> Alior USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-05",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2264.14"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "2264.14"
             }
           ]
         }
