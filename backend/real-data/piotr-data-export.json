@@ -68,7 +68,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "64126.75"
+      "balance": "60126.75"
     },
     {
       "name": "kantor Alior - EUR",
@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "2702.19"
+      "balance": "16902.90"
     },
     {
       "name": "IKE",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "7275.04"
+      "balance": "12675.30"
     },
     {
       "name": "Monika - pożyczka",
@@ -116,7 +116,7 @@
     },
     {
       "name": "mBank",
-      "balance": "13967.49"
+      "balance": "14467.49"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -134,7 +134,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "38145.03"
+          "balance": "34145.03"
         },
         {
           "name": "kantor Alior - EUR",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "1609.30"
+          "balance": "15810.01"
         },
         {
           "name": "IKE",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-50.00"
+          "balance": "5350.26"
         },
         {
           "name": "Monika - pożyczka",
@@ -182,7 +182,7 @@
         },
         {
           "name": "mBank",
-          "balance": "21222.41"
+          "balance": "21722.41"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -196,7 +196,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "64126.75"
+          "balance": "60126.75"
         },
         {
           "name": "kantor Alior - EUR",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "2702.19"
+          "balance": "16902.90"
         },
         {
           "name": "IKE",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "7275.04"
+          "balance": "12675.30"
         },
         {
           "name": "Monika - pożyczka",
@@ -244,7 +244,7 @@
         },
         {
           "name": "mBank",
-          "balance": "13967.49"
+          "balance": "14467.49"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1053,7 +1053,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "144822.56"
+          "balance": "140822.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1065,7 +1065,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-2428.61"
+          "balance": "11772.10"
         },
         {
           "name": "IKE",
@@ -1085,7 +1085,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6818.95"
+          "balance": "-1418.69"
         },
         {
           "name": "Monika - pożyczka",
@@ -1101,7 +1101,7 @@
         },
         {
           "name": "mBank",
-          "balance": "27.00"
+          "balance": "527.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -1115,7 +1115,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "38145.03"
+          "balance": "34145.03"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1127,7 +1127,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "1609.30"
+          "balance": "15810.01"
         },
         {
           "name": "IKE",
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-50.00"
+          "balance": "5350.26"
         },
         {
           "name": "Monika - pożyczka",
@@ -1163,7 +1163,7 @@
         },
         {
           "name": "mBank",
-          "balance": "21222.41"
+          "balance": "21722.41"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2063,7 +2063,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "144822.56"
+          "balance": "140822.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2075,7 +2075,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-2428.61"
+          "balance": "11772.10"
         },
         {
           "name": "IKE",
@@ -2095,7 +2095,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-6818.95"
+          "balance": "-1418.69"
         },
         {
           "name": "Monika - pożyczka",
@@ -2111,7 +2111,7 @@
         },
         {
           "name": "mBank",
-          "balance": "27.00"
+          "balance": "527.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2120,13 +2120,35 @@
       ],
       "transactions": [
         {
-          "description": "Audioteka",
-          "category": "Rozrywka",
+          "description": "Podatek dochodowy",
+          "category": "Podatek dochodowy",
           "date": "2018-07-02",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-19.90"
+              "price": "-17167.00"
+            }
+          ]
+        },
+        {
+          "description": "VAT",
+          "category": "VAT",
+          "date": "2018-07-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5124.00"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy ",
+          "category": "Księgowość",
+          "date": "2018-07-02",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-141.45"
             }
           ]
         },
@@ -2146,6 +2168,43 @@
           ]
         },
         {
+          "description": "ZUS",
+          "category": "ZUS",
+          "date": "2018-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "7186.37"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2018-07-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
           "description": "Crossover (18-24.06)",
           "category": "Crossover",
           "date": "2018-07-05",
@@ -2153,50 +2212,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7111.26"
-            }
-          ]
-        },
-        {
-          "description": "Ksiegowy",
-          "category": "Księgowość",
-          "date": "2018-07-05",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-123.00"
-            }
-          ]
-        },
-        {
-          "description": "bilety",
-          "category": "Transport",
-          "date": "2018-07-05",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-10.00"
-            }
-          ]
-        },
-        {
-          "description": "Jedzenie",
-          "category": "Jedzenie",
-          "date": "2018-07-05",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-100.64"
-            }
-          ]
-        },
-        {
-          "description": "Remont - panele",
-          "category": "Remont domu",
-          "date": "2018-07-06",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-280.00"
             }
           ]
         },
@@ -2223,46 +2238,43 @@
           ]
         },
         {
-          "description": "Podatek dochodowy",
-          "category": "Podatek dochodowy",
-          "date": "2018-07-07",
+          "description": "CodersTrust (czerwiec)",
+          "category": "CodersTrust - szkolenia",
+          "date": "2018-07-06",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-17167.00"
+              "price": "6590.34"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-789.75"
             }
           ]
         },
         {
-          "description": "VAT",
-          "category": "VAT",
-          "date": "2018-07-07",
+          "description": "Skycash - bilety",
+          "category": "Transport",
+          "date": "2018-07-06",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-5124.00"
+              "price": "-10.00"
             }
           ]
         },
         {
-          "description": "Ksiegowy - doplata",
-          "category": "Księgowość",
-          "date": "2018-07-07",
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-07-06",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-18.45"
-            }
-          ]
-        },
-        {
-          "description": "ZUS",
-          "category": "ZUS",
-          "date": "2018-07-07",
-          "accountPriceEntries": [
+              "price": "-72.69"
+            },
             {
-              "account": "Idea Bank",
-              "price": "-1163.39"
+              "account": "Ania - rozliczenie",
+              "price": "36.35"
             }
           ]
         },
@@ -2294,30 +2306,8 @@
           "date": "2018-07-10",
           "accountPriceEntries": [
             {
-              "account": "Idea Bank",
-              "price": "-5880.00"
-            }
-          ]
-        },
-        {
-          "description": "Okna - zaliczka",
-          "category": "Remont domu",
-          "date": "2018-07-10",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "2940.00"
-            }
-          ]
-        },
-        {
-          "description": "Leasing",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-07-10",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-2308.97"
             }
           ]
         },
@@ -2333,6 +2323,36 @@
           ]
         },
         {
+          "description": "Idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2018-07-12",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-500.00"
+            },
+            {
+              "account": "mBank",
+              "price": "500.00"
+            }
+          ]
+        },
+        {
+          "description": "Okna - zaliczka",
+          "category": "Remont domu",
+          "date": "2018-07-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-5880.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2940.00"
+            }
+          ]
+        },
+        {
           "description": "Crossover (25.06-01.07)",
           "category": "Crossover",
           "date": "2018-07-15",
@@ -2340,17 +2360,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7111.26"
-            }
-          ]
-        },
-        {
-          "description": "CodersTrust (czerwiec)",
-          "category": "CodersTrust - szkolenia",
-          "date": "2018-07-15",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "6590.34"
             }
           ]
         },
@@ -2366,6 +2375,32 @@
           ]
         },
         {
+          "description": "Leasing",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2018-07-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
+        },
+        {
+          "description": "Telefon",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2018-07-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-20.18"
+            }
+          ]
+        },
+        {
           "description": "Crossover (02-08.07)",
           "category": "Crossover",
           "date": "2018-07-19",
@@ -2373,17 +2408,6 @@
             {
               "account": "kantor Alior - USD",
               "price": "7111.26"
-            }
-          ]
-        },
-        {
-          "description": "Telefon",
-          "category": "Koszty prowadzenia firmy",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-20.20"
             }
           ]
         },
@@ -2432,28 +2456,6 @@
           ]
         },
         {
-          "description": "Żele energetyczne ",
-          "category": "Sport",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-24.99"
-            }
-          ]
-        },
-        {
-          "description": "Viatoll, a4go - doladowanie",
-          "category": "Transport",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-260.00"
-            }
-          ]
-        },
-        {
           "description": "Viatoll, a4go - doladowanie",
           "category": "Transport",
           "date": "2018-07-20",
@@ -2470,19 +2472,49 @@
           "date": "2018-07-21",
           "accountPriceEntries": [
             {
-              "account": "Idea Bank",
-              "price": "-139.67"
+              "account": "Ania - rozliczenie",
+              "price": "139.67"
             }
           ]
         },
         {
           "description": "Zakupy Ani",
           "category": "Zakupy",
-          "date": "2018-07-21",
+          "date": "2018-07-24",
           "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-139.67"
+            },
             {
               "account": "Ania - rozliczenie",
               "price": "139.67"
+            }
+          ]
+        },
+        {
+          "description": "Żele energetyczne ",
+          "category": "Sport",
+          "date": "2018-07-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-24.99"
+            }
+          ]
+        },
+        {
+          "description": "Viatoll, a4go - doladowanie",
+          "category": "Transport",
+          "date": "2018-07-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-240.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "120.00"
             }
           ]
         },
@@ -2509,46 +2541,28 @@
           ]
         },
         {
-          "description": "Maraton Wroclaw",
-          "category": "Sport",
+          "description": "Lodowka",
+          "category": "Remont domu",
           "date": "2018-07-29",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-130.00"
+              "price": "-3599.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1799.50"
             }
           ]
         },
         {
           "description": "Rescue Diver - podrecznik",
-          "category": "Sport",
-          "date": "2018-07-29",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-140.00"
-            }
-          ]
-        },
-        {
-          "description": "Prywatne konsultacje",
-          "category": "Przychody",
-          "date": "2018-07-29",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "225.00"
-            }
-          ]
-        },
-        {
-          "description": "Lodowka",
-          "category": "Remont domu",
+          "category": "Edukacja",
           "date": "2018-07-30",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-3599.00"
+              "price": "-140.00"
             }
           ]
         },
@@ -2560,6 +2574,43 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1799.50"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-07-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "7186.37"
+            }
+          ]
+        },
+        {
+          "description": "Maraton Wroclaw",
+          "category": "Sport",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-130.00"
+            }
+          ]
+        },
+        {
+          "description": "Prywatne konsultacje",
+          "category": "Przychody",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "225.00"
             }
           ]
         },
