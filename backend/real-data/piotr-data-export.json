@@ -80,7 +80,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "16902.90"
+      "balance": "10168.56"
     },
     {
       "name": "IKE",
@@ -92,7 +92,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "298.00"
+      "balance": "1048.00"
     },
     {
       "name": "Gotówka - euro",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "12675.30"
+      "balance": "14671.51"
     },
     {
       "name": "Monika - pożyczka",
@@ -146,7 +146,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "15810.01"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -158,7 +158,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "40.00"
+          "balance": "790.00"
         },
         {
           "name": "Gotówka - euro",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "5350.26"
+          "balance": "7346.47"
         },
         {
           "name": "Monika - pożyczka",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "16902.90"
+          "balance": "10168.56"
         },
         {
           "name": "IKE",
@@ -220,7 +220,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "298.00"
+          "balance": "1048.00"
         },
         {
           "name": "Gotówka - euro",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "12675.30"
+          "balance": "14671.51"
         },
         {
           "name": "Monika - pożyczka",
@@ -1127,7 +1127,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "15810.01"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -1139,7 +1139,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "40.00"
+          "balance": "790.00"
         },
         {
           "name": "Gotówka - euro",
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "5350.26"
+          "balance": "7346.47"
         },
         {
           "name": "Monika - pożyczka",
@@ -1174,33 +1174,11 @@
         {
           "description": "Ksiegowy doplata",
           "category": "Księgowość",
-          "date": "2018-08-02",
+          "date": "2018-08-01",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-18.45"
-            }
-          ]
-        },
-        {
-          "description": "ZUS",
-          "category": "ZUS",
-          "date": "2018-08-02",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-1163.39"
-            }
-          ]
-        },
-        {
-          "description": "Audioteka",
-          "category": "Rozrywka",
-          "date": "2018-08-02",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-19.90"
+              "price": "-141.45"
             }
           ]
         },
@@ -1249,6 +1227,17 @@
           ]
         },
         {
+          "description": "ZUS",
+          "category": "ZUS",
+          "date": "2018-08-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
+            }
+          ]
+        },
+        {
           "description": "Kantor PLN -> Idea",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
@@ -1260,17 +1249,6 @@
           ]
         },
         {
-          "description": "Kantor PLN -> Idea",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "5395.12"
-            }
-          ]
-        },
-        {
           "description": "Revolut -> Idea",
           "category": "Przelewy między kontami",
           "date": "2018-08-03",
@@ -1278,17 +1256,6 @@
             {
               "account": "Revolut - PLN",
               "price": "-1339.22"
-            }
-          ]
-        },
-        {
-          "description": "Revolut -> Idea",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-03",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "1339.22"
             }
           ]
         },
@@ -1359,24 +1326,13 @@
           ]
         },
         {
-          "description": "Ksiegowy",
-          "category": "Księgowość",
+          "description": "Audioteka",
+          "category": "Rozrywka",
           "date": "2018-08-04",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-123.00"
-            }
-          ]
-        },
-        {
-          "description": "Bilety Gdansk",
-          "category": "Transport",
-          "date": "2018-08-05",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-477.10"
+              "price": "-19.90"
             }
           ]
         },
@@ -1447,6 +1403,17 @@
           ]
         },
         {
+          "description": "Bilety Gdansk",
+          "category": "Transport",
+          "date": "2018-08-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-358.20"
+            }
+          ]
+        },
+        {
           "description": "Crossover (23-29.07)",
           "category": "Crossover",
           "date": "2018-08-09",
@@ -1476,6 +1443,36 @@
             {
               "account": "Ania - rozliczenie",
               "price": "728.45"
+            }
+          ]
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.48"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-4000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "4000.00"
             }
           ]
         },
@@ -1513,13 +1510,13 @@
           ]
         },
         {
-          "description": "Leasing",
-          "category": "Leasing samochodu",
-          "date": "2018-08-20",
+          "description": "Telefon",
+          "category": "Telefon",
+          "date": "2018-08-16",
           "accountPriceEntries": [
             {
               "account": "Idea Bank",
-              "price": "-2308.97"
+              "price": "-20.73"
             }
           ]
         },
@@ -1564,6 +1561,21 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-125.21"
+            }
+          ]
+        },
+        {
+          "description": "CT - konsultacje",
+          "category": "CodersTrust - szkolenia",
+          "date": "2018-08-21",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "5076.21"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-783.27"
             }
           ]
         },
@@ -1678,28 +1690,6 @@
           ]
         },
         {
-          "description": "Telefon",
-          "category": "Telefon",
-          "date": "2018-08-26",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-20.73"
-            }
-          ]
-        },
-        {
-          "description": "Remont",
-          "category": "Remont domu",
-          "date": "2018-08-28",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-1350.00"
-            }
-          ]
-        },
-        {
           "description": "Remont",
           "category": "Remont domu",
           "date": "2018-08-28",
@@ -1707,6 +1697,17 @@
             {
               "account": "Ania - rozliczenie",
               "price": "675.00"
+            }
+          ]
+        },
+        {
+          "description": "Konsultacje Prywatne",
+          "category": "Przychody",
+          "date": "2018-08-28",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "240.00"
             }
           ]
         },
@@ -1726,24 +1727,17 @@
           ]
         },
         {
-          "description": "Konsultacje Prywatne",
-          "category": "Przychody",
-          "date": "2018-08-29",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "240.00"
-            }
-          ]
-        },
-        {
           "description": "Niania",
           "category": "Dziecko",
           "date": "2018-08-30",
           "accountPriceEntries": [
             {
-              "account": "Idea Bank",
+              "account": "Gotówka",
               "price": "-1900.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "950.00"
             }
           ]
         },
@@ -1755,17 +1749,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "950.00"
-            }
-          ]
-        },
-        {
-          "description": "CT - konsultacje",
-          "category": "CodersTrust - szkolenia",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "5076.21"
             }
           ]
         },
@@ -1929,17 +1912,6 @@
           "date": "2018-08-30",
           "accountPriceEntries": [
             {
-              "account": "Idea Bank",
-              "price": "-631.10"
-            }
-          ]
-        },
-        {
-          "description": "Idea -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
               "account": "Ania - rozliczenie",
               "price": "631.10"
             }
@@ -1986,6 +1958,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "121.77"
+            }
+          ]
+        },
+        {
+          "description": "Remont",
+          "category": "Remont domu",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-1350.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "675.00"
             }
           ]
         }
