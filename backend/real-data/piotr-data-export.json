@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "30590.12"
+      "balance": "31612.98"
     },
     {
       "name": "Monika - pożyczka",
@@ -112,7 +112,7 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "-3596.00"
+      "balance": "-3531.14"
     },
     {
       "name": "mBank",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "29590.12"
+          "balance": "30612.98"
         },
         {
           "name": "Monika - pożyczka",
@@ -178,7 +178,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3596.00"
+          "balance": "-3531.14"
         },
         {
           "name": "mBank",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "30590.12"
+          "balance": "31612.98"
         },
         {
           "name": "Monika - pożyczka",
@@ -240,7 +240,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3596.00"
+          "balance": "-3531.14"
         },
         {
           "name": "mBank",
@@ -438,7 +438,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3596.00"
+          "balance": "-3531.14"
         },
         {
           "name": "mBank",
@@ -488,7 +488,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "29590.12"
+          "balance": "30612.98"
         },
         {
           "name": "Monika - pożyczka",
@@ -500,7 +500,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3596.00"
+          "balance": "-3531.14"
         },
         {
           "name": "mBank",
@@ -985,21 +985,6 @@
           ]
         },
         {
-          "description": "Wymiana walut USD -> EUR",
-          "category": "Wymiana walut",
-          "date": "2018-09-17",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "-2149.50"
-            },
-            {
-              "account": "kantor Alior - EUR",
-              "price": "2151.75"
-            }
-          ]
-        },
-        {
           "description": "Telefon",
           "category": "Telefon",
           "date": "2018-09-17",
@@ -1077,6 +1062,21 @@
           ]
         },
         {
+          "description": "Wymiana walut USD -> EUR",
+          "category": "Wymiana walut",
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2149.50"
+            },
+            {
+              "account": "kantor Alior - EUR",
+              "price": "2151.75"
+            }
+          ]
+        },
+        {
           "description": "Crossover (03-09.09)",
           "category": "Crossover",
           "date": "2018-09-20",
@@ -1134,11 +1134,26 @@
         {
           "description": "AirBnb sylwester zaliczka",
           "category": "Wyjazdy - noclegi",
-          "date": "2018-09-22",
+          "date": "2018-09-20",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - EUR",
               "price": "-1919.36"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "959.68"
+            }
+          ]
+        },
+        {
+          "description": "GoPass - Season Pass",
+          "category": "Sport",
+          "date": "2018-09-20",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-1903.76"
             }
           ]
         },
@@ -1150,17 +1165,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "959.68"
-            }
-          ]
-        },
-        {
-          "description": "GoPass - Season Pass",
-          "category": "Sport",
-          "date": "2018-09-22",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "-1903.76"
             }
           ]
         },
@@ -1282,6 +1286,10 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-126.35"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "63.18"
             }
           ]
         },
@@ -1436,7 +1444,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3596.00"
+          "balance": "-3531.14"
         },
         {
           "name": "mBank",
@@ -1795,6 +1803,21 @@
           ]
         },
         {
+          "description": "EUR -> Revolut PLN",
+          "category": "Wymiana walut",
+          "date": "2018-08-14",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-63.90"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "64.86"
+            }
+          ]
+        },
+        {
           "description": "Lokaty - Idea Bank",
           "category": "Przelewy między kontami",
           "date": "2018-08-15",
@@ -1952,7 +1975,7 @@
         },
         {
           "description": "Wroclaw - nocleg",
-          "category": "Sport",
+          "category": "Wyjazdy - noclegi",
           "date": "2018-08-21",
           "accountPriceEntries": [
             {
@@ -2230,17 +2253,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "5796.50"
-            }
-          ]
-        },
-        {
-          "description": "Kantor EUR -> Ania",
-          "category": "Przelewy między kontami",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - EUR",
-              "price": "-63.90"
             }
           ]
         },
