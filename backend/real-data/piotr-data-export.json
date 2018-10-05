@@ -64,7 +64,7 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "0.00"
+      "balance": "-5416.74"
     },
     {
       "name": "kantor Alior - USD",
@@ -92,7 +92,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "1048.00"
+      "balance": "2548.00"
     },
     {
       "name": "Gotówka - euro",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "14671.51"
+      "balance": "16027.19"
     },
     {
       "name": "Monika - pożyczka",
@@ -192,7 +192,7 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "0.00"
+          "balance": "-5416.74"
         },
         {
           "name": "kantor Alior - USD",
@@ -220,7 +220,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "1048.00"
+          "balance": "2548.00"
         },
         {
           "name": "Gotówka - euro",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "14671.51"
+          "balance": "16027.19"
         },
         {
           "name": "Monika - pożyczka",
@@ -282,6 +282,10 @@
             {
               "account": "Idea Bank",
               "price": "-262.40"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "131.20"
             }
           ]
         },
@@ -304,6 +308,10 @@
             {
               "account": "Idea Bank",
               "price": "-140.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "70.00"
             }
           ]
         },
@@ -363,6 +371,17 @@
           ]
         },
         {
+          "description": "ksiegowy ",
+          "category": "Księgowość",
+          "date": "2018-09-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-126.08"
+            }
+          ]
+        },
+        {
           "description": "Kraken - wejsciowka",
           "category": "Nurkowanie",
           "date": "2018-09-02",
@@ -381,6 +400,10 @@
             {
               "account": "Idea Bank",
               "price": "-1100.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "1100.00"
             }
           ]
         },
@@ -392,6 +415,17 @@
             {
               "account": "Gotówka",
               "price": "1100.00"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "ZUS",
+          "date": "2018-09-03",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1163.39"
             }
           ]
         },
@@ -436,28 +470,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "1175.00"
-            }
-          ]
-        },
-        {
-          "description": "ZUS",
-          "category": "ZUS",
-          "date": "2018-09-06",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-1163.39"
-            }
-          ]
-        },
-        {
-          "description": "ksiegowy (doplata)",
-          "category": "Księgowość",
-          "date": "2018-09-07",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-3.08"
             }
           ]
         },
@@ -546,6 +558,10 @@
             {
               "account": "Idea Bank",
               "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.48"
             }
           ]
         },
@@ -605,17 +621,6 @@
           ]
         },
         {
-          "description": "Ksiegowy",
-          "category": "Księgowość",
-          "date": "2018-09-14",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-123.00"
-            }
-          ]
-        },
-        {
           "description": "Kantor PLN -> Idea",
           "category": "Przelewy między kontami",
           "date": "2018-09-14",
@@ -634,6 +639,10 @@
             {
               "account": "Idea Bank",
               "price": "5416.74"
+            },
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-5416.74"
             }
           ]
         },
@@ -667,6 +676,10 @@
             {
               "account": "Idea Bank",
               "price": "-400.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "400.00"
             }
           ]
         },
