@@ -64,11 +64,11 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "-7103.34"
+      "balance": "-12498.46"
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "60126.75"
+      "balance": "62126.75"
     },
     {
       "name": "kantor Alior - EUR",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "16027.19"
+      "balance": "19703.53"
     },
     {
       "name": "Monika - pożyczka",
@@ -130,11 +130,11 @@
       "accountStateAtTheBeginingOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "-5416.74"
+          "balance": "-10811.86"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "60126.75"
+          "balance": "62126.75"
         },
         {
           "name": "kantor Alior - EUR",
@@ -166,7 +166,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "16027.19"
+          "balance": "19703.53"
         },
         {
           "name": "Monika - pożyczka",
@@ -192,11 +192,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "-7103.34"
+          "balance": "-12498.46"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "60126.75"
+          "balance": "62126.75"
         },
         {
           "name": "kantor Alior - EUR",
@@ -228,7 +228,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "16027.19"
+          "balance": "19703.53"
         },
         {
           "name": "Monika - pożyczka",
@@ -360,11 +360,11 @@
       "accountStateAtTheBeginingOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "5416.74"
+          "balance": "21.62"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "34145.03"
+          "balance": "36145.03"
         },
         {
           "name": "kantor Alior - EUR",
@@ -396,7 +396,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "7346.47"
+          "balance": "11022.81"
         },
         {
           "name": "Monika - pożyczka",
@@ -422,11 +422,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "-5416.74"
+          "balance": "-10811.86"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "60126.75"
+          "balance": "62126.75"
         },
         {
           "name": "kantor Alior - EUR",
@@ -458,7 +458,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "16027.19"
+          "balance": "19703.53"
         },
         {
           "name": "Monika - pożyczka",
@@ -1292,11 +1292,11 @@
       "accountStateAtTheBeginingOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "49258.44"
+          "balance": "43863.32"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "140822.56"
+          "balance": "142822.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1328,7 +1328,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1418.69"
+          "balance": "2257.65"
         },
         {
           "name": "Monika - pożyczka",
@@ -1354,11 +1354,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "5416.74"
+          "balance": "21.62"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "34145.03"
+          "balance": "36145.03"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1390,7 +1390,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "7346.47"
+          "balance": "11022.81"
         },
         {
           "name": "Monika - pożyczka",
@@ -2289,11 +2289,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "49258.44"
+          "balance": "43863.32"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "140822.56"
+          "balance": "142822.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2325,7 +2325,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1418.69"
+          "balance": "2257.65"
         },
         {
           "name": "Monika - pożyczka",
@@ -2642,28 +2642,6 @@
           ]
         },
         {
-          "description": "Malediwy - zaliczka",
-          "category": "Rozrywka",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-4291.25"
-            }
-          ]
-        },
-        {
-          "description": "Suchy skafander",
-          "category": "Nurkowanie",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-7352.68"
-            }
-          ]
-        },
-        {
           "description": "Suchy Skafander - prezent",
           "category": "Nurkowanie",
           "date": "2018-07-20",
@@ -2671,17 +2649,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "3676.34"
-            }
-          ]
-        },
-        {
-          "description": "Rescue Diver + serwis automatu",
-          "category": "Nurkowanie",
-          "date": "2018-07-20",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - PLN",
-              "price": "-1500.00"
             }
           ]
         },
@@ -2704,6 +2671,43 @@
             {
               "account": "Ania - rozliczenie",
               "price": "139.67"
+            }
+          ]
+        },
+        {
+          "description": "Malediwy - zaliczka - PLN",
+          "category": "Wyjazdy",
+          "date": "2018-07-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-2500.00"
+            }
+          ]
+        },
+        {
+          "description": "Suchy skafander",
+          "category": "Nurkowanie",
+          "date": "2018-07-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-7352.68"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "3676.34"
+            }
+          ]
+        },
+        {
+          "description": "Rescue Diver + serwis automatu",
+          "category": "Nurkowanie",
+          "date": "2018-07-22",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-1500.00"
             }
           ]
         },
@@ -2809,12 +2813,12 @@
         },
         {
           "description": "USD -> PLN",
-          "category": "Wymiana walut",
+          "category": "Przelewy między kontami",
           "date": "2018-07-30",
           "accountPriceEntries": [
             {
-              "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "account": "kantor Alior - PLN",
+              "price": "-7186.37"
             },
             {
               "account": "Idea Bank",
