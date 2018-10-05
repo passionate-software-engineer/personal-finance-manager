@@ -72,7 +72,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "193521.81"
+      "balance": "185132.56"
     },
     {
       "name": "kantor Alior - EUR",
@@ -128,7 +128,7 @@
     },
     {
       "name": "Revolut - USD",
-      "balance": "0.00"
+      "balance": "3582.50"
     }
   ],
   "periods": [
@@ -142,7 +142,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "194521.81"
+          "balance": "186132.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -198,7 +198,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -208,7 +208,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "193521.81"
+          "balance": "185132.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -264,7 +264,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "transactions": [
@@ -410,7 +410,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "168540.09"
+          "balance": "160150.84"
         },
         {
           "name": "kantor Alior - EUR",
@@ -466,7 +466,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -476,7 +476,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "194521.81"
+          "balance": "186132.56"
         },
         {
           "name": "kantor Alior - EUR",
@@ -532,7 +532,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "transactions": [
@@ -1362,7 +1362,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "142822.56"
+          "balance": "134433.31"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1418,7 +1418,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1428,7 +1428,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "168540.09"
+          "balance": "160150.84"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1484,7 +1484,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "transactions": [
@@ -2447,7 +2447,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "142822.56"
+          "balance": "134433.31"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2503,10 +2503,25 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "0.00"
+          "balance": "3582.50"
         }
       ],
       "transactions": [
+        {
+          "description": "USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-07-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "3582.50"
+            }
+          ]
+        },
         {
           "description": "Podatek dochodowy",
           "category": "Podatek dochodowy",
@@ -2573,7 +2588,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "price": "-6806.75"
             },
             {
               "account": "Idea Bank",
@@ -2711,6 +2726,17 @@
           ]
         },
         {
+          "description": "Crossover (25.06-01.07)",
+          "category": "Crossover",
+          "date": "2018-07-11",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
+        },
+        {
           "description": "Idea -> mBank",
           "category": "Przelewy między kontami",
           "date": "2018-07-12",
@@ -2737,17 +2763,6 @@
             {
               "account": "Ania - rozliczenie",
               "price": "2940.00"
-            }
-          ]
-        },
-        {
-          "description": "Crossover (25.06-01.07)",
-          "category": "Crossover",
-          "date": "2018-07-15",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7111.26"
             }
           ]
         },
