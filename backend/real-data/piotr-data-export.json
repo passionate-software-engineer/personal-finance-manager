@@ -128,7 +128,7 @@
     },
     {
       "name": "Revolut - USD",
-      "balance": "1737.26"
+      "balance": "0.00"
     }
   ],
   "periods": [
@@ -198,7 +198,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1737.26"
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -264,7 +264,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1737.26"
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -399,6 +399,17 @@
           ]
         },
         {
+          "description": "Crossover (17-23.09)",
+          "category": "Crossover",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
           "description": "USD -> PLN",
           "category": "Wymiana walut",
           "date": "2018-10-03",
@@ -444,13 +455,17 @@
           ]
         },
         {
-          "description": "Crossover (17-23.09)",
-          "category": "Crossover",
+          "description": "Revolut USD -> Alior USD",
+          "category": "Przelewy między kontami",
           "date": "2018-10-04",
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "-2264.14"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "2264.14"
             }
           ]
         },
@@ -496,21 +511,6 @@
             {
               "account": "mBank",
               "price": "5130.43"
-            }
-          ]
-        },
-        {
-          "description": "Revolut USD -> Alior USD",
-          "category": "Przelewy między kontami",
-          "date": "2018-10-05",
-          "accountPriceEntries": [
-            {
-              "account": "Revolut - USD",
-              "price": "-2264.14"
-            },
-            {
-              "account": "kantor Alior - USD",
-              "price": "2264.14"
             }
           ]
         }
@@ -582,7 +582,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1737.26"
+          "balance": "0.00"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -648,7 +648,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1737.26"
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -1534,7 +1534,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "1791.25"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1600,7 +1600,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1737.26"
+          "balance": "0.00"
         }
       ],
       "transactions": [
@@ -2003,7 +2003,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-4711.24"
+              "price": "-4657.25"
             },
             {
               "account": "Revolut - PLN",
@@ -2733,7 +2733,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "1791.25"
         }
       ],
       "transactions": [
@@ -3130,6 +3130,17 @@
             {
               "account": "kantor Alior - PLN",
               "price": "-1500.00"
+            }
+          ]
+        },
+        {
+          "description": "Malediwy - zaliczka USD",
+          "category": "Wyjazdy",
+          "date": "2018-07-22",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1791.25"
             }
           ]
         },
