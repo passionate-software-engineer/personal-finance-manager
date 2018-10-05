@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "31612.98"
+      "balance": "31942.48"
     },
     {
       "name": "Monika - pożyczka",
@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "53717.76"
+      "balance": "52717.76"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -136,7 +136,7 @@
     },
     {
       "name": "Santander",
-      "balance": "0.00"
+      "balance": "111.01"
     }
   ],
   "periods": [
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "31612.98"
+          "balance": "31942.48"
         },
         {
           "name": "Monika - pożyczka",
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "53717.76"
+          "balance": "52717.76"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -280,7 +280,7 @@
         },
         {
           "name": "Santander",
-          "balance": "0.00"
+          "balance": "111.01"
         }
       ],
       "transactions": [
@@ -378,6 +378,21 @@
           ]
         },
         {
+          "description": "zasilenie zegarka :)",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Santander",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
           "description": "Alior USD -> Revolut USD",
           "category": "Przelewy między kontami",
           "date": "2018-10-02",
@@ -456,6 +471,21 @@
           ]
         },
         {
+          "description": "Hestia - ubezpieczenie",
+          "category": "Utrzymanie domu",
+          "date": "2018-10-03",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-659.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "329.50"
+            }
+          ]
+        },
+        {
           "description": "Monika - splata",
           "category": "Przelewy między kontami",
           "date": "2018-10-04",
@@ -527,6 +557,17 @@
             {
               "account": "mBank",
               "price": "5130.43"
+            }
+          ]
+        },
+        {
+          "description": "Decathlon - torba",
+          "category": "Zakupy",
+          "date": "2018-10-04",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-229.99"
             }
           ]
         }
