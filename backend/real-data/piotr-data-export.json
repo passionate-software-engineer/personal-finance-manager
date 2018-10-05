@@ -72,7 +72,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "185132.56"
+      "balance": "52737.50"
     },
     {
       "name": "kantor Alior - EUR",
@@ -116,7 +116,7 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "-3531.14"
+      "balance": "14381.36"
     },
     {
       "name": "mBank",
@@ -128,7 +128,7 @@
     },
     {
       "name": "Revolut - USD",
-      "balance": "3582.50"
+      "balance": "2677.56"
     }
   ],
   "periods": [
@@ -142,7 +142,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "186132.56"
+          "balance": "53737.50"
         },
         {
           "name": "kantor Alior - EUR",
@@ -186,7 +186,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3531.14"
+          "balance": "14381.36"
         },
         {
           "name": "mBank",
@@ -198,7 +198,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "2677.56"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -208,7 +208,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "185132.56"
+          "balance": "52737.50"
         },
         {
           "name": "kantor Alior - EUR",
@@ -252,7 +252,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3531.14"
+          "balance": "14381.36"
         },
         {
           "name": "mBank",
@@ -264,7 +264,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "2677.56"
         }
       ],
       "transactions": [
@@ -410,7 +410,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "160150.84"
+          "balance": "27755.78"
         },
         {
           "name": "kantor Alior - EUR",
@@ -454,7 +454,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3531.14"
+          "balance": "14381.36"
         },
         {
           "name": "mBank",
@@ -466,7 +466,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "2677.56"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -476,7 +476,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "186132.56"
+          "balance": "53737.50"
         },
         {
           "name": "kantor Alior - EUR",
@@ -520,7 +520,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3531.14"
+          "balance": "14381.36"
         },
         {
           "name": "mBank",
@@ -532,7 +532,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "2677.56"
         }
       ],
       "transactions": [
@@ -1428,7 +1428,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "160150.84"
+          "balance": "27755.78"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1472,7 +1472,7 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "-3531.14"
+          "balance": "14381.36"
         },
         {
           "name": "mBank",
@@ -1484,7 +1484,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "3582.50"
+          "balance": "2677.56"
         }
       ],
       "transactions": [
@@ -1500,6 +1500,17 @@
           ]
         },
         {
+          "description": "Crossover (16-22.07)",
+          "category": "Crossover",
+          "date": "2018-08-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.27"
+            }
+          ]
+        },
+        {
           "description": "IntelliJ",
           "category": "Koszty prowadzenia firmy",
           "date": "2018-08-02",
@@ -1507,17 +1518,6 @@
             {
               "account": "kantor Alior - EUR",
               "price": "-315.88"
-            }
-          ]
-        },
-        {
-          "description": "Crossover (16-22.07)",
-          "category": "Crossover",
-          "date": "2018-08-02",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7111.27"
             }
           ]
         },
@@ -1724,6 +1724,17 @@
           ]
         },
         {
+          "description": "Crossover (23-29.07)",
+          "category": "Crossover",
+          "date": "2018-08-08",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7111.26"
+            }
+          ]
+        },
+        {
           "description": "Bilety Gdansk",
           "category": "Transport",
           "date": "2018-08-09",
@@ -1731,17 +1742,6 @@
             {
               "account": "Idea Bank",
               "price": "-358.20"
-            }
-          ]
-        },
-        {
-          "description": "Crossover (23-29.07)",
-          "category": "Crossover",
-          "date": "2018-08-09",
-          "accountPriceEntries": [
-            {
-              "account": "kantor Alior - USD",
-              "price": "7111.26"
             }
           ]
         },
@@ -1798,6 +1798,21 @@
           ]
         },
         {
+          "description": "USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-10",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-1773.34"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "1773.34"
+            }
+          ]
+        },
+        {
           "description": "Swietliki",
           "category": "Remont domu",
           "date": "2018-08-11",
@@ -1835,6 +1850,21 @@
           ]
         },
         {
+          "description": "USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-13",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-2507.75"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "2507.75"
+            }
+          ]
+        },
+        {
           "description": "EUR -> Revolut PLN",
           "category": "Wymiana walut",
           "date": "2018-08-14",
@@ -1846,6 +1876,21 @@
             {
               "account": "Revolut - PLN",
               "price": "64.86"
+            }
+          ]
+        },
+        {
+          "description": "USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-14",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-1074.75"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "1074.75"
             }
           ]
         },
@@ -1882,7 +1927,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "price": "-17912.50"
             },
             {
               "account": "kantor Alior - PLN",
@@ -1897,7 +1942,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "price": "-17912.50"
             },
             {
               "account": "kantor Alior - PLN",
@@ -1912,7 +1957,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "price": "-17912.50"
             },
             {
               "account": "kantor Alior - PLN",
@@ -1927,7 +1972,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "price": "-35825.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -1942,11 +1987,26 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2000.00"
+              "price": "-35825.00"
             },
             {
               "account": "kantor Alior - PLN",
               "price": "38022.00"
+            }
+          ]
+        },
+        {
+          "description": "Alior USD -> Revolut USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-15",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-17912.50"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "17912.50"
             }
           ]
         },
@@ -1969,6 +2029,36 @@
             {
               "account": "Idea Bank",
               "price": "-20.73"
+            }
+          ]
+        },
+        {
+          "description": "Revolut USD -> USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-27.23"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "27.23"
+            }
+          ]
+        },
+        {
+          "description": "Revolut USD -> Alior USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-17",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-6232.55"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "6232.55"
             }
           ]
         },
@@ -2100,7 +2190,7 @@
         {
           "description": "Crossover (6-12.08)",
           "category": "Crossover",
-          "date": "2018-08-23",
+          "date": "2018-08-24",
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
@@ -2366,6 +2456,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "675.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut USD -> Alior USD",
+          "category": "Przelewy między kontami",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1.00"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "1.00"
             }
           ]
         }
