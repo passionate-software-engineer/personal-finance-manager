@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "20362.07"
+      "balance": "19362.07"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -136,7 +136,7 @@
     },
     {
       "name": "Santander",
-      "balance": "111.01"
+      "balance": "1111.01"
     }
   ],
   "periods": [
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "20362.07"
+          "balance": "19362.07"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -280,7 +280,7 @@
         },
         {
           "name": "Santander",
-          "balance": "111.01"
+          "balance": "1111.01"
         }
       ],
       "transactions": [
@@ -590,6 +590,21 @@
             {
               "account": "mBank",
               "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Sandander",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-05",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Santander",
+              "price": "1000.00"
             }
           ]
         }
