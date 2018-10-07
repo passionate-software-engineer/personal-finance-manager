@@ -47,6 +47,15 @@ public class TestFilterProvider {
         .build();
   }
 
+  public static Filter filterExpensesOver1000() {
+    return Filter.builder()
+        .name("Expenses over 1000")
+        .priceFrom(convertDoubleToBigDecimal(1000))
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .build();
+  }
+
   public static List<Long> convertCategoryIdsToList(Long... categoryIds) {
     return Arrays.asList(categoryIds);
   }
