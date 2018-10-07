@@ -19,7 +19,7 @@ public class UserController {
   private UserService userService;
   private UserValidator userValidator;
 
-  @RequestMapping(value = "authenticate", method = RequestMethod.POST)
+  @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
     Optional<AuthResponse> authResponse = userService.authenticateUser(userToAuthenticate);
 

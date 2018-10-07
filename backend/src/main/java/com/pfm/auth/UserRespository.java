@@ -11,5 +11,5 @@ public interface UserRespository extends CrudRepository<User, Long> {
   @Query(value = "select count(user.username) from User user where user.username = :usernameToCheck")
   Integer numberOfUsersWithThisUsername(@Param("usernameToCheck") String usernameToCheck);
 
-  User findByUsername(String username);
+  User findByUsernameAndPassword(String username, String password);
 }
