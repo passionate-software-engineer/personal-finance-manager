@@ -2348,17 +2348,6 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - sierpien",
-          "category": "Rozliczenie miesiąca",
-          "date": "2018-08-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-6779.65"
-            }
-          ]
-        },
-        {
           "description": "Remont",
           "category": "Remont domu",
           "date": "2018-08-30",
@@ -2385,6 +2374,83 @@
             {
               "account": "kantor Alior - USD",
               "price": "1.00"
+            }
+          ]
+        },
+        {
+          "description": "Dziecko",
+          "category": "Dziecko",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-225.79"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-93.68"
+            }
+          ]
+        },
+        {
+          "description": "Zakupy spozywcze",
+          "category": "Jedzenie",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-515.70"
+            }
+          ]
+        },
+        {
+          "description": "Dom - remont",
+          "category": "Remont domu",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-5623.79"
+            }
+          ]
+        },
+        {
+          "description": "Dom - karnisze",
+          "category": "Utrzymanie domu",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-163.28"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki, chemia",
+          "category": "Kosmetyki",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-97.42"
+            }
+          ]
+        },
+        {
+          "description": "Drobne wydatki",
+          "category": "Inne Przychody",
+          "date": "2018-08-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-59.99"
             }
           ]
         }
