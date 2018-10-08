@@ -5430,17 +5430,6 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - marzec",
-          "category": "Rozliczenie miesiąca",
-          "date": "2018-03-31",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-3779.37"
-            }
-          ]
-        },
-        {
           "description": "Ania rozliczenie - korekta",
           "category": "Rozliczenie miesiąca",
           "date": "2018-03-31",
@@ -5448,6 +5437,127 @@
             {
               "account": "Ania - rozliczenie",
               "price": "2272.18"
+            }
+          ]
+        },
+        {
+          "description": "Dziecko",
+          "category": "Dziecko",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-160.02"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-176.18"
+            }
+          ]
+        },
+        {
+          "description": "Samochod",
+          "category": "Paliwo",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-207.99"
+            }
+          ]
+        },
+        {
+          "description": "Wakacje (noclegi i promy)",
+          "category": "Wyjazdy",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-349.65"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie (restauracje)",
+          "category": "Jedzenie",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-417.37"
+            }
+          ]
+        },
+        {
+          "description": "Zakupy spozywcze",
+          "category": "Jedzenie",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-818.05"
+            }
+          ]
+        },
+        {
+          "description": "Kabelek i poczta",
+          "category": "Inne Koszty",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-45.50"
+            }
+          ]
+        },
+        {
+          "description": "Leki i lekarze",
+          "category": "Leki, lekarze, higiena",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-74.83"
+            }
+          ]
+        },
+        {
+          "description": "Nurkowanie - El Hierro",
+          "category": "Nurkowanie",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-845.18"
+            }
+          ]
+        },
+        {
+          "description": "Wydatki na dom",
+          "category": "Utrzymanie domu",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-670.00"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki",
+          "category": "Kosmetyki",
+          "date": "2018-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-14.60"
             }
           ]
         }
