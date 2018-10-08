@@ -3715,17 +3715,6 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - czerwiec",
-          "category": "Rozliczenie miesiąca",
-          "date": "2018-06-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-4146.78"
-            }
-          ]
-        },
-        {
           "description": "Panele",
           "category": "Remont domu",
           "date": "2018-06-30",
@@ -3748,6 +3737,116 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-1573.31"
+            }
+          ]
+        },
+        {
+          "description": "Dziecko",
+          "category": "Dziecko",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-803.87"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-49.44"
+            }
+          ]
+        },
+        {
+          "description": "Samochod - paliwo",
+          "category": "Paliwo",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-236.46"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie (na miescie)",
+          "category": "Jedzenie",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-31.21"
+            }
+          ]
+        },
+        {
+          "description": "Serwis roweru",
+          "category": "Sport",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-231.00"
+            }
+          ]
+        },
+        {
+          "description": "zakupy spozywcze",
+          "category": "Jedzenie",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-639.30"
+            }
+          ]
+        },
+        {
+          "description": "Drobne wydatki",
+          "category": "Inne Koszty",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-28.00"
+            }
+          ]
+        },
+        {
+          "description": "Wydatki na dom",
+          "category": "Utrzymanie domu",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1957.47"
+            }
+          ]
+        },
+        {
+          "description": "Sudety - weekend",
+          "category": "Wyjazdy",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-75.75"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki, chemia",
+          "category": "Kosmetyki",
+          "date": "2018-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-94.28"
             }
           ]
         }
