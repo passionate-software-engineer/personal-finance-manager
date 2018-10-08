@@ -4213,13 +4213,90 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - maj",
-          "category": "Rozliczenie miesiąca",
+          "description": "Dziecko",
+          "category": "Dziecko",
           "date": "2018-05-31",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-4050.15"
+              "price": "-2764.02"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-93.44"
+            }
+          ]
+        },
+        {
+          "description": "Samochod",
+          "category": "Paliwo",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-144.38"
+            }
+          ]
+        },
+        {
+          "description": "Zakupy (spozywcze)",
+          "category": "Jedzenie",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-494.11"
+            }
+          ]
+        },
+        {
+          "description": "Wydatki na dom",
+          "category": "Utrzymanie domu",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-235.74"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki, chemia",
+          "category": "Kosmetyki",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-71.35"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-57.11"
+            }
+          ]
+        },
+        {
+          "description": "Inne",
+          "category": "Inne Koszty",
+          "date": "2018-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-190.00"
             }
           ]
         }
