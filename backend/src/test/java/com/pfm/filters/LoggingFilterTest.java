@@ -95,14 +95,14 @@ public class LoggingFilterTest {
 
   @Before
   public void prepareLogger() {
-    final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+    final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.addAppender(mockAppender);
     logger.setLevel(Level.ALL);
   }
 
   @After
   public void teardown() {
-    final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+    final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.detachAppender(mockAppender);
   }
 
@@ -220,7 +220,7 @@ public class LoggingFilterTest {
   @Test
   public void shouldNotLogIfErrorLevelSetForLogger() throws ServletException, IOException {
     //given
-    final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+    final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.setLevel(Level.ERROR);
 
     //when
