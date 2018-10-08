@@ -4666,13 +4666,90 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - kwiecien",
-          "category": "Rozliczenie miesiąca",
+          "description": "Dziecko ",
+          "category": "Dziecko",
           "date": "2018-04-30",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-5183.40"
+              "price": "-755.92"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-555.78"
+            }
+          ]
+        },
+        {
+          "description": "Samochod",
+          "category": "Samochód",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-36.95"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-37.25"
+            }
+          ]
+        },
+        {
+          "description": "Zakupy spozywcze",
+          "category": "Jedzenie",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-677.15"
+            }
+          ]
+        },
+        {
+          "description": "Leki i lekarze",
+          "category": "Leki, lekarze, higiena",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-132.66"
+            }
+          ]
+        },
+        {
+          "description": "Wydatki na dom",
+          "category": "Utrzymanie domu",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2919.35"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki, chemia",
+          "category": "Kosmetyki",
+          "date": "2018-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-68.34"
             }
           ]
         }
