@@ -1398,7 +1398,7 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca",
+          "description": "Rozliczenie miesiaca - wrzesien",
           "category": "Rozliczenie miesiąca",
           "date": "2018-09-30",
           "accountPriceEntries": [
@@ -1409,7 +1409,7 @@
           ]
         },
         {
-          "description": "Rozliczenie",
+          "description": "Ania rozliczenie - korekta",
           "category": "Rozliczenie miesiąca",
           "date": "2018-09-30",
           "accountPriceEntries": [
@@ -2348,7 +2348,7 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca",
+          "description": "Rozliczenie miesiaca - sierpien",
           "category": "Rozliczenie miesiąca",
           "date": "2018-08-30",
           "accountPriceEntries": [
@@ -3035,7 +3035,7 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca",
+          "description": "Rozliczenie miesiaca - lipiec",
           "category": "Rozliczenie miesiąca",
           "date": "2018-07-31",
           "accountPriceEntries": [
@@ -3741,7 +3741,7 @@
           ]
         },
         {
-          "description": "Wyrownanie rachunkow",
+          "description": "Ania rozliczenie - korekta",
           "category": "Rozliczenie miesiąca",
           "date": "2018-06-30",
           "accountPriceEntries": [
@@ -5441,7 +5441,7 @@
           ]
         },
         {
-          "description": "Wyrownanie rachunkow",
+          "description": "Ania rozliczenie - korekta",
           "category": "Rozliczenie miesiąca",
           "date": "2018-03-31",
           "accountPriceEntries": [
@@ -6067,13 +6067,68 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca (TODO rozbic)",
-          "category": "Rozliczenie miesiąca",
+          "description": "Dziecko",
+          "category": "Dziecko",
           "date": "2018-02-28",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-1202.78"
+              "price": "-8.29"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-49.44"
+            }
+          ]
+        },
+        {
+          "description": "Wakacje - prom",
+          "category": "Transport",
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-129.69"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-208.84"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie (zakupy)",
+          "category": "Jedzenie",
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-794.36"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki",
+          "category": "Kosmetyki",
+          "date": "2018-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-12.16"
             }
           ]
         }
