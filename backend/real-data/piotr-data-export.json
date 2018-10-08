@@ -3035,17 +3035,6 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - lipiec",
-          "category": "Rozliczenie miesiąca",
-          "date": "2018-07-31",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-11486.81"
-            }
-          ]
-        },
-        {
           "description": "CT - licencja",
           "category": "CodersTrust - licencja",
           "date": "2018-07-31",
@@ -3053,6 +3042,83 @@
             {
               "account": "Idea Bank",
               "price": "4312.38"
+            }
+          ]
+        },
+        {
+          "description": "Dziecko",
+          "category": "Dziecko",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-718.93"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-374.91"
+            }
+          ]
+        },
+        {
+          "description": "Samochod",
+          "category": "Paliwo",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-424.30"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie (na miescie)",
+          "category": "Jedzenie",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-82.35"
+            }
+          ]
+        },
+        {
+          "description": "Zakupy spozywcze",
+          "category": "Jedzenie",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-621.10"
+            }
+          ]
+        },
+        {
+          "description": "Wydatki na dom (glownie remont)",
+          "category": "Remont domu",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-9206.32"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki, chemia",
+          "category": "Kosmetyki",
+          "date": "2018-07-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-58.90"
             }
           ]
         }
