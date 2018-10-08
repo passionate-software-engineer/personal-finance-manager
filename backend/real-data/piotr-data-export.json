@@ -1398,17 +1398,6 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca - wrzesien",
-          "category": "Rozliczenie miesiąca",
-          "date": "2018-09-30",
-          "accountPriceEntries": [
-            {
-              "account": "Ania - rozliczenie",
-              "price": "-12471.39"
-            }
-          ]
-        },
-        {
           "description": "Ania rozliczenie - korekta",
           "category": "Rozliczenie miesiąca",
           "date": "2018-09-30",
@@ -1416,6 +1405,83 @@
             {
               "account": "Ania - rozliczenie",
               "price": "-2127.57"
+            }
+          ]
+        },
+        {
+          "description": "Dziecko",
+          "category": "Dziecko",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1634.79"
+            }
+          ]
+        },
+        {
+          "description": "Rachunki",
+          "category": "Rachunki",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-219.13"
+            }
+          ]
+        },
+        {
+          "description": "Samochod",
+          "category": "Paliwo",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-409.40"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-21.70"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1208.13"
+            }
+          ]
+        },
+        {
+          "description": "Remont",
+          "category": "Remont domu",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-8903.46"
+            }
+          ]
+        },
+        {
+          "description": "Chemia",
+          "category": "Kosmetyki",
+          "date": "2018-09-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-74.78"
             }
           ]
         }
