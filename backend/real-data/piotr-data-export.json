@@ -7659,7 +7659,11 @@
     },
     {
       "id": 13,
-      "name": "Jedzenie"
+      "name": "Jedzenie",
+      "parentCategory": {
+        "id": 24,
+        "name": "Zakupy"
+      }
     },
     {
       "id": 14,
@@ -7687,7 +7691,11 @@
     },
     {
       "id": 20,
-      "name": "Wyjazdy - noclegi"
+      "name": "Wyjazdy - noclegi",
+      "parentCategory": {
+        "id": 40,
+        "name": "Wyjazdy"
+      }
     },
     {
       "id": 21,
@@ -7695,7 +7703,11 @@
     },
     {
       "id": 22,
-      "name": "Telefon"
+      "name": "Telefon",
+      "parentCategory": {
+        "id": 4,
+        "name": "Rachunki"
+      }
     },
     {
       "id": 23,
@@ -7707,7 +7719,11 @@
     },
     {
       "id": 25,
-      "name": "Zakupy - jedzenie"
+      "name": "Zakupy - jedzenie",
+      "parentCategory": {
+        "id": 24,
+        "name": "Zakupy"
+      }
     },
     {
       "id": 26,
