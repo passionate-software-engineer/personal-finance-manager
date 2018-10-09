@@ -47,6 +47,8 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
+  protected User defaultUser = userMarian();
+
   @Autowired
   protected ObjectMapper mapper;
 
@@ -63,22 +65,13 @@ public abstract class InvoicePerformanceTestBase {
 
   protected Account[] getAccounts() throws Exception {
 
-    User user = userMarian();
-
-    String token = given()
-        .contentType(ContentType.JSON)
-        .body(json(user))
-        .post(usersServicePath() + "/authenticate")
-        .getBody()
-        .print();
+    String token = authenticateUserAndGetToken(defaultUser);
 
     return given()
         .when()
         .header("Authorization", token)
         .get(invoiceServicePath())
-
         .getBody()
-
         .as(Account[].class);
   }
 
@@ -105,22 +98,16 @@ public abstract class InvoicePerformanceTestBase {
   @PostConstruct
   public void before() throws Exception {
 
-    User user = userMarian();
     if (!userAdded) {
       given()
           .contentType(ContentType.JSON)
-          .body(user)
+          .body(defaultUser)
           .post(usersServicePath() + "/register");
 
       userAdded = true;
     }
 
-    String token = given()
-        .contentType(ContentType.JSON)
-        .body(user)
-        .post(usersServicePath() + "/authenticate")
-        .getBody()
-        .print();
+    String token = authenticateUserAndGetToken(defaultUser);
 
     for (int i = 0; i < 10; ++i) {
 
@@ -151,13 +138,8 @@ public abstract class InvoicePerformanceTestBase {
 
     Account[] accountsFromService = getAccounts();
     assertThat(accountsFromService.length, is(accounts.size()));
-    User user = userMarian();
-    String token = given()
-        .contentType(ContentType.JSON)
-        .body(json(user))
-        .post(usersServicePath() + "/authenticate")
-        .getBody()
-        .print();
+
+    String token = authenticateUserAndGetToken(defaultUser);
 
     int index = 0;
     for (Account account : accountsFromService) {
@@ -174,11 +156,22 @@ public abstract class InvoicePerformanceTestBase {
     assertThat(getAccounts().length, is(0));
   }
 
-  private AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {
+  protected AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {
     return mapper.readValue(jsonAuthResponse, AuthResponse.class);
   }
 
   protected String json(Object object) throws Exception {
     return mapper.writeValueAsString(object);
+  }
+
+  protected String authenticateUserAndGetToken(User user) throws Exception {
+    String response = given()
+        .contentType(ContentType.JSON)
+        .body(json(user))
+        .post(usersServicePath() + "/authenticate")
+        .getBody()
+        .print();
+
+    return jsonToAuthResponse(response).getToken();
   }
 }

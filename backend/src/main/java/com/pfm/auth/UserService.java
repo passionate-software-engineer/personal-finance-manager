@@ -18,7 +18,8 @@ public class UserService {
 
   public Optional<AuthResponse> authenticateUser(User userToAuthenticate) {
     //Todo ask base to return Username by username and password
-    User userFromDb = userRespository.findByUsernameAndPassword(userToAuthenticate.getUsername(),userToAuthenticate.getPassword());
+    User userFromDb = userRespository
+        .findByUsernameAndPassword(userToAuthenticate.getUsername(), get_Sha_512_SecurePassword(userToAuthenticate.getPassword()));
     if (userFromDb == null) {
       return Optional.empty();
     }

@@ -1,11 +1,9 @@
 package com.pfm.account.performance;
 
-import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static io.restassured.RestAssured.given;
 
 import com.anarsoft.vmlens.concurrent.junit.ThreadCount;
 import com.pfm.account.Account;
-import com.pfm.auth.User;
 import io.restassured.http.ContentType;
 import java.util.UUID;
 import org.junit.Test;
@@ -14,21 +12,9 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
 
   @Test
   @ThreadCount(THREAD_COUNT)
-  public void shouldAddSimultaneouslyMultipleAccounts() {
+  public void shouldAddSimultaneouslyMultipleAccounts() throws Exception {
 
-   User user = userMarian();
-//    given()
-//        .contentType(ContentType.JSON)
-//        .body(user)
-//        .when()
-//        .post(usersServicePath() + "/register");
-
-    String token = given()
-        .contentType(ContentType.JSON)
-        .body(user)
-        .post(usersServicePath() + "/authenticate")
-        .getBody()
-        .asString();
+    String token = authenticateUserAndGetToken(defaultUser);
 
     for (int i = 0; i < 10; ++i) {
 
@@ -39,7 +25,7 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
 
       String response = given()
           .contentType(ContentType.JSON)
-          .header("Authorization",token)
+          .header("Authorization", token)
           .body(account)
           .when()
           .post(invoiceServicePath())
