@@ -1,0 +1,11 @@
+ALTER TABLE account
+ADD user_id BIGINT NOT NULL;
+
+ALTER TABLE category
+ADD user_id BIGINT NOT NULL;
+
+ALTER TABLE transaction
+ADD user_id BIGINT NOT NULL;
+
+ALTER TABLE filter
+ADD user_id BIGINT NOT NULL;

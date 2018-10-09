@@ -87,12 +87,12 @@ public abstract class InvoicePerformanceTestBase {
     return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
-  protected String usersServicePath() {
-    return String.format(USERS_SERVICE_PATH, port);
-  }
-
   protected String invoiceServicePath(long id) {
     return invoiceServicePath() + "/" + id;
+  }
+
+  protected String usersServicePath() {
+    return String.format(USERS_SERVICE_PATH, port);
   }
 
   @PostConstruct

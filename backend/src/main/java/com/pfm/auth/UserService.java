@@ -17,17 +17,12 @@ public class UserService {
   private TokenService tokenService;
 
   public Optional<AuthResponse> authenticateUser(User userToAuthenticate) {
-    //Todo ask base to return Username by username and password
     User userFromDb = userRespository
         .findByUsernameAndPassword(userToAuthenticate.getUsername(), get_Sha_512_SecurePassword(userToAuthenticate.getPassword()));
     if (userFromDb == null) {
       return Optional.empty();
     }
 
-    String hashedPassword = userToAuthenticate.getPassword();
-    if (!userFromDb.getPassword().equals(get_Sha_512_SecurePassword(hashedPassword))) {
-      return Optional.empty();
-    }
     String token = tokenService.generateToken(userFromDb);
 
     AuthResponse authResponse = new AuthResponse(userFromDb, token);

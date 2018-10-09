@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class TokenService {
 
-  //is this correct or this field should be static?
+  //TODO is this correct or this field should be static?
   private HashMap<String, Token> tokens = new HashMap<>();
 
   public String generateToken(User user) {

@@ -6,8 +6,7 @@ CREATE TABLE filter
   price_from  NUMERIC(19, 2),
   price_to    NUMERIC(19, 2),
   date_from   DATE,
-  date_to     DATE,
-  user_id     BIGINT       NOT NULL
+  date_to     DATE
 );
 
 CREATE TABLE filter_account_ids

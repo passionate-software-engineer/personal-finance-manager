@@ -24,7 +24,7 @@ public class DeleteAccountTest extends InvoicePerformanceTestBase {
     collector.checkThat(
         given()
             .when()
-            .header("Authorization",token)
+            .header("Authorization", token)
             .delete(invoiceServicePath(account.getId()))
             .statusCode(),
         equalTo(200)
