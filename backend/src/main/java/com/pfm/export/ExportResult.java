@@ -1,6 +1,5 @@
 package com.pfm.export;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfm.category.Category;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,10 +12,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExportResult {
+final class ExportResult {
 
   private List<ExportAccount> initialAccountsState = new ArrayList<>();
   private List<ExportAccount> finalAccountsState = new ArrayList<>();
@@ -28,7 +26,7 @@ public class ExportResult {
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  static class ExportPeriod {
+  static final class ExportPeriod {
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -46,18 +44,13 @@ public class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  @JsonIgnoreProperties(ignoreUnknown = true) // TODO remove
-  static class ExportTransaction {
+  static final class ExportTransaction {
 
     private String description;
 
     private String category;
 
     private LocalDate date;
-
-    private String account; // TODO remove
-
-    private BigDecimal price; // TODO remove
 
     private List<ExportAccountPriceEntry> accountPriceEntries = new ArrayList<>();
   }
@@ -66,7 +59,7 @@ public class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  static class ExportAccount {
+  static final class ExportAccount {
 
     private String name;
 
@@ -78,7 +71,7 @@ public class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  static class ExportAccountPriceEntry {
+  static final class ExportAccountPriceEntry {
 
     private String account;
 
