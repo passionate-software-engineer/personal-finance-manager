@@ -45,7 +45,7 @@ public class TransactionServiceTest {
     //given
     Transaction transaction = Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
-            AccountPriceEntry.builder().accountId(NOT_EXISTING_ID).build()
+            AccountPriceEntry.builder().id(null).accountId(NOT_EXISTING_ID).build()
         ))
         .build();
 

@@ -11,22 +11,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionRequest {
 
+  @Setter
   @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
   protected String description;
 
+  @Setter
   @ApiModelProperty(value = "Category id", required = true, example = "1")
   protected Long categoryId;
 
+  @Setter
   @ApiModelProperty(value = "Date", required = true, example = "2018-12-31")
   protected LocalDate date;
 
+  @ApiModelProperty(value = "Price & Account entries")
   private List<AccountPriceEntry> accountPriceEntries;
 
 }

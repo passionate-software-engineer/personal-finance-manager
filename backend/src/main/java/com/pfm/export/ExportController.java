@@ -113,6 +113,8 @@ public class ExportController implements ExportApi {
   public void importData(@RequestBody ExportResult inputData) {
     Map<String, Long> categoryNameToIdMap = new HashMap<>();
 
+    // TODO validate input - e.g. account states at the begining / end of period, overall account states
+
     for (Category category : inputData.getCategories()) {
       Category savedCategory = categoryService.addCategory(category);
       categoryNameToIdMap.put(savedCategory.getName(), savedCategory.getId());
@@ -140,22 +142,18 @@ public class ExportController implements ExportApi {
 
         if (transaction.getAccountPriceEntries() != null) {
           for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+            Long accountId = accountNameToIdMap.get(entry.getAccount());
+            if (accountId == null) {
+              throw new IllegalStateException("Not found account with name " + entry.getAccount());
+            }
+
             newTransaction.getAccountPriceEntries().add(
                 AccountPriceEntry.builder()
-                    .accountId(accountNameToIdMap.get(entry.getAccount()))
+                    .accountId(accountId)
                     .price(entry.getPrice())
                     .build()
             );
           }
-        }
-
-        if (transaction.getAccount() != null && transaction.getPrice() != null) { // TODO remove after migration
-          newTransaction.getAccountPriceEntries().add(
-              AccountPriceEntry.builder()
-                  .accountId(accountNameToIdMap.get(transaction.getAccount()))
-                  .price(transaction.getPrice())
-                  .build()
-          );
         }
 
         transactionService.addTransaction(newTransaction);
