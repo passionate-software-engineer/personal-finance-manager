@@ -14,10 +14,10 @@ public class UserValidator {
 
   private UserService userService;
 
-  public List<String> validateUser(User user) {
+  public List<String> validateUser(Userek userek) {
     List<String> validationResults = new ArrayList<>();
 
-    if (userService.isUsernameAlreadyUsed(user.getUsername())) {
+    if (userService.isUsernameAlreadyUsed(userek.getUsername())) {
       validationResults.add(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST));
     }
 

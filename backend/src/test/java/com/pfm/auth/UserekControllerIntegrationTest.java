@@ -12,31 +12,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pfm.IntegrationTestsBase;
 import org.junit.Test;
 
-public class UserControllerIntegrationTest extends IntegrationTestsBase {
+public class UserekControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterUser() throws Exception {
     //given
-    User user = userMarian();
+    Userek userek = userMarian();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+        .content(json(userek)))
         .andExpect(status().isOk());
   }
 
   @Test
   public void shouldReturnErrorCausedByUsernameAlreadyExist() throws Exception {
     //given
-    User user = userMarian();
+    Userek userek = userMarian();
 
-    callRestToRegisterUserAndReturnUserId(user);
+    callRestToRegisterUserAndReturnUserId(userek);
 
     //then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+        .content(json(userek)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
@@ -46,14 +46,14 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldValidateUser() throws Exception {
     //given
-    User user = userMarian();
+    Userek userek = userMarian();
 
-    callRestToRegisterUserAndReturnUserId(user);
+    callRestToRegisterUserAndReturnUserId(userek);
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+        .content(json(userek)))
         .andExpect(status().isOk());
   }
 
@@ -61,12 +61,12 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingUser() throws Exception {
 
     //given
-    User user = userMarian();
+    Userek userek = userMarian();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+        .content(json(userek)))
         .andExpect(status().isBadRequest());
   }
 
@@ -74,16 +74,16 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserPassword() throws Exception {
 
     //given
-    User user = userMarian();
+    Userek userek = userMarian();
 
-    callRestToRegisterUserAndReturnUserId(user);
+    callRestToRegisterUserAndReturnUserId(userek);
 
     //when
-    user.setPassword("Wrong password");
+    userek.setPassword("Wrong password");
 
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+        .content(json(userek)))
         .andExpect(status().isBadRequest());
   }
 }

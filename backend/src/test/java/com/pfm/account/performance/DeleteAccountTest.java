@@ -19,7 +19,7 @@ public class DeleteAccountTest extends InvoicePerformanceTestBase {
     Account account = accounts.get(counter.getAndAdd(2));
     accounts.remove(account);
 
-    String token = authenticateUserAndGetToken(defaultUser);
+    String token = authenticateUserAndGetToken(defaultUserek);
 
     collector.checkThat(
         given()

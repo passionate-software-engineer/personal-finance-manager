@@ -17,11 +17,11 @@ public final class AuthResponse {
   private String lastName;
   private String token;
 
-  public AuthResponse(User user, String token) {
-    this.id = user.getId();
-    this.username = user.getUsername();
-    this.firstName = user.getFirstName();
-    this.lastName = user.getLastName();
+  public AuthResponse(Userek userek, String token) {
+    this.id = userek.getId();
+    this.username = userek.getUsername();
+    this.firstName = userek.getFirstName();
+    this.lastName = userek.getLastName();
     this.token = token;
   }
 

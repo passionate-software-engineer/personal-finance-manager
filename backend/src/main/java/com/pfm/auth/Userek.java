@@ -1,5 +1,6 @@
 package com.pfm.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +15,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public final class User {
+@JsonIgnoreProperties(ignoreUnknown = true)
+//Todo find proper name for the class if the name is "User" then postgress dont accept it
+public final class Userek {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String username;
   private String password;
   private String firstName;

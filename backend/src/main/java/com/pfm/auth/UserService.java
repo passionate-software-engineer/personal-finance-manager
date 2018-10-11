@@ -16,26 +16,26 @@ public class UserService {
   private UserRespository userRespository;
   private TokenService tokenService;
 
-  public Optional<AuthResponse> authenticateUser(User userToAuthenticate) {
-    User userFromDb = userRespository
-        .findByUsernameAndPassword(userToAuthenticate.getUsername(), get_Sha_512_SecurePassword(userToAuthenticate.getPassword()));
-    if (userFromDb == null) {
+  public Optional<AuthResponse> authenticateUser(Userek userekToAuthenticate) {
+    Userek userekFromDb = userRespository
+        .findByUsernameAndPassword(userekToAuthenticate.getUsername(), getSha512SecurePassword(userekToAuthenticate.getPassword()));
+    if (userekFromDb == null) {
       return Optional.empty();
     }
 
-    String token = tokenService.generateToken(userFromDb);
+    String token = tokenService.generateToken(userekFromDb);
 
-    AuthResponse authResponse = new AuthResponse(userFromDb, token);
+    AuthResponse authResponse = new AuthResponse(userekFromDb, token);
     return Optional.of(authResponse);
   }
 
-  public User registerUser(User user) {
-    String hashedPassword = get_Sha_512_SecurePassword(user.getPassword());
-    user.setPassword(hashedPassword);
-    return userRespository.save(user);
+  public Userek registerUser(Userek userek) {
+    String hashedPassword = getSha512SecurePassword(userek.getPassword());
+    userek.setPassword(hashedPassword);
+    return userRespository.save(userek);
   }
 
-  private static String get_Sha_512_SecurePassword(String passwordToHash) {
+  static String getSha512SecurePassword(String passwordToHash) {
     String salt = "salt";
     String generatedPassword = null;
     try {

@@ -35,6 +35,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     String requestToken = request.getHeader("authorization");
     if (requestToken == null || requestToken.isEmpty()) {
       logger.error("No request token.");
+      response.setContentType("text/plain");
       response.getWriter().write("Incorrect Token");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return false;
@@ -46,6 +47,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
       return true;
     } else {
       logger.error("Request token is incorrect.");
+      response.setContentType("text/plain");
       response.getWriter().write("Incorrect Token");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return false;

@@ -48,7 +48,7 @@ import com.pfm.transaction.TransactionRequest;
 import java.util.List;
 import org.junit.Test;
 
-public class MultipleUserIntegrationTests extends IntegrationTestsBase {
+public class MultipleUserekIntegrationTests extends IntegrationTestsBase {
 
   //TODO we should unify approach with final keyword before variables couse checkstyle force us to use it some circumstances.
   //It looks a bit stragne to use it sometimes and sometimes not.

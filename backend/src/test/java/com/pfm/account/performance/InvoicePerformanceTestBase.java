@@ -10,7 +10,7 @@ import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.auth.AuthResponse;
-import com.pfm.auth.User;
+import com.pfm.auth.Userek;
 import io.restassured.http.ContentType;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -47,7 +47,7 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
-  protected User defaultUser = userMarian();
+  protected Userek defaultUserek = userMarian();
 
   @Autowired
   protected ObjectMapper mapper;
@@ -65,7 +65,7 @@ public abstract class InvoicePerformanceTestBase {
 
   protected Account[] getAccounts() throws Exception {
 
-    String token = authenticateUserAndGetToken(defaultUser);
+    String token = authenticateUserAndGetToken(defaultUserek);
 
     return given()
         .when()
@@ -101,13 +101,13 @@ public abstract class InvoicePerformanceTestBase {
     if (!userAdded) {
       given()
           .contentType(ContentType.JSON)
-          .body(defaultUser)
+          .body(defaultUserek)
           .post(usersServicePath() + "/register");
 
       userAdded = true;
     }
 
-    String token = authenticateUserAndGetToken(defaultUser);
+    String token = authenticateUserAndGetToken(defaultUserek);
 
     for (int i = 0; i < 10; ++i) {
 
@@ -139,7 +139,7 @@ public abstract class InvoicePerformanceTestBase {
     Account[] accountsFromService = getAccounts();
     assertThat(accountsFromService.length, is(accounts.size()));
 
-    String token = authenticateUserAndGetToken(defaultUser);
+    String token = authenticateUserAndGetToken(defaultUserek);
 
     int index = 0;
     for (Account account : accountsFromService) {
@@ -164,10 +164,10 @@ public abstract class InvoicePerformanceTestBase {
     return mapper.writeValueAsString(object);
   }
 
-  protected String authenticateUserAndGetToken(User user) throws Exception {
+  protected String authenticateUserAndGetToken(Userek userek) throws Exception {
     String response = given()
         .contentType(ContentType.JSON)
-        .body(json(user))
+        .body(json(userek))
         .post(usersServicePath() + "/authenticate")
         .getBody()
         .print();

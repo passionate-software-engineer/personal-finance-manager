@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.auth.AuthResponse;
-import com.pfm.auth.User;
+import com.pfm.auth.Userek;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
@@ -397,30 +397,30 @@ public abstract class IntegrationTestsBase {
 
   //users
 
-  public long callRestToRegisterUserAndReturnUserId(User user) throws Exception {
+  public long callRestToRegisterUserAndReturnUserId(Userek userek) throws Exception {
     String response =
         mockMvc
             .perform(post(USERS_SERVICE_PATH + "/register")
-                .content(json(user))
+                .content(json(userek))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
     return Long.parseLong(response);
   }
 
-  public String callRestToAuthenticateUserAndReturnToken(User user) throws Exception {
+  public String callRestToAuthenticateUserAndReturnToken(Userek userek) throws Exception {
     String response = mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+        .content(json(userek)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
     return jsonToAuthResponse(response).getToken();
   }
 
-  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {
-    callRestToRegisterUserAndReturnUserId(user);
-    return callRestToAuthenticateUserAndReturnToken(user);
+  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(Userek userek) throws Exception {
+    callRestToRegisterUserAndReturnUserId(userek);
+    return callRestToAuthenticateUserAndReturnToken(userek);
   }
 
   private AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {

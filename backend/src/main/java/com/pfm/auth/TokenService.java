@@ -15,10 +15,10 @@ public class TokenService {
   //TODO is this correct or this field should be static?
   private HashMap<String, Token> tokens = new HashMap<>();
 
-  public String generateToken(User user) {
+  public String generateToken(Userek userek) {
 
     UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now());
+    Token token = new Token(uuid.toString(), userek.getId(), LocalDateTime.now());
     tokens.put(token.getToken(), token);
     return token.getToken();
   }
