@@ -55,9 +55,9 @@
         </ul>
       </div>
     </td>
-    <td *ngIf="account.editMode">
+    <td *ngIf="account.editMode" id="EditAccountSaveExitBtn">
       <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">{{'button.save' | translate}}</button>
-      <button class="btn btn-danger" (click)="account.editMode=false">{{'button.exit' | translate}}</button>
+      <button id="EditAccountExitBtn" class="btn btn-danger" (click)="account.editMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>
@@ -70,9 +70,9 @@
     <!--Balance-->
     <td>
       <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
-    <td>
+    <td id="NewAccountSaveExitBtn">
       <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">{{'button.save' | translate}}</button>
-      <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
+      <button id="NewAccountExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
   </tr>
 

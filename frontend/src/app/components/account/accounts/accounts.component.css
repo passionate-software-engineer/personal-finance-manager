@@ -1,0 +1,29 @@
+
+.dropdown-menu{
+  width: 100%;
+}
+
+#EditBtn{
+  max-width: 95%;
+  margin: 5px auto;
+}
+
+#DeleteBtn{
+  max-width: 95%;
+  margin: 5px auto;
+}
+
+
+#EditAccountSaveExitBtn,
+#NewAccountSaveExitBtn{
+  display: flex;
+  justify-content: space-between;
+}
+
+#EditAccountSaveBtn,
+#EditAccountExitBtn,
+#NewAccountSaveBtn,
+#NewAccountExitBtn{
+  width: 47.5%;
+}
+
