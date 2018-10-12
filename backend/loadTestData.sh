@@ -83,3 +83,5 @@ echo "Added filter cash expenses under id $FILTER_CASH"
 
 FILTER_CAR=$(curl -X POST "http://localhost:8088/filters" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"dateFrom\": \"2017-01-01\", \"dateTo\": \"2018-12-31\", \"name\": \"Car expenses < 500\", \"priceFrom\": 0, \"priceTo\": 500, \"categoryIds\": [ $CATEGORY_CAR ]}")
 echo "Added filter car expenses under id $FILTER_CAR"
+
+# TODO - not working anymore after changing the structure

@@ -59,4 +59,5 @@ public class TransactionServiceTest {
 
     assertThat(exception.getMessage(), is(equalTo("Account with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }
+
 }

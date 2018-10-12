@@ -32,10 +32,6 @@ public class TransactionService {
   }
 
   public Transaction addTransaction(Transaction transaction) {
-    if (transaction.getAccountPriceEntries() == null) {
-      throw new IllegalStateException("At least one Account and Price entry is required.");
-    }
-
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
       addAmountToAccount(entry.getAccountId(), entry.getPrice());
     }
