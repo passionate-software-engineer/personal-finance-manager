@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class AccountPriceEntry {
+public final class AccountPriceEntry {
 
   @Id
   @JsonIgnore

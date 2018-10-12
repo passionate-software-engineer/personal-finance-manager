@@ -2,6 +2,7 @@ package com.pfm.transaction;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 import pl.pojo.tester.api.assertion.Method;
 
@@ -34,6 +35,12 @@ public class AccountPriceEntryTest {
     assertPojoMethodsFor(classUnderTest)
         .testing(Method.TO_STRING)
         .areWellImplemented();
+  }
+
+  @Test
+  public void equalsContract() {
+    EqualsVerifier.forClass(AccountPriceEntry.class)
+        .verify();
   }
 
 }
