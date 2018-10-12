@@ -149,7 +149,7 @@ public class ExportResultTest {
 
   // TODO create parametrized tests taking class name and checking those values, for new class just add it to list and done :)
   // TODO correct all existing code to use such generic testing class - thanks to that Lombok generates and this class tests
-  // TODO try someting difficult and write annotation processor which is finding those classes based on Lombok annotation (no need to register)
+  // TODO instead try: https://www.rainerhahnekamp.com/en/ignoring-lombok-code-in-jacoco/ - may solve our problems ;)
 
   @Test
   public void equalsContractExportPeriod() {
