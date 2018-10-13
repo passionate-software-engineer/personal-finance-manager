@@ -76,7 +76,7 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "38089.14"
+      "balance": "45254.14"
     },
     {
       "name": "kantor Alior - EUR",
@@ -88,7 +88,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "6886.32"
+      "balance": "4454.35"
     },
     {
       "name": "IKE",
@@ -100,7 +100,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "228.00"
+      "balance": "5328.00"
     },
     {
       "name": "Gotówka - EUR",
@@ -108,7 +108,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "-1745.86"
+      "balance": "3222.86"
     },
     {
       "name": "Monika - pożyczka",
@@ -124,7 +124,7 @@
     },
     {
       "name": "mBank",
-      "balance": "19362.07"
+      "balance": "6185.58"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -136,7 +136,7 @@
     },
     {
       "name": "Santander",
-      "balance": "1111.01"
+      "balance": "1032.32"
     }
   ],
   "periods": [
@@ -220,7 +220,7 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "38089.14"
+          "balance": "45254.14"
         },
         {
           "name": "kantor Alior - EUR",
@@ -232,7 +232,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "6886.32"
+          "balance": "4454.35"
         },
         {
           "name": "IKE",
@@ -244,7 +244,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "228.00"
+          "balance": "5328.00"
         },
         {
           "name": "Gotówka - EUR",
@@ -252,7 +252,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1745.86"
+          "balance": "3222.86"
         },
         {
           "name": "Monika - pożyczka",
@@ -268,7 +268,7 @@
         },
         {
           "name": "mBank",
-          "balance": "19362.07"
+          "balance": "6185.58"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -280,7 +280,7 @@
         },
         {
           "name": "Santander",
-          "balance": "1111.01"
+          "balance": "1032.32"
         }
       ],
       "transactions": [
@@ -605,6 +605,215 @@
             {
               "account": "Santander",
               "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Kino - Kler",
+          "category": "Rozrywka",
+          "date": "2018-10-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-27.70"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - katowice - kolacja",
+          "category": "Jedzenie",
+          "date": "2018-10-08",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-33.69"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "16.84"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Księgowość",
+          "date": "2018-10-09",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - Katowice - sniadanie",
+          "category": "Jedzenie",
+          "date": "2018-10-09",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-40.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "20.00"
+            }
+          ]
+        },
+        {
+          "description": "OFA - wplata",
+          "category": "Edukacja",
+          "date": "2018-10-09",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-499.00"
+            }
+          ]
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "date": "2018-10-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.49"
+            }
+          ]
+        },
+        {
+          "description": "crossover (24-30.09)",
+          "category": "Crossover",
+          "date": "2018-10-11",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2018-10-12",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-313.61"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "156.80"
+            }
+          ]
+        },
+        {
+          "description": "Mrowka - odprowadzenie wody z ogrodu - rury itp",
+          "category": "Remont domu",
+          "date": "2018-10-12",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-266.70"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "133.35"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka wyplata",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-12",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-12000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "12000.00"
+            }
+          ]
+        },
+        {
+          "description": "Ogrod - zaliczka",
+          "category": "Remont domu",
+          "date": "2018-10-12",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-3000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1500.00"
+            }
+          ]
+        },
+        {
+          "description": "Wykonczenie wnetrz",
+          "category": "Remont domu",
+          "date": "2018-10-12",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-3000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1500.00"
+            }
+          ]
+        },
+        {
+          "description": "Wywoz ziemi z ogrodu",
+          "category": "Remont domu",
+          "date": "2018-10-12",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-900.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "450.00"
+            }
+          ]
+        },
+        {
+          "description": "Izotonik",
+          "category": "Jedzenie",
+          "date": "2018-10-13",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-5.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2.50"
+            }
+          ]
+        },
+        {
+          "description": "Mrowka - gniazdko, impregnat do drewna",
+          "category": "Remont domu",
+          "date": "2018-10-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-69.48"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "34.74"
             }
           ]
         }
@@ -7586,16 +7795,10 @@
   ],
   "categories": [
     {
-      "name": "Nurkowanie"
-    },
-    {
-      "name": "Kosmetyki"
-    },
-    {
-      "name": "Zdrowie"
-    },
-    {
       "name": "Dziecko"
+    },
+    {
+      "name": "Rozrywka"
     },
     {
       "name": "Rachunki"
@@ -7609,27 +7812,32 @@
       "parentCategoryName": "Rachunki"
     },
     {
+      "name": "Nurkowanie"
+    },
+    {
+      "name": "Wymiana walut"
+    },
+    {
+      "name": "Sport"
+    },
+    {
+      "name": "Leki, lekarze, higiena"
+    },
+    {
+      "name": "Zdrowie"
+    },
+    {
+      "name": "Rozliczenie miesiąca"
+    },
+    {
+      "name": "Przychody"
+    },
+    {
       "name": "Koszty prowadzenia firmy"
     },
     {
       "name": "Leasing samochodu",
-      "parentCategoryName": "Koszty prowadzenia firmy"
-    },
-    {
-      "name": "Utrzymanie domu"
-    },
-    {
-      "name": "Transport"
-    },
-    {
-      "name": "Przelewy między kontami"
-    },
-    {
-      "name": "Wyjazdy"
-    },
-    {
-      "name": "Wyjazdy - noclegi",
-      "parentCategoryName": "Wyjazdy"
+      "parentCategoryName": "Samochód"
     },
     {
       "name": "Prąd",
@@ -7640,20 +7848,15 @@
       "parentCategoryName": "Rachunki"
     },
     {
-      "name": "Rozrywka"
+      "name": "Remont domu"
     },
     {
-      "name": "Sport"
+      "name": "Crossover",
+      "parentCategoryName": "Przychody"
     },
     {
       "name": "Księgowość",
       "parentCategoryName": "Koszty prowadzenia firmy"
-    },
-    {
-      "name": "Opłaty i prowizje"
-    },
-    {
-      "name": "Edukacja"
     },
     {
       "name": "Podatek dochodowy",
@@ -7664,52 +7867,6 @@
       "parentCategoryName": "Koszty prowadzenia firmy"
     },
     {
-      "name": "Samochód"
-    },
-    {
-      "name": "Śmieci",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Telefon",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Remont domu"
-    },
-    {
-      "name": "Paliwo",
-      "parentCategoryName": "Samochód"
-    },
-    {
-      "name": "Inne Koszty"
-    },
-    {
-      "name": "Gaz",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Wymiana walut"
-    },
-    {
-      "name": "Przychody"
-    },
-    {
-      "name": "Crossover",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "CodersTrust - szkolenia",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "CodersTrust - licencja",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "Leki, lekarze, higiena"
-    },
-    {
       "name": "Zakupy"
     },
     {
@@ -7717,19 +7874,71 @@
       "parentCategoryName": "Zakupy"
     },
     {
+      "name": "Wyjazdy"
+    },
+    {
+      "name": "Wyjazdy - noclegi",
+      "parentCategoryName": "Wyjazdy"
+    },
+    {
+      "name": "CodersTrust - szkolenia",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "Transport"
+    },
+    {
+      "name": "Inne Koszty"
+    },
+    {
+      "name": "Opłaty i prowizje"
+    },
+    {
+      "name": "Edukacja"
+    },
+    {
+      "name": "Samochód"
+    },
+    {
+      "name": "Telefon",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Śmieci",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Kosmetyki"
+    },
+    {
       "name": "Jedzenie",
       "parentCategoryName": "Zakupy"
     },
     {
-      "name": "Rozliczenie miesiąca"
+      "name": "CodersTrust - licencja",
+      "parentCategoryName": "Przychody"
     },
     {
-      "name": "ZUS",
-      "parentCategoryName": "Koszty prowadzenia firmy"
+      "name": "Paliwo",
+      "parentCategoryName": "Samochód"
+    },
+    {
+      "name": "Utrzymanie domu"
+    },
+    {
+      "name": "Gaz",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Przelewy między kontami"
     },
     {
       "name": "Inne Przychody",
       "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "ZUS",
+      "parentCategoryName": "Koszty prowadzenia firmy"
     }
   ]
 }
