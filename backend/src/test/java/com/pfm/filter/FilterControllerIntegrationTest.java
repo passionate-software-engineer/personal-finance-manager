@@ -1,16 +1,16 @@
 package com.pfm.filter;
 
-import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
-import static com.pfm.helpers.TestCategoryProvider.categoryCar;
-import static com.pfm.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestFilterProvider.convertAccountIdsToList;
-import static com.pfm.helpers.TestFilterProvider.convertCategoryIdsToList;
-import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
-import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
-import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
-import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.test.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.test.helpers.TestFilterProvider.convertAccountIdsToList;
+import static com.pfm.test.helpers.TestFilterProvider.convertCategoryIdsToList;
+import static com.pfm.test.helpers.TestFilterProvider.filterCarExpenses;
+import static com.pfm.test.helpers.TestFilterProvider.filterFoodExpenses;
+import static com.pfm.test.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
+import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
+import com.pfm.test.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.Test;

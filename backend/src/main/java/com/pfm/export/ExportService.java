@@ -6,8 +6,12 @@ import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
+import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
+import com.pfm.helpers.topology.Graph;
+import com.pfm.helpers.topology.Graph.Node;
+import com.pfm.helpers.topology.TopologicalSortProvider;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -36,7 +40,16 @@ public class ExportService {
   public ExportResult exportData() {
     ExportResult result = new ExportResult();
     result.setPeriods(new ArrayList<>());
-    result.setCategories(categoryService.getCategories()); // TODO remove category id from RS
+
+    List<ExportCategory> exportCategories = categoryService.getCategories()
+        .stream()
+        .map(category -> ExportCategory.builder()
+            .name(category.getName())
+            .parentCategoryName(category.getParentCategory() != null ? category.getParentCategory().getName() : null)
+            .build()
+        )
+        .collect(Collectors.toList());
+    result.setCategories(exportCategories);
 
     Map<String, List<ExportTransaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
 
@@ -106,13 +119,22 @@ public class ExportService {
     return result;
   }
 
-  public void importData(@RequestBody ExportResult inputData) {
+  void importData(@RequestBody ExportResult inputData) {
     Map<String, Long> categoryNameToIdMap = new HashMap<>();
 
     // TODO validate input - e.g. account states at the begining / end of period, overall account states, if all required fields are present
 
-    for (Category category : inputData.getCategories()) {
-      Category savedCategory = categoryService.addCategory(category);
+    List<ExportCategory> categoriesSortedTopologically = sortCategoriesTopologically(inputData.getCategories());
+    for (ExportCategory category : categoriesSortedTopologically) {
+      Category categoryToSave = new Category();
+      categoryToSave.setName(category.getName());
+      if (category.getParentCategoryName() != null) {
+        categoryToSave.setParentCategory(Category.builder()
+            .id(categoryNameToIdMap.get(category.getParentCategoryName()))
+            .build()
+        );
+      }
+      Category savedCategory = categoryService.addCategory(categoryToSave);
       categoryNameToIdMap.put(savedCategory.getName(), savedCategory.getId());
     }
 
@@ -178,4 +200,23 @@ public class ExportService {
     return String.format("%04d-%02d-01", date.getYear(), date.getMonth().getValue());
   }
 
+  private List<ExportCategory> sortCategoriesTopologically(List<ExportCategory> categories) {
+    Graph<ExportCategory> graph = new Graph<>();
+
+    Map<String, Node<ExportCategory>> categoryNameToNodeMap = new HashMap<>();
+
+    for (ExportCategory category : categories) {
+      Node<ExportCategory> node = new Node<>(category);
+      graph.addNode(node);
+      categoryNameToNodeMap.put(category.getName(), node);
+    }
+
+    for (ExportCategory category : categories) {
+      if (category.getParentCategoryName() != null) {
+        categoryNameToNodeMap.get(category.getParentCategoryName()).addEdge(categoryNameToNodeMap.get(category.getName()));
+      }
+    }
+
+    return TopologicalSortProvider.sort(graph).stream().map(Node::getObject).collect(Collectors.toList());
+  }
 }

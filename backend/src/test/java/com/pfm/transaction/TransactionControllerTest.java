@@ -1,6 +1,6 @@
 package com.pfm.transaction;
 
-import static com.pfm.helpers.TestTransactionProvider.carTransactionRequestWithNoAccountAndNoCategory;
+import static com.pfm.test.helpers.TestTransactionProvider.carTransactionRequestWithNoAccountAndNoCategory;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

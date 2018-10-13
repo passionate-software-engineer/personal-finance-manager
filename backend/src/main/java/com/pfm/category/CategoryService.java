@@ -30,8 +30,9 @@ public class CategoryService {
     if (category.getParentCategory() == null) {
       return categoryRepository.save(category);
     }
-    // TODO - if parent category returned by DB is null then throw IllegalStateException
-    Category parentCategory = getCategoryById(category.getParentCategory().getId()).orElse(null);
+
+    Category parentCategory = getCategoryById(category.getParentCategory().getId())
+        .orElseThrow(() -> new IllegalStateException("Cannot find parent category with id " + category.getParentCategory().getId()));
     category.setParentCategory(parentCategory);
     return categoryRepository.save(category);
   }

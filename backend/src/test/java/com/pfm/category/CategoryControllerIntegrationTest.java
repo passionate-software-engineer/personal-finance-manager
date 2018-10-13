@@ -6,10 +6,10 @@ import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREAD
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestCategoryProvider.categoryCar;
-import static com.pfm.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryOil;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
+import com.pfm.test.helpers.IntegrationTestsBase;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
