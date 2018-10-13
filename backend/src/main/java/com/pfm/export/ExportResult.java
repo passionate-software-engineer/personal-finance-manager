@@ -1,6 +1,5 @@
 package com.pfm.export;
 
-import com.pfm.category.Category;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ final class ExportResult {
   private List<ExportAccount> finalAccountsState = new ArrayList<>();
 
   private List<ExportPeriod> periods = new ArrayList<>();
-  private List<Category> categories = new ArrayList<>();
+  private List<ExportCategory> categories = new ArrayList<>();
 
   @Data
   @Builder
@@ -31,12 +30,27 @@ final class ExportResult {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @Builder.Default
     private List<ExportAccount> accountStateAtTheBeginingOfPeriod = new ArrayList<>();
+
+    @Builder.Default
     private List<ExportAccount> accountStateAtTheEndOfPeriod = new ArrayList<>();
 
+    @Builder.Default
     private Collection<ExportTransaction> transactions = new ArrayList<>();
 
     // TODO add sum of all money
+
+  }
+
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  static final class ExportCategory {
+
+    private String name;
+    private String parentCategoryName;
 
   }
 
@@ -52,6 +66,7 @@ final class ExportResult {
 
     private LocalDate date;
 
+    @Builder.Default
     private List<ExportAccountPriceEntry> accountPriceEntries = new ArrayList<>();
   }
 

@@ -28,6 +28,7 @@ public class TransactionRequest {
   @ApiModelProperty(value = "Date", required = true, example = "2018-12-31")
   protected LocalDate date;
 
+  @Builder.Default
   @ApiModelProperty(value = "Price & Account entries")
   private List<AccountPriceEntry> accountPriceEntries = new ArrayList<>();
 

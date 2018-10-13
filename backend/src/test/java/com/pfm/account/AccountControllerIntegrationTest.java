@@ -4,9 +4,9 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
-import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.test.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
+import com.pfm.test.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;

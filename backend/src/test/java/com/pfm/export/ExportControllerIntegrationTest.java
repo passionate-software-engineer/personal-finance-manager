@@ -1,18 +1,20 @@
 package com.pfm.export;
 
-import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.test.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
+import com.pfm.category.Category;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
+import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
+import com.pfm.test.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,12 +29,20 @@ public class ExportControllerIntegrationTest extends IntegrationTestsBase {
     //given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+    long pizzaCategoryId = callRestToAddCategoryAndReturnId(Category.builder()
+        .name("Pizza")
+        .parentCategory(Category.builder()
+            .id(foodCategoryId)
+            .build()
+        )
+        .build()
+    );
 
-    Transaction transactionToAdd = foodTransactionWithNoAccountAndNoCategory();
-    long transactionId = callRestToAddTransactionAndReturnId(transactionToAdd, jacekAccountId, foodCategoryId);
+    Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
+    long transactionId = callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId);
 
-    Transaction addedTransaction = foodTransactionWithNoAccountAndNoCategory();
-    setTransactionIdAccountIdCategoryId(addedTransaction, transactionId, jacekAccountId, foodCategoryId);
+    Transaction transactionToAddPizza = foodTransactionWithNoAccountAndNoCategory();
+    setTransactionIdAccountIdCategoryId(transactionToAddPizza, transactionId, jacekAccountId, pizzaCategoryId);
 
     //when
     mockMvc.perform(get(EXPORT_SERVICE_PATH))
@@ -47,7 +57,16 @@ public class ExportControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldImportTransactions() throws Exception {
     //given
     ExportResult input = new ExportResult();
-    input.setCategories(Arrays.asList(categoryFood(), categoryHome()));
+    input.setCategories(Arrays.asList(
+        ExportCategory.builder()
+            .name(categoryHome().getName())
+            .build(),
+        ExportCategory.builder()
+            .name(categoryFood().getName())
+            .parentCategoryName(categoryHome().getName())
+            .build()
+        )
+    );
 
     ExportAccount aliorAccount = ExportAccount.builder()
         .name("Alior Bank")

@@ -3,7 +3,7 @@ package com.pfm.auth;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
+import com.pfm.test.helpers.IntegrationTestsBase;
 import org.junit.Test;
 
 public class UserControllerIntegrationTest extends IntegrationTestsBase {
