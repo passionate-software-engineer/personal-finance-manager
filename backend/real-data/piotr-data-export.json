@@ -7586,252 +7586,150 @@
   ],
   "categories": [
     {
-      "id": 1,
-      "name": "Przychody"
-    },
-    {
-      "id": 2,
-      "name": "Dziecko"
-    },
-    {
-      "id": 3,
-      "name": "Utrzymanie domu"
-    },
-    {
-      "id": 4,
-      "name": "Rachunki"
-    },
-    {
-      "id": 5,
-      "name": "TV",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 6,
-      "name": "Gaz",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 7,
-      "name": "Internet",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 8,
-      "name": "Prąd",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 9,
-      "name": "Śmieci",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 10,
-      "name": "Woda",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 11,
-      "name": "Przelewy między kontami"
-    },
-    {
-      "id": 12,
-      "name": "Rozliczenie miesiąca"
-    },
-    {
-      "id": 13,
-      "name": "Jedzenie",
-      "parentCategory": {
-        "id": 24,
-        "name": "Zakupy"
-      }
-    },
-    {
-      "id": 14,
       "name": "Nurkowanie"
     },
     {
-      "id": 15,
-      "name": "Leki, lekarze, higiena"
-    },
-    {
-      "id": 16,
-      "name": "Sport"
-    },
-    {
-      "id": 17,
       "name": "Kosmetyki"
     },
     {
-      "id": 18,
-      "name": "Transport"
-    },
-    {
-      "id": 19,
-      "name": "Wymiana walut"
-    },
-    {
-      "id": 20,
-      "name": "Wyjazdy - noclegi",
-      "parentCategory": {
-        "id": 40,
-        "name": "Wyjazdy"
-      }
-    },
-    {
-      "id": 21,
-      "name": "Rozrywka"
-    },
-    {
-      "id": 22,
-      "name": "Telefon",
-      "parentCategory": {
-        "id": 4,
-        "name": "Rachunki"
-      }
-    },
-    {
-      "id": 23,
-      "name": "Edukacja"
-    },
-    {
-      "id": 24,
-      "name": "Zakupy"
-    },
-    {
-      "id": 25,
-      "name": "Zakupy - jedzenie",
-      "parentCategory": {
-        "id": 24,
-        "name": "Zakupy"
-      }
-    },
-    {
-      "id": 26,
-      "name": "Remont domu"
-    },
-    {
-      "id": 27,
-      "name": "Crossover",
-      "parentCategory": {
-        "id": 1,
-        "name": "Przychody"
-      }
-    },
-    {
-      "id": 28,
-      "name": "CodersTrust - szkolenia",
-      "parentCategory": {
-        "id": 1,
-        "name": "Przychody"
-      }
-    },
-    {
-      "id": 29,
-      "name": "CodersTrust - licencja",
-      "parentCategory": {
-        "id": 1,
-        "name": "Przychody"
-      }
-    },
-    {
-      "id": 30,
-      "name": "Inne Przychody",
-      "parentCategory": {
-        "id": 1,
-        "name": "Przychody"
-      }
-    },
-    {
-      "id": 31,
-      "name": "Koszty prowadzenia firmy"
-    },
-    {
-      "id": 32,
-      "name": "ZUS",
-      "parentCategory": {
-        "id": 31,
-        "name": "Koszty prowadzenia firmy"
-      }
-    },
-    {
-      "id": 33,
-      "name": "Księgowość",
-      "parentCategory": {
-        "id": 31,
-        "name": "Koszty prowadzenia firmy"
-      }
-    },
-    {
-      "id": 34,
-      "name": "Podatek dochodowy",
-      "parentCategory": {
-        "id": 31,
-        "name": "Koszty prowadzenia firmy"
-      }
-    },
-    {
-      "id": 35,
-      "name": "VAT",
-      "parentCategory": {
-        "id": 31,
-        "name": "Koszty prowadzenia firmy"
-      }
-    },
-    {
-      "id": 36,
-      "name": "Leasing samochodu",
-      "parentCategory": {
-        "id": 31,
-        "name": "Koszty prowadzenia firmy"
-      }
-    },
-    {
-      "id": 37,
-      "name": "Samochód"
-    },
-    {
-      "id": 38,
-      "name": "Paliwo",
-      "parentCategory": {
-        "id": 37,
-        "name": "Samochód"
-      }
-    },
-    {
-      "id": 39,
       "name": "Zdrowie"
     },
     {
-      "id": 40,
+      "name": "Dziecko"
+    },
+    {
+      "name": "Rachunki"
+    },
+    {
+      "name": "TV",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Woda",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Leasing samochodu",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Utrzymanie domu"
+    },
+    {
+      "name": "Transport"
+    },
+    {
+      "name": "Przelewy między kontami"
+    },
+    {
       "name": "Wyjazdy"
     },
     {
-      "id": 41,
+      "name": "Wyjazdy - noclegi",
+      "parentCategoryName": "Wyjazdy"
+    },
+    {
+      "name": "Prąd",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Internet",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Rozrywka"
+    },
+    {
+      "name": "Sport"
+    },
+    {
+      "name": "Księgowość",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Opłaty i prowizje"
+    },
+    {
+      "name": "Edukacja"
+    },
+    {
+      "name": "Podatek dochodowy",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "VAT",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Samochód"
+    },
+    {
+      "name": "Śmieci",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Telefon",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Remont domu"
+    },
+    {
+      "name": "Paliwo",
+      "parentCategoryName": "Samochód"
+    },
+    {
       "name": "Inne Koszty"
     },
     {
-      "id": 42,
-      "name": "Opłaty i prowizje"
+      "name": "Gaz",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Wymiana walut"
+    },
+    {
+      "name": "Przychody"
+    },
+    {
+      "name": "Crossover",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "CodersTrust - szkolenia",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "CodersTrust - licencja",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "Leki, lekarze, higiena"
+    },
+    {
+      "name": "Zakupy"
+    },
+    {
+      "name": "Zakupy - jedzenie",
+      "parentCategoryName": "Zakupy"
+    },
+    {
+      "name": "Jedzenie",
+      "parentCategoryName": "Zakupy"
+    },
+    {
+      "name": "Rozliczenie miesiąca"
+    },
+    {
+      "name": "ZUS",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Inne Przychody",
+      "parentCategoryName": "Przychody"
     }
   ]
 }
