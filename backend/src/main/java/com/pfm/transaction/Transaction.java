@@ -32,8 +32,6 @@ public final class Transaction {
 
   private LocalDate date;
 
-  // TODO remove price, account from transaction table
-
   @OneToMany(cascade = CascadeType.ALL)
   private List<AccountPriceEntry> accountPriceEntries;
 

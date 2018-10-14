@@ -37,7 +37,7 @@ public class UserTest {
         .testing(Method.TO_STRING)
         .areWellImplemented();
   }
-  
+
   @Test
   public void shouldVerifyMissingCaseInEqualsId() {
     User user = User.builder().id(5L).build();

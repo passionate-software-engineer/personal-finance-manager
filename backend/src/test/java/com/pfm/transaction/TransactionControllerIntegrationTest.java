@@ -210,8 +210,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(3)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME))))
-        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(CATEGORY_ID_DOES_NOT_EXIST))))
-        .andExpect(jsonPath("$[2]", Matchers.is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST))));
+        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID)))
+        .andExpect(jsonPath("$[2]", Matchers.is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID)));
   }
 
   @Test
