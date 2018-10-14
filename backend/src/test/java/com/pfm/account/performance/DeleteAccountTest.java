@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.equalTo;
 import com.anarsoft.vmlens.concurrent.junit.ThreadCount;
 import com.pfm.account.Account;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Before;
 import org.junit.Test;
 
 public class DeleteAccountTest extends InvoicePerformanceTestBase {

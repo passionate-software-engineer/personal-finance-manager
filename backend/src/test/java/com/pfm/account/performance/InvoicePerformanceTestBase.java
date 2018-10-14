@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
-import com.anarsoft.vmlens.concurrent.junit.ThreadCount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.auth.AppUser;
@@ -49,8 +48,6 @@ public abstract class InvoicePerformanceTestBase {
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
   protected AppUser defaultAppUser = userMarian();
-
-  private boolean userAdded = false;
 
   protected String token;
 
