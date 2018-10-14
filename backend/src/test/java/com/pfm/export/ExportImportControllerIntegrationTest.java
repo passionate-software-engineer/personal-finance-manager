@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.junit.Test;
 
-public class ExportControllerIntegrationTest extends IntegrationTestsBase {
+public class ExportImportControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldExportTransactions() throws Exception {
