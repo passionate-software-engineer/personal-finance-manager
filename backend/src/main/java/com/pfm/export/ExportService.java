@@ -38,27 +38,94 @@ public class ExportService {
   private AccountService accountService;
   private CategoryService categoryService;
 
-  public ExportResult exportData() {
+  ExportResult exportData() {
     ExportResult result = new ExportResult();
-    result.setPeriods(new ArrayList<>());
 
-    List<ExportCategory> exportCategories = categoryService.getCategories()
-        .stream()
-        .map(category -> ExportCategory.builder()
-            .name(category.getName())
-            .parentCategoryName(category.getParentCategory() != null ? category.getParentCategory().getName() : null)
-            .build()
-        )
-        .collect(Collectors.toList());
-    result.setCategories(exportCategories);
+    result.setCategories(prepareExportCategories());
+    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts()));
+    result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState()));
 
+    List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions());
+    Map<String, List<ExportTransaction>> monthToTransactionMap = groupTransactionsByMonth(exportTransactions);
+
+    List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap);
+    result.setPeriods(periods);
+    result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
+    result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
+
+    // TODO - export / import filters
+
+    return result;
+  }
+
+  private List<ExportPeriod> generateExportPeriods(Map<String, List<ExportTransaction>> monthToTransactionMap) {
+    List<ExportAccount> accountsStateAtTheEndOfPeriod = convertToExportAccounts(accountService.getAccounts());
+
+    List<ExportPeriod> periods = new ArrayList<>();
+    // Algorithm is starting from the current account state - we know what are the values in the accounts at the time of doing export
+    // then every month (starting from most current) we subract values of transactions to get account states at the begining of period
+    for (Entry<String, List<ExportTransaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
+
+      List<ExportAccount> accountsStateAtTheBeginingOfPeriod = copyAccounts(accountsStateAtTheEndOfPeriod);
+      subtractTransactionsValuesFromAccountStateToCalculateStateBeforeTransactions(transactionsInMonth, accountsStateAtTheBeginingOfPeriod);
+
+      ExportPeriod period = ExportPeriod.builder()
+          .accountStateAtTheBeginingOfPeriod(accountsStateAtTheBeginingOfPeriod)
+          .accountStateAtTheEndOfPeriod(accountsStateAtTheEndOfPeriod)
+          .sumOfAllFundsAtTheBeginningOfPeriod(calculateSumOfFunds(accountsStateAtTheBeginingOfPeriod))
+          .sumOfAllFundsAtTheEndOfPeriod(calculateSumOfFunds(accountsStateAtTheEndOfPeriod))
+          .startDate(LocalDate.parse(transactionsInMonth.getKey()))
+          .endDate(LocalDate.parse(transactionsInMonth.getKey()).plusMonths(1).minusDays(1))
+          .transactions(transactionsInMonth.getValue())
+          .build();
+
+      transactionsInMonth.getValue().sort(Comparator.comparing(ExportTransaction::getDate));
+
+      periods.add(period);
+
+      // account state at the beginning of period is also account state at the end of the previous period (next we will process)
+      accountsStateAtTheEndOfPeriod = accountsStateAtTheBeginingOfPeriod;
+    }
+
+    return periods;
+  }
+
+  private void subtractTransactionsValuesFromAccountStateToCalculateStateBeforeTransactions(
+      Entry<String, List<ExportTransaction>> transactionsInMonth, List<ExportAccount> accountStateAtTheBeginingOfPeriod) {
+    Map<String, ExportAccount> accountNameToAccountMap = calculateAccountNameToAccountMap(accountStateAtTheBeginingOfPeriod);
+
+    // subtract transaction value from account state to calculate state before transaction
+    for (ExportTransaction transaction : transactionsInMonth.getValue()) {
+      for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+        ExportAccount account = accountNameToAccountMap.get(entry.getAccount());
+        account.setBalance(account.getBalance().subtract(entry.getPrice()));
+      }
+    }
+  }
+
+  private Map<String, ExportAccount> calculateAccountNameToAccountMap(List<ExportAccount> accountStateAtTheBeginingOfPeriod) {
+    Map<String, ExportAccount> accountNameToAccountMap = new HashMap<>();
+    for (ExportAccount account : accountStateAtTheBeginingOfPeriod) {
+      accountNameToAccountMap.put(account.getName(), account);
+    }
+    return accountNameToAccountMap;
+  }
+
+  private Map<String, List<ExportTransaction>> groupTransactionsByMonth(List<ExportTransaction> transactions) {
     Map<String, List<ExportTransaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
 
-    for (Transaction transaction : transactionService.getTransactions()) {
+    for (ExportTransaction transaction : transactions) {
       String key = getKey(transaction.getDate());
+      monthToTransactionMap.computeIfAbsent(key, input -> new ArrayList<>());
+      monthToTransactionMap.get(key).add(transaction);
+    }
+    return monthToTransactionMap;
+  }
 
-      monthToTransactionMap.computeIfAbsent(key, k -> new ArrayList<>());
+  private List<ExportTransaction> convertTransactionsToExportTransactions(List<Transaction> transactions) {
+    List<ExportTransaction> convertedTransactions = new ArrayList<>();
 
+    for (Transaction transaction : transactions) {
       ExportTransaction exportTransaction = ExportTransaction.builder()
           .description(transaction.getDescription())
           .date(transaction.getDate())
@@ -75,53 +142,21 @@ public class ExportService {
         );
       }
 
-      monthToTransactionMap.get(key).add(exportTransaction);
+      convertedTransactions.add(exportTransaction);
     }
 
-    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts()));
-    result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState()));
+    return convertedTransactions;
+  }
 
-    List<ExportAccount> accountsStateAtTheEndOfPeriod = convertToExportAccounts(accountService.getAccounts());
-
-    for (Entry<String, List<ExportTransaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
-
-      List<ExportAccount> accountStateAtTheBeginingOfPeriod = copyAccounts(accountsStateAtTheEndOfPeriod);
-      Map<String, ExportAccount> accountNameToAccountMap = new HashMap<>();
-      for (ExportAccount account : accountStateAtTheBeginingOfPeriod) {
-        accountNameToAccountMap.put(account.getName(), account);
-      }
-
-      // subtract transaction value from account state to calculate state before transaction
-      for (ExportTransaction transaction : transactionsInMonth.getValue()) {
-        for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-          ExportAccount account = accountNameToAccountMap.get(entry.getAccount());
-          account.setBalance(account.getBalance().subtract(entry.getPrice()));
-        }
-      }
-
-      ExportPeriod period = ExportPeriod.builder()
-          .accountStateAtTheBeginingOfPeriod(accountStateAtTheBeginingOfPeriod)
-          .accountStateAtTheEndOfPeriod(accountsStateAtTheEndOfPeriod)
-          .sumOfAllFundsAtTheBeginningOfPeriod(calculateSumOfFunds(accountStateAtTheBeginingOfPeriod))
-          .sumOfAllFundsAtTheEndOfPeriod(calculateSumOfFunds(accountsStateAtTheEndOfPeriod))
-          .startDate(LocalDate.parse(transactionsInMonth.getKey()))
-          .endDate(LocalDate.parse(transactionsInMonth.getKey()).plusMonths(1).minusDays(1))
-          .transactions(transactionsInMonth.getValue())
-          .build();
-
-      transactionsInMonth.getValue().sort(Comparator.comparing(ExportTransaction::getDate));
-
-      result.getPeriods().add(period);
-
-      accountsStateAtTheEndOfPeriod = copyAccounts(accountStateAtTheBeginingOfPeriod);
-    }
-
-    result.setInitialAccountsState(accountsStateAtTheEndOfPeriod);
-    result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
-
-    // TODO - export, import filters
-
-    return result;
+  private List<ExportCategory> prepareExportCategories() {
+    return categoryService.getCategories()
+        .stream()
+        .map(category -> ExportCategory.builder()
+            .name(category.getName())
+            .parentCategoryName(category.getParentCategory() != null ? category.getParentCategory().getName() : null)
+            .build()
+        )
+        .collect(Collectors.toList());
   }
 
   void importData(@RequestBody ExportResult inputData) {
