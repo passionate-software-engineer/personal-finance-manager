@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @CrossOrigin
-public interface ExportApi {
+public interface ExportImportApi {
 
   @GetMapping("export")
   ExportResult exportData();

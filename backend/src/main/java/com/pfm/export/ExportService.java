@@ -9,9 +9,6 @@ import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
-import com.pfm.helpers.topology.Graph;
-import com.pfm.helpers.topology.Graph.Node;
-import com.pfm.helpers.topology.TopologicalSortProvider;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -28,7 +25,6 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @AllArgsConstructor
@@ -53,7 +49,7 @@ public class ExportService {
     result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
 
-    // TODO - export / import filters
+    // TODO [enhancement] export / import filters
 
     return result;
   }
@@ -159,63 +155,6 @@ public class ExportService {
         .collect(Collectors.toList());
   }
 
-  void importData(@RequestBody ExportResult inputData) {
-    Map<String, Long> categoryNameToIdMap = new HashMap<>();
-
-    // TODO validate input - e.g. account states at the begining / end of period, overall account states, if all required fields are present
-
-    List<ExportCategory> categoriesSortedTopologically = sortCategoriesTopologically(inputData.getCategories());
-    for (ExportCategory category : categoriesSortedTopologically) {
-      Category categoryToSave = new Category();
-      categoryToSave.setName(category.getName());
-      if (category.getParentCategoryName() != null) {
-        categoryToSave.setParentCategory(Category.builder()
-            .id(categoryNameToIdMap.get(category.getParentCategoryName()))
-            .build()
-        );
-      }
-      Category savedCategory = categoryService.addCategory(categoryToSave);
-      categoryNameToIdMap.put(savedCategory.getName(), savedCategory.getId());
-    }
-
-    Map<String, Long> accountNameToIdMap = new HashMap<>();
-    for (ExportAccount account : inputData.getInitialAccountsState()) {
-      Account accountToSave = Account.builder()
-          .name(account.getName())
-          .balance(account.getBalance())
-          .build();
-
-      Account savedAccount = accountService.addAccount(accountToSave);
-      accountNameToIdMap.put(savedAccount.getName(), savedAccount.getId());
-    }
-
-    for (ExportPeriod period : inputData.getPeriods()) {
-      for (ExportTransaction transaction : period.getTransactions()) {
-        Transaction newTransaction = Transaction.builder()
-            .description(transaction.getDescription())
-            .accountPriceEntries(new ArrayList<>())
-            .date(transaction.getDate())
-            .categoryId(categoryNameToIdMap.get(transaction.getCategory()))
-            .build();
-
-        for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-          Long accountId = accountNameToIdMap.get(entry.getAccount());
-
-          newTransaction.getAccountPriceEntries().add(
-              AccountPriceEntry.builder()
-                  .accountId(accountId)
-                  .price(entry.getPrice())
-                  .build()
-          );
-        }
-
-        transactionService.addTransaction(newTransaction);
-      }
-    }
-
-    // TODO add checking account state during import based on period start and end balances
-  }
-
   private List<ExportAccount> convertToExportAccounts(List<Account> accounts) {
     return accounts.stream()
         .map(account -> ExportAccount.builder()
@@ -240,27 +179,8 @@ public class ExportService {
     return String.format("%04d-%02d-01", date.getYear(), date.getMonth().getValue());
   }
 
-  private List<ExportCategory> sortCategoriesTopologically(List<ExportCategory> categories) {
-    Graph<ExportCategory> graph = new Graph<>();
-
-    Map<String, Node<ExportCategory>> categoryNameToNodeMap = new HashMap<>();
-
-    for (ExportCategory category : categories) {
-      Node<ExportCategory> node = new Node<>(category);
-      graph.addNode(node);
-      categoryNameToNodeMap.put(category.getName(), node);
-    }
-
-    for (ExportCategory category : categories) {
-      if (category.getParentCategoryName() != null) {
-        categoryNameToNodeMap.get(category.getParentCategoryName()).addEdge(categoryNameToNodeMap.get(category.getName()));
-      }
-    }
-
-    return TopologicalSortProvider.sort(graph).stream().map(Node::getObject).collect(Collectors.toList());
-  }
-
   private BigDecimal calculateSumOfFunds(List<ExportAccount> accounts) {
     return accounts.stream().map(ExportAccount::getBalance).reduce(BigDecimal.ZERO, BigDecimal::add);
   }
+
 }
