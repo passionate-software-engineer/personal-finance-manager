@@ -79,7 +79,7 @@ public class TransactionValidatorTest {
     // then
     assertThat(result, hasSize(5));
     assertThat(result.get(0), is(getMessage(EMPTY_TRANSACTION_NAME)));
-    assertThat(result.get(1), is(getMessage(CATEGORY_ID_DOES_NOT_EXIST)));
+    assertThat(result.get(1), is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID));
     assertThat(result.get(2), is(getMessage(EMPTY_TRANSACTION_ACCOUNT)));
     assertThat(result.get(3), is(getMessage(EMPTY_TRANSACTION_PRICE)));
     assertThat(result.get(4), is(getMessage(EMPTY_TRANSACTION_DATE)));
@@ -97,7 +97,7 @@ public class TransactionValidatorTest {
     assertThat(result, hasSize(5));
     assertThat(result.get(0), is(getMessage(EMPTY_TRANSACTION_NAME)));
     assertThat(result.get(1), is(getMessage(EMPTY_TRANSACTION_CATEGORY)));
-    assertThat(result.get(2), is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST)));
+    assertThat(result.get(2), is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID));
     assertThat(result.get(3), is(getMessage(EMPTY_TRANSACTION_PRICE)));
     assertThat(result.get(4), is(getMessage(EMPTY_TRANSACTION_DATE)));
   }

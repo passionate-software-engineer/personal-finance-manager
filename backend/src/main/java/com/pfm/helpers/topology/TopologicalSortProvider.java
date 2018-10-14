@@ -19,24 +19,20 @@ public class TopologicalSortProvider {
       }
     }
 
-    //while nodesWithNoIncomingEdges is non-empty do
     while (!nodesWithNoIncomingEdges.isEmpty()) {
-      //remove a node currentNode from nodesWithNoIncomingEdges
+      // take first node from nodes not having incoming edges, add it to result list and remove from list of nodes to review
       Node<T> currentNode = nodesWithNoIncomingEdges.iterator().next();
+      sortedElements.add(currentNode);
       nodesWithNoIncomingEdges.remove(currentNode);
 
-      //insert currentNode into sortedElements
-      sortedElements.add(currentNode);
-
-      //for each node m with an edge e from currentNode to m do
+      // remove all edges from currentNode to other nodes
       for (Iterator<Edge<T>> it = currentNode.getOutEdges().iterator(); it.hasNext(); ) {
-        //remove edge from the graph
         Edge<T> edge = it.next();
-        Node<T> nextNode = edge.getTo();
         it.remove(); // Remove edge from currentNode
+
+        Node<T> nextNode = edge.getTo();
         nextNode.getInEdges().remove(edge); // Remove incoming edge from nextNode
 
-        //if nextNode has no other incoming edges then insert nextNode into nodesWithNoIncomingEdges
         if (nextNode.getInEdges().isEmpty()) {
           nodesWithNoIncomingEdges.add(nextNode);
         }

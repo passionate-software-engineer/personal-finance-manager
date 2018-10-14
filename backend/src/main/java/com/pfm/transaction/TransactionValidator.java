@@ -34,18 +34,17 @@ public class TransactionValidator {
     if (transactionRequest.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
     } else if (!categoryService.idExist(transactionRequest.getCategoryId())) {
-      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST));
+      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + transactionRequest.getCategoryId());
     }
 
     if (transactionRequest.getAccountPriceEntries() == null || transactionRequest.getAccountPriceEntries().size() == 0) {
       validationErrors.add(getMessage(AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED));
     } else {
       for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
-        // TODO add information which entry is wrong
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
         } else if (!accountService.idExist(entry.getAccountId())) {
-          validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST));
+          validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + entry.getAccountId());
         }
 
         if (entry.getPrice() == null) {
