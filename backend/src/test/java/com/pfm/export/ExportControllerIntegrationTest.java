@@ -99,6 +99,8 @@ public class ExportControllerIntegrationTest extends IntegrationTestsBase {
         .startDate(LocalDate.MIN)
         .endDate(LocalDate.MAX)
         .transactions(Collections.singletonList(transaction))
+        .sumOfAllFundsAtTheBeginningOfPeriod(BigDecimal.TEN)
+        .sumOfAllFundsAtTheEndOfPeriod(BigDecimal.TEN)
         .build();
 
     input.setPeriods(Collections.singletonList(period));

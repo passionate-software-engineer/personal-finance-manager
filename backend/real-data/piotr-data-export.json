@@ -1,4 +1,6 @@
 {
+  "sumOfAllFundsAtTheBeginningOfExport": "114742.44",
+  "sumOfAllFundsAtTheEndOfExport": "259105.53",
   "initialAccountsState": [
     {
       "name": "kantor Alior - PLN",
@@ -137,6 +139,154 @@
     {
       "name": "Santander",
       "balance": "1032.32"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Dziecko"
+    },
+    {
+      "name": "Rozrywka"
+    },
+    {
+      "name": "Rachunki"
+    },
+    {
+      "name": "TV",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Woda",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Nurkowanie"
+    },
+    {
+      "name": "Wymiana walut"
+    },
+    {
+      "name": "Sport"
+    },
+    {
+      "name": "Leki, lekarze, higiena"
+    },
+    {
+      "name": "Zdrowie"
+    },
+    {
+      "name": "Rozliczenie miesiąca"
+    },
+    {
+      "name": "Przychody"
+    },
+    {
+      "name": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Prąd",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Internet",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Remont domu"
+    },
+    {
+      "name": "Crossover",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "Księgowość",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Podatek dochodowy",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "VAT",
+      "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Zakupy"
+    },
+    {
+      "name": "Zakupy - jedzenie",
+      "parentCategoryName": "Zakupy"
+    },
+    {
+      "name": "Wyjazdy"
+    },
+    {
+      "name": "Wyjazdy - noclegi",
+      "parentCategoryName": "Wyjazdy"
+    },
+    {
+      "name": "CodersTrust - szkolenia",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "Transport"
+    },
+    {
+      "name": "Inne Koszty"
+    },
+    {
+      "name": "Opłaty i prowizje"
+    },
+    {
+      "name": "Edukacja"
+    },
+    {
+      "name": "Samochód"
+    },
+    {
+      "name": "Telefon",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Śmieci",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Kosmetyki"
+    },
+    {
+      "name": "Jedzenie",
+      "parentCategoryName": "Zakupy"
+    },
+    {
+      "name": "CodersTrust - licencja",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "Leasing samochodu",
+      "parentCategoryName": "Samochód"
+    },
+    {
+      "name": "Paliwo",
+      "parentCategoryName": "Samochód"
+    },
+    {
+      "name": "Utrzymanie domu"
+    },
+    {
+      "name": "Gaz",
+      "parentCategoryName": "Rachunki"
+    },
+    {
+      "name": "Przelewy między kontami"
+    },
+    {
+      "name": "Inne Przychody",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "ZUS",
+      "parentCategoryName": "Koszty prowadzenia firmy"
     }
   ],
   "periods": [
@@ -817,7 +967,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "269579.97",
+      "sumOfAllFundsAtTheEndOfPeriod": "259105.53"
     },
     {
       "startDate": "2018-09-01",
@@ -1694,7 +1846,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "263317.75",
+      "sumOfAllFundsAtTheEndOfPeriod": "269579.97"
     },
     {
       "startDate": "2018-08-01",
@@ -2729,7 +2883,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "233748.40",
+      "sumOfAllFundsAtTheEndOfPeriod": "263317.75"
     },
     {
       "startDate": "2018-07-01",
@@ -3463,7 +3619,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "244055.83",
+      "sumOfAllFundsAtTheEndOfPeriod": "233748.40"
     },
     {
       "startDate": "2018-06-01",
@@ -4257,7 +4415,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "213493.24",
+      "sumOfAllFundsAtTheEndOfPeriod": "244055.83"
     },
     {
       "startDate": "2018-05-01",
@@ -4806,7 +4966,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "190373.93",
+      "sumOfAllFundsAtTheEndOfPeriod": "213493.24"
     },
     {
       "startDate": "2018-04-01",
@@ -5336,7 +5498,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "189114.82",
+      "sumOfAllFundsAtTheEndOfPeriod": "190373.93"
     },
     {
       "startDate": "2018-03-01",
@@ -6221,7 +6385,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "152160.94",
+      "sumOfAllFundsAtTheEndOfPeriod": "189114.82"
     },
     {
       "startDate": "2018-02-01",
@@ -6902,7 +7068,9 @@
             }
           ]
         }
-      ]
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "116260.81",
+      "sumOfAllFundsAtTheEndOfPeriod": "152160.94"
     },
     {
       "startDate": "2018-01-01",
@@ -7790,155 +7958,9 @@
             }
           ]
         }
-      ]
-    }
-  ],
-  "categories": [
-    {
-      "name": "Dziecko"
-    },
-    {
-      "name": "Rozrywka"
-    },
-    {
-      "name": "Rachunki"
-    },
-    {
-      "name": "TV",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Woda",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Nurkowanie"
-    },
-    {
-      "name": "Wymiana walut"
-    },
-    {
-      "name": "Sport"
-    },
-    {
-      "name": "Leki, lekarze, higiena"
-    },
-    {
-      "name": "Zdrowie"
-    },
-    {
-      "name": "Rozliczenie miesiąca"
-    },
-    {
-      "name": "Przychody"
-    },
-    {
-      "name": "Koszty prowadzenia firmy"
-    },
-    {
-      "name": "Leasing samochodu",
-      "parentCategoryName": "Samochód"
-    },
-    {
-      "name": "Prąd",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Internet",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Remont domu"
-    },
-    {
-      "name": "Crossover",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "Księgowość",
-      "parentCategoryName": "Koszty prowadzenia firmy"
-    },
-    {
-      "name": "Podatek dochodowy",
-      "parentCategoryName": "Koszty prowadzenia firmy"
-    },
-    {
-      "name": "VAT",
-      "parentCategoryName": "Koszty prowadzenia firmy"
-    },
-    {
-      "name": "Zakupy"
-    },
-    {
-      "name": "Zakupy - jedzenie",
-      "parentCategoryName": "Zakupy"
-    },
-    {
-      "name": "Wyjazdy"
-    },
-    {
-      "name": "Wyjazdy - noclegi",
-      "parentCategoryName": "Wyjazdy"
-    },
-    {
-      "name": "CodersTrust - szkolenia",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "Transport"
-    },
-    {
-      "name": "Inne Koszty"
-    },
-    {
-      "name": "Opłaty i prowizje"
-    },
-    {
-      "name": "Edukacja"
-    },
-    {
-      "name": "Samochód"
-    },
-    {
-      "name": "Telefon",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Śmieci",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Kosmetyki"
-    },
-    {
-      "name": "Jedzenie",
-      "parentCategoryName": "Zakupy"
-    },
-    {
-      "name": "CodersTrust - licencja",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "Paliwo",
-      "parentCategoryName": "Samochód"
-    },
-    {
-      "name": "Utrzymanie domu"
-    },
-    {
-      "name": "Gaz",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Przelewy między kontami"
-    },
-    {
-      "name": "Inne Przychody",
-      "parentCategoryName": "Przychody"
-    },
-    {
-      "name": "ZUS",
-      "parentCategoryName": "Koszty prowadzenia firmy"
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": "114742.44",
+      "sumOfAllFundsAtTheEndOfPeriod": "116260.81"
     }
   ]
 }

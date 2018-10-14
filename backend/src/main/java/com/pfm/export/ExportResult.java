@@ -15,11 +15,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 final class ExportResult {
 
+  private BigDecimal sumOfAllFundsAtTheBeginningOfExport;
+  private BigDecimal sumOfAllFundsAtTheEndOfExport;
+
   private List<ExportAccount> initialAccountsState = new ArrayList<>();
   private List<ExportAccount> finalAccountsState = new ArrayList<>();
 
-  private List<ExportPeriod> periods = new ArrayList<>();
   private List<ExportCategory> categories = new ArrayList<>();
+
+  private List<ExportPeriod> periods = new ArrayList<>();
 
   @Data
   @Builder
@@ -39,7 +43,8 @@ final class ExportResult {
     @Builder.Default
     private Collection<ExportTransaction> transactions = new ArrayList<>();
 
-    // TODO add sum of all money
+    private BigDecimal sumOfAllFundsAtTheBeginningOfPeriod;
+    private BigDecimal sumOfAllFundsAtTheEndOfPeriod;
 
   }
 
