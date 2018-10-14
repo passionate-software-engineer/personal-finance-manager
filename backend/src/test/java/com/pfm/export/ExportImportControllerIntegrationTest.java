@@ -4,8 +4,12 @@ import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.test.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.category.Category;
@@ -26,10 +30,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
   @Test
   public void shouldExportTransactions() throws Exception {
-    //given
+    // given
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
-    long pizzaCategoryId = callRestToAddCategoryAndReturnId(Category.builder()
+    callRestToAddCategoryAndReturnId(Category.builder()
         .name("Pizza")
         .parentCategory(Category.builder()
             .id(foodCategoryId)
@@ -39,18 +43,44 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     );
 
     Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
-    long transactionId = callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId);
+    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId);
 
-    Transaction transactionToAddPizza = foodTransactionWithNoAccountAndNoCategory();
-    setTransactionIdAccountIdCategoryId(transactionToAddPizza, transactionId, jacekAccountId, pizzaCategoryId);
-
-    //when
+    // when
+    // then
     mockMvc.perform(get(EXPORT_SERVICE_PATH))
-        .andExpect(status().isOk());
-
-    //then
-
-    // TODO add assertions
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport", is("1000.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport", is("1010.00")))
+        .andExpect(jsonPath("initialAccountsState", hasSize(1)))
+        .andExpect(jsonPath("initialAccountsState[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("initialAccountsState[0].balance", is("1000.00")))
+        .andExpect(jsonPath("finalAccountsState", hasSize(1)))
+        .andExpect(jsonPath("finalAccountsState[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("finalAccountsState[0].balance", is("1010.00")))
+        .andExpect(jsonPath("categories", hasSize(2)))
+        .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
+        .andExpect(jsonPath("categories[1].name", is("Pizza")))
+        .andExpect(jsonPath("categories[1].parentCategoryName", is(categoryFood().getName())))
+        .andExpect(jsonPath("periods", hasSize(1)))
+        .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
+        .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod", is("1000.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod", is("1010.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginingOfPeriod", hasSize(1)))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginingOfPeriod[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginingOfPeriod[0].balance", is("1000.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod", hasSize(1)))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].balance", is("1010.00")))
+        .andExpect(jsonPath("periods[0].transactions", hasSize(1)))
+        .andExpect(jsonPath("periods[0].transactions[0].description", is(transactionToAddFood.getDescription())))
+        .andExpect(jsonPath("periods[0].transactions[0].category", is(categoryFood().getName())))
+        .andExpect(jsonPath("periods[0].transactions[0].date", is(transactionToAddFood.getDate().toString())))
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries", hasSize(1)))
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].account", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")))
+        .andDo(print());
   }
 
   @Test
