@@ -36,7 +36,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
 
-  boolean userAdded = false;
+  private static boolean userAdded = false;
 
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();

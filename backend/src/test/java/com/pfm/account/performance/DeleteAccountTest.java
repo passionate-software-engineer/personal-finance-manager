@@ -11,6 +11,7 @@ import org.junit.Test;
 public class DeleteAccountTest extends InvoicePerformanceTestBase {
 
   private AtomicInteger counter = new AtomicInteger(0);
+  private volatile String token;
 
   @Test
   @ThreadCount(THREAD_COUNT)
@@ -19,7 +20,7 @@ public class DeleteAccountTest extends InvoicePerformanceTestBase {
     Account account = accounts.get(counter.getAndAdd(2));
     accounts.remove(account);
 
-    String token = authenticateUserAndGetToken(defaultAppUser);
+    token = authenticateUserAndGetToken(defaultAppUser);
 
     collector.checkThat(
         given()

@@ -12,6 +12,7 @@ import org.junit.Test;
 public class UpdateAccountTest extends InvoicePerformanceTestBase {
 
   private AtomicInteger counter = new AtomicInteger(0);
+  private volatile String token;
 
   @Test
   @ThreadCount(THREAD_COUNT)
@@ -21,7 +22,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
     account.setBalance(getRandomBalance());
     account.setName(getRandomName());
 
-    String token = authenticateUserAndGetToken(defaultAppUser);
+    token = authenticateUserAndGetToken(defaultAppUser);
 
     int statusCode = given()
         .contentType(ContentType.JSON)

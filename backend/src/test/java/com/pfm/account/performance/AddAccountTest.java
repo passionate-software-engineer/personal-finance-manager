@@ -10,11 +10,13 @@ import org.junit.Test;
 
 public class AddAccountTest extends InvoicePerformanceTestBase {
 
+  private volatile String token;
+
   @Test
   @ThreadCount(THREAD_COUNT)
   public void shouldAddSimultaneouslyMultipleAccounts() throws Exception {
 
-    String token = authenticateUserAndGetToken(defaultAppUser);
+     token = authenticateUserAndGetToken(defaultAppUser);
 
     for (int i = 0; i < 10; ++i) {
 
