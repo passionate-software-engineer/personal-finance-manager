@@ -4,15 +4,20 @@ import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.test.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.account.Account;
+import com.pfm.account.AccountService;
 import com.pfm.category.Category;
+import com.pfm.category.CategoryService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
@@ -20,13 +25,25 @@ import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.test.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExportImportControllerIntegrationTest extends IntegrationTestsBase {
+
+  @Autowired
+  private AccountService accountService;
+
+  @Autowired
+  private CategoryService categoryService;
+
+  @Autowired
+  private TransactionService transactionService;
 
   @Test
   public void shouldExportTransactions() throws Exception {
@@ -79,13 +96,12 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods[0].transactions[0].date", is(transactionToAddFood.getDate().toString())))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries", hasSize(1)))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].account", is(accountJacekBalance1000().getName())))
-        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")))
-        .andDo(print());
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")));
   }
 
   @Test
   public void shouldImportTransactions() throws Exception {
-    //given
+    // given
     ExportResult input = new ExportResult();
     input.setCategories(Arrays.asList(
         ExportCategory.builder()
@@ -112,8 +128,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     input.setFinalAccountsState(Arrays.asList(aliorAccount, ideaBankAccount));
 
     ExportAccountPriceEntry entry = ExportAccountPriceEntry.builder()
-        .account(aliorAccount.getName()) // TODO add check to detect magic strings & numbers
-        .price(BigDecimal.valueOf(124))
+        .account(aliorAccount.getName()) // TODO add checkstyle check to detect magic strings & numbers
+        .price(BigDecimal.valueOf(-124))
         .build();
 
     ExportTransaction transaction = ExportTransaction.builder()
@@ -135,16 +151,43 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     input.setPeriods(Collections.singletonList(period));
 
-    //when
+    // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
         .content(json(input))
         .contentType(JSON_CONTENT_TYPE)
     )
         .andExpect(status().isOk());
 
-    //then
+    // then
 
-    // TODO add assertions
+    List<Account> accounts = accountService.getAccounts();
+    assertThat(accounts, hasSize(2));
+    assertThat(accounts.get(0).getName(), is(aliorAccount.getName()));
+    assertThat(accounts.get(0).getBalance(), is(aliorAccount.getBalance().add(entry.getPrice()).setScale(2, HALF_UP)));
+    assertThat(accounts.get(1).getName(), is(ideaBankAccount.getName()));
+    // TODO handle rounding in single place - create helper class and use everywhere, add method to format BigDecimal to string
+    assertThat(accounts.get(1).getBalance(), is(ideaBankAccount.getBalance().setScale(2, HALF_UP)));
+
+    List<Category> categories = categoryService.getCategories();
+    assertThat(categories, hasSize(2));
+    assertThat(categories.get(0).getName(), is(input.getCategories().get(0).getName()));
+    assertThat(categories.get(0).getParentCategory(), is(nullValue()));
+    assertThat(categories.get(1).getName(), is(input.getCategories().get(1).getName()));
+    assertThat(categories.get(1).getParentCategory().getName(), is(input.getCategories().get(1).getParentCategoryName()));
+
+    List<Transaction> transactions = transactionService.getTransactions();
+    assertThat(transactions, hasSize(1));
+
+    Transaction createdTransaction = transactions.get(0);
+    assertThat(createdTransaction.getDate(), is(transaction.getDate()));
+    assertThat(createdTransaction.getDescription(), is(transaction.getDescription()));
+    assertThat(categoryService.getCategoryById(createdTransaction.getCategoryId()).orElseThrow(AssertionError::new).getName(),
+        is(transaction.getCategory()));
+    assertThat(createdTransaction.getAccountPriceEntries(), hasSize(1));
+    assertThat(createdTransaction.getAccountPriceEntries().get(0).getPrice(), is(entry.getPrice().setScale(2, HALF_UP)));
+    assertThat(
+        accountService.getAccountById(createdTransaction.getAccountPriceEntries().get(0).getAccountId()).orElseThrow(AssertionError::new).getName(),
+        is(entry.getAccount()));
   }
 
 }
