@@ -36,8 +36,6 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
 
-  private static boolean userAdded = false;
-
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
@@ -48,6 +46,8 @@ public abstract class InvoicePerformanceTestBase {
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
   protected AppUser defaultAppUser = userMarian();
+
+  private boolean userAdded = false;
 
   @Autowired
   protected ObjectMapper mapper;
