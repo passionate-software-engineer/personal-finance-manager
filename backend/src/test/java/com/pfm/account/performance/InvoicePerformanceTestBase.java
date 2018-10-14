@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
+import com.anarsoft.vmlens.concurrent.junit.ThreadCount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.auth.AppUser;
@@ -36,6 +37,8 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
 
+  //TODO register user only once, now user is registered many times in before method
+
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
@@ -48,6 +51,8 @@ public abstract class InvoicePerformanceTestBase {
   protected AppUser defaultAppUser = userMarian();
 
   private boolean userAdded = false;
+
+  protected String token;
 
   @Autowired
   protected ObjectMapper mapper;
@@ -64,8 +69,6 @@ public abstract class InvoicePerformanceTestBase {
   private int port;
 
   protected Account[] getAccounts() throws Exception {
-
-    String token = authenticateUserAndGetToken(defaultAppUser);
 
     return given()
         .when()
@@ -97,17 +100,11 @@ public abstract class InvoicePerformanceTestBase {
 
   @PostConstruct
   public void before() throws Exception {
-
-    if (!userAdded) {
-      given()
-          .contentType(ContentType.JSON)
-          .body(defaultAppUser)
-          .post(usersServicePath() + "/register");
-
-      userAdded = true;
-    }
-
-    String token = authenticateUserAndGetToken(defaultAppUser);
+    given()
+        .contentType(ContentType.JSON)
+        .body(defaultAppUser)
+        .post(usersServicePath() + "/register");
+    token = authenticateUserAndGetToken(defaultAppUser);
 
     for (int i = 0; i < 10; ++i) {
 
@@ -138,8 +135,6 @@ public abstract class InvoicePerformanceTestBase {
 
     Account[] accountsFromService = getAccounts();
     assertThat(accountsFromService.length, is(accounts.size()));
-
-    String token = authenticateUserAndGetToken(defaultAppUser);
 
     int index = 0;
     for (Account account : accountsFromService) {
