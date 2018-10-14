@@ -31,12 +31,11 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
+// TODO imporove all those tests
 // TODO those tests takes lots of time - run it separetly not as Unit tests
 @RunWith(ConcurrentTestRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
-
-  //TODO register user only once, now user is registered many times in before method
 
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
