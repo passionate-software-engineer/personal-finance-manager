@@ -14,7 +14,7 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
   @ThreadCount(THREAD_COUNT)
   public void shouldAddSimultaneouslyMultipleAccounts() throws Exception {
 
-    String token = authenticateUserAndGetToken(defaultUserek);
+    String token = authenticateUserAndGetToken(defaultAppUser);
 
     for (int i = 0; i < 10; ++i) {
 

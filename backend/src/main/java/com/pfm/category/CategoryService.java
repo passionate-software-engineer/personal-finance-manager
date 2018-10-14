@@ -20,7 +20,8 @@ public class CategoryService {
     return categoryRepository.findByIdAndUserId(id, userId);
   }
 
-  //leave this method for transactionApi to work now
+  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
+  //Its used sometimes in places where validation is done e.g. in validator
   public Optional<Category> getCategoryById(long id) {
     return categoryRepository.findById(id);
   }

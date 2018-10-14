@@ -1,14 +1,14 @@
 ALTER TABLE account
-ADD user_id BIGINT REFERENCES userek (id);
+ADD user_id BIGINT REFERENCES app_user (id);
 
 ALTER TABLE category
-ADD user_id BIGINT REFERENCES userek (id);
+ADD user_id BIGINT REFERENCES app_user (id);
 
 ALTER TABLE transaction
-ADD user_id BIGINT REFERENCES userek (id);
+ADD user_id BIGINT REFERENCES app_user (id);
 
 ALTER TABLE filter
-ADD user_id BIGINT REFERENCES userek (id);
+ADD user_id BIGINT REFERENCES app_user (id);
 
 CREATE INDEX idx_user_id_account_table
 ON account (user_id);

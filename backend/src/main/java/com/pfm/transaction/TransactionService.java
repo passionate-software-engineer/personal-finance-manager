@@ -21,6 +21,8 @@ public class TransactionService {
   private TransactionRepository transactionRepository;
   private AccountService accountService;
 
+  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
+  //Its used sometimes in places where validation is done e.g. in validator
   public Optional<Transaction> getTransactionById(long id) {
     return transactionRepository.findById(id);
   }

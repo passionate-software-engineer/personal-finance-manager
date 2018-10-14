@@ -1,11 +1,11 @@
 package com.pfm.helpers;
 
-import com.pfm.auth.Userek;
+import com.pfm.auth.AppUser;
 
 public class TestUsersProvider {
 
-  public static Userek userMarian() {
-    return Userek.builder()
+  public static AppUser userMarian() {
+    return AppUser.builder()
         .username("Marian")
         .password("Marian")
         .firstName("Marian")
@@ -13,8 +13,8 @@ public class TestUsersProvider {
         .build();
   }
 
-  public static Userek userZdzislaw() {
-    return Userek.builder()
+  public static AppUser userZdzislaw() {
+    return AppUser.builder()
         .firstName("Zdzislaw")
         .lastName("Krecina")
         .username("Zdzislaw")

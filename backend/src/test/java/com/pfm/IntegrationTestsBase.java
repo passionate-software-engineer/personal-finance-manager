@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.auth.AppUser;
 import com.pfm.auth.AuthResponse;
-import com.pfm.auth.Userek;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
@@ -397,30 +397,30 @@ public abstract class IntegrationTestsBase {
 
   //users
 
-  public long callRestToRegisterUserAndReturnUserId(Userek userek) throws Exception {
+  public long callRestToRegisterUserAndReturnUserId(AppUser appUser) throws Exception {
     String response =
         mockMvc
             .perform(post(USERS_SERVICE_PATH + "/register")
-                .content(json(userek))
+                .content(json(appUser))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
     return Long.parseLong(response);
   }
 
-  public String callRestToAuthenticateUserAndReturnToken(Userek userek) throws Exception {
+  public String callRestToAuthenticateUserAndReturnToken(AppUser appUser) throws Exception {
     String response = mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(userek)))
+        .content(json(appUser)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
     return jsonToAuthResponse(response).getToken();
   }
 
-  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(Userek userek) throws Exception {
-    callRestToRegisterUserAndReturnUserId(userek);
-    return callRestToAuthenticateUserAndReturnToken(userek);
+  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(AppUser appUser) throws Exception {
+    callRestToRegisterUserAndReturnUserId(appUser);
+    return callRestToAuthenticateUserAndReturnToken(appUser);
   }
 
   private AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {

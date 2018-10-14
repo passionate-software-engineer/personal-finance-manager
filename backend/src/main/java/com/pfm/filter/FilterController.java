@@ -33,7 +33,7 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<Filter> getFilterById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<Filter> getFilterById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving filter with id: {}", id);
     Optional<Filter> filter = filterService.getFilterByIdAndByUserId(id, userId);
 
@@ -47,12 +47,12 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<List<Filter>> getFilters(@RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<List<Filter>> getFilters(@RequestAttribute(value = "userId") long userId) {
     return ResponseEntity.ok(filterService.getAllFilters(userId));
   }
 
   @Override
-  public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Adding filter to the database");
 
     List<String> validationResult = filterValidator.validateFilterRequest(filterRequest, userId);
@@ -71,7 +71,7 @@ public class FilterController implements FilterApi {
 
   @Override
   public ResponseEntity<?> updateFilter(@PathVariable long id, @RequestBody FilterRequest filterRequest,
-      @RequestAttribute(value = "userId") Long userId) {
+      @RequestAttribute(value = "userId") long userId) {
     if (!filterService.getFilterByIdAndByUserId(id, userId).isPresent()) {
       log.info("No filter with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
@@ -92,7 +92,7 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteFilter(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> deleteFilter(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
     if (!filterService.getFilterByIdAndByUserId(id, userId).isPresent()) {
       log.info("No filter with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();

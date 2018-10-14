@@ -50,8 +50,6 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.21.0'
     testCompile 'pl.pojo:pojo-tester:0.7.6'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
-   // testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.0-beta.5'
-  //  testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '1.7.4'
 
     compile 'com.h2database:h2:1.4.197'
     compile 'io.springfox:springfox-swagger-ui:2.9.2'
@@ -59,7 +57,6 @@ dependencies {
     compile "org.flywaydb:flyway-core:5.1.4"
     compile 'org.postgresql:postgresql:42.2.5'
     compile 'org.projectlombok:lombok:1.16.0'
-//    compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-starter-test'
@@ -112,7 +109,7 @@ jacocoTestCoverageVerification {
         }
         rule {
             element = 'CLASS'
-            excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
+            excludes = ['com.pfm.filters.LoggingFilter',"com.pfm.auth.UserService"] // TODO cover with tests
             limit {
                 counter = 'BRANCH'
                 minimum = 1.00
@@ -120,7 +117,7 @@ jacocoTestCoverageVerification {
         }
         rule {
             element = 'CLASS'
-            excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
+            excludes = ['com.pfm.filters.LoggingFilter',"com.pfm.auth.UserService"] // TODO cover with tests
             limit {
                 counter = 'LINE'
                 minimum = 1.00

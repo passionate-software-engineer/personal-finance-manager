@@ -16,6 +16,8 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
+  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
+  //Its used sometimes in places where validation is done e.g. in validator
   public Optional<Account> getAccountById(long id) {
     return accountRepository.findById(id);
   }

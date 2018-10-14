@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-//Todo find proper name for the class if the name is "User" then postgress dont accept it
-public final class Userek {
+public final class AppUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

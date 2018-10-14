@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class TokenService {
 
-  //TODO is this correct or this field should be static?
+  // Is this correct or this field should be static? Its easier to test this way and Spring ensure that this class will be incjected as sinleton
   private HashMap<String, Token> tokens = new HashMap<>();
 
-  public String generateToken(Userek userek) {
+  public String generateToken(AppUser appUser) {
 
     UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), userek.getId(), LocalDateTime.now());
+    Token token = new Token(uuid.toString(), appUser.getId(), LocalDateTime.now());
     tokens.put(token.getToken(), token);
     return token.getToken();
   }
@@ -30,7 +30,7 @@ public class TokenService {
       return false;
     }
 
-    //TODO should return false or throw exepction ?
+    //should return false or throw exepction ?
     LocalDateTime creationTime = tokenFromDb.getCreationTime();
     if (creationTime == null) {
       throw new IllegalStateException("Token creation time does not exist");

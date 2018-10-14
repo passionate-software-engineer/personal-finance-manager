@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @CrossOrigin
 @Api(value = "Category", description = "Controller used to list / add / update / delete categories.")
+//TODO add categoryApi class like in Account
 public class CategoryController {
 
   private CategoryService categoryService;
@@ -35,7 +36,7 @@ public class CategoryController {
   private TokenService tokenService;
 
   //TODO change to user builder
-  public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, Long userId) {
+  public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     if (parentCategoryId == null) {
@@ -47,7 +48,7 @@ public class CategoryController {
 
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{id}")
-  public ResponseEntity<Category> getCategoryById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<Category> getCategoryById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
 
     log.info("Retrieving category with id: {}", id);
     Optional<Category> category = categoryService.getCategoryByIdAndUserId(id, userId);
@@ -63,7 +64,7 @@ public class CategoryController {
 
   @ApiOperation(value = "Get list of categories", response = Category.class, responseContainer = "List")
   @GetMapping
-  public ResponseEntity<List<Category>> getCategories(@RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<List<Category>> getCategories(@RequestAttribute(value = "userId") long userId) {
 
     log.info("Retrieving categories from database");
     List<Category> categories = categoryService.getCategories(userId);
@@ -73,7 +74,7 @@ public class CategoryController {
 
   @ApiOperation(value = "Create a new category", response = Long.class)
   @PostMapping
-  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") long userId) {
 
     log.info("Saving category {} to the database", categoryRequest.getName());
     Category category = convertToCategory(categoryRequest, userId);
@@ -93,7 +94,7 @@ public class CategoryController {
   @ApiOperation(value = "Update an existing category", response = Void.class)
   @PutMapping(value = "/{id}")
   public ResponseEntity<?> updateCategory(@PathVariable long id, @RequestBody CategoryRequest categoryRequest,
-      @RequestAttribute(value = "userId") Long userId) {
+      @RequestAttribute(value = "userId") long userId) {
 
     if (!categoryService.getCategoryByIdAndUserId(id, userId).isPresent()) {
       log.info("No category with id {} was found, not able to update", id);
@@ -117,7 +118,7 @@ public class CategoryController {
   // TODO deleting category used in transaction / filter fails with ugly error
   @ApiOperation(value = "Delete an existing category", response = Void.class)
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<?> deleteCategory(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> deleteCategory(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
 
     if (!categoryService.getCategoryByIdAndUserId(id, userId).isPresent()) {
       log.info("No category with id {} was found, not able to delete", id);

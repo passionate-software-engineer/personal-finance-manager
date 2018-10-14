@@ -25,7 +25,7 @@ public class TransactionController implements TransactionApi {
   private AccountService accountService;
 
   @Override
-  public ResponseEntity<Transaction> getTransactionById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<Transaction> getTransactionById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving transaction with id: {}", id);
     Optional<Transaction> transaction = transactionService.getTransactionByIdAndUserId(id, userId);
 
@@ -39,14 +39,14 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<List<Transaction>> getTransactions(@RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<List<Transaction>> getTransactions(@RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving all transactions");
 
     return ResponseEntity.ok(transactionService.getTransactions(userId));
   }
 
   @Override
-  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Adding transaction to the database");
 
     List<String> validationResult = transactionValidator.validate(transactionRequest, userId);
@@ -65,7 +65,7 @@ public class TransactionController implements TransactionApi {
 
   @Override
   public ResponseEntity<?> updateTransaction(@PathVariable long id, @RequestBody TransactionRequest transactionRequest,
-      @RequestAttribute(value = "userId") Long userId) {
+      @RequestAttribute(value = "userId") long userId) {
     if (!transactionService.getTransactionByIdAndUserId(id, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
@@ -86,7 +86,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteTransaction(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> deleteTransaction(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
     if (!transactionService.getTransactionByIdAndUserId(id, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();

@@ -16,23 +16,23 @@ public class UserService {
   private UserRespository userRespository;
   private TokenService tokenService;
 
-  public Optional<AuthResponse> authenticateUser(Userek userekToAuthenticate) {
-    Userek userekFromDb = userRespository
-        .findByUsernameAndPassword(userekToAuthenticate.getUsername(), getSha512SecurePassword(userekToAuthenticate.getPassword()));
-    if (userekFromDb == null) {
+  public Optional<AuthResponse> authenticateUser(AppUser appUserToAuthenticate) {
+    AppUser appUserFromDb = userRespository
+        .findByUsernameAndPassword(appUserToAuthenticate.getUsername(), getSha512SecurePassword(appUserToAuthenticate.getPassword()));
+    if (appUserFromDb == null) {
       return Optional.empty();
     }
 
-    String token = tokenService.generateToken(userekFromDb);
+    String token = tokenService.generateToken(appUserFromDb);
 
-    AuthResponse authResponse = new AuthResponse(userekFromDb, token);
+    AuthResponse authResponse = new AuthResponse(appUserFromDb, token);
     return Optional.of(authResponse);
   }
 
-  public Userek registerUser(Userek userek) {
-    String hashedPassword = getSha512SecurePassword(userek.getPassword());
-    userek.setPassword(hashedPassword);
-    return userRespository.save(userek);
+  public AppUser registerUser(AppUser appUser) {
+    String hashedPassword = getSha512SecurePassword(appUser.getPassword());
+    appUser.setPassword(hashedPassword);
+    return userRespository.save(appUser);
   }
 
   static String getSha512SecurePassword(String passwordToHash) {

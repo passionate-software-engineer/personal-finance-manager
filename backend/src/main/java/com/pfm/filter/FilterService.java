@@ -22,6 +22,8 @@ public class FilterService {
     return filterRepository.findById(id);
   }
 
+  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
+  //Its used sometimes in places where validation is done e.g. in validator
   public Optional<Filter> getFilterByIdAndByUserId(long id, long userId) {
     return filterRepository.findByIdAndUserId(id, userId);
   }

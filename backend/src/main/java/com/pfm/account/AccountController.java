@@ -22,7 +22,7 @@ public class AccountController implements AccountApi {
 
   //TODO add convert Account Request to Account method
 
-  public ResponseEntity<?> getAccountById(@PathVariable long id, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> getAccountById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving account with id: {}", id);
 
     Optional<Account> account = accountService.getAccountByIdAndUserId(id, userId);
@@ -35,14 +35,14 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok(account.get());
   }
 
-  public ResponseEntity<List<Account>> getAccounts(@RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<List<Account>> getAccounts(@RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving all accounts from database");
 
     List<Account> accounts = accountService.getAccounts(userId);
     return ResponseEntity.ok(accounts);
   }
 
-  public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") Long userId) {
+  public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Saving account {} to the database", accountRequest.getName());
 
     // must copy as types do not match for Hibernate
@@ -61,7 +61,7 @@ public class AccountController implements AccountApi {
   }
 
   public ResponseEntity<?> updateAccount(@PathVariable("id") Long id,
-      @RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") Long userId) {
+      @RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
 
     if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", id);
@@ -84,7 +84,7 @@ public class AccountController implements AccountApi {
   }
 
   public ResponseEntity<?> deleteAccount(@PathVariable long id,
-      @RequestAttribute(value = "userId") Long userId) { // TODO deleting account used in transaction / filter throws ugly error
+      @RequestAttribute(value = "userId") long userId) { // TODO deleting account used in transaction / filter throws ugly error
 
     if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", id);
