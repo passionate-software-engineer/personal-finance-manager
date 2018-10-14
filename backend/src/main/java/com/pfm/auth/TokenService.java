@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class TokenService {
 
-  // Is this correct or this field should be static? Its easier to test this way and Spring ensure that this class will be incjected as sinleton
+  // Is this correct or this field should be static? Its easier to test this way and Spring ensure that this class will be incjected as singleton
   private HashMap<String, Token> tokens = new HashMap<>();
 
   public String generateToken(AppUser appUser) {
@@ -30,17 +30,13 @@ public class TokenService {
       return false;
     }
 
-    //should return false or throw exepction ?
+    //should return false or throw excepction ?
     LocalDateTime creationTime = tokenFromDb.getCreationTime();
     if (creationTime == null) {
       throw new IllegalStateException("Token creation time does not exist");
     }
 
-    if (!creationTime.plusMinutes(15).isAfter(LocalDateTime.now())) {
-      return false;
-    }
-
-    return true;
+    return creationTime.plusMinutes(15).isAfter(LocalDateTime.now());
   }
 
   public long getUserIdFromToken(String token) {

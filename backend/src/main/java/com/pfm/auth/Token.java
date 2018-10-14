@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 public class Token {
 
-  String token;
-  long userId;
-  LocalDateTime creationTime;
+  private String token;
+  private long userId;
+  private LocalDateTime creationTime;
 
 }

@@ -35,7 +35,7 @@ public class CategoryController {
   private CategoryValidator categoryValidator;
   private TokenService tokenService;
 
-  //TODO change to user builder
+  //TODO change to category builder
   public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 

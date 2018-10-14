@@ -34,6 +34,12 @@ public class MessagesProvider {
   public static final String FILTER_EMPTY_NAME = "filterValidator.emptyName";
 
   public static final String USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST = "userValidator.userWithProvidedUsernameAlreadyExists";
+  public static final String EMPTY_USERNAME = "userValidator.emptyUsername";
+  public static final String EMPTY_FIRST_NAME = "userValidator.emptyFirstname";
+  public static final String EMPTY_LAST_NAME = "userValidator.emptyLastname";
+  public static final String EMPTY_PASSWORD = "userValidator.emptyPassword";
+  public static final String USERNAME_CONTAINS_WHITSPACE = "userValidator.usernameContainsWhitespaces";
+  public static final String PASSWORD_CONTAINS_WHITSPACE = "userValidator.passwordContainsWhitespaces";
   public static final String USERNAME_OR_PASSWORD_IS_INCORRECT = "userController.usernameOrPassowrdIsIncorrect";
 
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests

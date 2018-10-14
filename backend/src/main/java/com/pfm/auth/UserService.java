@@ -1,6 +1,6 @@
 package com.pfm.auth;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
 
-  private UserRespository userRespository;
+  private UserRepository userRepository;
   private TokenService tokenService;
 
   public Optional<AuthResponse> authenticateUser(AppUser appUserToAuthenticate) {
-    AppUser appUserFromDb = userRespository
+    AppUser appUserFromDb = userRepository
         .findByUsernameAndPassword(appUserToAuthenticate.getUsername(), getSha512SecurePassword(appUserToAuthenticate.getPassword()));
     if (appUserFromDb == null) {
       return Optional.empty();
@@ -32,31 +32,29 @@ public class UserService {
   public AppUser registerUser(AppUser appUser) {
     String hashedPassword = getSha512SecurePassword(appUser.getPassword());
     appUser.setPassword(hashedPassword);
-    return userRespository.save(appUser);
+    return userRepository.save(appUser);
   }
 
-  static String getSha512SecurePassword(String passwordToHash) {
+  private static String getSha512SecurePassword(String passwordToHash) {
     String salt = "salt";
     String generatedPassword = null;
     try {
       MessageDigest md = MessageDigest.getInstance("SHA-512");
-      md.update(salt.getBytes("UTF-8"));
-      byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
+      md.update(salt.getBytes(StandardCharsets.UTF_8));
+      byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
       StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < bytes.length; i++) {
-        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+      for (byte abyte : bytes) {
+        sb.append(Integer.toString((abyte & 0xff) + 0x100, 16).substring(1));
       }
       generatedPassword = sb.toString();
     } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
     return generatedPassword;
   }
 
   public boolean isUsernameAlreadyUsed(String username) {
-    return userRespository.numberOfUsersWithThisUsername(username) > 0;
+    return userRepository.numberOfUsersWithThisUsername(username) > 0;
   }
 
 }
