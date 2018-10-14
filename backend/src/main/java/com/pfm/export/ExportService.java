@@ -15,6 +15,7 @@ import com.pfm.helpers.topology.TopologicalSortProvider;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,14 +79,15 @@ public class ExportService {
     }
 
     result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts()));
+    result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState()));
 
     List<ExportAccount> accountsStateAtTheEndOfPeriod = convertToExportAccounts(accountService.getAccounts());
 
     for (Entry<String, List<ExportTransaction>> transactionsInMonth : monthToTransactionMap.entrySet()) {
 
-      List<ExportAccount> accounts = copyAccounts(accountsStateAtTheEndOfPeriod);
+      List<ExportAccount> accountStateAtTheBeginingOfPeriod = copyAccounts(accountsStateAtTheEndOfPeriod);
       Map<String, ExportAccount> accountNameToAccountMap = new HashMap<>();
-      for (ExportAccount account : accounts) {
+      for (ExportAccount account : accountStateAtTheBeginingOfPeriod) {
         accountNameToAccountMap.put(account.getName(), account);
       }
 
@@ -98,8 +100,10 @@ public class ExportService {
       }
 
       ExportPeriod period = ExportPeriod.builder()
-          .accountStateAtTheBeginingOfPeriod(accounts)
+          .accountStateAtTheBeginingOfPeriod(accountStateAtTheBeginingOfPeriod)
           .accountStateAtTheEndOfPeriod(accountsStateAtTheEndOfPeriod)
+          .sumOfAllFundsAtTheBeginningOfPeriod(calculateSumOfFunds(accountStateAtTheBeginingOfPeriod))
+          .sumOfAllFundsAtTheEndOfPeriod(calculateSumOfFunds(accountsStateAtTheEndOfPeriod))
           .startDate(LocalDate.parse(transactionsInMonth.getKey()))
           .endDate(LocalDate.parse(transactionsInMonth.getKey()).plusMonths(1).minusDays(1))
           .transactions(transactionsInMonth.getValue())
@@ -109,10 +113,11 @@ public class ExportService {
 
       result.getPeriods().add(period);
 
-      accountsStateAtTheEndOfPeriod = copyAccounts(accounts);
+      accountsStateAtTheEndOfPeriod = copyAccounts(accountStateAtTheBeginingOfPeriod);
     }
 
     result.setInitialAccountsState(accountsStateAtTheEndOfPeriod);
+    result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
 
     // TODO - export, import filters
 
@@ -218,5 +223,9 @@ public class ExportService {
     }
 
     return TopologicalSortProvider.sort(graph).stream().map(Node::getObject).collect(Collectors.toList());
+  }
+
+  private BigDecimal calculateSumOfFunds(List<ExportAccount> accounts) {
+    return accounts.stream().map(ExportAccount::getBalance).reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 }
