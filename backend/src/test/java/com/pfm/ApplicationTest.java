@@ -1,5 +1,6 @@
 package com.pfm;
 
+import java.util.concurrent.ThreadLocalRandom;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -10,6 +11,7 @@ public class ApplicationTest {
 
   @Test
   public void main() {
-    Application.main(new String[]{});
+    int port = ThreadLocalRandom.current().nextInt(50000, 55000);
+    Application.main(new String[]{"--server.port=" + port});
   }
 }
