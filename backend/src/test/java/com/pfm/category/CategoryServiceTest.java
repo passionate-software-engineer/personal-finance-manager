@@ -99,7 +99,7 @@ public class CategoryServiceTest {
         .build();
 
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      categoryService.addCategory(category);
+      categoryService.addCategory(category, FAKE_USER_ID);
     });
 
     //then

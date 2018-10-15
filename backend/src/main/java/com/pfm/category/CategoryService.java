@@ -37,7 +37,7 @@ public class CategoryService {
       return categoryRepository.save(category);
     }
 
-    Category parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(),userId)
+    Category parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId)
         .orElseThrow(() -> new IllegalStateException("Cannot find parent category with id " + category.getParentCategory().getId()));
     category.setParentCategory(parentCategory);
     return categoryRepository.save(category);

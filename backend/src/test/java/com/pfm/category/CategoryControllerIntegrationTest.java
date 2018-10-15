@@ -7,11 +7,10 @@ import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
-
-import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

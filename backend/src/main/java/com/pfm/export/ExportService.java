@@ -34,17 +34,17 @@ public class ExportService {
   private AccountService accountService;
   private CategoryService categoryService;
 
-  ExportResult exportData() {
+  ExportResult exportData(long userId) {
     ExportResult result = new ExportResult();
 
-    result.setCategories(prepareExportCategories());
-    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts()));
+    result.setCategories(prepareExportCategories(userId));
+    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts(userId)));
     result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState()));
 
-    List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions());
+    List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions(userId));
     Map<String, List<ExportTransaction>> monthToTransactionMap = groupTransactionsByMonth(exportTransactions);
 
-    List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap);
+    List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap, userId);
     result.setPeriods(periods);
     result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
@@ -54,8 +54,8 @@ public class ExportService {
     return result;
   }
 
-  private List<ExportPeriod> generateExportPeriods(Map<String, List<ExportTransaction>> monthToTransactionMap) {
-    List<ExportAccount> accountsStateAtTheEndOfPeriod = convertToExportAccounts(accountService.getAccounts());
+  private List<ExportPeriod> generateExportPeriods(Map<String, List<ExportTransaction>> monthToTransactionMap, long userId) {
+    List<ExportAccount> accountsStateAtTheEndOfPeriod = convertToExportAccounts(accountService.getAccounts(userId));
 
     List<ExportPeriod> periods = new ArrayList<>();
     // Algorithm is starting from the current account state - we know what are the values in the accounts at the time of doing export
@@ -144,8 +144,8 @@ public class ExportService {
     return convertedTransactions;
   }
 
-  private List<ExportCategory> prepareExportCategories() {
-    return categoryService.getCategories()
+  private List<ExportCategory> prepareExportCategories(long userId) {
+    return categoryService.getCategories(userId)
         .stream()
         .map(category -> ExportCategory.builder()
             .name(category.getName())

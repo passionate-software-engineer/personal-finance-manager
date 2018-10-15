@@ -52,8 +52,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldAddTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(),token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(),token);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     BigDecimal expectedPrice = accountJacekBalance1000().getBalance()
         .add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice());
 
@@ -65,8 +65,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), transactionId, jacekAccountId, foodCategoryId);
     expectedTransaction.setUserId(userId);
 
-    assertThat(callRestToGetTransactionById(transactionId,token), is(equalTo(expectedTransaction)));
-    BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId,token);
+    assertThat(callRestToGetTransactionById(transactionId, token), is(equalTo(expectedTransaction)));
+    BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId, token);
 
     assertThat(jacekAccountBalanceAfterAddingTransaction, is(expectedPrice));
   }

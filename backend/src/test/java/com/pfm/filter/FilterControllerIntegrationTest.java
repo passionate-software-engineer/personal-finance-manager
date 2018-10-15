@@ -1,6 +1,5 @@
 package com.pfm.filter;
 
-import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
@@ -12,6 +11,7 @@ import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;

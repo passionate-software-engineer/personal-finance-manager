@@ -4,10 +4,10 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;

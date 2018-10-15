@@ -100,13 +100,13 @@ public class TransactionController implements TransactionApi {
   }
 
   private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest, long userId) {
-    Optional<Category> transactionCategory = categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(),userId);
+    Optional<Category> transactionCategory = categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId);
     if (!transactionCategory.isPresent()) {
       throw new IllegalStateException("Provided category id: " + transactionRequest.getCategoryId() + " does not exist in the database");
     }
 
     for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
-      Optional<Account> transactionAccount = accountService.getAccountByIdAndUserId(entry.getAccountId(),userId);
+      Optional<Account> transactionAccount = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
       if (!transactionAccount.isPresent()) {
         throw new IllegalStateException("Provided account id: " + entry.getAccountId() + " does not exist in the database");
       }

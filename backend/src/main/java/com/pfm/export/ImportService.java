@@ -32,25 +32,27 @@ public class ImportService {
   private AccountService accountService;
   private CategoryService categoryService;
 
-  void importData(@RequestBody ExportResult inputData) {
-    Map<String, Long> categoryNameToIdMap = importCategoriesAndMapCategoryNamesToIds(inputData);
-    Map<String, Long> accountNameToIdMap = importAccountsAndMapAccountNamesToIds(inputData);
+  void importData(@RequestBody ExportResult inputData, long userId) {
+    Map<String, Long> categoryNameToIdMap = importCategoriesAndMapCategoryNamesToIds(inputData, userId);
+    Map<String, Long> accountNameToIdMap = importAccountsAndMapAccountNamesToIds(inputData, userId);
 
     for (ExportPeriod period : inputData.getPeriods()) {
       for (ExportTransaction transaction : period.getTransactions()) {
-        importTransaction(categoryNameToIdMap, accountNameToIdMap, transaction);
+        importTransaction(categoryNameToIdMap, accountNameToIdMap, transaction, userId);
       }
     }
 
   }
 
   // TODO [enhancement] add checking account state during import based on period start and end balances & overall account states
-  private void importTransaction(Map<String, Long> categoryNameToIdMap, Map<String, Long> accountNameToIdMap, ExportTransaction transaction) {
+  private void importTransaction(Map<String, Long> categoryNameToIdMap, Map<String, Long> accountNameToIdMap, ExportTransaction transaction,
+      long userId) {
     Transaction newTransaction = Transaction.builder()
         .description(transaction.getDescription())
         .accountPriceEntries(new ArrayList<>())
         .date(transaction.getDate())
         .categoryId(categoryNameToIdMap.get(transaction.getCategory()))
+        .userId(userId)
         .build();
 
     for (ExportAccountPriceEntry entry : transaction.getAccountPriceEntries()) {
@@ -67,12 +69,13 @@ public class ImportService {
     transactionService.addTransaction(newTransaction);
   }
 
-  private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData) {
+  private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) {
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {
       Account accountToSave = Account.builder()
           .name(account.getName())
           .balance(account.getBalance())
+          .userId(userId)
           .build();
 
       Account savedAccount = accountService.addAccount(accountToSave);
@@ -81,20 +84,21 @@ public class ImportService {
     return accountNameToIdMap;
   }
 
-  private Map<String, Long> importCategoriesAndMapCategoryNamesToIds(@RequestBody ExportResult inputData) {
+  private Map<String, Long> importCategoriesAndMapCategoryNamesToIds(@RequestBody ExportResult inputData, long userId) {
     Map<String, Long> categoryNameToIdMap = new HashMap<>();
 
     List<ExportCategory> categoriesSortedTopologically = sortCategoriesTopologically(inputData.getCategories());
     for (ExportCategory category : categoriesSortedTopologically) {
       Category categoryToSave = new Category();
       categoryToSave.setName(category.getName());
+      categoryToSave.setUserId(userId);
       if (category.getParentCategoryName() != null) {
         categoryToSave.setParentCategory(Category.builder()
             .id(categoryNameToIdMap.get(category.getParentCategoryName()))
             .build()
         );
       }
-      Category savedCategory = categoryService.addCategory(categoryToSave);
+      Category savedCategory = categoryService.addCategory(categoryToSave, userId);
       categoryNameToIdMap.put(savedCategory.getName(), savedCategory.getId());
     }
     return categoryNameToIdMap;

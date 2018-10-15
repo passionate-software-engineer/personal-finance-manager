@@ -21,5 +21,4 @@ public class TestUsersProvider {
         .password("Zdzislaw")
         .build();
   }
-
 }

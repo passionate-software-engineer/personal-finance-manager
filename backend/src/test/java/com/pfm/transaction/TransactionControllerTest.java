@@ -44,12 +44,12 @@ public class TransactionControllerTest {
     transactionRequestToAdd.getAccountPriceEntries().get(0).setAccountId(notExistingId);
     transactionRequestToAdd.setCategoryId(notExistingId);
 
-    when(transactionValidator.validate(transactionRequestToAdd,mockUserId)).thenReturn(new ArrayList<>());
+    when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
     when(categoryService.getCategoryById(notExistingId)).thenReturn(Optional.empty());
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      transactionController.addTransaction(transactionRequestToAdd,mockUserId);
+      transactionController.addTransaction(transactionRequestToAdd, mockUserId);
     });
     assertThat(exception.getMessage(), is(equalTo("Provided category id: " + notExistingId + " does not exist in the database")));
   }
@@ -62,7 +62,7 @@ public class TransactionControllerTest {
     TransactionRequest transactionRequestToAdd = carTransactionRequestWithNoAccountAndNoCategory();
     transactionRequestToAdd.setCategoryId(notExistingId);
 
-    when(transactionValidator.validate(transactionRequestToAdd,mockUserId)).thenReturn(new ArrayList<>());
+    when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
     when(categoryService.getCategoryById(notExistingId)).thenReturn(Optional.empty());
 
     //when
@@ -82,9 +82,9 @@ public class TransactionControllerTest {
     transactionRequestToAdd.getAccountPriceEntries().get(0).setAccountId(notExistingId);
     transactionRequestToAdd.setCategoryId(existingId);
 
-    when(transactionValidator.validate(transactionRequestToAdd,mockUserId)).thenReturn(new ArrayList<>());
-    when(categoryService.getCategoryById(existingId)).thenReturn(Optional.of(new Category()));
-    when(accountService.getAccountById(notExistingId)).thenReturn(Optional.empty());
+    when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
+    when(categoryService.getCategoryByIdAndUserId(existingId, mockUserId)).thenReturn(Optional.of(new Category()));
+    when(accountService.getAccountByIdAndUserId(notExistingId, mockUserId)).thenReturn(Optional.empty());
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {

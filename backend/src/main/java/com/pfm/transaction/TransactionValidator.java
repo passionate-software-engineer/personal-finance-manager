@@ -24,7 +24,7 @@ public class TransactionValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public List<String> validate(TransactionRequest transactionRequest,long userId) {
+  public List<String> validate(TransactionRequest transactionRequest, long userId) {
     List<String> validationErrors = new ArrayList<>();
 
     if (transactionRequest.getDescription() == null || transactionRequest.getDescription().trim().equals("")) {
@@ -34,7 +34,7 @@ public class TransactionValidator {
     if (transactionRequest.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
     } else if (!categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId).isPresent()) {
-      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST)+ transactionRequest.getCategoryId());
+      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + transactionRequest.getCategoryId());
     }
 
     if (transactionRequest.getAccountPriceEntries() == null || transactionRequest.getAccountPriceEntries().size() == 0) {
@@ -43,7 +43,7 @@ public class TransactionValidator {
       for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
-        } else if (!accountService.getAccountByIdAndUserId(entry.getAccountId(),userId).isPresent()) {
+        } else if (!accountService.getAccountByIdAndUserId(entry.getAccountId(), userId).isPresent()) {
           validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + entry.getAccountId());
         }
 
@@ -51,6 +51,10 @@ public class TransactionValidator {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_PRICE));
         }
       }
+    }
+
+    if (transactionRequest.getDate() == null) {
+      validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
 
     return validationErrors;

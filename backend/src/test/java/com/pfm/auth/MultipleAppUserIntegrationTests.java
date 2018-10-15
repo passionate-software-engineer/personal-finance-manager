@@ -36,13 +36,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
+import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.util.List;
@@ -168,7 +168,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     //when
     TransactionRequest updatedTransaction = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
-    updatedTransaction.setAccountId(marianAccountMbankId);
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
     updatedTransaction.setCategoryId(marianCategoryFoodId);
     updatedTransaction.setDescription("updated descrition");
 
@@ -301,7 +301,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //when
     TransactionRequest transactionToAdd = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     transactionToAdd.setCategoryId(marianCategoryCarId);
-    transactionToAdd.setAccountId(marianAccountMbankId);
+    transactionToAdd.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
 
     mockMvc
         .perform(post(TRANSACTIONS_SERVICE_PATH)
@@ -310,8 +310,8 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_ID_DOES_NOT_EXIST))))
-        .andExpect(jsonPath("$[1]", is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST))));
+        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + marianCategoryCarId)))
+        .andExpect(jsonPath("$[1]", is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + marianAccountMbankId)));
   }
 
   @Test
@@ -334,7 +334,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //when
     TransactionRequest updatedTransaction = convertTransactionToTransactionRequest(carTransactionWithNoAccountAndNoCategory());
     updatedTransaction.setCategoryId(zdzislawCategoryHomeId);
-    updatedTransaction.setAccountId(zdzislawAccountIdeaId);
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIdeaId);
 
     mockMvc
         .perform(put(TRANSACTIONS_SERVICE_PATH + "/" + marianFoodTransactionId)
@@ -343,8 +343,8 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_ID_DOES_NOT_EXIST))))
-        .andExpect(jsonPath("$[1]", is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST))));
+        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + zdzislawCategoryHomeId)))
+        .andExpect(jsonPath("$[1]", is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + zdzislawAccountIdeaId)));
   }
 
   @Test
@@ -436,13 +436,15 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     Account marianAccountMbankExpected = accountMbankBalance10();
     marianAccountMbankExpected.setId(marianAccountMbankId);
-    marianAccountMbankExpected.setBalance(accountMbankBalance10().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getPrice()));
+    marianAccountMbankExpected
+        .setBalance(accountMbankBalance10().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
     marianAccountMbankExpected.setUserId(userMarianId);
 
     Account marianAccountMilleniumExpected = accountMilleniumBalance100();
     marianAccountMilleniumExpected.setId(marianAccountMilleniumId);
     marianAccountMilleniumExpected
-        .setBalance(accountMilleniumBalance100().getBalance().add(carTransactionWithNoAccountAndNoCategory().getPrice()));
+        .setBalance(
+            accountMilleniumBalance100().getBalance().add(carTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
     marianAccountMilleniumExpected.setUserId(userMarianId);
 
     assertThat(accountsMarian, hasSize(2));
@@ -452,12 +454,14 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     Account zdzislawAccountIngExpected = accountIngBalance9999();
     zdzislawAccountIngExpected.setId(zdzislawAccountIngId);
-    zdzislawAccountIngExpected.setBalance(accountIngBalance9999().getBalance().add(animalsTransactionWithNoAccountAndNoCategory().getPrice()));
+    zdzislawAccountIngExpected.setBalance(
+        accountIngBalance9999().getBalance().add(animalsTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
     zdzislawAccountIngExpected.setUserId(userZdzislawId);
 
     Account zdzislawAccountIdeaExpected = accountIdeaBalance100000();
     zdzislawAccountIdeaExpected.setId(zdzislawAccountIdeaId);
-    zdzislawAccountIdeaExpected.setBalance(accountIdeaBalance100000().getBalance().add(homeTransactionWithNoAccountAndNoCategory().getPrice()));
+    zdzislawAccountIdeaExpected.setBalance(
+        accountIdeaBalance100000().getBalance().add(homeTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
     zdzislawAccountIdeaExpected.setUserId(userZdzislawId);
 
     assertThat(accountsZdzislaw, hasSize(2));
@@ -493,13 +497,13 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     Transaction marianFoodTransactionExpected = foodTransactionWithNoAccountAndNoCategory();
     marianFoodTransactionExpected.setId(marianFoodTransactionId);
-    marianFoodTransactionExpected.setAccountId(marianAccountMbankId);
+    marianFoodTransactionExpected.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
     marianFoodTransactionExpected.setCategoryId(marianCategoryFoodId);
     marianFoodTransactionExpected.setUserId(userMarianId);
 
     Transaction marianCarTransactionExpected = carTransactionWithNoAccountAndNoCategory();
     marianCarTransactionExpected.setId(marianCarTransactionId);
-    marianCarTransactionExpected.setAccountId(marianAccountMilleniumId);
+    marianCarTransactionExpected.getAccountPriceEntries().get(0).setAccountId(marianAccountMilleniumId);
     marianCarTransactionExpected.setCategoryId(marianCategoryCarId);
     marianCarTransactionExpected.setUserId(userMarianId);
 
@@ -510,13 +514,13 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     Transaction zdzislawAnimalsTransactionsExpected = animalsTransactionWithNoAccountAndNoCategory();
     zdzislawAnimalsTransactionsExpected.setId(zdzislawTransactionAnimalsId);
-    zdzislawAnimalsTransactionsExpected.setAccountId(zdzislawAccountIngId);
+    zdzislawAnimalsTransactionsExpected.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIngId);
     zdzislawAnimalsTransactionsExpected.setCategoryId(zdzislawCategoryAnimalsId);
     zdzislawAnimalsTransactionsExpected.setUserId(userZdzislawId);
 
     Transaction zdzislawHomeTransactionsExpected = homeTransactionWithNoAccountAndNoCategory();
     zdzislawHomeTransactionsExpected.setId(zdzislawTransactionHomeId);
-    zdzislawHomeTransactionsExpected.setAccountId(zdzislawAccountIdeaId);
+    zdzislawHomeTransactionsExpected.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIdeaId);
     zdzislawHomeTransactionsExpected.setCategoryId(zdzislawCategoryHomeId);
     zdzislawHomeTransactionsExpected.setUserId(userZdzislawId);
 
