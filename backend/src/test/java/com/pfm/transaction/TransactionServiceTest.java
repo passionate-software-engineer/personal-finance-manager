@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.pfm.account.AccountService;
+import java.util.Collections;
 import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,14 +45,20 @@ public class TransactionServiceTest {
   public void shouldReturnExceptionCausedByAccountIdDoesNotExistInDb() throws Exception {
     //given
     Transaction transaction = Transaction.builder()
-        .accountId(NOT_EXISTING_ID)
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder().id(null).accountId(NOT_EXISTING_ID).build()
+        ))
         .build();
+
     when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
     when(accountService.getAccountById(NOT_EXISTING_ID)).thenReturn(Optional.empty());
+
     //when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       transactionService.updateTransaction(1L, transaction);
     });
+
     assertThat(exception.getMessage(), is(equalTo("Account with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }
+
 }

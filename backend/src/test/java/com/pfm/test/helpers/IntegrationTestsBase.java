@@ -1,4 +1,4 @@
-package com.pfm;
+package com.pfm.test.helpers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -50,6 +50,8 @@ public abstract class IntegrationTestsBase {
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
+  protected static final String EXPORT_SERVICE_PATH = "/export";
+  protected static final String IMPORT_SERVICE_PATH = "/import";
 
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
@@ -216,7 +218,7 @@ public abstract class IntegrationTestsBase {
   private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId, String token)
       throws Exception {
     transactionRequest.setCategoryId(categoryId);
-    transactionRequest.setAccountId(accountId);
+    transactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
     String response =
         mockMvc
             .perform(post(TRANSACTIONS_SERVICE_PATH)
@@ -236,28 +238,26 @@ public abstract class IntegrationTestsBase {
   protected TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
     return TransactionRequest.builder()
         .description(transaction.getDescription())
-        .price(transaction.getPrice())
+        .accountPriceEntries(transaction.getAccountPriceEntries())
         .date(transaction.getDate())
         .categoryId(transaction.getCategoryId())
-        .accountId(transaction.getAccountId())
         .build();
   }
 
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId, long accountId, long categoryId) {
     transaction.setId(transactionId);
     transaction.setCategoryId(categoryId);
-    transaction.setAccountId(accountId);
+    transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
     return transaction;
   }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
-        .accountId(transactionRequest.getAccountId())
+        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .categoryId(transactionRequest.getCategoryId())
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
-        .price(transactionRequest.getPrice())
         .build();
   }
 

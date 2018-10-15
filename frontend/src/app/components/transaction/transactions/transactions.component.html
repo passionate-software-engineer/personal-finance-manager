@@ -123,15 +123,15 @@
     </td>
 
     <!--Price-->
-    <td class="right aligned" *ngIf="!transaction.editMode">{{transaction.price | number:'0.2'}}</td>
+    <td class="right aligned" *ngIf="!transaction.editMode"><p *ngFor="let entry of transaction.accountPriceEntries">{{entry.price | number:'0.2'}}</p></td>
     <td *ngIf="transaction.editMode">
-      <input class="form-control" type="number" [(ngModel)]="transaction.editedTransaction.price">
+      <input *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
     </td>
 
     <!--Account-->
-    <td *ngIf="!transaction.editMode">{{transaction.account.name}}</td>
+    <td *ngIf="!transaction.editMode"><p *ngFor="let entry of transaction.accountPriceEntries">{{entry.account.name}}</p></td>
     <td *ngIf="transaction.editMode">
-      <select class="form-control" [(ngModel)]="transaction.editedTransaction.account">
+      <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
         </option>
@@ -184,13 +184,13 @@
 
     <!--Price-->
     <td>
-      <input class="form-control" type="number" [(ngModel)]="newTransaction.price">
+      <input *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
       <!--<input type="number" min="0.00" max="10000.00" step="0.01" />-->
     </td>
 
     <!--Account-->
     <td>
-      <select class="form-control" [(ngModel)]="newTransaction.account">
+      <select *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
         </option>

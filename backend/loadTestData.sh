@@ -52,25 +52,25 @@ echo "Added category Car under id $CATEGORY_EATING_OUTSIDE"
 
 
 # Add transactions
-TRANSACTION_CINEMA=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_MBANK, \"categoryId\": $CATEGORY_ENTERTAINMENT, \"date\": \"2018-12-31\", \"description\": \"Cinema - Star Wars 5\", \"price\": 15.99}")
+TRANSACTION_CINEMA=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_MBANK, \"price\": -15.99 } ], \"categoryId\": $CATEGORY_ENTERTAINMENT, \"date\": \"2018-12-31\", \"description\": \"Cinema - Star Wars 5\"}")
 echo "Added transaction Cinema under id $TRANSACTION_CINEMA"
 
-TRANSACTION_MCDONALDS=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_MBANK, \"categoryId\": $CATEGORY_EATING_OUTSIDE, \"date\": \"2018-10-12\", \"description\": \"Big Mac\", \"price\": 10.25}")
+TRANSACTION_MCDONALDS=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_MBANK, \"price\": -10.25 } ], \"categoryId\": $CATEGORY_EATING_OUTSIDE, \"date\": \"2018-10-12\", \"description\": \"Big Mac\"}")
 echo "Added transaction BigMac under id $TRANSACTION_MCDONALDS"
 
-TRANSACTION_BURGERKING=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_CASH, \"categoryId\": $CATEGORY_EATING_OUTSIDE, \"date\": \"2018-06-12\", \"description\": \"Whopper\", \"price\": 9.89}")
+TRANSACTION_BURGERKING=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_CASH, \"price\": -9.89 } ], \"categoryId\": $CATEGORY_EATING_OUTSIDE, \"date\": \"2018-06-12\", \"description\": \"Whopper\"}")
 echo "Added transaction Whopper under id $TRANSACTION_BURGERKING"
 
-TRANSACTION_CAR=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_CAR, \"date\": \"2017-11-20\", \"description\": \"Alfa Romeo Stelvio\", \"price\": 210890}")
+TRANSACTION_CAR=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_IDEA, \"price\": -110890 }, { \"accountId\": $ACCOUNT_CASH, \"price\": -100000 } ], \"categoryId\": $CATEGORY_CAR, \"date\": \"2017-11-20\", \"description\": \"Alfa Romeo Stelvio\"}")
 echo "Added transaction Car under id $TRANSACTION_CAR"
 
-TRANSACTION_CAR_FUEL=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_CASH, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2017-11-20\", \"description\": \"Fuel - Orlen\", \"price\": 300.23}")
+TRANSACTION_CAR_FUEL=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{  \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_CASH, \"price\": -300.23 } ], \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2017-11-20\", \"description\": \"Fuel - Orlen\"}")
 echo "Added transaction Car fuel under id $TRANSACTION_CAR_FUEL"
 
-TRANSACTION_CAR_FUEL=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_IDEA, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2017-11-27\", \"description\": \"Fuel - Shell\", \"price\": 290.64}")
+TRANSACTION_CAR_FUEL=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_IDEA, \"price\": -290.64 } ], \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2017-11-27\", \"description\": \"Fuel - Shell\"}")
 echo "Added transaction Car fuel under id $TRANSACTION_CAR_FUEL"
 
-TRANSACTION_CAR_FUEL=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountId\": $ACCOUNT_MBANK, \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2017-12-14\", \"description\": \"Fuel - Tesco\", \"price\": 111.03}")
+TRANSACTION_CAR_FUEL=$(curl -X POST "http://localhost:8088/transactions" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"accountPriceEntries\": [ { \"accountId\": $ACCOUNT_MBANK, \"price\": -111.03 } ], \"categoryId\": $CATEGORY_CAR_FUEL, \"date\": \"2017-12-14\", \"description\": \"Fuel - Tesco\"}")
 echo "Added transaction Car fuel under id $TRANSACTION_CAR_FUEL"
 
 

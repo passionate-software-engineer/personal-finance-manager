@@ -1,8 +1,8 @@
 package com.pfm.category;
 
-import static com.pfm.helpers.TestCategoryProvider.categoryCar;
-import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.test.helpers.TestCategoryProvider.categoryOil;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -83,6 +83,27 @@ public class CategoryServiceTest {
 
     //then
     verify(categoryRepository).save(category);
+  }
+
+  @Test
+  public void shouldThrowIllegalStateExceptionWhenNotExistingParentIdWasProvided() {
+
+    //given
+    Category category = Category.builder()
+        .name("does not matter")
+        .parentCategory(
+            Category.builder()
+                .id(-1L)
+                .build()
+        )
+        .build();
+
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      categoryService.addCategory(category);
+    });
+
+    //then
+    assertThat(exception.getMessage(), is(equalTo("Cannot find parent category with id -1")));
   }
 
   @Test

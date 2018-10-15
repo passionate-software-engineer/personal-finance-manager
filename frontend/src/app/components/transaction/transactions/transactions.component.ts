@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TransactionService} from '../transaction-service/transaction.service';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
-import {Transaction} from '../transaction';
+import {AccountPriceEntry, Transaction} from '../transaction';
 import {Account} from '../../account/account';
 import {Category} from '../../category/category';
 import {CategoryService} from '../../category/category-service/category.service';
@@ -58,6 +58,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             this.getFilters();
           });
       });
+
+    // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
+    this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+    this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
   }
 
   getTransactions(): void {
@@ -69,14 +73,20 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           const transaction = new Transaction();
           transaction.date = transactionResponse.date;
           transaction.id = transactionResponse.id;
-          transaction.price = +transactionResponse.price; // + added to convert to number
           transaction.description = transactionResponse.description;
 
-          // need to have same object to allow dropdown to work correctly
-          for (const account of this.accounts) {
-            if (account.id === transactionResponse.accountId) {
-              transaction.account = account;
+          for (const entry of transactionResponse.accountPriceEntries) {
+            const accountPriceEntry = new AccountPriceEntry();
+            accountPriceEntry.price = +entry.price; // + added to convert to number
+
+            // need to have same object to allow dropdown to work correctly
+            for (const account of this.accounts) { // TODO use hashmap
+              if (account.id === entry.accountId) {
+                accountPriceEntry.account = account;
+              }
             }
+
+            transaction.accountPriceEntries.push(accountPriceEntry);
           }
 
           for (const category of this.categories) {
@@ -117,14 +127,20 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             const returnedTransaction = new Transaction(); // TODO dupliated code
             returnedTransaction.date = updatedTransaction.date;
             returnedTransaction.id = updatedTransaction.id;
-            returnedTransaction.price = +updatedTransaction.price; // + added to convert to number
             returnedTransaction.description = updatedTransaction.description;
 
-            // need to have same object to allow dropdown to work correctly
-            for (const account of this.accounts) {
-              if (account.id === updatedTransaction.accountId) {
-                returnedTransaction.account = account;
+            for (const entry of updatedTransaction.accountPriceEntries) {
+              const accountPriceEntry = new AccountPriceEntry();
+              accountPriceEntry.price = +entry.price; // + added to convert to number
+
+              // need to have same object to allow dropdown to work correctly
+              for (const account of this.accounts) { // TODO use hashmap
+                if (account.id === entry.accountId) {
+                  accountPriceEntry.account = account;
+                }
               }
+
+              returnedTransaction.accountPriceEntries.push(accountPriceEntry);
             }
 
             for (const category of this.categories) {
@@ -154,14 +170,20 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             const returnedTransaction = new Transaction();
             returnedTransaction.date = createdTransaction.date;
             returnedTransaction.id = createdTransaction.id;
-            returnedTransaction.price = +createdTransaction.price; // + added to convert to number
             returnedTransaction.description = createdTransaction.description;
 
-            // need to have same object to allow dropdown to work correctly
-            for (const account of this.accounts) {
-              if (account.id === createdTransaction.accountId) {
-                returnedTransaction.account = account;
+            for (const entry of createdTransaction.accountPriceEntries) {
+              const accountPriceEntry = new AccountPriceEntry();
+              accountPriceEntry.price = +entry.price; // + added to convert to number
+
+              // need to have same object to allow dropdown to work correctly
+              for (const account of this.accounts) { // TODO use hashmap
+                if (account.id === entry.accountId) {
+                  accountPriceEntry.account = account;
+                }
               }
+
+              returnedTransaction.accountPriceEntries.push(accountPriceEntry);
             }
 
             for (const category of this.categories) {
@@ -174,6 +196,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             this.allTransactions.push(returnedTransaction);
             this.addingMode = false;
             this.newTransaction = new Transaction();
+            // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
+            this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+            this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
           });
       });
   }
@@ -196,18 +221,24 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       status = false;
     }
 
-    if (transaction.price == null) {
-      this.alertService.error(this.translate.instant('message.priceEmpty'));
-      status = false;
+    for (const entry of transaction.accountPriceEntries) {
+      if (entry.price == null && entry.account == null && transaction.accountPriceEntries.length > 1) {
+        continue;
+      }
+
+      if (entry.price == null) {
+        this.alertService.error(this.translate.instant('message.priceEmpty'));
+        status = false;
+      }
+
+      if (entry.account == null) {
+        this.alertService.error(this.translate.instant('message.accountNameEmpty'));
+        status = false;
+      }
     }
 
     if (transaction.category == null) {
       this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
-      status = false;
-    }
-
-    if (transaction.account == null) {
-      this.alertService.error(this.translate.instant('message.accountNameEmpty'));
       status = false;
     }
 
@@ -218,12 +249,20 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
 
-    // need to have same object to allow dropdown to work correctly
-    for (const account of this.accounts) {
-      if (account.id === transaction.editedTransaction.account.id) {
-        transaction.editedTransaction.account = account;
+    for (const entry of transaction.editedTransaction.accountPriceEntries) {
+      entry.price = +entry.price; // + added to convert to number
+
+      // need to have same object to allow dropdown to work correctly
+      for (const account of this.accounts) { // TODO use hashmap
+        if (account.id === entry.account.id) {
+          entry.account = account;
+        }
       }
+
     }
+
+    // Adds empty entry, thanks to that new value can be added on the UI
+    transaction.editedTransaction.accountPriceEntries.push(new AccountPriceEntry());
 
     for (const category of this.categories) {
       if (category.id === transaction.editedTransaction.category.id) {

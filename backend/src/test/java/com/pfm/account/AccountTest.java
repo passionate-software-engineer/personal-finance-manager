@@ -18,7 +18,7 @@ public class AccountTest {
     // when
 
     // then
-    assertPojoMethodsFor(classUnderTest)
+    assertPojoMethodsFor(classUnderTest) // TODO remove all tests testing generated code - Lombok is ignored now
         .testing(Method.TO_STRING)
         .testing(Method.EQUALS)
         .testing(Method.HASH_CODE)

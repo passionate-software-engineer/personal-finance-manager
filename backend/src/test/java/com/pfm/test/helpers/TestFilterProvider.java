@@ -1,6 +1,6 @@
-package com.pfm.helpers;
+package com.pfm.test.helpers;
 
-import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
 
 import com.pfm.filter.Filter;
 import java.time.LocalDate;

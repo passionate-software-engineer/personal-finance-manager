@@ -100,20 +100,23 @@ public class TransactionController implements TransactionApi {
   }
 
   private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest, long userId) {
-    Optional<Account> transactionAccount = accountService.getAccountByIdAndUserId(transactionRequest.getAccountId(), userId);
-    Optional<Category> transactionCategory = categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId);
+    Optional<Category> transactionCategory = categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(),userId);
+    if (!transactionCategory.isPresent()) {
+      throw new IllegalStateException("Provided category id: " + transactionRequest.getCategoryId() + " does not exist in the database");
+    }
 
-    // just double check - it should be already verified by validator
-    if (!(transactionAccount.isPresent() && transactionCategory.isPresent())) {
-      throw new IllegalStateException("Account or category was not provided");
+    for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
+      Optional<Account> transactionAccount = accountService.getAccountByIdAndUserId(entry.getAccountId(),userId);
+      if (!transactionAccount.isPresent()) {
+        throw new IllegalStateException("Provided account id: " + entry.getAccountId() + " does not exist in the database");
+      }
     }
 
     return Transaction.builder()
         .description(transactionRequest.getDescription())
-        .price(transactionRequest.getPrice())
-        .accountId(transactionRequest.getAccountId())
         .categoryId(transactionRequest.getCategoryId())
         .date(transactionRequest.getDate())
+        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .userId(userId)
         .build();
   }

@@ -19,13 +19,27 @@ export class TransactionService extends ServiceBase {
   }
 
   private static transactionToTransactionRequest(transaction: Transaction) {
-    return {
+    const result = {
       description: transaction.description,
       categoryId: transaction.category.id,
-      accountId: transaction.account.id,
-      price: transaction.price,
+      accountPriceEntries: [],
       date: transaction.date
     };
+
+    for (const entry of transaction.accountPriceEntries) {
+      if (entry.account === undefined || entry.price === undefined) {
+        continue;
+      }
+
+      result.accountPriceEntries.push(
+        {
+          accountId: entry.account.id,
+          price: entry.price
+        }
+      );
+    }
+
+    return result;
   }
 
   getTransactions(): Observable<TransactionResponse[]> {

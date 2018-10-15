@@ -38,7 +38,9 @@ public class TransactionService {
   }
 
   public Transaction addTransaction(Transaction transaction) {
-    addAmountToAccount(transaction.getAccountId(), transaction.getPrice());
+    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+      addAmountToAccount(entry.getAccountId(), entry.getPrice());
+    }
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     return transactionRepository.save(transaction);
   }
@@ -46,19 +48,25 @@ public class TransactionService {
   public void updateTransaction(long id, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id);
 
-    subtractAmountFromAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
+    // subtract old value
+    for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
+      subtractAmountFromAccount(entry.getAccountId(), entry.getPrice());
+    }
+
+    // add new value
+    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+      addAmountToAccount(entry.getAccountId(), entry.getPrice());
+    }
 
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategoryId(transaction.getCategoryId());
-    transactionToUpdate.setPrice(transaction.getPrice());
-    transactionToUpdate.setAccountId(transaction.getAccountId());
+    transactionToUpdate.setAccountPriceEntries(transaction.getAccountPriceEntries());
     transactionToUpdate.setDate(transaction.getDate());
 
     transactionRepository.save(transactionToUpdate);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
 
-    addAmountToAccount(transactionToUpdate.getAccountId(), transactionToUpdate.getPrice());
   }
 
   public void deleteTransaction(long id) {
@@ -66,7 +74,9 @@ public class TransactionService {
     transactionRepository.deleteById(id);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-    subtractAmountFromAccount(transactionToDelete.getAccountId(), transactionToDelete.getPrice());
+    for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
+      subtractAmountFromAccount(entry.getAccountId(), entry.getPrice());
+    }
   }
 
   private Transaction getTransactionFromDatabase(long id) {
