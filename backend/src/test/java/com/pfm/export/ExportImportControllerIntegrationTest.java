@@ -1,9 +1,9 @@
 package com.pfm.export;
 
-import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.test.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -23,7 +23,7 @@ import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
-import com.pfm.test.helpers.IntegrationTestsBase;
+import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
 import java.math.BigDecimal;

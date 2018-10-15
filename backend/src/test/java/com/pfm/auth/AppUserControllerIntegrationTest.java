@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.IntegrationTestsBase;
+import com.pfm.helpers.IntegrationTestsBase;
 import java.util.Arrays;
 import java.util.Collection;
 import junitparams.Parameters;

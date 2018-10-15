@@ -1,4 +1,4 @@
-package com.pfm.test.helpers;
+package com.pfm.helpers;
 
 import com.pfm.category.Category;
 

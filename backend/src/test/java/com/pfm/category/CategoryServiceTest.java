@@ -1,8 +1,8 @@
 package com.pfm.category;
 
-import static com.pfm.test.helpers.TestCategoryProvider.categoryCar;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;

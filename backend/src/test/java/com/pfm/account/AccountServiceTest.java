@@ -1,7 +1,7 @@
 package com.pfm.account;
 
-import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.test.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

@@ -15,13 +15,6 @@ import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
-import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.test.helpers.TestAccountProvider.accountMbankBalance10;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryCar;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
-import static com.pfm.test.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
-import static com.pfm.test.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -35,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.test.helpers.IntegrationTestsBase;
+import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
