@@ -2,11 +2,14 @@
 
 trap 'echo "ERROR: $BASH_SOURCE:$LINENO $BASH_COMMAND" >&2' ERR
 
+BACKEND_PORT=$(jot -r 1  40000 45000)
+FRONTEND_PORT=$(jot -r 1  46000 50000)
+
 rm -f output.log
-java -jar backend/build/libs/backend-1.0.jar >>output.log 2>&1 &
+java -jar backend/build/libs/backend-1.0.jar --server.port=$BACKEND_PORT >>output.log 2>&1 &
 
 backend_pid=$!
-echo "Starting application, pid=$backend_pid"
+echo "Starting application, pid=$backend_pid, backend_port=$BACKEND_PORT, frontend_port=$FRONTEND_PORT"
 
 tail -f output.log | while read LOG_LINE
 do
@@ -19,7 +22,10 @@ echo "Starting E2E tests"
 
 set -e
 cd frontend
-ng e2e --port 4222
+sed -i '' "s/8088/$BACKEND_PORT/g" src/environments/environment.ts
+cat src/environments/environment.ts
+
+ng e2e --port $FRONTEND_PORT
 
 echo "Stopping application with pid=$backend_pid"
 kill $backend_pid
