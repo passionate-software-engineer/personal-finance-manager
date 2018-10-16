@@ -1,7 +1,11 @@
 package com.pfm.filters;
 
+import static com.pfm.filters.LoggingFilter.REQUEST_MARKER;
+import static com.pfm.filters.LoggingFilter.RESPONSE_MARKER;
+import static java.util.Collections.enumeration;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -20,7 +24,6 @@ import ch.qos.logback.core.Appender;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,14 +47,29 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @RunWith(MockitoJUnitRunner.class)
 public class LoggingFilterTest {
 
+  private static final String ENCODING_HEADER = "Encoding";
+  private static final String CONTENT_TYPE_HEADER = "Content-Type";
+  private static final String REQUEST_METHOD = "GET";
+  private static final String REQUEST_URI = "/accounts";
+  private static final String REQUEST_CONTENT_TYPE = MediaType.APPLICATION_JSON.toString();
+  private static final String REQUEST_QUERY_STRING = "Query string";
+  private static final String REQUEST_ENCODING = "UTF-8";
+  private static final Map<String, String> REQUEST_HEADERS;
+  private static final String REQUEST_CONTENT = "Test content for request";
+  private static final String RESPONSE_CONTENT = "Test content for response";
+
   private HttpServletRequest request = mock(HttpServletRequest.class);
   private HttpServletResponse response = mock(HttpServletResponse.class);
-  private ContentCachingRequestWrapper wrappedRequest = spy(
-      new ContentCachingRequestWrapper(request));
-  private ContentCachingResponseWrapper wrappedResponse = spy(
-      new ContentCachingResponseWrapper(response));
+  private ContentCachingRequestWrapper wrappedRequest = spy(new ContentCachingRequestWrapper(request));
+  private ContentCachingResponseWrapper wrappedResponse = spy(new ContentCachingResponseWrapper(response));
   private FilterChain mockFilterChain = mock(FilterChain.class);
   private LoggingFilter filter = new LoggingFilter();
+
+  static {
+    REQUEST_HEADERS = new HashMap<>();
+    REQUEST_HEADERS.put(ENCODING_HEADER, REQUEST_ENCODING);
+    REQUEST_HEADERS.put(CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE);
+  }
 
   @Mock
   private Appender<ILoggingEvent> mockAppender;
@@ -61,53 +79,47 @@ public class LoggingFilterTest {
 
   @Before
   public void prepareRequests() {
-    Map<String, String> headers = getHeadersMap();
-    Enumeration<String> headerNames = Collections.enumeration(headers.keySet());
-    Enumeration<String> headerValues = Collections.enumeration(headers.values());
-    when(request.getHeaderNames()).thenReturn(headerNames);
-    when(request.getHeaders(anyString())).thenReturn(headerValues);
-    byte[] requestContent = "Test content for request".getBytes(StandardCharsets.UTF_8);
+    when(request.getHeaderNames()).thenReturn(enumeration(REQUEST_HEADERS.keySet()));
+    when(request.getHeaders(anyString())).thenReturn(enumeration(REQUEST_HEADERS.values()));
+
+    byte[] requestContent = REQUEST_CONTENT.getBytes(StandardCharsets.UTF_8);
     when(wrappedRequest.getContentAsByteArray()).thenReturn(requestContent);
-    when(request.getCharacterEncoding()).thenReturn("UTF-8");
-    when(request.getQueryString()).thenReturn("Query sample string");
-    when(request.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
-    when(request.getRequestURI()).thenReturn("/accounts");
+
+    when(request.getCharacterEncoding()).thenReturn(REQUEST_ENCODING);
+    when(request.getQueryString()).thenReturn(REQUEST_QUERY_STRING);
+    when(request.getContentType()).thenReturn(REQUEST_CONTENT_TYPE);
+    when(request.getHeaders(ENCODING_HEADER)).thenReturn(enumeration(Collections.singletonList(REQUEST_ENCODING)));
+    when(request.getHeaders(CONTENT_TYPE_HEADER)).thenReturn(enumeration(Collections.singletonList(REQUEST_CONTENT_TYPE)));
+    when(request.getRequestURI()).thenReturn(REQUEST_URI);
+    when(request.getMethod()).thenReturn(REQUEST_METHOD);
   }
 
   @Before
   public void prepareResponses() {
-    Map<String, String> headers = getHeadersMap();
-    Enumeration<String> headerValues2 = Collections.enumeration(headers.values());
-    when(response.getStatus()).thenReturn(200);
-    byte[] responseContent = "Test content for response".getBytes(StandardCharsets.UTF_8);
+    byte[] responseContent = RESPONSE_CONTENT.getBytes(StandardCharsets.UTF_8);
     when(wrappedResponse.getContentAsByteArray()).thenReturn(responseContent);
-    when(response.getCharacterEncoding()).thenReturn(StandardCharsets.UTF_8.name());
-    when(response.getHeaderNames()).thenReturn(Collections.list(headerValues2));
-    when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
-  }
 
-  private Map<String, String> getHeadersMap() {
-    Map<String, String> headers = new HashMap<>();
-    headers.put("test1", "HTTP/1.1 200 OK");
-    headers.put("Content-Type", "text/html");
-    return headers;
+    when(response.getStatus()).thenReturn(200);
+    when(response.getCharacterEncoding()).thenReturn(StandardCharsets.UTF_8.name());
+    when(response.getHeaderNames()).thenReturn(Collections.list(enumeration(REQUEST_HEADERS.values())));
+    when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
   }
 
   @Before
   public void prepareLogger() {
     final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.addAppender(mockAppender);
-    logger.setLevel(Level.ALL);
+    logger.setLevel(Level.DEBUG);
   }
 
   @After
-  public void teardown() {
+  public void tearDown() {
     final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.detachAppender(mockAppender);
   }
 
   @Test
-  public void shouldFilterAndLogUnwrapped() throws ServletException, IOException {
+  public void shouldProcessNotWrappedRequest() throws ServletException, IOException {
     //given
 
     //when
@@ -116,20 +128,29 @@ public class LoggingFilterTest {
     //then
     verify(mockAppender, times(4)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+
+    assertThat(resultLog, hasSize(4));
+
     LoggingEvent loggingEvent = resultLog.get(0);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
     assertThat(loggingEvent.getFormattedMessage(),
-        containsString("null /accounts?Query sample string"));
+        is(String.format("%s %s %s?%s", REQUEST_MARKER, REQUEST_METHOD, REQUEST_URI, REQUEST_QUERY_STRING)));
+
+    loggingEvent = resultLog.get(1);
+    assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, ENCODING_HEADER, REQUEST_ENCODING)));
+
     loggingEvent = resultLog.get(2);
     assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("text/html"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE)));
+
     loggingEvent = resultLog.get(3);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("200 OK"));
+    assertThat(loggingEvent.getFormattedMessage(), containsString(String.format("%s %d OK", RESPONSE_MARKER, response.getStatus())));
   }
 
   @Test
-  public void shouldFilterAndLogWrapped() throws ServletException, IOException {
+  public void shouldProcessWrappedRequest() throws ServletException, IOException {
     //given
 
     //when
@@ -138,23 +159,39 @@ public class LoggingFilterTest {
     //then
     verify(mockAppender, times(6)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+
+    assertThat(resultLog, hasSize(6));
+
     LoggingEvent loggingEvent = resultLog.get(0);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
     assertThat(loggingEvent.getFormattedMessage(),
-        containsString("null /accounts?Query sample string"));
+        is(String.format("%s %s %s?%s", REQUEST_MARKER, REQUEST_METHOD, REQUEST_URI, REQUEST_QUERY_STRING)));
+
     loggingEvent = resultLog.get(1);
     assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("test1: HTTP/1.1 200 OK"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, ENCODING_HEADER, REQUEST_ENCODING)));
+
+    loggingEvent = resultLog.get(2);
+    assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE)));
+
+    loggingEvent = resultLog.get(3);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %n %s", REQUEST_MARKER, REQUEST_CONTENT)));
+
+    loggingEvent = resultLog.get(4);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), containsString(String.format("%s %d OK", RESPONSE_MARKER, response.getStatus())));
+
     loggingEvent = resultLog.get(5);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("Test content for response"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %n %s", RESPONSE_MARKER, RESPONSE_CONTENT)));
   }
 
   @Test
-  public void shouldFilterAndLogwithNullBodyAndNotVisibleType()
-      throws ServletException, IOException {
+  public void shouldLogContentLengthWhenInvisibleContentTypeWasProvided() throws ServletException, IOException {
     //given
-    when(request.getContentType()).thenReturn(MediaType.valueOf("TEST_MEDIA_TYPE/TEST").toString());
+    when(request.getContentType()).thenReturn(MediaType.APPLICATION_OCTET_STREAM.toString());
     when(request.getQueryString()).thenReturn(null);
 
     //when
@@ -163,25 +200,39 @@ public class LoggingFilterTest {
     //then
     verify(mockAppender, times(6)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+
+    assertThat(resultLog, hasSize(6));
+
     LoggingEvent loggingEvent = resultLog.get(0);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("null /accounts"));
+    assertThat(loggingEvent.getFormattedMessage(),
+        is(String.format("%s %s %s", REQUEST_MARKER, REQUEST_METHOD, REQUEST_URI)));
+
     loggingEvent = resultLog.get(1);
     assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("test1: HTTP/1.1 200 OK"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, ENCODING_HEADER, REQUEST_ENCODING)));
+
+    loggingEvent = resultLog.get(2);
+    assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE)));
+
     loggingEvent = resultLog.get(3);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("[24 bytes content]"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s [%d bytes content]", REQUEST_MARKER, REQUEST_CONTENT.length())));
+
+    loggingEvent = resultLog.get(4);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), containsString(String.format("%s %d OK", RESPONSE_MARKER, response.getStatus())));
+
     loggingEvent = resultLog.get(5);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("Test content for response"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %n %s", RESPONSE_MARKER, RESPONSE_CONTENT)));
   }
 
   @Test
-  public void shouldFilterAndThrowUnsupportedEncodingException()
-      throws ServletException, IOException {
+  public void shouldHandleUnsupportedEncodingException() throws ServletException, IOException {
     //given
-    when(response.getCharacterEncoding()).thenReturn("TEST_ENCODING");
+    when(response.getCharacterEncoding()).thenReturn("NOT_EXISTING_ENCODING");
 
     //when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
@@ -189,19 +240,41 @@ public class LoggingFilterTest {
     //then
     verify(mockAppender, times(7)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
-    LoggingEvent loggingEvent = resultLog.get(2);
+
+    assertThat(resultLog, hasSize(7));
+
+    LoggingEvent loggingEvent = resultLog.get(0);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(),
+        is(String.format("%s %s %s?%s", REQUEST_MARKER, REQUEST_METHOD, REQUEST_URI, REQUEST_QUERY_STRING)));
+
+    loggingEvent = resultLog.get(1);
     assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("test1: text/html"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, ENCODING_HEADER, REQUEST_ENCODING)));
+
+    loggingEvent = resultLog.get(2);
+    assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE)));
+
+    loggingEvent = resultLog.get(3);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %n %s", REQUEST_MARKER, REQUEST_CONTENT)));
+
+    loggingEvent = resultLog.get(4);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), containsString(String.format("%s %d OK", RESPONSE_MARKER, response.getStatus())));
+
     loggingEvent = resultLog.get(5);
     assertThat(loggingEvent.getLevel(), is(Level.INFO));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("[25 bytes content]"));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s [%d bytes content]", RESPONSE_MARKER, RESPONSE_CONTENT.length())));
+
     loggingEvent = resultLog.get(6);
     assertThat(loggingEvent.getLevel(), is(Level.WARN));
-    assertThat(loggingEvent.getFormattedMessage(), containsString("Not able to convert response"));
+    assertThat(loggingEvent.getFormattedMessage(), is("Not able to convert content"));
   }
 
   @Test
-  public void shouldFilterAndLogAsyncRequest() throws ServletException, IOException {
+  public void shouldNotLogAnythingWhenIsAsyncDispatch() throws ServletException, IOException {
     //given
     LoggingFilter filter = new LoggingFilter() {
       @Override
@@ -218,7 +291,7 @@ public class LoggingFilterTest {
   }
 
   @Test
-  public void shouldNotLogIfErrorLevelSetForLogger() throws ServletException, IOException {
+  public void shouldNotLogAnythingIfErrorLevelSetForLogger() throws ServletException, IOException {
     //given
     final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.setLevel(Level.ERROR);
