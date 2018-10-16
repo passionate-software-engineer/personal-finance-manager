@@ -77,7 +77,7 @@ ENDSSH
     }
     post {
         always {
-            archiveArtifacts artifacts: 'backend/build/jacocoHtml/**/*, backend/build/reports/checkstyle/**/*, backend/build/dependencyUpdates/**/*, frontend/ncu_output.txt'
+            archiveArtifacts artifacts: 'backend/build/reports/jacoco/html/**/*, backend/build/reports/checkstyle/**/*, backend/build/dependencyUpdates/**/*, frontend/ncu_output.txt'
             junit 'backend/build/test-results/**/*.xml'
         }
     }
