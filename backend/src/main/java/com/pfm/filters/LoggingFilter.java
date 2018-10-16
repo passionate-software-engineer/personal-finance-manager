@@ -18,7 +18,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
-@Component // TODO not working for bad request (HTTP 400) caused by invalid request and handled by Spring
+@Component
 public class LoggingFilter extends OncePerRequestFilter {
 
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
@@ -31,8 +31,8 @@ public class LoggingFilter extends OncePerRequestFilter {
       MediaType.MULTIPART_FORM_DATA
   );
 
-  private static final String REQUEST_MARKER = "|>";
-  private static final String RESPONSE_MARKER = "|<";
+  static final String REQUEST_MARKER = "|>";
+  static final String RESPONSE_MARKER = "|<";
 
   private void logRequestMethod(ContentCachingRequestWrapper request) {
     String queryString = request.getQueryString();
@@ -72,7 +72,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
   private void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
     MediaType mediaType = MediaType.valueOf(contentType);
-    Boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+    boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 
     if (visible) {
       try {
@@ -80,7 +80,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         log.info("{} \n {}", prefix, contentAsString);
       } catch (UnsupportedEncodingException e) {
         log.info("{} [{} bytes content]", prefix, content.length);
-        log.warn("Not able to convert response", e);
+        log.warn("Not able to convert content", e);
       }
     } else {
       log.info("{} [{} bytes content]", prefix, content.length);
@@ -142,5 +142,5 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestBody(request);
       logResponse(response);
     }
-  } // TODO cover class with tests verifying how it logs information
+  }
 }

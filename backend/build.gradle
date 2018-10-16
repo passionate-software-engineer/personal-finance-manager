@@ -92,13 +92,13 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'BRANCH'
-                minimum = 0.96
+                minimum = 1.00
             }
         }
         rule {
             limit {
                 counter = 'LINE'
-                minimum = 0.98
+                minimum = 1.00
             }
         }
         rule {
@@ -110,22 +110,6 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'METHOD'
-                minimum = 1.00
-            }
-        }
-        rule {
-            element = 'CLASS'
-            excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
-            limit {
-                counter = 'BRANCH'
-                minimum = 1.00
-            }
-        }
-        rule {
-            element = 'CLASS'
-            excludes = ['com.pfm.filters.LoggingFilter'] // TODO cover with tests
-            limit {
-                counter = 'LINE'
                 minimum = 1.00
             }
         }
