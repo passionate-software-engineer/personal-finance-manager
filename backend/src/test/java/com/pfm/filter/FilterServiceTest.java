@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class FilterServiceTest {
 
   private static final long NOT_EXISTING_ID = 0;
+  private static final long MOCK_USER_ID = 99;
 
   @Mock
   private FilterRepository filterRepository;
@@ -25,15 +26,13 @@ public class FilterServiceTest {
   private FilterService filterService;
 
   @Test
-  public void shouldReturnExceptionCausedByIdDoesNotExistInDb() throws Exception {
+  public void shouldReturnExceptionCausedByIdDoesNotExistInDb() {
 
     //given
-    when(filterRepository.findById(NOT_EXISTING_ID)).thenReturn(Optional.empty());
+    when(filterRepository.findByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      filterService.updateFilter(NOT_EXISTING_ID, new Filter());
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> filterService.updateFilter(NOT_EXISTING_ID, MOCK_USER_ID, new Filter()));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Filter with id: " + NOT_EXISTING_ID + " does not exist in database")));

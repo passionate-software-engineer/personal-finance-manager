@@ -202,7 +202,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Category result = callRestToGetCategoryById(categoryOilId, token);
 
-    final Category expected = convertCategoryRequestToCategoryAndSetId(categoryOilId, categoryOilToUpdate);
+    final Category expected = convertCategoryRequestToCategoryAndSetId(categoryOilId, userId, categoryOilToUpdate);
     expected.setUserId(userId);
 
     assertThat(result, is(equalTo(expected)));
@@ -308,7 +308,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     List<Category> categories = callRestToGetAllCategories(token);
-    Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, categoryToCategoryRequest(categoryHome));
+    Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, categoryToCategoryRequest(categoryHome));
     assertThat(categories.size(), is(equalTo(1)));
     assertFalse(categories.contains(deletedCategory));
   }

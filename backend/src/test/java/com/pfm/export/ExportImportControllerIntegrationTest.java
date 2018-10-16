@@ -192,12 +192,13 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     Transaction createdTransaction = transactions.get(0);
     assertThat(createdTransaction.getDate(), is(transaction.getDate()));
     assertThat(createdTransaction.getDescription(), is(transaction.getDescription()));
-    assertThat(categoryService.getCategoryById(createdTransaction.getCategoryId()).orElseThrow(AssertionError::new).getName(),
+    assertThat(categoryService.getCategoryByIdAndUserId(createdTransaction.getCategoryId(), userId).orElseThrow(AssertionError::new).getName(),
         is(transaction.getCategory()));
     assertThat(createdTransaction.getAccountPriceEntries(), hasSize(1));
     assertThat(createdTransaction.getAccountPriceEntries().get(0).getPrice(), is(entry.getPrice().setScale(2, HALF_UP)));
     assertThat(
-        accountService.getAccountById(createdTransaction.getAccountPriceEntries().get(0).getAccountId()).orElseThrow(AssertionError::new).getName(),
+        accountService.getAccountByIdAndUserId(createdTransaction.getAccountPriceEntries().get(0).getAccountId(), userId)
+            .orElseThrow(AssertionError::new).getName(),
         is(entry.getAccount()));
   }
 

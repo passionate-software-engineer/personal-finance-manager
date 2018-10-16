@@ -66,7 +66,7 @@ public class ImportService {
       );
     }
 
-    transactionService.addTransaction(newTransaction);
+    transactionService.addTransaction(userId, newTransaction);
   }
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) {

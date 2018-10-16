@@ -45,12 +45,10 @@ public class TransactionControllerTest {
     transactionRequestToAdd.setCategoryId(notExistingId);
 
     when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
-    when(categoryService.getCategoryById(notExistingId)).thenReturn(Optional.empty());
+    when(categoryService.getCategoryByIdAndUserId(notExistingId, mockUserId)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      transactionController.addTransaction(transactionRequestToAdd, mockUserId);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> transactionController.addTransaction(transactionRequestToAdd, mockUserId));
     assertThat(exception.getMessage(), is(equalTo("Provided category id: " + notExistingId + " does not exist in the database")));
   }
 
@@ -63,12 +61,10 @@ public class TransactionControllerTest {
     transactionRequestToAdd.setCategoryId(notExistingId);
 
     when(transactionValidator.validate(transactionRequestToAdd, mockUserId)).thenReturn(new ArrayList<>());
-    when(categoryService.getCategoryById(notExistingId)).thenReturn(Optional.empty());
+    when(categoryService.getCategoryByIdAndUserId(notExistingId, mockUserId)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      transactionController.addTransaction(transactionRequestToAdd, mockUserId);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> transactionController.addTransaction(transactionRequestToAdd, mockUserId));
     assertThat(exception.getMessage(), is(equalTo("Provided category id: " + notExistingId + " does not exist in the database")));
   }
 
@@ -87,9 +83,7 @@ public class TransactionControllerTest {
     when(accountService.getAccountByIdAndUserId(notExistingId, mockUserId)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      transactionController.addTransaction(transactionRequestToAdd, mockUserId);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> transactionController.addTransaction(transactionRequestToAdd, mockUserId));
     assertThat(exception.getMessage(), is(equalTo("Provided account id: " + notExistingId + " does not exist in the database")));
   }
 

@@ -41,7 +41,7 @@ public class ExportService {
     result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts(userId)));
     result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState()));
 
-    List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions(userId));
+    List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions(userId), userId);
     Map<String, List<ExportTransaction>> monthToTransactionMap = groupTransactionsByMonth(exportTransactions);
 
     List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap, userId);
@@ -118,7 +118,7 @@ public class ExportService {
     return monthToTransactionMap;
   }
 
-  private List<ExportTransaction> convertTransactionsToExportTransactions(List<Transaction> transactions) {
+  private List<ExportTransaction> convertTransactionsToExportTransactions(List<Transaction> transactions, long userId) {
     List<ExportTransaction> convertedTransactions = new ArrayList<>();
 
     for (Transaction transaction : transactions) {
@@ -126,13 +126,13 @@ public class ExportService {
           .description(transaction.getDescription())
           .date(transaction.getDate())
           .accountPriceEntries(new ArrayList<>())
-          .category(categoryService.getCategoryById(transaction.getCategoryId()).orElse(new Category()).getName())
+          .category(categoryService.getCategoryByIdAndUserId(transaction.getCategoryId(), userId).orElse(new Category()).getName())
           .build();
 
       for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
         exportTransaction.getAccountPriceEntries().add(
             ExportAccountPriceEntry.builder()
-                .account(accountService.getAccountById(entry.getAccountId()).orElse(new Account()).getName())
+                .account(accountService.getAccountByIdAndUserId(entry.getAccountId(), userId).orElse(new Account()).getName())
                 .price(entry.getPrice())
                 .build()
         );

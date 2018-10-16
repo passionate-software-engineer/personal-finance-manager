@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 public class CorrelationIdFilterTest {
 
   private static final String INVOICES_SERVICE_PATH = "/accounts";
-  private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
 
   @Autowired
   private MockMvc mockMvc;

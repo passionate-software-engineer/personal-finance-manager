@@ -86,7 +86,7 @@ public class FilterController implements FilterApi {
 
     Filter filter = convertFilterRequestToFilter(filterRequest, userId);
 
-    filterService.updateFilter(id, filter);
+    filterService.updateFilter(id, userId, filter);
     log.info("Filter with id {} was successfully updated", id);
 
     return ResponseEntity.ok().build();

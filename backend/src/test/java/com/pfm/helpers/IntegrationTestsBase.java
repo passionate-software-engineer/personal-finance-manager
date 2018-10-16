@@ -198,12 +198,13 @@ public abstract class IntegrationTestsBase {
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
 
-  protected Category convertCategoryRequestToCategoryAndSetId(long categoryId, CategoryRequest categoryRequest) {
+  protected Category convertCategoryRequestToCategoryAndSetId(long categoryId, long userId, CategoryRequest categoryRequest) {
     return Category.builder()
         .id(categoryId)
         .name(categoryRequest.getName())
-        .parentCategory(categoryRequest.getParentCategoryId() == null ? null : categoryService.getCategoryById(categoryRequest.getParentCategoryId())
-            .orElse(null))
+        .parentCategory(categoryRequest.getParentCategoryId() == null ? null
+            : categoryService.getCategoryByIdAndUserId(categoryRequest.getParentCategoryId(), userId)
+                .orElse(null))
         .build();
   }
 

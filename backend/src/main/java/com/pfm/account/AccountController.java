@@ -1,6 +1,5 @@
 package com.pfm.account;
 
-import com.pfm.auth.TokenService;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,6 @@ public class AccountController implements AccountApi {
 
   private AccountService accountService;
   private AccountValidator accountValidator;
-  private TokenService tokenService;
 
   //TODO add convert Account Request to Account method
 
@@ -70,14 +68,14 @@ public class AccountController implements AccountApi {
     Account account = new Account(accountId, accountRequest.getName(), accountRequest.getBalance(), userId);
 
     log.info("Updating account with id {}", accountId);
-    List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, account);
+    List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
 
     if (!validationResult.isEmpty()) {
       log.error("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    accountService.updateAccount(accountId, account);
+    accountService.updateAccount(accountId, userId, account);
     log.info("Account with id {} was successfully updated", accountId);
     return ResponseEntity.ok().build();
   }

@@ -18,12 +18,6 @@ public class FilterService {
     return filterRepository.save(filter);
   }
 
-  public Optional<Filter> getFilterById(long id) {
-    return filterRepository.findById(id);
-  }
-
-  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
-  //Its used sometimes in places where validation is done e.g. in validator
   public Optional<Filter> getFilterByIdAndByUserId(long id, long userId) {
     return filterRepository.findByIdAndUserId(id, userId);
   }
@@ -38,8 +32,8 @@ public class FilterService {
         .collect(Collectors.toList());
   }
 
-  public void updateFilter(long id, Filter filter) {
-    Filter filterToUpdate = getFilterFromDatabase(id);
+  public void updateFilter(long id, long userId, Filter filter) {
+    Filter filterToUpdate = getFilterFromDatabase(id, userId);
 
     filterToUpdate.setAccountIds(filter.getAccountIds());
     filterToUpdate.setCategoryIds(filter.getCategoryIds());
@@ -53,8 +47,8 @@ public class FilterService {
     filterRepository.save(filterToUpdate);
   }
 
-  private Filter getFilterFromDatabase(long id) {
-    Optional<Filter> filterFromDb = getFilterById(id);
+  private Filter getFilterFromDatabase(long id, long userId) {
+    Optional<Filter> filterFromDb = getFilterByIdAndByUserId(id, userId);
 
     if (!filterFromDb.isPresent()) {
       throw new IllegalStateException("Filter with id: " + id + " does not exist in database");

@@ -39,8 +39,8 @@ public class AccountValidator {
     return validationResults;
   }
 
-  public List<String> validateAccountForUpdate(long id, Account account) {
-    Optional<Account> accountToUpdate = accountService.getAccountById(id);
+  public List<String> validateAccountForUpdate(long id, long userId, Account account) {
+    Optional<Account> accountToUpdate = accountService.getAccountByIdAndUserId(id, userId);
 
     if (!accountToUpdate.isPresent()) {
       throw new IllegalStateException("Account with id: " + id + " does not exist in database");

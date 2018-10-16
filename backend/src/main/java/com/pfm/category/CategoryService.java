@@ -20,12 +20,6 @@ public class CategoryService {
     return categoryRepository.findByIdAndUserId(id, userId);
   }
 
-  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
-  //Its used sometimes in places where validation is done e.g. in validator
-  public Optional<Category> getCategoryById(long id) {
-    return categoryRepository.findById(id);
-  }
-
   public List<Category> getCategories(long userId) {
     return StreamSupport.stream(categoryRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Category::getId))
@@ -47,7 +41,7 @@ public class CategoryService {
     categoryRepository.deleteById(id);
   }
 
-  public void updateCategory(long id, Category category, long userId) {
+  public void updateCategory(long id, long userId, Category category) {
     Optional<Category> receivedCategory = getCategoryByIdAndUserId(id, userId);
     if (!receivedCategory.isPresent()) {
       throw new IllegalStateException("Category with id : " + id + " does not exist in database");
@@ -76,12 +70,12 @@ public class CategoryService {
     return categoryRepository.existsById(id);
   }
 
-  public boolean canBeParentCategory(long categoryId, long parentCategoryId) {
+  public boolean canBeParentCategory(long categoryId, long parentCategoryId, long userId) {
     if (categoryId == parentCategoryId) {
       return false; // got cycle - one of the parents is trying to use it's child as parent
     }
 
-    Optional<Category> parentCategoryOptional = getCategoryById(parentCategoryId);
+    Optional<Category> parentCategoryOptional = getCategoryByIdAndUserId(parentCategoryId, userId);
 
     if (!parentCategoryOptional.isPresent()) {
       throw new IllegalStateException(String.format("Received parent category id (%d) which does not exists in database", parentCategoryId));
@@ -94,7 +88,7 @@ public class CategoryService {
     }
 
     // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare
-    return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId());
+    return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId(), userId);
   }
 
   public boolean isCategoryNameAlreadyUsed(String name) {

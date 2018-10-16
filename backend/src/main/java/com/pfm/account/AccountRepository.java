@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
+  //TODO make it unique for user not for all users
   List<Account> findByNameIgnoreCase(String name);
 
   List<Account> findByUserId(long userId);

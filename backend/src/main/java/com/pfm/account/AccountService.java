@@ -16,14 +16,8 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
-  //TODO possibly replace this method everywhere to use only "get.......ByIdAndUserId(long id, long userId)" to make app safer ??
-  //Its used sometimes in places where validation is done e.g. in validator
-  public Optional<Account> getAccountById(long id) {
-    return accountRepository.findById(id);
-  }
-
-  public Optional<Account> getAccountByIdAndUserId(long id, long userId) {
-    return accountRepository.findByIdAndUserId(id, userId);
+  public Optional<Account> getAccountByIdAndUserId(long accountId, long userId) {
+    return accountRepository.findByIdAndUserId(accountId, userId);
   }
 
   public List<Account> getAccounts(long userId) {
@@ -36,11 +30,11 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public void updateAccount(long id, Account account) {
-    Optional<Account> accountFromDb = getAccountById(id);
+  public void updateAccount(long accountId, long userId, Account account) {
+    Optional<Account> accountFromDb = getAccountByIdAndUserId(accountId, userId);
 
     if (!accountFromDb.isPresent()) {
-      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+      throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
     }
 
     Account accountToUpdate = accountFromDb.get();
@@ -50,12 +44,8 @@ public class AccountService {
     accountRepository.save(accountToUpdate);
   }
 
-  public void deleteAccount(long id) {
-    accountRepository.deleteById(id);
-  }
-
-  public boolean idExist(long id) {
-    return accountRepository.existsById(id);
+  public void deleteAccount(long accountId) {
+    accountRepository.deleteById(accountId);
   }
 
   public boolean isAccountNameAlreadyUsed(String name) {

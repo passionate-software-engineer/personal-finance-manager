@@ -13,6 +13,7 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
   @Query(value = "select count(category.parentCategory.id) from Category category where category.parentCategory.id = :id")
   Integer numberOfEntriesUsingThisCategoryAsParentId(@Param("id") long id);
 
+  //TODO make it unique for user not for all users
   List<Category> findByNameIgnoreCase(String name);
 
   List<Category> findByUserId(long userId);

@@ -58,7 +58,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
-    Transaction createdTransaction = transactionService.addTransaction(transaction);
+    Transaction createdTransaction = transactionService.addTransaction(userId, transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
 
     return ResponseEntity.ok(createdTransaction.getId());
@@ -80,7 +80,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
-    transactionService.updateTransaction(id, transaction);
+    transactionService.updateTransaction(id, userId, transaction);
     log.info("Transaction with id {} was successfully updated", id);
 
     return ResponseEntity.ok().build();
@@ -94,7 +94,7 @@ public class TransactionController implements TransactionApi {
     }
 
     log.info("Attempting to delete transaction with id {}", id);
-    transactionService.deleteTransaction(id);
+    transactionService.deleteTransaction(id, userId);
 
     log.info("Transaction with id {} was deleted successfully", id);
     return ResponseEntity.ok().build();

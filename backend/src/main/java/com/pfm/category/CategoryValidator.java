@@ -20,12 +20,12 @@ public class CategoryValidator {
 
   private CategoryService categoryService;
 
-  public List<String> validateCategoryForUpdate(long id, Category category) {
+  public List<String> validateCategoryForUpdate(long id, long userId, Category category) {
     List<String> validationResults = new ArrayList<>();
 
     validate(validationResults, category);
 
-    Optional<Category> categoryToUpdate = categoryService.getCategoryById(id);
+    Optional<Category> categoryToUpdate = categoryService.getCategoryByIdAndUserId(id, userId);
 
     if (!categoryToUpdate.isPresent()) {
       throw new IllegalStateException("Category with id: " + id + " does not exist in database");
@@ -36,8 +36,8 @@ public class CategoryValidator {
     }
 
     // TODO check category.getParentCategory().getId() != null
-    if (category.getParentCategory() != null && categoryService.getCategoryById(category.getParentCategory().getId()).isPresent()
-        && !categoryService.canBeParentCategory(id, category.getParentCategory().getId())) {
+    if (category.getParentCategory() != null && categoryService.getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).isPresent()
+        && !categoryService.canBeParentCategory(id, category.getParentCategory().getId(), userId)) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 

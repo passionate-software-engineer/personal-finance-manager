@@ -27,6 +27,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
+  private static final long MOCK_USER_ID = 999;
+
   @Rule
   public ExpectedException expectedEx = ExpectedException.none();
 
@@ -43,37 +45,12 @@ public class AccountServiceTest {
     Account account = accountMbankBalance10();
     account.setId(1L);
 
-    when(accountRepository.findById(account.getId()))
+    when(accountRepository.findByIdAndUserId(account.getId(), MOCK_USER_ID))
         .thenReturn(Optional.of(account));
 
     //when
     Optional<Account> returnedAccount = accountService
-        .getAccountById(account.getId());
-
-    //then
-    assertTrue(returnedAccount.isPresent());
-
-    Account actualAccount = returnedAccount.get();
-
-    assertThat(actualAccount.getId(), is(equalTo(account.getId())));
-    assertThat(actualAccount.getName(), is(equalTo(account.getName())));
-    assertThat(actualAccount.getBalance(), is(equalTo(account.getBalance())));
-  }
-
-  @Test
-  public void shouldGetAccountByIdAndUserId() {
-
-    //given
-    long mockUserId = 1;
-    Account account = accountMbankBalance10();
-    account.setId(1L);
-
-    when(accountRepository.findByIdAndUserId(account.getId(), mockUserId))
-        .thenReturn(Optional.of(account));
-
-    //when
-    Optional<Account> returnedAccount = accountService
-        .getAccountByIdAndUserId(account.getId(), mockUserId);
+        .getAccountByIdAndUserId(account.getId(), MOCK_USER_ID);
 
     //then
     assertTrue(returnedAccount.isPresent());
@@ -88,16 +65,15 @@ public class AccountServiceTest {
   @Test
   public void shouldGetAllAccounts() {
     //given
-    long mockUserId = 1;
     Account accountJacek = accountJacekBalance1000();
     accountJacek.setId(1L);
     Account accountMbank = accountMbankBalance10();
     accountMbank.setId(2L);
 
-    when(accountRepository.findByUserId(mockUserId)).thenReturn(Arrays.asList(accountMbank, accountJacek));
+    when(accountRepository.findByUserId(MOCK_USER_ID)).thenReturn(Arrays.asList(accountMbank, accountJacek));
 
     //when
-    List<Account> actualAccountsList = accountService.getAccounts(mockUserId);
+    List<Account> actualAccountsList = accountService.getAccounts(MOCK_USER_ID);
 
     //then
     assertThat(actualAccountsList.size(), is(2));
@@ -153,27 +129,13 @@ public class AccountServiceTest {
         .name("Zaskurniaki")
         .build();
 
-    when(accountRepository.findById(1L)).thenReturn(Optional.of(accountMbankBalance10()));
+    when(accountRepository.findByIdAndUserId(1L, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));
 
     //when
-    accountService.updateAccount(1L, updatedAccount);
+    accountService.updateAccount(1L, MOCK_USER_ID, updatedAccount);
 
     //then
     verify(accountRepository, times(1)).save(updatedAccount);
-  }
-
-  @Test
-  public void shouldCheckIfAccountExists() {
-    //not changed to JUunit 5 to show difference with JUnit4
-    //given
-    long id = 1;
-    when(accountRepository.existsById(id)).thenReturn(true);
-
-    //when
-    accountService.idExist(id);
-
-    //then
-    verify(accountRepository).existsById(id);
   }
 
   @Test
@@ -184,10 +146,10 @@ public class AccountServiceTest {
     expectedEx.expect(IllegalStateException.class);
     expectedEx.expectMessage("Account with id: " + id + " does not exist in database");
 
-    when(accountRepository.findById(id)).thenReturn(Optional.empty());
+    when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    accountService.updateAccount(id, accountMbankBalance10());
+    accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10());
 
   }
 }

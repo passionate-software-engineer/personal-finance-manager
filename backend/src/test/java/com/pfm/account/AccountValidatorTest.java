@@ -23,6 +23,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountValidatorTest {
 
+  private long mockUserId = 999;
+
   @Mock
   private AccountService accountService;
 
@@ -36,12 +38,10 @@ public class AccountValidatorTest {
     long id = 1;
 
     //when
-    when(accountService.getAccountById(id))
+    when(accountService.getAccountByIdAndUserId(id, mockUserId))
         .thenReturn(Optional.empty());
 
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      accountValidator.validateAccountForUpdate(id, new Account());
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> accountValidator.validateAccountForUpdate(id, mockUserId, new Account()));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Account with id: " + id + " does not exist in database")));
@@ -52,11 +52,11 @@ public class AccountValidatorTest {
 
     //given
     long id = 10L;
-    when(accountService.getAccountById(id)).thenReturn(Optional.of(accountMbankBalance10()));
+    when(accountService.getAccountByIdAndUserId(id, mockUserId)).thenReturn(Optional.of(accountMbankBalance10()));
     Account account = Account.builder().id(id).name("").balance(null).build();
 
     //when
-    List<String> result = accountValidator.validateAccountForUpdate(id, account);
+    List<String> result = accountValidator.validateAccountForUpdate(id, mockUserId, account);
 
     //then
     assertThat(result.size(), is(2));

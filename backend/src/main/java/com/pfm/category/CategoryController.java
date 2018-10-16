@@ -35,7 +35,7 @@ public class CategoryController {
   private CategoryValidator categoryValidator;
 
   //TODO change to category builder
-  public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
+  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     if (parentCategoryId == null) {
@@ -103,13 +103,13 @@ public class CategoryController {
     Category category = convertToCategory(categoryRequest, userId);
     category.setId(id);
 
-    List<String> validationResult = categoryValidator.validateCategoryForUpdate(id, category);
+    List<String> validationResult = categoryValidator.validateCategoryForUpdate(id, userId, category);
     if (!validationResult.isEmpty()) {
       log.error("Category is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    categoryService.updateCategory(id, category, userId);
+    categoryService.updateCategory(id, userId, category);
     log.info("Category with id {} was successfully updated", id);
     return ResponseEntity.ok().build();
   }
