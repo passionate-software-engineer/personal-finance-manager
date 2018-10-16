@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -20,8 +19,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
 @Component
-@Order(2)
-// TODO not working for bad request (HTTP 400) caused by invalid request and handled by Springc
 public class LoggingFilter extends OncePerRequestFilter {
 
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
@@ -34,8 +31,8 @@ public class LoggingFilter extends OncePerRequestFilter {
       MediaType.MULTIPART_FORM_DATA
   );
 
-  private static final String REQUEST_MARKER = "|>";
-  private static final String RESPONSE_MARKER = "|<";
+  static final String REQUEST_MARKER = "|>";
+  static final String RESPONSE_MARKER = "|<";
 
   private void logRequestMethod(ContentCachingRequestWrapper request) {
     String queryString = request.getQueryString();
@@ -50,7 +47,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     Collections.list(request.getHeaderNames())
         .forEach(headerName -> Collections.list(request.getHeaders(headerName))
             .forEach(headerValue ->
-                log.info("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
+                log.debug("{} {}: {}", REQUEST_MARKER, headerName, headerValue)));
   }
 
   private void logRequestBody(ContentCachingRequestWrapper request) {
@@ -75,7 +72,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
   private void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
     MediaType mediaType = MediaType.valueOf(contentType);
-    Boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+    boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 
     if (visible) {
       try {
@@ -83,7 +80,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         log.info("{} \n {}", prefix, contentAsString);
       } catch (UnsupportedEncodingException e) {
         log.info("{} [{} bytes content]", prefix, content.length);
-        log.warn("Not able to convert response", e);
+        log.warn("Not able to convert content", e);
       }
     } else {
       log.info("{} [{} bytes content]", prefix, content.length);
@@ -145,5 +142,5 @@ public class LoggingFilter extends OncePerRequestFilter {
       logRequestBody(request);
       logResponse(response);
     }
-  } // TODO cover class with tests verifying how it logs information
+  }
 }
