@@ -21,3 +21,5 @@ ON transaction (user_id);
 
 CREATE INDEX idx_user_id_filter_table
 ON filter (user_id);
+
+

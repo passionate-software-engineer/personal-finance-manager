@@ -3,7 +3,6 @@ package com.pfm.category;
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
-import com.pfm.auth.TokenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -29,11 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @Api(value = "Category", description = "Controller used to list / add / update / delete categories.")
 //TODO add categoryApi class like in Account
+//TODO change id to entityId in methods
 public class CategoryController {
 
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
-  private TokenService tokenService;
 
   //TODO change to category builder
   public static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {

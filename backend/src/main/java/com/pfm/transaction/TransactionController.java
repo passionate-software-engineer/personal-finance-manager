@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
+  //TODO change id to entityId in methods
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
   private CategoryService categoryService;

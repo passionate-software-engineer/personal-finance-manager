@@ -10,6 +10,6 @@ public class Token {
 
   private String token;
   private long userId;
-  private LocalDateTime creationTime;
+  private LocalDateTime expiryDate;
 
 }

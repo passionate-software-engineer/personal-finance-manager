@@ -15,8 +15,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
   @Autowired
-  TokenService tokenService;
+  private TokenService tokenService;
 
+  //TODO this should be done be spring security
   private static final String pattern = "(\\/users.*|\\/swagger.*)";
   private final Logger logger = LoggerFactory.getLogger("Security");
 

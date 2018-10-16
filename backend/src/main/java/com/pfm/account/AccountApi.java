@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AccountApi {
 
   @ApiOperation(value = "Find account by id", response = Account.class)
-  @GetMapping(value = "/{id}")
-  ResponseEntity<?> getAccountById(long id, long userId);
+  @GetMapping(value = "/{accountId}")
+  ResponseEntity<?> getAccountById(long accountId, long userId);
 
   @ApiOperation(value = "Get list of all accounts", response = Account.class, responseContainer = "List")
   @GetMapping
@@ -29,11 +29,11 @@ public interface AccountApi {
   public ResponseEntity<?> addAccount(AccountRequest accountRequest, long userId);
 
   @ApiOperation(value = "Update an existing account", response = Void.class)
-  @PutMapping(value = "/{id}")
-  public ResponseEntity<?> updateAccount(Long id, AccountRequest accountRequest, long userId);
+  @PutMapping(value = "/{accountId}")
+  public ResponseEntity<?> updateAccount(long accountId, AccountRequest accountRequest, long userId);
 
   @ApiOperation(value = "Delete an existing account", response = Void.class)
-  @DeleteMapping(value = "/{id}")
-  public ResponseEntity<?> deleteAccount(long id, long userId);
+  @DeleteMapping(value = "/{accountId}")
+  public ResponseEntity<?> deleteAccount(long accountId, long userId);
 }
 

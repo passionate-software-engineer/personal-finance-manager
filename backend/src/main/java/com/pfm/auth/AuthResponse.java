@@ -16,13 +16,4 @@ public final class AuthResponse {
   private String firstName;
   private String lastName;
   private String token;
-
-  public AuthResponse(AppUser appUser, String token) {
-    this.id = appUser.getId();
-    this.username = appUser.getUsername();
-    this.firstName = appUser.getFirstName();
-    this.lastName = appUser.getLastName();
-    this.token = token;
-  }
-
 }

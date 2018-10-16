@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 public class FilterController implements FilterApi {
+  //TODO change id to entityId in methods
 
   private FilterService filterService;
   private FilterValidator filterValidator;

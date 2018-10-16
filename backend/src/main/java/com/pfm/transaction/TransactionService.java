@@ -109,7 +109,6 @@ public class TransactionService {
     // I can
     accountToUpdate.setBalance(operation.apply(accountToUpdate.getBalance(), amount));
 
-    //set user id only to run application for testing account api
     accountService.updateAccount(accountToUpdate.getId(), accountToUpdate);
   }
 

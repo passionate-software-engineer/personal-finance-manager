@@ -1,11 +1,9 @@
 package com.pfm.auth;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -17,44 +15,37 @@ public class UserService {
   private TokenService tokenService;
 
   public Optional<AuthResponse> authenticateUser(AppUser appUserToAuthenticate) {
-    AppUser appUserFromDb = userRepository
-        .findByUsernameAndPassword(appUserToAuthenticate.getUsername(), getSha512SecurePassword(appUserToAuthenticate.getPassword()));
-    if (appUserFromDb == null) {
+    Optional<AppUser> appUserFromDb = userRepository
+        .findByUsername(appUserToAuthenticate.getUsername());
+    if (!appUserFromDb.isPresent()) {
       return Optional.empty();
     }
 
-    String token = tokenService.generateToken(appUserFromDb);
+    AppUser userFromDb = appUserFromDb.get();
 
-    AuthResponse authResponse = new AuthResponse(appUserFromDb, token);
+    if (!BCrypt.checkpw(appUserToAuthenticate.getPassword(), userFromDb.getPassword())) {
+      return Optional.empty();
+    }
+
+    String token = tokenService.generateToken(userFromDb);
+
+    AuthResponse authResponse = new AuthResponse(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
+        userFromDb.getLastName(), token);
     return Optional.of(authResponse);
   }
 
   public AppUser registerUser(AppUser appUser) {
-    String hashedPassword = getSha512SecurePassword(appUser.getPassword());
+    String hashedPassword = getHashedPassowrd(appUser.getPassword());
     appUser.setPassword(hashedPassword);
     return userRepository.save(appUser);
   }
 
-  private static String getSha512SecurePassword(String passwordToHash) {
-    String salt = "salt";
-    String generatedPassword = null;
-    try {
-      MessageDigest md = MessageDigest.getInstance("SHA-512");
-      md.update(salt.getBytes(StandardCharsets.UTF_8));
-      byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
-      StringBuilder sb = new StringBuilder();
-      for (byte abyte : bytes) {
-        sb.append(Integer.toString((abyte & 0xff) + 0x100, 16).substring(1));
-      }
-      generatedPassword = sb.toString();
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-    return generatedPassword;
+  private static String getHashedPassowrd(String passwordToHash) {
+    return BCrypt.hashpw(passwordToHash, BCrypt.gensalt());
   }
 
   public boolean isUsernameAlreadyUsed(String username) {
-    return userRepository.numberOfUsersWithThisUsername(username) > 0;
+    return userRepository.findByUsernameIgnoreCase(username).isPresent();
   }
 
 }

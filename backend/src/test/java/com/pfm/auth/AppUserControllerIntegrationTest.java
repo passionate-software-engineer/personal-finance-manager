@@ -53,6 +53,24 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldReturnErrorCausedByUsernameAlreadyExistDifferentLettersSize() throws Exception {
+    //given
+    AppUser appUser = userMarian();
+
+    callRestToRegisterUserAndReturnUserId(appUser);
+
+    appUser.setUsername(appUser.getUsername().toUpperCase());
+
+    //then
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(appUser)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
+  }
+
+  @Test
   public void shouldValidateUser() throws Exception {
     //given
     AppUser appUser = userMarian();
