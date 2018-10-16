@@ -16,6 +16,7 @@ pipeline {
                         sh '''
                            cd backend
                            ./gradlew build
+                           ./gradlew dependencyUpdates -Drevision=release
                            '''
                     }
                 }
@@ -25,14 +26,7 @@ pipeline {
                            cd frontend
                            npm install
                            ng build
-                           '''
-                    }
-                }
-                stage('E2E') {
-                    steps {
-                        sh '''
-                           cd frontend-test
-                           ./gradlew build
+                           ncu > ncu_output.txt
                            '''
                     }
                 }
@@ -83,7 +77,7 @@ ENDSSH
     }
     post {
         always {
-            archiveArtifacts artifacts: 'backend/build/jacocoHtml/**/*, backend/build/reports/checkstyle/**/*'
+            archiveArtifacts artifacts: 'backend/build/jacocoHtml/**/*, backend/build/reports/checkstyle/**/*, backend/build/dependencyUpdates/**/*, frontend/ncu_output.txt'
             junit 'backend/build/test-results/**/*.xml'
         }
     }
