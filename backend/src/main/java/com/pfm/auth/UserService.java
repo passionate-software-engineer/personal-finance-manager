@@ -14,7 +14,7 @@ public class UserService {
   private UserRepository userRepository;
   private TokenService tokenService;
 
-  public Optional<AuthResponse> authenticateUser(AppUser appUserToAuthenticate) {
+  public Optional<UserDetails> authenticateUser(AppUser appUserToAuthenticate) {
     Optional<AppUser> appUserFromDb = userRepository
         .findByUsername(appUserToAuthenticate.getUsername());
     if (!appUserFromDb.isPresent()) {
@@ -29,9 +29,9 @@ public class UserService {
 
     String token = tokenService.generateToken(userFromDb);
 
-    AuthResponse authResponse = new AuthResponse(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
+    UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
         userFromDb.getLastName(), token);
-    return Optional.of(authResponse);
+    return Optional.of(userDetails);
   }
 
   public AppUser registerUser(AppUser appUser) {

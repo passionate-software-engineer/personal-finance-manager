@@ -10,7 +10,7 @@ import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.auth.AppUser;
-import com.pfm.auth.AuthResponse;
+import com.pfm.auth.UserDetails;
 import io.restassured.http.ContentType;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -147,8 +147,8 @@ public abstract class InvoicePerformanceTestBase {
     assertThat(getAccounts().length, is(0));
   }
 
-  protected AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {
-    return mapper.readValue(jsonAuthResponse, AuthResponse.class);
+  protected UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {
+    return mapper.readValue(jsonAuthResponse, UserDetails.class);
   }
 
   protected String json(Object object) throws Exception {

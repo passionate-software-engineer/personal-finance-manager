@@ -24,7 +24,7 @@ public class UserController {
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody AppUser appUserToAuthenticate) {
-    Optional<AuthResponse> authResponse = userService.authenticateUser(appUserToAuthenticate);
+    Optional<UserDetails> authResponse = userService.authenticateUser(appUserToAuthenticate);
 
     if (authResponse.isPresent()) {
       return ResponseEntity.ok(authResponse.get());

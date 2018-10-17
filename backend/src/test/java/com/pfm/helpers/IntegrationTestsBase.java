@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.auth.AppUser;
-import com.pfm.auth.AuthResponse;
+import com.pfm.auth.UserDetails;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
@@ -424,8 +424,8 @@ public abstract class IntegrationTestsBase {
     return callRestToAuthenticateUserAndReturnToken(appUser);
   }
 
-  private AuthResponse jsonToAuthResponse(String jsonAuthResponse) throws Exception {
-    return mapper.readValue(jsonAuthResponse, AuthResponse.class);
+  private UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {
+    return mapper.readValue(jsonAuthResponse, UserDetails.class);
   }
 
 }
