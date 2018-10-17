@@ -12,7 +12,6 @@ import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -33,16 +32,16 @@ public class TransactionService {
         .collect(Collectors.toList());
   }
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+  @Transactional // TODO review all services and add transactions support & tests
   public Transaction addTransaction(Transaction transaction) {
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
       addAmountToAccount(entry.getAccountId(), entry.getPrice());
     }
-    // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
+
     return transactionRepository.save(transaction);
   }
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+  @Transactional
   public void updateTransaction(long id, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id);
 
@@ -62,20 +61,21 @@ public class TransactionService {
     transactionToUpdate.setDate(transaction.getDate());
 
     transactionRepository.save(transactionToUpdate);
-
-    // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-
   }
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+  @Transactional
   public void deleteTransaction(long id) {
     Transaction transactionToDelete = getTransactionFromDatabase(id);
-    transactionRepository.deleteById(id);
 
-    // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
       subtractAmountFromAccount(entry.getAccountId(), entry.getPrice());
     }
+
+    transactionRepository.deleteById(id);
+  }
+
+  public boolean idExist(long id) {
+    return transactionRepository.existsById(id);
   }
 
   private Transaction getTransactionFromDatabase(long id) {
@@ -88,10 +88,6 @@ public class TransactionService {
     return transactionFromDb.get();
   }
 
-  public boolean idExist(long id) {
-    return transactionRepository.existsById(id);
-  }
-
   private void subtractAmountFromAccount(long accountId, BigDecimal amountToAdd) {
     updateAccountBalance(accountId, amountToAdd, BigDecimal::subtract);
   }
@@ -100,8 +96,7 @@ public class TransactionService {
     updateAccountBalance(accountId, amountToSubtract, BigDecimal::add);
   }
 
-  @Transactional(propagation = Propagation.MANDATORY)
-  void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
+  private void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
     Optional<Account> account = accountService.getAccountById(accountId);
 
     if (!account.isPresent()) {
