@@ -36,6 +36,7 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 
 public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
@@ -146,7 +147,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + foodTransactionId)
-        .header("Authorization", token)
+        .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedFoodTransactionRequest)))
         .andExpect(status()
@@ -184,7 +185,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updateFoodTransaction.setDate(null);
 
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + foodTransactionId)
-        .header("Authorization", token)
+        .header(HttpHeaders.AUTHORIZATION, token)
         .content(json(updateFoodTransaction))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
@@ -200,7 +201,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
-        .header("Authorization", token)
+        .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
@@ -229,7 +230,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
-        .header("Authorization", token)
+        .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
@@ -244,7 +245,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header("Authorization", token))
+        .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -253,7 +254,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header("Authorization", token))
+        .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -262,7 +263,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header("Authorization", token)
+        .header(HttpHeaders.AUTHORIZATION, token)
         .content(json(foodTransactionWithNoAccountAndNoCategory()))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());

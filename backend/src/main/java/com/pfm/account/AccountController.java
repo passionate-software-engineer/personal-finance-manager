@@ -18,8 +18,6 @@ public class AccountController implements AccountApi {
   private AccountService accountService;
   private AccountValidator accountValidator;
 
-  //TODO add convert Account Request to Account method
-
   public ResponseEntity<?> getAccountById(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving account with id: {}", accountId);
 
@@ -43,11 +41,10 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Saving account {} to the database", accountRequest.getName());
 
-    // must copy as types do not match for Hibernate
-
+    //TODO add convert Account Request to Account method
     Account account = new Account(null, accountRequest.getName(), accountRequest.getBalance(), userId);
 
-    List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(account);
+    List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
     if (!validationResult.isEmpty()) {
       log.info("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);

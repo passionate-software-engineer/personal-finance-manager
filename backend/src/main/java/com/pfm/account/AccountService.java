@@ -48,8 +48,8 @@ public class AccountService {
     accountRepository.deleteById(accountId);
   }
 
-  public boolean isAccountNameAlreadyUsed(String name) {
-    return accountRepository.findByNameIgnoreCase(name).size() != 0;
+  public boolean isAccountNameAlreadyUsed(long userId, String name) {
+    return accountRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
 }

@@ -23,8 +23,8 @@ public class UserController {
   private UserValidator userValidator;
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-  public ResponseEntity<?> authenticateUser(@RequestBody AppUser appUserToAuthenticate) {
-    Optional<UserDetails> authResponse = userService.authenticateUser(appUserToAuthenticate);
+  public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
+    Optional<UserDetails> authResponse = userService.authenticateUser(userToAuthenticate);
 
     if (authResponse.isPresent()) {
       return ResponseEntity.ok(authResponse.get());
@@ -34,12 +34,12 @@ public class UserController {
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public ResponseEntity<?> registerUser(@RequestBody AppUser appUser) {
-    List<String> validationResult = userValidator.validateUser(appUser);
+  public ResponseEntity<?> registerUser(@RequestBody User user) {
+    List<String> validationResult = userValidator.validateUser(user);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
-    long userId = userService.registerUser(appUser).getId();
+    long userId = userService.registerUser(user).getId();
     return ResponseEntity.ok(userId);
   }
 }

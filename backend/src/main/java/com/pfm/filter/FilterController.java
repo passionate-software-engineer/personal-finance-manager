@@ -36,7 +36,7 @@ public class FilterController implements FilterApi {
   @Override
   public ResponseEntity<Filter> getFilterById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving filter with id: {}", id);
-    Optional<Filter> filter = filterService.getFilterByIdAndByUserId(id, userId);
+    Optional<Filter> filter = filterService.getFilterByIdAndUserId(id, userId);
 
     if (!filter.isPresent()) {
       log.info("Filter with id {} was not found", id);
@@ -73,7 +73,7 @@ public class FilterController implements FilterApi {
   @Override
   public ResponseEntity<?> updateFilter(@PathVariable long id, @RequestBody FilterRequest filterRequest,
       @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.getFilterByIdAndByUserId(id, userId).isPresent()) {
+    if (!filterService.getFilterByIdAndUserId(id, userId).isPresent()) {
       log.info("No filter with id {} was found, not able to update", id);
       return ResponseEntity.notFound().build();
     }
@@ -94,7 +94,7 @@ public class FilterController implements FilterApi {
 
   @Override
   public ResponseEntity<?> deleteFilter(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.getFilterByIdAndByUserId(id, userId).isPresent()) {
+    if (!filterService.getFilterByIdAndUserId(id, userId).isPresent()) {
       log.info("No filter with id {} was found, not able to delete", id);
       return ResponseEntity.notFound().build();
     }

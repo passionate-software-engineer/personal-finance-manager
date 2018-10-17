@@ -34,17 +34,6 @@ public class CategoryController {
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
 
-  //TODO change to category builder
-  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
-    Long parentCategoryId = categoryRequest.getParentCategoryId();
-
-    if (parentCategoryId == null) {
-      return new Category(null, categoryRequest.getName(), null, userId);
-    }
-
-    return new Category(null, categoryRequest.getName(), new Category(parentCategoryId, null, null, null), userId);
-  }
-
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{id}")
   public ResponseEntity<Category> getCategoryById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
@@ -78,7 +67,7 @@ public class CategoryController {
     log.info("Saving category {} to the database", categoryRequest.getName());
     Category category = convertToCategory(categoryRequest, userId);
 
-    List<String> validationResult = categoryValidator.validateCategoryForAdd(category);
+    List<String> validationResult = categoryValidator.validateCategoryForAdd(category, userId);
     if (!validationResult.isEmpty()) {
       log.info("Category is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -115,6 +104,7 @@ public class CategoryController {
   }
 
   // TODO deleting category used in transaction / filter fails with ugly error
+
   @ApiOperation(value = "Delete an existing category", response = Void.class)
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<?> deleteCategory(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
@@ -134,4 +124,23 @@ public class CategoryController {
     return ResponseEntity.ok().build();
   }
 
+  //TODO change to category builder
+  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
+    Long parentCategoryId = categoryRequest.getParentCategoryId();
+
+    if (parentCategoryId == null) {
+      return Category.builder()
+          .id(null)
+          .name(categoryRequest.getName())
+          .parentCategory(null)
+          .userId(userId)
+          .build();
+    }
+    return Category.builder()
+        .id(null)
+        .name(categoryRequest.getName())
+        .parentCategory(Category.builder().id(parentCategoryId).build())
+        .userId(userId)
+        .build();
+  }
 }

@@ -14,16 +14,15 @@ public class UserService {
   private UserRepository userRepository;
   private TokenService tokenService;
 
-  public Optional<UserDetails> authenticateUser(AppUser appUserToAuthenticate) {
-    Optional<AppUser> appUserFromDb = userRepository
-        .findByUsername(appUserToAuthenticate.getUsername());
+  public Optional<UserDetails> authenticateUser(User userToAuthenticate) {
+    Optional<User> appUserFromDb = userRepository.findByUsernameIgnoreCase(userToAuthenticate.getUsername());
     if (!appUserFromDb.isPresent()) {
       return Optional.empty();
     }
 
-    AppUser userFromDb = appUserFromDb.get();
+    User userFromDb = appUserFromDb.get();
 
-    if (!BCrypt.checkpw(appUserToAuthenticate.getPassword(), userFromDb.getPassword())) {
+    if (!BCrypt.checkpw(userToAuthenticate.getPassword(), userFromDb.getPassword())) {
       return Optional.empty();
     }
 
@@ -34,13 +33,13 @@ public class UserService {
     return Optional.of(userDetails);
   }
 
-  public AppUser registerUser(AppUser appUser) {
-    String hashedPassword = getHashedPassowrd(appUser.getPassword());
-    appUser.setPassword(hashedPassword);
-    return userRepository.save(appUser);
+  public User registerUser(User user) {
+    String hashedPassword = hashPassword(user.getPassword());
+    user.setPassword(hashedPassword);
+    return userRepository.save(user);
   }
 
-  private static String getHashedPassowrd(String passwordToHash) {
+  private static String hashPassword(String passwordToHash) {
     return BCrypt.hashpw(passwordToHash, BCrypt.gensalt());
   }
 

@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
@@ -191,7 +192,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(get(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .header("Authorization", token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -201,7 +202,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(delete(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .header("Authorization", token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -211,7 +212,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterCarExpenses()))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -233,7 +234,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());
@@ -251,7 +252,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());
@@ -275,7 +276,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + filterId)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());

@@ -32,6 +32,7 @@ import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.http.HttpHeaders;
 
 @RunWith(JUnitParamsRunner.class)
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
@@ -82,7 +83,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
-                .header("Authorization", token)
+                .header(HttpHeaders.AUTHORIZATION, token)
                 .content(json(categoryToAdd))
                 .contentType(JSON_CONTENT_TYPE)
         )
@@ -108,7 +109,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
-                .header("Authorization", token)
+                .header(HttpHeaders.AUTHORIZATION, token)
                 .content(json(categoryToAdd))
                 .contentType(JSON_CONTENT_TYPE)
         )
@@ -163,7 +164,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(get(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .header("Authorization", token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -214,7 +215,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(categoryToCategoryRequest(categoryOil()))).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
@@ -230,7 +231,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + categoryId)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
@@ -250,7 +251,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     // when // TODO require space after comment start (checkstyle) :)
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
-            .header("Authorization", token)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(newCategoryContent)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk());
   }
@@ -288,7 +289,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + id)
             .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE)
-            .header("Authorization", token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(CATEGORIES_CYCLE_DETECTED))));
@@ -339,7 +340,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
-        .header("Authorization", token))
+        .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
   }
@@ -349,7 +350,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header("Authorization", token))
+        .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 }

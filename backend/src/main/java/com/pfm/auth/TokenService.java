@@ -14,10 +14,10 @@ public class TokenService {
 
   private HashMap<String, Token> tokens = new HashMap<>();
 
-  public String generateToken(AppUser appUser) {
+  public String generateToken(User user) {
 
     UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), appUser.getId(), LocalDateTime.now().plusMinutes(15));
+    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now().plusMinutes(15));
     tokens.put(token.getToken(), token);
     return token.getToken();
   }
@@ -31,13 +31,14 @@ public class TokenService {
 
     LocalDateTime expiryDate = tokenFromDb.getExpiryDate();
     if (expiryDate == null) {
-      throw new IllegalStateException("Token creation time does not exist");
+      tokens.remove(token);
+      throw new IllegalStateException("Token expiry time does not exist");
     }
 
     return expiryDate.isAfter(LocalDateTime.now());
   }
 
-  public long getUserIdFromToken(String token) {
+  public long getUserIdBasedOnToken(String token) {
     Token tokenFromDb = tokens.get(token);
 
     if (tokenFromDb == null) {

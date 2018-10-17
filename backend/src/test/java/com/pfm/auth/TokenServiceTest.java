@@ -16,7 +16,7 @@ public class TokenServiceTest {
   private TokenService tokenService = new TokenService(tokens);
 
   @Test
-  public void shouldThrowExeptionCausedByNullCreationTime() {
+  public void shouldThrowExeptionCausedByNullExpiryTime() {
 
     //given
     Token token = new Token("Token", 1L, null);
@@ -27,14 +27,14 @@ public class TokenServiceTest {
         () -> tokenService.validateToken(token.getToken()));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Token creation time does not exist")));
+    assertThat(exception.getMessage(), is(equalTo("Token expiry time does not exist")));
   }
 
   @Test
   public void shouldReturnFalseCausedByExpiredToken() {
 
     //given
-    Token token = new Token("Token", 1L, LocalDateTime.of(2017, 12, 12, 12, 12));
+    Token token = new Token("Token", 1L, LocalDateTime.now());
     tokens.put(token.getToken(), token);
 
     //then
@@ -50,7 +50,7 @@ public class TokenServiceTest {
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.getUserIdFromToken("Fake token"));
+        () -> tokenService.getUserIdBasedOnToken("Not existing Token"));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Provided token does not exist")));

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
-import com.pfm.auth.AppUser;
+import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
 import io.restassured.http.ContentType;
 import java.math.BigDecimal;
@@ -46,7 +46,7 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
-  protected AppUser defaultAppUser = userMarian();
+  protected User defaultUser = userMarian();
 
   protected String token;
 
@@ -98,9 +98,9 @@ public abstract class InvoicePerformanceTestBase {
   public void before() throws Exception {
     given()
         .contentType(ContentType.JSON)
-        .body(defaultAppUser)
+        .body(defaultUser)
         .post(usersServicePath() + "/register");
-    token = authenticateUserAndGetToken(defaultAppUser);
+    token = authenticateUserAndGetToken(defaultUser);
 
     for (int i = 0; i < 10; ++i) {
 
@@ -155,10 +155,10 @@ public abstract class InvoicePerformanceTestBase {
     return mapper.writeValueAsString(object);
   }
 
-  protected String authenticateUserAndGetToken(AppUser appUser) throws Exception {
+  protected String authenticateUserAndGetToken(User user) throws Exception {
     String response = given()
         .contentType(ContentType.JSON)
-        .body(json(appUser))
+        .body(json(user))
         .post(usersServicePath() + "/authenticate")
         .getBody()
         .print();

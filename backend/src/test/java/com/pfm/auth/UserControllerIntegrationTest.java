@@ -22,31 +22,31 @@ import java.util.Collection;
 import junitparams.Parameters;
 import org.junit.Test;
 
-public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
+public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterUser() throws Exception {
     //given
-    AppUser appUser = userMarian();
+    User user = userMarian();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isOk());
   }
 
   @Test
   public void shouldReturnErrorCausedByUsernameAlreadyExist() throws Exception {
     //given
-    AppUser appUser = userMarian();
+    User user = userMarian();
 
-    callRestToRegisterUserAndReturnUserId(appUser);
+    callRestToRegisterUserAndReturnUserId(user);
 
     //then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
@@ -55,16 +55,16 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedByUsernameAlreadyExistDifferentLettersSize() throws Exception {
     //given
-    AppUser appUser = userMarian();
+    User user = userMarian();
 
-    callRestToRegisterUserAndReturnUserId(appUser);
+    callRestToRegisterUserAndReturnUserId(user);
 
-    appUser.setUsername(appUser.getUsername().toUpperCase());
+    user.setUsername(user.getUsername().toUpperCase());
 
     //then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
@@ -73,13 +73,13 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldValidateUser() throws Exception {
     //given
-    AppUser appUser = userMarian();
-    callRestToRegisterUserAndReturnUserId(appUser);
+    User user = userMarian();
+    callRestToRegisterUserAndReturnUserId(user);
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isOk());
   }
 
@@ -87,12 +87,12 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingUser() throws Exception {
 
     //given
-    AppUser appUser = userMarian();
+    User user = userMarian();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
   }
@@ -101,15 +101,15 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserPassword() throws Exception {
 
     //given
-    AppUser appUser = userMarian();
-    callRestToRegisterUserAndReturnUserId(appUser);
+    User user = userMarian();
+    callRestToRegisterUserAndReturnUserId(user);
 
     //when
-    appUser.setPassword("Wrong password");
+    user.setPassword("Wrong password");
 
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
   }
@@ -118,12 +118,12 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNullUserPasswordUsernameFirstNameLastName() throws Exception {
 
     //given
-    AppUser appUser = AppUser.builder().build();
+    User user = User.builder().build();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_USERNAME))))
@@ -136,7 +136,7 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByEmptyUserPasswordUsernameFirstNameLastName() throws Exception {
 
     //given
-    AppUser appUser = AppUser.builder()
+    User user = User.builder()
         .firstName("   ")
         .lastName("      ")
         .password("    ")
@@ -146,7 +146,7 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))
@@ -160,7 +160,7 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWhiteSpacesInUsernameAndPassword(String username, String password) throws Exception {
 
     //given
-    AppUser appUser = AppUser.builder()
+    User user = User.builder()
         .username(username)
         .password(password)
         .build();
@@ -168,7 +168,7 @@ public class AppUserControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(appUser)))
+        .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))

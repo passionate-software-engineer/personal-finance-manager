@@ -21,34 +21,34 @@ public class UserValidator {
 
   private UserService userService;
 
-  public List<String> validateUser(AppUser appUser) {
+  public List<String> validateUser(User user) {
     List<String> validationResults = new ArrayList<>();
 
-    if (appUser.getUsername() == null) {
+    if (user.getUsername() == null) {
       validationResults.add(getMessage(EMPTY_USERNAME));
     }
 
-    if (appUser.getUsername() != null && StringUtils.containsWhitespace(appUser.getUsername())) {
+    if (user.getUsername() != null && StringUtils.containsWhitespace(user.getUsername())) {
       validationResults.add(getMessage(USERNAME_CONTAINS_WHITSPACE));
     }
 
-    if (appUser.getUsername() != null && userService.isUsernameAlreadyUsed(appUser.getUsername())) {
+    if (user.getUsername() != null && userService.isUsernameAlreadyUsed(user.getUsername())) {
       validationResults.add(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST));
     }
 
-    if (appUser.getPassword() == null) {
+    if (user.getPassword() == null) {
       validationResults.add(getMessage(EMPTY_PASSWORD));
     }
 
-    if (appUser.getPassword() != null && StringUtils.containsWhitespace(appUser.getPassword())) {
+    if (user.getPassword() != null && StringUtils.containsWhitespace(user.getPassword())) {
       validationResults.add(getMessage(PASSWORD_CONTAINS_WHITSPACE));
     }
 
-    if (appUser.getFirstName() == null || appUser.getFirstName().trim().equals("")) {
+    if (user.getFirstName() == null || user.getFirstName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_FIRST_NAME));
     }
 
-    if (appUser.getLastName() == null || appUser.getLastName().trim().equals("")) {
+    if (user.getLastName() == null || user.getLastName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_LAST_NAME));
     }
 

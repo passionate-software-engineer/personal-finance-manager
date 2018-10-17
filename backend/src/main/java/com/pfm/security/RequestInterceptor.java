@@ -1,5 +1,6 @@
 package com.pfm.security;
 
+import com.google.common.net.HttpHeaders;
 import com.pfm.auth.TokenService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,11 +20,10 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 
   //TODO this should be done be spring security
   private static final String pattern = "(\\/users.*|\\/swagger.*)";
-  private final Logger logger = LoggerFactory.getLogger("Security");
+  private final Logger logger = LoggerFactory.getLogger(RequestInterceptor.class.getName());
 
   @Override
-  public boolean preHandle(HttpServletRequest request,
-      HttpServletResponse response, Object object) throws Exception {
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 
     if ("OPTIONS".equals(request.getMethod())) {
       return true;
@@ -33,23 +33,23 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
       return true;
     }
 
-    String requestToken = request.getHeader("authorization");
+    String requestToken = request.getHeader(HttpHeaders.AUTHORIZATION);
     if (requestToken == null || requestToken.isEmpty()) {
-      logger.error("No request token.");
+      logger.error("Authorization header value is empty");
       response.setContentType("text/plain");
-      response.getWriter().write("Incorrect Token");
+      response.getWriter().write("Authorization header value is empty");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return false;
     }
 
     if (isTokenCorrect(requestToken)) {
-      long userIdFromToken = tokenService.getUserIdFromToken(requestToken);
+      long userIdFromToken = tokenService.getUserIdBasedOnToken(requestToken);
       request.setAttribute("userId", userIdFromToken);
       return true;
     } else {
-      logger.error("Request token is incorrect.");
+      logger.error("Request token " + requestToken + " is incorrect");
       response.setContentType("text/plain");
-      response.getWriter().write("Incorrect Token");
+      response.getWriter().write("Request token " + requestToken + " is incorrect");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return false;
     }

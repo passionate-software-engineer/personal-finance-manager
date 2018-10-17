@@ -19,23 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  //TODO change id to entityId in methods
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
   private CategoryService categoryService;
   private AccountService accountService;
 
   @Override
-  public ResponseEntity<Transaction> getTransactionById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
-    log.info("Retrieving transaction with id: {}", id);
-    Optional<Transaction> transaction = transactionService.getTransactionByIdAndUserId(id, userId);
+  public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId, @RequestAttribute(value = "userId") long userId) {
+    log.info("Retrieving transaction with id: {}", transactionId);
+    Optional<Transaction> transaction = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
     if (!transaction.isPresent()) {
-      log.info("Transaction with id {} was not found", id);
+      log.info("Transaction with id {} was not found", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    log.info("Transaction with id {} was successfully retrieved", id);
+    log.info("Transaction with id {} was successfully retrieved", transactionId);
     return ResponseEntity.ok(transaction.get());
   }
 
@@ -65,10 +64,10 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> updateTransaction(@PathVariable long id, @RequestBody TransactionRequest transactionRequest,
+  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
       @RequestAttribute(value = "userId") long userId) {
-    if (!transactionService.getTransactionByIdAndUserId(id, userId).isPresent()) {
-      log.info("No transaction with id {} was found, not able to update", id);
+    if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
+      log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
 
@@ -80,23 +79,23 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
-    transactionService.updateTransaction(id, userId, transaction);
-    log.info("Transaction with id {} was successfully updated", id);
+    transactionService.updateTransaction(transactionId, userId, transaction);
+    log.info("Transaction with id {} was successfully updated", transactionId);
 
     return ResponseEntity.ok().build();
   }
 
   @Override
-  public ResponseEntity<?> deleteTransaction(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
-    if (!transactionService.getTransactionByIdAndUserId(id, userId).isPresent()) {
-      log.info("No transaction with id {} was found, not able to delete", id);
+  public ResponseEntity<?> deleteTransaction(@PathVariable long transactionId, @RequestAttribute(value = "userId") long userId) {
+    if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
+      log.info("No transaction with id {} was found, not able to delete", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    log.info("Attempting to delete transaction with id {}", id);
-    transactionService.deleteTransaction(id, userId);
+    log.info("Attempting to delete transaction with id {}", transactionId);
+    transactionService.deleteTransaction(transactionId, userId);
 
-    log.info("Transaction with id {} was deleted successfully", id);
+    log.info("Transaction with id {} was deleted successfully", transactionId);
     return ResponseEntity.ok().build();
   }
 

@@ -32,7 +32,7 @@ public class CategoryValidator {
     }
 
     if (!categoryToUpdate.get().getName().equals(category.getName())) {
-      checkForDuplicatedName(validationResults, category);
+      checkForDuplicatedName(validationResults, category, userId);
     }
 
     // TODO check category.getParentCategory().getId() != null
@@ -44,12 +44,12 @@ public class CategoryValidator {
     return validationResults;
   }
 
-  public List<String> validateCategoryForAdd(Category category) {
+  public List<String> validateCategoryForAdd(Category category, long userId) {
     List<String> validationResults = new ArrayList<>();
 
     validate(validationResults, category);
 
-    checkForDuplicatedName(validationResults, category);
+    checkForDuplicatedName(validationResults, category, userId);
 
     return validationResults;
   }
@@ -65,9 +65,9 @@ public class CategoryValidator {
     }
   }
 
-  private void checkForDuplicatedName(List<String> validationResults, Category category) {
+  private void checkForDuplicatedName(List<String> validationResults, Category category, long userId) {
     if (category.getName() != null && !category.getName().trim().equals("")
-        && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
+        && categoryService.isCategoryNameAlreadyUsed(category.getName(), userId)) {
       validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }

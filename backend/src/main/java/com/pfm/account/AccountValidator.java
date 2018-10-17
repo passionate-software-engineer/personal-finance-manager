@@ -17,7 +17,7 @@ public class AccountValidator {
 
   private AccountService accountService;
 
-  public List<String> validate(Account account) {
+  private List<String> validate(Account account) {
     List<String> validationResults = new ArrayList<>();
 
     if (account.getName() == null || account.getName().trim().equals("")) {
@@ -31,10 +31,10 @@ public class AccountValidator {
     return validationResults;
   }
 
-  public List<String> validateAccountIncludingNameDuplication(Account account) {
+  public List<String> validateAccountIncludingNameDuplication(long userId, Account account) {
     List<String> validationResults = validate(account);
 
-    checkForDuplicatedName(validationResults, account);
+    checkForDuplicatedName(userId, validationResults, account);
 
     return validationResults;
   }
@@ -52,11 +52,11 @@ public class AccountValidator {
     }
 
     // it's not ok if account is duplicating name of other account
-    return validateAccountIncludingNameDuplication(account);
+    return validateAccountIncludingNameDuplication(userId, account);
   }
 
-  private void checkForDuplicatedName(List<String> validationResults, Account account) {
-    if (account.getName() != null && !account.getName().trim().equals("") && accountService.isAccountNameAlreadyUsed(account.getName())) {
+  private void checkForDuplicatedName(long userId, List<String> validationResults, Account account) {
+    if (account.getName() != null && !account.getName().trim().equals("") && accountService.isAccountNameAlreadyUsed(userId, account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }

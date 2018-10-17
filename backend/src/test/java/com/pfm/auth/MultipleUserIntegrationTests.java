@@ -47,8 +47,9 @@ import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.util.List;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 
-public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
+public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   //TODO we should unify approach with final keyword before variables couse checkstyle force us to use it some circumstances.
   //It looks a bit stragne to use it sometimes and sometimes not.
@@ -72,7 +73,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
-            .header("Authorization", zdzislawToken)
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
             .content(json(filterToAdd))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
@@ -102,7 +103,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + marianOver1000ExpensesFilter)
-            .header("Authorization", marianToken)
+            .header(HttpHeaders.AUTHORIZATION, marianToken)
             .content(json(updatedFilter))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
@@ -128,7 +129,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + marianExpensesOver1000Filter)
-            .header("Authorization", zdzislawToken)
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
             .content(json(updatedFilter))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -148,7 +149,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(delete(FILTERS_SERVICE_PATH + "/" + marianExpensesOver1000Filter)
-            .header("Authorization", zdzislawToken))
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
         .andExpect(status().isNotFound());
   }
 
@@ -174,7 +175,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(put(TRANSACTIONS_SERVICE_PATH + "/" + marianFoodTransactionId)
-            .header("Authorization", zdzislawToken)
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
             .content(json(updatedTransaction))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -197,7 +198,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + marianFoodTransactionId)
-            .header("Authorization", zdzislawToken))
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
         .andExpect(status().isNotFound());
   }
 
@@ -219,7 +220,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + marianCategoryFoodId)
-            .header("Authorization", zdzislawToken)
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
             .content(json(updatedCategory))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -239,7 +240,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(delete(CATEGORIES_SERVICE_PATH + "/" + marianCategoryFoodId)
-            .header("Authorization", zdzislawToken))
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
         .andExpect(status().isNotFound());
   }
 
@@ -262,7 +263,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(put(ACCOUNTS_SERVICE_PATH + "/" + marianAccountMbankId)
-            .header("Authorization", zdzislawToken)
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
             .content(json(updatedAccount))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -282,7 +283,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + marianAccountMbankId)
-            .header("Authorization", zdzislawToken))
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
         .andExpect(status().isNotFound());
   }
 
@@ -305,7 +306,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(post(TRANSACTIONS_SERVICE_PATH)
-            .header("Authorization", zdzislawToken)
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
             .content(json(transactionToAdd))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
@@ -338,7 +339,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
 
     mockMvc
         .perform(put(TRANSACTIONS_SERVICE_PATH + "/" + marianFoodTransactionId)
-            .header("Authorization", marianToken)
+            .header(HttpHeaders.AUTHORIZATION, marianToken)
             .content(json(updatedTransaction))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
@@ -353,7 +354,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
-            .header("Authorization", "Wrong token")
+            .header(HttpHeaders.AUTHORIZATION, "Wrong token")
             .content(json(convertAccountToAccountRequest(accountJacekBalance1000())))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isUnauthorized());
@@ -365,7 +366,7 @@ public class MultipleAppUserIntegrationTests extends IntegrationTestsBase {
     //given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
-            .header("Authorization", "")
+            .header(HttpHeaders.AUTHORIZATION, "")
             .content(json(convertAccountToAccountRequest(accountJacekBalance1000())))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isUnauthorized());

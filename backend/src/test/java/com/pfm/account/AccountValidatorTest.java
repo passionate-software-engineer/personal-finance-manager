@@ -9,7 +9,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -67,10 +66,10 @@ public class AccountValidatorTest {
   @Test
   public void shouldNotFindDuplicateWhenNoOtherAccountsExists() {
     //given
-    when(accountService.isAccountNameAlreadyUsed(any())).thenReturn(true);
+    when(accountService.isAccountNameAlreadyUsed(mockUserId, accountMbankBalance10().getName())).thenReturn(true);
 
     //when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(accountMbankBalance10());
+    List<String> result = accountValidator.validateAccountIncludingNameDuplication(mockUserId, accountMbankBalance10());
 
     //then
     assertThat(result.size(), is(1));

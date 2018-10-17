@@ -18,7 +18,7 @@ public class FilterService {
     return filterRepository.save(filter);
   }
 
-  public Optional<Filter> getFilterByIdAndByUserId(long id, long userId) {
+  public Optional<Filter> getFilterByIdAndUserId(long id, long userId) {
     return filterRepository.findByIdAndUserId(id, userId);
   }
 
@@ -48,7 +48,7 @@ public class FilterService {
   }
 
   private Filter getFilterFromDatabase(long id, long userId) {
-    Optional<Filter> filterFromDb = getFilterByIdAndByUserId(id, userId);
+    Optional<Filter> filterFromDb = getFilterByIdAndUserId(id, userId);
 
     if (!filterFromDb.isPresent()) {
       throw new IllegalStateException("Filter with id: " + id + " does not exist in database");

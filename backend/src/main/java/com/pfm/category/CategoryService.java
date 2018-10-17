@@ -91,8 +91,8 @@ public class CategoryService {
     return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId(), userId);
   }
 
-  public boolean isCategoryNameAlreadyUsed(String name) {
-    return categoryRepository.findByNameIgnoreCase(name).size() != 0;
+  public boolean isCategoryNameAlreadyUsed(String name, long userId) {
+    return categoryRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
 }
