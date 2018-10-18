@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+//TODO add descriptions and examples for swagger
 public final class Filter {
 
   @Id
@@ -46,5 +47,7 @@ public final class Filter {
   private LocalDate dateTo;
 
   private String description;
+
+  private long userId;
 
 }

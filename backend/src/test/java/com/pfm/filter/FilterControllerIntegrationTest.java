@@ -1,16 +1,17 @@
 package com.pfm.filter;
 
-import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.test.helpers.TestAccountProvider.accountMbankBalance10;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryCar;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.test.helpers.TestFilterProvider.convertAccountIdsToList;
-import static com.pfm.test.helpers.TestFilterProvider.convertCategoryIdsToList;
-import static com.pfm.test.helpers.TestFilterProvider.filterCarExpenses;
-import static com.pfm.test.helpers.TestFilterProvider.filterFoodExpenses;
-import static com.pfm.test.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
-import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestFilterProvider.convertAccountIdsToList;
+import static com.pfm.helpers.TestFilterProvider.convertCategoryIdsToList;
+import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
+import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
+import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
@@ -22,31 +23,43 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.test.helpers.IntegrationTestsBase;
+import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
 import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
+
+  private String token;
+  private long userId;
+
+  @Before
+  public void setup() throws Exception {
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+  }
 
   @Test
   public void shouldAddFilter() throws Exception {
 
     //given
-    Long categoryId = callRestToAddCategoryAndReturnId(categoryFood());
-    Long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    Long categoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    Long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
     homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
     homeExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
 
     //when
-    Long filterId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd);
+    Long filterId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd, token);
 
     //then
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, homeExpensesFilterToAdd);
+    expectedFilter.setUserId(userId);
 
-    Filter actualFilter = getFilterById(filterId);
+    Filter actualFilter = getFilterById(filterId, token);
     assertThat(expectedFilter, is(equalTo(actualFilter)));
   }
 
@@ -54,19 +67,20 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetFilterById() throws Exception {
 
     //given
-    long categoryId = callRestToAddCategoryAndReturnId(categoryCar());
-    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
+    long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
     carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
     carExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
-    long filterId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd);
+    long filterId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd, token);
 
     //when
-    Filter outputFilter = getFilterById(filterId);
+    Filter outputFilter = getFilterById(filterId, token);
 
     //then
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, carExpensesFilterToAdd);
+    expectedFilter.setUserId(userId);
     assertThat(expectedFilter, is(equalTo(outputFilter)));
   }
 
@@ -74,35 +88,44 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetAllFilters() throws Exception {
 
     //given
-    final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood());
-    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar());
-    long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome());
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
-    long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10());
+    final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), token);
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
     homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryHomeId));
-    final long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd);
+    final long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd, token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
     carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountMbankId, accountJacekId));
     carExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryCarId));
-    final long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd);
+    final long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd, token);
 
     FilterRequest foodExpensesFilterToAdd = convertFilterToFilterRequest(filterFoodExpenses());
     foodExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountJacekId));
     foodExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryFoodId));
-    long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(foodExpensesFilterToAdd);
+    long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(foodExpensesFilterToAdd, token);
 
     //when
-    List<Filter> actualListOfFilters = callRestToGetAllFilters();
+    final List<Filter> actualListOfFilters = callRestToGetAllFilters(token);
 
     //then
+    final Filter expectedCarExpensesFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, carExpensesFilterToAdd);
+    expectedCarExpensesFilter.setUserId(userId);
+
+    final Filter expectedFoodExpensesFilter = convertFilterRequestToFilterAndSetId(filterFoodExpensesId, foodExpensesFilterToAdd);
+    expectedFoodExpensesFilter.setUserId(userId);
+
+    final Filter expectedHomeExpensesFilter = convertFilterRequestToFilterAndSetId(filterHomeExpensesId, homeExpensesFilterToAdd);
+    expectedHomeExpensesFilter.setUserId(userId);
+
     assertThat(actualListOfFilters.size(), is(3));
     assertThat(actualListOfFilters, containsInAnyOrder(
-        convertFilterRequestToFilterAndSetId(filterCarExpensesId, carExpensesFilterToAdd),
-        convertFilterRequestToFilterAndSetId(filterFoodExpensesId, foodExpensesFilterToAdd),
-        convertFilterRequestToFilterAndSetId(filterHomeExpensesId, homeExpensesFilterToAdd)
+        expectedCarExpensesFilter,
+        expectedFoodExpensesFilter,
+        expectedHomeExpensesFilter
     ));
   }
 
@@ -110,21 +133,24 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldDeleteFilter() throws Exception {
 
     //given
-    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses());
-    long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(filterFoodExpenses());
+    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
+    long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(filterFoodExpenses(), token);
 
     //when
-    callRestToDeleteFilterById(filterCarExpensesId);
+    callRestToDeleteFilterById(filterCarExpensesId, token);
 
     //then
-    List<Filter> actualFilters = callRestToGetAllFilters();
+    List<Filter> actualFilters = callRestToGetAllFilters(token);
 
     assertThat(actualFilters.size(), is(1));
 
     Filter expectedFoodExpenses = filterFoodExpenses();
     expectedFoodExpenses.setId(filterFoodExpensesId);
+    expectedFoodExpenses.setUserId(userId);
+
     Filter expetedCarExpenses = filterCarExpenses();
     expetedCarExpenses.setId(filterCarExpensesId);
+    expetedCarExpenses.setUserId(userId);
 
     assertThat(actualFilters, contains(expectedFoodExpenses));
     assertThat(actualFilters.contains(expetedCarExpenses), is(false));
@@ -134,9 +160,9 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateFilter() throws Exception {
 
     //given
-    long categoryId = callRestToAddCategoryAndReturnId(categoryCar());
-    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
-    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses());
+    long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
 
     FilterRequest filterCarExpensesToUpdate = FilterRequest.builder()
         .name("Car expenses between 1000$ and 2000$")
@@ -150,11 +176,14 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
         .build();
 
     //when
-    callRestServiceToUpdateFilter(filterCarExpensesId, filterCarExpensesToUpdate);
+    callRestServiceToUpdateFilter(filterCarExpensesId, filterCarExpensesToUpdate, token);
 
     //then
-    Filter updatedFilter = getFilterById(filterCarExpensesId);
-    assertThat(updatedFilter, is(equalTo(convertFilterRequestToFilterAndSetId(filterCarExpensesId, filterCarExpensesToUpdate))));
+    Filter updatedFilter = getFilterById(filterCarExpensesId, token);
+    final Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, filterCarExpensesToUpdate);
+    expectedFilter.setUserId(userId);
+
+    assertThat(updatedFilter, is(equalTo(expectedFilter)));
   }
 
   @Test
@@ -162,7 +191,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc
-        .perform(get(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+        .perform(get(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -171,7 +201,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc
-        .perform(delete(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID))
+        .perform(delete(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -181,6 +212,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterCarExpenses()))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
@@ -202,6 +234,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());
@@ -219,6 +252,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());
@@ -228,7 +262,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByValidationErrorsIdInUpdateMethod() throws Exception {
 
     //given
-    final long filterId = callRestServiceToAddFilterAndReturnId(filterCarExpenses());
+    final long filterId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
     FilterRequest filterRequestWithValidationErrors = new FilterRequest();
     filterRequestWithValidationErrors.setName(" ");
     filterRequestWithValidationErrors.setAccountIds(convertAccountIdsToList(1L));
@@ -242,6 +276,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + filterId)
+            .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());

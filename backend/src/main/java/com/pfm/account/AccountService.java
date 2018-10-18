@@ -16,12 +16,12 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
-  public Optional<Account> getAccountById(long id) {
-    return accountRepository.findById(id);
+  public Optional<Account> getAccountByIdAndUserId(long accountId, long userId) {
+    return accountRepository.findByIdAndUserId(accountId, userId);
   }
 
-  public List<Account> getAccounts() {
-    return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
+  public List<Account> getAccounts(long userId) {
+    return StreamSupport.stream(accountRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Account::getId))
         .collect(Collectors.toList());
   }
@@ -30,11 +30,11 @@ public class AccountService {
     return accountRepository.save(account);
   }
 
-  public void updateAccount(long id, Account account) {
-    Optional<Account> accountFromDb = getAccountById(id);
+  public void updateAccount(long accountId, long userId, Account account) {
+    Optional<Account> accountFromDb = getAccountByIdAndUserId(accountId, userId);
 
     if (!accountFromDb.isPresent()) {
-      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+      throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
     }
 
     Account accountToUpdate = accountFromDb.get();
@@ -44,16 +44,12 @@ public class AccountService {
     accountRepository.save(accountToUpdate);
   }
 
-  public void deleteAccount(long id) {
-    accountRepository.deleteById(id);
+  public void deleteAccount(long accountId) {
+    accountRepository.deleteById(accountId);
   }
 
-  public boolean idExist(long id) {
-    return accountRepository.existsById(id);
-  }
-
-  public boolean isAccountNameAlreadyUsed(String name) {
-    return accountRepository.findByNameIgnoreCase(name).size() != 0;
+  public boolean isAccountNameAlreadyUsed(long userId, String name) {
+    return accountRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
 }

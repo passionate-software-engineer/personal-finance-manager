@@ -1,6 +1,6 @@
-package com.pfm.test.helpers;
+package com.pfm.helpers;
 
-import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 
 import com.pfm.filter.Filter;
 import java.time.LocalDate;
@@ -42,6 +42,15 @@ public class TestFilterProvider {
     return Filter.builder()
         .name("Home expenses up to 200$")
         .priceTo(convertDoubleToBigDecimal(200))
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .build();
+  }
+
+  public static Filter filterExpensesOver1000() {
+    return Filter.builder()
+        .name("Expenses over 1000")
+        .priceFrom(convertDoubleToBigDecimal(1000))
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
         .build();

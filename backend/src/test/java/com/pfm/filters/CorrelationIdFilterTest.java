@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 public class CorrelationIdFilterTest {
 
   private static final String INVOICES_SERVICE_PATH = "/accounts";
-  private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
 
   @Autowired
   private MockMvc mockMvc;
@@ -33,8 +32,8 @@ public class CorrelationIdFilterTest {
     // when
     mockMvc
         .perform(get(INVOICES_SERVICE_PATH))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk());
+        .andExpect(content().contentType(MediaType.TEXT_PLAIN))
+        .andExpect(status().isUnauthorized());
 
     // then
     // assertThat(MDC.get(CORRELATION_ID), is(not(nullValue())));
@@ -51,8 +50,8 @@ public class CorrelationIdFilterTest {
             get(INVOICES_SERVICE_PATH)
                 .header(CORRELATION_ID, UUID.randomUUID().toString())
         )
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk());
+        .andExpect(content().contentType(MediaType.TEXT_PLAIN))
+        .andExpect(status().isUnauthorized());
 
     // then
     // assertThat(MDC.get(CORRELATION_ID), is(not(nullValue())));

@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class TransactionServiceTest {
 
   private static final long NOT_EXISTING_ID = 0;
+  private static final long MOCK_USER_ID = 1;
 
   @Mock
   private TransactionRepository transactionRepository;
@@ -30,18 +31,15 @@ public class TransactionServiceTest {
   private TransactionService transactionService;
 
   @Test
-  public void shouldReturnExceptionCausedByIdDoesNotExistInDb() throws Exception {
-    //given
-    when(transactionRepository.findById(NOT_EXISTING_ID)).thenReturn(Optional.empty());
+  public void shouldReturnExceptionCausedByIdDoesNotExistInDb() {
+
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      transactionService.deleteTransaction(NOT_EXISTING_ID);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> transactionService.deleteTransaction(NOT_EXISTING_ID, MOCK_USER_ID));
     assertThat(exception.getMessage(), is(equalTo("Transaction with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }
 
   @Test
-  public void shouldReturnExceptionCausedByAccountIdDoesNotExistInDb() throws Exception {
+  public void shouldReturnExceptionCausedByAccountIdDoesNotExistInDb() {
     //given
     Transaction transaction = Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
@@ -49,13 +47,11 @@ public class TransactionServiceTest {
         ))
         .build();
 
-    when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
-    when(accountService.getAccountById(NOT_EXISTING_ID)).thenReturn(Optional.empty());
+    when(transactionRepository.findByIdAndUserId(1L, MOCK_USER_ID)).thenReturn(Optional.of(transaction));
+    when(accountService.getAccountByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      transactionService.updateTransaction(1L, transaction);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> transactionService.updateTransaction(1L, MOCK_USER_ID, transaction));
 
     assertThat(exception.getMessage(), is(equalTo("Account with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }

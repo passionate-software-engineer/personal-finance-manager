@@ -1,6 +1,6 @@
-package com.pfm.test.helpers;
+package com.pfm.helpers;
 
-import static com.pfm.test.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
@@ -43,6 +43,30 @@ public class TestTransactionProvider {
         )
         .description("Oil")
         .date(LocalDate.of(2018, 8, 10))
+        .build();
+  }
+
+  public static Transaction animalsTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .price(convertDoubleToBigDecimal(8))
+                .build())
+        )
+        .description("Food for Parrot")
+        .date(LocalDate.of(2018, 10, 1))
+        .build();
+  }
+
+  public static Transaction homeTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .price(convertDoubleToBigDecimal(77))
+                .build())
+        )
+        .description("Table")
+        .date(LocalDate.of(2018, 10, 2))
         .build();
   }
 

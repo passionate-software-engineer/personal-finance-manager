@@ -24,7 +24,7 @@ public class TransactionValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  List<String> validate(TransactionRequest transactionRequest) {
+  public List<String> validate(TransactionRequest transactionRequest, long userId) {
     List<String> validationErrors = new ArrayList<>();
 
     if (transactionRequest.getDescription() == null || transactionRequest.getDescription().trim().equals("")) {
@@ -33,7 +33,7 @@ public class TransactionValidator {
 
     if (transactionRequest.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
-    } else if (!categoryService.idExist(transactionRequest.getCategoryId())) {
+    } else if (!categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId).isPresent()) {
       validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + transactionRequest.getCategoryId());
     }
 
@@ -43,7 +43,7 @@ public class TransactionValidator {
       for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
-        } else if (!accountService.idExist(entry.getAccountId())) {
+        } else if (!accountService.getAccountByIdAndUserId(entry.getAccountId(), userId).isPresent()) {
           validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + entry.getAccountId());
         }
 

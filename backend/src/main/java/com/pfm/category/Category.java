@@ -31,4 +31,6 @@ public final class Category {
   @ManyToOne
   @ApiModelProperty(value = "Parent category object", required = true)
   private Category parentCategory;
+
+  private Long userId;
 }

@@ -33,6 +33,8 @@ public final class Transaction {
 
   private LocalDate date;
 
+  private Long userId;
+
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<AccountPriceEntry> accountPriceEntries;
 

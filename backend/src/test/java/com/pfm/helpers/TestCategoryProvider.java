@@ -1,4 +1,4 @@
-package com.pfm.test.helpers;
+package com.pfm.helpers;
 
 import com.pfm.category.Category;
 
@@ -28,6 +28,13 @@ public class TestCategoryProvider {
     return Category.builder()
         .id(2L)
         .name("Home")
+        .build();
+  }
+
+  public static Category categoryAnimals() {
+    return Category.builder()
+        .id(2L)
+        .name("Animals")
         .build();
   }
 }

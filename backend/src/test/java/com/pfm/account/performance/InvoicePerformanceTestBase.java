@@ -1,12 +1,16 @@
 package com.pfm.account.performance;
 
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
+import com.pfm.auth.User;
+import com.pfm.auth.UserDetails;
 import io.restassured.http.ContentType;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -20,12 +24,14 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
+// TODO imporove all those tests
 // TODO those tests takes lots of time - run it separetly not as Unit tests
 @RunWith(ConcurrentTestRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -36,7 +42,16 @@ public abstract class InvoicePerformanceTestBase {
 
   protected static final int THREAD_COUNT = 24;
 
-  private static final String INVOICES_SERVICE_PATH = "http://localhost:%d/accounts";
+  private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
+
+  private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
+
+  protected User defaultUser = userMarian();
+
+  protected String token;
+
+  @Autowired
+  protected ObjectMapper mapper;
 
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
@@ -50,8 +65,10 @@ public abstract class InvoicePerformanceTestBase {
   private int port;
 
   protected Account[] getAccounts() throws Exception {
+
     return given()
         .when()
+        .header("Authorization", token)
         .get(invoiceServicePath())
         .getBody()
         .as(Account[].class);
@@ -66,16 +83,27 @@ public abstract class InvoicePerformanceTestBase {
   }
 
   protected String invoiceServicePath() {
-    return String.format(INVOICES_SERVICE_PATH, port);
+    return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
   protected String invoiceServicePath(long id) {
     return invoiceServicePath() + "/" + id;
   }
 
+  protected String usersServicePath() {
+    return String.format(USERS_SERVICE_PATH, port);
+  }
+
   @PostConstruct
-  public void before() {
+  public void before() throws Exception {
+    given()
+        .contentType(ContentType.JSON)
+        .body(defaultUser)
+        .post(usersServicePath() + "/register");
+    token = authenticateUserAndGetToken(defaultUser);
+
     for (int i = 0; i < 10; ++i) {
+
       Account account = Account.builder()
           .name(getRandomName())
           .balance(getRandomBalance())
@@ -83,6 +111,7 @@ public abstract class InvoicePerformanceTestBase {
 
       String response = given()
           .contentType(ContentType.JSON)
+          .header("Authorization", token)
           .body(account)
           .when()
           .post(invoiceServicePath())
@@ -111,9 +140,29 @@ public abstract class InvoicePerformanceTestBase {
     for (Account account : accountsFromService) {
       given()
           .when()
+          .header("Authorization", token)
           .delete(invoiceServicePath(account.getId()));
     }
 
     assertThat(getAccounts().length, is(0));
+  }
+
+  protected UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {
+    return mapper.readValue(jsonAuthResponse, UserDetails.class);
+  }
+
+  protected String json(Object object) throws Exception {
+    return mapper.writeValueAsString(object);
+  }
+
+  protected String authenticateUserAndGetToken(User user) throws Exception {
+    String response = given()
+        .contentType(ContentType.JSON)
+        .body(json(user))
+        .post(usersServicePath() + "/authenticate")
+        .getBody()
+        .print();
+
+    return jsonToAuthResponse(response).getToken();
   }
 }

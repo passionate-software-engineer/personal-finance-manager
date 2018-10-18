@@ -18,22 +18,22 @@ public class FilterService {
     return filterRepository.save(filter);
   }
 
-  public Optional<Filter> getFilterById(long id) {
-    return filterRepository.findById(id);
+  public Optional<Filter> getFilterByIdAndUserId(long id, long userId) {
+    return filterRepository.findByIdAndUserId(id, userId);
   }
 
   public void deleteFilter(long id) {
     filterRepository.deleteById(id);
   }
 
-  public List<Filter> getAllFilters() {
-    return StreamSupport.stream(filterRepository.findAll().spliterator(), false)
+  public List<Filter> getAllFilters(long userId) {
+    return StreamSupport.stream(filterRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Filter::getId))
         .collect(Collectors.toList());
   }
 
-  public void updateFilter(long id, Filter filter) {
-    Filter filterToUpdate = getFilterFromDatabase(id);
+  public void updateFilter(long id, long userId, Filter filter) {
+    Filter filterToUpdate = getFilterFromDatabase(id, userId);
 
     filterToUpdate.setAccountIds(filter.getAccountIds());
     filterToUpdate.setCategoryIds(filter.getCategoryIds());
@@ -47,12 +47,8 @@ public class FilterService {
     filterRepository.save(filterToUpdate);
   }
 
-  public boolean idExist(long id) {
-    return filterRepository.existsById(id);
-  }
-
-  private Filter getFilterFromDatabase(long id) {
-    Optional<Filter> filterFromDb = getFilterById(id);
+  private Filter getFilterFromDatabase(long id, long userId) {
+    Optional<Filter> filterFromDb = getFilterByIdAndUserId(id, userId);
 
     if (!filterFromDb.isPresent()) {
       throw new IllegalStateException("Filter with id: " + id + " does not exist in database");

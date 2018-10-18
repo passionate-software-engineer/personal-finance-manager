@@ -1,9 +1,11 @@
 package com.pfm.auth;
 
-import java.util.ArrayList;
+import static com.pfm.config.MessagesProvider.USERNAME_OR_PASSWORD_IS_INCORRECT;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import java.util.List;
 import java.util.Optional;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,33 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@NoArgsConstructor
+@AllArgsConstructor
 @RequestMapping("/users")
 @CrossOrigin
 @RestController
 public class UserController {
 
-  private List<User> usersDatabase = new ArrayList<>();
+  private UserService userService;
+  private UserValidator userValidator;
 
-  @RequestMapping(value = "authenticate", method = RequestMethod.POST)
+  @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
-    Optional<User> userFromDb = usersDatabase.stream()
-        .filter(user -> user.getUsername().equals(userToAuthenticate.getUsername()))
-        .filter(user -> user.getPassword().equals(userToAuthenticate.getPassword()))
-        .findFirst();
+    Optional<UserDetails> authResponse = userService.authenticateUser(userToAuthenticate);
 
-    if (userFromDb.isPresent()) {
-      return ResponseEntity.ok(userFromDb.get());
+    if (authResponse.isPresent()) {
+      return ResponseEntity.ok(authResponse.get());
     }
 
-    return ResponseEntity.badRequest().body("Username or password is incorrect");
+    return ResponseEntity.badRequest().body(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT));
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public ResponseEntity<?> registerUser(@RequestBody User user) {
-    user.setToken("fake-jwt-token");
-    usersDatabase.add(user);
-    return ResponseEntity.ok(user);
+    List<String> validationResult = userValidator.validateUser(user);
+    if (!validationResult.isEmpty()) {
+      return ResponseEntity.badRequest().body(validationResult);
+    }
+    long userId = userService.registerUser(user).getId();
+    return ResponseEntity.ok(userId);
   }
 }
 

@@ -12,7 +12,8 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
 
   @Test
   @ThreadCount(THREAD_COUNT)
-  public void shouldAddSimultaneouslyMultipleAccounts() {
+  public void shouldAddSimultaneouslyMultipleAccounts() throws Exception {
+
     for (int i = 0; i < 10; ++i) {
 
       Account account = Account.builder()
@@ -22,6 +23,7 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
 
       String response = given()
           .contentType(ContentType.JSON)
+          .header("Authorization", token)
           .body(account)
           .when()
           .post(invoiceServicePath())

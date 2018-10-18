@@ -20,36 +20,36 @@ public class CategoryValidator {
 
   private CategoryService categoryService;
 
-  public List<String> validateCategoryForUpdate(long id, Category category) {
+  public List<String> validateCategoryForUpdate(long id, long userId, Category category) {
     List<String> validationResults = new ArrayList<>();
 
     validate(validationResults, category);
 
-    Optional<Category> categoryToUpdate = categoryService.getCategoryById(id);
+    Optional<Category> categoryToUpdate = categoryService.getCategoryByIdAndUserId(id, userId);
 
     if (!categoryToUpdate.isPresent()) {
       throw new IllegalStateException("Category with id: " + id + " does not exist in database");
     }
 
     if (!categoryToUpdate.get().getName().equals(category.getName())) {
-      checkForDuplicatedName(validationResults, category);
+      checkForDuplicatedName(validationResults, category, userId);
     }
 
     // TODO check category.getParentCategory().getId() != null
-    if (category.getParentCategory() != null && categoryService.getCategoryById(category.getParentCategory().getId()).isPresent()
-        && !categoryService.canBeParentCategory(id, category.getParentCategory().getId())) {
+    if (category.getParentCategory() != null && categoryService.getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).isPresent()
+        && !categoryService.canBeParentCategory(id, category.getParentCategory().getId(), userId)) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 
     return validationResults;
   }
 
-  public List<String> validateCategoryForAdd(Category category) {
+  public List<String> validateCategoryForAdd(Category category, long userId) {
     List<String> validationResults = new ArrayList<>();
 
     validate(validationResults, category);
 
-    checkForDuplicatedName(validationResults, category);
+    checkForDuplicatedName(validationResults, category, userId);
 
     return validationResults;
   }
@@ -65,9 +65,9 @@ public class CategoryValidator {
     }
   }
 
-  private void checkForDuplicatedName(List<String> validationResults, Category category) {
+  private void checkForDuplicatedName(List<String> validationResults, Category category, long userId) {
     if (category.getName() != null && !category.getName().trim().equals("")
-        && categoryService.isCategoryNameAlreadyUsed(category.getName())) {
+        && categoryService.isCategoryNameAlreadyUsed(category.getName(), userId)) {
       validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }

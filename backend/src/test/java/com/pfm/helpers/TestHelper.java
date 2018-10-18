@@ -1,4 +1,4 @@
-package com.pfm.test.helpers;
+package com.pfm.helpers;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

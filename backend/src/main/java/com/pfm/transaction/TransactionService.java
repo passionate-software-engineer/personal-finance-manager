@@ -21,35 +21,35 @@ public class TransactionService {
   private TransactionRepository transactionRepository;
   private AccountService accountService;
 
-  public Optional<Transaction> getTransactionById(long id) {
-    return transactionRepository.findById(id);
+  public Optional<Transaction> getTransactionByIdAndUserId(long id, long userId) {
+    return transactionRepository.findByIdAndUserId(id, userId);
   }
 
-  public List<Transaction> getTransactions() {
-    return StreamSupport.stream(transactionRepository.findAll().spliterator(), false)
+  public List<Transaction> getTransactions(long userId) {
+    return StreamSupport.stream(transactionRepository.findByUserId(userId).spliterator(), false)
         .sorted(Comparator.comparing(Transaction::getId))
         .collect(Collectors.toList());
   }
 
-  public Transaction addTransaction(Transaction transaction) {
+  public Transaction addTransaction(long userId, Transaction transaction) {
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), entry.getPrice());
+      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice());
     }
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     return transactionRepository.save(transaction);
   }
 
-  public void updateTransaction(long id, Transaction transaction) {
-    Transaction transactionToUpdate = getTransactionFromDatabase(id);
+  public void updateTransaction(long id, long userId, Transaction transaction) {
+    Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
 
     // subtract old value
     for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
-      subtractAmountFromAccount(entry.getAccountId(), entry.getPrice());
+      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
     }
 
     // add new value
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), entry.getPrice());
+      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice());
     }
 
     transactionToUpdate.setDescription(transaction.getDescription());
@@ -63,18 +63,18 @@ public class TransactionService {
 
   }
 
-  public void deleteTransaction(long id) {
-    Transaction transactionToDelete = getTransactionFromDatabase(id);
+  public void deleteTransaction(long id, long userId) {
+    Transaction transactionToDelete = getTransactionFromDatabase(id, userId);
     transactionRepository.deleteById(id);
 
     // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
-      subtractAmountFromAccount(entry.getAccountId(), entry.getPrice());
+      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
     }
   }
 
-  private Transaction getTransactionFromDatabase(long id) {
-    Optional<Transaction> transactionFromDb = getTransactionById(id);
+  private Transaction getTransactionFromDatabase(long id, long userId) {
+    Optional<Transaction> transactionFromDb = getTransactionByIdAndUserId(id, userId);
 
     if (!transactionFromDb.isPresent()) {
       throw new IllegalStateException("Transaction with id: " + id + " does not exist in database");
@@ -83,20 +83,16 @@ public class TransactionService {
     return transactionFromDb.get();
   }
 
-  public boolean idExist(long id) {
-    return transactionRepository.existsById(id);
+  private void subtractAmountFromAccount(long accountId, long userId, BigDecimal amountToAdd) {
+    updateAccountBalance(accountId, userId, amountToAdd, BigDecimal::subtract);
   }
 
-  private void subtractAmountFromAccount(long accountId, BigDecimal amountToAdd) {
-    updateAccountBalance(accountId, amountToAdd, BigDecimal::subtract);
+  private void addAmountToAccount(long accountId, long userId, BigDecimal amountToSubtract) {
+    updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add);
   }
 
-  private void addAmountToAccount(long accountId, BigDecimal amountToSubtract) {
-    updateAccountBalance(accountId, amountToSubtract, BigDecimal::add);
-  }
-
-  private void updateAccountBalance(long accountId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
-    Optional<Account> account = accountService.getAccountById(accountId);
+  private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
+    Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
 
     if (!account.isPresent()) {
       throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
@@ -107,7 +103,7 @@ public class TransactionService {
     // I can
     accountToUpdate.setBalance(operation.apply(accountToUpdate.getBalance(), amount));
 
-    accountService.updateAccount(accountToUpdate.getId(), accountToUpdate);
+    accountService.updateAccount(accountToUpdate.getId(), userId, accountToUpdate);
   }
 
 }

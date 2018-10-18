@@ -1,9 +1,10 @@
 package com.pfm.export;
 
-import static com.pfm.test.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.test.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.test.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -23,7 +24,7 @@ import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
-import com.pfm.test.helpers.IntegrationTestsBase;
+import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
 import java.math.BigDecimal;
@@ -31,6 +32,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,26 +47,34 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Autowired
   private TransactionService transactionService;
 
+  private String token;
+  private Long userId;
+
+  @Before
+  public void setup() throws Exception {
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+  }
+
   @Test
   public void shouldExportTransactions() throws Exception {
     // given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000());
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood());
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     callRestToAddCategoryAndReturnId(Category.builder()
         .name("Pizza")
         .parentCategory(Category.builder()
             .id(foodCategoryId)
             .build()
-        )
-        .build()
-    );
+        ).build(), token);
 
     Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
-    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId);
+    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, token);
 
     // when
     // then
-    mockMvc.perform(get(EXPORT_SERVICE_PATH))
+    mockMvc.perform(get(EXPORT_SERVICE_PATH)
+        .header("Authorization", token))
         .andExpect(status().isOk())
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport", is("1000.00")))
         .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport", is("1010.00")))
@@ -153,6 +163,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
+        .header("Authorization", token)
         .content(json(input))
         .contentType(JSON_CONTENT_TYPE)
     )
@@ -160,7 +171,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // then
 
-    List<Account> accounts = accountService.getAccounts();
+    List<Account> accounts = accountService.getAccounts(userId);
     assertThat(accounts, hasSize(2));
     assertThat(accounts.get(0).getName(), is(aliorAccount.getName()));
     assertThat(accounts.get(0).getBalance(), is(aliorAccount.getBalance().add(entry.getPrice()).setScale(2, HALF_UP)));
@@ -168,25 +179,26 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // TODO handle rounding in single place - create helper class and use everywhere, add method to format BigDecimal to string
     assertThat(accounts.get(1).getBalance(), is(ideaBankAccount.getBalance().setScale(2, HALF_UP)));
 
-    List<Category> categories = categoryService.getCategories();
+    List<Category> categories = categoryService.getCategories(userId);
     assertThat(categories, hasSize(2));
     assertThat(categories.get(0).getName(), is(input.getCategories().get(0).getName()));
     assertThat(categories.get(0).getParentCategory(), is(nullValue()));
     assertThat(categories.get(1).getName(), is(input.getCategories().get(1).getName()));
     assertThat(categories.get(1).getParentCategory().getName(), is(input.getCategories().get(1).getParentCategoryName()));
 
-    List<Transaction> transactions = transactionService.getTransactions();
+    List<Transaction> transactions = transactionService.getTransactions(userId);
     assertThat(transactions, hasSize(1));
 
     Transaction createdTransaction = transactions.get(0);
     assertThat(createdTransaction.getDate(), is(transaction.getDate()));
     assertThat(createdTransaction.getDescription(), is(transaction.getDescription()));
-    assertThat(categoryService.getCategoryById(createdTransaction.getCategoryId()).orElseThrow(AssertionError::new).getName(),
+    assertThat(categoryService.getCategoryByIdAndUserId(createdTransaction.getCategoryId(), userId).orElseThrow(AssertionError::new).getName(),
         is(transaction.getCategory()));
     assertThat(createdTransaction.getAccountPriceEntries(), hasSize(1));
     assertThat(createdTransaction.getAccountPriceEntries().get(0).getPrice(), is(entry.getPrice().setScale(2, HALF_UP)));
     assertThat(
-        accountService.getAccountById(createdTransaction.getAccountPriceEntries().get(0).getAccountId()).orElseThrow(AssertionError::new).getName(),
+        accountService.getAccountByIdAndUserId(createdTransaction.getAccountPriceEntries().get(0).getAccountId(), userId)
+            .orElseThrow(AssertionError::new).getName(),
         is(entry.getAccount()));
   }
 

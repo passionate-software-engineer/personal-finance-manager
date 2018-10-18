@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface TransactionApi {
 
   @ApiOperation(value = "Find transaction by id", response = Transaction.class)
-  @GetMapping(value = "/{id}")
-  ResponseEntity<Transaction> getTransactionById(long id);
+  @GetMapping(value = "/{transactionId}")
+  ResponseEntity<Transaction> getTransactionById(long transactionId, long userId);
 
   @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List")
   @GetMapping
-  ResponseEntity<List<Transaction>> getTransactions();
+  ResponseEntity<List<Transaction>> getTransactions(long userId);
 
-  @ApiOperation(value = "Create a new transaction", response = Long.class)
+  @ApiOperation(value = "Create a new transaction", response = long.class)
   @PostMapping
-  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
+  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest, long userId);
 
   @ApiOperation(value = "Update an existing transaction", response = Void.class)
-  @PutMapping(value = "/{id}")
-  ResponseEntity<?> updateTransaction(long id, TransactionRequest transactionRequest);
+  @PutMapping(value = "/{transactionId}")
+  ResponseEntity<?> updateTransaction(long transactionId, TransactionRequest transactionRequest, long userId);
 
   @ApiOperation(value = "Delete an existing transaction", response = Void.class)
-  @DeleteMapping(value = "/{id}")
-  ResponseEntity<?> deleteTransaction(long id);
+  @DeleteMapping(value = "/{transactionId}")
+  ResponseEntity<?> deleteTransaction(long transactionId, long userId);
 }
