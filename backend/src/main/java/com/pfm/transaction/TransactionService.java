@@ -12,6 +12,7 @@ import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @AllArgsConstructor
@@ -31,14 +32,16 @@ public class TransactionService {
         .collect(Collectors.toList());
   }
 
+  @Transactional
   public Transaction addTransaction(long userId, Transaction transaction) {
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
       addAmountToAccount(entry.getAccountId(), userId, entry.getPrice());
     }
-    // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
+
     return transactionRepository.save(transaction);
   }
 
+  @Transactional
   public void updateTransaction(long id, long userId, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
 
@@ -58,19 +61,16 @@ public class TransactionService {
     transactionToUpdate.setDate(transaction.getDate());
 
     transactionRepository.save(transactionToUpdate);
-
-    // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
-
   }
 
+  @Transactional
   public void deleteTransaction(long id, long userId) {
     Transaction transactionToDelete = getTransactionFromDatabase(id, userId);
-    transactionRepository.deleteById(id);
 
-    // TODO - did you enabled transactions? account state should be not changed when transaction save is failing!!
     for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
       subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
     }
+    transactionRepository.deleteById(id);
   }
 
   private Transaction getTransactionFromDatabase(long id, long userId) {
@@ -99,8 +99,7 @@ public class TransactionService {
     }
 
     Account accountToUpdate = account.get();
-    // TODO maybe you can write query which updates only balance? that's common operation so does not make sense to update other values
-    // I can
+    // TODO write query which updates only balance? that's common operation so does not make sense to update other values
     accountToUpdate.setBalance(operation.apply(accountToUpdate.getBalance(), amount));
 
     accountService.updateAccount(accountToUpdate.getId(), userId, accountToUpdate);
