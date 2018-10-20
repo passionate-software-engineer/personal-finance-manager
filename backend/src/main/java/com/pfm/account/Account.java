@@ -1,7 +1,5 @@
 package com.pfm.account;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.history.DifferenceProvider;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Account implements DifferenceProvider<Account> {
 
   @Id

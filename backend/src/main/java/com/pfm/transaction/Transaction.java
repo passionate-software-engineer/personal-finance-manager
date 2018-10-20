@@ -1,10 +1,6 @@
 package com.pfm.transaction;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.history.DifferenceProvider;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Transaction implements DifferenceProvider<Transaction> {
 
   @Id

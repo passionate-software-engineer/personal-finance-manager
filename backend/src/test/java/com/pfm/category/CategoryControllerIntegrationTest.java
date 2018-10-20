@@ -4,7 +4,7 @@ import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
-import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
@@ -232,7 +232,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
             .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", is(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST))));
+        .andExpect(jsonPath("$[0]", is(getMessage(PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST))));
   }
 
   @Test
@@ -328,8 +328,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
-      throws Exception {
+  public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory() throws Exception {
 
     //given
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);

@@ -1,6 +1,5 @@
 package com.pfm.filter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,16 +15,15 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class FilterRequest {
 
   @ApiModelProperty(value = "Filter Name", example = "Expenses June")
   private String name;
 
-  // TODO check how to add list as example
+  //TODO add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> accountIds;
 
-  // TODO check how to add list as example
+  //TODO add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> categoryIds;
 
   @ApiModelProperty(value = "Price from", example = "100")
@@ -40,6 +38,6 @@ public class FilterRequest {
   @ApiModelProperty(value = "Date", example = "2018-07-16")
   private LocalDate dateTo;
 
-  @ApiModelProperty(value = "Description", example = "Food")
+  @ApiModelProperty(value = "Description", example = "Food filter")
   private String description;
 }

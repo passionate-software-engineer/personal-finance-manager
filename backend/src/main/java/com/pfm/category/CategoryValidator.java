@@ -1,11 +1,15 @@
 package com.pfm.category;
 
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
+import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
-import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.filter.FilterService;
+import com.pfm.transaction.TransactionService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +23,8 @@ public class CategoryValidator {
   //TODO possible can simplify this
 
   private CategoryService categoryService;
+  private FilterService filterService;
+  private TransactionService transactionService;
 
   public List<String> validateCategoryForUpdate(long id, long userId, Category category) {
     List<String> validationResults = new ArrayList<>();
@@ -61,7 +67,7 @@ public class CategoryValidator {
 
     if (category.getParentCategory() != null
         && !categoryService.idExist(category.getParentCategory().getId())) {
-      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST));
+      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST));
     }
   }
 
@@ -70,6 +76,20 @@ public class CategoryValidator {
         && categoryService.isCategoryNameAlreadyUsed(category.getName(), userId)) {
       validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
+  }
+
+  public List<String> validateCategoryForDelete(long categoryId) {
+    List<String> validationErrors = new ArrayList<>();
+
+    if (transactionService.transactionExistByCategoryId(categoryId)) {
+      validationErrors.add(getMessage(CATEGORY_IS_USED_IN_TRANSACTION));
+    }
+
+    if (filterService.filterExistByCategoryId(categoryId)) {
+      validationErrors.add(getMessage(CATEGORY_IS_USED_IN_FILTER));
+    }
+
+    return validationErrors;
   }
 
 }

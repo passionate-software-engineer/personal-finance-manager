@@ -1,7 +1,5 @@
 package com.pfm.category;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pfm.history.DifferenceProvider;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Category implements DifferenceProvider<Category> {
 
   @Id

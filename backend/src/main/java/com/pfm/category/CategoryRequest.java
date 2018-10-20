@@ -1,6 +1,5 @@
 package com.pfm.category;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@JsonIgnoreProperties(ignoreUnknown = true) // TODO we should enable strict validation - don't allow additional fields (check for other occurrences)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

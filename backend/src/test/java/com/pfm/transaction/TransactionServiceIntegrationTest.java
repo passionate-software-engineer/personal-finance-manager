@@ -1,13 +1,17 @@
 package com.pfm.transaction;
 
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
-import static com.pfm.helpers.TestUsersProvider.userMarian;
-import static com.pfm.helpers.TestUsersProvider.userMirek;
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.pfm.account.Account;
@@ -19,6 +23,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
+import org.flywaydb.core.Flyway;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -45,18 +51,25 @@ public class TransactionServiceIntegrationTest {
   @Autowired
   UserService userService;
 
+  @Autowired
+  protected Flyway flyway;
+
+  private long userId;
+
+  @Before
+  public void before() {
+    flyway.clean();
+    flyway.migrate();
+    userId = userService.registerUser(userZdzislaw()).getId();
+  }
+
   @Test
   public void shouldRollbackAccountStateUpdateWhenSaveFailsBecauseOfInvalidData() {
 
     // given
-    long userId = userService.registerUser(userZdzislaw()).getId();
-
-    Account savedAccount = accountService.addAccount(Account.builder()
-        .balance(BigDecimal.TEN)
-        .name("Idea bank")
-        .userId(userId)
-        .build()
-    );
+    Account account = accountMbankBalance10();
+    account.setUserId(userId);
+    Account savedAccount = accountService.addAccount(account);
 
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
@@ -76,23 +89,16 @@ public class TransactionServiceIntegrationTest {
     // then
     Optional<Account> returnedAccount = accountService.getAccountByIdAndUserId(savedAccount.getId(), userId);
     assertThat(returnedAccount.isPresent(), is(true));
-
-    Account account = returnedAccount.get();
-    assertThat(account.getBalance(), is(BigDecimal.valueOf(1000, 2)));
+    assertThat(returnedAccount.get().getBalance(), is(BigDecimal.valueOf(1000, 2)));
   }
 
   @Test
   public void shouldRollbackAccountStateUpdateWhenDeleteFailsBecauseOfInvalidData() {
 
     // given
-    long userId = userService.registerUser(userMarian()).getId();
-
-    Account savedAccount = accountService.addAccount(Account.builder()
-        .balance(BigDecimal.TEN)
-        .name("mBank")
-        .userId(userId)
-        .build()
-    );
+    Account account = accountMbankBalance10();
+    account.setUserId(userId);
+    Account savedAccount = accountService.addAccount(account);
 
     Category category = categoryCar();
     category.setUserId(userId);
@@ -132,14 +138,9 @@ public class TransactionServiceIntegrationTest {
   public void shouldRollbackAccountStateUpdateWhenUpdateFailsBecauseOfInvalidData() {
 
     // given
-    long userId = userService.registerUser(userMirek()).getId();
-
-    Account savedAccount = accountService.addAccount(Account.builder()
-        .balance(BigDecimal.TEN)
-        .name("Ing")
-        .userId(userId)
-        .build()
-    );
+    Account account = accountMbankBalance10();
+    account.setUserId(userId);
+    Account savedAccount = accountService.addAccount(account);
 
     Category category = categoryOil();
     category.setUserId(userId);
@@ -178,6 +179,66 @@ public class TransactionServiceIntegrationTest {
 
     assertThat(returnedAccount.isPresent(), is(true));
     assertThat(returnedAccount.get().getBalance(), is(BigDecimal.valueOf(1100, 2)));
+  }
+
+  @Test
+  public void shouldCheckIfTransactionExistByAccountId() {
+
+    //given
+    Account account = accountMbankBalance10();
+    account.setUserId(userId);
+    Account savedAccount = accountService.addAccount(account);
+
+    long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
+
+    Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
+    transaction.setUserId(userId);
+    AccountPriceEntry accountPriceEntry = AccountPriceEntry.builder()
+        .accountId(savedAccount.getId()
+        ).price(convertDoubleToBigDecimal(10))
+        .build();
+    transaction.setAccountPriceEntries(Collections.singletonList(accountPriceEntry));
+    transaction.setCategoryId(categoryId);
+
+    Long transactionId = transactionService.addTransaction(userId, transaction).getId();
+
+    //when
+    assertTrue(transactionService.transactionExistByAccountId(savedAccount.getId()));
+
+    transactionService.deleteTransaction(transactionId, userId);
+
+    assertFalse(transactionService.transactionExistByAccountId(savedAccount.getId()));
+
+  }
+
+  @Test
+  public void shouldCheckIfTransactionExistByCategoryId() {
+
+    //given
+    Account account = accountMbankBalance10();
+    account.setUserId(userId);
+    Account savedAccount = accountService.addAccount(account);
+
+    long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
+
+    Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
+    transaction.setUserId(userId);
+    AccountPriceEntry accountPriceEntry = AccountPriceEntry.builder()
+        .accountId(savedAccount.getId()
+        ).price(convertDoubleToBigDecimal(10))
+        .build();
+    transaction.setAccountPriceEntries(Collections.singletonList(accountPriceEntry));
+    transaction.setCategoryId(categoryId);
+
+    Long transactionId = transactionService.addTransaction(userId, transaction).getId();
+
+    //when
+    assertTrue(transactionService.transactionExistByCategoryId(categoryId));
+
+    transactionService.deleteTransaction(transactionId, userId);
+
+    assertFalse(transactionService.transactionExistByCategoryId(categoryId));
+
   }
 
 }

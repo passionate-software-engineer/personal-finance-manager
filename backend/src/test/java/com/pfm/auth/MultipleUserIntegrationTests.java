@@ -545,4 +545,54 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     assertThat(zdzislawFilters, containsInAnyOrder(zdzislawHomeExpensesFilterExpected));
   }
 
+  @Test
+  public void shouldAccountWithTheSameNameToDifferentUsers() throws Exception {
+
+    //given
+    callRestToRegisterUserAndReturnUserId(userMarian());
+    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+
+    Account account = accountMbankBalance10();
+
+    //when
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, marianToken)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(convertAccountToAccountRequest(account))))
+        .andExpect(status().isOk());
+
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(convertAccountToAccountRequest(account))))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void shouldAddCategoryWithTheSameNameToDifferentUsers() throws Exception {
+
+    //given
+    callRestToRegisterUserAndReturnUserId(userMarian());
+    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
+    callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+
+    Category category = categoryCar();
+
+    //when
+    mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, marianToken)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(categoryToCategoryRequest(category))))
+        .andExpect(status().isOk());
+
+    mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(categoryToCategoryRequest(category))))
+        .andExpect(status().isOk());
+  }
 }

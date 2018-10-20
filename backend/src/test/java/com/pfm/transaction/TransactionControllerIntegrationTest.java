@@ -1,8 +1,10 @@
 package com.pfm.transaction;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
@@ -165,6 +167,40 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(mbankAccountId, token);
     assertThat(piotrAccountBalanceAfterTransactionUpdate,
         is(accountMbankBalance10().getBalance().add(updatedFoodTransactionRequest.getAccountPriceEntries().get(0).getPrice())));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenTryingToDeleteAccountUsedInTransaction() throws Exception {
+
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
+        token);
+
+    mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + jacekAccountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_USED_IN_TRANSACTION))));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInTransaction() throws Exception {
+
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
+        token);
+
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + jacekAccountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(CATEGORY_IS_USED_IN_TRANSACTION))));
   }
 
   @Test

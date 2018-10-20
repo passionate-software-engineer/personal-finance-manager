@@ -1,5 +1,8 @@
 package com.pfm.filter;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
+import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
@@ -16,16 +19,19 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
 import java.util.List;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
@@ -210,7 +216,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .header(HttpHeaders.AUTHORIZATION, token)
-            .content(json(filterCarExpenses()))
+            .content(json(convertFilterToFilterRequest(filterCarExpenses())))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
@@ -277,6 +283,40 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
             .content(json(filterRequestWithValidationErrors))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void shouldReturnErrorWhenTryingToDeleteAccountUsedInFilter() throws Exception {
+
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+
+    Filter filter = filterCarExpenses();
+    filter.setAccountIds(convertAccountIdsToList(jacekAccountId));
+    callRestServiceToAddFilterAndReturnId(filter, token);
+
+    mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + jacekAccountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_USED_IN_FILTER))));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInFilter() throws Exception {
+
+    //given
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+
+    Filter filter = filterCarExpenses();
+    filter.setCategoryIds(convertCategoryIdsToList(carCategoryId));
+    callRestServiceToAddFilterAndReturnId(filter, token);
+
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(CATEGORY_IS_USED_IN_FILTER))));
   }
 
 }
