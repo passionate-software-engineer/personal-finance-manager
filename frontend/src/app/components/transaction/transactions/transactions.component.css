@@ -1,3 +1,7 @@
 thead th {
   width: 20%
 }
+
+.table-hover tr:hover{
+  background: rgba(190, 229, 235, 0.5);
+}
