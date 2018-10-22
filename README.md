@@ -67,4 +67,4 @@ Define accounts, categories and you are ready to track your transactions.
   - Register user
   - Login with registered user
   - Add account, category, transaction and filter
-  - Delete eveything added
+  - Delete everything added
