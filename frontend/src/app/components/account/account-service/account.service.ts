@@ -17,13 +17,20 @@ export class AccountService extends ServiceBase {
     super(http, alertService);
   }
 
+  private static accountToAccountRequest(account: Account) {
+    return {
+      name: account.name,
+      balance: account.balance
+    };
+  }
+
   getAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
       .pipe(catchError(this.handleError('getAccounts', [])));
   }
 
   addAccount(account: Account): Observable<any> {
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), account, this.httpOptions)
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), AccountService.accountToAccountRequest(account), this.httpOptions)
       .pipe(catchError(this.handleError('addAccount', [])));
   }
 
@@ -33,7 +40,7 @@ export class AccountService extends ServiceBase {
   }
 
   editAccount(account: Account): Observable<any> {
-    return this.http.put<Account>(ServiceBase.apiUrl(PATH, account.id), account, this.httpOptions)
+    return this.http.put<Account>(ServiceBase.apiUrl(PATH, account.id), AccountService.accountToAccountRequest(account), this.httpOptions)
       .pipe(catchError(this.handleError('editAccount', [])));
   }
 
