@@ -32,9 +32,6 @@ import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
-  private String token;
-  private long userId;
-
   @Before
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());

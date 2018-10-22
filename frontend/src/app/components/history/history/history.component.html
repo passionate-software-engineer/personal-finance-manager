@@ -1,0 +1,36 @@
+<button class="btn btn-primary" type="button" (click)="onRefreshHistory()">Refresh</button>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+  <tr>
+
+
+    <!--Date-->
+    <th [class.active]="order === 'date'" (click)="setOrder('date')"  width="30%" >
+      Date
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
+    </th>
+
+    <!--Entry-->
+    <th [class.active]="order === 'entry'" (click)="setOrder('entry')">
+      Entry
+      <span [hidden]="reverse">▼</span>
+      <span [hidden]="!reverse">▲</span>
+    </th>
+
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let histor of history | orderBy: order:reverse:'case-insensitive'">
+
+    <!--Date-->
+    <td>{{histor.date | date: "yyyy-MM-dd HH:mm"}}</td>
+
+    <!--Entry-->
+    <td>{{histor.entry}}</td>
+
+  </tbody>
+</table>

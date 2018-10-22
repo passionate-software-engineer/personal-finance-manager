@@ -1,7 +1,10 @@
 package com.pfm.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pfm.history.DifferenceProvider;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,13 +15,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class Category {
+public final class Category implements DifferenceProvider<Category> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +35,45 @@ public final class Category {
   @ApiModelProperty(value = "Parent category object", required = true)
   private Category parentCategory;
 
-  private Long userId;
+  private long userId;
+
+  @Override
+  public List<String> getDifferences(Category category) {
+    List<String> differences = new ArrayList<String>();
+
+    if (!(this.getName().equals(category.getName()))) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Category name", this.getName(), category.getName()));
+    }
+
+    if (this.parentCategory == null && category.parentCategory != null) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Parent category of " + this.getName() + " category ",
+          "'Main Category'", category.parentCategory.getName()));
+    }
+
+    if (this.parentCategory != null && category.parentCategory == null) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Parent category of " + this.getName() + " category ",
+          this.parentCategory.getName(),
+          "'Main Category'"));
+    }
+    if (this.parentCategory != null && category.parentCategory != null && !this.parentCategory.equals(category.getParentCategory())) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Parent category of " + this.getName() + " category ", this.parentCategory.getName(),
+          category.parentCategory.getName()));
+    }
+    return differences;
+  }
+
+  @Override
+  public List<String> getObjectPropertiesWithValues() {
+    List<String> newValues = new ArrayList<>();
+    if (!(this.parentCategory == null)) {
+      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getName() + " Category ", "'parent'", this.getParentCategory().getName()));
+    }
+    return newValues;
+  }
+
+  @Override
+  public String getObjectDescriptiveName() {
+    return this.getName();
+  }
+
 }

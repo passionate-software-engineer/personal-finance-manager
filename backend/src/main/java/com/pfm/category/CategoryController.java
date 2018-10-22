@@ -3,6 +3,7 @@ package com.pfm.category;
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.history.HistoryEntryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -33,6 +34,7 @@ public class CategoryController {
 
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
+  private HistoryEntryService historyEntryService;
 
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{id}")
@@ -51,7 +53,7 @@ public class CategoryController {
   }
 
   @ApiOperation(value = "Get list of categories", response = Category.class, responseContainer = "List")
-  @GetMapping
+  @GetMapping // TODO return only parent category id - not the entire object / objects chain
   public ResponseEntity<List<Category>> getCategories(@RequestAttribute(value = "userId") long userId) {
 
     log.info("Retrieving categories from database");
@@ -75,10 +77,12 @@ public class CategoryController {
 
     Category createdCategory = categoryService.addCategory(category, userId);
     log.info("Saving category to the database was successful. Category id is {}", createdCategory.getId());
+    historyEntryService.addEntryOnAdd(category, userId);
 
     return ResponseEntity.ok(createdCategory.getId());
   }
 
+  // TODO add transactions to all methods working with history service
   @ApiOperation(value = "Update an existing category", response = Void.class)
   @PutMapping(value = "/{id}")
   public ResponseEntity<?> updateCategory(@PathVariable long id, @RequestBody CategoryRequest categoryRequest,
@@ -98,8 +102,16 @@ public class CategoryController {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
+    if (category.getParentCategory() != null) {
+      category.setParentCategory(categoryService.getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).get());
+    }
+
+    Category categoryToUpdate = categoryService.getCategoryByIdAndUserId(id, userId).get();
+    historyEntryService.addEntryOnUpdate(categoryToUpdate, category, userId);
+
     categoryService.updateCategory(id, userId, category);
     log.info("Category with id {} was successfully updated", id);
+
     return ResponseEntity.ok().build();
   }
 
@@ -118,9 +130,13 @@ public class CategoryController {
       return ResponseEntity.badRequest().body(getMessage(CANNOT_DELETE_PARENT_CATEGORY));
     }
     log.info("Attempting to delete category with id {}", id);
+
+    Category deletedCategory = categoryService.getCategoryByIdAndUserId(id, userId).get();
     categoryService.deleteCategory(id);
 
     log.info("Category with id {} was deleted successfully", id);
+    historyEntryService.addEntryOnDelete(deletedCategory, userId);
+
     return ResponseEntity.ok().build();
   }
 

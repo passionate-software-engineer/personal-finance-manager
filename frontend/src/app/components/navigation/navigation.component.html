@@ -19,6 +19,10 @@
         <a class="nav-link" routerLink="/accounts" routerLinkActive="active">{{'navigation.accounts' | translate}}
         </a>
       </li>
+      <li [routerLinkActive]="['active']" class="nav-item">
+        <a class="nav-link" routerLink="/history" routerLinkActive="active">History
+        </a>
+      </li>
     </ul>
     <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
     <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>

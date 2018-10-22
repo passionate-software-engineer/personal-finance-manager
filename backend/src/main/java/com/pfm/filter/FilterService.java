@@ -35,6 +35,8 @@ public class FilterService {
   public void updateFilter(long id, long userId, Filter filter) {
     Filter filterToUpdate = getFilterFromDatabase(id, userId);
 
+    // TODO add history entries for filter modifications.
+
     filterToUpdate.setAccountIds(filter.getAccountIds());
     filterToUpdate.setCategoryIds(filter.getCategoryIds());
     filterToUpdate.setDateFrom(filter.getDateFrom());

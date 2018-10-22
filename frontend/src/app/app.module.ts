@@ -9,6 +9,7 @@ import {NavigationComponent} from './components/navigation/navigation.component'
 import {AlertsComponent} from './components/alert/alerts/alerts.component';
 import {AlertsService} from './components/alert/alerts-service/alerts.service';
 import {TransactionsComponent} from './components/transaction/transactions/transactions.component';
+import {HistoryComponent} from './components/history/history/history.component';
 import {OrderModule} from 'ngx-order-pipe';
 import {routing} from './app-routing.module';
 import {AuthenticationService} from './authentication/authentication.service';
@@ -34,7 +35,8 @@ export const createTranslateLoader = (http: HttpClient) => {
     NavigationComponent,
     AlertsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
