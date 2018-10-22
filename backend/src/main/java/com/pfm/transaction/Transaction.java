@@ -1,6 +1,6 @@
 package com.pfm.transaction;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.history.DifferenceProvider;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,20 +23,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Transaction implements DifferenceProvider<Transaction> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  // TODO -- add Swagger annotations - type is used in getAllTransactions
   private String description;
 
   private long categoryId;
 
   private LocalDate date;
 
-  private long userId;
+  @JsonIgnore
+  private Long userId;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
   private List<AccountPriceEntry> accountPriceEntries;

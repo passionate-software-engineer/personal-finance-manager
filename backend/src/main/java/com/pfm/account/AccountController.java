@@ -43,8 +43,7 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Saving account {} to the database", accountRequest.getName());
 
-    //TODO add convert Account Request to Account method
-    Account account = new Account(null, accountRequest.getName(), accountRequest.getBalance(), userId);
+    Account account = convertAccountRequestToAccount(userId, accountRequest);
 
     List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
     if (!validationResult.isEmpty()) {
@@ -58,14 +57,14 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok(createdAccount.getId());
   }
 
-  public ResponseEntity<?> updateAccount(@PathVariable long accountId,
-      @RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest,
+      @RequestAttribute(value = "userId") long userId) {
 
     if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
-    Account account = new Account(accountId, accountRequest.getName(), accountRequest.getBalance(), userId);
+    Account account = convertAccountRequestToAccount(userId, accountRequest);
 
     log.info("Updating account with id {}", accountId);
     List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
@@ -85,13 +84,19 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  public ResponseEntity<?> deleteAccount(@PathVariable long accountId,
-      @RequestAttribute(value = "userId") long userId) { // TODO deleting account used in transaction / filter throws ugly error
-
+  public ResponseEntity<?> deleteAccount(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
+    //TODO write sql query and change to existyByIdAndUserId. Change in whole project
     if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", accountId);
       return ResponseEntity.notFound().build();
     }
+
+    List<String> validationResults = accountValidator.validateAccountForDelete(accountId);
+    if (!validationResults.isEmpty()) {
+      log.info("Account with id {} was found, in transaction or filter, not able to delete", accountId);
+      return ResponseEntity.badRequest().body(validationResults);
+    }
+
     Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
     log.info("Attempting to delete account with id {}", accountId);
     accountService.deleteAccount(accountId);
@@ -100,5 +105,13 @@ public class AccountController implements AccountApi {
     log.info("Account with id {} was deleted successfully", accountId);
 
     return ResponseEntity.ok().build();
+  }
+
+  private Account convertAccountRequestToAccount(long userId, AccountRequest accountRequest) {
+    return Account.builder()
+        .name(accountRequest.getName())
+        .balance(accountRequest.getBalance())
+        .userId(userId)
+        .build();
   }
 }

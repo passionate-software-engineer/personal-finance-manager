@@ -4,7 +4,7 @@ import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
-import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
@@ -57,11 +57,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(carCategoryId);
-    expectedCarCategory.setUserId(userId);
+
     Category expectedOilCategory = categoryOil;
     expectedOilCategory.setId(oilCategoryId);
     expectedOilCategory.setParentCategory(expectedCarCategory);
-    expectedOilCategory.setUserId(userId);
 
     List<Category> categories = callRestToGetAllCategories(token);
 
@@ -130,10 +129,9 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(categoryCarId);
-    expectedCarCategory.setUserId(userId);
+
     Category expectedHomeCategory = categoryHome;
     expectedHomeCategory.setId(categoryHomeId);
-    expectedHomeCategory.setUserId(userId);
 
     assertThat(categories.size(), is(2));
     assertThat(categories, containsInAnyOrder(expectedCarCategory, expectedHomeCategory));
@@ -148,11 +146,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     Category actualCarCategory = callRestToGetCategoryById(categoryCarId, token);
-    Category expectedCarCategory = categoryCar;
-    expectedCarCategory.setId(categoryCarId);
-    expectedCarCategory.setUserId(userId);
 
-    assertThat(actualCarCategory, is(equalTo(expectedCarCategory)));
+    // then
+    categoryCar.setId(categoryCarId);
+    assertThat(actualCarCategory, is(equalTo(categoryCar)));
   }
 
   @Test
@@ -179,7 +176,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Category expectedCategory = categoryToUpdate;
     expectedCategory.setId(homeCategoryId);
-    expectedCategory.setUserId(userId);
+
     Category result = callRestToGetCategoryById(homeCategoryId, token);
     assertThat(result, is(equalTo(expectedCategory)));
   }
@@ -201,7 +198,6 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     Category result = callRestToGetCategoryById(categoryOilId, token);
 
     final Category expected = convertCategoryRequestToCategoryAndSetId(categoryOilId, userId, categoryOilToUpdate);
-    expected.setUserId(userId);
 
     assertThat(result, is(equalTo(expected)));
   }
@@ -232,7 +228,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
             .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", is(getMessage(PROVIDED_PARENT_CATEGORY_NOT_EXIST))));
+        .andExpect(jsonPath("$[0]", is(getMessage(PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST))));
   }
 
   @Test
@@ -328,8 +324,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory()
-      throws Exception {
+  public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory() throws Exception {
 
     //given
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);

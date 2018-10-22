@@ -1,8 +1,10 @@
 package com.pfm.transaction;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
@@ -61,7 +63,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Transaction expectedTransaction =
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), transactionId, jacekAccountId, foodCategoryId);
-    expectedTransaction.setUserId(userId);
 
     assertThat(callRestToGetTransactionById(transactionId, token), is(equalTo(expectedTransaction)));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId, token);
@@ -103,8 +104,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
-        foodCategoryId, token);
+    long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
     long carTransactionId = callRestToAddTransactionAndReturnId(carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
     //when
@@ -113,11 +113,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Transaction foodTransactionExpected =
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), foodTransactionId, jacekAccountId, foodCategoryId);
-    foodTransactionExpected.setUserId(userId);
 
     Transaction carTransactionExpected =
         setTransactionIdAccountIdCategoryId(carTransactionWithNoAccountAndNoCategory(), carTransactionId, jacekAccountId, carCategoryId);
-    carTransactionExpected.setUserId(userId);
 
     assertThat(allTransactionsInDb.size(), is(2));
     assertThat(allTransactionsInDb, containsInAnyOrder(foodTransactionExpected, carTransactionExpected));
@@ -155,7 +153,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsInDb.size(), is(1));
 
     Transaction expected = convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest);
-    expected.setUserId(userId);
 
     assertTrue(allTransactionsInDb.contains(expected));
 
@@ -165,6 +162,40 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     BigDecimal piotrAccountBalanceAfterTransactionUpdate = callRestServiceAndReturnAccountBalance(mbankAccountId, token);
     assertThat(piotrAccountBalanceAfterTransactionUpdate,
         is(accountMbankBalance10().getBalance().add(updatedFoodTransactionRequest.getAccountPriceEntries().get(0).getPrice())));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenTryingToDeleteAccountUsedInTransaction() throws Exception {
+
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
+        token);
+
+    mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + jacekAccountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_USED_IN_TRANSACTION))));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInTransaction() throws Exception {
+
+    //given
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
+        token);
+
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + jacekAccountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(CATEGORY_IS_USED_IN_TRANSACTION))));
   }
 
   @Test
@@ -261,7 +292,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token)
-        .content(json(foodTransactionWithNoAccountAndNoCategory()))
+        .content(json(TransactionRequest.builder().build()))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }

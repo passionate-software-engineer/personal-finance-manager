@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 public class FilterController implements FilterApi {
-  //TODO change id to entityId in methods
 
   private FilterService filterService;
   private FilterValidator filterValidator;
@@ -34,16 +33,16 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<Filter> getFilterById(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
-    log.info("Retrieving filter with id: {}", id);
-    Optional<Filter> filter = filterService.getFilterByIdAndUserId(id, userId);
+  public ResponseEntity<Filter> getFilterById(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
+    log.info("Retrieving filter with id: {}", filterId);
+    Optional<Filter> filter = filterService.getFilterByIdAndUserId(filterId, userId);
 
     if (!filter.isPresent()) {
-      log.info("Filter with id {} was not found", id);
+      log.info("Filter with id {} was not found", filterId);
       return ResponseEntity.notFound().build();
     }
 
-    log.info("Filter with id {} was successfully retrieved", id);
+    log.info("Filter with id {} was successfully retrieved", filterId);
     return ResponseEntity.ok(filter.get());
   }
 
@@ -71,10 +70,10 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> updateFilter(@PathVariable long id, @RequestBody FilterRequest filterRequest,
+  public ResponseEntity<?> updateFilter(@PathVariable long filterId, @RequestBody FilterRequest filterRequest,
       @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.getFilterByIdAndUserId(id, userId).isPresent()) {
-      log.info("No filter with id {} was found, not able to update", id);
+    if (!filterService.getFilterByIdAndUserId(filterId, userId).isPresent()) {
+      log.info("No filter with id {} was found, not able to update", filterId);
       return ResponseEntity.notFound().build();
     }
 
@@ -86,19 +85,19 @@ public class FilterController implements FilterApi {
 
     Filter filter = convertFilterRequestToFilter(filterRequest, userId);
 
-    filterService.updateFilter(id, userId, filter);
-    log.info("Filter with id {} was successfully updated", id);
+    filterService.updateFilter(filterId, userId, filter);
+    log.info("Filter with id {} was successfully updated", filterId);
 
     return ResponseEntity.ok().build();
   }
 
   @Override
-  public ResponseEntity<?> deleteFilter(@PathVariable long id, @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.getFilterByIdAndUserId(id, userId).isPresent()) {
-      log.info("No filter with id {} was found, not able to delete", id);
+  public ResponseEntity<?> deleteFilter(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
+    if (!filterService.getFilterByIdAndUserId(filterId, userId).isPresent()) {
+      log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();
     }
-    filterService.deleteFilter(id);
+    filterService.deleteFilter(filterId);
     return ResponseEntity.ok().build();
   }
 }

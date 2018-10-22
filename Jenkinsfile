@@ -16,7 +16,6 @@ pipeline {
                         sh '''
                            cd backend
                            ./gradlew build
-                           ./gradlew dependencyUpdates -Drevision=release -DoutputDir=build/reports/dependencyUpdates
                            '''
                     }
                 }

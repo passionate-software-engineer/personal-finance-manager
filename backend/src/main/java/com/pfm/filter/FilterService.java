@@ -58,4 +58,12 @@ public class FilterService {
 
     return filterFromDb.get();
   }
+
+  public boolean filterExistByAccountId(long accountId) {
+    return filterRepository.existsByAccountIdsContains(accountId);
+  }
+
+  public boolean filterExistByCategoryId(long categoryId) {
+    return filterRepository.existsByCategoryIdsContains(categoryId);
+  }
 }

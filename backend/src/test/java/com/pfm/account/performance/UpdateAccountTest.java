@@ -15,7 +15,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
 
   @Test
   @ThreadCount(THREAD_COUNT)
-  public void shouldUpdateSimultaneouslyMultipleAccounts() throws Exception {
+  public void shouldUpdateSimultaneouslyMultipleAccounts() {
 
     Account account = accounts.get(counter.getAndIncrement());
     account.setBalance(getRandomBalance());
@@ -23,7 +23,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
 
     int statusCode = given()
         .contentType(ContentType.JSON)
-        .body(account)
+        .body(convertAccountToAccountRequest(account))
         .header("Authorization", token)
         .when()
         .put(invoiceServicePath(account.getId()))

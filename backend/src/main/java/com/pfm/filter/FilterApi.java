@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface FilterApi {
 
   @ApiOperation(value = "Find filter by id", response = Filter.class)
-  @GetMapping(value = "/{id}")
-  ResponseEntity<Filter> getFilterById(long id, long userId);
+  @GetMapping(value = "/{filterId}")
+  ResponseEntity<Filter> getFilterById(long filterId, long userId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, responseContainer = "List")
   @GetMapping
@@ -29,10 +29,10 @@ public interface FilterApi {
   ResponseEntity<?> addFilter(FilterRequest filterRequest, long userId);
 
   @ApiOperation(value = "Update an existing filter", response = Void.class)
-  @PutMapping(value = "/{id}")
-  ResponseEntity<?> updateFilter(long id, FilterRequest filterRequest, long userId);
+  @PutMapping(value = "/{filterId}")
+  ResponseEntity<?> updateFilter(long filterId, FilterRequest filterRequest, long userId);
 
   @ApiOperation(value = "Delete an existing filter", response = Void.class)
-  @DeleteMapping(value = "/{id}")
-  ResponseEntity<?> deleteFilter(long id, long userId);
+  @DeleteMapping(value = "/{filterId}")
+  ResponseEntity<?> deleteFilter(long filterId, long userId);
 }

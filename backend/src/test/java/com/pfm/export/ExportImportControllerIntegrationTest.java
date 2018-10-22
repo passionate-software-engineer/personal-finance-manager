@@ -162,8 +162,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
         .header("Authorization", token)
         .content(json(input))
-        .contentType(JSON_CONTENT_TYPE)
-    )
+        .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk());
 
     // then

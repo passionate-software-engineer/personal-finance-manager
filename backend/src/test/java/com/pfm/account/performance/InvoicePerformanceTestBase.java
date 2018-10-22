@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
+import com.pfm.account.AccountRequest;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
 import io.restassured.http.ContentType;
@@ -46,7 +47,7 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
-  protected User defaultUser = userMarian();
+  private User defaultUser = userMarian();
 
   protected String token;
 
@@ -64,7 +65,7 @@ public abstract class InvoicePerformanceTestBase {
   @LocalServerPort
   private int port;
 
-  protected Account[] getAccounts() throws Exception {
+  protected Account[] getAccounts() {
 
     return given()
         .when()
@@ -104,25 +105,33 @@ public abstract class InvoicePerformanceTestBase {
 
     for (int i = 0; i < 10; ++i) {
 
-      Account account = Account.builder()
-          .name(getRandomName())
-          .balance(getRandomBalance())
-          .build();
-
-      String response = given()
-          .contentType(ContentType.JSON)
-          .header("Authorization", token)
-          .body(account)
-          .when()
-          .post(invoiceServicePath())
-          .getBody()
-          .asString();
-
-      Long accountId = Long.parseLong(response);
-      account.setId(accountId);
+      Account account = getAccount();
 
       accounts.add(account);
     }
+  }
+
+  protected Account getAccount() {
+    AccountRequest accountRequest = AccountRequest.builder()
+        .name(UUID.randomUUID().toString())
+        .balance(getRandomBalance())
+        .build();
+
+    String response = given()
+        .contentType(ContentType.JSON)
+        .header("Authorization", token)
+        .body(accountRequest)
+        .when()
+        .post(invoiceServicePath())
+        .getBody()
+        .asString();
+
+    Long accountId = Long.parseLong(response);
+    return Account.builder()
+        .id(accountId)
+        .name(accountRequest.getName())
+        .balance(accountRequest.getBalance())
+        .build();
   }
 
   @After
@@ -165,4 +174,12 @@ public abstract class InvoicePerformanceTestBase {
 
     return jsonToAuthResponse(response).getToken();
   }
+
+  protected AccountRequest convertAccountToAccountRequest(Account account) {
+    return AccountRequest.builder()
+        .name(account.getName())
+        .balance(account.getBalance())
+        .build();
+  }
+
 }

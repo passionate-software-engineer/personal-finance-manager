@@ -10,5 +10,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 
   List<Transaction> findByUserId(long userId);
 
-  Optional<Transaction> findByIdAndUserId(long id, long userId);
+  Optional<Transaction> findByIdAndUserId(long transactionId, long userId);
+
+  boolean existsByCategoryId(long categoryId);
 }

@@ -1,6 +1,5 @@
 package com.pfm.transaction;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionRequest {
 
   @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")

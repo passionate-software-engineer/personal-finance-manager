@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TransactionService {
 
+  private AccountPriceEntriesRepository accountPriceEntriesRepository;
   private TransactionRepository transactionRepository;
   private AccountService accountService;
 
@@ -99,10 +100,15 @@ public class TransactionService {
       throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
     }
 
-    Account accountToUpdate = account.get();
-    // TODO write query which updates only balance? that's common operation so does not make sense to update other values
-    accountToUpdate.setBalance(operation.apply(accountToUpdate.getBalance(), amount));
+    BigDecimal newBalance = operation.apply(account.get().getBalance(), amount);
+    accountService.updateAccountBalance(accountId, newBalance);
+  }
 
-    accountService.updateAccount(accountToUpdate.getId(), userId, accountToUpdate);
+  public boolean transactionExistByAccountId(long accountId) {
+    return accountPriceEntriesRepository.existsByAccountId(accountId);
+  }
+
+  public boolean transactionExistByCategoryId(long categoryId) {
+    return transactionRepository.existsByCategoryId(categoryId);
   }
 }
