@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController
+@RestController // TODO add support for history - import data should be part of the history
 public class ExportImportController implements ExportImportApi {
 
   private ExportService exportService;
