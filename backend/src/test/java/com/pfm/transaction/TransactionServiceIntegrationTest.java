@@ -13,6 +13,7 @@ import static org.junit.Assert.fail;
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.auth.UserService;
+import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -93,7 +94,10 @@ public class TransactionServiceIntegrationTest {
         .build()
     );
 
-    long categoryId = categoryService.addCategory(categoryCar(), userId).getId();
+    Category category = categoryCar();
+    category.setUserId(userId);
+
+    long categoryId = categoryService.addCategory(category, userId).getId();
 
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
@@ -104,6 +108,7 @@ public class TransactionServiceIntegrationTest {
     transaction.setCategoryId(categoryId);
     transaction.setDescription("Transaction with price 1");
     transaction.setDate(LocalDate.now());
+    transaction.setUserId(userId);
 
     transactionService.addTransaction(userId, transaction);
     Mockito.when(transactionService.getTransactionByIdAndUserId(42, userId)).thenReturn(Optional.of(transaction));
@@ -136,7 +141,10 @@ public class TransactionServiceIntegrationTest {
         .build()
     );
 
-    long categoryId = categoryService.addCategory(categoryOil(), userId).getId();
+    Category category = categoryOil();
+    category.setUserId(userId);
+
+    long categoryId = categoryService.addCategory(category, userId).getId();
 
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
@@ -161,7 +169,7 @@ public class TransactionServiceIntegrationTest {
     try {
       transactionService.updateTransaction(transactionId, userId, transaction);
       fail();
-    } catch (UnsupportedOperationException ex) {
+    } catch (DataIntegrityViolationException ex) {
       assertNotNull(ex); // just not to leave empty
     }
 

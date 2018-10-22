@@ -47,9 +47,6 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Autowired
   private TransactionService transactionService;
 
-  private String token;
-  private Long userId;
-
   @Before
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());

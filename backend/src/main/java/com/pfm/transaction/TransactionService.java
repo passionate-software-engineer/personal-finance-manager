@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class TransactionService {
   }
 
   public List<Transaction> getTransactions(long userId) {
-    return StreamSupport.stream(transactionRepository.findByUserId(userId).spliterator(), false)
+    return transactionRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Transaction::getId))
         .collect(Collectors.toList());
   }
@@ -57,7 +56,8 @@ public class TransactionService {
 
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategoryId(transaction.getCategoryId());
-    transactionToUpdate.setAccountPriceEntries(transaction.getAccountPriceEntries());
+    transactionToUpdate.getAccountPriceEntries().clear();
+    transactionToUpdate.getAccountPriceEntries().addAll(transaction.getAccountPriceEntries());
     transactionToUpdate.setDate(transaction.getDate());
 
     transactionRepository.save(transactionToUpdate);
@@ -87,6 +87,7 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToAdd, BigDecimal::subtract);
   }
 
+  // TODO history - account state updated
   private void addAmountToAccount(long accountId, long userId, BigDecimal amountToSubtract) {
     updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add);
   }
@@ -104,5 +105,4 @@ public class TransactionService {
 
     accountService.updateAccount(accountToUpdate.getId(), userId, accountToUpdate);
   }
-
 }

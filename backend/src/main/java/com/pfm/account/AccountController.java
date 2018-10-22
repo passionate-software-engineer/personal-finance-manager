@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class AccountController implements AccountApi {
 
   private AccountService accountService;
   private AccountValidator accountValidator;
+  private HistoryEntryService historyEntryService;
 
   public ResponseEntity<?> getAccountById(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving account with id: {}", accountId);
@@ -52,6 +54,7 @@ public class AccountController implements AccountApi {
 
     Account createdAccount = accountService.addAccount(account);
     log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
+    historyEntryService.addEntryOnAdd(createdAccount, userId);
     return ResponseEntity.ok(createdAccount.getId());
   }
 
@@ -72,8 +75,13 @@ public class AccountController implements AccountApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
+    Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    historyEntryService.addEntryOnUpdate(accountToUpdate, account, userId);
+
     accountService.updateAccount(accountId, userId, account);
+
     log.info("Account with id {} was successfully updated", accountId);
+
     return ResponseEntity.ok().build();
   }
 
@@ -84,11 +92,13 @@ public class AccountController implements AccountApi {
       log.info("No account with id {} was found, not able to delete", accountId);
       return ResponseEntity.notFound().build();
     }
-
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
     log.info("Attempting to delete account with id {}", accountId);
     accountService.deleteAccount(accountId);
 
+    historyEntryService.addEntryOnDelete(account, userId);
     log.info("Account with id {} was deleted successfully", accountId);
+
     return ResponseEntity.ok().build();
   }
 }

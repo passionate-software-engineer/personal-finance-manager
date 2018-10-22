@@ -4,6 +4,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class TransactionController implements TransactionApi {
   private TransactionValidator transactionValidator;
   private CategoryService categoryService;
   private AccountService accountService;
+  private HistoryEntryService historyEntryService;
 
   @Override
   public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId, @RequestAttribute(value = "userId") long userId) {
@@ -59,6 +61,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
+    historyEntryService.addEntryOnAdd(createdTransaction, userId);
 
     return ResponseEntity.ok(createdTransaction.getId());
   }
@@ -79,6 +82,9 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
+    Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get();
+    historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
+
     transactionService.updateTransaction(transactionId, userId, transaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
@@ -91,9 +97,10 @@ public class TransactionController implements TransactionApi {
       log.info("No transaction with id {} was found, not able to delete", transactionId);
       return ResponseEntity.notFound().build();
     }
-
+    Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get();
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
+    historyEntryService.addEntryOnDelete(transactionToDelete, userId);
 
     log.info("Transaction with id {} was deleted successfully", transactionId);
     return ResponseEntity.ok().build();

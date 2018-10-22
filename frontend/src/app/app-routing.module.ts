@@ -5,6 +5,7 @@ import {TransactionsComponent} from './components/transaction/transactions/trans
 import {AuthGuard} from './authentication/auth.guard';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
+import {HistoryComponent} from './components/history/history/history.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -12,9 +13,10 @@ const routes: Routes = [
   {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]},
   {path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard]},
   {path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]},
-
+  {path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
   // otherwise redirect to home
   {path: '**', redirectTo: '/transactions', canActivate: [AuthGuard]}
+
 ];
 
 export const routing = RouterModule.forRoot(routes);

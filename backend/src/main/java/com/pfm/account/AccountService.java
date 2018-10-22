@@ -42,6 +42,7 @@ public class AccountService {
     accountToUpdate.setBalance(account.getBalance());
 
     accountRepository.save(accountToUpdate);
+
   }
 
   public void deleteAccount(long accountId) {
@@ -51,5 +52,4 @@ public class AccountService {
   public boolean isAccountNameAlreadyUsed(long userId, String name) {
     return accountRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
-
 }
