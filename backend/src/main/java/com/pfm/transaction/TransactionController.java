@@ -69,6 +69,7 @@ public class TransactionController implements TransactionApi {
   @Override
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
       @RequestAttribute(value = "userId") long userId) {
+
     if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();

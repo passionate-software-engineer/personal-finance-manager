@@ -55,11 +55,9 @@ public class FilterServiceIntegrationTest {
 
     //given
     Account account = accountMbankBalance10();
-    account.setUserId(userId);
     long accountId = accountService.addAccount(account).getId();
 
     Filter filter = filterFoodExpenses();
-    filter.setUserId(userId);
     filter.setAccountIds(Arrays.asList(accountId));
     long filterId = filterService.addFilter(filter).getId();
 
@@ -76,11 +74,9 @@ public class FilterServiceIntegrationTest {
 
     //given
     Category category = categoryCar();
-    category.setUserId(userId);
     Long categoryId = categoryService.addCategory(category, userId).getId();
 
     Filter filter = filterHomeExpensesUpTo200();
-    filter.setUserId(userId);
     filter.setCategoryIds(Arrays.asList(categoryId));
     long filterId = filterService.addFilter(filter).getId();
 

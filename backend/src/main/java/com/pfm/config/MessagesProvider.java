@@ -46,7 +46,6 @@ public class MessagesProvider {
   public static final String PASSWORD_CONTAINS_WHITSPACE = "userValidator.passwordContainsWhitespaces";
   public static final String USERNAME_OR_PASSWORD_IS_INCORRECT = "userController.usernameOrPassowrdIsIncorrect";
 
-
   // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
   private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 

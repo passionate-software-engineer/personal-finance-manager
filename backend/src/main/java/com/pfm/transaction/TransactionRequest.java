@@ -15,7 +15,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class TransactionRequest {
 
   @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")

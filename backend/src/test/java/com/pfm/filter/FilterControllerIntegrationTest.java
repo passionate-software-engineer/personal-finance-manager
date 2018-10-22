@@ -60,7 +60,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, homeExpensesFilterToAdd);
-    expectedFilter.setUserId(userId);
 
     Filter actualFilter = getFilterById(filterId, token);
     assertThat(expectedFilter, is(equalTo(actualFilter)));
@@ -83,7 +82,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, carExpensesFilterToAdd);
-    expectedFilter.setUserId(userId);
     assertThat(expectedFilter, is(equalTo(outputFilter)));
   }
 
@@ -116,13 +114,10 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     final Filter expectedCarExpensesFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, carExpensesFilterToAdd);
-    expectedCarExpensesFilter.setUserId(userId);
 
     final Filter expectedFoodExpensesFilter = convertFilterRequestToFilterAndSetId(filterFoodExpensesId, foodExpensesFilterToAdd);
-    expectedFoodExpensesFilter.setUserId(userId);
 
     final Filter expectedHomeExpensesFilter = convertFilterRequestToFilterAndSetId(filterHomeExpensesId, homeExpensesFilterToAdd);
-    expectedHomeExpensesFilter.setUserId(userId);
 
     assertThat(actualListOfFilters.size(), is(3));
     assertThat(actualListOfFilters, containsInAnyOrder(
@@ -149,11 +144,9 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     Filter expectedFoodExpenses = filterFoodExpenses();
     expectedFoodExpenses.setId(filterFoodExpensesId);
-    expectedFoodExpenses.setUserId(userId);
 
     Filter expetedCarExpenses = filterCarExpenses();
     expetedCarExpenses.setId(filterCarExpensesId);
-    expetedCarExpenses.setUserId(userId);
 
     assertThat(actualFilters, contains(expectedFoodExpenses));
     assertThat(actualFilters.contains(expetedCarExpenses), is(false));
@@ -184,7 +177,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Filter updatedFilter = getFilterById(filterCarExpensesId, token);
     final Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, filterCarExpensesToUpdate);
-    expectedFilter.setUserId(userId);
 
     assertThat(updatedFilter, is(equalTo(expectedFilter)));
   }

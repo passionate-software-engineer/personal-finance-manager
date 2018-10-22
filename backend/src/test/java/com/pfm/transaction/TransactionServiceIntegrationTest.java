@@ -194,8 +194,8 @@ public class TransactionServiceIntegrationTest {
     Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
     transaction.setUserId(userId);
     AccountPriceEntry accountPriceEntry = AccountPriceEntry.builder()
-        .accountId(savedAccount.getId()
-        ).price(convertDoubleToBigDecimal(10))
+        .accountId(savedAccount.getId())
+        .price(convertDoubleToBigDecimal(10))
         .build();
     transaction.setAccountPriceEntries(Collections.singletonList(accountPriceEntry));
     transaction.setCategoryId(categoryId);

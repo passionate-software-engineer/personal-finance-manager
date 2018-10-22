@@ -1,5 +1,6 @@
 package com.pfm.filter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -54,7 +55,7 @@ public final class Filter {
   @ApiModelProperty(value = "Description", example = "Food expenses")
   private String description;
 
-  @ApiModelProperty(value = "User id", example = "1")
-  private long userId;
+  @JsonIgnore
+  private Long userId;
 
 }

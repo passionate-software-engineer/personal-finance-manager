@@ -394,9 +394,10 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldRegisterTwoUsersAndAddAccountsCatgoriesTransaction() throws Exception {
 
     //given
-    final long userMarianId = callRestToRegisterUserAndReturnUserId(userMarian());
+    callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
-    final long userZdzislawId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
+
+    callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     //when
@@ -439,14 +440,12 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     marianAccountMbankExpected.setId(marianAccountMbankId);
     marianAccountMbankExpected
         .setBalance(accountMbankBalance10().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
-    marianAccountMbankExpected.setUserId(userMarianId);
 
     Account marianAccountMilleniumExpected = accountMilleniumBalance100();
     marianAccountMilleniumExpected.setId(marianAccountMilleniumId);
     marianAccountMilleniumExpected
         .setBalance(
             accountMilleniumBalance100().getBalance().add(carTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
-    marianAccountMilleniumExpected.setUserId(userMarianId);
 
     assertThat(accountsMarian, hasSize(2));
     assertThat(accountsMarian, containsInAnyOrder(marianAccountMbankExpected, marianAccountMilleniumExpected));
@@ -457,13 +456,11 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     zdzislawAccountIngExpected.setId(zdzislawAccountIngId);
     zdzislawAccountIngExpected.setBalance(
         accountIngBalance9999().getBalance().add(animalsTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
-    zdzislawAccountIngExpected.setUserId(userZdzislawId);
 
     Account zdzislawAccountIdeaExpected = accountIdeaBalance100000();
     zdzislawAccountIdeaExpected.setId(zdzislawAccountIdeaId);
     zdzislawAccountIdeaExpected.setBalance(
         accountIdeaBalance100000().getBalance().add(homeTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
-    zdzislawAccountIdeaExpected.setUserId(userZdzislawId);
 
     assertThat(accountsZdzislaw, hasSize(2));
     assertThat(accountsZdzislaw, containsInAnyOrder(zdzislawAccountIngExpected, zdzislawAccountIdeaExpected));
@@ -472,11 +469,9 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Category marianCategoryCarExpected = categoryCar();
     marianCategoryCarExpected.setId(marianCategoryCarId);
-    marianCategoryCarExpected.setUserId(userMarianId);
 
     Category marianCategoryFoodExpected = categoryFood();
     marianCategoryFoodExpected.setId(marianCategoryFoodId);
-    marianCategoryFoodExpected.setUserId(userMarianId);
 
     assertThat(marianCategories, hasSize(2));
     assertThat(marianCategories, containsInAnyOrder(marianCategoryCarExpected, marianCategoryFoodExpected));
@@ -485,11 +480,9 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Category zdzislawCategoryHomeExpected = categoryHome();
     zdzislawCategoryHomeExpected.setId(zdzislawCategoryHomeId);
-    zdzislawCategoryHomeExpected.setUserId(userZdzislawId);
 
     Category zdzislawCategoryAnimalsExpected = categoryAnimals();
     zdzislawCategoryAnimalsExpected.setId(zdzislawCategoryAnimalsId);
-    zdzislawCategoryAnimalsExpected.setUserId(userZdzislawId);
 
     assertThat(zdzislawCategories, hasSize(2));
     assertThat(zdzislawCategories, containsInAnyOrder(zdzislawCategoryAnimalsExpected, zdzislawCategoryHomeExpected));
@@ -500,13 +493,11 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     marianFoodTransactionExpected.setId(marianFoodTransactionId);
     marianFoodTransactionExpected.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
     marianFoodTransactionExpected.setCategoryId(marianCategoryFoodId);
-    marianFoodTransactionExpected.setUserId(userMarianId);
 
     Transaction marianCarTransactionExpected = carTransactionWithNoAccountAndNoCategory();
     marianCarTransactionExpected.setId(marianCarTransactionId);
     marianCarTransactionExpected.getAccountPriceEntries().get(0).setAccountId(marianAccountMilleniumId);
     marianCarTransactionExpected.setCategoryId(marianCategoryCarId);
-    marianCarTransactionExpected.setUserId(userMarianId);
 
     assertThat(marianTransactions, hasSize(2));
     assertThat(marianTransactions, containsInAnyOrder(marianFoodTransactionExpected, marianCarTransactionExpected));
@@ -517,20 +508,17 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     zdzislawAnimalsTransactionsExpected.setId(zdzislawTransactionAnimalsId);
     zdzislawAnimalsTransactionsExpected.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIngId);
     zdzislawAnimalsTransactionsExpected.setCategoryId(zdzislawCategoryAnimalsId);
-    zdzislawAnimalsTransactionsExpected.setUserId(userZdzislawId);
 
     Transaction zdzislawHomeTransactionsExpected = homeTransactionWithNoAccountAndNoCategory();
     zdzislawHomeTransactionsExpected.setId(zdzislawTransactionHomeId);
     zdzislawHomeTransactionsExpected.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIdeaId);
     zdzislawHomeTransactionsExpected.setCategoryId(zdzislawCategoryHomeId);
-    zdzislawHomeTransactionsExpected.setUserId(userZdzislawId);
 
     assertThat(zdzislawTransactions, hasSize(2));
     assertThat(zdzislawTransactions, containsInAnyOrder(zdzislawAnimalsTransactionsExpected, zdzislawHomeTransactionsExpected));
 
     List<Filter> marianFilters = callRestToGetAllFilters(marianToken);
-    Filter marianExpensesOver1000FilterExpected = filterExpensesOver1000ToAdd;
-    marianExpensesOver1000FilterExpected.setUserId(userMarianId);
+    Filter marianExpensesOver1000FilterExpected = filterExpensesOver1000ToAdd; // TODO add detecting unneeded variables like that to checkstyle
     marianExpensesOver1000FilterExpected.setId(marianExpensesOver1000FilterId);
 
     assertThat(marianFilters, hasSize(1));
@@ -538,7 +526,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     List<Filter> zdzislawFilters = callRestToGetAllFilters(zdzislawToken);
     Filter zdzislawHomeExpensesFilterExpected = filterHomeExpensesToAdd;
-    zdzislawHomeExpensesFilterExpected.setUserId(userZdzislawId);
     zdzislawHomeExpensesFilterExpected.setId(zdzislawHomeExpensesFilterId);
 
     assertThat(zdzislawFilters, hasSize(1));

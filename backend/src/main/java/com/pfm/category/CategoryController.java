@@ -112,13 +112,11 @@ public class CategoryController implements CategoryApi {
       return ResponseEntity.badRequest().body(validationResults);
     }
 
-    log.info("Attempting to delete category with id {}", id);
+    log.info("Attempting to delete category with id {}", categoryId);
 
     // TODO Optional without isPresent - look for other occurences
-    Category deletedCategory = categoryService.getCategoryByIdAndUserId(id, userId).get();
-    categoryService.deleteCategory(id);
+    Category deletedCategory = categoryService.getCategoryByIdAndUserId(categoryId, userId).get();
 
-    log.info("Attempting to delete category with id {}", categoryId);
     categoryService.deleteCategory(categoryId);
 
     log.info("Category with id {} was deleted successfully", categoryId);
@@ -134,9 +132,10 @@ public class CategoryController implements CategoryApi {
           .id(null)
           .name(categoryRequest.getName())
           .parentCategory(null)
-          .userId(userId)
+          .userId(userId) // TODO userId should be handled by services and passed to it explicitely
           .build();
     }
+
     return Category.builder()
         .id(null)
         .name(categoryRequest.getName())

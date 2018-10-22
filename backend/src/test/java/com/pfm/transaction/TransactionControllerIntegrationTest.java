@@ -63,7 +63,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Transaction expectedTransaction =
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), transactionId, jacekAccountId, foodCategoryId);
-    expectedTransaction.setUserId(userId);
 
     assertThat(callRestToGetTransactionById(transactionId, token), is(equalTo(expectedTransaction)));
     BigDecimal jacekAccountBalanceAfterAddingTransaction = callRestServiceAndReturnAccountBalance(jacekAccountId, token);
@@ -105,8 +104,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
-        foodCategoryId, token);
+    long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
     long carTransactionId = callRestToAddTransactionAndReturnId(carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
     //when
@@ -115,11 +113,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Transaction foodTransactionExpected =
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), foodTransactionId, jacekAccountId, foodCategoryId);
-    foodTransactionExpected.setUserId(userId);
 
     Transaction carTransactionExpected =
         setTransactionIdAccountIdCategoryId(carTransactionWithNoAccountAndNoCategory(), carTransactionId, jacekAccountId, carCategoryId);
-    carTransactionExpected.setUserId(userId);
 
     assertThat(allTransactionsInDb.size(), is(2));
     assertThat(allTransactionsInDb, containsInAnyOrder(foodTransactionExpected, carTransactionExpected));
@@ -157,7 +153,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsInDb.size(), is(1));
 
     Transaction expected = convertTransactionRequestToTransactionAndSetId(foodTransactionId, updatedFoodTransactionRequest);
-    expected.setUserId(userId);
 
     assertTrue(allTransactionsInDb.contains(expected));
 
@@ -297,7 +292,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token)
-        .content(json(foodTransactionWithNoAccountAndNoCategory()))
+        .content(json(TransactionRequest.builder().build()))
         .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }

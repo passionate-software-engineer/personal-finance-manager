@@ -63,7 +63,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
-        .andExpect(jsonPath("$.userId", is((int) userId)));
+        .andExpect(jsonPath("$.userId").doesNotExist());
 
   }
 
@@ -112,7 +112,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
-        .andExpect(jsonPath("$.userId", is((int) userId)));
+        .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
   @Test
@@ -145,11 +145,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0].id", is(accountJacekId.intValue())))
         .andExpect(jsonPath("$[0].name", is(accountJacek.getName())))
         .andExpect(jsonPath("$[0].balance", is(accountJacek.getBalance().toString())))
-        .andExpect(jsonPath("$[0].userId", is((int) userId)))
+        .andExpect(jsonPath("$[0].userId").doesNotExist())
         .andExpect(jsonPath("$[1].id", is(accountMbankId.intValue())))
         .andExpect(jsonPath("$[1].name", is(accountMbank.getName())))
         .andExpect(jsonPath("$[1].balance", is(accountMbank.getBalance().toString())))
-        .andExpect(jsonPath("$[1].userId", is((int) userId)));
+        .andExpect(jsonPath("$[1].userId").doesNotExist());
   }
 
   @Test
@@ -176,7 +176,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(updatedAccount.getName())))
         .andExpect(jsonPath("$.balance", is(updatedAccount.getBalance().toString())))
-        .andExpect(jsonPath("$.userId", is((int) userId)));
+        .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
   @Test
@@ -202,7 +202,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(equalTo(updatedAccount.getName()))))
         .andExpect(jsonPath("$.balance", is(equalTo(updatedAccount.getBalance().toString()))))
-        .andExpect(jsonPath("$.userId", is((int) userId)));
+        .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
   @Test

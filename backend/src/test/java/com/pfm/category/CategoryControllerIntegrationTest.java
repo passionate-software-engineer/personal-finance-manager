@@ -57,11 +57,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(carCategoryId);
-    expectedCarCategory.setUserId(userId);
+
     Category expectedOilCategory = categoryOil;
     expectedOilCategory.setId(oilCategoryId);
     expectedOilCategory.setParentCategory(expectedCarCategory);
-    expectedOilCategory.setUserId(userId);
 
     List<Category> categories = callRestToGetAllCategories(token);
 
@@ -130,10 +129,9 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Category expectedCarCategory = categoryCar;
     expectedCarCategory.setId(categoryCarId);
-    expectedCarCategory.setUserId(userId);
+
     Category expectedHomeCategory = categoryHome;
     expectedHomeCategory.setId(categoryHomeId);
-    expectedHomeCategory.setUserId(userId);
 
     assertThat(categories.size(), is(2));
     assertThat(categories, containsInAnyOrder(expectedCarCategory, expectedHomeCategory));
@@ -148,11 +146,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     Category actualCarCategory = callRestToGetCategoryById(categoryCarId, token);
-    Category expectedCarCategory = categoryCar;
-    expectedCarCategory.setId(categoryCarId);
-    expectedCarCategory.setUserId(userId);
 
-    assertThat(actualCarCategory, is(equalTo(expectedCarCategory)));
+    // then
+    categoryCar.setId(categoryCarId);
+    assertThat(actualCarCategory, is(equalTo(categoryCar)));
   }
 
   @Test
@@ -179,7 +176,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     Category expectedCategory = categoryToUpdate;
     expectedCategory.setId(homeCategoryId);
-    expectedCategory.setUserId(userId);
+
     Category result = callRestToGetCategoryById(homeCategoryId, token);
     assertThat(result, is(equalTo(expectedCategory)));
   }
@@ -201,7 +198,6 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     Category result = callRestToGetCategoryById(categoryOilId, token);
 
     final Category expected = convertCategoryRequestToCategoryAndSetId(categoryOilId, userId, categoryOilToUpdate);
-    expected.setUserId(userId);
 
     assertThat(result, is(equalTo(expected)));
   }

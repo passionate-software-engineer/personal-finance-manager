@@ -1,5 +1,7 @@
 package com.pfm.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pfm.history.DifferenceProvider;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,8 +33,8 @@ public final class Account implements DifferenceProvider<Account> {
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   private BigDecimal balance;
 
-  @ApiModelProperty(value = "Account owner id", required = true, example = "1")
-  private long userId;
+  @JsonIgnore
+  private Long userId;
 
   @Override
   public List<String> getDifferences(Account otherAccount) {
