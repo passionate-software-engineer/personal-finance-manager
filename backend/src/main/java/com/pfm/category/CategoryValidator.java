@@ -42,7 +42,7 @@ public class CategoryValidator {
     }
 
     // TODO check category.getParentCategory().getId() != null
-    if (category.getParentCategory() != null && categoryService.getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).isPresent()
+    if (category.getParentCategory() != null && categoryService.categoryExistByIdAndUserId(category.getParentCategory().getId(), userId)
         && !categoryService.canBeParentCategory(id, category.getParentCategory().getId(), userId)) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }

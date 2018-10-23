@@ -15,4 +15,6 @@ public interface FilterRepository extends CrudRepository<Filter, Long> {
   boolean existsByAccountIdsContains(long accountId);
 
   boolean existsByCategoryIdsContains(long categoryId);
+
+  boolean existsByIdAndUserId(long filterId, long userId);
 }

@@ -18,20 +18,6 @@ public class FilterController implements FilterApi {
   private FilterService filterService;
   private FilterValidator filterValidator;
 
-  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest, long userId) {
-    return Filter.builder()
-        .name(filterRequest.getName())
-        .dateFrom(filterRequest.getDateFrom())
-        .dateTo(filterRequest.getDateTo())
-        .accountIds(filterRequest.getAccountIds())
-        .categoryIds(filterRequest.getCategoryIds())
-        .priceFrom(filterRequest.getPriceFrom())
-        .priceTo(filterRequest.getPriceTo())
-        .description(filterRequest.getDescription())
-        .userId(userId)
-        .build();
-  }
-
   @Override
   public ResponseEntity<Filter> getFilterById(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving filter with id: {}", filterId);
@@ -55,15 +41,15 @@ public class FilterController implements FilterApi {
   public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Adding filter to the database");
 
-    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest, userId);
+    Filter filter = convertFilterRequestToFilter(filterRequest);
+
+    List<String> validationResult = filterValidator.validateFilterRequest(filter, userId);
     if (!validationResult.isEmpty()) {
       log.info("Filter is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Filter filter = convertFilterRequestToFilter(filterRequest, userId);
-
-    Filter createdFilter = filterService.addFilter(filter);
+    Filter createdFilter = filterService.addFilter(userId, filter);
     log.info("Saving filter to the database was successful. Filter id is {}", createdFilter.getId());
 
     return ResponseEntity.ok(createdFilter.getId());
@@ -72,18 +58,19 @@ public class FilterController implements FilterApi {
   @Override
   public ResponseEntity<?> updateFilter(@PathVariable long filterId, @RequestBody FilterRequest filterRequest,
       @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.getFilterByIdAndUserId(filterId, userId).isPresent()) {
+
+    if (!filterService.filterExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to update", filterId);
       return ResponseEntity.notFound().build();
     }
 
-    List<String> validationResult = filterValidator.validateFilterRequest(filterRequest, userId);
+    Filter filter = convertFilterRequestToFilter(filterRequest);
+
+    List<String> validationResult = filterValidator.validateFilterRequest(filter, userId);
     if (!validationResult.isEmpty()) {
       log.error("Filter is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-
-    Filter filter = convertFilterRequestToFilter(filterRequest, userId);
 
     filterService.updateFilter(filterId, userId, filter);
     log.info("Filter with id {} was successfully updated", filterId);
@@ -93,11 +80,24 @@ public class FilterController implements FilterApi {
 
   @Override
   public ResponseEntity<?> deleteFilter(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.getFilterByIdAndUserId(filterId, userId).isPresent()) {
+    if (!filterService.filterExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();
     }
     filterService.deleteFilter(filterId);
     return ResponseEntity.ok().build();
+  }
+
+  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
+    return Filter.builder()
+        .name(filterRequest.getName())
+        .dateFrom(filterRequest.getDateFrom())
+        .dateTo(filterRequest.getDateTo())
+        .accountIds(filterRequest.getAccountIds())
+        .categoryIds(filterRequest.getCategoryIds())
+        .priceFrom(filterRequest.getPriceFrom())
+        .priceTo(filterRequest.getPriceTo())
+        .description(filterRequest.getDescription())
+        .build();
   }
 }

@@ -14,7 +14,8 @@ public class FilterService {
 
   private FilterRepository filterRepository;
 
-  public Filter addFilter(Filter filter) {
+  public Filter addFilter(long userId, Filter filter) {
+    filter.setUserId(userId);
     return filterRepository.save(filter);
   }
 
@@ -65,5 +66,9 @@ public class FilterService {
 
   public boolean filterExistByCategoryId(long categoryId) {
     return filterRepository.existsByCategoryIdsContains(categoryId);
+  }
+
+  public boolean filterExistByFilterIdAndUserId(long filterId, long userId) {
+    return filterRepository.existsByIdAndUserId(filterId, userId);
   }
 }

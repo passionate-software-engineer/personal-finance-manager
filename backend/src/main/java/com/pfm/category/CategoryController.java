@@ -49,7 +49,7 @@ public class CategoryController implements CategoryApi {
   public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") long userId) {
 
     log.info("Saving category {} to the database", categoryRequest.getName());
-    Category category = convertToCategory(categoryRequest, userId);
+    Category category = convertToCategory(categoryRequest);
 
     List<String> validationResult = categoryValidator.validateCategoryForAdd(category, userId);
     if (!validationResult.isEmpty()) {
@@ -73,7 +73,7 @@ public class CategoryController implements CategoryApi {
       return ResponseEntity.notFound().build();
     }
 
-    Category category = convertToCategory(categoryRequest, userId);
+    Category category = convertToCategory(categoryRequest);
     category.setId(categoryId);
 
     List<String> validationResult = categoryValidator.validateCategoryForUpdate(categoryId, userId, category);
@@ -124,7 +124,7 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok().build();
   }
 
-  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest, long userId) {
+  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     if (parentCategoryId == null) {
@@ -132,7 +132,6 @@ public class CategoryController implements CategoryApi {
           .id(null)
           .name(categoryRequest.getName())
           .parentCategory(null)
-          .userId(userId) // TODO userId should be handled by services and passed to it explicitely
           .build();
     }
 
@@ -140,7 +139,6 @@ public class CategoryController implements CategoryApi {
         .id(null)
         .name(categoryRequest.getName())
         .parentCategory(Category.builder().id(parentCategoryId).build())
-        .userId(userId)
         .build();
   }
 }

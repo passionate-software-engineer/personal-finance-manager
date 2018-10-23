@@ -27,7 +27,8 @@ public class AccountService {
         .collect(Collectors.toList());
   }
 
-  public Account addAccount(Account account) {
+  public Account addAccount(long userId, Account account) {
+    account.setUserId(userId);
     return accountRepository.save(account);
   }
 
@@ -55,5 +56,9 @@ public class AccountService {
 
   public void updateAccountBalance(long accountId, BigDecimal newBalance) {
     accountRepository.updateAccountBalance(newBalance, accountId);
+  }
+
+  public boolean accountExistByIdAndUserId(long accountId, long userId) {
+    return accountRepository.existsByIdAndUserId(accountId, userId);
   }
 }

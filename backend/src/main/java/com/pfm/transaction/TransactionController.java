@@ -1,9 +1,5 @@
 package com.pfm.transaction;
 
-import com.pfm.account.Account;
-import com.pfm.account.AccountService;
-import com.pfm.category.Category;
-import com.pfm.category.CategoryService;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +18,6 @@ public class TransactionController implements TransactionApi {
 
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
-  private CategoryService categoryService;
-  private AccountService accountService;
   private HistoryEntryService historyEntryService;
 
   @Override
@@ -51,13 +45,13 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Adding transaction to the database");
 
-    List<String> validationResult = transactionValidator.validate(transactionRequest, userId);
+    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
+
+    List<String> validationResult = transactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-
-    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
@@ -70,18 +64,18 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
       @RequestAttribute(value = "userId") long userId) {
 
-    if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
+    if (!transactionService.transactionExistByTransactionIdAndUserId(transactionId, userId)) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    List<String> validationResult = transactionValidator.validate(transactionRequest, userId);
+    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
+
+    List<String> validationResult = transactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-
-    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest, userId);
 
     Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get();
     historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
@@ -107,26 +101,12 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok().build();
   }
 
-  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest, long userId) {
-    Optional<Category> transactionCategory = categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId);
-    if (!transactionCategory.isPresent()) {
-      throw new IllegalStateException("Provided category id: " + transactionRequest.getCategoryId() + " does not exist in the database");
-    }
-
-    for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
-      Optional<Account> transactionAccount = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
-      if (!transactionAccount.isPresent()) {
-        throw new IllegalStateException("Provided account id: " + entry.getAccountId() + " does not exist in the database");
-      }
-    }
-
+  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
     return Transaction.builder()
         .description(transactionRequest.getDescription())
         .categoryId(transactionRequest.getCategoryId())
         .date(transactionRequest.getDate())
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
-        .userId(userId)
         .build();
   }
-
 }

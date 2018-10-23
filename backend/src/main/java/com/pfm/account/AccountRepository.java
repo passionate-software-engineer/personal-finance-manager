@@ -22,4 +22,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
   @Modifying(clearAutomatically = true)
   @Query("update Account account set account.balance = :newBalance where account.id = :id")
   void updateAccountBalance(@Param("newBalance") BigDecimal newBalance, @Param("id") long accountId);
+
+  boolean existsByIdAndUserId(long accountId, long userId);
 }
