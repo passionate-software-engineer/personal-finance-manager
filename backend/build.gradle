@@ -1,13 +1,16 @@
+import com.github.spotbugs.SpotBugsTask
+
 buildscript {
+    ext {
+        springBootVersion = '2.1.0.RC1'
+    }
     repositories {
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
     }
-
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.6.RELEASE'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath 'org.owasp:dependency-check-gradle:3.3.2'
     }
 }
@@ -16,16 +19,16 @@ buildscript {
 plugins {
     // 3rd party
     id "com.github.ben-manes.versions" version "0.20.0"
+    id "com.github.spotbugs" version "1.6.5"
     id "com.gorylenko.gradle-git-properties" version "1.5.2"
     id 'de.aaschmid.cpd' version '1.1'
     id 'io.spring.dependency-management' version "1.0.6.RELEASE"
     //TODO dependencyUpdates -Drevision=release -DoutputDir=build/reports/dependencyUpdates .Jenkins
     id 'org.owasp.dependencycheck' version '3.3.2'
-    id 'org.springframework.boot' version '2.0.6.RELEASE'
+    //id 'org.springframework.boot' version '2.1.0.RC1'
 
     // core
     id 'checkstyle'
-    id 'findbugs'
     id 'idea'
     id "jacoco"
     id 'java'
@@ -33,12 +36,17 @@ plugins {
     id 'project-report'
 }
 
+// TODO not working when moved to block above
+apply plugin: 'org.springframework.boot'
+
 version '1.0'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 // keep alphabetical order in groups
@@ -69,6 +77,14 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.springframework.boot:spring-boot-starter-web'
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+spotbugs {
+    toolVersion = '3.1.8'
 }
 
 checkstyle {
@@ -118,10 +134,10 @@ jacocoTestCoverageVerification {
     }
 }
 
-tasks.withType(FindBugs) {
+tasks.withType(SpotBugsTask) {
     reports {
-        xml.enabled false
-        html.enabled true
+        xml.enabled = true
+        html.enabled = false
     }
 }
 
