@@ -2,8 +2,8 @@
 
 trap 'echo "ERROR: $BASH_SOURCE:$LINENO $BASH_COMMAND" >&2' ERR
 
-BACKEND_PORT=$(jot -r 1  40000 45000)
-FRONTEND_PORT=$(jot -r 1  46000 50000)
+BACKEND_PORT=$(( ( RANDOM % 5000 )  + 40000 ))
+FRONTEND_PORT=$(( ( RANDOM % 5000 )  + 46000 ))
 
 rm -f output.log
 java -jar backend/build/libs/backend-1.0.jar --server.port=$BACKEND_PORT >>output.log 2>&1 &
