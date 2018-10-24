@@ -67,7 +67,8 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
       @RequestAttribute(value = "userId") long userId) {
 
-    if (!transactionService.transactionExistByTransactionIdAndUserId(transactionId, userId)) {
+    Optional<Transaction> transactionByIdAndUserId = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    if (!transactionByIdAndUserId.isPresent()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
@@ -80,7 +81,7 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get();
+    Transaction transactionToUpdate = transactionByIdAndUserId.get();
     historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
 
     transactionService.updateTransaction(transactionId, userId, transaction);

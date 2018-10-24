@@ -70,7 +70,9 @@ public class CategoryController implements CategoryApi {
   public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest,
       @RequestAttribute(value = "userId") long userId) {
 
-    if (!categoryService.getCategoryByIdAndUserId(categoryId, userId).isPresent()) {
+    Optional<Category> categoryByIdAndUserId = categoryService.getCategoryByIdAndUserId(categoryId, userId);
+
+    if (!categoryByIdAndUserId.isPresent()) {
       log.info("No category with id {} was found, not able to update", categoryId);
       return ResponseEntity.notFound().build();
     }
@@ -85,10 +87,10 @@ public class CategoryController implements CategoryApi {
     }
 
     if (category.getParentCategory() != null) {
-      category.setParentCategory(categoryService.getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).get());
+      category.setParentCategory(categoryService.getCategoryByIdAndUserId(category.getParentCategory().getId(), userId).orElse(null));
     }
 
-    Category categoryToUpdate = categoryService.getCategoryByIdAndUserId(categoryId, userId).get();
+    Category categoryToUpdate = categoryByIdAndUserId.get();
     historyEntryService.addEntryOnUpdate(categoryToUpdate, category, userId);
 
     categoryService.updateCategory(categoryId, userId, category);
@@ -117,7 +119,6 @@ public class CategoryController implements CategoryApi {
 
     log.info("Attempting to delete category with id {}", categoryId);
 
-    // TODO Optional without isPresent - look for other occurences
     Category deletedCategory = categoryService.getCategoryByIdAndUserId(categoryId, userId).get();
 
     categoryService.deleteCategory(categoryId);
