@@ -43,7 +43,7 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Saving account {} to the database", accountRequest.getName());
 
-    Account account = convertAccountRequestToAccount(userId, accountRequest);
+    Account account = convertAccountRequestToAccount(accountRequest);
 
     List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
     if (!validationResult.isEmpty()) {
@@ -51,7 +51,7 @@ public class AccountController implements AccountApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Account createdAccount = accountService.addAccount(account);
+    Account createdAccount = accountService.addAccount(userId, account);
     log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
     historyEntryService.addEntryOnAdd(createdAccount, userId);
     return ResponseEntity.ok(createdAccount.getId());
@@ -64,7 +64,7 @@ public class AccountController implements AccountApi {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
-    Account account = convertAccountRequestToAccount(userId, accountRequest);
+    Account account = convertAccountRequestToAccount(accountRequest);
 
     log.info("Updating account with id {}", accountId);
     List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
@@ -85,7 +85,6 @@ public class AccountController implements AccountApi {
   }
 
   public ResponseEntity<?> deleteAccount(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
-    //TODO write sql query and change to existyByIdAndUserId. Change in whole project
     if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", accountId);
       return ResponseEntity.notFound().build();
@@ -107,11 +106,10 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  private Account convertAccountRequestToAccount(long userId, AccountRequest accountRequest) {
+  private Account convertAccountRequestToAccount(AccountRequest accountRequest) {
     return Account.builder()
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
-        .userId(userId)
         .build();
   }
 }

@@ -32,7 +32,7 @@ public final class Transaction implements DifferenceProvider<Transaction> {
   // TODO -- add Swagger annotations - type is used in getAllTransactions
   private String description;
 
-  private long categoryId;
+  private Long categoryId;
 
   private LocalDate date;
 

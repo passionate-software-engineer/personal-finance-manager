@@ -75,10 +75,9 @@ public class ImportService {
       Account accountToSave = Account.builder()
           .name(account.getName())
           .balance(account.getBalance())
-          .userId(userId)
           .build();
 
-      Account savedAccount = accountService.addAccount(accountToSave);
+      Account savedAccount = accountService.addAccount(userId, accountToSave);
       accountNameToIdMap.put(savedAccount.getName(), savedAccount.getId());
     }
     return accountNameToIdMap;

@@ -27,6 +27,7 @@ public class CategoryService {
   }
 
   public Category addCategory(Category category, long userId) {
+    category.setUserId(userId);
     if (category.getParentCategory() == null) {
       return categoryRepository.save(category);
     }
@@ -96,6 +97,10 @@ public class CategoryService {
 
   public boolean isCategoryNameAlreadyUsed(String name, long userId) {
     return categoryRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
+  }
+
+  public boolean categoryExistByIdAndUserId(long categoryId, long userId) {
+    return categoryRepository.existsByIdAndUserId(categoryId, userId);
   }
 
 }

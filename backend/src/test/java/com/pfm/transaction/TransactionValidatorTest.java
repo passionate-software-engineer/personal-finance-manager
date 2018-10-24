@@ -15,6 +15,7 @@ import static org.hamcrest.core.Is.is;
 
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,11 +39,11 @@ public class TransactionValidatorTest {
 
   @Test
   public void shouldReturnErrorWhenNoTransactionAccountPriceEntriesWereProvidedNullValue() {
-    TransactionRequest transactionRequest = new TransactionRequest();
-    transactionRequest.setAccountPriceEntries(null);
+    Transaction transaction = new Transaction();
+    transaction.setAccountPriceEntries(null);
 
     // when
-    List<String> result = transactionValidator.validate(transactionRequest, 1);
+    List<String> result = transactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(4));
@@ -54,10 +55,10 @@ public class TransactionValidatorTest {
 
   @Test
   public void shouldReturnErrorWhenNoTransactionAccountPriceEntriesWereProvidedEmptyList() {
-    TransactionRequest transactionRequest = new TransactionRequest();
+    Transaction transaction = new Transaction();
 
     // when
-    List<String> result = transactionValidator.validate(transactionRequest, 1);
+    List<String> result = transactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(4));
@@ -69,12 +70,12 @@ public class TransactionValidatorTest {
 
   @Test
   public void shouldReturnErrorWhenNoPriceAndAccountWereProvided() {
-    TransactionRequest transactionRequest = new TransactionRequest();
-    transactionRequest.getAccountPriceEntries().add(new AccountPriceEntry());
-    transactionRequest.setCategoryId(NOT_EXISTING_ID);
+    Transaction transaction = new Transaction();
+    transaction.setAccountPriceEntries(Arrays.asList(new AccountPriceEntry()));
+    transaction.setCategoryId(NOT_EXISTING_ID);
 
     // when
-    List<String> result = transactionValidator.validate(transactionRequest, 1);
+    List<String> result = transactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(5));
@@ -87,11 +88,11 @@ public class TransactionValidatorTest {
 
   @Test
   public void shouldReturnErrorWhenAccountIdDoesNotExists() {
-    TransactionRequest transactionRequest = new TransactionRequest();
-    transactionRequest.getAccountPriceEntries().add(AccountPriceEntry.builder().accountId(NOT_EXISTING_ID).build());
+    Transaction transaction = new Transaction();
+    transaction.setAccountPriceEntries(Arrays.asList(new AccountPriceEntry(1L, NOT_EXISTING_ID, null)));
 
     // when
-    List<String> result = transactionValidator.validate(transactionRequest, 1);
+    List<String> result = transactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(5));

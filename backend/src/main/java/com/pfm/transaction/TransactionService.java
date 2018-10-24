@@ -34,6 +34,7 @@ public class TransactionService {
 
   @Transactional
   public Transaction addTransaction(long userId, Transaction transaction) {
+    transaction.setUserId(userId);
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
       addAmountToAccount(entry.getAccountId(), userId, entry.getPrice());
     }
@@ -110,5 +111,9 @@ public class TransactionService {
 
   public boolean transactionExistByCategoryId(long categoryId) {
     return transactionRepository.existsByCategoryId(categoryId);
+  }
+
+  public boolean transactionExistByTransactionIdAndUserId(long transactionId, long userId) {
+    return transactionRepository.existsByIdAndUserId(transactionId, userId);
   }
 }

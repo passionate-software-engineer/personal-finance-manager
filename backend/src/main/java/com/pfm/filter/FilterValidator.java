@@ -21,36 +21,36 @@ public class FilterValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public List<String> validateFilterRequest(FilterRequest filterRequest, long userId) {
+  public List<String> validateFilterRequest(Filter filter, long userId) {
     List<String> validationResults = new ArrayList<>();
 
-    if (filterRequest.getName() == null || filterRequest.getName().trim().equals("")) {
+    if (filter.getName() == null || filter.getName().trim().equals("")) {
       validationResults.add(getMessage(FILTER_EMPTY_NAME));
     }
 
-    if (filterRequest.getAccountIds() != null) {
-      for (long id : filterRequest.getAccountIds()) {
-        if (!accountService.getAccountByIdAndUserId(id, userId).isPresent()) {
+    if (filter.getAccountIds() != null) {
+      for (long id : filter.getAccountIds()) {
+        if (!accountService.accountExistByIdAndUserId(id, userId)) {
           validationResults.add(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + id);
         }
       }
     }
 
-    if (filterRequest.getCategoryIds() != null) {
-      for (long id : filterRequest.getCategoryIds()) {
-        if (!categoryService.getCategoryByIdAndUserId(id, userId).isPresent()) {
+    if (filter.getCategoryIds() != null) {
+      for (long id : filter.getCategoryIds()) {
+        if (!categoryService.categoryExistByIdAndUserId(id, userId)) {
           validationResults.add(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + id);
         }
       }
     }
 
-    if (filterRequest.getPriceFrom() != null && filterRequest.getPriceTo() != null
-        && filterRequest.getPriceFrom().compareTo(filterRequest.getPriceTo()) > 0) {
+    if (filter.getPriceFrom() != null && filter.getPriceTo() != null
+        && filter.getPriceFrom().compareTo(filter.getPriceTo()) > 0) {
       validationResults.add(getMessage(FILTER_PRICE_FROM_BIGGER_THEN_PRICE_TO));
     }
 
-    if (filterRequest.getDateFrom() != null && filterRequest.getDateTo() != null
-        && filterRequest.getDateFrom().isAfter(filterRequest.getDateTo())) {
+    if (filter.getDateFrom() != null && filter.getDateTo() != null
+        && filter.getDateFrom().isAfter(filter.getDateTo())) {
       validationResults.add(getMessage(FILTER_DATE_FROM_IS_AFTER_DATE_TO));
     }
 
