@@ -22,7 +22,7 @@ echo "Starting E2E tests"
 
 set -e
 cd frontend
-sed -i '' "s/8088/$BACKEND_PORT/g" src/environments/environment.ts
+sed -i "s/8088/$BACKEND_PORT/g" src/environments/environment.ts
 cat src/environments/environment.ts
 
 ng e2e --port $FRONTEND_PORT
