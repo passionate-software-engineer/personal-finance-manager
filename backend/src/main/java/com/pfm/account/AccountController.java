@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +41,7 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok(accounts);
   }
 
+  @Transactional
   public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Saving account {} to the database", accountRequest.getName());
 
@@ -57,6 +59,7 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok(createdAccount.getId());
   }
 
+  @Transactional
   public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest,
       @RequestAttribute(value = "userId") long userId) {
 
@@ -84,6 +87,7 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
+  @Transactional
   public ResponseEntity<?> deleteAccount(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
     if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", accountId);

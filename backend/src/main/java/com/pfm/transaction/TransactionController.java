@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") long userId) {
     log.info("Adding transaction to the database");
 
@@ -61,6 +63,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
       @RequestAttribute(value = "userId") long userId) {
 
@@ -87,6 +90,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> deleteTransaction(@PathVariable long transactionId, @RequestAttribute(value = "userId") long userId) {
     if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", transactionId);

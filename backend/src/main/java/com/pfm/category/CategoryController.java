@@ -9,6 +9,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,7 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok(categories);
   }
 
+  @Transactional
   public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") long userId) {
 
     log.info("Saving category {} to the database", categoryRequest.getName());
@@ -64,7 +66,7 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok(createdCategory.getId());
   }
 
-  // TODO add transactions to all methods working with history service
+  @Transactional
   public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest,
       @RequestAttribute(value = "userId") long userId) {
 
@@ -94,6 +96,7 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok().build();
   }
 
+  @Transactional
   public ResponseEntity<?> deleteCategory(@PathVariable long categoryId, @RequestAttribute(value = "userId") long userId) {
 
     if (!categoryService.getCategoryByIdAndUserId(categoryId, userId).isPresent()) {
