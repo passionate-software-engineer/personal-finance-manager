@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-  @Query("select account from Account account where lower(account.name) like lower(concat('%', :nameToFind,'%')) AND account.userId = :id")
+  @Query("select account from Account account where lower(account.name) like lower(:nameToFind) AND account.userId = :id")
   List<Account> findByNameIgnoreCaseAndUserId(@Param("nameToFind") String nameToFind, @Param("id") long id);
 
   List<Account> findByUserId(long userId);
