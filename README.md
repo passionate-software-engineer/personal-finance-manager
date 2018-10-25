@@ -63,7 +63,7 @@ Define accounts, categories and you are ready to track your transactions.
 - Check if application passes gradle build task
 - Check if application starts with PostgreSQL database
 - Check if swagger is working
-- Run application and test it manually :
+- Run application and test it manually:
   - Register user
   - Login with registered user
   - Add account, category, transaction and filter
