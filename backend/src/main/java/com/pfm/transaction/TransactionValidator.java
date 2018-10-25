@@ -24,26 +24,26 @@ public class TransactionValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public List<String> validate(TransactionRequest transactionRequest, long userId) {
+  public List<String> validate(Transaction transaction, long userId) {
     List<String> validationErrors = new ArrayList<>();
 
-    if (transactionRequest.getDescription() == null || transactionRequest.getDescription().trim().equals("")) {
+    if (transaction.getDescription() == null || transaction.getDescription().trim().equals("")) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_NAME));
     }
 
-    if (transactionRequest.getCategoryId() == null) {
+    if (transaction.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
-    } else if (!categoryService.getCategoryByIdAndUserId(transactionRequest.getCategoryId(), userId).isPresent()) {
-      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + transactionRequest.getCategoryId());
+    } else if (!categoryService.categoryExistByIdAndUserId(transaction.getCategoryId(), userId)) {
+      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + transaction.getCategoryId());
     }
 
-    if (transactionRequest.getAccountPriceEntries() == null || transactionRequest.getAccountPriceEntries().size() == 0) {
+    if (transaction.getAccountPriceEntries() == null || transaction.getAccountPriceEntries().size() == 0) {
       validationErrors.add(getMessage(AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED));
     } else {
-      for (AccountPriceEntry entry : transactionRequest.getAccountPriceEntries()) {
+      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
-        } else if (!accountService.getAccountByIdAndUserId(entry.getAccountId(), userId).isPresent()) {
+        } else if (!accountService.accountExistByIdAndUserId(entry.getAccountId(), userId)) {
           validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + entry.getAccountId());
         }
 
@@ -53,7 +53,7 @@ public class TransactionValidator {
       }
     }
 
-    if (transactionRequest.getDate() == null) {
+    if (transaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
 

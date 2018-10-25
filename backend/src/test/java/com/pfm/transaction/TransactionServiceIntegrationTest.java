@@ -69,7 +69,7 @@ public class TransactionServiceIntegrationTest {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
-    Account savedAccount = accountService.addAccount(account);
+    Account savedAccount = accountService.addAccount(userId, account);
 
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
@@ -98,7 +98,7 @@ public class TransactionServiceIntegrationTest {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
-    Account savedAccount = accountService.addAccount(account);
+    Account savedAccount = accountService.addAccount(userId, account);
 
     Category category = categoryCar();
     category.setUserId(userId);
@@ -140,7 +140,7 @@ public class TransactionServiceIntegrationTest {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
-    Account savedAccount = accountService.addAccount(account);
+    Account savedAccount = accountService.addAccount(userId, account);
 
     Category category = categoryOil();
     category.setUserId(userId);
@@ -187,7 +187,7 @@ public class TransactionServiceIntegrationTest {
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
-    Account savedAccount = accountService.addAccount(account);
+    Account savedAccount = accountService.addAccount(userId, account);
 
     long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
 
@@ -217,7 +217,7 @@ public class TransactionServiceIntegrationTest {
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
-    Account savedAccount = accountService.addAccount(account);
+    Account savedAccount = accountService.addAccount(userId, account);
 
     long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
 

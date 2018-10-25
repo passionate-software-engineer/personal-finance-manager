@@ -20,4 +20,6 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
   List<Category> findByUserId(long userId);
 
   Optional<Category> findByIdAndUserId(long id, long userId);
+
+  boolean existsByIdAndUserId(long categoryId, long userId);
 }
