@@ -54,7 +54,7 @@ Define accounts, categories and you are ready to track your transactions.
 
 ## Running application in IntelliJ
 - Open IntelliJ, click open project, select **_build.gradle_** file, click **_import as project_**
-- Enable annotation processing for Lombok. 
+- Enable annotation processing for Lombok.
 ![Enable annotations for Lombok](https://github.com/pio-kol/accouting-system/blob/master/readme/annotatnion.png)
 - Wait for Gradle to download half of the internet :)
 - Right click on **_Application.java_** and select **_Run_**
@@ -63,8 +63,13 @@ Define accounts, categories and you are ready to track your transactions.
 - Check if application passes gradle build task
 - Check if application starts with PostgreSQL database
 - Check if swagger is working
-- Run application and test it manually :
+- Run application and test it manually:
   - Register user
   - Login with registered user
   - Add account, category, transaction and filter
   - Delete everything added
+
+## Building and pushing docker image (remember to increase the number)
+- docker build . -t piokol/pfm:9
+- docker run -it --user root piokol/pfm:9 /bin/bash (optional just to check image)
+- docker push piokol/pfm:9

@@ -2,8 +2,8 @@
 
 trap 'echo "ERROR: $BASH_SOURCE:$LINENO $BASH_COMMAND" >&2' ERR
 
-BACKEND_PORT=$(jot -r 1  40000 45000)
-FRONTEND_PORT=$(jot -r 1  46000 50000)
+BACKEND_PORT=$(( ( RANDOM % 5000 )  + 40000 ))
+FRONTEND_PORT=$(( ( RANDOM % 5000 )  + 46000 ))
 
 rm -f output.log
 java -jar backend/build/libs/backend-1.0.jar --server.port=$BACKEND_PORT >>output.log 2>&1 &
@@ -22,7 +22,7 @@ echo "Starting E2E tests"
 
 set -e
 cd frontend
-sed -i '' "s/8088/$BACKEND_PORT/g" src/environments/environment.ts
+sed -i "s/8088/$BACKEND_PORT/g" src/environments/environment.ts
 cat src/environments/environment.ts
 
 ng e2e --port $FRONTEND_PORT
