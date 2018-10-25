@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "master"
+        label "pfm-docker"
     }
     options {
         timeout(time: 10, unit: 'MINUTES')
