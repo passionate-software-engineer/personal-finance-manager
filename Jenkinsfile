@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "pfm-docker"
+        label "pfm-docker-java-11"
     }
     options {
         timeout(time: 10, unit: 'MINUTES')
