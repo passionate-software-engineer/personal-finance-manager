@@ -20,6 +20,6 @@ if [ -f backend-1.0.jar.new ]; then
   mv --force backend-1.0.jar.new backend-1.0.jar
 fi
 
-mv application.log > application.log.$DATE
+mv application.log application.log.$DATE
 
 nohup java -jar backend-1.0.jar --spring.profiles.active=aws >> application.log 2>> application.log &
