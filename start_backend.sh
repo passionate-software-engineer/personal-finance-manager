@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
+set -x
 set -e
 
 OLD_PROCESS_ID=$(ps -ef | grep "[b]ackend-1.0.jar" | awk '{print $2}')
-if [ -z "$OLD_PROCESS_ID" ]
+if [ -n "$OLD_PROCESS_ID" ]
 then
   kill $OLD_PROCESS_ID
 else
