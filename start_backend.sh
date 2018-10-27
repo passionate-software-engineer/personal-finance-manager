@@ -23,3 +23,12 @@ fi
 mv application.log application.log.$DATE
 
 nohup java -jar backend-1.0.jar --spring.profiles.active=aws >> application.log 2>> application.log &
+
+sleep 30
+PROCESS_ID=$(ps -ef | grep "[b]ackend-1.0.jar" | awk '{print $2}')
+if [ -`n` "$PROCESS_ID" ]
+then
+  echo "Application failed to start"
+  cat application.log
+  exit 1
+fi
