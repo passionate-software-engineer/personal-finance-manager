@@ -2,8 +2,6 @@
 
 set -e
 
-cd app
-
 OLD_PROCESS_ID=$(ps -ef | grep "[b]ackend-1.0.jar" | awk '{print $2}')
 if [ -z "$OLD_PROCESS_ID" ]
 then
