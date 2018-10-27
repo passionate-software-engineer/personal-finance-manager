@@ -45,10 +45,11 @@ pipeline {
           parallel {
             stage('BACKEND') {
                 steps {
+                sshagent(credentials : ['AWS_PRIVATE_KEY']) {
                      sh '''
                      cd backend/build/libs
-                     scp -i "~/.ssh/piotr-key-aws.pem" backend-1.0.jar ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/backend-1.0.jar.new
-                     ssh -i "~/.ssh/piotr-key-aws.pem" ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com <<'ENDSSH'
+                     scp -o StrictHostKeyChecking=no backend-1.0.jar ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/backend-1.0.jar.new
+                     ssh ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com <<'ENDSSH'
 # must be formatted like that - command will pass whitespaces to remote server otherwise
 # TODO move that to script, then it will be more natural
 cd app
@@ -59,6 +60,7 @@ mv backend-1.0.jar.new backend-1.0.jar
 nohup java -jar backend-1.0.jar --spring.profiles.active=aws >> application.log 2>> application.log &
 ENDSSH
                        '''
+                }
                 }
             }
             stage('FRONTEND') {
