@@ -11,6 +11,7 @@ else
   echo "Process was already stopped, no need to stop it again"
 fi
 
+cd app
 chmod 700 backend-1.0.jar.new
 mv --force backend-1.0.jar backend-1.0.jar.bak
 mv --force backend-1.0.jar.new backend-1.0.jar
