@@ -62,12 +62,16 @@ ENDSSH
                 }
             }
             stage('FRONTEND') {
+                environment {
+                    AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+                    AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+                }
                 steps {
                      sh '''
                         cd frontend
                         ng build --configuration=aws
                         cd dist/frontend
-                        aws s3 cp --profile pfm --recursive --acl "public-read" . s3://personal-finance-manager
+                        aws s3 cp --recursive --acl "public-read" . s3://personal-finance-manager
                         '''
                 }
             }

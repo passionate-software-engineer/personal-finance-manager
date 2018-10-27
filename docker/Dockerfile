@@ -34,3 +34,9 @@ ENV PATH $JAVA_HOME/bin:$PATH
 RUN useradd -ms /bin/bash jenkins -g sudo
 RUN echo "jenkins:jenkins" | chpasswd
 RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Install aws-cli
+RUN curl -O https://bootstrap.pypa.io/get-pip.py
+RUN python3 get-pip.py --user
+ENV PATH /root/.local/bin:$PATH
+RUN pip install awscli --upgrade --user
