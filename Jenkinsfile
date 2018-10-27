@@ -49,7 +49,8 @@ pipeline {
                         sh '''
                            cd backend/build/libs
                            scp -o StrictHostKeyChecking=no backend-1.0.jar ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/backend-1.0.jar.new
-                           ssh ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com "bash -s" < ../../../start_backend.sh
+                           scp ../../../start_backend.sh ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/start_backend.sh
+                           ssh ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com "./start_backend" 
                            '''
                     }
                 }

@@ -1,3 +1,5 @@
+set -e
+
 cd app
 chmod 500 backend-1.0.jar.new
 kill $(ps -ef | grep "[b]ackend-1.0.jar" | awk '{print $2}')
