@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -38,7 +39,7 @@ public class JacksonConfig {
     @Override
     public void serialize(BigDecimal value, JsonGenerator jsonGenerator,
         SerializerProvider provider) throws IOException {
-      jsonGenerator.writeString(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+      jsonGenerator.writeString(value.setScale(2, RoundingMode.HALF_UP).toString());
     }
   }
 }
