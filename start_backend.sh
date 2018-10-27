@@ -1,5 +1,3 @@
-# must be formatted like that - command will pass whitespaces to remote server otherwise
-# TODO move that to script, then it will be more natural
 cd app
 chmod 500 backend-1.0.jar.new
 kill $(ps -ef | grep "[b]ackend-1.0.jar" | awk '{print $2}')
