@@ -32,8 +32,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
-// TODO imporove all those tests
-// TODO those tests takes lots of time - run it separetly not as Unit tests
+// TODO imporove all those tests L
+// TODO those tests takes lots of time - run it separetly not as Unit tests L
 @RunWith(ConcurrentTestRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {

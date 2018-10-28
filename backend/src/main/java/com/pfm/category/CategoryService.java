@@ -91,7 +91,7 @@ public class CategoryService {
       return true; // we cannot continue as parent category is null but we need it's id. No parent is trying to use this category as parent so it's ok
     }
 
-    // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare
+    // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare - good place to show measuring
     return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId(), userId);
   }
 

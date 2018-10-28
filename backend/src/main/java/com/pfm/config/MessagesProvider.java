@@ -21,6 +21,7 @@ public class MessagesProvider {
   public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS = "categoryValidator.categoryWithProvidedNameAlreadyExists";
   public static final String CATEGORY_IS_USED_IN_TRANSACTION = "categoryValidator.categoryIsUsedInTransaction";
   public static final String CATEGORY_IS_USED_IN_FILTER = "categoryValidator.categoryIsUsedInFilter";
+  public static final String PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY = "categoryValidator.parentCategoryIdIsEmpty";
 
   public static final String EMPTY_TRANSACTION_NAME = "transactionValidator.emptyTransactionName";
   public static final String EMPTY_TRANSACTION_CATEGORY = "transactionValidator.emptyTransactionCategory";

@@ -2,6 +2,7 @@ package com.pfm.transaction;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.history.HistoryEntryService;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +22,7 @@ public class TransactionService {
   private AccountPriceEntriesRepository accountPriceEntriesRepository;
   private TransactionRepository transactionRepository;
   private AccountService accountService;
+  private HistoryEntryService historyEntryService;
 
   public Optional<Transaction> getTransactionByIdAndUserId(long id, long userId) {
     return transactionRepository.findByIdAndUserId(id, userId);
@@ -89,10 +91,10 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToAdd, BigDecimal::subtract);
   }
 
-  // TODO history - account state updated
   private void addAmountToAccount(long accountId, long userId, BigDecimal amountToSubtract) {
     updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add);
   }
+
 
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
     Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
@@ -100,8 +102,17 @@ public class TransactionService {
     if (!account.isPresent()) {
       throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
     }
+    Account accountFromDb = account.get();
 
-    BigDecimal newBalance = operation.apply(account.get().getBalance(), amount);
+    BigDecimal newBalance = operation.apply(accountFromDb.getBalance(), amount);
+
+    Account accountWithNewBalance = Account.builder()
+            .name(accountFromDb.getName())
+            .balance(newBalance)
+            .build();
+
+    historyEntryService.addEntryOnUpdate(accountFromDb, accountWithNewBalance, userId);
+
     accountService.updateAccountBalance(accountId, newBalance);
   }
 
@@ -113,7 +124,7 @@ public class TransactionService {
     return transactionRepository.existsByCategoryId(categoryId);
   }
 
-  public boolean transactionExistByTransactionIdAndUserId(long transactionId, long userId) {
-    return transactionRepository.existsByIdAndUserId(transactionId, userId);
-  }
+  //  public boolean transactionExistByTransactionIdAndUserId(long transactionId, long userId) {
+  //    return transactionRepository.existsByIdAndUserId(transactionId, userId);
+  //  }
 }

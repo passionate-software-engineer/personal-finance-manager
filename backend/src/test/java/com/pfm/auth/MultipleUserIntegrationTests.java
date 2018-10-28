@@ -51,9 +51,6 @@ import org.springframework.http.HttpHeaders;
 
 public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
-  //TODO we should unify approach with final keyword before variables couse checkstyle force us to use it some circumstances.
-  //It looks a bit stragne to use it sometimes and sometimes not.
-
   @Test
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilter() throws Exception {
 

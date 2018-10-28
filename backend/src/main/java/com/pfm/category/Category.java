@@ -32,6 +32,7 @@ public final class Category implements DifferenceProvider<Category> {
 
   @ManyToOne
   @ApiModelProperty(value = "Parent category object", required = true)
+  //TODO try using parentCategoryID
   private Category parentCategory;
 
   @JsonIgnore
