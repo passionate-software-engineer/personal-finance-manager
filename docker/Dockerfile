@@ -1,23 +1,25 @@
 FROM ubuntu:16.04
 
 # Install tools
-RUN apt-get -qqy update && apt-get -qqy --force-yes --no-install-recommends install \
+RUN apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install \
+  apt-utils \
   curl \
   ca-certificates \
   openssh-server \
   git \
   sudo \
   nano \
-  wget
+  wget \
+  jq
 
 # Install NodeJs
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get -qqy update && apt-get -qqy --force-yes --no-install-recommends install nodejs
+RUN apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install nodejs
 
 # Install Google chrome
 RUN curl -sL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list
-RUN apt-get -qqy update && apt-get -qqy --force-yes --no-install-recommends install google-chrome-stable
+RUN apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install google-chrome-stable
 
 # Install npm global packages
 RUN npm install -g @angular/cli protractor ncu

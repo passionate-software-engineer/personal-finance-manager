@@ -2,8 +2,14 @@ pipeline {
     agent {
         label "pfm-docker-java-11"
     }
+    parameters {
+        string(name: 'APP_URL', defaultValue: 'http://personal-finance-manager.s3-website.us-east-2.amazonaws.com', description: 'Application (frontend) URL')
+        string(name: 'APP_S3_BUCKET', defaultValue: 's3://personal-finance-manager', description: 'S3 bucket for frontend upload')
+        string(name: 'EC2_INSTANCE', defaultValue: 'ec2-13-59-117-184.us-east-2.compute.amazonaws.com', description: 'EC2 instance for backend service')
+    }
     options {
         timeout(time: 10, unit: 'MINUTES')
+        timestamps()
     }
     triggers {
         cron('H 0 * * *')
@@ -34,7 +40,7 @@ pipeline {
         stage('E2E') {
           steps {
             sh '''
-               ./run_e2e.sh
+               ./scripts/run_e2e.sh
                '''
           }
         }
@@ -48,9 +54,9 @@ pipeline {
                     sshagent(credentials : ['AWS_PRIVATE_KEY']) {
                         sh '''
                            cd backend/build/libs
-                           scp -o StrictHostKeyChecking=no backend-1.0.jar ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/backend-1.0.jar.new
-                           scp ../../../start_backend.sh ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com:/home/ec2-user/app/start_app.sh
-                           ssh ec2-user@ec2-13-59-117-184.us-east-2.compute.amazonaws.com "cd app && source ~/.bash_profile && ./start_app.sh" 
+                           scp -o StrictHostKeyChecking=no backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
+                           scp ../../../scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
+                           ssh ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
                            '''
                     }
                 }
@@ -65,11 +71,31 @@ pipeline {
                         cd frontend
                         ng build --configuration=aws
                         cd dist/frontend
-                        aws s3 cp --recursive --acl "public-read" . s3://personal-finance-manager
+                        aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
                         '''
                 }
             }
          }
+      }
+      stage('App startup') {
+        when{
+          branch 'master'
+        }
+        steps {
+          sh '''
+             ./scripts/wait_until_app_is_ready.sh
+             '''
+        }
+      }
+      stage('E2E after deploy') {
+        when{
+          branch 'master'
+        }
+        steps {
+          sh '''
+             protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
+             '''
+        }
       }
     }
     post {
