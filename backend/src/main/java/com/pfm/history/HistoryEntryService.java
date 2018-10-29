@@ -1,6 +1,7 @@
 package com.pfm.history;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class HistoryEntryService {
         .collect(Collectors.toList());
   }
 
-  // TODO refactor security to not force develeopers to pass usreId all around.
+  // TODO refactor security to not force develeopers to pass userId all around.
   public <T extends DifferenceProvider<T>> void addEntryOnAdd(T newObject, long userId) {
     List<String> entries = newObject.getObjectPropertiesWithValues();
     entries.add(0, String.format(ADD_ENTRY_TEMPLATE, newObject.getClass().getSimpleName(), newObject.getObjectDescriptiveName()));
@@ -33,7 +34,7 @@ public class HistoryEntryService {
   }
 
   public <T extends DifferenceProvider<T>> void addEntryOnDelete(T oldObject, long userId) {
-    List<String> entries = oldObject.getObjectPropertiesWithValues();
+    List<String> entries = new ArrayList<>();
     entries.add(String.format(DELETE_ENTRY_TEMPLATE, oldObject.getClass().getSimpleName(), oldObject.getObjectDescriptiveName()));
     saveHistoryEntries(entries, userId);
   }
@@ -47,14 +48,19 @@ public class HistoryEntryService {
   }
 
   private void saveHistoryEntries(List<String> entries, long userId) {
+    StringBuilder stringBuilder = new StringBuilder();
     for (String entry : entries) {
-      HistoryEntry historyEntry = HistoryEntry.builder()
-          .userId(userId)
-          .date(LocalDateTime.now())
-          .entry(entry)
-          .build();
-      historyEntryRepository.save(historyEntry);
+      stringBuilder.append(entry);
+      stringBuilder.append(", ");
     }
+    stringBuilder.setCharAt(stringBuilder.length() - 2, ' ');
+    stringBuilder.setCharAt(stringBuilder.length() - 1, '.');
+    HistoryEntry historyEntry = HistoryEntry.builder()
+        .userId(userId)
+        .date(LocalDateTime.now())
+        .entry(stringBuilder.toString())
+        .build();
+    historyEntryRepository.save(historyEntry);
   }
 
 }

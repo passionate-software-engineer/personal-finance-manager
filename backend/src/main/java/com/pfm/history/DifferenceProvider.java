@@ -6,7 +6,7 @@ import java.util.List;
 public interface DifferenceProvider<E> {
 
   String UPDATE_ENTRY_TEMPLATE = "%s changed from '%s' to '%s'";
-  String ENTRY_VALUES_TEMPLATE = "The value of '%s' '%s' property is '%s'";
+  String ENTRY_VALUES_TEMPLATE = "%s is %s";
 
   @JsonIgnore
   List<String> getDifferences(E e);
