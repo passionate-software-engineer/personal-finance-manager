@@ -3,7 +3,6 @@ package com.pfm.account;
 import static com.pfm.helpers.BigDecimalHelper.convertBigDecimalToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pfm.helpers.BigDecimalHelper;
 import com.pfm.history.DifferenceProvider;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -44,19 +43,17 @@ public final class Account implements DifferenceProvider<Account> {
     List<String> differences = new ArrayList<>();
 
     if (!(this.getName().equals(otherAccount.getName()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Account name", this.getName(), otherAccount.getName()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name ", this.getName(), otherAccount.getName()));
     }
 
-    if (!differences.isEmpty() && !(this.getBalance().compareTo(otherAccount.getBalance()) == 0)){
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "balance", this.getBalance().toString(),
+    if (!(this.getBalance().compareTo(otherAccount.getBalance()) == 0)) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "balance ", this.getBalance().toString(),
           convertBigDecimalToString(otherAccount.getBalance())));
     }
 
-    if (differences.isEmpty() && !(this.getBalance().compareTo(otherAccount.getBalance()) == 0)) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Account '" + this.getName() + "' balance", this.getBalance().toString(),
-          convertBigDecimalToString(otherAccount.getBalance())));
+    if (!differences.isEmpty()) {
+      differences.add(0, "Account '" + this.getName() + "' changes");
     }
-
 
     return differences;
   }

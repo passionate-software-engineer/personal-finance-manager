@@ -95,7 +95,6 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add);
   }
 
-
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
     Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
 

@@ -48,10 +48,10 @@ public final class Transaction implements DifferenceProvider<Transaction> {
 
     // TODO add transaction name so it's easy to know which one was updated
     if (!(transaction.getDescription().equals(this.getDescription()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction description", this.getDescription(), transaction.getDescription()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "description", this.getDescription(), transaction.getDescription()));
     }
     if (!(this.categoryId == transaction.getCategoryId())) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction category", this.categoryId, transaction.getCategoryId()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "category", this.categoryId, transaction.getCategoryId()));
     }
 
     List<AccountPriceEntry> thisEntries = this.getAccountPriceEntries();
@@ -65,10 +65,10 @@ public final class Transaction implements DifferenceProvider<Transaction> {
       AccountPriceEntry otherEntry = otherEntriesIterator.next();
 
       if (!(thisEntry.getAccountId().equals(otherEntry.getAccountId()))) {
-        differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction account", thisEntry.getAccountId(), otherEntry.getAccountId()));
+        differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "account", thisEntry.getAccountId(), otherEntry.getAccountId()));
       }
       if (!(thisEntry.getPrice().compareTo(otherEntry.getPrice()) == 0)) {
-        differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction price", thisEntry.getPrice().toString(), otherEntry.getPrice().toString()));
+        differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "price", thisEntry.getPrice().toString(), otherEntry.getPrice().toString()));
       }
     }
 
@@ -89,17 +89,22 @@ public final class Transaction implements DifferenceProvider<Transaction> {
     if (!(this.getDate().equals(transaction.getDate()))) {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction date", this.getDate().toString(), transaction.getDate().toString()));
     }
+
+
+    if (!differences.isEmpty()) {
+      differences.add(0, "Transaction '" + this.getDescription() + "' changes");
+    }
     return differences;
   }
 
   @Override
   public List<String> getObjectPropertiesWithValues() {
     List<String> newValues = new ArrayList<>();
-    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getDescription() + " Transaction", "'date'", this.getDate().toString()));
-    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getDescription() + " Transaction", "'category'", this.getCategoryId()));
+    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "date", this.getDate().toString()));
+    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "category", this.getCategoryId()));
     for (AccountPriceEntry entry : this.getAccountPriceEntries()) {
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getDescription() + " Transaction", "'price'", entry.getPrice().toString()));
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getDescription() + " Transaction", "'account'", entry.getAccountId()));
+      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "price", entry.getPrice().toString()));
+      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "account", entry.getAccountId()));
     }
     return newValues;
   }

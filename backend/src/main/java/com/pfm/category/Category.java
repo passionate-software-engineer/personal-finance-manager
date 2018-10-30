@@ -43,22 +43,26 @@ public final class Category implements DifferenceProvider<Category> {
     List<String> differences = new ArrayList<String>();
 
     if (!(this.getName().equals(category.getName()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Category name", this.getName(), category.getName()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name", this.getName(), category.getName()));
     }
 
     if (this.parentCategory == null && category.parentCategory != null) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Parent category of " + this.getName() + " category ",
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "parent category ",
           "'Main Category'", category.parentCategory.getName()));
     }
 
     if (this.parentCategory != null && category.parentCategory == null) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Parent category of " + this.getName() + " category ",
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "parent category ",
           this.parentCategory.getName(),
           "'Main Category'"));
     }
     if (this.parentCategory != null && category.parentCategory != null && !this.parentCategory.equals(category.getParentCategory())) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Parent category of " + this.getName() + " category ", this.parentCategory.getName(),
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "parent category ", this.parentCategory.getName(),
           category.parentCategory.getName()));
+    }
+
+    if (!differences.isEmpty()) {
+      differences.add(0, "Category '" + this.getName() + "' changes");
     }
     return differences;
   }

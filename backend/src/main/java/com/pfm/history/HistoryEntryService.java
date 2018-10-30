@@ -48,13 +48,31 @@ public class HistoryEntryService {
   }
 
   private void saveHistoryEntries(List<String> entries, long userId) {
+
     StringBuilder stringBuilder = new StringBuilder();
-    for (String entry : entries) {
-      stringBuilder.append(entry);
-      stringBuilder.append(", ");
+
+    for (int i = 0; i < entries.size(); i++) {
+      stringBuilder.append(entries.get(i));
+
+      if (i == 0 && entries.size() == 1) {
+        stringBuilder.append(" .");
+        break;
+      }
+
+      if (i == 0 && entries.size() > 1) {
+        stringBuilder.append(" : ");
+      }
+
+      if (i + 1 == entries.size()) {
+        stringBuilder.append(" .");
+        break;
+      }
+
+      if (i > 0) {
+        stringBuilder.append(", ");
+      }
     }
-    stringBuilder.setCharAt(stringBuilder.length() - 2, ' ');
-    stringBuilder.setCharAt(stringBuilder.length() - 1, '.');
+
     HistoryEntry historyEntry = HistoryEntry.builder()
         .userId(userId)
         .date(LocalDateTime.now())
@@ -62,5 +80,5 @@ public class HistoryEntryService {
         .build();
     historyEntryRepository.save(historyEntry);
   }
-
 }
+

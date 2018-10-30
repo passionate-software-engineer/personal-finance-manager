@@ -87,11 +87,11 @@ public class CategoryValidator {
     List<String> validationErrors = new ArrayList<>();
 
     if (transactionService.transactionExistByCategoryId(categoryId)) {
-        validationErrors.add(getMessage(CATEGORY_IS_USED_IN_TRANSACTION));
-      }
+      validationErrors.add(getMessage(CATEGORY_IS_USED_IN_TRANSACTION));
+    }
 
-      if (filterService.filterExistByCategoryId(categoryId)) {
-        validationErrors.add(getMessage(CATEGORY_IS_USED_IN_FILTER));
+    if (filterService.filterExistByCategoryId(categoryId)) {
+      validationErrors.add(getMessage(CATEGORY_IS_USED_IN_FILTER));
     }
 
     return validationErrors;
