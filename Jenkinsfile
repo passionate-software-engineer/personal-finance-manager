@@ -8,7 +8,7 @@ pipeline {
         string(name: 'EC2_INSTANCE', defaultValue: 'ec2-13-59-117-184.us-east-2.compute.amazonaws.com', description: 'EC2 instance for backend service')
     }
     options {
-        timeout(time: 10, unit: 'MINUTES')
+        timeout(time: 20, unit: 'MINUTES')
         timestamps()
     }
     triggers {
@@ -83,7 +83,7 @@ pipeline {
         }
         steps {
           sh '''
-             ./scripts/wait_until_app_is_ready.sh
+             ./scripts/wait_until_app_is_ready.sh $EC2_INSTANCE
              '''
         }
       }
