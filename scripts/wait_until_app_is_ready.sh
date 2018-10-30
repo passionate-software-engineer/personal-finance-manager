@@ -14,7 +14,7 @@ until $(curl --output /dev/null --silent --head --fail $URL); do
       exit 1
     fi
 
-    printf "Waiting for application to startup, attempt: $attempt_counter / ${max_attempts}\n"
+    printf "Waiting for application to startup, attempt: $attempt_counter / ${max_attempts}. Checking $URL\n"
     attempt_counter=$(($attempt_counter+1))
     sleep 5
 done
