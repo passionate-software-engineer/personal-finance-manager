@@ -4,7 +4,7 @@
 const {SpecReporter} = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 20000,
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
@@ -20,7 +20,7 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 40000,
     print: function () {
     }
   },
@@ -31,3 +31,5 @@ exports.config = {
     jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
   }
 };
+
+
