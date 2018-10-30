@@ -93,6 +93,7 @@ pipeline {
         }
         steps {
           sh '''
+             webdriver-manager update
              protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
              '''
         }
