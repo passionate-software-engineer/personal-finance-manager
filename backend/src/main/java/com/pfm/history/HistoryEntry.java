@@ -2,6 +2,9 @@ package com.pfm.history;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +30,8 @@ public final class HistoryEntry {
   private LocalDateTime date;
 
   @ApiModelProperty(value = "HistoryEntry entry", required = true)
-  private String entry;
+  @ElementCollection
+  private List<String> entry;
 
   private Long userId;
 }
