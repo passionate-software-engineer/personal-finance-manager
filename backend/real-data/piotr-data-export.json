@@ -1,6 +1,6 @@
 {
   "sumOfAllFundsAtTheBeginningOfExport": "114742.44",
-  "sumOfAllFundsAtTheEndOfExport": "259105.53",
+  "sumOfAllFundsAtTheEndOfExport": "271775.93",
   "initialAccountsState": [
     {
       "name": "kantor Alior - PLN",
@@ -74,11 +74,11 @@
   "finalAccountsState": [
     {
       "name": "kantor Alior - PLN",
-      "balance": "0.00"
+      "balance": "21710.51"
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "45254.14"
+      "balance": "7165.00"
     },
     {
       "name": "kantor Alior - EUR",
@@ -90,7 +90,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "4454.35"
+      "balance": "5840.63"
     },
     {
       "name": "IKE",
@@ -102,7 +102,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "5328.00"
+      "balance": "458.65"
     },
     {
       "name": "Gotówka - EUR",
@@ -110,7 +110,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "3222.86"
+      "balance": "18911.86"
     },
     {
       "name": "Monika - pożyczka",
@@ -126,7 +126,7 @@
     },
     {
       "name": "mBank",
-      "balance": "6185.58"
+      "balance": "23129.19"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -138,7 +138,7 @@
     },
     {
       "name": "Santander",
-      "balance": "1032.32"
+      "balance": "931.81"
     }
   ],
   "categories": [
@@ -366,11 +366,11 @@
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "kantor Alior - PLN",
-          "balance": "0.00"
+          "balance": "21710.51"
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "45254.14"
+          "balance": "7165.00"
         },
         {
           "name": "kantor Alior - EUR",
@@ -382,7 +382,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "4454.35"
+          "balance": "5840.63"
         },
         {
           "name": "IKE",
@@ -394,7 +394,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "5328.00"
+          "balance": "458.65"
         },
         {
           "name": "Gotówka - EUR",
@@ -402,7 +402,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "3222.86"
+          "balance": "18911.86"
         },
         {
           "name": "Monika - pożyczka",
@@ -418,7 +418,7 @@
         },
         {
           "name": "mBank",
-          "balance": "6185.58"
+          "balance": "23129.19"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -430,7 +430,7 @@
         },
         {
           "name": "Santander",
-          "balance": "1032.32"
+          "balance": "931.81"
         }
       ],
       "transactions": [
@@ -966,10 +966,517 @@
               "price": "34.74"
             }
           ]
+        },
+        {
+          "description": "Telefon",
+          "category": "Telefon",
+          "date": "2018-10-15",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-20.72"
+            }
+          ]
+        },
+        {
+          "description": "Brama garazowa - doplata",
+          "category": "Remont domu",
+          "date": "2018-10-15",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-4420.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2210.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "9731.56"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-9429.14"
+            }
+          ]
+        },
+        {
+          "description": "Przelew",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-9731.56"
+            },
+            {
+              "account": "mBank",
+              "price": "9731.56"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "11134.20"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-10747.50"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "3711.40"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            }
+          ]
+        },
+        {
+          "description": "Balkony",
+          "category": "Remont domu",
+          "date": "2018-10-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "-11140.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "5570.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Crossover",
+          "date": "2018-10-17",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Runmaggedon - ksiazka",
+          "category": "Edukacja",
+          "date": "2018-10-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-49.00"
+            }
+          ]
+        },
+        {
+          "description": "Wyplata gotowki",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-7000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "7000.00"
+            }
+          ]
+        },
+        {
+          "description": "Ogrodnik - rozliczenie",
+          "category": "Remont domu",
+          "date": "2018-10-20",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-7039.35"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "3519.68"
+            }
+          ]
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Zdrowie",
+          "date": "2018-10-20",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Ania gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-20",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-4100.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "4100.00"
+            }
+          ]
+        },
+        {
+          "description": "Biedronka - zakupy",
+          "category": "Jedzenie",
+          "date": "2018-10-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-100.51"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "50.25"
+            }
+          ]
+        },
+        {
+          "description": "Biedronka - zakupy",
+          "category": "Zakupy",
+          "date": "2018-10-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-100.48"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "50.24"
+            }
+          ]
+        },
+        {
+          "description": "Wyplata gotowki",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-4000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "4000.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-24",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7544.21"
+            },
+            {
+              "account": "mBank",
+              "price": "7544.21"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-24",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-7165.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7544.21"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Crossover",
+          "date": "2018-10-24",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Coderstrust - konsultacje",
+          "category": "CodersTrust - szkolenia",
+          "date": "2018-10-25",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1107.00"
+            }
+          ]
+        },
+        {
+          "description": "Nauka programowania",
+          "category": "Przychody",
+          "date": "2018-10-26",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "300.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-26",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-12444.96"
+            },
+            {
+              "account": "mBank",
+              "price": "12444.96"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-26",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-268.69"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "285.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-26",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-11464.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "12159.96"
+            }
+          ]
+        },
+        {
+          "description": "Malediwy - doplata - bilet",
+          "category": "Wyjazdy",
+          "date": "2018-10-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1120.00"
+            }
+          ]
+        },
+        {
+          "description": "Dentysta - przeglad",
+          "category": "Leki, lekarze, higiena",
+          "date": "2018-10-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-70.00"
+            }
+          ]
+        },
+        {
+          "description": "Alior -> Revolut",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-28",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "-14330.00"
+            },
+            {
+              "account": "Revolut - USD",
+              "price": "14330.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2018-10-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-291.84"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "145.92"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> Alior",
+          "category": "Przelewy między kontami",
+          "date": "2018-10-29",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2597.31"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "2597.31"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "10367.81"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-9762.31"
+            }
+          ]
+        },
+        {
+          "description": "Decathlon - pletwy",
+          "category": "Sport",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-99.99"
+            }
+          ]
+        },
+        {
+          "description": "Basen treningi",
+          "category": "Sport",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-250.00"
+            }
+          ]
+        },
+        {
+          "description": "Smieci - wywoz",
+          "category": "Remont domu",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-40.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "20.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-31",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "3814.50"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2018-10-31",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - PLN",
+              "price": "3822.60"
+            },
+            {
+              "account": "kantor Alior - USD",
+              "price": "-3582.50"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Crossover",
+          "date": "2018-10-31",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - USD",
+              "price": "7165.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-10-31",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-45.81"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "22.91"
+            }
+          ]
         }
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": "269579.97",
-      "sumOfAllFundsAtTheEndOfPeriod": "259105.53"
+      "sumOfAllFundsAtTheEndOfPeriod": "271775.93"
     },
     {
       "startDate": "2018-09-01",
