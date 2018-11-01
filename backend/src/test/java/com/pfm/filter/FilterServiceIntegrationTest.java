@@ -13,7 +13,7 @@ import com.pfm.account.AccountService;
 import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
-import java.util.Arrays;
+import java.util.Collections;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +27,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class FilterServiceIntegrationTest {
 
   @Autowired
+  protected Flyway flyway;
+
+  @Autowired
   private AccountService accountService;
 
   @Autowired
@@ -37,9 +40,6 @@ public class FilterServiceIntegrationTest {
 
   @Autowired
   private UserService userService;
-
-  @Autowired
-  protected Flyway flyway;
 
   private long userId;
 
@@ -58,7 +58,7 @@ public class FilterServiceIntegrationTest {
     long accountId = accountService.addAccount(userId, account).getId();
 
     Filter filter = filterFoodExpenses();
-    filter.setAccountIds(Arrays.asList(accountId));
+    filter.setAccountIds(Collections.singletonList(accountId));
     long filterId = filterService.addFilter(userId, filter).getId();
 
     //when
@@ -77,7 +77,7 @@ public class FilterServiceIntegrationTest {
     Long categoryId = categoryService.addCategory(category, userId).getId();
 
     Filter filter = filterHomeExpensesUpTo200();
-    filter.setCategoryIds(Arrays.asList(categoryId));
+    filter.setCategoryIds(Collections.singletonList(categoryId));
     long filterId = filterService.addFilter(userId, filter).getId();
 
     //when

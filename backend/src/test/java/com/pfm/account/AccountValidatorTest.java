@@ -22,7 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountValidatorTest {
 
-  private long mockUserId = 999;
+  private static final long MOCK_USER_ID = 999;
 
   @Mock
   private AccountService accountService;
@@ -37,10 +37,10 @@ public class AccountValidatorTest {
     long id = 1;
 
     //when
-    when(accountService.getAccountByIdAndUserId(id, mockUserId))
+    when(accountService.getAccountByIdAndUserId(id, MOCK_USER_ID))
         .thenReturn(Optional.empty());
 
-    Throwable exception = assertThrows(IllegalStateException.class, () -> accountValidator.validateAccountForUpdate(id, mockUserId, new Account()));
+    Throwable exception = assertThrows(IllegalStateException.class, () -> accountValidator.validateAccountForUpdate(id, MOCK_USER_ID, new Account()));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Account with id: " + id + " does not exist in database")));
@@ -51,11 +51,11 @@ public class AccountValidatorTest {
 
     //given
     long id = 10L;
-    when(accountService.getAccountByIdAndUserId(id, mockUserId)).thenReturn(Optional.of(accountMbankBalance10()));
+    when(accountService.getAccountByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));
     Account account = Account.builder().id(id).name("").balance(null).build();
 
     //when
-    List<String> result = accountValidator.validateAccountForUpdate(id, mockUserId, account);
+    List<String> result = accountValidator.validateAccountForUpdate(id, MOCK_USER_ID, account);
 
     //then
     assertThat(result.size(), is(2));
@@ -66,10 +66,10 @@ public class AccountValidatorTest {
   @Test
   public void shouldNotFindDuplicateWhenNoOtherAccountsExists() {
     //given
-    when(accountService.isAccountNameAlreadyUsed(mockUserId, accountMbankBalance10().getName())).thenReturn(true);
+    when(accountService.isAccountNameAlreadyUsed(MOCK_USER_ID, accountMbankBalance10().getName())).thenReturn(true);
 
     //when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(mockUserId, accountMbankBalance10());
+    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, accountMbankBalance10());
 
     //then
     assertThat(result.size(), is(1));

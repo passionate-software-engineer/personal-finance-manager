@@ -22,12 +22,4 @@ public class TestUsersProvider {
         .build();
   }
 
-  public static User userMirek() {
-    return User.builder()
-        .firstName("Mirek")
-        .lastName("Mirek")
-        .username("MirekHandlarz")
-        .password("Mirasek")
-        .build();
-  }
 }

@@ -12,7 +12,7 @@ public class TopologicalSortProvider {
   public static <T> List<Node<T>> sort(Graph<T> graph) {
     ArrayList<Node<T>> sortedElements = new ArrayList<>();
 
-    HashSet<Node<T>> nodesWithNoIncomingEdges = new HashSet<Node<T>>();
+    HashSet<Node<T>> nodesWithNoIncomingEdges = new HashSet<>();
     for (Node<T> node : graph.getNodes()) {
       if (node.getInEdges().size() == 0) {
         nodesWithNoIncomingEdges.add(node);

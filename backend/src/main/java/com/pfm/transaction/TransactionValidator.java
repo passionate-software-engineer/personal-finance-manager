@@ -43,7 +43,7 @@ public class TransactionValidator {
       for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
-        } else if (!accountService.accountExistByIdAndUserId(entry.getAccountId(), userId)) {
+        } else if (accountService.accountDoesNotExistByIdAndUserId(entry.getAccountId(), userId)) {
           validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + entry.getAccountId());
         }
 

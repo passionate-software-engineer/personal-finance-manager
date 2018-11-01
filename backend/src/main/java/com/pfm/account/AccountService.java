@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class AccountService {
   }
 
   public List<Account> getAccounts(long userId) {
-    return StreamSupport.stream(accountRepository.findByUserId(userId).spliterator(), false)
+    return accountRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Account::getId))
         .collect(Collectors.toList());
   }
@@ -58,7 +57,7 @@ public class AccountService {
     accountRepository.updateAccountBalance(newBalance, accountId);
   }
 
-  public boolean accountExistByIdAndUserId(long accountId, long userId) {
-    return accountRepository.existsByIdAndUserId(accountId, userId);
+  public boolean accountDoesNotExistByIdAndUserId(long accountId, long userId) {
+    return !accountRepository.existsByIdAndUserId(accountId, userId);
   }
 }

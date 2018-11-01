@@ -18,6 +18,19 @@ public class FilterController implements FilterApi {
   private FilterService filterService;
   private FilterValidator filterValidator;
 
+  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
+    return Filter.builder()
+        .name(filterRequest.getName())
+        .dateFrom(filterRequest.getDateFrom())
+        .dateTo(filterRequest.getDateTo())
+        .accountIds(filterRequest.getAccountIds())
+        .categoryIds(filterRequest.getCategoryIds())
+        .priceFrom(filterRequest.getPriceFrom())
+        .priceTo(filterRequest.getPriceTo())
+        .description(filterRequest.getDescription())
+        .build();
+  }
+
   @Override
   public ResponseEntity<Filter> getFilterById(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving filter with id: {}", filterId);
@@ -59,7 +72,7 @@ public class FilterController implements FilterApi {
   public ResponseEntity<?> updateFilter(@PathVariable long filterId, @RequestBody FilterRequest filterRequest,
       @RequestAttribute(value = "userId") long userId) {
 
-    if (!filterService.filterExistByFilterIdAndUserId(filterId, userId)) {
+    if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to update", filterId);
       return ResponseEntity.notFound().build();
     }
@@ -80,24 +93,11 @@ public class FilterController implements FilterApi {
 
   @Override
   public ResponseEntity<?> deleteFilter(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.filterExistByFilterIdAndUserId(filterId, userId)) {
+    if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();
     }
     filterService.deleteFilter(filterId);
     return ResponseEntity.ok().build();
-  }
-
-  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
-    return Filter.builder()
-        .name(filterRequest.getName())
-        .dateFrom(filterRequest.getDateFrom())
-        .dateTo(filterRequest.getDateTo())
-        .accountIds(filterRequest.getAccountIds())
-        .categoryIds(filterRequest.getCategoryIds())
-        .priceFrom(filterRequest.getPriceFrom())
-        .priceTo(filterRequest.getPriceTo())
-        .description(filterRequest.getDescription())
-        .build();
   }
 }

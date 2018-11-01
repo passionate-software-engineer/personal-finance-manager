@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public interface FilterApi {
 
   @ApiOperation(value = "Find filter by id", response = Filter.class)
   @GetMapping(value = "/{filterId}")
-  ResponseEntity<Filter> getFilterById(long filterId, long userId);
+  ResponseEntity<Filter> getFilterById(@PathVariable long filterId, long userId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, responseContainer = "List")
   @GetMapping
@@ -30,9 +31,9 @@ public interface FilterApi {
 
   @ApiOperation(value = "Update an existing filter", response = Void.class)
   @PutMapping(value = "/{filterId}")
-  ResponseEntity<?> updateFilter(long filterId, FilterRequest filterRequest, long userId);
+  ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest, long userId);
 
   @ApiOperation(value = "Delete an existing filter", response = Void.class)
   @DeleteMapping(value = "/{filterId}")
-  ResponseEntity<?> deleteFilter(long filterId, long userId);
+  ResponseEntity<?> deleteFilter(@PathVariable long filterId, long userId);
 }
