@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class TopologicalSortProviderTest {
 
-  @Test // TODO change all classes to use JUnit5 Test annotation
+  @Test
   void shouldSortGraphTopologically() {
     // given
 
@@ -90,7 +90,8 @@ class TopologicalSortProviderTest {
     assertThat(exception.getMessage(), CoreMatchers.is(equalTo("Cycle detected, topological sort not possible")));
   }
 
-  @Test // just to get coverage
+  // just to get coverage
+  @Test
   void shouldNotThrowExceptionWhenCreatingObject() {
 
     // when
