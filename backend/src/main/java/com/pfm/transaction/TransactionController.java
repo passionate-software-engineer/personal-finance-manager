@@ -81,7 +81,7 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction transactionToUpdate = transactionByIdAndUserId.get();
+    Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
     historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
 
     transactionService.updateTransaction(transactionId, userId, transaction);
@@ -97,7 +97,7 @@ public class TransactionController implements TransactionApi {
       log.info("No transaction with id {} was found, not able to delete", transactionId);
       return ResponseEntity.notFound().build();
     }
-    Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get();
+    Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
     historyEntryService.addEntryOnDelete(transactionToDelete, userId);

@@ -44,7 +44,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     Account account = accountJacekBalance1000();
 
     //when
-    String respone =
+    String response =
         mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE)
@@ -53,7 +53,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
             .getResponse().getContentAsString();
 
     //then
-    Long accountId = Long.parseLong(respone);
+    Long accountId = Long.parseLong(response);
 
     mockMvc
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)

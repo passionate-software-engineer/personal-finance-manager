@@ -175,6 +175,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))));
   }
 
+  @SuppressWarnings("unused") // used as test parameters
   private Collection<Object[]> usernameAndPasswordWithWhitespaces() {
     return Arrays.asList(new Object[][]{
         {" Marian", " 1232sbbb"},

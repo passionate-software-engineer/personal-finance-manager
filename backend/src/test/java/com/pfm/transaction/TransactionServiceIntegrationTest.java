@@ -39,6 +39,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TransactionServiceIntegrationTest {
 
+  @Autowired
+  protected Flyway flyway;
+
+  @Autowired
+  UserService userService;
+
   @SpyBean
   private TransactionService transactionService;
 
@@ -47,12 +53,6 @@ public class TransactionServiceIntegrationTest {
 
   @Autowired
   private CategoryService categoryService;
-
-  @Autowired
-  UserService userService;
-
-  @Autowired
-  protected Flyway flyway;
 
   private long userId;
 

@@ -9,6 +9,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,8 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
 
+  static final String REQUEST_MARKER = "|>";
+  static final String RESPONSE_MARKER = "|<";
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
       MediaType.valueOf("text/*"),
       MediaType.APPLICATION_FORM_URLENCODED,
@@ -30,9 +33,6 @@ public class LoggingFilter extends OncePerRequestFilter {
       MediaType.valueOf("application/*+xml"),
       MediaType.MULTIPART_FORM_DATA
   );
-
-  static final String REQUEST_MARKER = "|>";
-  static final String RESPONSE_MARKER = "|<";
 
   private void logRequestMethod(ContentCachingRequestWrapper request) {
     String queryString = request.getQueryString();
@@ -104,7 +104,7 @@ public class LoggingFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+  protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
       throws ServletException, IOException {
     if (isAsyncDispatch(request)) {
       filterChain.doFilter(request, response);

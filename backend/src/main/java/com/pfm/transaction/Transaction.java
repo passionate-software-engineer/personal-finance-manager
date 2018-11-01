@@ -50,8 +50,8 @@ public final class Transaction implements DifferenceProvider<Transaction> {
     if (!(transaction.getDescription().equals(this.getDescription()))) {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "description", this.getDescription(), transaction.getDescription()));
     }
-    if (!(this.categoryId == transaction.getCategoryId())) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "category", this.categoryId, transaction.getCategoryId()));
+    if (!(this.categoryId.equals(transaction.getCategoryId()))) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction category", this.categoryId, transaction.getCategoryId()));
     }
 
     List<AccountPriceEntry> thisEntries = this.getAccountPriceEntries();

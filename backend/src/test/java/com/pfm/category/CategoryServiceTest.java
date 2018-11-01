@@ -26,13 +26,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryServiceTest {
 
+  private static final long MOCK_USER_ID = -1;
+
   @Mock
   private CategoryRepository categoryRepository;
 
   @InjectMocks
   private CategoryService categoryService;
-
-  private static final long MOCK_USER_ID = -1;
 
   @Test
   public void shouldGetCategoryById() {

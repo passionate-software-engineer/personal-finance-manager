@@ -6,6 +6,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
@@ -17,11 +18,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Order(1)
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
-  public static final String CORRELATION_ID = "correlationId";
+  static final String CORRELATION_ID = "correlationId";
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws IOException, ServletException {
+  protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
+      throws IOException, ServletException {
     try {
       addRequestCorrelationIdToMdc(request);
       filterChain.doFilter(request, response);

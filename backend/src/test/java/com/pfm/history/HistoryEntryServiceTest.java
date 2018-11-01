@@ -42,7 +42,7 @@ public class HistoryEntryServiceTest {
     List<HistoryEntry> actualHistoryEntryList = historyEntryService.getHistoryEntries(userId);
 
     //then
-    ArrayList<HistoryEntry> list = new ArrayList<HistoryEntry>();
+    ArrayList<HistoryEntry> list = new ArrayList<>();
     list.add(HISTORY_ENTRY_CATEGORY_DELETE);
     list.add(HISTORY_ENTRY_CATEGORY_ADD);
     list.add(HISTORY_ENTRY_ACCOUNT_UPDATE);

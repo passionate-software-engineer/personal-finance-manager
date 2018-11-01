@@ -30,7 +30,7 @@ public class AccountServiceTest {
   private static final long MOCK_USER_ID = 999;
 
   @Rule
-  public ExpectedException expectedEx = ExpectedException.none();
+  public final ExpectedException expectedException = ExpectedException.none();
 
   @Mock
   private AccountRepository accountRepository;
@@ -143,8 +143,8 @@ public class AccountServiceTest {
 
     //given
     long id = 1;
-    expectedEx.expect(IllegalStateException.class);
-    expectedEx.expectMessage("Account with id: " + id + " does not exist in database");
+    expectedException.expect(IllegalStateException.class);
+    expectedException.expectMessage("Account with id: " + id + " does not exist in database");
 
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 

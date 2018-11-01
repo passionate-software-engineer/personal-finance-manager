@@ -40,7 +40,7 @@ public final class Category implements DifferenceProvider<Category> {
 
   @Override
   public List<String> getDifferences(Category category) {
-    List<String> differences = new ArrayList<String>();
+    List<String> differences = new ArrayList<>();
 
     if (!(this.getName().equals(category.getName()))) {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name", this.getName(), category.getName()));

@@ -55,17 +55,15 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil, carCategoryId, token);
 
     //then
-    Category expectedCarCategory = categoryCar;
-    expectedCarCategory.setId(carCategoryId);
+    categoryCar.setId(carCategoryId);
 
-    Category expectedOilCategory = categoryOil;
-    expectedOilCategory.setId(oilCategoryId);
-    expectedOilCategory.setParentCategory(expectedCarCategory);
+    categoryOil.setId(oilCategoryId);
+    categoryOil.setParentCategory(categoryCar);
 
     List<Category> categories = callRestToGetAllCategories(token);
 
     assertThat(categories.size(), is(2));
-    assertThat(categories, containsInAnyOrder(expectedCarCategory, expectedOilCategory));
+    assertThat(categories, containsInAnyOrder(categoryCar, categoryOil));
   }
 
   @Test
@@ -127,14 +125,12 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     final List<Category> categories = callRestToGetAllCategories(token);
 
     //then
-    Category expectedCarCategory = categoryCar;
-    expectedCarCategory.setId(categoryCarId);
+    categoryCar.setId(categoryCarId);
 
-    Category expectedHomeCategory = categoryHome;
-    expectedHomeCategory.setId(categoryHomeId);
+    categoryHome.setId(categoryHomeId);
 
     assertThat(categories.size(), is(2));
-    assertThat(categories, containsInAnyOrder(expectedCarCategory, expectedHomeCategory));
+    assertThat(categories, containsInAnyOrder(categoryCar, categoryHome));
   }
 
   @Test
@@ -174,11 +170,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToUpdateCategory(homeCategoryId, categoryToCategoryRequest(categoryToUpdate), token);
 
     //then
-    Category expectedCategory = categoryToUpdate;
-    expectedCategory.setId(homeCategoryId);
+    categoryToUpdate.setId(homeCategoryId);
 
     Category result = callRestToGetCategoryById(homeCategoryId, token);
-    assertThat(result, is(equalTo(expectedCategory)));
+    assertThat(result, is(equalTo(categoryToUpdate)));
   }
 
   @Test

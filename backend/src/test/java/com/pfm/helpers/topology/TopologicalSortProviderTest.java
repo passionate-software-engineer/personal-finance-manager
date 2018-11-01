@@ -13,10 +13,10 @@ import java.util.List;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
-public class TopologicalSortProviderTest {
+class TopologicalSortProviderTest {
 
-  @Test // TODO change all classes to use JUnit5 Test annotation
-  public void shouldSortGraphTopologically() {
+  @Test
+  void shouldSortGraphTopologically() {
     // given
 
     Node<String> two = new Node<>("2");
@@ -69,7 +69,7 @@ public class TopologicalSortProviderTest {
   }
 
   @Test
-  public void shouldThrowIllegalStateExceptionWhenCycleIsDetectedInGraph() {
+  void shouldThrowIllegalStateExceptionWhenCycleIsDetectedInGraph() {
     // given
     Node<Integer> one = new Node<>(1);
     Node<Integer> two = new Node<>(2);
@@ -90,8 +90,9 @@ public class TopologicalSortProviderTest {
     assertThat(exception.getMessage(), CoreMatchers.is(equalTo("Cycle detected, topological sort not possible")));
   }
 
-  @Test // just to get coverage
-  public void shouldNotThrowExceptionWhenCreatingObject() {
+  // just to get coverage
+  @Test
+  void shouldNotThrowExceptionWhenCreatingObject() {
 
     // when
     TopologicalSortProvider provider = new TopologicalSortProvider();

@@ -515,18 +515,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     assertThat(zdzislawTransactions, containsInAnyOrder(zdzislawAnimalsTransactionsExpected, zdzislawHomeTransactionsExpected));
 
     List<Filter> marianFilters = callRestToGetAllFilters(marianToken);
-    Filter marianExpensesOver1000FilterExpected = filterExpensesOver1000ToAdd; // TODO add detecting unneeded variables like that to checkstyle
-    marianExpensesOver1000FilterExpected.setId(marianExpensesOver1000FilterId);
+    filterExpensesOver1000ToAdd.setId(marianExpensesOver1000FilterId);
 
     assertThat(marianFilters, hasSize(1));
-    assertThat(marianFilters, containsInAnyOrder(marianExpensesOver1000FilterExpected));
+    assertThat(marianFilters, containsInAnyOrder(filterExpensesOver1000ToAdd));
 
     List<Filter> zdzislawFilters = callRestToGetAllFilters(zdzislawToken);
-    Filter zdzislawHomeExpensesFilterExpected = filterHomeExpensesToAdd;
-    zdzislawHomeExpensesFilterExpected.setId(zdzislawHomeExpensesFilterId);
+    filterHomeExpensesToAdd.setId(zdzislawHomeExpensesFilterId);
 
     assertThat(zdzislawFilters, hasSize(1));
-    assertThat(zdzislawFilters, containsInAnyOrder(zdzislawHomeExpensesFilterExpected));
+    assertThat(zdzislawFilters, containsInAnyOrder(filterHomeExpensesToAdd));
   }
 
   @Test

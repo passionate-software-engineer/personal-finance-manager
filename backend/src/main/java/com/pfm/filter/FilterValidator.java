@@ -30,7 +30,7 @@ public class FilterValidator {
 
     if (filter.getAccountIds() != null) {
       for (long id : filter.getAccountIds()) {
-        if (!accountService.accountExistByIdAndUserId(id, userId)) {
+        if (accountService.accountDoesNotExistByIdAndUserId(id, userId)) {
           validationResults.add(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + id);
         }
       }

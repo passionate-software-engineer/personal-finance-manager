@@ -24,6 +24,24 @@ public class CategoryController implements CategoryApi {
   private CategoryValidator categoryValidator;
   private HistoryEntryService historyEntryService;
 
+  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+    Long parentCategoryId = categoryRequest.getParentCategoryId();
+
+    if (parentCategoryId == null) {
+      return Category.builder()
+          .id(null)
+          .name(categoryRequest.getName())
+          .parentCategory(null)
+          .build();
+    }
+
+    return Category.builder()
+        .id(null)
+        .name(categoryRequest.getName())
+        .parentCategory(Category.builder().id(parentCategoryId).build())
+        .build();
+  }
+
   public ResponseEntity<Category> getCategoryById(@PathVariable long categoryId, @RequestAttribute(value = "userId") long userId) {
 
     log.info("Retrieving category with id: {}", categoryId);
@@ -126,23 +144,5 @@ public class CategoryController implements CategoryApi {
     log.info("Category with id {} was deleted successfully", categoryId);
     historyEntryService.addEntryOnDelete(deletedCategory, userId);
     return ResponseEntity.ok().build();
-  }
-
-  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
-    Long parentCategoryId = categoryRequest.getParentCategoryId();
-
-    if (parentCategoryId == null) {
-      return Category.builder()
-          .id(null)
-          .name(categoryRequest.getName())
-          .parentCategory(null)
-          .build();
-    }
-
-    return Category.builder()
-        .id(null)
-        .name(categoryRequest.getName())
-        .parentCategory(Category.builder().id(parentCategoryId).build())
-        .build();
   }
 }
