@@ -15,7 +15,7 @@ import static org.hamcrest.core.Is.is;
 
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +71,7 @@ public class TransactionValidatorTest {
   @Test
   public void shouldReturnErrorWhenNoPriceAndAccountWereProvided() {
     Transaction transaction = new Transaction();
-    transaction.setAccountPriceEntries(Arrays.asList(new AccountPriceEntry()));
+    transaction.setAccountPriceEntries(Collections.singletonList(new AccountPriceEntry()));
     transaction.setCategoryId(NOT_EXISTING_ID);
 
     // when
@@ -89,7 +89,7 @@ public class TransactionValidatorTest {
   @Test
   public void shouldReturnErrorWhenAccountIdDoesNotExists() {
     Transaction transaction = new Transaction();
-    transaction.setAccountPriceEntries(Arrays.asList(new AccountPriceEntry(1L, NOT_EXISTING_ID, null)));
+    transaction.setAccountPriceEntries(Collections.singletonList(new AccountPriceEntry(NOT_EXISTING_ID, null, 1L)));
 
     // when
     List<String> result = transactionValidator.validate(transaction, 1);
