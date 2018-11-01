@@ -54,11 +54,11 @@ public abstract class InvoicePerformanceTestBase {
   @Rule
   public final ErrorCollector collector = new ErrorCollector();
 
-  final List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
-
   @Qualifier("pfmObjectMapper")
   @Autowired
   protected ObjectMapper mapper;
+
+  final List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
 
   String token;
 
