@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class CategoryService {
   }
 
   public List<Category> getCategories(long userId) {
-    return StreamSupport.stream(categoryRepository.findByUserId(userId).spliterator(), false)
+    return categoryRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Category::getId))
         .collect(Collectors.toList());
   }

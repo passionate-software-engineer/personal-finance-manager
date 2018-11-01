@@ -16,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryValidatorTest {
 
-  private long mockUserId = 1;
+  private static final long MOCK_USER_ID = 1;
 
   @Mock
   private CategoryService categoryService;
@@ -29,11 +29,11 @@ public class CategoryValidatorTest {
 
     //given
     long id = 1L;
-    when(categoryService.getCategoryByIdAndUserId(id, mockUserId)).thenReturn(Optional.empty());
+    when(categoryService.getCategoryByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> categoryValidator.validateCategoryForUpdate(id, mockUserId, new Category()));
+        () -> categoryValidator.validateCategoryForUpdate(id, MOCK_USER_ID, new Category()));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Category with id: " + id + " does not exist in database")));

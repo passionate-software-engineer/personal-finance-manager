@@ -26,6 +26,7 @@ import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -41,7 +42,7 @@ public abstract class InvoicePerformanceTestBase {
   @ClassRule
   public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
-  protected static final int THREAD_COUNT = 24;
+  static final int THREAD_COUNT = 24;
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
 
@@ -53,19 +54,18 @@ public abstract class InvoicePerformanceTestBase {
   @Rule
   public final ErrorCollector collector = new ErrorCollector();
 
-  protected String token;
-
+  @Qualifier("pfmObjectMapper")
   @Autowired
   protected ObjectMapper mapper;
 
-  protected List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
+  final List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
 
-  private User defaultUser = userMarian();
+  String token;
 
   @LocalServerPort
   private int port;
 
-  protected Account[] getAccounts() {
+  private Account[] getAccounts() {
 
     return given()
         .when()
@@ -75,28 +75,26 @@ public abstract class InvoicePerformanceTestBase {
         .as(Account[].class);
   }
 
-  protected BigDecimal getRandomBalance() {
+  BigDecimal getRandomBalance() {
     return BigDecimal.valueOf((long) (Math.random() * Integer.MAX_VALUE)).setScale(2, RoundingMode.CEILING);
   }
 
-  protected String getRandomName() {
+  String getRandomName() {
     return UUID.randomUUID().toString();
   }
 
-  protected String invoiceServicePath() {
-    return String.format(ACCOUNTS_SERVICE_PATH, port);
-  }
-
-  protected String invoiceServicePath(long id) {
+  String invoiceServicePath(long id) {
     return invoiceServicePath() + "/" + id;
   }
 
-  protected String usersServicePath() {
-    return String.format(USERS_SERVICE_PATH, port);
+  private String invoiceServicePath() {
+    return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
   @PostConstruct
   public void before() throws Exception {
+    final User defaultUser = userMarian();
+
     given()
         .contentType(ContentType.JSON)
         .body(defaultUser)
@@ -111,7 +109,7 @@ public abstract class InvoicePerformanceTestBase {
     }
   }
 
-  protected Account getAccount() {
+  Account getAccount() {
     AccountRequest accountRequest = AccountRequest.builder()
         .name(UUID.randomUUID().toString())
         .balance(getRandomBalance())
@@ -135,7 +133,7 @@ public abstract class InvoicePerformanceTestBase {
   }
 
   @After
-  public void afterCheck() throws Exception {
+  public void afterCheck() {
     accounts.sort((first, second) -> (int) (first.getId() - second.getId()));
 
     Account[] accountsFromService = getAccounts();
@@ -156,15 +154,15 @@ public abstract class InvoicePerformanceTestBase {
     assertThat(getAccounts().length, is(0));
   }
 
-  protected UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {
+  private UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {
     return mapper.readValue(jsonAuthResponse, UserDetails.class);
   }
 
-  protected String json(Object object) throws Exception {
+  private String json(Object object) throws Exception {
     return mapper.writeValueAsString(object);
   }
 
-  protected String authenticateUserAndGetToken(User user) throws Exception {
+  private String authenticateUserAndGetToken(User user) throws Exception {
     String response = given()
         .contentType(ContentType.JSON)
         .body(json(user))
@@ -175,11 +173,15 @@ public abstract class InvoicePerformanceTestBase {
     return jsonToAuthResponse(response).getToken();
   }
 
-  protected AccountRequest convertAccountToAccountRequest(Account account) {
+  AccountRequest convertAccountToAccountRequest(Account account) {
     return AccountRequest.builder()
         .name(account.getName())
         .balance(account.getBalance())
         .build();
+  }
+
+  private String usersServicePath() {
+    return String.format(USERS_SERVICE_PATH, port);
   }
 
 }

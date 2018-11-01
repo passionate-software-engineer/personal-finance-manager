@@ -38,8 +38,6 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
   private static final String CATEGORY_PATH = "/categories";
   private static final String TRANSACTION_PATH = "/transactions";
   private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
-  private static final String START = "2018-01-01-12-00";
-  private static final String END = "2018-12-30-20-00";
 
   @Before
   public void setup() throws Exception {

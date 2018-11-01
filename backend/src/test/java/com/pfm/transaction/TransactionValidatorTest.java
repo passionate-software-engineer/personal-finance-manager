@@ -12,6 +12,9 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
@@ -90,6 +93,8 @@ public class TransactionValidatorTest {
   public void shouldReturnErrorWhenAccountIdDoesNotExists() {
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(new AccountPriceEntry(NOT_EXISTING_ID, null, 1L)));
+
+    when(accountService.accountDoesNotExistByIdAndUserId(eq(NOT_EXISTING_ID), anyLong())).thenReturn(true);
 
     // when
     List<String> result = transactionValidator.validate(transaction, 1);

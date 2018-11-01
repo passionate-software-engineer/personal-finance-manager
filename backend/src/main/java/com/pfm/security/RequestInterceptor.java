@@ -4,22 +4,22 @@ import com.google.common.net.HttpHeaders;
 import com.pfm.auth.TokenService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@AllArgsConstructor
 @Component
 @CrossOrigin
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
   //TODO this should be done be spring security
-  private static final String pattern = "(\\/users.*|.*swagger.*)";
+  private static final String pattern = "(/users.*|.*swagger.*)";
   private final Logger logger = LoggerFactory.getLogger(RequestInterceptor.class.getName());
 
-  @Autowired
   private TokenService tokenService;
 
   @Override

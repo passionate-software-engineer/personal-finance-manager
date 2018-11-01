@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class FilterService {
   }
 
   public List<Filter> getAllFilters(long userId) {
-    return StreamSupport.stream(filterRepository.findByUserId(userId).spliterator(), false)
+    return filterRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Filter::getId))
         .collect(Collectors.toList());
   }
@@ -68,7 +67,7 @@ public class FilterService {
     return filterRepository.existsByCategoryIdsContains(categoryId);
   }
 
-  public boolean filterExistByFilterIdAndUserId(long filterId, long userId) {
-    return filterRepository.existsByIdAndUserId(filterId, userId);
+  public boolean filterDoesNotExistByFilterIdAndUserId(long filterId, long userId) {
+    return !filterRepository.existsByIdAndUserId(filterId, userId);
   }
 }

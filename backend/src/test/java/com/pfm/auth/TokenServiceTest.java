@@ -12,8 +12,8 @@ import org.junit.Test;
 
 public class TokenServiceTest {
 
-  private HashMap<String, Token> tokens = new HashMap<>();
-  private TokenService tokenService = new TokenService(tokens);
+  private final HashMap<String, Token> tokens = new HashMap<>();
+  private final TokenService tokenService = new TokenService(tokens);
 
   @Test
   public void shouldThrowExeptionCausedByNullExpiryTime() {

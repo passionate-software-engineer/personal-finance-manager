@@ -29,6 +29,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -63,6 +64,7 @@ public abstract class IntegrationTestsBase {
   @Autowired
   protected MockMvc mockMvc;
 
+  @Qualifier("pfmObjectMapper")
   @Autowired
   protected ObjectMapper mapper;
 

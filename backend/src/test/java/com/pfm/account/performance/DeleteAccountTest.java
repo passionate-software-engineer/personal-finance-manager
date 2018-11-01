@@ -10,11 +10,11 @@ import org.junit.Test;
 
 public class DeleteAccountTest extends InvoicePerformanceTestBase {
 
-  private AtomicInteger counter = new AtomicInteger(0);
+  private final AtomicInteger counter = new AtomicInteger(0);
 
   @Test
   @ThreadCount(THREAD_COUNT)
-  public void shouldDeleteSimultaneouslyMultipleAccounts() throws Exception {
+  public void shouldDeleteSimultaneouslyMultipleAccounts() {
 
     Account account = accounts.get(counter.getAndAdd(2));
     accounts.remove(account);

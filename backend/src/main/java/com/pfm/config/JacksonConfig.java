@@ -20,7 +20,7 @@ public class JacksonConfig {
 
   @Primary
   @Bean
-  public ObjectMapper objectMapper() {
+  public ObjectMapper pfmObjectMapper() {
     ObjectMapper mapper = new ObjectMapper();
     mapper.setSerializationInclusion(Include.NON_NULL);
 

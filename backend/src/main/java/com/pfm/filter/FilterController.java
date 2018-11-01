@@ -72,7 +72,7 @@ public class FilterController implements FilterApi {
   public ResponseEntity<?> updateFilter(@PathVariable long filterId, @RequestBody FilterRequest filterRequest,
       @RequestAttribute(value = "userId") long userId) {
 
-    if (!filterService.filterExistByFilterIdAndUserId(filterId, userId)) {
+    if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to update", filterId);
       return ResponseEntity.notFound().build();
     }
@@ -93,7 +93,7 @@ public class FilterController implements FilterApi {
 
   @Override
   public ResponseEntity<?> deleteFilter(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
-    if (!filterService.filterExistByFilterIdAndUserId(filterId, userId)) {
+    if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();
     }

@@ -64,12 +64,12 @@ public class LoggingFilterTest {
     REQUEST_HEADERS.put(CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE);
   }
 
-  private HttpServletRequest request = mock(HttpServletRequest.class);
-  private HttpServletResponse response = mock(HttpServletResponse.class);
-  private ContentCachingRequestWrapper wrappedRequest = spy(new ContentCachingRequestWrapper(request));
-  private ContentCachingResponseWrapper wrappedResponse = spy(new ContentCachingResponseWrapper(response));
-  private FilterChain mockFilterChain = mock(FilterChain.class);
-  private LoggingFilter filter = new LoggingFilter();
+  private final HttpServletRequest request = mock(HttpServletRequest.class);
+  private final HttpServletResponse response = mock(HttpServletResponse.class);
+  private final ContentCachingRequestWrapper wrappedRequest = spy(new ContentCachingRequestWrapper(request));
+  private final ContentCachingResponseWrapper wrappedResponse = spy(new ContentCachingResponseWrapper(response));
+  private final FilterChain mockFilterChain = mock(FilterChain.class);
+  private final LoggingFilter filter = new LoggingFilter();
 
   @Mock
   private Appender<ILoggingEvent> mockAppender;

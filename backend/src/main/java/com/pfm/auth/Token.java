@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class Token {
+class Token {
 
   private String token;
   private long userId;

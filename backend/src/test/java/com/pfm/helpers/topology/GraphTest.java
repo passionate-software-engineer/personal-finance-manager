@@ -57,7 +57,7 @@ class GraphTest {
     String valueToTest = "Abracadabra";
 
     // when
-    int hashCodeValue = new Node<String>(valueToTest).hashCode();
+    int hashCodeValue = new Node<>(valueToTest).hashCode();
 
     // then
     assertThat(hashCodeValue, is(valueToTest.hashCode()));
@@ -84,7 +84,7 @@ class GraphTest {
     BigDecimal valueToTest = BigDecimal.TEN;
 
     // when
-    String toStringValue = new Node<BigDecimal>(valueToTest).toString();
+    String toStringValue = new Node<>(valueToTest).toString();
 
     // then
     assertThat(toStringValue, is(valueToTest.toString()));

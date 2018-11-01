@@ -26,11 +26,10 @@ public class UserController {
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
     Optional<UserDetails> authResponse = userService.authenticateUser(userToAuthenticate);
 
-    if (authResponse.isPresent()) {
-      return ResponseEntity.ok(authResponse.get());
-    }
+    return authResponse.<ResponseEntity<?>>map(ResponseEntity::ok)
+        .orElseGet(() ->
+            ResponseEntity.badRequest().body(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT)));
 
-    return ResponseEntity.badRequest().body(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT));
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
