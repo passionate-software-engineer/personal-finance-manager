@@ -14,6 +14,10 @@ public class UserService {
   private UserRepository userRepository;
   private TokenService tokenService;
 
+  private static String hashPassword(String passwordToHash) {
+    return BCrypt.hashpw(passwordToHash, BCrypt.gensalt());
+  }
+
   public Optional<UserDetails> authenticateUser(User userToAuthenticate) {
     Optional<User> appUserFromDb = userRepository.findByUsernameIgnoreCase(userToAuthenticate.getUsername());
     if (!appUserFromDb.isPresent()) {
@@ -37,10 +41,6 @@ public class UserService {
     String hashedPassword = hashPassword(user.getPassword());
     user.setPassword(hashedPassword);
     return userRepository.save(user);
-  }
-
-  private static String hashPassword(String passwordToHash) {
-    return BCrypt.hashpw(passwordToHash, BCrypt.gensalt());
   }
 
   public boolean isUsernameAlreadyUsed(String username) {

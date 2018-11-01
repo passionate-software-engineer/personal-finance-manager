@@ -15,12 +15,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @CrossOrigin
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
-  @Autowired
-  private TokenService tokenService;
-
   //TODO this should be done be spring security
   private static final String pattern = "(\\/users.*|.*swagger.*)";
   private final Logger logger = LoggerFactory.getLogger(RequestInterceptor.class.getName());
+
+  @Autowired
+  private TokenService tokenService;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {

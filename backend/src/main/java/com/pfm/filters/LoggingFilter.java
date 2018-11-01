@@ -21,6 +21,8 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
 
+  static final String REQUEST_MARKER = "|>";
+  static final String RESPONSE_MARKER = "|<";
   private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
       MediaType.valueOf("text/*"),
       MediaType.APPLICATION_FORM_URLENCODED,
@@ -30,9 +32,6 @@ public class LoggingFilter extends OncePerRequestFilter {
       MediaType.valueOf("application/*+xml"),
       MediaType.MULTIPART_FORM_DATA
   );
-
-  static final String REQUEST_MARKER = "|>";
-  static final String RESPONSE_MARKER = "|<";
 
   private void logRequestMethod(ContentCachingRequestWrapper request) {
     String queryString = request.getQueryString();

@@ -47,20 +47,20 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
-  private User defaultUser = userMarian();
-
-  protected String token;
-
-  @Autowired
-  protected ObjectMapper mapper;
-
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
   @Rule
   public final ErrorCollector collector = new ErrorCollector();
 
+  protected String token;
+
+  @Autowired
+  protected ObjectMapper mapper;
+
   protected List<Account> accounts = Collections.synchronizedList(new ArrayList<>());
+
+  private User defaultUser = userMarian();
 
   @LocalServerPort
   private int port;

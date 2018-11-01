@@ -27,6 +27,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class FilterServiceIntegrationTest {
 
   @Autowired
+  protected Flyway flyway;
+
+  @Autowired
   private AccountService accountService;
 
   @Autowired
@@ -37,9 +40,6 @@ public class FilterServiceIntegrationTest {
 
   @Autowired
   private UserService userService;
-
-  @Autowired
-  protected Flyway flyway;
 
   private long userId;
 
