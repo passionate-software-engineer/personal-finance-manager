@@ -13,21 +13,13 @@ import com.pfm.account.AccountService;
 import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.helpers.IntegrationTestsBase;
 import java.util.Collections;
-import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class FilterServiceIntegrationTest {
-
-  @Autowired
-  protected Flyway flyway;
+public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   @Autowired
   private AccountService accountService;
@@ -45,8 +37,7 @@ public class FilterServiceIntegrationTest {
 
   @Before
   public void before() {
-    flyway.clean();
-    flyway.migrate();
+    super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
   }
 

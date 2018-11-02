@@ -31,20 +31,20 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LoggingFilterTest {
 
   private static final String ENCODING_HEADER = "Encoding";
@@ -77,7 +77,7 @@ public class LoggingFilterTest {
   @Captor
   private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
 
-  @Before
+  @BeforeEach
   public void prepareRequests() {
     when(request.getHeaderNames()).thenReturn(enumeration(REQUEST_HEADERS.keySet()));
     when(request.getHeaders(anyString())).thenReturn(enumeration(REQUEST_HEADERS.values()));
@@ -94,7 +94,7 @@ public class LoggingFilterTest {
     when(request.getMethod()).thenReturn(REQUEST_METHOD);
   }
 
-  @Before
+  @BeforeEach
   public void prepareResponses() {
     byte[] responseContent = RESPONSE_CONTENT.getBytes(StandardCharsets.UTF_8);
     when(wrappedResponse.getContentAsByteArray()).thenReturn(responseContent);
@@ -105,14 +105,14 @@ public class LoggingFilterTest {
     when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
   }
 
-  @Before
+  @BeforeEach
   public void prepareLogger() {
     final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.addAppender(mockAppender);
     logger.setLevel(Level.DEBUG);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.detachAppender(mockAppender);

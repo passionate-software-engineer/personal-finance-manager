@@ -16,34 +16,22 @@ import static org.junit.Assert.fail;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
-import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
-import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class TransactionServiceIntegrationTest {
-
-  @Autowired
-  protected Flyway flyway;
-
-  @Autowired
-  UserService userService;
+public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @SpyBean
   private TransactionService transactionService;
@@ -54,12 +42,9 @@ public class TransactionServiceIntegrationTest {
   @Autowired
   private CategoryService categoryService;
 
-  private long userId;
-
   @Before
   public void before() {
-    flyway.clean();
-    flyway.migrate();
+    super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
   }
 

@@ -12,6 +12,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
+import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
@@ -60,6 +61,9 @@ public abstract class IntegrationTestsBase {
 
   @Rule
   public final SpringMethodRule springMethodRule = new SpringMethodRule();
+
+  @Autowired
+  protected UserService userService;
 
   @Autowired
   protected MockMvc mockMvc;

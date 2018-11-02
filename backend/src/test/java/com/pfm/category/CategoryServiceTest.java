@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,13 +18,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CategoryServiceTest {
 
   private static final long MOCK_USER_ID = -1;
@@ -108,11 +109,12 @@ public class CategoryServiceTest {
   public void shouldAddCategoryWithParentCategory() {
     //given
     Category categoryCar = categoryCar();
-    when(categoryRepository.save(categoryCar)).thenReturn(categoryCar);
-    when(categoryRepository.findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID)).thenReturn(Optional.of(categoryCar));
+    doReturn(categoryCar).when(categoryRepository).save(categoryCar);
+    doReturn(Optional.of(categoryCar)).when(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
+
     Category categoryOil = categoryOil();
     categoryOil.setParentCategory(categoryCar);
-    when(categoryRepository.save(categoryOil)).thenReturn(categoryOil);
+    doReturn(categoryOil).when(categoryRepository).save(categoryOil);
 
     //when
     categoryService.addCategory(categoryCar, MOCK_USER_ID);
@@ -162,9 +164,9 @@ public class CategoryServiceTest {
     Category categoryCar = categoryCar();
     Category categoryOil = categoryOil();
     categoryOil.setParentCategory(categoryCar);
-    when(categoryRepository.findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID)).thenReturn(Optional.of(categoryOil));
-    when(categoryRepository.findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID)).thenReturn(Optional.of(categoryCar));
-    when(categoryRepository.save(categoryOil)).thenReturn(categoryOil);
+    doReturn(Optional.of(categoryOil)).when(categoryRepository).findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID);
+    doReturn(Optional.of(categoryCar)).when(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
+    doReturn(categoryOil).when(categoryRepository).save(categoryOil);
 
     //when
     categoryService.updateCategory(categoryOil.getId(), MOCK_USER_ID, categoryOil);
@@ -196,8 +198,9 @@ public class CategoryServiceTest {
     Category categoryOil = categoryOil();
     Category categoryCar = categoryCar();
     categoryOil.setParentCategory(categoryCar);
-    when(categoryRepository.findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID)).thenReturn(Optional.of(categoryOil));
-    when(categoryRepository.findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID)).thenReturn(Optional.empty());
+
+    doReturn(Optional.of(categoryOil)).when(categoryRepository).findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID);
+    doReturn(Optional.empty()).when(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,

@@ -24,13 +24,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-@SpringBootTest // TODO rewrite test to use common helper methods and objects
-@AutoConfigureMockMvc
+// TODO rewrite test to use common helper methods and objects
 public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   private static final String PATH = "/history";

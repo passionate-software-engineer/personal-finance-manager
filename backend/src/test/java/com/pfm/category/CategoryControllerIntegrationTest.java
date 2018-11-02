@@ -27,14 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.helpers.IntegrationTestsBase;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.http.HttpHeaders;
 
-@RunWith(JUnitParamsRunner.class)
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   //TODO change JunitPArams to Junit5 to avoid CLASS RULE
