@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,19 +27,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.helpers.IntegrationTestsBase;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
 
-@RunWith(JUnitParamsRunner.class)
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
-  //TODO change JunitPArams to Junit5 to avoid CLASS RULE
-
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -66,8 +62,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(categories, containsInAnyOrder(categoryCar, categoryOil));
   }
 
-  @Test
-  @Parameters(method = "emptyAccountNameParameters")
+  @ParameterizedTest
+  @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
 
     //given
@@ -86,8 +82,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_CATEGORY_NAME))));
   }
 
-  @SuppressWarnings("unused")
-  private Object[] emptyAccountNameParameters() {
+  private static Object[] emptyAccountNameParameters() {
     return new Object[]{"", " ", "    ", null};
   }
 

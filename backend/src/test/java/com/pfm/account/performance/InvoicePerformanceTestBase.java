@@ -4,9 +4,8 @@ import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.anarsoft.vmlens.concurrent.junit.ConcurrentTestRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
@@ -20,39 +19,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.rules.ErrorCollector;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.context.junit4.rules.SpringClassRule;
-import org.springframework.test.context.junit4.rules.SpringMethodRule;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 // TODO imporove all those tests
 // TODO those tests takes lots of time - run it separetly not as Unit tests
-@RunWith(ConcurrentTestRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
-
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
   static final int THREAD_COUNT = 24;
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
-
-  @Rule
-  public final SpringMethodRule springMethodRule = new SpringMethodRule();
-
-  @Rule
-  public final ErrorCollector collector = new ErrorCollector();
 
   @Qualifier("pfmObjectMapper")
   @Autowired
@@ -103,13 +89,13 @@ public abstract class InvoicePerformanceTestBase {
 
     for (int i = 0; i < 10; ++i) {
 
-      Account account = getAccount();
+      Account account = addAndReturnAccount();
 
       accounts.add(account);
     }
   }
 
-  Account getAccount() {
+  Account addAndReturnAccount() {
     AccountRequest accountRequest = AccountRequest.builder()
         .name(UUID.randomUUID().toString())
         .balance(getRandomBalance())
@@ -132,7 +118,7 @@ public abstract class InvoicePerformanceTestBase {
         .build();
   }
 
-  @After
+  @AfterEach
   public void afterCheck() {
     accounts.sort((first, second) -> (int) (first.getId() - second.getId()));
 
@@ -141,7 +127,7 @@ public abstract class InvoicePerformanceTestBase {
 
     int index = 0;
     for (Account account : accountsFromService) {
-      collector.checkThat(account, is(equalTo(accounts.get(index++))));
+      assertThat(account, is(equalTo(accounts.get(index++))));
     }
 
     for (Account account : accountsFromService) {

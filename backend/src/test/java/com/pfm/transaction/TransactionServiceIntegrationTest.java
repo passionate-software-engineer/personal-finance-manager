@@ -7,43 +7,31 @@ import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
-import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
-import org.flywaydb.core.Flyway;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class TransactionServiceIntegrationTest {
-
-  @Autowired
-  protected Flyway flyway;
-
-  @Autowired
-  UserService userService;
+public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @SpyBean
   private TransactionService transactionService;
@@ -54,12 +42,9 @@ public class TransactionServiceIntegrationTest {
   @Autowired
   private CategoryService categoryService;
 
-  private long userId;
-
-  @Before
+  @BeforeEach
   public void before() {
-    flyway.clean();
-    flyway.migrate();
+    super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
   }
 

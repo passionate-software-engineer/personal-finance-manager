@@ -2,19 +2,19 @@ package com.pfm.account.performance;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.anarsoft.vmlens.concurrent.junit.ThreadCount;
 import com.pfm.account.Account;
 import io.restassured.http.ContentType;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UpdateAccountTest extends InvoicePerformanceTestBase {
 
   private final AtomicInteger counter = new AtomicInteger(0);
 
   @Test
-  @ThreadCount(THREAD_COUNT)
+  //  @ThreadCount(THREAD_COUNT) // TODO add wrapper running tests in multiple tests
   public void shouldUpdateSimultaneouslyMultipleAccounts() {
 
     Account account = accounts.get(counter.getAndIncrement());
@@ -29,7 +29,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
         .put(invoiceServicePath(account.getId()))
         .statusCode();
 
-    collector.checkThat(statusCode, is(200));
+    assertThat(statusCode, is(200));
   }
 
 }

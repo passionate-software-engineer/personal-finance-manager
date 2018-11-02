@@ -2,12 +2,13 @@ package com.pfm.account;
 
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
-import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,21 +17,16 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {
 
   private static final long MOCK_USER_ID = 999;
-
-  @Rule
-  public final ExpectedException expectedException = ExpectedException.none();
 
   @Mock
   private AccountRepository accountRepository;
@@ -143,14 +139,15 @@ public class AccountServiceTest {
 
     //given
     long id = 1;
-    expectedException.expect(IllegalStateException.class);
-    expectedException.expectMessage("Account with id: " + id + " does not exist in database");
-
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10());
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10());
+    });
 
+    // then
+    assertThat(exception.getMessage(), is("Account with id: " + id + " does not exist in database"));
   }
 
 }
