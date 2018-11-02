@@ -19,8 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pfm.helpers.IntegrationTestsBase;
 import java.util.Arrays;
 import java.util.Collection;
-import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
@@ -155,8 +156,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[3]", is(getMessage(EMPTY_LAST_NAME))));
   }
 
-  @Test
-  @Parameters(method = "usernameAndPasswordWithWhitespaces")
+  @ParameterizedTest
+  @MethodSource("usernameAndPasswordWithWhitespaces")
   public void shouldReturnErrorCausedByWhiteSpacesInUsernameAndPassword(String username, String password) throws Exception {
 
     //given
@@ -175,8 +176,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))));
   }
 
-  @SuppressWarnings("unused") // used as test parameters
-  private Collection<Object[]> usernameAndPasswordWithWhitespaces() {
+  private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
     return Arrays.asList(new Object[][]{
         {" Marian", " 1232sbbb"},
         {"Mar ian", "1232 sbbb"},

@@ -23,8 +23,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -42,7 +42,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
   @Autowired
   private CategoryService categoryService;
 
-  @Before
+  @BeforeEach
   public void before() {
     super.before();
     userId = userService.registerUser(userZdzislaw()).getId();

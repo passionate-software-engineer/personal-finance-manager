@@ -22,8 +22,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -36,7 +36,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
   private static final String TRANSACTION_PATH = "/transactions";
   private static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());

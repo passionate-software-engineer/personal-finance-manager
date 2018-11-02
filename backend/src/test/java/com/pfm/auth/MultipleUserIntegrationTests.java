@@ -46,7 +46,7 @@ import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
 public class MultipleUserIntegrationTests extends IntegrationTestsBase {

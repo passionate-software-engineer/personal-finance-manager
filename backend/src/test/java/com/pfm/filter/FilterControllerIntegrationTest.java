@@ -32,13 +32,13 @@ import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());

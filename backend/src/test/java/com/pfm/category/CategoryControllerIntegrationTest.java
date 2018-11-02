@@ -27,16 +27,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.helpers.IntegrationTestsBase;
 import java.util.List;
-import junitparams.Parameters;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
 
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
-  //TODO change JunitPArams to Junit5 to avoid CLASS RULE
-
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -63,8 +62,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(categories, containsInAnyOrder(categoryCar, categoryOil));
   }
 
-  @Test
-  @Parameters(method = "emptyAccountNameParameters")
+  @ParameterizedTest
+  @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
 
     //given
@@ -83,8 +82,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_CATEGORY_NAME))));
   }
 
-  @SuppressWarnings("unused")
-  private Object[] emptyAccountNameParameters() {
+  private static Object[] emptyAccountNameParameters() {
     return new Object[]{"", " ", "    ", null};
   }
 

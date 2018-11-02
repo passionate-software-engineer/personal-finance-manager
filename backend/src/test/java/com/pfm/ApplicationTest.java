@@ -1,12 +1,9 @@
 package com.pfm;
 
 import java.util.concurrent.ThreadLocalRandom;
-import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.junit.jupiter.api.Test;
 
 // Test class added ONLY to cover main() invocation not covered by application tests.
-@ExtendWith(SpringExtension.class)
 public class ApplicationTest {
 
   @Test

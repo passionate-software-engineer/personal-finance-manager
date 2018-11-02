@@ -15,8 +15,8 @@ import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.util.Collections;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class FilterServiceIntegrationTest extends IntegrationTestsBase {
@@ -35,7 +35,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   private long userId;
 
-  @Before
+  @BeforeEach
   public void before() {
     super.before();
     userId = userService.registerUser(userZdzislaw()).getId();

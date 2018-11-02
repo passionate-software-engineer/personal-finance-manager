@@ -24,14 +24,15 @@ import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
-import junitparams.Parameters;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -67,8 +68,8 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   }
 
-  @Test
-  @Parameters(method = "emptyAccountNameParameters")
+  @ParameterizedTest
+  @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCausedByEmptyNameField(String name, BigDecimal balance) throws Exception {
 
     //given
@@ -85,8 +86,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[1]", is(getMessage(EMPTY_ACCOUNT_BALANCE))));
   }
 
-  @SuppressWarnings("unused")
-  private Collection<Object[]> emptyAccountNameParameters() {
+  private static Collection<Object[]> emptyAccountNameParameters() {
     return Arrays.asList(new Object[][]{
         {"", null},
         {" ", null},

@@ -32,8 +32,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExportImportControllerIntegrationTest extends IntegrationTestsBase {
@@ -47,7 +47,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Autowired
   private TransactionService transactionService;
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
