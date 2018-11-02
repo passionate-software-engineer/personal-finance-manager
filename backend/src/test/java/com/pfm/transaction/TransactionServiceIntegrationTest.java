@@ -7,12 +7,12 @@ import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;

@@ -5,8 +5,8 @@ import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
