@@ -53,10 +53,10 @@ public class CategoryValidatorTest {
         .build();
 
     long id = 1L;
-    when(categoryService.getCategoryByIdAndUserId(id, mockUserId)).thenReturn(Optional.of(category));
+    when(categoryService.getCategoryByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(category));
 
     //when
-    List<String> validationResults = categoryValidator.validateCategoryForUpdate(id, mockUserId, category);
+    List<String> validationResults = categoryValidator.validateCategoryForUpdate(id, MOCK_USER_ID, category);
 
     //then
     assertThat(validationResults, hasSize(1));

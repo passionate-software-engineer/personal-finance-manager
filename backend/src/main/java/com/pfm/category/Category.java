@@ -70,8 +70,9 @@ public final class Category implements DifferenceProvider<Category> {
   @Override
   public List<String> getObjectPropertiesWithValues() {
     List<String> newValues = new ArrayList<>();
+    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "name", this.getName()));
     if (!(this.parentCategory == null)) {
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, this.getName() + " Category ", "'parent'", this.getParentCategory().getName()));
+      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "parent category", this.getParentCategory().getName()));
     }
     return newValues;
   }

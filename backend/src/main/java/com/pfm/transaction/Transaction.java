@@ -90,7 +90,6 @@ public final class Transaction implements DifferenceProvider<Transaction> {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction date", this.getDate().toString(), transaction.getDate().toString()));
     }
 
-
     if (!differences.isEmpty()) {
       differences.add(0, "Transaction '" + this.getDescription() + "' changes");
     }
@@ -100,6 +99,7 @@ public final class Transaction implements DifferenceProvider<Transaction> {
   @Override
   public List<String> getObjectPropertiesWithValues() {
     List<String> newValues = new ArrayList<>();
+    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "name", this.getDescription()));
     newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "date", this.getDate().toString()));
     newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "category", this.getCategoryId()));
     for (AccountPriceEntry entry : this.getAccountPriceEntries()) {

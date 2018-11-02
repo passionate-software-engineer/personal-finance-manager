@@ -22,7 +22,7 @@ public class HistoryEntryService {
 
   public List<HistoryEntry> getHistoryEntries(long userId) {
     return historyEntryRepository.findByUserId(userId).stream()
-        .sorted(Comparator.comparing(HistoryEntry::getDate))
+        .sorted(Comparator.comparing(HistoryEntry::getId))
         .collect(Collectors.toList());
   }
 
@@ -48,31 +48,6 @@ public class HistoryEntryService {
   }
 
   private void saveHistoryEntries(List<String> entries, long userId) {
-
-//    StringBuilder stringBuilder = new StringBuilder();
-//
-//    for (int i = 0; i < entries.size(); i++) {
-//      stringBuilder.append(entries.get(i));
-//
-//      if (i == 0 && entries.size() == 1) {
-//        stringBuilder.append(" .");
-//        break;
-//      }
-//
-//      if (i == 0 && entries.size() > 1) {
-//        stringBuilder.append(" : ");
-//      }
-//
-//      if (i + 1 == entries.size()) {
-//        stringBuilder.append(" .");
-//        break;
-//      }
-//
-//      if (i > 0) {
-//        stringBuilder.append(", ");
-//      }
-//    }
-
     HistoryEntry historyEntry = HistoryEntry.builder()
         .userId(userId)
         .date(LocalDateTime.now())
