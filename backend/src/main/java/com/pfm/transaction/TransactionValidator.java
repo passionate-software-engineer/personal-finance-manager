@@ -34,7 +34,7 @@ public class TransactionValidator {
     if (transaction.getCategoryId() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_CATEGORY));
     } else if (!categoryService.categoryExistByIdAndUserId(transaction.getCategoryId(), userId)) {
-      validationErrors.add(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + transaction.getCategoryId());
+      validationErrors.add(String.format(getMessage(CATEGORY_ID_DOES_NOT_EXIST), transaction.getCategoryId()));
     }
 
     if (transaction.getAccountPriceEntries() == null || transaction.getAccountPriceEntries().size() == 0) {
@@ -44,7 +44,7 @@ public class TransactionValidator {
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
         } else if (accountService.accountDoesNotExistByIdAndUserId(entry.getAccountId(), userId)) {
-          validationErrors.add(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + entry.getAccountId());
+          validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
         }
 
         if (entry.getPrice() == null) {

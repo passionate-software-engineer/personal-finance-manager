@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Order(1)
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
-  static final String CORRELATION_ID = "correlationId";
+  static final String CORRELATION_ID = "correlationId"; // TODO change to Correlation-Id to be consistent with other headers convention
 
   @Override
   protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)

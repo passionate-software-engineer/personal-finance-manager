@@ -31,7 +31,7 @@ public class FilterValidator {
     if (filter.getAccountIds() != null) {
       for (long id : filter.getAccountIds()) {
         if (accountService.accountDoesNotExistByIdAndUserId(id, userId)) {
-          validationResults.add(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + id);
+          validationResults.add(String.format(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST), id));
         }
       }
     }
@@ -39,7 +39,7 @@ public class FilterValidator {
     if (filter.getCategoryIds() != null) {
       for (long id : filter.getCategoryIds()) {
         if (!categoryService.categoryExistByIdAndUserId(id, userId)) {
-          validationResults.add(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + id);
+          validationResults.add(String.format(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST), id));
         }
       }
     }
