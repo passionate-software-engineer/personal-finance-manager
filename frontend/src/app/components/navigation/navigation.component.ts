@@ -17,7 +17,13 @@ export class NavigationComponent implements OnInit {
     authenticationService.currentUserObservable.subscribe(user => {
       this.currentUser = user;
     });
-    translate.setDefaultLang('en');
+    let language = localStorage.getItem('language');
+    if (language === null || language === undefined) {
+      language = 'en';
+      localStorage.setItem('language', language);
+    }
+
+    translate.setDefaultLang(language);
   }
 
   ngOnInit() {
@@ -32,8 +38,8 @@ export class NavigationComponent implements OnInit {
     return this.authenticationService.isUserLoggedIn();
   }
 
-  // TODO save language in local storage so it's persistent between application reloads
   switchLanguage = (language: string) => {
     this.translate.use(language);
+    localStorage.setItem('language', language);
   };
 }

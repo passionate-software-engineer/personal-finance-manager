@@ -25,24 +25,24 @@ export class CategoryService extends ServiceBase {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
+    return this.http.get<Category[]>(ServiceBase.apiUrl(PATH))
       .pipe(catchError(this.handleError('getCategories', [])));
   }
 
   addCategory(category: Category): Observable<any> {
     const categoryRequest = CategoryService.categoryToCategoryRequest(category);
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.httpOptions)
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType)
       .pipe(catchError(this.handleError('addCategory', [])));
   }
 
   deleteCategory(id: number): Observable<any> {
-    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
       .pipe(catchError(this.handleError('deleteCategory', [])));
   }
 
   editCategory(category: Category): Observable<any> {
     const categoryRequest = CategoryService.categoryToCategoryRequest(category);
-    return this.http.put<Category>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.httpOptions)
+    return this.http.put<Category>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.contentType)
       .pipe(catchError(this.handleError('editCategory', [])));
   }
 }

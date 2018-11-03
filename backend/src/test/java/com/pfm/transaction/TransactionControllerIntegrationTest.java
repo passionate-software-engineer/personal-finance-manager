@@ -9,6 +9,7 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
+import static com.pfm.filters.LanguageFilter.LANGUAGE_HEADER;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.config.MessagesProvider.Language;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -230,14 +232,15 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token)
+        .header(LANGUAGE_HEADER, "de") // will default to en
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME))))
-        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(EMPTY_TRANSACTION_CATEGORY))))
-        .andExpect(jsonPath("$[2]", Matchers.is(getMessage(AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED))))
-        .andExpect(jsonPath("$[3]", Matchers.is(getMessage(EMPTY_TRANSACTION_DATE))));
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME, Language.ENGLISH))))
+        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(EMPTY_TRANSACTION_CATEGORY, Language.ENGLISH))))
+        .andExpect(jsonPath("$[2]", Matchers.is(getMessage(AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED, Language.ENGLISH))))
+        .andExpect(jsonPath("$[3]", Matchers.is(getMessage(EMPTY_TRANSACTION_DATE, Language.ENGLISH))));
   }
 
   @Test
@@ -259,13 +262,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token)
+        .header(LANGUAGE_HEADER, "pl")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(3)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME))))
-        .andExpect(jsonPath("$[1]", Matchers.is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID)))
-        .andExpect(jsonPath("$[2]", Matchers.is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID)));
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME, Language.POLISH))))
+        .andExpect(jsonPath("$[1]", Matchers.is(String.format(getMessage(CATEGORY_ID_DOES_NOT_EXIST, Language.POLISH), NOT_EXISTING_ID))))
+        .andExpect(jsonPath("$[2]", Matchers.is(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST, Language.POLISH), NOT_EXISTING_ID))));
   }
 
   @Test

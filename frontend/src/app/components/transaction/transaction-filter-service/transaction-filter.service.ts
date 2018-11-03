@@ -43,29 +43,29 @@ export class TransactionFilterService extends ServiceBase {
   }
 
   getFilters(): Observable<FilterResponse[]> {
-    return this.http.get<FilterResponse[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
+    return this.http.get<FilterResponse[]>(ServiceBase.apiUrl(PATH))
       .pipe(catchError(this.handleError('getFilters', [])));
   }
 
   getFilter(id: number): Observable<FilterResponse> {
-    return this.http.get<FilterResponse>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
+    return this.http.get<FilterResponse>(ServiceBase.apiUrl(PATH, id))
       .pipe(catchError(this.handleError('getSingleFilter', null)));
   }
 
   addFilter(filter: TransactionFilter): Observable<any> {
     const filterRequest = TransactionFilterService.filterToFilterRequest(filter);
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), filterRequest, this.httpOptions)
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), filterRequest, this.contentType)
       .pipe(catchError(this.handleError('addFilter', [])));
   }
 
   deleteFilter(id: number): Observable<any> {
-    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
       .pipe(catchError(this.handleError('deleteFilter', [])));
   }
 
   updateFilter(filter: TransactionFilter): Observable<any> {
     const categoryRequest = TransactionFilterService.filterToFilterRequest(filter);
-    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, filter.id), categoryRequest, this.httpOptions)
+    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, filter.id), categoryRequest, this.contentType)
       .pipe(catchError(this.handleError('updateFilter', [])));
   }
 }

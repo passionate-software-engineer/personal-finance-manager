@@ -17,7 +17,7 @@ export class HistoryService extends ServiceBase {
   }
 
   getHistory(): Observable<History[]> {
-    return this.http.get<History[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
+    return this.http.get<History[]>(ServiceBase.apiUrl(PATH))
       .pipe(catchError(this.handleError('getHistory', [])));
   }
 }

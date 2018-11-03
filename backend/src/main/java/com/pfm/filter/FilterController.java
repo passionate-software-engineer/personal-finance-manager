@@ -97,6 +97,7 @@ public class FilterController implements FilterApi {
       log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();
     }
+
     filterService.deleteFilter(filterId);
     return ResponseEntity.ok().build();
   }

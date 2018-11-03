@@ -25,22 +25,22 @@ export class AccountService extends ServiceBase {
   }
 
   getAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(ServiceBase.apiUrl(PATH), this.httpCorrelationId)
+    return this.http.get<Account[]>(ServiceBase.apiUrl(PATH))
       .pipe(catchError(this.handleError('getAccounts', [])));
   }
 
   addAccount(account: Account): Observable<any> {
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), AccountService.accountToAccountRequest(account), this.httpOptions)
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), AccountService.accountToAccountRequest(account), this.contentType)
       .pipe(catchError(this.handleError('addAccount', [])));
   }
 
   deleteAccount(id: number): Observable<any> {
-    return this.http.delete<Account>(ServiceBase.apiUrl(PATH, id), this.httpCorrelationId)
+    return this.http.delete<Account>(ServiceBase.apiUrl(PATH, id))
       .pipe(catchError(this.handleError('deleteAccount', [])));
   }
 
   editAccount(account: Account): Observable<any> {
-    return this.http.put<Account>(ServiceBase.apiUrl(PATH, account.id), AccountService.accountToAccountRequest(account), this.httpOptions)
+    return this.http.put<Account>(ServiceBase.apiUrl(PATH, account.id), AccountService.accountToAccountRequest(account), this.contentType)
       .pipe(catchError(this.handleError('editAccount', [])));
   }
 
