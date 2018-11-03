@@ -49,23 +49,39 @@ public class MessagesProvider {
   private static final ResourceBundle englishBundle = ResourceBundle.getBundle("messages", new Locale("en"));
   private static final ResourceBundle polishBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 
-  //  private static final ThreadLocal<Language> languageThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<Language> languageThreadLocal = new ThreadLocal<>();
 
   public static String getMessage(String messageKey) {
-    //    if (Language.POLISH.equals(languageThreadLocal.get())) {
-    //      return polishBundle.getString(messageKey);
-    //    }
+    return getMessage(messageKey, languageThreadLocal.get());
+  }
+
+  public static String getMessage(String messageKey, Language language) {
+    if (Language.POLISH.equals(language)) {
+      return polishBundle.getString(messageKey);
+    }
 
     return englishBundle.getString(messageKey);
   }
 
-  //  public static void setLanguage(Language language) {
-  //    languageThreadLocal.set(language);
-  //  }
-  //
-  //  public enum Language {
-  //    POLISH,
-  //    ENGLISH
-  //  }
+  public static void setLanguage(Language language) {
+    languageThreadLocal.set(language);
+  }
+
+  public enum Language {
+    POLISH,
+    ENGLISH;
+
+    public static Language getEnumByString(String language) {
+      if (language.contains("pl")) {
+        return POLISH;
+      }
+
+      if (language.contains("en")) {
+        return ENGLISH;
+      }
+
+      return ENGLISH;
+    }
+  }
 
 }

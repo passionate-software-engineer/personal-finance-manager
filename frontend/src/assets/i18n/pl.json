@@ -51,6 +51,7 @@
   "navigation.register": "Zarejestruj się",
   "navigation.login": "Zaloguj się",
   "navigation.logout": "Wyloguj się",
+  "navigation.history": "Historia operacji",
   "register.firstName": "Imię",
   "register.firstNameIsRequired": "Imię jest wymagane",
   "register.lastName": "Nazwisko",
@@ -77,5 +78,7 @@
   "transaction.price": "Cena",
   "transaction.account": "Konto",
   "transaction.category": "Kategoria",
-  "filters.showAllFilterName": "Wszystkie transakcje"
+  "filters.showAllFilterName": "Wszystkie transakcje",
+  "history.date": "Data",
+  "history.entry": "Wpis"
 }

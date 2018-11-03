@@ -51,6 +51,7 @@
   "navigation.register": "Register",
   "navigation.login": "Login",
   "navigation.logout": "Logout",
+  "navigation.history": "History",
   "register.firstName": "First Name",
   "register.firstNameIsRequired": "First Name is required",
   "register.lastName": "Last Name",
@@ -77,5 +78,7 @@
   "transaction.price": "Price",
   "transaction.account": "Account",
   "transaction.category": "Category",
-  "filters.showAllFilterName": "All transactions"
+  "filters.showAllFilterName": "All transactions",
+  "history.date": "Date",
+  "history.entry": "Entry"
 }

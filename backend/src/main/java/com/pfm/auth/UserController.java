@@ -32,6 +32,8 @@ public class UserController { // TODO extract API interface
 
   }
 
+  // TODO should enable user to log out / invalidate session
+
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public ResponseEntity<?> registerUser(@RequestBody User user) {
     List<String> validationResult = userValidator.validateUser(user);

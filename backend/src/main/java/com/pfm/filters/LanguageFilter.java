@@ -1,47 +1,44 @@
 package com.pfm.filters;
 
+import com.pfm.config.MessagesProvider;
+import com.pfm.config.MessagesProvider.Language;
 import java.io.IOException;
-import java.util.UUID;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @Component
-@Order(1)
-public class CorrelationIdFilter extends OncePerRequestFilter {
+@Order(3)
+public class LanguageFilter extends OncePerRequestFilter {
 
-  static final String CORRELATION_ID = "Correlation-Id";
+  public static final String LANGUAGE_HEADER = "Language";
 
   @Override
   protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
       throws IOException, ServletException {
     try {
-      addRequestCorrelationIdToMdc(request);
+      setLanguageForProcessingThread(request);
       filterChain.doFilter(request, response);
     } finally {
-      removeRequestCorrelationIdFromMdc();
+      MessagesProvider.setLanguage(null);
     }
   }
 
-  private void addRequestCorrelationIdToMdc(HttpServletRequest request) {
-    String correlationId = request.getHeader(CORRELATION_ID);
+  private void setLanguageForProcessingThread(HttpServletRequest request) {
+    String languageHeader = request.getHeader(LANGUAGE_HEADER);
 
-    if (correlationId == null) {
-      correlationId = UUID.randomUUID().toString();
+    if (languageHeader == null) {
+      languageHeader = "en";
     }
 
-    MDC.put(CORRELATION_ID, correlationId);
+    MessagesProvider.setLanguage(Language.getEnumByString(languageHeader));
   }
 
-  private void removeRequestCorrelationIdFromMdc() {
-    MDC.remove(CORRELATION_ID);
-  }
 }
