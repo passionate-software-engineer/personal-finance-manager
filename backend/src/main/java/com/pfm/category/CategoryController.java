@@ -65,6 +65,7 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok(categories);
   }
 
+  @Override
   @Transactional
   public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") long userId) {
 
@@ -84,6 +85,7 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok(createdCategory.getId());
   }
 
+  @Override // TODO add spring transactions to all methods working with history service
   @Transactional
   public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest,
       @RequestAttribute(value = "userId") long userId) {
@@ -124,8 +126,8 @@ public class CategoryController implements CategoryApi {
       return ResponseEntity.notFound().build();
     }
 
-    if (categoryService.isParentCategory(categoryId)) {
-      log.info("Category is used as parent. category Delete category {} not possible", categoryId);
+    if (categoryService.isParentCategory(categoryId)) { // TODO review log messages and make sure each one is useful and correct.
+      log.info("Category is used as parent. Category {} delete is not possible", categoryId);
       return ResponseEntity.badRequest().body(getMessage(CANNOT_DELETE_PARENT_CATEGORY));
     }
 

@@ -21,6 +21,19 @@ public class FilterController implements FilterApi {
   private FilterValidator filterValidator;
   private HistoryEntryService historyEntryService;
 
+  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
+    return Filter.builder()
+        .name(filterRequest.getName())
+        .dateFrom(filterRequest.getDateFrom())
+        .dateTo(filterRequest.getDateTo())
+        .accountIds(filterRequest.getAccountIds())
+        .categoryIds(filterRequest.getCategoryIds())
+        .priceFrom(filterRequest.getPriceFrom())
+        .priceTo(filterRequest.getPriceTo())
+        .description(filterRequest.getDescription())
+        .build();
+  }
+
   @Override
   public ResponseEntity<Filter> getFilterById(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
     log.info("Retrieving filter with id: {}", filterId);
@@ -102,18 +115,5 @@ public class FilterController implements FilterApi {
     historyEntryService.addEntryOnDelete(filterByIdAndUserId.get(), userId);
 
     return ResponseEntity.ok().build();
-  }
-
-  private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
-    return Filter.builder()
-        .name(filterRequest.getName())
-        .dateFrom(filterRequest.getDateFrom())
-        .dateTo(filterRequest.getDateTo())
-        .accountIds(filterRequest.getAccountIds())
-        .categoryIds(filterRequest.getCategoryIds())
-        .priceFrom(filterRequest.getPriceFrom())
-        .priceTo(filterRequest.getPriceTo())
-        .description(filterRequest.getDescription())
-        .build();
   }
 }

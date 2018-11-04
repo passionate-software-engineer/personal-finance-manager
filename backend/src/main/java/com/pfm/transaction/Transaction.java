@@ -91,6 +91,9 @@ public final class Transaction implements DifferenceProvider<Transaction> {
               + ", price: " + accountPriceEntry.getPrice());
     }
 
+    if (!(this.getDate().equals(transaction.getDate()))) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction date", this.getDate().toString(), transaction.getDate().toString()));
+    }
     return differences;
   }
 

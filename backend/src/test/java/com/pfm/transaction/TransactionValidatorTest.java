@@ -20,13 +20,13 @@ import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TransactionValidatorTest {
 
   private static final long NOT_EXISTING_ID = 0L;
@@ -83,7 +83,7 @@ public class TransactionValidatorTest {
     // then
     assertThat(result, hasSize(5));
     assertThat(result.get(0), is(getMessage(EMPTY_TRANSACTION_NAME)));
-    assertThat(result.get(1), is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID));
+    assertThat(result.get(1), is(String.format(getMessage(CATEGORY_ID_DOES_NOT_EXIST), NOT_EXISTING_ID)));
     assertThat(result.get(2), is(getMessage(EMPTY_TRANSACTION_ACCOUNT)));
     assertThat(result.get(3), is(getMessage(EMPTY_TRANSACTION_PRICE)));
     assertThat(result.get(4), is(getMessage(EMPTY_TRANSACTION_DATE)));
@@ -103,7 +103,7 @@ public class TransactionValidatorTest {
     assertThat(result, hasSize(5));
     assertThat(result.get(0), is(getMessage(EMPTY_TRANSACTION_NAME)));
     assertThat(result.get(1), is(getMessage(EMPTY_TRANSACTION_CATEGORY)));
-    assertThat(result.get(2), is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + NOT_EXISTING_ID));
+    assertThat(result.get(2), is(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), NOT_EXISTING_ID)));
     assertThat(result.get(3), is(getMessage(EMPTY_TRANSACTION_PRICE)));
     assertThat(result.get(4), is(getMessage(EMPTY_TRANSACTION_DATE)));
   }

@@ -46,7 +46,7 @@ import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
 public class MultipleUserIntegrationTests extends IntegrationTestsBase {
@@ -75,8 +75,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", is(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + marianAccountMbankId)))
-        .andExpect(jsonPath("$[1]", is(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + marianCategoryFoodId)));
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST), marianAccountMbankId))))
+        .andExpect(jsonPath("$[1]", is(String.format(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST), marianCategoryFoodId))));
   }
 
   @Test
@@ -105,8 +105,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", is(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST) + zdzislawAccountIdeaId)))
-        .andExpect(jsonPath("$[1]", is(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST) + zdzislawCategoryHomeId)));
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(FILTER_ACCOUNT_ID_DOES_NOT_EXIST), zdzislawAccountIdeaId))))
+        .andExpect(jsonPath("$[1]", is(String.format(getMessage(FILTER_CATEGORY_ID_DOES_NOT_EXIST), zdzislawCategoryHomeId))));
   }
 
   @Test
@@ -308,8 +308,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + marianCategoryCarId)))
-        .andExpect(jsonPath("$[1]", is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + marianAccountMbankId)));
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(CATEGORY_ID_DOES_NOT_EXIST), marianCategoryCarId))))
+        .andExpect(jsonPath("$[1]", is(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), marianAccountMbankId))));
   }
 
   @Test
@@ -341,8 +341,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_ID_DOES_NOT_EXIST) + zdzislawCategoryHomeId)))
-        .andExpect(jsonPath("$[1]", is(getMessage(ACCOUNT_ID_DOES_NOT_EXIST) + zdzislawAccountIdeaId)));
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(CATEGORY_ID_DOES_NOT_EXIST), zdzislawCategoryHomeId))))
+        .andExpect(jsonPath("$[1]", is(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), zdzislawAccountIdeaId))));
   }
 
   @Test

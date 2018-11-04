@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../authentication/authentication.service';
+import {v4 as uuid} from 'uuid';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
+export class HeadersInterceptor implements HttpInterceptor {
 
   constructor(private authenticationService: AuthenticationService) {
   }
@@ -17,10 +18,19 @@ export class JwtInterceptor implements HttpInterceptor {
 
       request = request.clone({
         setHeaders: {
-          Authorization: `${currentUser.token}`
+          Authorization: `${currentUser.token}`,
+          'Correlation-Id': uuid(),
+          'Language': localStorage.getItem('language')
         }
       });
 
+    } else {
+      request = request.clone({
+        setHeaders: {
+          'Correlation-Id': uuid(),
+          'Language': localStorage.getItem('language')
+        }
+      });
     }
 
     return next.handle(request);

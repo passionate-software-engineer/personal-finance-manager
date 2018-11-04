@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 @CrossOrigin
 @RestController
-public class UserController {
+public class UserController { // TODO extract API interface
 
   private UserService userService;
   private UserValidator userValidator;
@@ -32,12 +32,15 @@ public class UserController {
 
   }
 
+  // TODO should enable user to log out / invalidate session
+
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public ResponseEntity<?> registerUser(@RequestBody User user) {
     List<String> validationResult = userValidator.validateUser(user);
     if (!validationResult.isEmpty()) {
       return ResponseEntity.badRequest().body(validationResult);
     }
+
     long userId = userService.registerUser(user).getId();
     return ResponseEntity.ok(userId);
   }

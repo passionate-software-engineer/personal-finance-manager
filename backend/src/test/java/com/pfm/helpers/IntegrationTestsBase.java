@@ -12,6 +12,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
+import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
@@ -22,30 +23,22 @@ import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import org.flywaydb.core.Flyway;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.rules.SpringClassRule;
-import org.springframework.test.context.junit4.rules.SpringMethodRule;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(JUnitParamsRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public abstract class IntegrationTestsBase {
-
-  // TODO - MINOR - Try using multiple runners or Junit5 parametrized tests L
-  @ClassRule
-  public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
@@ -58,8 +51,8 @@ public abstract class IntegrationTestsBase {
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
 
-  @Rule
-  public final SpringMethodRule springMethodRule = new SpringMethodRule();
+  @Autowired
+  protected UserService userService;
 
   @Autowired
   protected MockMvc mockMvc;
@@ -77,7 +70,7 @@ public abstract class IntegrationTestsBase {
   protected String token;
   protected long userId;
 
-  @Before
+  @BeforeEach
   public void before() {
     flyway.clean();
     flyway.migrate();

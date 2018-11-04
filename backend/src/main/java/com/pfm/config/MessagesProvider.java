@@ -27,13 +27,13 @@ public class MessagesProvider {
   public static final String EMPTY_TRANSACTION_CATEGORY = "transactionValidator.emptyTransactionCategory";
   public static final String EMPTY_TRANSACTION_PRICE = "transactionValidator.emptyTransactionPrice";
   public static final String EMPTY_TRANSACTION_ACCOUNT = "transactionValidator.emptyTransactionAccountName";
-  public static final String CATEGORY_ID_DOES_NOT_EXIST = "transactionValidator.categoryIdDoesNotExist";
-  public static final String ACCOUNT_ID_DOES_NOT_EXIST = "transactionValidator.accountIdDoesNotExist";
+  public static final String CATEGORY_ID_DOES_NOT_EXIST = "validator.categoryIdDoesNotExist";
+  public static final String ACCOUNT_ID_DOES_NOT_EXIST = "validator.accountIdDoesNotExist";
   public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
   public static final String AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED = "transactionValidator.atLeastOneAccountAndPriceIsRequired";
 
-  public static final String FILTER_ACCOUNT_ID_DOES_NOT_EXIST = "filterValidator.accountIdDoesNotExist";
-  public static final String FILTER_CATEGORY_ID_DOES_NOT_EXIST = "filterValidator.categoryIdDoesNotExist";
+  public static final String FILTER_ACCOUNT_ID_DOES_NOT_EXIST = "validator.accountIdDoesNotExist";
+  public static final String FILTER_CATEGORY_ID_DOES_NOT_EXIST = "validator.categoryIdDoesNotExist";
   public static final String FILTER_PRICE_FROM_BIGGER_THEN_PRICE_TO = "filterValidator.priceFromBiggerThenPriceTo";
   public static final String FILTER_DATE_FROM_IS_AFTER_DATE_TO = "filterValidator.dateFromAfterDateTo";
   public static final String FILTER_EMPTY_NAME = "filterValidator.emptyName";
@@ -47,10 +47,42 @@ public class MessagesProvider {
   public static final String PASSWORD_CONTAINS_WHITSPACE = "userValidator.passwordContainsWhitespaces";
   public static final String USERNAME_OR_PASSWORD_IS_INCORRECT = "userController.usernameOrPassowrdIsIncorrect";
 
-  // TODO - language should not be hardcoded any way - it must be taken from request - we need to add header language to our requests
-  private static final ResourceBundle langBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
+  private static final ResourceBundle englishBundle = ResourceBundle.getBundle("messages", new Locale("en"));
+  private static final ResourceBundle polishBundle = ResourceBundle.getBundle("messages", new Locale("pl"));
 
-  public static String getMessage(String errorMessage) {
-    return langBundle.getString(errorMessage);
+  private static final ThreadLocal<Language> languageThreadLocal = new ThreadLocal<>();
+
+  public static String getMessage(String messageKey) {
+    return getMessage(messageKey, languageThreadLocal.get());
   }
+
+  public static String getMessage(String messageKey, Language language) {
+    if (Language.POLISH.equals(language)) {
+      return polishBundle.getString(messageKey);
+    }
+
+    return englishBundle.getString(messageKey);
+  }
+
+  public static void setLanguage(Language language) {
+    languageThreadLocal.set(language);
+  }
+
+  public enum Language {
+    POLISH,
+    ENGLISH;
+
+    public static Language getEnumByString(String language) {
+      if (language.contains("pl")) {
+        return POLISH;
+      }
+
+      if (language.contains("en")) {
+        return ENGLISH;
+      }
+
+      return ENGLISH;
+    }
+  }
+
 }
