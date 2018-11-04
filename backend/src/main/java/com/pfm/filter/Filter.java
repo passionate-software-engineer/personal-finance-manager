@@ -148,10 +148,6 @@ public final class Filter implements DifferenceProvider<Filter> {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "description", this.getDescription(), filter.getDescription()));
     }
 
-    if (!differences.isEmpty()) {
-      differences.add(0, "Filter '" + this.getName() + "' changes");
-    }
-
     return differences;
   }
 

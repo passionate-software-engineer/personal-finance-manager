@@ -16,7 +16,7 @@ public class HistoryEntryService {
 
   private static final String ADD_ENTRY_TEMPLATE = "Added %s";
   private static final String DELETE_ENTRY_TEMPLATE = "Deleted %s '%s'";
-  private static final String NO_CHANGE_TEMPLATE = "%s was updated but there were no changes";
+  private static final String CHANGES_TEMPLATE = "%s '%s' changes";
 
   private HistoryEntryRepository historyEntryRepository;
 
@@ -42,8 +42,9 @@ public class HistoryEntryService {
   public <T extends DifferenceProvider<T>> void addEntryOnUpdate(T objectToUpdate, T objectWithNewValues, long userId) {
     List<String> differences = objectToUpdate.getDifferences(objectWithNewValues);
     if (differences.isEmpty()) {
-      differences.add(String.format(NO_CHANGE_TEMPLATE, objectToUpdate.getClass().getSimpleName()));
+      return;
     }
+    differences.add(0, String.format(CHANGES_TEMPLATE, objectToUpdate.getClass().getSimpleName(), objectToUpdate.getObjectDescriptiveName()));
     saveHistoryEntries(differences, userId);
   }
 

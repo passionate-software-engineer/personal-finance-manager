@@ -6,7 +6,7 @@
 
 
     <!--Date-->
-    <th [class.active]="order === 'date'" (click)="setOrder('date')"  width="30%" >
+    <th [class.active]="order === 'date'" (click)="setOrder('date')" width="30%">
       Date
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
@@ -30,7 +30,11 @@
     <td>{{histor.date | date: "yyyy-MM-dd HH:mm"}}</td>
 
     <!--Entry-->
-    <td>{{histor.entry}}</td>
+    <td>
+        <p *ngFor="let i of histor.entry">
+          {{i}}
+        </p>
+    </td>
 
   </tbody>
 </table>

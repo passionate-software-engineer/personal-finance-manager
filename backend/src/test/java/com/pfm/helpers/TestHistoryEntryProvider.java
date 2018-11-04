@@ -2,7 +2,6 @@ package com.pfm.helpers;
 
 import com.pfm.history.HistoryEntry;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class TestHistoryEntryProvider {

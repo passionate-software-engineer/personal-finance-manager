@@ -43,16 +43,12 @@ public final class Account implements DifferenceProvider<Account> {
     List<String> differences = new ArrayList<>();
 
     if (!(this.getName().equals(otherAccount.getName()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name ", this.getName(), otherAccount.getName()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name", this.getName(), otherAccount.getName()));
     }
 
     if (!(this.getBalance().compareTo(otherAccount.getBalance()) == 0)) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "balance ", this.getBalance().toString(),
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "balance", this.getBalance().toString(),
           convertBigDecimalToString(otherAccount.getBalance())));
-    }
-
-    if (!differences.isEmpty()) {
-      differences.add(0, "Account '" + this.getName() + "' changes");
     }
 
     return differences;

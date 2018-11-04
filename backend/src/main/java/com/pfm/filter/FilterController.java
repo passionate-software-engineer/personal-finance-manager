@@ -1,7 +1,6 @@
 package com.pfm.filter;
 
 import com.pfm.history.HistoryEntryService;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -112,8 +111,8 @@ public class FilterController implements FilterApi {
         .dateTo(filterRequest.getDateTo())
         .accountIds(filterRequest.getAccountIds())
         .categoryIds(filterRequest.getCategoryIds())
-        .priceFrom(filterRequest.getPriceFrom().setScale(2, RoundingMode.HALF_UP))
-        .priceTo(filterRequest.getPriceTo().setScale(2, RoundingMode.HALF_UP))
+        .priceFrom(filterRequest.getPriceFrom())
+        .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
         .build();
   }

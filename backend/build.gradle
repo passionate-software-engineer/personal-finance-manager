@@ -149,9 +149,9 @@ test {
     finalizedBy jacocoTestCoverageVerification
 }
 
-cpdCheck {
-    source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
-}
+//cpdCheck {
+//   source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
+//}
 
 gitProperties {
     dateFormat = "yyyy-MM-dd'T'HH:mmZ"
