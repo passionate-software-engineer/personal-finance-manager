@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class TransactionDifferncesProviderTest {
 
   @Test
-  void getDifferencesTest() {
+  void getDifferencesAllFieldsChangedTest() {
 
     //given
     Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
@@ -109,7 +109,7 @@ class TransactionDifferncesProviderTest {
   }
 
   @Test
-  void getDifferencesNoChangesCaseTest() {
+  void getDifferencesNoChangesTest() {
 
     //given
     Transaction transaction = foodTransactionWithNoAccountAndNoCategory();

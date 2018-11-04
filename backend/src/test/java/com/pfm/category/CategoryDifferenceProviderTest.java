@@ -34,7 +34,7 @@ class CategoryDifferenceProviderTest {
   }
 
   @Test
-  void getDifferencesParentCategoryNameChangedCaseTest() {
+  void getDifferencesParentCategoryNameChangedTest() {
     Category category = categoryOil();
     category.setParentCategory(categoryCar());
 
@@ -55,7 +55,7 @@ class CategoryDifferenceProviderTest {
   }
 
   @Test
-  void getDifferencesNoChangesCaseTest() {
+  void getDifferencesNoChangesTest() {
     Category category = categoryOil();
     category.setParentCategory(categoryOil());
 

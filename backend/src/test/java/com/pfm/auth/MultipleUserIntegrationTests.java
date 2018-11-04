@@ -14,8 +14,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryAnimals;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestFilterProvider.convertAccountIdsToList;
-import static com.pfm.helpers.TestFilterProvider.convertCategoryIdsToList;
+import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterExpensesOver1000;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
@@ -43,6 +42,7 @@ import com.pfm.category.CategoryRequest;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.helpers.IntegrationTestsBase;
+import com.pfm.helpers.TestFilterProvider;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.util.List;
@@ -65,8 +65,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //when
     FilterRequest filterToAdd = convertFilterToFilterRequest(filterExpensesOver1000());
-    filterToAdd.setCategoryIds(convertCategoryIdsToList(marianCategoryFoodId));
-    filterToAdd.setAccountIds(convertAccountIdsToList(marianAccountMbankId));
+    filterToAdd.setCategoryIds(convertIdsToList(marianCategoryFoodId));
+    filterToAdd.setAccountIds(TestFilterProvider.convertIdsToList(marianAccountMbankId));
 
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
@@ -95,8 +95,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //when
     FilterRequest updatedFilter = convertFilterToFilterRequest(filterExpensesOver1000());
-    updatedFilter.setAccountIds(convertAccountIdsToList(zdzislawAccountIdeaId));
-    updatedFilter.setCategoryIds(convertCategoryIdsToList(zdzislawCategoryHomeId));
+    updatedFilter.setAccountIds(TestFilterProvider.convertIdsToList(zdzislawAccountIdeaId));
+    updatedFilter.setCategoryIds(convertIdsToList(zdzislawCategoryHomeId));
 
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + marianOver1000ExpensesFilter)
@@ -410,8 +410,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         marianCategoryCarId, marianToken);
 
     Filter filterExpensesOver1000ToAdd = filterExpensesOver1000();
-    filterExpensesOver1000ToAdd.setCategoryIds(convertCategoryIdsToList(marianCategoryFoodId, marianCategoryCarId));
-    filterExpensesOver1000ToAdd.setAccountIds(convertAccountIdsToList(marianAccountMilleniumId, marianAccountMbankId));
+    filterExpensesOver1000ToAdd.setCategoryIds(convertIdsToList(marianCategoryFoodId, marianCategoryCarId));
+    filterExpensesOver1000ToAdd.setAccountIds(TestFilterProvider.convertIdsToList(marianAccountMilleniumId, marianAccountMbankId));
     final long marianExpensesOver1000FilterId = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000ToAdd, marianToken);
 
     //zdzislaw
@@ -426,8 +426,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         zdzislawCategoryHomeId, zdzislawToken);
 
     Filter filterHomeExpensesToAdd = filterHomeExpensesUpTo200();
-    filterHomeExpensesToAdd.setAccountIds(convertAccountIdsToList(zdzislawAccountIngId, zdzislawAccountIdeaId));
-    filterHomeExpensesToAdd.setCategoryIds(convertCategoryIdsToList(zdzislawCategoryHomeId));
+    filterHomeExpensesToAdd.setAccountIds(TestFilterProvider.convertIdsToList(zdzislawAccountIngId, zdzislawAccountIdeaId));
+    filterHomeExpensesToAdd.setCategoryIds(convertIdsToList(zdzislawCategoryHomeId));
     final long zdzislawHomeExpensesFilterId = callRestServiceToAddFilterAndReturnId(filterHomeExpensesToAdd, zdzislawToken);
 
     //then

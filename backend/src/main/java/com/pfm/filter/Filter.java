@@ -72,13 +72,13 @@ public final class Filter implements DifferenceProvider<Filter> {
     }
 
     //account ids
-    if (!(this.getAccountIds().equals(filter.getAccountIds())) && (!this.getAccountIds().isEmpty() || !filter.getAccountIds().isEmpty())) {
+    if (!(this.getAccountIds().equals(filter.getAccountIds()))) {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "accounts ids", this.getAccountIds().toString(), filter.getAccountIds().toString()));
     }
 
     //category ids
-    if (!(this.getCategoryIds().equals(filter.getCategoryIds())) && (!this.getCategoryIds().isEmpty() || !filter.getCategoryIds().isEmpty())) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "category ids", this.getCategoryIds().toString(), filter.getCategoryIds().toString()));
+    if (!(this.getCategoryIds().equals(filter.getCategoryIds()))) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "categories ids", this.getCategoryIds().toString(), filter.getCategoryIds().toString()));
     }
 
     //price from 
@@ -154,14 +154,15 @@ public final class Filter implements DifferenceProvider<Filter> {
   @Override
   public List<String> getObjectPropertiesWithValues() {
     List<String> newValues = new ArrayList<>();
+
     newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "name", this.getName()));
 
-    if (!this.getCategoryIds().isEmpty()) {
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "categories ids", this.getCategoryIds().toString()));
+    if (!this.getAccountIds().isEmpty()) {
+      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "accounts ids", this.getAccountIds().toString()));
     }
 
     if (!this.getCategoryIds().isEmpty()) {
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "accounts ids", this.getAccountIds().toString()));
+      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "categories ids", this.getCategoryIds().toString()));
     }
 
     if (this.getPriceFrom() != null) {

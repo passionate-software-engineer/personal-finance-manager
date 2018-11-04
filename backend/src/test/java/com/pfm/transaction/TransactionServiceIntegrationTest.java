@@ -44,7 +44,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   private long userId;
 
-  @Before
   @BeforeEach
   public void before() {
     super.before();

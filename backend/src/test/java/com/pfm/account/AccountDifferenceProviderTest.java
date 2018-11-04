@@ -1,7 +1,8 @@
 package com.pfm.account;
 
 import static com.pfm.helpers.BigDecimalHelper.convertBigDecimalToString;
-import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestAccountProvider.accountIngBalance9999;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.history.DifferenceProvider.ENTRY_VALUES_TEMPLATE;
 import static com.pfm.history.DifferenceProvider.UPDATE_ENTRY_TEMPLATE;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,18 +14,12 @@ import org.junit.jupiter.api.Test;
 
 class AccountDifferenceProviderTest {
 
-  private Account account = Account.builder()
-      .name("Mbank")
-      .balance(convertDoubleToBigDecimal(10))
-      .build();
-
-  private Account accountWithChanges = Account.builder()
-      .name("Ing")
-      .balance(convertDoubleToBigDecimal(150))
-      .build();
-
   @Test
-  void getDifferencesTest() {
+  void getDifferencesAllFieldsChangedTest() {
+
+    //given
+    Account account = accountMbankBalance10();
+    Account accountWithChanges = accountIngBalance9999();
 
     //when
     List<String> differences = account.getDifferences(accountWithChanges);
@@ -39,7 +34,24 @@ class AccountDifferenceProviderTest {
   }
 
   @Test
+  void getDifferencesNoChangesTest() {
+
+    //given
+    Account account = accountMbankBalance10();
+
+    //when
+    List<String> differences = account.getDifferences(account);
+
+    //then
+    List<String> expected = new ArrayList<>();
+    assertThat(differences, equalTo(expected));
+  }
+
+  @Test
   void getObjectPropertiesWithValuesTest() {
+
+    //given
+    Account account = accountMbankBalance10();
 
     //when
     List<String> outputObjectPropertiesWithValues = account.getObjectPropertiesWithValues();
@@ -55,11 +67,13 @@ class AccountDifferenceProviderTest {
   @Test
   void getObjectDescriptiveNameTest() {
 
+    //given
+    Account account = accountMbankBalance10();
+
     //when
     String output = account.getObjectDescriptiveName();
 
     //then
     assertThat(output, equalTo(account.getName()));
-
   }
 }
