@@ -48,10 +48,15 @@ public final class Transaction implements DifferenceProvider<Transaction> {
 
     // TODO add transaction name so it's easy to know which one was updated
     if (!(transaction.getDescription().equals(this.getDescription()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "description", this.getDescription(), transaction.getDescription()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name", this.getDescription(), transaction.getDescription()));
     }
+
+    if (!(this.getDate().equals(transaction.getDate()))) {
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "date", this.getDate().toString(), transaction.getDate().toString()));
+    }
+
     if (!(this.categoryId.equals(transaction.getCategoryId()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction category", this.categoryId, transaction.getCategoryId()));
+      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "category", this.categoryId, transaction.getCategoryId()));
     }
 
     List<AccountPriceEntry> thisEntries = this.getAccountPriceEntries();
@@ -86,13 +91,6 @@ public final class Transaction implements DifferenceProvider<Transaction> {
               + ", price: " + accountPriceEntry.getPrice());
     }
 
-    if (!(this.getDate().equals(transaction.getDate()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "Transaction date", this.getDate().toString(), transaction.getDate().toString()));
-    }
-
-    if (!differences.isEmpty()) {
-      differences.add(0, "Transaction '" + this.getDescription() + "' changes");
-    }
     return differences;
   }
 
