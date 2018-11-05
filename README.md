@@ -47,17 +47,31 @@ Define accounts, categories and you are ready to track your transactions.
 
 ## How to start project locally
 
-1. Install [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
+1. Install [JDK 11](https://jdk.java.net/11/), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
 2. Open terminal window, go to **_backend_** directory & run **_./gradlew bootRun_**
 3. Open second terminal window, go to **_frontend_** directory, run **_npm install_** & **_ng serve --open_**
 4. Browser window will open automatically, you can play with the application
 
 ## Running application in IntelliJ
 - Open IntelliJ, click open project, select **_build.gradle_** file, click **_import as project_**
-- Enable annotation processing for Lombok.
-![Enable annotations for Lombok](https://github.com/pio-kol/accouting-system/blob/master/readme/annotatnion.png)
+- Enable annotation processing for Lombok. \
+![Enable annotations for Lombok](readme/lombok-annotations.png)
 - Wait for Gradle to download half of the internet :)
 - Right click on **_Application.java_** and select **_Run_**
+
+## Setting up code formatter in IntelliJ
+- Select IntelliJ > Preferences > Editor > Code Style > Java
+- Select Import scheme -> IntelliJ IDEA XML \
+![Import scheme](readme/import-scheme.png)
+- Select backend/config/pfm-code-style.xml file and click OK
+- Right click on src directory and select Reformat \
+![Reformat src](readme/reformat-src.png)
+- On the dialog select first 3 checkboxes \
+![Reformat dialog](readme/reformat-dialog.png)
+- Right click on src directory and select Git > Commit \
+![Git commit](readme/git-commit-directory.png)
+- You should see "No changes" dialog \
+![No changes dialog](readme/git-no-changes.png)
 
 ## Checklist before merging to branch master
 - Check if application passes gradle build task
