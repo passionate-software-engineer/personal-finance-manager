@@ -25,6 +25,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
+  private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
+    return Arrays.asList(new Object[][]{
+        {" Marian", " 1232sbbb"},
+        {"Mar ian", "1232 sbbb"},
+        {" Mar ian ", " 1232 sbbb "},
+        {"Marian ", "1232sbbb "}
+    });
+  }
+
   @Test
   public void shouldRegisterUser() throws Exception {
     //given
@@ -174,14 +183,5 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))));
-  }
-
-  private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
-    return Arrays.asList(new Object[][]{
-        {" Marian", " 1232sbbb"},
-        {"Mar ian", "1232 sbbb"},
-        {" Mar ian ", " 1232 sbbb "},
-        {"Marian ", "1232sbbb "}
-    });
   }
 }

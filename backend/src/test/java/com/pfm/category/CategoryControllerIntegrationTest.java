@@ -35,6 +35,10 @@ import org.springframework.http.HttpHeaders;
 
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
+  private static Object[] emptyAccountNameParameters() {
+    return new Object[]{"", " ", "    ", null};
+  }
+
   @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
@@ -80,10 +84,6 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_CATEGORY_NAME))));
-  }
-
-  private static Object[] emptyAccountNameParameters() {
-    return new Object[]{"", " ", "    ", null};
   }
 
   @Test
