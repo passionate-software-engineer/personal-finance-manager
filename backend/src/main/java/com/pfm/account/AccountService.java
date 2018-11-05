@@ -20,6 +20,15 @@ public class AccountService {
     return accountRepository.findByIdAndUserId(accountId, userId);
   }
 
+  public Account getAccountFromDbByIdAndUserId(long accountId, long userId) {
+    Optional<Account> accountByIdAndUserId = accountRepository.findByIdAndUserId(accountId, userId);
+    if (!accountByIdAndUserId.isPresent()) {
+      throw new IllegalStateException("Account with id : " + accountId
+          + " does not exist in database");
+    }
+    return accountByIdAndUserId.get();
+  }
+
   public List<Account> getAccounts(long userId) {
     return accountRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Account::getId))

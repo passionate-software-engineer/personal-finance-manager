@@ -96,23 +96,18 @@ public class TransactionService {
   }
 
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
-    Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
+    Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
 
-    if (!account.isPresent()) {
-      throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
-    }
-    Account accountFromDb = account.get();
-
-    BigDecimal newBalance = operation.apply(accountFromDb.getBalance(), amount);
+    BigDecimal newBalance = operation.apply(account.getBalance(), amount);
 
     Account accountWithNewBalance = Account.builder()
-            .name(accountFromDb.getName())
-            .balance(newBalance)
-            .build();
-
-    historyEntryService.addEntryOnUpdate(accountFromDb, accountWithNewBalance, userId);
+        .name(account.getName())
+        .balance(newBalance)
+        .build();
 
     accountService.updateAccountBalance(accountId, newBalance);
+
+    historyEntryService.addEntryOnUpdate(account, accountWithNewBalance, userId);
   }
 
   public boolean transactionExistByAccountId(long accountId) {

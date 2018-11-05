@@ -46,7 +46,6 @@ public final class Transaction implements DifferenceProvider<Transaction> {
   public List<String> getDifferences(Transaction transaction) {
     List<String> differences = new ArrayList<>();
 
-    // TODO add transaction name so it's easy to know which one was updated
     if (!(transaction.getDescription().equals(this.getDescription()))) {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name", this.getDescription(), transaction.getDescription()));
     }
@@ -59,37 +58,8 @@ public final class Transaction implements DifferenceProvider<Transaction> {
       differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "category", this.categoryId, transaction.getCategoryId()));
     }
 
-    List<AccountPriceEntry> thisEntries = this.getAccountPriceEntries();
-    List<AccountPriceEntry> otherEntries = transaction.getAccountPriceEntries();
 
-    Iterator<AccountPriceEntry> thisEntriesIterator = thisEntries.iterator();
-    Iterator<AccountPriceEntry> otherEntriesIterator = otherEntries.iterator();
 
-    while (thisEntriesIterator.hasNext() && otherEntriesIterator.hasNext()) {
-      AccountPriceEntry thisEntry = thisEntriesIterator.next();
-      AccountPriceEntry otherEntry = otherEntriesIterator.next();
-
-      if (!(thisEntry.getAccountId().equals(otherEntry.getAccountId()))) {
-        differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "account", thisEntry.getAccountId(), otherEntry.getAccountId()));
-      }
-      if (!(thisEntry.getPrice().compareTo(otherEntry.getPrice()) == 0)) {
-        differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "price", thisEntry.getPrice().toString(), otherEntry.getPrice().toString()));
-      }
-    }
-
-    for (int i = thisEntries.size(); i < otherEntries.size(); ++i) {
-      AccountPriceEntry accountPriceEntry = otherEntries.get(i);
-      differences.add(
-          "New account price entry was added to transaction. Account: " + accountPriceEntry.getAccountId()
-              + ", price: " + accountPriceEntry.getPrice());
-    }
-
-    for (int i = otherEntries.size(); i < thisEntries.size(); ++i) {
-      AccountPriceEntry accountPriceEntry = thisEntries.get(i);
-      differences.add(
-          "Account price entry was deleted from transaction. Account: " + accountPriceEntry.getAccountId()
-              + ", price: " + accountPriceEntry.getPrice());
-    }
 
     return differences;
   }
@@ -100,10 +70,7 @@ public final class Transaction implements DifferenceProvider<Transaction> {
     newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "name", this.getDescription()));
     newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "date", this.getDate().toString()));
     newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "category", this.getCategoryId()));
-    for (AccountPriceEntry entry : this.getAccountPriceEntries()) {
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "price", entry.getPrice().toString()));
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "account", entry.getAccountId()));
-    }
+
     return newValues;
   }
 
