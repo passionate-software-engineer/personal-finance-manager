@@ -55,7 +55,7 @@ Define accounts, categories and you are ready to track your transactions.
 ## Running application in IntelliJ
 - Open IntelliJ, click open project, select **_build.gradle_** file, click **_import as project_**
 - Enable annotation processing for Lombok.
-![Enable annotations for Lombok](https://github.com/pio-kol/accouting-system/blob/master/readme/annotatnion.png)
+![Enable annotations for Lombok](https://github.com/programming-in-practice/personal-finance-manager/blob/readme-corrections/lombok-annotations.png)
 - Wait for Gradle to download half of the internet :)
 - Right click on **_Application.java_** and select **_Run_**
 
