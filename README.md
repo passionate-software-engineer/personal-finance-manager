@@ -60,12 +60,17 @@ Define accounts, categories and you are ready to track your transactions.
 
 ## Setting up code formatter in IntelliJ
 - Select IntelliJ > Preferences > Editor > Code Style > Java
-- Select Import scheme -> IntelliJ IDEA XML ![Import scheme](readme/import-scheme.png)
+- Select Import scheme -> IntelliJ IDEA XML 
+![Import scheme](readme/import-scheme.png)
 - Select backend/config/pfm-code-style.xml file and click OK
-- Right click on src directory and select Reformat ![Reformat src](readme/reformat-src.png)
-- On the dialog select first 3 checkboxes ![Reformat dialog](readme/reformat-dialog.png)
-- Right click on src directory and select Git > Commit ![Git commit](readme/git-commit-directory.png)
-- You should see "No changes" dialog ![No changes dialog](readme/git-no-changes.png)
+- Right click on src directory and select Reformat 
+![Reformat src](readme/reformat-src.png)
+- On the dialog select first 3 checkboxes 
+![Reformat dialog](readme/reformat-dialog.png)
+- Right click on src directory and select Git > Commit 
+![Git commit](readme/git-commit-directory.png)
+- You should see "No changes" dialog 
+![No changes dialog](readme/git-no-changes.png)
 
 ## Checklist before merging to branch master
 - Check if application passes gradle build task
