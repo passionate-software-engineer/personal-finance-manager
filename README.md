@@ -54,22 +54,23 @@ Define accounts, categories and you are ready to track your transactions.
 
 ## Running application in IntelliJ
 - Open IntelliJ, click open project, select **_build.gradle_** file, click **_import as project_**
-- Enable annotation processing for Lombok. ![Enable annotations for Lombok](readme/lombok-annotations.png)
+- Enable annotation processing for Lombok. \
+![Enable annotations for Lombok](readme/lombok-annotations.png)
 - Wait for Gradle to download half of the internet :)
 - Right click on **_Application.java_** and select **_Run_**
 
 ## Setting up code formatter in IntelliJ
 - Select IntelliJ > Preferences > Editor > Code Style > Java
-- Select Import scheme -> IntelliJ IDEA XML 
+- Select Import scheme -> IntelliJ IDEA XML \
 ![Import scheme](readme/import-scheme.png)
 - Select backend/config/pfm-code-style.xml file and click OK
-- Right click on src directory and select Reformat 
+- Right click on src directory and select Reformat \
 ![Reformat src](readme/reformat-src.png)
-- On the dialog select first 3 checkboxes 
+- On the dialog select first 3 checkboxes \
 ![Reformat dialog](readme/reformat-dialog.png)
-- Right click on src directory and select Git > Commit 
+- Right click on src directory and select Git > Commit \
 ![Git commit](readme/git-commit-directory.png)
-- You should see "No changes" dialog 
+- You should see "No changes" dialog \
 ![No changes dialog](readme/git-no-changes.png)
 
 ## Checklist before merging to branch master
