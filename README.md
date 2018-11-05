@@ -47,7 +47,7 @@ Define accounts, categories and you are ready to track your transactions.
 
 ## How to start project locally
 
-1. Install [JDK 1.11](https://jdk.java.net/11/), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
+1. Install [JDK 11](https://jdk.java.net/11/), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
 2. Open terminal window, go to **_backend_** directory & run **_./gradlew bootRun_**
 3. Open second terminal window, go to **_frontend_** directory, run **_npm install_** & **_ng serve --open_**
 4. Browser window will open automatically, you can play with the application
