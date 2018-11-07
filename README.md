@@ -8,7 +8,7 @@ Define accounts, categories and you are ready to track your transactions.
 [Personal Finance Manager demo instance](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
 
 ## API Reference
-[Swagger API](http://ec2-13-59-117-184.us-east-2.compute.amazonaws.com:8088/swagger-ui.html)
+[Swagger API](http://ec2-3-120-209-115.eu-central-1.compute.amazonaws.com:8088/swagger-ui.html)
 
 ## Technologies & Frameworks
 
