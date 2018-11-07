@@ -15,12 +15,17 @@ else
 fi
 
 if [ -f backend-1.0.jar.new ]; then
+  if [ -f backend-1.0.jar ]; then
+    mv --force backend-1.0.jar backend-1.0.jar.$DATE
+  fi
+
   chmod 700 backend-1.0.jar.new
-  mv --force backend-1.0.jar backend-1.0.jar.$DATE
   mv --force backend-1.0.jar.new backend-1.0.jar
 fi
 
-mv application.log application.log.$DATE
+if [ -f application.log ]; then
+  mv application.log application.log.$DATE
+fi
 
 java -version
 

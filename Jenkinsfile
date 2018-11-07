@@ -54,7 +54,8 @@ pipeline {
                     sshagent(credentials : ['AWS_PRIVATE_KEY']) {
                         sh '''
                            cd backend/build/libs
-                           scp -o StrictHostKeyChecking=no backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
+                           ssh -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
+                           scp backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
                            scp ../../../scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
                            ssh ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
                            '''
