@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
-import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {FilterResponse} from './transaction-filter-response';
 import {TransactionFilter} from '../transaction-filter';
@@ -43,29 +42,24 @@ export class TransactionFilterService extends ServiceBase {
   }
 
   getFilters(): Observable<FilterResponse[]> {
-    return this.http.get<FilterResponse[]>(ServiceBase.apiUrl(PATH))
-      .pipe(catchError(this.handleError('getFilters', [])));
+    return this.http.get<FilterResponse[]>(ServiceBase.apiUrl(PATH));
   }
 
   getFilter(id: number): Observable<FilterResponse> {
-    return this.http.get<FilterResponse>(ServiceBase.apiUrl(PATH, id))
-      .pipe(catchError(this.handleError('getSingleFilter', null)));
+    return this.http.get<FilterResponse>(ServiceBase.apiUrl(PATH, id));
   }
 
   addFilter(filter: TransactionFilter): Observable<any> {
     const filterRequest = TransactionFilterService.filterToFilterRequest(filter);
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), filterRequest, this.contentType)
-      .pipe(catchError(this.handleError('addFilter', [])));
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), filterRequest, this.contentType);
   }
 
   deleteFilter(id: number): Observable<any> {
-    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id))
-      .pipe(catchError(this.handleError('deleteFilter', [])));
+    return this.http.delete<any>(ServiceBase.apiUrl(PATH, id));
   }
 
   updateFilter(filter: TransactionFilter): Observable<any> {
     const categoryRequest = TransactionFilterService.filterToFilterRequest(filter);
-    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, filter.id), categoryRequest, this.contentType)
-      .pipe(catchError(this.handleError('updateFilter', [])));
+    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, filter.id), categoryRequest, this.contentType);
   }
 }

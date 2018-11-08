@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/transactions';
 
     this.loading = true;
     this.authenticationService.login(this.username(), this.password())
@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate([returnUrl]);
         },
         error => {
-          this.alertService.error(error);
           this.loading = false;
         });
   }
