@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {History} from '../history';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {catchError} from 'rxjs/operators';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {ServiceBase} from '../../../helpers/service-base';
+
 const PATH = 'history';
 
 @Injectable({
@@ -17,7 +17,6 @@ export class HistoryService extends ServiceBase {
   }
 
   getHistory(): Observable<History[]> {
-    return this.http.get<History[]>(ServiceBase.apiUrl(PATH))
-      .pipe(catchError(this.handleError('getHistory', [])));
+    return this.http.get<History[]>(ServiceBase.apiUrl(PATH));
   }
 }
