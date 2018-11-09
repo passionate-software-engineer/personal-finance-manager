@@ -2,6 +2,7 @@ package com.pfm.transaction;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,23 +18,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "Transactions", description = "Controller used to list / add / update / delete transaction.")
 public interface TransactionApi {
 
-  @ApiOperation(value = "Find transaction by id", response = Transaction.class)
+  @ApiOperation(value = "Find transaction by id", response = Transaction.class, authorizations = {@Authorization(value = "Bearer")})
   @GetMapping(value = "/{transactionId}")
-  ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId, long userId);
+  ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId);
 
-  @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List")
+  @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List",
+      authorizations = {@Authorization(value = "Bearer")})
   @GetMapping
-  ResponseEntity<List<Transaction>> getTransactions(long userId);
+  ResponseEntity<List<Transaction>> getTransactions();
 
-  @ApiOperation(value = "Create a new transaction", response = long.class)
+  @ApiOperation(value = "Create a new transaction", response = long.class, authorizations = {@Authorization(value = "Bearer")})
   @PostMapping
-  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest, long userId);
+  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
 
-  @ApiOperation(value = "Update an existing transaction", response = Void.class)
+  @ApiOperation(value = "Update an existing transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @PutMapping(value = "/{transactionId}")
-  ResponseEntity<?> updateTransaction(@PathVariable long transactionId, TransactionRequest transactionRequest, long userId);
+  ResponseEntity<?> updateTransaction(@PathVariable long transactionId, TransactionRequest transactionRequest);
 
-  @ApiOperation(value = "Delete an existing transaction", response = Void.class)
+  @ApiOperation(value = "Delete an existing transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @DeleteMapping(value = "/{transactionId}")
-  ResponseEntity<?> deleteTransaction(@PathVariable long transactionId, long userId);
+  ResponseEntity<?> deleteTransaction(@PathVariable long transactionId);
 }

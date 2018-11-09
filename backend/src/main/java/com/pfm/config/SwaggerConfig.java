@@ -2,11 +2,13 @@ package com.pfm.config;
 
 import static springfox.documentation.builders.PathSelectors.any;
 
+import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -23,7 +25,8 @@ public class SwaggerConfig {
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.pfm"))
         .paths(any())
-        .build();
+        .build()
+        .securitySchemes(Collections.singletonList(new ApiKey("Bearer", "Authorization", "header")));
   }
 
   private ApiInfo getApiInfo() {
@@ -40,4 +43,5 @@ public class SwaggerConfig {
         .contact(contact)
         .build();
   }
+
 }

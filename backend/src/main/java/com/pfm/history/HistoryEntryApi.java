@@ -2,6 +2,7 @@ package com.pfm.history;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface HistoryEntryApi {
 
   // TODO add option to return history entries by date range
-  @ApiOperation(value = "List history entries", response = HistoryEntry.class, responseContainer = "List")
+  @ApiOperation(value = "List history entries", response = HistoryEntry.class, responseContainer = "List",
+      authorizations = {@Authorization(value = "Bearer")})
   @GetMapping
   ResponseEntity<List<HistoryEntry>> getHistory();
 
