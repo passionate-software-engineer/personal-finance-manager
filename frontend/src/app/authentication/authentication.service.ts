@@ -10,7 +10,9 @@ import {User} from './user';
 export class AuthenticationService {
   private currentUserSource = new Subject<User>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
   public currentUserObservable = this.currentUserSource.asObservable();

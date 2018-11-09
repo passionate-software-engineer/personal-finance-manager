@@ -17,7 +17,7 @@ public class TokenService {
   public Token generateToken(User user) {
 
     UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now().plusMinutes(1));
+    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now().plusMinutes(15));
     tokens.put(token.getToken(), token);
     return token;
   }

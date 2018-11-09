@@ -3,10 +3,7 @@ import {User} from '../../authentication/user';
 import {UserService} from '../../authentication/user.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {interval} from 'rxjs';
-import {HealthService} from '../../authentication/health.service';
-import {Router} from '@angular/router';
-import {AlertsService} from '../alert/alerts-service/alerts.service';
+import {HealthCheckTask} from '../../authentication/HealthCheckTask';
 
 @Component({
   selector: 'app-navigation',
@@ -19,11 +16,9 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public translate: TranslateService,
+    private translate: TranslateService,
     private authenticationService: AuthenticationService,
-    private healthService: HealthService,
-    private router: Router,
-    private alertService: AlertsService
+    private healthCheckTask: HealthCheckTask // TODO ugly trick to get class created, find other way
   ) {
     authenticationService.currentUserObservable.subscribe(user => {
       this.currentUser = user;
@@ -35,18 +30,6 @@ export class NavigationComponent implements OnInit {
     }
 
     translate.setDefaultLang(language);
-
-    interval(15 * 1000).subscribe(eventNumber => {
-      this.healthService.getHealthStatus().subscribe();
-      const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
-      if (tokenExpirationTime != null) {
-        if (new Date(tokenExpirationTime) < new Date()) {
-          router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-          authenticationService.logout();
-          alertService.error(this.translate.instant('message.loggedOut'));
-        }
-      }
-    });
   }
 
   ngOnInit() {
