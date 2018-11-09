@@ -26,7 +26,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (err.status === 401) {
         this.authenticationService.logout();
         this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-        this.alertService.error('message.loggedOut');
+        this.alertService.error(this.translate.instant('message.loggedOut'));
         return throwError('');
       }
 

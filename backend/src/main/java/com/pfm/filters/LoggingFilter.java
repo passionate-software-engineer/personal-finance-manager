@@ -73,8 +73,14 @@ public class LoggingFilter extends OncePerRequestFilter {
   }
 
   private void logContent(byte[] content, String contentType, String contentEncoding, String prefix) {
-    MediaType mediaType = MediaType.valueOf(contentType);
-    boolean visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+    boolean visible = false;
+
+    if (contentType != null) {
+      MediaType mediaType = MediaType.valueOf(contentType);
+      visible = VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+    } else {
+      log.warn("No content type was specified");
+    }
 
     if (visible) {
       try {

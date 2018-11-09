@@ -14,12 +14,12 @@ public class TokenService {
 
   private HashMap<String, Token> tokens = new HashMap<>();
 
-  public String generateToken(User user) {
+  public Token generateToken(User user) {
 
     UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now().plusMinutes(15));
+    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now().plusMinutes(1));
     tokens.put(token.getToken(), token);
-    return token.getToken();
+    return token;
   }
 
   public boolean validateToken(String token) {

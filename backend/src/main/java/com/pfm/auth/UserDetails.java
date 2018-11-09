@@ -1,5 +1,6 @@
 package com.pfm.auth;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +17,5 @@ public final class UserDetails {
   private String firstName;
   private String lastName;
   private String token;
+  private LocalDateTime tokenExpirationTime;
 }
