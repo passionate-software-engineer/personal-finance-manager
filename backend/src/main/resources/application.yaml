@@ -26,6 +26,10 @@ management:
     web:
       exposure:
         include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+        allowed-headers: "*"
   endpoint:
     health:
       show-details: always

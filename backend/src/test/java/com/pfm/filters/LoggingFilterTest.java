@@ -274,6 +274,51 @@ public class LoggingFilterTest {
   }
 
   @Test
+  public void shouldLogWarningAndContentLengthWhenNullContentTypeWasProvided() throws ServletException, IOException {
+    //given
+    when(request.getContentType()).thenReturn(null);
+    when(request.getQueryString()).thenReturn(null);
+
+    //when
+    filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
+
+    //then
+    verify(mockAppender, times(7)).doAppend(captorLoggingEvent.capture());
+    final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+
+    assertThat(resultLog, hasSize(7));
+
+    LoggingEvent loggingEvent = resultLog.get(0);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(),
+        is(String.format("%s %s %s", REQUEST_MARKER, REQUEST_METHOD, REQUEST_URI)));
+
+    loggingEvent = resultLog.get(1);
+    assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, ENCODING_HEADER, REQUEST_ENCODING)));
+
+    loggingEvent = resultLog.get(2);
+    assertThat(loggingEvent.getLevel(), is(Level.DEBUG));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %s: %s", REQUEST_MARKER, CONTENT_TYPE_HEADER, REQUEST_CONTENT_TYPE)));
+
+    loggingEvent = resultLog.get(3);
+    assertThat(loggingEvent.getLevel(), is(Level.WARN));
+    assertThat(loggingEvent.getFormattedMessage(), is("No content type was specified"));
+
+    loggingEvent = resultLog.get(4);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s [%d bytes content]", REQUEST_MARKER, REQUEST_CONTENT.length())));
+
+    loggingEvent = resultLog.get(5);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), containsString(String.format("%s %d OK", RESPONSE_MARKER, response.getStatus())));
+
+    loggingEvent = resultLog.get(6);
+    assertThat(loggingEvent.getLevel(), is(Level.INFO));
+    assertThat(loggingEvent.getFormattedMessage(), is(String.format("%s %n %s", RESPONSE_MARKER, RESPONSE_CONTENT)));
+  }
+
+  @Test
   public void shouldNotLogAnythingWhenIsAsyncDispatch() throws ServletException, IOException {
     //given
     LoggingFilter filter = new LoggingFilter() {
