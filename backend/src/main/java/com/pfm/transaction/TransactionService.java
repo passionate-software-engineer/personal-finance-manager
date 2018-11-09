@@ -44,7 +44,7 @@ public class TransactionService {
     return transactionRepository.save(transaction);
   }
 
-  @Transactional
+
   public void updateTransaction(long id, long userId, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
 
@@ -107,7 +107,7 @@ public class TransactionService {
 
     accountService.updateAccountBalance(accountId, newBalance);
 
-    historyEntryService.addEntryOnUpdate(account, accountWithNewBalance, userId);
+//    historyEntryService.addEntryOnUpdate(account, accountWithNewBalance, userId);
   }
 
   public boolean transactionExistByAccountId(long accountId) {

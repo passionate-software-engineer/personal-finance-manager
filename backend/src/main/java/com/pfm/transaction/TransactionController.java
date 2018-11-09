@@ -63,7 +63,6 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  @Transactional
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
       @RequestAttribute(value = "userId") long userId) {
 
@@ -83,9 +82,9 @@ public class TransactionController implements TransactionApi {
 
     Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
 
+    historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
     transactionService.updateTransaction(transactionId, userId, transaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
-    historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
 
     return ResponseEntity.ok().build();
   }

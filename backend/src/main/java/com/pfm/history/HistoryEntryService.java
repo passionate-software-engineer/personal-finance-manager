@@ -3,7 +3,9 @@ package com.pfm.history;
 import static com.pfm.history.DifferenceProvider.ENTRY_VALUES_TEMPLATE;
 import static com.pfm.history.DifferenceProvider.UPDATE_ENTRY_TEMPLATE;
 
+import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.history.HistoryEntry.Type;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import java.time.LocalDateTime;
@@ -34,6 +36,18 @@ public class HistoryEntryService {
         .collect(Collectors.toList());
   }
 
+  public  void addHistoryEntryOnAdd(Account account, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = HistoryEntryProvider.createHistoryEntryOnAdd(account);
+    HistoryEntry historyEntry = HistoryEntry.builder()
+        .date(LocalDateTime.now())
+        .type(Type.ADD)
+        .entries(historyEntryOnAdd)
+        .object(account.getClass().getSimpleName())
+        .userId(userId)
+        .build();
+    saveHistoryEntry(historyEntry);
+  }
+
   // TODO refactor security to not force develeopers to pass userId all around.
   public <T extends DifferenceProvider<T>> void addEntryOnAdd(T newObject, long userId) {
     List<String> entries = newObject.getObjectPropertiesWithValues();
@@ -41,13 +55,13 @@ public class HistoryEntryService {
     if (newObject instanceof Transaction) {
       addTransactionAccountsOnAdd((Transaction) newObject, entries, userId);
     }
-    saveHistoryEntries(entries, userId);
+    //saveHistoryEntries(entries, userId);
   }
 
   public <T extends DifferenceProvider<T>> void addEntryOnDelete(T oldObject, long userId) {
     List<String> entries = new ArrayList<>();
     entries.add(String.format(DELETE_ENTRY_TEMPLATE, oldObject.getClass().getSimpleName(), oldObject.getObjectDescriptiveName()));
-    saveHistoryEntries(entries, userId);
+    // saveHistoryEntries(entries, userId);
   }
 
   public <T extends DifferenceProvider<T>> void addEntryOnUpdate(T objectToUpdate, T objectWithNewValues, long userId) {
@@ -59,16 +73,15 @@ public class HistoryEntryService {
       return;
     }
     differences.add(0, String.format(CHANGES_TEMPLATE, objectToUpdate.getClass().getSimpleName(), objectToUpdate.getObjectDescriptiveName()));
-    saveHistoryEntries(differences, userId);
+    //saveHistoryEntries(differences, userId);
+  }
+
+  private void saveHistoryEntry(HistoryEntry historyEntry) {
+    historyEntryRepository.save(historyEntry);
   }
 
   private void saveHistoryEntries(List<String> entries, long userId) {
-    HistoryEntry historyEntry = HistoryEntry.builder()
-        .userId(userId)
-        .date(LocalDateTime.now())
-        .entry(entries)
-        .build();
-    historyEntryRepository.save(historyEntry);
+
     System.out.println("dupa");
   }
 

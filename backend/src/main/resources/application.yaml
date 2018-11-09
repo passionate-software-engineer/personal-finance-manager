@@ -1,7 +1,7 @@
 server.port: 8088
 spring:
   profiles:
-    active: local-h2
+    active: local-postgres
   jpa:
     show-sql: true
     hibernate:
@@ -18,8 +18,9 @@ logging:
     console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"
   level:
     com.pfm: INFO
-    org.springframework.jdbc.core.StatementCreatorUtils: TRACE
-    #  TODO log values in hibernate logs
+    org.hibernate.type: TRACE
+    org.hibernate.SQL: DEBUG
+    org.springframework.transaction: DEBUG
 
 management:
   endpoints:
