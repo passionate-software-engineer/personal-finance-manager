@@ -3,6 +3,7 @@ package com.pfm.category;
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +22,7 @@ public class CategoryController implements CategoryApi {
   private CategoryService categoryService;
   private CategoryValidator categoryValidator;
   private HistoryEntryService historyEntryService;
+  private UserProvider userProvider;
 
   private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
@@ -41,7 +42,9 @@ public class CategoryController implements CategoryApi {
         .build();
   }
 
-  public ResponseEntity<Category> getCategoryById(@PathVariable long categoryId, @RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<Category> getCategoryById(@PathVariable long categoryId) {
+    long userId = userProvider.getCurrentUserId();
 
     log.info("Retrieving category with id: {}", categoryId);
     Optional<Category> category = categoryService.getCategoryByIdAndUserId(categoryId, userId);
@@ -56,7 +59,9 @@ public class CategoryController implements CategoryApi {
   }
 
   // TODO return only parent category id - not the entire object / objects chain
-  public ResponseEntity<List<Category>> getCategories(@RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<List<Category>> getCategories() {
+    long userId = userProvider.getCurrentUserId();
 
     log.info("Retrieving categories from database");
     List<Category> categories = categoryService.getCategories(userId);
@@ -65,7 +70,8 @@ public class CategoryController implements CategoryApi {
   }
 
   @Override
-  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest) {
+    long userId = userProvider.getCurrentUserId();
 
     log.info("Saving category {} to the database", categoryRequest.getName());
     Category category = convertToCategory(categoryRequest);
@@ -84,8 +90,8 @@ public class CategoryController implements CategoryApi {
   }
 
   @Override // TODO add spring transactions to all methods working with history service
-  public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest,
-      @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest) {
+    long userId = userProvider.getCurrentUserId();
 
     if (!categoryService.getCategoryByIdAndUserId(categoryId, userId).isPresent()) {
       log.info("No category with id {} was found, not able to update", categoryId);
@@ -113,7 +119,9 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok().build();
   }
 
-  public ResponseEntity<?> deleteCategory(@PathVariable long categoryId, @RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<?> deleteCategory(@PathVariable long categoryId) {
+    long userId = userProvider.getCurrentUserId();
 
     if (!categoryService.getCategoryByIdAndUserId(categoryId, userId).isPresent()) {
       log.info("No category with id {} was found, not able to delete", categoryId);

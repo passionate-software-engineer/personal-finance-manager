@@ -19,22 +19,22 @@ public interface CategoryApi {
 
   @ApiOperation(value = "Find category by id", response = Category.class)
   @GetMapping(value = "/{categoryId}")
-  ResponseEntity<Category> getCategoryById(@PathVariable long categoryId, long userId);
+  ResponseEntity<Category> getCategoryById(@PathVariable long categoryId);
 
   @ApiOperation(value = "Get list of categories", response = Category.class, responseContainer = "List")
   @GetMapping
-  ResponseEntity<List<Category>> getCategories(long userId);
+  ResponseEntity<List<Category>> getCategories();
 
   @ApiOperation(value = "Create a new category", response = Long.class)
   @PostMapping
-  ResponseEntity<?> addCategory(CategoryRequest categoryRequest, long userId);
+  ResponseEntity<?> addCategory(CategoryRequest categoryRequest);
 
   @ApiOperation(value = "Update an existing category", response = Void.class)
   @PutMapping(value = "/{categoryId}")
-  ResponseEntity<?> updateCategory(@PathVariable long categoryId, CategoryRequest categoryRequest, long userId);
+  ResponseEntity<?> updateCategory(@PathVariable long categoryId, CategoryRequest categoryRequest);
 
   @ApiOperation(value = "Delete an existing category", response = Void.class)
   @DeleteMapping(value = "/{categoryId}")
-  ResponseEntity<?> deleteCategory(@PathVariable long categoryId, long userId);
+  ResponseEntity<?> deleteCategory(@PathVariable long categoryId);
 
 }

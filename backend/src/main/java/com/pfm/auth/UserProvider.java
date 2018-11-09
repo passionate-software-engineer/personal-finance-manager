@@ -16,7 +16,13 @@ public class UserProvider {
   }
 
   public long getCurrentUserId() {
-    return userThreadLocal.get();
+    Long currentUserId = userThreadLocal.get();
+
+    if (currentUserId == null) {
+      throw new IllegalStateException("No user is logged in but user id was requested");
+    }
+
+    return currentUserId;
   }
 
 }

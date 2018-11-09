@@ -23,9 +23,11 @@ public class AccountController implements AccountApi {
 
   @Override
   public ResponseEntity<?> getAccountById(@PathVariable long accountId) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving account with id: {}", accountId);
 
-    Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId());
+    Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
 
     if (!account.isPresent()) {
       log.info("Account with id {} was not found", accountId);
@@ -37,51 +39,56 @@ public class AccountController implements AccountApi {
 
   @Override
   public ResponseEntity<List<Account>> getAccounts() {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving all accounts from database");
 
-    List<Account> accounts = accountService.getAccounts(userProvider.getCurrentUserId());
+    List<Account> accounts = accountService.getAccounts(userId);
     return ResponseEntity.ok(accounts);
   }
 
   @Override
   public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Saving account {} to the database", accountRequest.getName());
 
     Account account = convertAccountRequestToAccount(accountRequest);
 
-    List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userProvider.getCurrentUserId(), account);
+    List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
     if (!validationResult.isEmpty()) {
       log.info("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Account createdAccount = accountService.addAccount(userProvider.getCurrentUserId(), account);
+    Account createdAccount = accountService.addAccount(userId, account);
     log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
-    historyEntryService.addEntryOnAdd(createdAccount, userProvider.getCurrentUserId());
+    historyEntryService.addEntryOnAdd(createdAccount, userId);
     return ResponseEntity.ok(createdAccount.getId());
   }
 
   @Override
   public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest) {
+    long userId = userProvider.getCurrentUserId();
 
-    if (!accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId()).isPresent()) {
+    if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
     Account account = convertAccountRequestToAccount(accountRequest);
 
     log.info("Updating account with id {}", accountId);
-    List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userProvider.getCurrentUserId(), account);
+    List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
 
     if (!validationResult.isEmpty()) {
       log.error("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId()).get();
-    historyEntryService.addEntryOnUpdate(accountToUpdate, account, userProvider.getCurrentUserId());
+    Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    historyEntryService.addEntryOnUpdate(accountToUpdate, account, userId);
 
-    accountService.updateAccount(accountId, userProvider.getCurrentUserId(), account);
+    accountService.updateAccount(accountId, userId, account);
 
     log.info("Account with id {} was successfully updated", accountId);
 
@@ -90,7 +97,9 @@ public class AccountController implements AccountApi {
 
   @Override
   public ResponseEntity<?> deleteAccount(@PathVariable long accountId) {
-    if (!accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId()).isPresent()) {
+    long userId = userProvider.getCurrentUserId();
+
+    if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", accountId);
       return ResponseEntity.notFound().build();
     }
@@ -101,11 +110,11 @@ public class AccountController implements AccountApi {
       return ResponseEntity.badRequest().body(validationResults);
     }
 
-    Account account = accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId()).get();
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
     log.info("Attempting to delete account with id {}", accountId);
     accountService.deleteAccount(accountId);
 
-    historyEntryService.addEntryOnDelete(account, userProvider.getCurrentUserId());
+    historyEntryService.addEntryOnDelete(account, userId);
     log.info("Account with id {} was deleted successfully", accountId);
 
     return ResponseEntity.ok().build();
