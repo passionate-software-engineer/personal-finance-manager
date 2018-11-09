@@ -16,6 +16,6 @@ public interface HistoryEntryApi {
   // TODO add option to return history entries by date range
   @ApiOperation(value = "List history entries", response = HistoryEntry.class, responseContainer = "List")
   @GetMapping
-  ResponseEntity<List<HistoryEntry>> getHistory(long userId);
+  ResponseEntity<List<HistoryEntry>> getHistory();
 
 }

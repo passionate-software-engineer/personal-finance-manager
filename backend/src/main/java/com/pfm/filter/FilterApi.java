@@ -19,21 +19,21 @@ public interface FilterApi {
 
   @ApiOperation(value = "Find filter by id", response = Filter.class)
   @GetMapping(value = "/{filterId}")
-  ResponseEntity<Filter> getFilterById(@PathVariable long filterId, long userId);
+  ResponseEntity<Filter> getFilterById(@PathVariable long filterId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, responseContainer = "List")
   @GetMapping
-  ResponseEntity<List<Filter>> getFilters(long userId);
+  ResponseEntity<List<Filter>> getFilters();
 
   @ApiOperation(value = "Create new filter", response = Long.class)
   @PostMapping
-  ResponseEntity<?> addFilter(FilterRequest filterRequest, long userId);
+  ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
   @ApiOperation(value = "Update an existing filter", response = Void.class)
   @PutMapping(value = "/{filterId}")
-  ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest, long userId);
+  ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest);
 
   @ApiOperation(value = "Delete an existing filter", response = Void.class)
   @DeleteMapping(value = "/{filterId}")
-  ResponseEntity<?> deleteFilter(@PathVariable long filterId, long userId);
+  ResponseEntity<?> deleteFilter(@PathVariable long filterId);
 }

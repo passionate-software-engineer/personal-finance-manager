@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface ExportImportApi {
 
   @GetMapping("export")
-  ExportResult exportData(long userId);
+  ExportResult exportData();
 
   @PostMapping("import")
-  void importData(ExportResult inputData, long userId);
+  void importData(ExportResult inputData);
 
 }
