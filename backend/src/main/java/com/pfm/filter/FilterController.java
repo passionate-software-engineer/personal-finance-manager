@@ -1,12 +1,12 @@
 package com.pfm.filter;
 
+import com.pfm.auth.UserProvider;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +17,7 @@ public class FilterController implements FilterApi {
 
   private FilterService filterService;
   private FilterValidator filterValidator;
+  private UserProvider userProvider;
 
   private static Filter convertFilterRequestToFilter(FilterRequest filterRequest) {
     return Filter.builder()
@@ -32,7 +33,9 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<Filter> getFilterById(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<Filter> getFilterById(@PathVariable long filterId) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving filter with id: {}", filterId);
     Optional<Filter> filter = filterService.getFilterByIdAndUserId(filterId, userId);
 
@@ -46,12 +49,16 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<List<Filter>> getFilters(@RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<List<Filter>> getFilters() {
+    long userId = userProvider.getCurrentUserId();
+
     return ResponseEntity.ok(filterService.getAllFilters(userId));
   }
 
   @Override
-  public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> addFilter(@RequestBody FilterRequest filterRequest) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Adding filter to the database");
 
     Filter filter = convertFilterRequestToFilter(filterRequest);
@@ -69,8 +76,8 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> updateFilter(@PathVariable long filterId, @RequestBody FilterRequest filterRequest,
-      @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> updateFilter(@PathVariable long filterId, @RequestBody FilterRequest filterRequest) {
+    long userId = userProvider.getCurrentUserId();
 
     if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to update", filterId);
@@ -92,7 +99,9 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteFilter(@PathVariable long filterId, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> deleteFilter(@PathVariable long filterId) {
+    long userId = userProvider.getCurrentUserId();
+
     if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
       log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();

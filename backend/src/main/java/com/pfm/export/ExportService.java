@@ -49,7 +49,7 @@ public class ExportService {
     result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
 
-    // TODO [enhancement] export / import filters
+    // TODO export / import filters
 
     return result;
   }

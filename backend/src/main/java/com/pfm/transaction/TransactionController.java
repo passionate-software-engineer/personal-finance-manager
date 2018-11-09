@@ -1,5 +1,6 @@
 package com.pfm.transaction;
 
+import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +19,12 @@ public class TransactionController implements TransactionApi {
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
   private HistoryEntryService historyEntryService;
+  private UserProvider userProvider;
 
   @Override
-  public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving transaction with id: {}", transactionId);
     Optional<Transaction> transaction = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -35,14 +38,18 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<List<Transaction>> getTransactions(@RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<List<Transaction>> getTransactions() {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving all transactions");
 
     return ResponseEntity.ok(transactionService.getTransactions(userId));
   }
 
   @Override
-  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Adding transaction to the database");
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
@@ -61,8 +68,8 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest,
-      @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest) {
+    long userId = userProvider.getCurrentUserId();
 
     if (!transactionService.transactionExistByTransactionIdAndUserId(transactionId, userId)) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
@@ -87,7 +94,9 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> deleteTransaction(@PathVariable long transactionId, @RequestAttribute(value = "userId") long userId) {
+  public ResponseEntity<?> deleteTransaction(@PathVariable long transactionId) {
+    long userId = userProvider.getCurrentUserId();
+
     if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", transactionId);
       return ResponseEntity.notFound().build();

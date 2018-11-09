@@ -14,22 +14,23 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
   private final AtomicInteger counter = new AtomicInteger(0);
 
   @Test
-  //  @ThreadCount(THREAD_COUNT) // TODO add wrapper running tests in multiple tests
-  public void shouldUpdateSimultaneouslyMultipleAccounts() {
+  public void shouldUpdateSimultaneouslyMultipleAccounts() throws InterruptedException {
+    runInMultipleThreads(() -> {
 
-    Account account = accounts.get(counter.getAndIncrement());
-    account.setBalance(getRandomBalance());
-    account.setName(getRandomName());
+      Account account = accounts.get(counter.getAndIncrement());
+      account.setBalance(getRandomBalance());
+      account.setName(getRandomName());
 
-    int statusCode = given()
-        .contentType(ContentType.JSON)
-        .body(convertAccountToAccountRequest(account))
-        .header("Authorization", token)
-        .when()
-        .put(invoiceServicePath(account.getId()))
-        .statusCode();
+      int statusCode = given()
+          .contentType(ContentType.JSON)
+          .body(convertAccountToAccountRequest(account))
+          .header("Authorization", token)
+          .when()
+          .put(invoiceServicePath(account.getId()))
+          .statusCode();
 
-    assertThat(statusCode, is(200));
+      assertThat(statusCode, is(200));
+
+    });
   }
-
 }

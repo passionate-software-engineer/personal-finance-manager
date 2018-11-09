@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +19,12 @@ public class AccountController implements AccountApi {
   private AccountService accountService;
   private AccountValidator accountValidator;
   private HistoryEntryService historyEntryService;
+  private UserProvider userProvider;
 
-  public ResponseEntity<?> getAccountById(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<?> getAccountById(@PathVariable long accountId) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving account with id: {}", accountId);
 
     Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
@@ -33,14 +37,20 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok(account.get());
   }
 
-  public ResponseEntity<List<Account>> getAccounts(@RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<List<Account>> getAccounts() {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Retrieving all accounts from database");
 
     List<Account> accounts = accountService.getAccounts(userId);
     return ResponseEntity.ok(accounts);
   }
 
-  public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest, @RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest) {
+    long userId = userProvider.getCurrentUserId();
+
     log.info("Saving account {} to the database", accountRequest.getName());
 
     Account account = convertAccountRequestToAccount(accountRequest);
@@ -57,8 +67,9 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok(createdAccount.getId());
   }
 
-  public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest,
-      @RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest) {
+    long userId = userProvider.getCurrentUserId();
 
     if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", accountId);
@@ -84,7 +95,10 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  public ResponseEntity<?> deleteAccount(@PathVariable long accountId, @RequestAttribute(value = "userId") long userId) {
+  @Override
+  public ResponseEntity<?> deleteAccount(@PathVariable long accountId) {
+    long userId = userProvider.getCurrentUserId();
+
     if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to delete", accountId);
       return ResponseEntity.notFound().build();

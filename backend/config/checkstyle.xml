@@ -242,5 +242,6 @@
     </module>
     <module name="CommentsIndentation"/>
     <module name="DeclarationOrderCheck" />
+    <module name="MissingOverride"/>
   </module>
 </module>

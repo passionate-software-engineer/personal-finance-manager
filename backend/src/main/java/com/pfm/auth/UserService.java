@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserService { // TODO swagger not working correctly with user parameter
+public class UserService {
 
   private UserRepository userRepository;
   private TokenService tokenService;

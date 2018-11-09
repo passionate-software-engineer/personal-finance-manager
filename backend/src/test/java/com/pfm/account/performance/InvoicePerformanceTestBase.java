@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,8 +31,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-// TODO imporove all those tests
-// TODO those tests takes lots of time - run it separetly not as Unit tests
+// ENHANCEMENT add tests for other services
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {
@@ -168,6 +170,17 @@ public abstract class InvoicePerformanceTestBase {
 
   private String usersServicePath() {
     return String.format(USERS_SERVICE_PATH, port);
+  }
+
+  protected void runInMultipleThreads(Runnable task) throws InterruptedException {
+    ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_COUNT);
+
+    for (int i = 0; i < THREAD_COUNT; ++i) {
+      threadPool.submit(task);
+    }
+
+    threadPool.shutdown();
+    threadPool.awaitTermination(30, TimeUnit.SECONDS);
   }
 
 }

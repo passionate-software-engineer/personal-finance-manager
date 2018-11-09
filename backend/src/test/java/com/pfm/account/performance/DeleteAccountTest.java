@@ -13,20 +13,22 @@ public class DeleteAccountTest extends InvoicePerformanceTestBase {
   private final AtomicInteger counter = new AtomicInteger(0);
 
   @Test
-  //  @ThreadCount(THREAD_COUNT) // TODO add wrapper running tests in multiple tests
-  public void shouldDeleteSimultaneouslyMultipleAccounts() {
+  public void shouldDeleteSimultaneouslyMultipleAccounts() throws InterruptedException {
+    runInMultipleThreads(() -> {
 
-    Account account = accounts.get(counter.getAndAdd(2));
-    accounts.remove(account);
+      Account account = accounts.get(counter.getAndAdd(2));
+      accounts.remove(account);
 
-    assertThat(
-        given()
-            .when()
-            .header("Authorization", token)
-            .delete(invoiceServicePath(account.getId()))
-            .statusCode(),
-        equalTo(200)
-    );
+      assertThat(
+          given()
+              .when()
+              .header("Authorization", token)
+              .delete(invoiceServicePath(account.getId()))
+              .statusCode(),
+          equalTo(200)
+      );
+
+    });
   }
 
 }
