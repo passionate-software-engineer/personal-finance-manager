@@ -45,6 +45,7 @@
   "message.dateEmpty": "Data jest pusta lub niepoprawna",
   "message.descriptionEmpty": "Opis nie może być pusty",
   "message.priceEmpty": "Cena jest pusta lub ma niepoprawny format",
+  "message.loggedOut": "Zostałeś wylogowany. Twoja sesja wygasła.",
   "navigation.transactions": "Transakcje",
   "navigation.categories": "Kategorie",
   "navigation.accounts": "Konta",

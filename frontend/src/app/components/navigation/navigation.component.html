@@ -24,8 +24,6 @@
         </a>
       </li>
     </ul>
-    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
-    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>
     <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
         <a class="nav-link" routerLink="/register" routerLinkActive="active">
@@ -48,7 +46,8 @@
           </a>
         </div>
       </li>
-
     </ul>
+    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
+    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>
   </div>
 </nav>

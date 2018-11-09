@@ -10,7 +10,9 @@ import {User} from './user';
 export class AuthenticationService {
   private currentUserSource = new Subject<User>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
   public currentUserObservable = this.currentUserSource.asObservable();
@@ -26,10 +28,10 @@ export class AuthenticationService {
         if (user && user.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
+          this.updateCurrentUser(user);
         }
 
-        this.updateCurrentUser(user);
-        return user;
+        return;
       }));
   }
 

@@ -45,6 +45,7 @@
   "message.dateEmpty": "Date is empty or incomplete",
   "message.descriptionEmpty": "Description cannot be empty",
   "message.priceEmpty": "Price is empty or price format is incorrect",
+  "message.loggedOut": "You have been logged out. Your session has expired.",
   "navigation.transactions": "Transactions",
   "navigation.categories": "Categories",
   "navigation.accounts": "Accounts",
