@@ -3,7 +3,6 @@ package com.pfm.history;
 import static com.pfm.history.DifferenceProvider.ENTRY_VALUES_TEMPLATE;
 import static com.pfm.history.DifferenceProvider.UPDATE_ENTRY_TEMPLATE;
 
-import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.history.HistoryEntry.Type;
 import com.pfm.transaction.AccountPriceEntry;
@@ -36,17 +35,53 @@ public class HistoryEntryService {
         .collect(Collectors.toList());
   }
 
-  public  void addHistoryEntryOnAdd(Account account, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = HistoryEntryProvider.createHistoryEntryOnAdd(account);
+  public <T extends HistoryEntryProvider> void addHistoryEntryOnAdd(T t, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = t.createHistoryEntryOnAdd();
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.ADD)
         .entries(historyEntryOnAdd)
-        .object(account.getClass().getSimpleName())
+        .object(t.getClass().getSimpleName())
         .userId(userId)
         .build();
     saveHistoryEntry(historyEntry);
   }
+
+  public <T extends HistoryEntryProvider> void addHistoryEntryOnUpdate(T oldObject, T newObject, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = oldObject.createHistoryEntryOnUpdate(newObject);
+    HistoryEntry historyEntry = HistoryEntry.builder()
+        .date(LocalDateTime.now())
+        .type(Type.UPDATE)
+        .entries(historyEntryOnAdd)
+        .object(oldObject.getClass().getSimpleName())
+        .userId(userId)
+        .build();
+    saveHistoryEntry(historyEntry);
+  }
+
+  public <T extends HistoryEntryProvider> void addHistoryEntryOnDelete(T oldObject, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = oldObject.createHistoryEntryOnDelete();
+    HistoryEntry historyEntry = HistoryEntry.builder()
+        .date(LocalDateTime.now())
+        .type(Type.DELETE)
+        .entries(historyEntryOnAdd)
+        .object(oldObject.getClass().getSimpleName())
+        .userId(userId)
+        .build();
+    saveHistoryEntry(historyEntry);
+  }
+
+//  public <T extends HistoryEntryProvider> void addHistoryEntryOnUpdate(T t, long userId) {
+//    List<HistoryInfo> historyEntryOnAdd = t.createHistoryEntryOnDelete();
+//    HistoryEntry historyEntry = HistoryEntry.builder()
+//        .date(LocalDateTime.now())
+//        .type(Type.ADD)
+//        .entries(historyEntryOnAdd)
+//        .object(oldObject.getClass().getSimpleName())
+//        .userId(userId)
+//        .build();
+//    saveHistoryEntry(historyEntry);
+//  }
 
   // TODO refactor security to not force develeopers to pass userId all around.
   public <T extends DifferenceProvider<T>> void addEntryOnAdd(T newObject, long userId) {

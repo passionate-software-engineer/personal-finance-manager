@@ -55,7 +55,7 @@ public class AccountController implements AccountApi {
 
     Account createdAccount = accountService.addAccount(userId, account);
     log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
-    historyEntryService.addHistoryEntryOnAdd(createdAccount,userId);
+    historyEntryService.addHistoryEntryOnAdd(createdAccount, userId);
     return ResponseEntity.ok(createdAccount.getId());
   }
 
@@ -80,6 +80,7 @@ public class AccountController implements AccountApi {
     Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
 //    historyEntryService.addEntryOnUpdate(accountToUpdate, account, userId);
 
+    historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);
     accountService.updateAccount(accountId, userId, account);
 
     log.info("Account with id {} was successfully updated", accountId);
@@ -101,10 +102,10 @@ public class AccountController implements AccountApi {
     }
 
     Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    historyEntryService.addHistoryEntryOnDelete(account, userId);
     log.info("Attempting to delete account with id {}", accountId);
     accountService.deleteAccount(accountId);
 
-//    historyEntryService.addEntryOnDelete(account, userId);
     log.info("Account with id {} was deleted successfully", accountId);
 
     return ResponseEntity.ok().build();

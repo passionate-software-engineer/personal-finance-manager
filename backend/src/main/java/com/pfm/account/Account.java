@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Account  {
+public final class Account extends HistoryEntryProvider<Account>  {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
