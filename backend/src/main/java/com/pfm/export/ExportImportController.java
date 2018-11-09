@@ -25,7 +25,7 @@ public class ExportImportController implements ExportImportApi {
   @Override
   public void importData(@RequestBody ExportResult inputData) {
     long userId = userProvider.getCurrentUserId();
-    // TODO [enhancement] validate input - if all required fields are present, check if no data is present before import
+    // TODO validate input - if all required fields are present, check if no data is present before import
     importService.importData(inputData, userId);
   }
 
