@@ -1,39 +1,49 @@
 package com.pfm.history;
 
+import com.pfm.account.AccountService;
+import com.pfm.category.CategoryService;
+import com.pfm.history.HistoryField.idFieldName;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@AllArgsConstructor
 public class HistoryEntryProvider {
-  
-  public List<HistoryInfo> createHistoryEntryOnAdd() {
+
+  private AccountService accountService;
+  private CategoryService categoryService;
+
+  public List<HistoryInfo> createHistoryEntryOnAdd(Object newObject) {
 
     List<HistoryInfo> historyInfos = new ArrayList<>();
-
-    Field[] fields = this.getClass().getDeclaredFields();
+    Field[] fields = newObject.getClass().getDeclaredFields();
 
     for (Field field : fields) {
-      Object value = null;
+      field.setAccessible(true);
+      if (field.isAnnotationPresent(HistoryField.class)) {
+        String value = getValueFromField(field);
 
-      value = getObject(field, value);
-
-      HistoryInfo historyInfo = HistoryInfo.builder()
-          .name(field.getName())
-          .newValue(value.toString())
-          .build();
-      historyInfos.add(historyInfo);
+        HistoryInfo historyInfo = HistoryInfo.builder()
+            .name(field.getName())
+            .newValue(value)
+            .build();
+        historyInfos.add(historyInfo);
+      }
     }
 
     return historyInfos;
   }
 
-  public List<HistoryInfo> createHistoryEntryOnUpdate(T t) {
+  public List<HistoryInfo> createHistoryEntryOnUpdate(Object oldObject, Object newObject) {
 
     List<HistoryInfo> historyInfos = new ArrayList<>();
 
-    Field[] fieldsFromOldObject = this.getClass().getDeclaredFields();
-    Field[] fieldsFromNewObject = t.getClass().getDeclaredFields();
+    Field[] fieldsFromOldObject = oldObject.getClass().getDeclaredFields();
+    Field[] fieldsFromNewObject = newObject.getClass().getDeclaredFields();
 
     for (int i = 0; i < fieldsFromNewObject.length; i++) {
       //old object
@@ -55,10 +65,10 @@ public class HistoryEntryProvider {
     return historyInfos;
   }
 
-  public List<HistoryInfo> createHistoryEntryOnDelete() {
+  public List<HistoryInfo> createHistoryEntryOnDelete(Object oldObject) {
     List<HistoryInfo> historyInfos = new ArrayList<>();
 
-    Field[] fields = this.getClass().getDeclaredFields();
+    Field[] fields = oldObject.getClass().getDeclaredFields();
 
     for (Field field : fields) {
       Object value = null;
@@ -87,6 +97,19 @@ public class HistoryEntryProvider {
       e.printStackTrace();
     } finally {
       field.setAccessible(false);
+    }
+    return value;
+  }
+
+  private String getValueFromField(Field field) {
+    String value = null;
+    if (field.getAnnotation(HistoryField.class).getidFieldName().equals(idFieldName.None)) {
+      try {
+        value = (String) field.get(new Object());
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    } else if (field.getAnnotation(HistoryField.class).getidFieldName().equals(idFieldName.Category)) {
     }
     return value;
   }

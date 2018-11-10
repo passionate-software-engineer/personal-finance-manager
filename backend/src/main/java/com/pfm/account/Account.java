@@ -5,6 +5,7 @@ import static com.pfm.helpers.BigDecimalHelper.convertBigDecimalToString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.history.DifferenceProvider;
 import com.pfm.history.HistoryEntryProvider;
+import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Account extends HistoryEntryProvider<Account>  {
+public final class Account {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +32,11 @@ public final class Account extends HistoryEntryProvider<Account>  {
   public Long id;
 
   @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
+  @HistoryField
   public String name;
 
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
+  @HistoryField
   public BigDecimal balance;
 
   @JsonIgnore

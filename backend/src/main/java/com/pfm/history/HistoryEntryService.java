@@ -28,6 +28,7 @@ public class HistoryEntryService {
 
   private HistoryEntryRepository historyEntryRepository;
   private AccountService accountService;
+  private HistoryEntryProvider historyEntryProvider;
 
   public List<HistoryEntry> getHistoryEntries(long userId) {
     return historyEntryRepository.findByUserId(userId).stream()
@@ -35,20 +36,20 @@ public class HistoryEntryService {
         .collect(Collectors.toList());
   }
 
-  public <T extends HistoryEntryProvider> void addHistoryEntryOnAdd(T t, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = t.createHistoryEntryOnAdd();
+  public void addHistoryEntryOnAdd(Object object, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = historyEntryProvider.createHistoryEntryOnAdd(object);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.ADD)
         .entries(historyEntryOnAdd)
-        .object(t.getClass().getSimpleName())
+        .object(object.getClass().getSimpleName())
         .userId(userId)
         .build();
     saveHistoryEntry(historyEntry);
   }
 
-  public <T extends HistoryEntryProvider> void addHistoryEntryOnUpdate(T oldObject, T newObject, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = oldObject.createHistoryEntryOnUpdate(newObject);
+  public void addHistoryEntryOnUpdate(Object oldObject, Object newObject, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = historyEntryProvider.createHistoryEntryOnUpdate(oldObject, newObject);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.UPDATE)
@@ -59,8 +60,8 @@ public class HistoryEntryService {
     saveHistoryEntry(historyEntry);
   }
 
-  public <T extends HistoryEntryProvider> void addHistoryEntryOnDelete(T oldObject, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = oldObject.createHistoryEntryOnDelete();
+  public void addHistoryEntryOnDelete(Object oldObject, long userId) {
+    List<HistoryInfo> historyEntryOnAdd = historyEntryProvider.createHistoryEntryOnDelete(oldObject);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.DELETE)
