@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SecurityInterceptorConfig implements WebMvcConfigurer {
 
-  private RequestInterceptor requestInterceptor;
+  private SecurityRequestInterceptor requestInterceptor;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {

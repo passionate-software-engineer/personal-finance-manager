@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]},
   {path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
   // otherwise redirect to home
-  {path: '**', redirectTo: '/transactions', canActivate: [AuthGuard]}
+  {path: '**', redirectTo: '/login'}
 
 ];
 

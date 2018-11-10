@@ -44,7 +44,7 @@ public class ImportService {
 
   }
 
-  // TODO [enhancement] add checking account state during import based on period start and end balances & overall account states
+  // ENHANCEMENT add checking account state during import based on period start and end balances & overall account states
   private void importTransaction(Map<String, Long> categoryNameToIdMap, Map<String, Long> accountNameToIdMap, ExportTransaction transaction,
       long userId) {
     Transaction newTransaction = Transaction.builder()

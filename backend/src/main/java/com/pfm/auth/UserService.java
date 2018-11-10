@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserService { // TODO swagger not working correctly with user parameter
+public class UserService {
 
   private UserRepository userRepository;
   private TokenService tokenService;
@@ -30,10 +30,11 @@ public class UserService { // TODO swagger not working correctly with user param
       return Optional.empty();
     }
 
-    String token = tokenService.generateToken(userFromDb);
+    Token token = tokenService.generateToken(userFromDb);
 
     UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
-        userFromDb.getLastName(), token);
+        userFromDb.getLastName(), token.getToken(), token.getExpiryDate());
+
     return Optional.of(userDetails);
   }
 

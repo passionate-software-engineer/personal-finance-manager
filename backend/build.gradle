@@ -25,7 +25,6 @@ plugins {
     id 'io.spring.dependency-management' version "1.0.6.RELEASE"
     //TODO dependencyUpdates -Drevision=release -DoutputDir=build/reports/dependencyUpdates .Jenkins
     id 'org.owasp.dependencycheck' version '3.3.2'
-    //id 'org.springframework.boot' version '2.1.0.RC1'
 
     // core
     id 'checkstyle'
@@ -36,7 +35,7 @@ plugins {
     id 'project-report'
 }
 
-// TODO not working when moved to block above
+// ENHANCEMENT not working when moved to block above (will work when moved to official version)
 apply plugin: 'org.springframework.boot'
 
 version '1.0'

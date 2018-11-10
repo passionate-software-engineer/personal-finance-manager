@@ -2,6 +2,7 @@ package com.pfm.filter;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,23 +18,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "Filters", description = "Controller used to list / add / update / delete filters.")
 public interface FilterApi {
 
-  @ApiOperation(value = "Find filter by id", response = Filter.class)
+  @ApiOperation(value = "Find filter by id", response = Filter.class, authorizations = {@Authorization(value = "Bearer")})
   @GetMapping(value = "/{filterId}")
-  ResponseEntity<Filter> getFilterById(@PathVariable long filterId, long userId);
+  ResponseEntity<Filter> getFilterById(@PathVariable long filterId);
 
-  @ApiOperation(value = "Get list of all filters", response = Filter.class, responseContainer = "List")
+  @ApiOperation(value = "Get list of all filters", response = Filter.class, responseContainer = "List",
+      authorizations = {@Authorization(value = "Bearer")})
   @GetMapping
-  ResponseEntity<List<Filter>> getFilters(long userId);
+  ResponseEntity<List<Filter>> getFilters();
 
-  @ApiOperation(value = "Create new filter", response = Long.class)
+  @ApiOperation(value = "Create new filter", response = Long.class, authorizations = {@Authorization(value = "Bearer")})
   @PostMapping
-  ResponseEntity<?> addFilter(FilterRequest filterRequest, long userId);
+  ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
-  @ApiOperation(value = "Update an existing filter", response = Void.class)
+  @ApiOperation(value = "Update an existing filter", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @PutMapping(value = "/{filterId}")
-  ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest, long userId);
+  ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest);
 
-  @ApiOperation(value = "Delete an existing filter", response = Void.class)
+  @ApiOperation(value = "Delete an existing filter", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @DeleteMapping(value = "/{filterId}")
-  ResponseEntity<?> deleteFilter(@PathVariable long filterId, long userId);
+  ResponseEntity<?> deleteFilter(@PathVariable long filterId);
 }

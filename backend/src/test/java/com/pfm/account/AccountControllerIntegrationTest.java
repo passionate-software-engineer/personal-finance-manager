@@ -32,6 +32,15 @@ import org.springframework.http.HttpHeaders;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
+  private static Collection<Object[]> emptyAccountNameParameters() {
+    return Arrays.asList(new Object[][]{
+        {"", null},
+        {" ", null},
+        {"    ", null},
+        {null, null}
+    });
+  }
+
   @BeforeEach
   public void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
@@ -84,15 +93,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(2)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_NAME))))
         .andExpect(jsonPath("$[1]", is(getMessage(EMPTY_ACCOUNT_BALANCE))));
-  }
-
-  private static Collection<Object[]> emptyAccountNameParameters() {
-    return Arrays.asList(new Object[][]{
-        {"", null},
-        {" ", null},
-        {"    ", null},
-        {null, null}
-    });
   }
 
   @Test

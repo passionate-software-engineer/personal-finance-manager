@@ -5,7 +5,7 @@ pipeline {
     parameters {
         string(name: 'APP_URL', defaultValue: 'http://personal-finance-manager.s3-website.us-east-2.amazonaws.com', description: 'Application (frontend) URL')
         string(name: 'APP_S3_BUCKET', defaultValue: 's3://personal-finance-manager', description: 'S3 bucket for frontend upload')
-        string(name: 'EC2_INSTANCE', defaultValue: 'ec2-13-59-117-184.us-east-2.compute.amazonaws.com', description: 'EC2 instance for backend service')
+        string(name: 'EC2_INSTANCE', defaultValue: 'ec2-3-120-209-115.eu-central-1.compute.amazonaws.com', description: 'EC2 instance for backend service')
     }
     options {
         timeout(time: 20, unit: 'MINUTES')
@@ -54,7 +54,8 @@ pipeline {
                     sshagent(credentials : ['AWS_PRIVATE_KEY']) {
                         sh '''
                            cd backend/build/libs
-                           scp -o StrictHostKeyChecking=no backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
+                           ssh -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
+                           scp backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
                            scp ../../../scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
                            ssh ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
                            '''
