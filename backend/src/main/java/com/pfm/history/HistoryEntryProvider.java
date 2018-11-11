@@ -5,7 +5,7 @@ import com.pfm.account.AccountService;
 import com.pfm.auth.UserProvider;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
-import com.pfm.history.HistoryField.idFieldName;
+import com.pfm.history.HistoryField.IdFieldName;
 import com.pfm.transaction.AccountPriceEntry;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class HistoryEntryProvider {
 
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(field.getName())
-            .oldValue(value.toString())
+            .oldValue(value)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -88,26 +88,26 @@ public class HistoryEntryProvider {
     return historyInfos;
   }
 
+  @SuppressWarnings("unchecked")
   private String getValueFromField(Field field, Object object) {
 
-    String value = null;
-    final idFieldName idFieldName = field.getAnnotation(HistoryField.class).idFieldName();
+    Object value = null;
+    final IdFieldName idFieldName = field.getAnnotation(HistoryField.class).idFieldName();
 
     switch (idFieldName) {
 
-      case None: {
-        value = getValue(field, object).toString();
-        break;
-      }
-
       case ParentCategory: {
-        Category parentCategory = (Category) getValue(field, object);
-        value = parentCategory.getName();
+        Category category = (Category) getValue(field, object);
+        if (category == null) {
+          value = "Main Category";
+        } else {
+          value = category.getName();
+        }
         break;
       }
 
       case Category: {
-        value = categoryService.getCategoryByIdAndUserId((Long) getValue(field, object), userProvider.getCurrentUserId()).get().getName();
+        value = categoryService.getCategoryFromDbByIdAndUserId((Long) getValue(field, object), userProvider.getCurrentUserId()).getName();
         break;
       }
 
@@ -116,15 +116,24 @@ public class HistoryEntryProvider {
         List<String> values = new ArrayList<>();
         for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
           Long accountId = accountPriceEntry.getAccountId();
-          Account account = accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId()).get();
-          values.add(String.format("%s - %s", account.getName(), account.getBalance().toString()));
+          Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userProvider.getCurrentUserId());
+          values.add(String.format("%s - %s", account.getName(), accountPriceEntry.getPrice()));
         }
-        value = values.toString();
+        value = values;
         break;
       }
 
+      default:
+        value = getValue(field, object);
+        break;
+
     }
-    return value;
+
+    if (value == null) {
+      throw new IllegalStateException();
+    }
+
+    return value.toString();
   }
 
   private Object getValue(Field field, Object object) {
@@ -134,11 +143,6 @@ public class HistoryEntryProvider {
     } catch (IllegalAccessException e) {
       e.printStackTrace();
     }
-
-    if (value == null) {
-      throw new IllegalStateException();
-    }
-
     return value;
   }
 }

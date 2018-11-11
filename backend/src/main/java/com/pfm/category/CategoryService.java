@@ -19,6 +19,15 @@ public class CategoryService {
     return categoryRepository.findByIdAndUserId(id, userId);
   }
 
+  public Category getCategoryFromDbByIdAndUserId(long id, long userId) {
+    Optional<Category> categoryByIdAndUserId = getCategoryByIdAndUserId(id, userId);
+    if (!categoryByIdAndUserId.isPresent()) {
+      throw new IllegalStateException("Category with id : " + id + " does not exist in database");
+    }
+
+    return categoryByIdAndUserId.get();
+  }
+
   public List<Category> getCategories(long userId) {
     return categoryRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Category::getId))

@@ -44,7 +44,7 @@ public class TransactionService {
     return transactionRepository.save(transaction);
   }
 
-
+  @Transactional
   public void updateTransaction(long id, long userId, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
 
@@ -108,8 +108,6 @@ public class TransactionService {
     historyEntryService.addHistoryEntryOnUpdate(account, accountWithNewBalance, userId);
 
     accountService.updateAccountBalance(accountId, newBalance);
-
-//    historyEntryService.addEntryOnUpdate(account, accountWithNewBalance, userId);
   }
 
   public boolean transactionExistByAccountId(long accountId) {
@@ -120,7 +118,4 @@ public class TransactionService {
     return transactionRepository.existsByCategoryId(categoryId);
   }
 
-  //  public boolean transactionExistByTransactionIdAndUserId(long transactionId, long userId) {
-  //    return transactionRepository.existsByIdAndUserId(transactionId, userId);
-  //  }
 }

@@ -2,7 +2,7 @@ package com.pfm.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.history.HistoryField;
-import com.pfm.history.HistoryField.idFieldName;
+import com.pfm.history.HistoryField.IdFieldName;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public final class Category  {
+public final class Category {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public final class Category  {
   @ManyToOne
   @ApiModelProperty(value = "Parent category object", required = true)
   //TODO try using parentCategoryID
-  @HistoryField(idFieldName = idFieldName.ParentCategory)
+  @HistoryField(idFieldName = IdFieldName.ParentCategory)
   private Category parentCategory;
 
   @JsonIgnore

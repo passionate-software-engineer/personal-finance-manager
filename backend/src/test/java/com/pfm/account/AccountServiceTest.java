@@ -142,9 +142,7 @@ public class AccountServiceTest {
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10());
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10()));
 
     // then
     assertThat(exception.getMessage(), is("Account with id: " + id + " does not exist in database"));
