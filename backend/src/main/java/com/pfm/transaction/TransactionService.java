@@ -105,6 +105,8 @@ public class TransactionService {
         .balance(newBalance)
         .build();
 
+    historyEntryService.addHistoryEntryOnUpdate(account, accountWithNewBalance, userId);
+
     accountService.updateAccountBalance(accountId, newBalance);
 
 //    historyEntryService.addEntryOnUpdate(account, accountWithNewBalance, userId);

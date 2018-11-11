@@ -1,10 +1,9 @@
 package com.pfm.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pfm.history.DifferenceProvider;
+import com.pfm.history.HistoryField;
+import com.pfm.history.HistoryField.idFieldName;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public final class Category implements DifferenceProvider<Category> {
+public final class Category  {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,55 +27,16 @@ public final class Category implements DifferenceProvider<Category> {
   private Long id;
 
   @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
+  @HistoryField
   private String name;
 
   @ManyToOne
   @ApiModelProperty(value = "Parent category object", required = true)
   //TODO try using parentCategoryID
+  @HistoryField(idFieldName = idFieldName.ParentCategory)
   private Category parentCategory;
 
   @JsonIgnore
   private Long userId;
-
-  @Override
-  public List<String> getDifferences(Category category) {
-    List<String> differences = new ArrayList<>();
-
-    if (!(this.getName().equals(category.getName()))) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "name", this.getName(), category.getName()));
-    }
-
-    if (this.parentCategory == null && category.parentCategory != null) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "parent category",
-          "'Main Category'", category.parentCategory.getName()));
-    }
-
-    if (this.parentCategory != null && category.parentCategory == null) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "parent category",
-          this.parentCategory.getName(),
-          "'Main Category'"));
-    }
-    if (this.parentCategory != null && category.parentCategory != null && !this.parentCategory.equals(category.getParentCategory())) {
-      differences.add(String.format(UPDATE_ENTRY_TEMPLATE, "parent category", this.parentCategory.getName(),
-          category.parentCategory.getName()));
-    }
-
-    return differences;
-  }
-
-  @Override
-  public List<String> getObjectPropertiesWithValues() {
-    List<String> newValues = new ArrayList<>();
-    newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "name", this.getName()));
-    if (!(this.parentCategory == null)) {
-      newValues.add(String.format(ENTRY_VALUES_TEMPLATE, "parent category", this.getParentCategory().getName()));
-    }
-    return newValues;
-  }
-
-  @Override
-  public String getObjectDescriptiveName() {
-    return this.getName();
-  }
 
 }

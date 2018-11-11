@@ -1,10 +1,13 @@
 package com.pfm.history;
 
+import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.auth.UserProvider;
+import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.history.HistoryField.idFieldName;
+import com.pfm.transaction.AccountPriceEntry;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -16,6 +19,7 @@ public class HistoryEntryProvider {
 
   private AccountService accountService;
   private CategoryService categoryService;
+  private UserProvider userProvider;
 
   public List<HistoryInfo> createHistoryEntryOnAdd(Object newObject) {
 
@@ -25,8 +29,7 @@ public class HistoryEntryProvider {
     for (Field field : fields) {
       field.setAccessible(true);
       if (field.isAnnotationPresent(HistoryField.class)) {
-        String value = getValueFromField(field);
-
+        String value = getValueFromField(field, newObject);
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(field.getName())
             .newValue(value)
@@ -46,20 +49,19 @@ public class HistoryEntryProvider {
     Field[] fieldsFromNewObject = newObject.getClass().getDeclaredFields();
 
     for (int i = 0; i < fieldsFromNewObject.length; i++) {
-      //old object
-      Object valueFromOldObject = null;
-      valueFromOldObject = getObject(fieldsFromOldObject[i], valueFromOldObject);
+      fieldsFromOldObject[i].setAccessible(true);
+      fieldsFromNewObject[i].setAccessible(true);
+      if (fieldsFromOldObject[i].isAnnotationPresent(HistoryField.class)) {
+        String valueFromOldObject = getValueFromField(fieldsFromOldObject[i], oldObject);
+        String valueFromNewObject = getValueFromField(fieldsFromNewObject[i], newObject);
 
-      //new object
-      Object valueFromNewObject = null;
-      valueFromNewObject = getObject(fieldsFromNewObject[i], valueFromNewObject);
-
-      HistoryInfo historyInfo = HistoryInfo.builder()
-          .name(fieldsFromOldObject[i].getName())
-          .oldValue(valueFromOldObject.toString())
-          .newValue(valueFromNewObject.toString())
-          .build();
-      historyInfos.add(historyInfo);
+        HistoryInfo historyInfo = HistoryInfo.builder()
+            .name(fieldsFromOldObject[i].getName())
+            .oldValue(valueFromOldObject)
+            .newValue(valueFromNewObject)
+            .build();
+        historyInfos.add(historyInfo);
+      }
     }
 
     return historyInfos;
@@ -71,46 +73,72 @@ public class HistoryEntryProvider {
     Field[] fields = oldObject.getClass().getDeclaredFields();
 
     for (Field field : fields) {
-      Object value = null;
+      field.setAccessible(true);
+      if (field.isAnnotationPresent(HistoryField.class)) {
 
-      value = getObject(field, value);
+        String value = getValueFromField(field, oldObject);
 
-      HistoryInfo historyInfo = HistoryInfo.builder()
-          .name(field.getName())
-          .oldValue(value.toString())
-          .build();
-      historyInfos.add(historyInfo);
+        HistoryInfo historyInfo = HistoryInfo.builder()
+            .name(field.getName())
+            .oldValue(value.toString())
+            .build();
+        historyInfos.add(historyInfo);
+      }
     }
-
     return historyInfos;
   }
 
-  private Object getObject(Field field, Object value) {
-    try {
-      if (Modifier.isPublic(field.getModifiers())) {
-        value = field.get(this);
-      } else {
-        field.setAccessible(true);
-        value = field.get(this);
+  private String getValueFromField(Field field, Object object) {
+
+    String value = null;
+    final idFieldName idFieldName = field.getAnnotation(HistoryField.class).idFieldName();
+
+    switch (idFieldName) {
+
+      case None: {
+        value = getValue(field, object).toString();
+        break;
       }
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } finally {
-      field.setAccessible(false);
+
+      case ParentCategory: {
+        Category parentCategory = (Category) getValue(field, object);
+        value = parentCategory.getName();
+        break;
+      }
+
+      case Category: {
+        value = categoryService.getCategoryByIdAndUserId((Long) getValue(field, object), userProvider.getCurrentUserId()).get().getName();
+        break;
+      }
+
+      case AccountPriceEntry: {
+        List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
+        List<String> values = new ArrayList<>();
+        for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
+          Long accountId = accountPriceEntry.getAccountId();
+          Account account = accountService.getAccountByIdAndUserId(accountId, userProvider.getCurrentUserId()).get();
+          values.add(String.format("%s - %s", account.getName(), account.getBalance().toString()));
+        }
+        value = values.toString();
+        break;
+      }
+
     }
     return value;
   }
 
-  private String getValueFromField(Field field) {
-    String value = null;
-    if (field.getAnnotation(HistoryField.class).getidFieldName().equals(idFieldName.None)) {
-      try {
-        value = (String) field.get(new Object());
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
-    } else if (field.getAnnotation(HistoryField.class).getidFieldName().equals(idFieldName.Category)) {
+  private Object getValue(Field field, Object object) {
+    Object value = null;
+    try {
+      value = field.get(object);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
+
+    if (value == null) {
+      throw new IllegalStateException();
+    }
+
     return value;
   }
 }

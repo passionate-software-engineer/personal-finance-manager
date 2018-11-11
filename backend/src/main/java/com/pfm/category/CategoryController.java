@@ -86,7 +86,7 @@ public class CategoryController implements CategoryApi {
 
     Category createdCategory = categoryService.addCategory(category, userId);
     log.info("Saving category to the database was successful. Category id is {}", createdCategory.getId());
-    historyEntryService.addEntryOnAdd(category, userId);
+    historyEntryService.addHistoryEntryOnAdd(category, userId);
 
     return ResponseEntity.ok(createdCategory.getId());
   }
@@ -117,7 +117,7 @@ public class CategoryController implements CategoryApi {
     }
 
     Category categoryToUpdate = categoryByIdAndUserId.get();
-    historyEntryService.addEntryOnUpdate(categoryToUpdate, category, userId);
+    historyEntryService.addHistoryEntryOnUpdate(categoryToUpdate, category, userId);
 
     categoryService.updateCategory(categoryId, userId, category);
     log.info("Category with id {} was successfully updated", categoryId);
@@ -152,7 +152,7 @@ public class CategoryController implements CategoryApi {
     categoryService.deleteCategory(categoryId);
 
     log.info("Category with id {} was deleted successfully", categoryId);
-    historyEntryService.addEntryOnDelete(deletedCategory, userId);
+    historyEntryService.addHistoryEntryOnDelete(deletedCategory, userId);
     return ResponseEntity.ok().build();
   }
 }

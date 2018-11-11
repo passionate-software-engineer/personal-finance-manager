@@ -76,7 +76,7 @@ public class FilterController implements FilterApi {
     Filter createdFilter = filterService.addFilter(userId, filter);
     log.info("Saving filter to the database was successful. Filter id is {}", createdFilter.getId());
 
-    historyEntryService.addEntryOnAdd(filter, userId);
+    historyEntryService.addHistoryEntryOnAdd(filter, userId);
 
     return ResponseEntity.ok(createdFilter.getId());
   }
@@ -99,7 +99,7 @@ public class FilterController implements FilterApi {
       log.error("Filter is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-    historyEntryService.addEntryOnUpdate(filterByIdAndUserId.get(), filter, userId);
+    historyEntryService.addHistoryEntryOnUpdate(filterByIdAndUserId.get(), filter, userId);
 
     filterService.updateFilter(filterId, userId, filter);
     log.info("Filter with id {} was successfully updated", filterId);
@@ -112,14 +112,15 @@ public class FilterController implements FilterApi {
   public ResponseEntity<?> deleteFilter(@PathVariable long filterId) {
     long userId = userProvider.getCurrentUserId();
 
-    if (filterService.filterDoesNotExistByFilterIdAndUserId(filterId, userId)) {
+    Optional<Filter> filterByIdAndUserId = filterService.getFilterByIdAndUserId(filterId, userId);
+    if (!filterByIdAndUserId.isPresent()) {
       log.info("No filter with id {} was found, not able to delete", filterId);
       return ResponseEntity.notFound().build();
     }
 
     filterService.deleteFilter(filterId);
 
-    historyEntryService.addEntryOnDelete(filterByIdAndUserId.get(), userId);
+    historyEntryService.addHistoryEntryOnDelete(filterByIdAndUserId.get(), userId);
 
     return ResponseEntity.ok().build();
   }

@@ -70,6 +70,7 @@ public class AccountController implements AccountApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest) {
     long userId = userProvider.getCurrentUserId();
 
@@ -88,7 +89,6 @@ public class AccountController implements AccountApi {
     }
 
     Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
-    historyEntryService.addEntryOnUpdate(accountToUpdate, account, userId);
 
     historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);
     accountService.updateAccount(accountId, userId, account);

@@ -64,7 +64,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
-    historyEntryService.addEntryOnAdd(createdTransaction, userId);
+    historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
 
     return ResponseEntity.ok(createdTransaction.getId());
   }
@@ -90,7 +90,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
 
-    historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
+    historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, transaction, userId);
     transactionService.updateTransaction(transactionId, userId, transaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
@@ -109,7 +109,7 @@ public class TransactionController implements TransactionApi {
     Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
-    historyEntryService.addEntryOnDelete(transactionToDelete, userId);
+    historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
 
     log.info("Transaction with id {} was deleted successfully", transactionId);
     return ResponseEntity.ok().build();
