@@ -11,15 +11,14 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
-import com.pfm.auth.UserProvider;
 import com.pfm.category.CategoryService;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
@@ -44,9 +43,6 @@ class HistoryEntryProviderTest {
   @Mock
   private CategoryService categoryService;
 
-  @Mock
-  private UserProvider userProvider;
-
   @InjectMocks
   private HistoryEntryProvider historyEntryProvider;
 
@@ -57,28 +53,31 @@ class HistoryEntryProviderTest {
     Transaction transaction = getTransaction();
     when(categoryService.getCategoryFromDbByIdAndUserId(1L, 1L)).thenReturn(categoryCar());
     when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
-    when(userProvider.getCurrentUserId()).thenReturn(1L);
 
     //when
-    final List<HistoryInfo> historyInfos = historyEntryProvider.createHistoryEntryOnAdd(transaction);
+    final List<HistoryInfo> historyInfos = historyEntryProvider.createHistoryEntryOnAdd(transaction, 1L);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
         .newValue(transaction.getDescription())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("categoryId")
         .newValue(categoryCar().getName())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("date")
         .newValue(transaction.getDate().toString())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("accountPriceEntries")
         .newValue(String.format("[%s - %s]", accountMbankBalance10().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
+        .userId(1L)
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
@@ -96,10 +95,9 @@ class HistoryEntryProviderTest {
 
     lenient().when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
     lenient().when(accountService.getAccountFromDbByIdAndUserId(2L, 1L)).thenReturn(accountIngBalance9999());
-    when(userProvider.getCurrentUserId()).thenReturn(1L);
 
     //when
-    final List<HistoryInfo> historyInfos = historyEntryProvider.createHistoryEntryOnUpdate(transaction, updatedTransaction);
+    final List<HistoryInfo> historyInfos = historyEntryProvider.createHistoryEntryOnUpdate(transaction, updatedTransaction, 1L);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
@@ -107,21 +105,25 @@ class HistoryEntryProviderTest {
         .name("description")
         .oldValue(transaction.getDescription())
         .newValue(updatedTransaction.getDescription())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("categoryId")
         .oldValue(categoryFood().getName())
         .newValue(categoryHome().getName())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("date")
         .oldValue(transaction.getDate().toString())
         .newValue(updatedTransaction.getDate().toString())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("accountPriceEntries")
         .oldValue(String.format("[%s - %s]", accountMbankBalance10().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .newValue(String.format("[%s - %s]", accountIngBalance9999().getName(), updatedTransaction.getAccountPriceEntries().get(0).getPrice()))
+        .userId(1L)
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
@@ -134,28 +136,31 @@ class HistoryEntryProviderTest {
     Transaction transaction = getTransaction();
     when(categoryService.getCategoryFromDbByIdAndUserId(1L, 1L)).thenReturn(categoryFood());
     when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
-    when(userProvider.getCurrentUserId()).thenReturn(1L);
 
     //when
-    final List<HistoryInfo> historyInfos = historyEntryProvider.createHistoryEntryOnDelete(transaction);
+    final List<HistoryInfo> historyInfos = historyEntryProvider.createHistoryEntryOnDelete(transaction, 1L);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
         .oldValue(transaction.getDescription())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("categoryId")
         .oldValue(categoryFood().getName())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("date")
         .oldValue(transaction.getDate().toString())
+        .userId(1L)
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("accountPriceEntries")
         .oldValue(String.format("[%s - %s]", accountMbankBalance10().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
+        .userId(1L)
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
@@ -163,7 +168,6 @@ class HistoryEntryProviderTest {
 
   private Transaction getTransaction() {
     Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
-    List<AccountPriceEntry> accountPriceEntries = new ArrayList<>();
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
         .price(convertDoubleToBigDecimal(100.00))
         .accountId(1L)
@@ -193,9 +197,10 @@ class HistoryEntryProviderTest {
     Account account = new Account();
     final Field name = account.getClass().getDeclaredField("name");
 
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      Whitebox.invokeMethod(historyEntryProvider, "getValueFromField", name, account);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class,
+        () -> Whitebox.invokeMethod(historyEntryProvider, "getValueFromField", name, account, 1L));
+
+    assertThat(exception.getMessage(), is("Field value is null"));
   }
 
   @Test
@@ -205,7 +210,7 @@ class HistoryEntryProviderTest {
     when(mock.get(account)).thenThrow(new IllegalAccessException());
     Object value = Whitebox.invokeMethod(historyEntryProvider, "getValue", mock, account);
 
-    assertTrue(value == null);
+    assertNull(value);
 
   }
 }

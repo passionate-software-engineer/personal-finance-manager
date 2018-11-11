@@ -178,7 +178,21 @@ public class CategoryServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionCausedByIdNotExist() {
+  public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
+
+    //given
+    long id = 1;
+    when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.getCategoryFromDbByIdAndUserId(id, MOCK_USER_ID));
+
+    //then
+    assertThat(exception.getMessage(), is(equalTo("Category with id : " + id + " does not exist in database")));
+  }
+
+  @Test
+  public void shouldThrowExceptionCausedByIdNotExistInGetMethod() {
 
     //given
     long id = 1;

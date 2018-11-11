@@ -135,7 +135,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionCausedByIdNotExist() {
+  public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
 
     //given
     long id = 1;
@@ -143,6 +143,20 @@ public class AccountServiceTest {
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class, () -> accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10()));
+
+    // then
+    assertThat(exception.getMessage(), is("Account with id: " + id + " does not exist in database"));
+  }
+
+  @Test
+  public void shouldThrowExceptionCausedByIdNotExistInGetMethod() {
+
+    //given
+    long id = 1;
+    when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class, () -> accountService.getAccountFromDbByIdAndUserId(id, MOCK_USER_ID));
 
     // then
     assertThat(exception.getMessage(), is("Account with id: " + id + " does not exist in database"));

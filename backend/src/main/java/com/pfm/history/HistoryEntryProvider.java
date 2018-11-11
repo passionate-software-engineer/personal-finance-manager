@@ -2,7 +2,6 @@ package com.pfm.history;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
-import com.pfm.auth.UserProvider;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.history.HistoryField.IdFieldName;
@@ -19,9 +18,8 @@ public class HistoryEntryProvider {
 
   private AccountService accountService;
   private CategoryService categoryService;
-  private UserProvider userProvider;
 
-  public List<HistoryInfo> createHistoryEntryOnAdd(Object newObject) {
+  public List<HistoryInfo> createHistoryEntryOnAdd(Object newObject, long userId) {
 
     List<HistoryInfo> historyInfos = new ArrayList<>();
     Field[] fields = newObject.getClass().getDeclaredFields();
@@ -29,10 +27,11 @@ public class HistoryEntryProvider {
     for (Field field : fields) {
       field.setAccessible(true);
       if (field.isAnnotationPresent(HistoryField.class)) {
-        String value = getValueFromField(field, newObject);
+        String value = getValueFromField(field, newObject, userId);
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(field.getName())
             .newValue(value)
+            .userId(userId)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -41,7 +40,7 @@ public class HistoryEntryProvider {
     return historyInfos;
   }
 
-  public List<HistoryInfo> createHistoryEntryOnUpdate(Object oldObject, Object newObject) {
+  public List<HistoryInfo> createHistoryEntryOnUpdate(Object oldObject, Object newObject, long userId) {
 
     List<HistoryInfo> historyInfos = new ArrayList<>();
 
@@ -52,13 +51,14 @@ public class HistoryEntryProvider {
       fieldsFromOldObject[i].setAccessible(true);
       fieldsFromNewObject[i].setAccessible(true);
       if (fieldsFromOldObject[i].isAnnotationPresent(HistoryField.class)) {
-        String valueFromOldObject = getValueFromField(fieldsFromOldObject[i], oldObject);
-        String valueFromNewObject = getValueFromField(fieldsFromNewObject[i], newObject);
+        String valueFromOldObject = getValueFromField(fieldsFromOldObject[i], oldObject, userId);
+        String valueFromNewObject = getValueFromField(fieldsFromNewObject[i], newObject, userId);
 
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(fieldsFromOldObject[i].getName())
             .oldValue(valueFromOldObject)
             .newValue(valueFromNewObject)
+            .userId(userId)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -67,7 +67,7 @@ public class HistoryEntryProvider {
     return historyInfos;
   }
 
-  public List<HistoryInfo> createHistoryEntryOnDelete(Object oldObject) {
+  public List<HistoryInfo> createHistoryEntryOnDelete(Object oldObject, long userId) {
     List<HistoryInfo> historyInfos = new ArrayList<>();
 
     Field[] fields = oldObject.getClass().getDeclaredFields();
@@ -76,11 +76,12 @@ public class HistoryEntryProvider {
       field.setAccessible(true);
       if (field.isAnnotationPresent(HistoryField.class)) {
 
-        String value = getValueFromField(field, oldObject);
+        String value = getValueFromField(field, oldObject, userId);
 
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(field.getName())
             .oldValue(value)
+            .userId(userId)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -89,9 +90,9 @@ public class HistoryEntryProvider {
   }
 
   @SuppressWarnings("unchecked")
-  private String getValueFromField(Field field, Object object) {
+  private String getValueFromField(Field field, Object object, long userId) {
 
-    Object value = null;
+    Object value;
     final IdFieldName idFieldName = field.getAnnotation(HistoryField.class).idFieldName();
 
     switch (idFieldName) {
@@ -107,7 +108,7 @@ public class HistoryEntryProvider {
       }
 
       case Category: {
-        value = categoryService.getCategoryFromDbByIdAndUserId((Long) getValue(field, object), userProvider.getCurrentUserId()).getName();
+        value = categoryService.getCategoryFromDbByIdAndUserId((Long) getValue(field, object), userId).getName();
         break;
       }
 
@@ -116,7 +117,7 @@ public class HistoryEntryProvider {
         List<String> values = new ArrayList<>();
         for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
           Long accountId = accountPriceEntry.getAccountId();
-          Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userProvider.getCurrentUserId());
+          Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
           values.add(String.format("%s - %s", account.getName(), accountPriceEntry.getPrice()));
         }
         value = values;
@@ -130,7 +131,7 @@ public class HistoryEntryProvider {
     }
 
     if (value == null) {
-      throw new IllegalStateException();
+      throw new IllegalStateException("Field value is null");
     }
 
     return value.toString();
