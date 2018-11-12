@@ -1,6 +1,6 @@
 package com.pfm.history;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +50,7 @@ public class HistoryEntryService {
     for (String entry : entries) {
       HistoryEntry historyEntry = HistoryEntry.builder()
           .userId(userId)
-          .date(LocalDateTime.now())
+          .date(ZonedDateTime.now())
           .entry(entry)
           .build();
       historyEntryRepository.save(historyEntry);

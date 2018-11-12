@@ -18,7 +18,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Order(1)
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
-  static final String CORRELATION_ID = "Correlation-Id";
+  public static final String CORRELATION_ID = "Correlation-Id";
+
+  public static String getCorrelationId() {
+    return MDC.get(CORRELATION_ID);
+  }
 
   @Override
   protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)

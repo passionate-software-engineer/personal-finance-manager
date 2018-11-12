@@ -1,7 +1,7 @@
 package com.pfm.history;
 
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +24,7 @@ public final class HistoryEntry {
   private Long id;
 
   @ApiModelProperty(value = "Time event happened", required = true)
-  private LocalDateTime date;
+  private ZonedDateTime date;
 
   @ApiModelProperty(value = "HistoryEntry entry", required = true)
   private String entry;
