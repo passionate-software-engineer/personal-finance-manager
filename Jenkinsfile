@@ -16,6 +16,28 @@ pipeline {
     }
     stages {
 
+	stage('Dependency check') {
+            parallel { // TODO send email when new versions available
+                stage('BACKEND') {
+                    steps {
+                        sh '''
+                           cd backend
+                           ./gradlew clean dependencyUpdates -Drevision=release -DoutputDir=build/reports/dependencyUpdates
+
+                           '''
+                    }
+                }
+                stage('FRONTEND') {
+                    steps {
+                        sh '''
+                           cd frontend
+                           ncu > ncu_output.txt
+                           '''
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             parallel {
                 stage('BACKEND') {
@@ -32,27 +54,6 @@ pipeline {
                            cd frontend
                            npm install
                            ng build
-                           '''
-                    }
-                }
-            }
-        }
-
-	stage('Dependency check') {
-            parallel { // TODO send email when new versions available
-                stage('BACKEND') {
-                    steps {
-                        sh '''
-                           cd backend
-                           ./gradlew clean dependencyUpdates -Drevision=release -DoutputDir=build/reports/dependencyUpdates
-                           '''
-                    }
-                }
-                stage('FRONTEND') {
-                    steps {
-                        sh '''
-                           cd frontend
-                           ncu > ncu_output.txt
                            '''
                     }
                 }
