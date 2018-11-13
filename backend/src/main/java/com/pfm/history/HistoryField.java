@@ -9,10 +9,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface HistoryField {
 
-  IdFieldName idFieldName() default IdFieldName.None;
+  IdField idFieldName() default IdField.None;
 
-  enum IdFieldName {
-    Category, Account, None, ParentCategory, AccountPriceEntry
+  boolean nullAllowed() default false;
+
+  enum IdField {
+    Category, Account, None, ParentCategory, AccountPriceEntry, CategoryIds, AccountIds
   }
 
 }

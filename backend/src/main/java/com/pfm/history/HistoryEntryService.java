@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class HistoryEntryService {
 
   private HistoryEntryRepository historyEntryRepository;
-  private HistoryEntryProvider historyEntryProvider;
+  private HistoryInfoProvider historyInfoProvider;
 
   public List<HistoryEntry> getHistoryEntries(long userId) {
     return historyEntryRepository.findByUserId(userId).stream()
@@ -24,7 +24,7 @@ public class HistoryEntryService {
   }
 
   public void addHistoryEntryOnAdd(Object object, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = historyEntryProvider.createHistoryEntryOnAdd(object, userId);
+    List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnAdd(object, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.ADD)
@@ -36,7 +36,7 @@ public class HistoryEntryService {
   }
 
   public void addHistoryEntryOnUpdate(Object oldObject, Object newObject, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = historyEntryProvider.createHistoryEntryOnUpdate(oldObject, newObject, userId);
+    List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnUpdate(oldObject, newObject, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.UPDATE)
@@ -49,7 +49,7 @@ public class HistoryEntryService {
 
   // TODO refactor security to not force develeopers to pass userId all around.
   public void addHistoryEntryOnDelete(Object oldObject, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = historyEntryProvider.createHistoryEntryOnDelete(oldObject, userId);
+    List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnDelete(oldObject, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(LocalDateTime.now())
         .type(Type.DELETE)

@@ -11,8 +11,7 @@ CREATE TABLE history_info
   id            BIGSERIAL PRIMARY KEY,
   name          VARCHAR(100) NOT NULL,
   old_value     VARCHAR(100) ,
-  new_value     VARCHAR(100),
-  user_id       BIGINT REFERENCES app_user (id)
+  new_value     VARCHAR(100)
 );
 
 CREATE TABLE history_entry_entries

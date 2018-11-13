@@ -45,14 +45,12 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
         .id(1L)
         .name("name")
         .newValue(account.getName())
-        .userId(userId)
         .build());
 
     historyInfosExpected.add(HistoryInfo.builder()
         .id(2L)
         .name("balance")
         .newValue(account.getBalance().toString())
-        .userId(userId)
         .build());
 
     assertThat(historyEntries, hasSize(1));

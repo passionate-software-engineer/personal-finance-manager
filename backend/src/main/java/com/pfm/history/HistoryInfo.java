@@ -28,5 +28,4 @@ public final class HistoryInfo {
 
   private String oldValue;
 
-  private Long userId;
 }

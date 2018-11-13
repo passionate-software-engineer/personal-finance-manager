@@ -4,7 +4,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
-import com.pfm.history.HistoryField.IdFieldName;
+import com.pfm.history.HistoryField.IdField;
 import com.pfm.transaction.AccountPriceEntry;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class HistoryEntryProvider {
+public class HistoryInfoProvider {
 
   private AccountService accountService;
   private CategoryService categoryService;
@@ -31,7 +31,6 @@ public class HistoryEntryProvider {
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(field.getName())
             .newValue(value)
-            .userId(userId)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -58,7 +57,6 @@ public class HistoryEntryProvider {
             .name(fieldsFromOldObject[i].getName())
             .oldValue(valueFromOldObject)
             .newValue(valueFromNewObject)
-            .userId(userId)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -81,7 +79,6 @@ public class HistoryEntryProvider {
         HistoryInfo historyInfo = HistoryInfo.builder()
             .name(field.getName())
             .oldValue(value)
-            .userId(userId)
             .build();
         historyInfos.add(historyInfo);
       }
@@ -90,12 +87,12 @@ public class HistoryEntryProvider {
   }
 
   @SuppressWarnings("unchecked")
-  private String getValueFromField(Field field, Object object, long userId) {
+  String getValueFromField(Field field, Object object, long userId) {
 
     Object value;
-    final IdFieldName idFieldName = field.getAnnotation(HistoryField.class).idFieldName();
+    final IdField idField = field.getAnnotation(HistoryField.class).idFieldName();
 
-    switch (idFieldName) {
+    switch (idField) {
 
       case ParentCategory: {
         Category category = (Category) getValue(field, object);
@@ -118,9 +115,31 @@ public class HistoryEntryProvider {
         for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
           Long accountId = accountPriceEntry.getAccountId();
           Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
-          values.add(String.format("%s - %s", account.getName(), accountPriceEntry.getPrice()));
+          values.add(String.format("%s : %s", account.getName(), accountPriceEntry.getPrice()));
         }
         value = values;
+        break;
+      }
+
+      case AccountIds: {
+        List<Long> accountsIds = (List<Long>) getValue(field, object);
+        List<String> accounts = new ArrayList<>();
+        for (long id : accountsIds) {
+          String accountName = accountService.getAccountFromDbByIdAndUserId(id, userId).getName();
+          accounts.add(accountName);
+        }
+        value = accounts.toString();
+        break;
+      }
+
+      case CategoryIds: {
+        List<Long> categoryIds = (List<Long>) getValue(field, object);
+        List<String> categoriesName = new ArrayList<>();
+        for (long id : categoryIds) {
+          String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, userId).getName();
+          categoriesName.add(accountName);
+        }
+        value = categoriesName.toString();
         break;
       }
 
@@ -130,19 +149,19 @@ public class HistoryEntryProvider {
 
     }
 
-    if (value == null) {
+    if (value == null && !field.getAnnotation(HistoryField.class).nullAllowed()) {
       throw new IllegalStateException("Field value is null");
     }
 
-    return value.toString();
+    return value == null ? null : value.toString();
   }
 
-  private Object getValue(Field field, Object object) {
-    Object value = null;
+  Object getValue(Field field, Object object) {
+    Object value;
     try {
       value = field.get(object);
     } catch (IllegalAccessException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
     return value;
   }

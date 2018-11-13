@@ -2,7 +2,7 @@ package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfm.history.HistoryField;
-import com.pfm.history.HistoryField.IdFieldName;
+import com.pfm.history.HistoryField.IdField;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -32,14 +32,14 @@ public final class Transaction {
   @HistoryField
   private String description;
 
-  @HistoryField(idFieldName = IdFieldName.Category)
+  @HistoryField(idFieldName = IdField.Category)
   private Long categoryId;
 
   @HistoryField
   private LocalDate date;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-  @HistoryField(idFieldName = IdFieldName.AccountPriceEntry)
+  @HistoryField(idFieldName = IdField.AccountPriceEntry)
   private List<AccountPriceEntry> accountPriceEntries;
 
   @JsonIgnore
