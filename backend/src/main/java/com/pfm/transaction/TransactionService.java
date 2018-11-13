@@ -74,6 +74,7 @@ public class TransactionService {
     for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
       subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
     }
+
     transactionRepository.deleteById(id);
   }
 
