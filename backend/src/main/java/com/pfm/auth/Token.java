@@ -1,6 +1,6 @@
 package com.pfm.auth;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,6 +10,6 @@ class Token {
 
   private String token;
   private long userId;
-  private LocalDateTime expiryDate;
+  private ZonedDateTime expiryDate;
 
 }

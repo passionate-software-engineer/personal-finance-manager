@@ -15,6 +15,29 @@ pipeline {
         cron('H 0 * * *')
     }
     stages {
+
+	stage('Dependency check') {
+            parallel { // TODO send email when new versions available
+                stage('BACKEND') {
+                    steps {
+                        sh '''
+                           cd backend
+                           ./gradlew clean dependencyUpdates -Drevision=release -DoutputDir=build/reports/dependencyUpdates
+
+                           '''
+                    }
+                }
+                stage('FRONTEND') {
+                    steps {
+                        sh '''
+                           cd frontend
+                           ncu > ncu_output.txt
+                           '''
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             parallel {
                 stage('BACKEND') {
@@ -31,12 +54,12 @@ pipeline {
                            cd frontend
                            npm install
                            ng build
-                           ncu > ncu_output.txt
                            '''
                     }
                 }
             }
         }
+
         stage('E2E') {
           steps {
             sh '''
@@ -44,6 +67,7 @@ pipeline {
                '''
           }
         }
+
         stage('Deploy') {
           when{
             branch 'master'
@@ -78,6 +102,7 @@ pipeline {
             }
          }
       }
+
       stage('App startup') {
         when{
           branch 'master'
@@ -88,6 +113,7 @@ pipeline {
              '''
         }
       }
+
       stage('E2E after deploy') {
         when{
           branch 'master'
@@ -100,6 +126,7 @@ pipeline {
         }
       }
     }
+
     post {
         always {
             archiveArtifacts artifacts: 'backend/build/reports/**/*, frontend/ncu_output.txt'

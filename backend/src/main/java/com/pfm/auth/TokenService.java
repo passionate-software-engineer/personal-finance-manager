@@ -1,6 +1,6 @@
 package com.pfm.auth;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class TokenService {
   public Token generateToken(User user) {
 
     UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), user.getId(), LocalDateTime.now().plusMinutes(15));
+    Token token = new Token(uuid.toString(), user.getId(), ZonedDateTime.now().plusMinutes(15));
     tokens.put(token.getToken(), token);
     return token;
   }
@@ -29,13 +29,13 @@ public class TokenService {
       return false;
     }
 
-    LocalDateTime expiryDate = tokenFromDb.getExpiryDate();
+    ZonedDateTime expiryDate = tokenFromDb.getExpiryDate();
     if (expiryDate == null) {
       tokens.remove(token);
       throw new IllegalStateException("Token expiry time does not exist");
     }
 
-    return expiryDate.isAfter(LocalDateTime.now());
+    return expiryDate.isAfter(ZonedDateTime.now());
   }
 
   public long getUserIdBasedOnToken(String token) {

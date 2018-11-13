@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {interval, Subscription} from 'rxjs';
 import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {Router} from '@angular/router';
@@ -16,6 +16,7 @@ export class HealthCheckTask {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
+    private ngZone: NgZone,
     private healthService: HealthService,
     private translate: TranslateService,
     private alertService: AlertsService) {
@@ -30,19 +31,27 @@ export class HealthCheckTask {
   }
 
   private startHealthCheckTask(): void {
-    this.healthCheckTask = interval(15 * 1000).subscribe(eventNumber => {
-      // no need to do anything - error handler will do the job
-      this.healthService.getHealthStatus().subscribe();
+    this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
-      if (tokenExpirationTime != null) {
-        if (new Date(tokenExpirationTime) < new Date()) {
-          this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-          this.authenticationService.logout();
-          this.alertService.error(this.translate.instant('message.loggedOut'));
-        }
-      }
+      this.healthCheckTask = interval(15 * 1000).subscribe(eventNumber => {
+
+        this.ngZone.run(() => {
+          // no need to do anything - error handler will do the job
+          this.healthService.getHealthStatus().subscribe();
+
+          const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
+          if (tokenExpirationTime != null) {
+            if (new Date(tokenExpirationTime) < new Date()) {
+              this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+              this.authenticationService.logout();
+              this.alertService.error(this.translate.instant('message.loggedOut'));
+            }
+          }
+        });
+
+      });
     });
+
   }
 
   private stopHealthCheckTask(): void {

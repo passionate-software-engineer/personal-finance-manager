@@ -1,4 +1,4 @@
-package com.pfm.security;
+package com.pfm.filters.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
