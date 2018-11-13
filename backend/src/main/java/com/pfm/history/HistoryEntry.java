@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
+import java.time.ZonedDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,7 +30,7 @@ public final class HistoryEntry {
   private Long id;
 
   @ApiModelProperty(value = "Time event happened", required = true)
-  private LocalDateTime date;
+  private ZonedDateTime date;
 
   @Enumerated(EnumType.STRING)
   private Type type;

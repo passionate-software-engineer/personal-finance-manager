@@ -17,7 +17,7 @@ export class AuthenticationService {
 
   public currentUserObservable = this.currentUserSource.asObservable();
 
-  private updateCurrentUser(user: User) {
+  public updateCurrentUser(user: User) {
     this.currentUserSource.next(user);
   }
 

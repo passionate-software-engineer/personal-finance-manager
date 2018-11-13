@@ -24,15 +24,19 @@ export class ErrorInterceptor implements HttpInterceptor {
 
       // auto logout if 401 response returned from api
       if (err.status === 401) {
-        this.authenticationService.logout();
+        if (this.authenticationService.isUserLoggedIn()) {
+          this.authenticationService.logout();
+        }
         this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
         this.alertService.error(this.translate.instant('message.loggedOut'));
         return throwError('');
       }
 
       if (err.status === 0) {
+        if (this.authenticationService.isUserLoggedIn()) {
+          this.authenticationService.logout();
+        }
         this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-        this.authenticationService.logout();
         this.alertService.error(this.translate.instant('message.noConnectivity'));
         return throwError('');
       }

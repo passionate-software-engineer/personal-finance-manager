@@ -15,7 +15,7 @@ spring:
 # TODO wrap log file for days
 logging:
   pattern:
-    console: "%d [%15.15t] [%36X{correlationId}] %-5p %-30.30c{3}  - %m%n"
+    console: "%d [%15.15t] [%36X{Correlation-Id}] %-5p %-30.30c{3}  - %m%n"
   level:
     com.pfm: INFO
     org.hibernate.type: TRACE

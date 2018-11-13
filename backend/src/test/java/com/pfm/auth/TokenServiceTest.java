@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ public class TokenServiceTest {
   public void shouldReturnFalseCausedByExpiredToken() {
 
     //given
-    Token token = new Token("Token", 1L, LocalDateTime.now());
+    Token token = new Token("Token", 1L, ZonedDateTime.now());
     tokens.put(token.getToken(), token);
 
     //then

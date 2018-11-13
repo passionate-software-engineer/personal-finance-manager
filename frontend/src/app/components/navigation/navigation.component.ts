@@ -3,7 +3,7 @@ import {User} from '../../authentication/user';
 import {UserService} from '../../authentication/user.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {HealthCheckTask} from '../../authentication/HealthCheckTask';
+import {HealthCheckTask} from '../../authentication/health-check-task';
 
 @Component({
   selector: 'app-navigation',
@@ -34,6 +34,9 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authenticationService.getLoggedInUser();
+    if (this.currentUser.token != null) { // TODO ugly trick to notify health check to start on page load when user is signed in
+      this.authenticationService.updateCurrentUser(this.currentUser);
+    }
   }
 
   logout() {

@@ -1,4 +1,4 @@
-package com.pfm.security;
+package com.pfm.filters.security;
 
 import com.google.common.net.HttpHeaders;
 import com.pfm.auth.TokenService;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
 
   //TODO this should be done be spring security
-  private static final String pattern = "(/users.*|.*swagger.*)";
+  private static final String pattern = "(/users/.*|.*swagger.*|/error)";
   private final Logger logger = LoggerFactory.getLogger(SecurityRequestInterceptor.class.getName());
 
   private TokenService tokenService;
