@@ -3,7 +3,7 @@ import {User} from '../../authentication/user';
 import {UserService} from '../../authentication/user.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {HealthCheckTask} from '../../authentication/HealthCheckTask';
+import {HealthCheckTask} from '../../authentication/health-check-task';
 
 @Component({
   selector: 'app-navigation',
