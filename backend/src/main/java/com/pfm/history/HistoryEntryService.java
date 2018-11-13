@@ -1,7 +1,7 @@
 package com.pfm.history;
 
 import com.pfm.history.HistoryEntry.Type;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class HistoryEntryService {
   public void addHistoryEntryOnAdd(Object object, long userId) {
     List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnAdd(object, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
-        .date(LocalDateTime.now())
+        .date(ZonedDateTime.now())
         .type(Type.ADD)
         .entries(historyEntryOnAdd)
         .object(object.getClass().getSimpleName())
@@ -38,7 +38,7 @@ public class HistoryEntryService {
   public void addHistoryEntryOnUpdate(Object oldObject, Object newObject, long userId) {
     List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnUpdate(oldObject, newObject, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
-        .date(LocalDateTime.now())
+        .date(ZonedDateTime.now())
         .type(Type.UPDATE)
         .entries(historyEntryOnAdd)
         .object(oldObject.getClass().getSimpleName())
@@ -51,7 +51,7 @@ public class HistoryEntryService {
   public void addHistoryEntryOnDelete(Object oldObject, long userId) {
     List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnDelete(oldObject, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
-        .date(LocalDateTime.now())
+        .date(ZonedDateTime.now())
         .type(Type.DELETE)
         .entries(historyEntryOnAdd)
         .object(oldObject.getClass().getSimpleName())
