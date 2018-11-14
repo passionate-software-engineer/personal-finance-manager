@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
-import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {FilterResponse} from './transaction-filter-response';
 import {TransactionFilter} from '../transaction-filter';
 import {ServiceBase} from '../../../helpers/service-base';
@@ -14,8 +13,8 @@ const PATH = 'filters';
 })
 export class TransactionFilterService extends ServiceBase {
 
-  constructor(http: HttpClient, alertService: AlertsService) {
-    super(http, alertService);
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   private static filterToFilterRequest(filter: TransactionFilter) {

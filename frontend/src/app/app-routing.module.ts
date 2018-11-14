@@ -6,6 +6,7 @@ import {AuthGuard} from './authentication/auth.guard';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HistoryComponent} from './components/history/history/history.component';
+import {ImportExportComponent} from './components/import-export/import-export/import-export.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard]},
   {path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]},
   {path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
+  {path: 'export', component: ImportExportComponent, canActivate: [AuthGuard]},
   // otherwise redirect to home
   {path: '**', redirectTo: '/login'}
 

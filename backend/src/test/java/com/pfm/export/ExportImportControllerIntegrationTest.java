@@ -19,12 +19,14 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.config.MessagesProvider;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.helpers.IntegrationTestsBase;
+import com.pfm.helpers.TestAccountProvider;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
 import java.math.BigDecimal;
@@ -107,6 +109,24 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   }
 
   @Test
+  public void shouldExportTransactionsWhenNoDataIsAvailableInTheSystem() throws Exception {
+    // given
+
+    // when
+    mockMvc.perform(get(EXPORT_SERVICE_PATH)
+        .header("Authorization", token))
+
+        // then
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport", is("0.00")))
+        .andExpect(jsonPath("initialAccountsState", hasSize(0)))
+        .andExpect(jsonPath("finalAccountsState", hasSize(0)))
+        .andExpect(jsonPath("categories", hasSize(0)))
+        .andExpect(jsonPath("periods", hasSize(0)));
+  }
+
+  @Test
   public void shouldImportTransactions() throws Exception {
     // given
     ExportResult input = new ExportResult();
@@ -163,7 +183,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .header("Authorization", token)
         .content(json(input))
         .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk());
+        .andExpect(status().isCreated());
 
     // then
 
@@ -196,6 +216,22 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         accountService.getAccountByIdAndUserId(createdTransaction.getAccountPriceEntries().get(0).getAccountId(), userId)
             .orElseThrow(AssertionError::new).getName(),
         is(entry.getAccount()));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenDataIsImportedAgain() throws Exception {
+    // given
+    accountService.addAccount(userId, TestAccountProvider.accountJacekBalance1000());
+
+    // when
+    mockMvc.perform(post(IMPORT_SERVICE_PATH)
+        .header("Authorization", token)
+        .content(json(new ExportResult()))
+        .contentType(JSON_CONTENT_TYPE))
+
+        // then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", is(MessagesProvider.getMessage(MessagesProvider.IMPORT_NOT_POSSIBLE))));
   }
 
 }

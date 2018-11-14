@@ -46,6 +46,8 @@
   "message.descriptionEmpty": "Description cannot be empty",
   "message.priceEmpty": "Price is empty or price format is incorrect",
   "message.loggedOut": "You have been logged out. Your session has expired.",
+  "message.dataExportedSuccessfully": "Data was exported successfully",
+  "message.dataImportedSuccessfully": "Data was imported successfully",
   "navigation.transactions": "Transactions",
   "navigation.categories": "Categories",
   "navigation.accounts": "Accounts",
@@ -53,6 +55,7 @@
   "navigation.login": "Login",
   "navigation.logout": "Logout",
   "navigation.history": "History",
+  "navigation.exportImport": "Import/Export",
   "register.firstName": "First Name",
   "register.firstNameIsRequired": "First Name is required",
   "register.lastName": "Last Name",
@@ -69,6 +72,8 @@
   "button.exit": "Exit",
   "button.refresh": "Refresh",
   "button.options": "Options",
+  "button.export": "Export",
+  "button.import": "Import",
   "transaction.save": "Save as new filter",
   "transaction.update": "Update selected filter",
   "transaction.reset": "Reset selected filter",
@@ -81,5 +86,6 @@
   "transaction.category": "Category",
   "filters.showAllFilterName": "All transactions",
   "history.date": "Date",
-  "history.entry": "Entry"
+  "history.entry": "Entry",
+  "import.noContentProvided": "No data to import was provided"
 }
