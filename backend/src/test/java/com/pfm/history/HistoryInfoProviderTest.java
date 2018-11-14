@@ -1,5 +1,6 @@
 package com.pfm.history;
 
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountIngBalance9999;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
@@ -22,6 +23,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.config.MessagesProvider;
 import com.pfm.filter.Filter;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
@@ -180,7 +182,7 @@ class HistoryInfoProviderTest {
         .build());
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("parentCategory")
-        .newValue("Main Category")
+        .newValue(getMessage(MessagesProvider.MAIN_CATEGORY))
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
@@ -207,7 +209,7 @@ class HistoryInfoProviderTest {
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("parentCategory")
         .oldValue(category.getParentCategory().getName())
-        .newValue("Main Category")
+        .newValue(getMessage(MessagesProvider.MAIN_CATEGORY))
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));

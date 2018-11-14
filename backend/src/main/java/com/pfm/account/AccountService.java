@@ -23,8 +23,7 @@ public class AccountService {
   public Account getAccountFromDbByIdAndUserId(long accountId, long userId) {
     Optional<Account> accountByIdAndUserId = accountRepository.findByIdAndUserId(accountId, userId);
     if (!accountByIdAndUserId.isPresent()) {
-      throw new IllegalStateException("Account with id: " + accountId
-          + " does not exist in database");
+      throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
     }
     return accountByIdAndUserId.get();
   }

@@ -51,11 +51,11 @@ public class CategoryController implements CategoryApi {
     Optional<Category> category = categoryService.getCategoryByIdAndUserId(categoryId, userId);
 
     if (!category.isPresent()) {
-      log.info("Category with id {} was not found", categoryId);
+      log.info("CATEGORY with id {} was not found", categoryId);
       return ResponseEntity.notFound().build();
     }
 
-    log.info("Category with id {} was successfully retrieved", categoryId);
+    log.info("CATEGORY with id {} was successfully retrieved", categoryId);
     return ResponseEntity.ok(category.get());
   }
 
@@ -80,12 +80,12 @@ public class CategoryController implements CategoryApi {
 
     List<String> validationResult = categoryValidator.validateCategoryForAdd(category, userId);
     if (!validationResult.isEmpty()) {
-      log.info("Category is not valid {}", validationResult);
+      log.info("CATEGORY is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
     Category createdCategory = categoryService.addCategory(category, userId);
-    log.info("Saving category to the database was successful. Category id is {}", createdCategory.getId());
+    log.info("Saving category to the database was successful. CATEGORY id is {}", createdCategory.getId());
     historyEntryService.addHistoryEntryOnAdd(category, userId);
 
     return ResponseEntity.ok(createdCategory.getId());
@@ -108,7 +108,7 @@ public class CategoryController implements CategoryApi {
 
     List<String> validationResult = categoryValidator.validateCategoryForUpdate(categoryId, userId, category);
     if (!validationResult.isEmpty()) {
-      log.error("Category is not valid {}", validationResult);
+      log.error("CATEGORY is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
@@ -120,7 +120,7 @@ public class CategoryController implements CategoryApi {
     historyEntryService.addHistoryEntryOnUpdate(categoryToUpdate, category, userId);
 
     categoryService.updateCategory(categoryId, userId, category);
-    log.info("Category with id {} was successfully updated", categoryId);
+    log.info("CATEGORY with id {} was successfully updated", categoryId);
     return ResponseEntity.ok().build();
   }
 
@@ -135,13 +135,13 @@ public class CategoryController implements CategoryApi {
     }
 
     if (categoryService.isParentCategory(categoryId)) { // TODO review log messages and make sure each one is useful and correct.
-      log.info("Category is used as parent. Category {} delete is not possible", categoryId);
+      log.info("CATEGORY is used as parent. CATEGORY {} delete is not possible", categoryId);
       return ResponseEntity.badRequest().body(getMessage(CANNOT_DELETE_PARENT_CATEGORY));
     }
 
     List<String> validationResults = categoryValidator.validateCategoryForDelete(categoryId);
     if (!validationResults.isEmpty()) {
-      log.info("Category with id {} was found, in transaction or filter, not able to delete", categoryId);
+      log.info("CATEGORY with id {} was found, in transaction or filter, not able to delete", categoryId);
       return ResponseEntity.badRequest().body(validationResults);
     }
 
@@ -151,7 +151,7 @@ public class CategoryController implements CategoryApi {
 
     categoryService.deleteCategory(categoryId);
 
-    log.info("Category with id {} was deleted successfully", categoryId);
+    log.info("CATEGORY with id {} was deleted successfully", categoryId);
     historyEntryService.addHistoryEntryOnDelete(deletedCategory, userId);
     return ResponseEntity.ok().build();
   }

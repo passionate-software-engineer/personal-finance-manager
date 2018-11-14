@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CategoryValidator {
 
-  //TODO possible can simplify this L
+  //ENHANCEMENT possible can simplify this L
 
   private CategoryService categoryService;
   private FilterService filterService;
@@ -42,8 +42,9 @@ public class CategoryValidator {
       checkForDuplicatedName(validationResults, category, userId);
     }
 
-    if (category.getParentCategory() != null && category.getParentCategory().getId() != null && categoryService
-        .categoryExistByIdAndUserId(category.getParentCategory().getId(), userId)
+    if (category.getParentCategory() != null
+        && category.getParentCategory().getId() != null
+        && categoryService.categoryExistByIdAndUserId(category.getParentCategory().getId(), userId)
         && !categoryService.canBeParentCategory(id, category.getParentCategory().getId(), userId)) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }

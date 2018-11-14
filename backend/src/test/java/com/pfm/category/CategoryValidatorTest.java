@@ -48,7 +48,7 @@ public class CategoryValidatorTest {
 
     //given
     Category category = Category.builder()
-        .name("Category")
+        .name("CATEGORY")
         .parentCategory(Category.builder().build())
         .build();
 

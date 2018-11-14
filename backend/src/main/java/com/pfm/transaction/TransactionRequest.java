@@ -20,7 +20,7 @@ public class TransactionRequest {
   @ApiModelProperty(value = "Description", required = true, example = "Cinema - Star Wars 5")
   protected String description;
 
-  @ApiModelProperty(value = "Category id", required = true, example = "1")
+  @ApiModelProperty(value = "CATEGORY id", required = true, example = "1")
   protected Long categoryId;
 
   @ApiModelProperty(value = "Date", required = true, example = "2018-12-31")

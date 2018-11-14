@@ -1,10 +1,11 @@
-ALTER TABLE history_entry DROP entry;
+ALTER TABLE history_entry
+ DROP entry;
 
 ALTER TABLE history_entry
   ADD type VARCHAR(100);
 
 ALTER TABLE history_entry
-    ADD object VARCHAR(100);
+  ADD object VARCHAR(100);
 
 CREATE TABLE history_info
 (

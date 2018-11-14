@@ -185,10 +185,12 @@ public class CategoryServiceTest {
     when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.getCategoryFromDbByIdAndUserId(id, MOCK_USER_ID));
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      categoryService.getCategoryFromDbByIdAndUserId(id, MOCK_USER_ID);
+    });
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Category with id : " + id + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + id + " does not exist in database")));
   }
 
   @Test
@@ -202,7 +204,7 @@ public class CategoryServiceTest {
     Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.updateCategory(id, MOCK_USER_ID, new Category()));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Category with id : " + id + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + id + " does not exist in database")));
   }
 
   @Test
@@ -221,7 +223,7 @@ public class CategoryServiceTest {
         () -> categoryService.updateCategory(categoryOil.getId(), MOCK_USER_ID, categoryOil));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Category with id : " + categoryCar.getId() + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + categoryCar.getId() + " does not exist in database")));
   }
 
   @Test

@@ -47,6 +47,8 @@ public class MessagesProvider {
   public static final String PASSWORD_CONTAINS_WHITSPACE = "userValidator.passwordContainsWhitespaces";
   public static final String USERNAME_OR_PASSWORD_IS_INCORRECT = "userController.usernameOrPassowrdIsIncorrect";
 
+  public static final String MAIN_CATEGORY = "historyInfoProvider.mainCategory";
+
   public static final String INTERNAL_ERROR = "internalError";
 
   private static final ResourceBundle englishBundle = ResourceBundle.getBundle("messages", new Locale("en"));

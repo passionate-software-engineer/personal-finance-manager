@@ -42,8 +42,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
   @Autowired
   private CategoryService categoryService;
 
-  private long userId;
-
   @BeforeEach
   public void before() {
     super.before();

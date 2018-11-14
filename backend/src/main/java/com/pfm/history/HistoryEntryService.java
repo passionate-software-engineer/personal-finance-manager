@@ -35,7 +35,12 @@ public class HistoryEntryService {
     saveHistoryEntry(historyEntry);
   }
 
-  public void addHistoryEntryOnUpdate(Object oldObject, Object newObject, long userId) {
+  public <T> void addHistoryEntryOnUpdate(T oldObject, T newObject, long userId) {
+
+    if (oldObject.getClass() != newObject.getClass()) {
+      throw new IllegalStateException("Parameters oldObject and newObject are not the same types");
+    }
+
     List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnUpdate(oldObject, newObject, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(ZonedDateTime.now())
