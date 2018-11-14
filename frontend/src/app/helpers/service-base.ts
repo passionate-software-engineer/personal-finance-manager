@@ -1,5 +1,4 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {environment} from '../../environments/environment';
 
 export abstract class ServiceBase {
@@ -8,7 +7,7 @@ export abstract class ServiceBase {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(protected http: HttpClient, protected alertService: AlertsService) {
+  protected constructor(protected http: HttpClient) {
   }
 
   protected static apiUrl(service: string, id: number = null): string {

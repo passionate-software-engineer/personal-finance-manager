@@ -46,6 +46,8 @@
   "message.descriptionEmpty": "Opis nie może być pusty",
   "message.priceEmpty": "Cena jest pusta lub ma niepoprawny format",
   "message.loggedOut": "Zostałeś wylogowany. Twoja sesja wygasła.",
+  "message.dataExportedSuccessfully": "Dane zostały wyeksportowane",
+  "message.dataImportedSuccessfully": "Dane zostały wczytane do systemu",
   "navigation.transactions": "Transakcje",
   "navigation.categories": "Kategorie",
   "navigation.accounts": "Konta",
@@ -53,6 +55,7 @@
   "navigation.login": "Zaloguj się",
   "navigation.logout": "Wyloguj się",
   "navigation.history": "Historia operacji",
+  "navigation.exportImport": "Import/Eksport",
   "register.firstName": "Imię",
   "register.firstNameIsRequired": "Imię jest wymagane",
   "register.lastName": "Nazwisko",
@@ -69,6 +72,8 @@
   "button.exit": "Wyjdź",
   "button.refresh": "Odśwież",
   "button.options": "Opcje",
+  "button.export": "Export",
+  "button.import": "Import",
   "transaction.save": "Zapisz jako nowy filtr",
   "transaction.update": "Zmodyfikuj wybrany filtr",
   "transaction.reset": "Zresetuj wybrany filtr",
@@ -81,5 +86,6 @@
   "transaction.category": "Kategoria",
   "filters.showAllFilterName": "Wszystkie transakcje",
   "history.date": "Data",
-  "history.entry": "Wpis"
+  "history.entry": "Wpis",
+  "import.noContentProvided": "Nie podano danych do zaimportowania"
 }
