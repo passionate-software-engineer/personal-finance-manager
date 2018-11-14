@@ -131,13 +131,13 @@ public abstract class IntegrationTestsBase {
 
   //category
   protected long callRestToAddCategoryAndReturnId(Category category, String token) throws Exception {
-    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
 
   protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category, long parentCategoryId, String token)
       throws Exception {
-    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
     categoryRequest.setParentCategoryId(parentCategoryId);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
@@ -207,7 +207,7 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  protected CategoryRequest categoryToCategoryRequest(Category category) {
+  protected CategoryRequest convertCategoryToCategoryRequest(Category category) {
     return CategoryRequest.builder()
         .name(category.getName())
         .parentCategoryId(category.getParentCategory() == null ? null : category.getParentCategory().getId())

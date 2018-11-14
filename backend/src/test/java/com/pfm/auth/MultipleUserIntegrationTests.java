@@ -567,13 +567,13 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, marianToken)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(categoryToCategoryRequest(category))))
+        .content(json(convertCategoryToCategoryRequest(category))))
         .andExpect(status().isOk());
 
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(categoryToCategoryRequest(category))))
+        .content(json(convertCategoryToCategoryRequest(category))))
         .andExpect(status().isOk());
   }
 }

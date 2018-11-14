@@ -32,8 +32,8 @@ public final class Category {
 
   @ManyToOne
   @ApiModelProperty(value = "Parent category object", required = true)
-  //TODO try using parentCategoryID instead of CATEGORY object
   @HistoryField(idFieldName = SpecialFieldType.PARENT_CATEGORY)
+  //TODO try using parentCategoryID instead of CATEGORY object
   private Category parentCategory;
 
   @JsonIgnore

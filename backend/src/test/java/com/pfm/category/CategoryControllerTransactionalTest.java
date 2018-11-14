@@ -1,6 +1,6 @@
-package com.pfm.account;
+package com.pfm.category;
 
-import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-class AccountControllerTransactionalTest extends IntegrationTestsBase {
+class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
   @SpyBean
   private HistoryEntryService historyEntryService;
@@ -28,10 +28,10 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
   private UserProvider userProvider;
 
   @SpyBean
-  private AccountService accountService;
+  private CategoryService categoryService;
 
   @Autowired
-  private AccountController accountController;
+  private CategoryController categoryController;
 
   @BeforeEach
   public void before() {
@@ -41,39 +41,39 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
   }
 
   @Test
-  void shouldRollbackTransactionWhenAccountAddFailed() {
+  void shouldRollbackTransactionWhenCategoryAddFailed() {
 
     //given
-    Account account = accountMbankBalance10();
+    Category category = categoryCar();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
     // when
     try {
-      accountController.addAccount(convertAccountToAccountRequest(account));
+      categoryController.addCategory(convertCategoryToCategoryRequest(category));
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
     }
 
     //then
-    assertThat(accountService.getAccounts(userId), hasSize(0));
+    assertThat(categoryService.getCategories(userId), hasSize(0));
   }
 
   @Test
-  void shouldRollbackTransactionWhenAccountUpdateFailed() {
+  void shouldRollbackTransactionWhenCategoryUpdateFailed() {
 
     //given
-    Account account = accountMbankBalance10();
-    final Long accountId = accountService.addAccount(userId, account).getId();
+    Category category = categoryCar();
+    final Long categoryId = categoryService.addCategory(category, userId).getId();
 
-    Account updatedAccount = accountMbankBalance10();
-    updatedAccount.setName("updatedName");
+    Category updatedCategory = categoryCar();
+    updatedCategory.setName("updatedName");
 
-    doThrow(IllegalStateException.class).when(accountService).updateAccount(any(Long.class), any(Long.class), any(Account.class));
+    doThrow(IllegalStateException.class).when(categoryService).updateCategory(any(Long.class), any(Long.class), any(Category.class));
 
     // when
     try {
-      accountController.updateAccount(accountId, convertAccountToAccountRequest(updatedAccount));
+      categoryController.updateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory));
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
@@ -84,25 +84,24 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
   }
 
-  @Test
-  void shouldRollbackTransactionWhenAccountDeleteFailed() {
+    @Test
+    void shouldRollbackTransactionWhenCategoryDeleteFailed() {
 
-    //given
-    Account account = accountMbankBalance10();
+      //given
+      Category category = categoryCar();
+      final Long categoryId = categoryService.addCategory(category, userId).getId();
 
-    final Long accountId = accountService.addAccount(userId, account).getId();
+      doThrow(IllegalStateException.class).when(categoryService).deleteCategory(categoryId);
 
-    doThrow(IllegalStateException.class).when(accountService).deleteAccount(accountId);
+      // when
+      try {
+        categoryController.deleteCategory(categoryId);
+        fail();
+      } catch (IllegalStateException ex) {
+        assertNotNull(ex);
+      }
 
-    // when
-    try {
-      accountController.deleteAccount(accountId);
-      fail();
-    } catch (IllegalStateException ex) {
-      assertNotNull(ex);
+      //then
+      assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
     }
-
-    //then
-    assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
-  }
 }
