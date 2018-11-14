@@ -1,6 +1,6 @@
-package com.pfm.category;
+package com.pfm.filter;
 
-import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-class CategoryControllerTransactionalTest extends IntegrationTestsBase {
+class FilterControllerTransactionalTest extends IntegrationTestsBase {
 
   @SpyBean
   private HistoryEntryService historyEntryService;
@@ -28,10 +28,10 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
   private UserProvider userProvider;
 
   @SpyBean
-  private CategoryService categoryService;
+  private FilterService filterService;
 
   @Autowired
-  private CategoryController categoryController;
+  private FilterController filterController;
 
   @BeforeEach
   public void before() {
@@ -41,39 +41,39 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
   }
 
   @Test
-  void shouldRollbackTransactionWhenCategoryAddFailed() {
+  void shouldRollbackTransactionWhenFilterAddFailed() {
 
     //given
-    Category category = categoryCar();
+    Filter filter = filterFoodExpenses();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
     // when
     try {
-      categoryController.addCategory(convertCategoryToCategoryRequest(category));
+      filterController.addFilter(convertFilterToFilterRequest(filter));
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
     }
 
     //then
-    assertThat(categoryService.getCategories(userId), hasSize(0));
+    assertThat(filterService.getAllFilters(userId), hasSize(0));
   }
 
   @Test
-  void shouldRollbackTransactionWhenCategoryUpdateFailed() {
+  void shouldRollbackTransactionWhenFilterUpdateFailed() {
 
     //given
-    Category category = categoryCar();
-    final Long categoryId = categoryService.addCategory(category, userId).getId();
+    Filter filter = filterFoodExpenses();
+    final Long filterId = filterService.addFilter(userId, filter).getId();
 
-    Category updatedCategory = categoryCar();
-    updatedCategory.setName("updatedName");
+    Filter updatedFilter = filterFoodExpenses();
+    updatedFilter.setName("updatedName");
 
-    doThrow(IllegalStateException.class).when(categoryService).updateCategory(any(Long.class), any(Long.class), any(Category.class));
+    doThrow(IllegalStateException.class).when(filterService).updateFilter(any(Long.class), any(Long.class), any(Filter.class));
 
     // when
     try {
-      categoryController.updateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory));
+      filterController.updateFilter(filterId, convertFilterToFilterRequest(filter));
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
@@ -85,17 +85,17 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
   }
 
   @Test
-  void shouldRollbackTransactionWhenCategoryDeleteFailed() {
+  void shouldRollbackTransactionWhenFilterDeleteFailed() {
 
     //given
-    Category category = categoryCar();
-    final Long categoryId = categoryService.addCategory(category, userId).getId();
+    Filter filter = filterFoodExpenses();
+    final Long filterId = filterService.addFilter(userId, filter).getId();
 
-    doThrow(IllegalStateException.class).when(categoryService).deleteCategory(categoryId);
+    doThrow(IllegalStateException.class).when(filterService).deleteFilter(filterId);
 
     // when
     try {
-      categoryController.deleteCategory(categoryId);
+      filterController.deleteFilter(filterId);
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
