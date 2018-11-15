@@ -35,13 +35,13 @@ public final class Filter {
 
   @ElementCollection
   @Column(name = "account_id")
-  @HistoryField(idFieldName = SpecialFieldType.ACCOUNT_IDS)
+  @HistoryField(fieldType = SpecialFieldType.ACCOUNT_IDS)
   //ENHANCEMENT add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> accountIds;
 
   @ElementCollection
   @Column(name = "category_id")
-  @HistoryField(idFieldName = SpecialFieldType.CATEGORY_IDS)
+  @HistoryField(fieldType = SpecialFieldType.CATEGORY_IDS)
   //ENHANCEMENT descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> categoryIds;
 

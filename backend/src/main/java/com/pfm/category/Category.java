@@ -32,7 +32,7 @@ public final class Category {
 
   @ManyToOne
   @ApiModelProperty(value = "Parent category object", required = true)
-  @HistoryField(idFieldName = SpecialFieldType.PARENT_CATEGORY)
+  @HistoryField(fieldType = SpecialFieldType.PARENT_CATEGORY)
   //TODO try using parentCategoryID instead of CATEGORY object
   private Category parentCategory;
 

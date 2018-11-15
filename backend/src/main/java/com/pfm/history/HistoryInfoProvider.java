@@ -12,7 +12,9 @@ import com.pfm.transaction.AccountPriceEntry;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -84,44 +86,12 @@ public class HistoryInfoProvider {
     return historyInfos;
   }
 
-  //ENHANCEMENT use Map<Constant,Handler> instead of this switch or make enum
+  @SuppressWarnings("unchecked")
   String getValueFromField(Field field, Object object, long userId) {
 
-    Object value;
-    final SpecialFieldType specialFieldType = field.getAnnotation(HistoryField.class).idFieldName();
+    final SpecialFieldType specialFieldType = field.getAnnotation(HistoryField.class).fieldType();
 
-    switch (specialFieldType) {
-
-      case PARENT_CATEGORY: {
-        value = getObjectForParentCategory(field, object);
-        break;
-      }
-
-      case CATEGORY: {
-        value = categoryService.getCategoryFromDbByIdAndUserId((Long) getValue(field, object), userId).getName();
-        break;
-      }
-
-      case ACCOUNT_PRICE_ENTRY: {
-        value = getObjectForAccountPriceEntries(field, object, userId);
-        break;
-      }
-
-      case ACCOUNT_IDS: {
-        value = getObjectForAccountIds(field, object, userId);
-        break;
-      }
-
-      case CATEGORY_IDS: {
-        value = getObjectForCategoryIds(field, object, userId);
-        break;
-      }
-
-      default:
-        value = getValue(field, object);
-        break;
-
-    }
+    Object value = getSpecialFieldsMap().get(specialFieldType).apply(field, object, userId);
 
     if (value == null && !field.getAnnotation(HistoryField.class).nullable()) {
       throw new IllegalStateException("Field value is null");
@@ -147,46 +117,82 @@ public class HistoryInfoProvider {
         .collect(Collectors.toList());
   }
 
-  @SuppressWarnings("unchecked")
-  private Object getObjectForCategoryIds(Field field, Object object, long userId) {
-    List<Long> categoryIds = (List<Long>) getValue(field, object);
-    List<String> categoriesName = new ArrayList<>();
-    for (long id : categoryIds) {
-      String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, userId).getName();
-      categoriesName.add(accountName);
-    }
-    return categoriesName.toString();
+  private SpecialFieldFunction<Field, Object, Long> getObjectForParentCategoryField() {
+    return (field, object, along) -> {
+      Category category = (Category) getValue(field, object);
+      return category == null ? getMessage(MessagesProvider.MAIN_CATEGORY) : category.getName();
+    };
+  }
+
+  private SpecialFieldFunction<Field, Object, Long> getObjectForCategoryField() {
+    return (field, object, along) -> {
+      final long categoryId = (Long) getValue(field, object);
+      return categoryService.getCategoryFromDbByIdAndUserId(categoryId, along).getName();
+    };
   }
 
   @SuppressWarnings("unchecked")
-  private Object getObjectForAccountPriceEntries(Field field, Object object, long userId) {
-    List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
-    List<String> values = new ArrayList<>();
-    for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
-      Long accountId = accountPriceEntry.getAccountId();
-      Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
-      values.add(String.format("%s : %s", account.getName(), accountPriceEntry.getPrice()));
-    }
-    return values;
-  }
-
-  private Object getObjectForParentCategory(Field field, Object object) {
-    Category category = (Category) getValue(field, object);
-    if (category == null) {
-      return getMessage(MessagesProvider.MAIN_CATEGORY);
-    }
-    return category.getName();
+  private SpecialFieldFunction<Field, Object, Long> getObjectForNoSpecialField() {
+    return (field, object, along) ->
+        getValue(field, object);
   }
 
   @SuppressWarnings("unchecked")
-  private Object getObjectForAccountIds(Field field, Object object, long userId) {
-    List<Long> accountsIds = (List<Long>) getValue(field, object);
-    List<String> accounts = new ArrayList<>();
-    for (long id : accountsIds) {
-      String accountName = accountService.getAccountFromDbByIdAndUserId(id, userId).getName();
-      accounts.add(accountName);
-    }
-    return accounts.toString();
+  private SpecialFieldFunction<Field, Object, Long> getObjectForCategoryIdsField() {
+    return (field, object, along) -> {
+      List<Long> categoryIds = (List<Long>) getValue(field, object);
+      List<String> categoriesName = new ArrayList<>();
+      for (long id : categoryIds) {
+        String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, along).getName();
+        categoriesName.add(accountName);
+      }
+      return categoriesName;
+    };
+  }
+
+  @SuppressWarnings("unchecked")
+  private SpecialFieldFunction<Field, Object, Long> getObjectForAccountsIdsField() {
+    return (field, object, along) -> {
+      List<Long> accountsIds = (List<Long>) getValue(field, object);
+      List<String> accountsNames = new ArrayList<>();
+      for (long id : accountsIds) {
+        String accountName = accountService.getAccountFromDbByIdAndUserId(id, along).getName();
+        accountsNames.add(accountName);
+      }
+      return accountsNames;
+    };
+  }
+
+  @SuppressWarnings("unchecked")
+  private SpecialFieldFunction<Field, Object, Long> getObjectForAccountPriceEntriesField() {
+    return (field, object, along) -> {
+      List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
+      List<String> values = new ArrayList<>();
+      for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
+        Long accountId = accountPriceEntry.getAccountId();
+        Account account = accountService.getAccountFromDbByIdAndUserId(accountId, along);
+        values.add(String.format("%s : %s", account.getName(), accountPriceEntry.getPrice()));
+      }
+      return values;
+    };
+  }
+
+  private Map<SpecialFieldType, SpecialFieldFunction<Field, Object, Long>> getSpecialFieldsMap() {
+    Map<SpecialFieldType, SpecialFieldFunction<Field, Object, Long>> map = new HashMap<>();
+    map.put(SpecialFieldType.PARENT_CATEGORY, getObjectForParentCategoryField());
+    map.put(SpecialFieldType.CATEGORY_IDS, getObjectForCategoryIdsField());
+    map.put(SpecialFieldType.CATEGORY, getObjectForCategoryField());
+    map.put(SpecialFieldType.ACCOUNT_IDS, getObjectForAccountsIdsField());
+    map.put(SpecialFieldType.ACCOUNT_PRICE_ENTRY, getObjectForAccountPriceEntriesField());
+    map.put(SpecialFieldType.NONE, getObjectForNoSpecialField());
+
+    return map;
+  }
+
+  @FunctionalInterface
+  interface SpecialFieldFunction<F extends Field, O, L extends Long> {
+
+    Object apply(F field, O object, L along);
   }
 
 }

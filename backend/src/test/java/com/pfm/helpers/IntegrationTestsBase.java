@@ -120,6 +120,22 @@ public abstract class IntegrationTestsBase {
     return getAccountsFromResponse(response);
   }
 
+  protected void callRestToDeleteAccountById(long id, String token) throws Exception {
+    mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + id)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToUpdateAccount(long id, AccountRequest accountRequest, String token) throws Exception {
+    mockMvc
+        .perform(put(ACCOUNTS_SERVICE_PATH + "/" + id)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(accountRequest))
+            .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isOk());
+  }
+
   private List<Account> getAccountsFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Account.class));

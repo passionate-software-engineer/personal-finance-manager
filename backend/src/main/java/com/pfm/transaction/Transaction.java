@@ -32,14 +32,14 @@ public final class Transaction {
   @HistoryField
   private String description;
 
-  @HistoryField(idFieldName = SpecialFieldType.CATEGORY)
+  @HistoryField(fieldType = SpecialFieldType.CATEGORY)
   private Long categoryId;
 
   @HistoryField
   private LocalDate date;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-  @HistoryField(idFieldName = SpecialFieldType.ACCOUNT_PRICE_ENTRY)
+  @HistoryField(fieldType = SpecialFieldType.ACCOUNT_PRICE_ENTRY)
   private List<AccountPriceEntry> accountPriceEntries;
 
   @JsonIgnore

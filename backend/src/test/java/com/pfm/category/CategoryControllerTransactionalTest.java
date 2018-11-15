@@ -81,7 +81,6 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
     //then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
-
   }
 
   @Test

@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
+import com.pfm.helpers.TestHelper;
 import com.pfm.history.HistoryEntry.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,79 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
     assertThat(historyEntries.get(0).getUserId(), equalTo(userId));
     assertThat(historyEntries.get(0).getEntries(), equalTo(historyInfosExpected));
+  }
 
+  @Test
+  public void shouldReturnHistoryOfUpdatingAccount() throws Exception {
+
+    //given
+    Account account = accountMbankBalance10();
+    Account updatedAccount = accountMbankBalance10();
+    updatedAccount.setName("updatedName");
+    updatedAccount.setBalance(TestHelper.convertDoubleToBigDecimal(999));
+
+    final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    callRestToUpdateAccount(accountId, convertAccountToAccountRequest(updatedAccount), token);
+
+    //when
+    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(3L)
+        .name("name")
+        .newValue(updatedAccount.getName())
+        .oldValue(account.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(4L)
+        .name("balance")
+        .newValue(updatedAccount.getBalance().toString())
+        .oldValue(account.getBalance().toString())
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
+    assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(1).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfDeletingAccount() throws Exception {
+
+    //given
+    Account account = accountMbankBalance10();
+
+    final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    callRestToDeleteAccountById(accountId, token);
+
+    //when
+    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(3L)
+        .name("name")
+        .oldValue(account.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(4L)
+        .name("balance")
+        .oldValue(account.getBalance().toString())
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
+    assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(1).getType(), equalTo(Type.DELETE));
+    assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
   }
 
   private List<HistoryEntry> callRestServiceToReturnHistoryEntries(String token) throws Exception {
@@ -77,10 +150,12 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     return historyEntries.stream()
         .map(HistoryEntry::getEntries)
         .collect(Collectors.toList());
+
   }
 
   private List<HistoryEntry> getHistoryEntriesFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, HistoryEntry.class));
   }
+
 
 }
