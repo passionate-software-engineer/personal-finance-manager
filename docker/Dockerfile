@@ -22,7 +22,7 @@ RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |
 RUN apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install google-chrome-stable
 
 # Install npm global packages
-RUN npm install -g @angular/cli protractor ncu
+RUN npm install -g @angular/cli protractor npm-check-updates
 
 # Install java
 RUN wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz -O /tmp/openjdk-11.tar.gz
