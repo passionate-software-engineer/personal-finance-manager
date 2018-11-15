@@ -1,6 +1,10 @@
 package com.pfm.history;
 
+import static com.pfm.config.MessagesProvider.MAIN_CATEGORY;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -9,6 +13,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
+import com.pfm.category.Category;
+import com.pfm.config.MessagesProvider;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestHelper;
 import com.pfm.history.HistoryEntry.Type;
@@ -129,6 +135,157 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
 
     assertThat(historyEntries, hasSize(2));
     assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(1).getType(), equalTo(Type.DELETE));
+    assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfAddingCategoryWithNoParentCategory() throws Exception {
+
+    //given
+    Category category = categoryOil();
+    callRestToAddCategoryAndReturnId(category, token);
+
+    //when
+    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(1L)
+        .name("name")
+        .newValue(category.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(2L)
+        .name("parentCategory")
+        .newValue(getMessage(MAIN_CATEGORY))
+        .build());
+
+    assertThat(historyEntries, hasSize(1));
+    assertThat(historyEntries.get(0).getObject(), equalTo(Category.class.getSimpleName()));
+    assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
+    assertThat(historyEntries.get(0).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(0).getEntries(), equalTo(historyInfosExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfAddingCategoryWithParentCategory() throws Exception {
+
+    //given
+    Category category = categoryOil();
+    Category parentCategory = categoryCar();
+    final long parentCategoryId = callRestToAddCategoryAndReturnId(parentCategory, token);
+    category.setParentCategory(Category.builder()
+        .id(parentCategoryId).
+            build());
+
+    callRestToAddCategoryAndReturnId(category, token);
+
+    //when
+    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(3L)
+        .name("name")
+        .newValue(category.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(4L)
+        .name("parentCategory")
+        .newValue(parentCategory.getName())
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
+    assertThat(historyEntries.get(0).getObject(), equalTo(Category.class.getSimpleName()));
+    assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
+    assertThat(historyEntries.get(0).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfUpdatingCategory() throws Exception {
+
+    //given
+    Category category = categoryOil();
+    Category parentCategory = categoryCar();
+
+    final long parentCategoryId = callRestToAddCategoryAndReturnId(parentCategory, token);
+
+    category.setParentCategory(Category.builder()
+        .id(parentCategoryId).
+            build());
+
+    final long categoryId = callRestToAddCategoryAndReturnId(category, token);
+
+    Category updatedCategory = categoryOil();
+    updatedCategory.setName("Brakes oil");
+
+    callRestToUpdateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory), token);
+
+    //when
+    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(5L)
+        .name("name")
+        .oldValue(category.getName())
+        .newValue(updatedCategory.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("parentCategory")
+        .oldValue(parentCategory.getName())
+        .newValue(getMessage(MAIN_CATEGORY))
+        .build());
+
+    assertThat(historyEntries, hasSize(3));
+    assertThat(historyEntries.get(2).getObject(), equalTo(Category.class.getSimpleName()));
+    assertThat(historyEntries.get(2).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(2).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(2).getEntries(), equalTo(historyInfosExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfDeletingCategory() throws Exception {
+
+    //given
+    Category category = categoryOil();
+    final long categoryId = callRestToAddCategoryAndReturnId(category, token);
+
+    callRestToDeleteCategoryById(categoryId,token);
+
+    //when
+    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(3L)
+        .name("name")
+        .oldValue(category.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(4L)
+        .name("parentCategory")
+        .oldValue(getMessage(MAIN_CATEGORY))
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
+    assertThat(historyEntries.get(1).getObject(), equalTo(Category.class.getSimpleName()));
     assertThat(historyEntries.get(1).getType(), equalTo(Type.DELETE));
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
