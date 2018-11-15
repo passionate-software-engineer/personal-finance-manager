@@ -52,7 +52,7 @@ public class HistoryEntryService {
     saveHistoryEntry(historyEntry);
   }
 
-  // TODO refactor security to not force develeopers to pass userId all around.
+  // TODO refactor security to not force developers to pass userId all around.
   public void addHistoryEntryOnDelete(Object oldObject, long userId) {
     List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnDelete(oldObject, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
