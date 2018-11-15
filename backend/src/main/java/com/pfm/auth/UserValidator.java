@@ -5,6 +5,10 @@ import static com.pfm.config.MessagesProvider.EMPTY_LAST_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_PASSWORD;
 import static com.pfm.config.MessagesProvider.EMPTY_USERNAME;
 import static com.pfm.config.MessagesProvider.PASSWORD_CONTAINS_WHITSPACE;
+import static com.pfm.config.MessagesProvider.TOO_LONG_FIRST_NAME;
+import static com.pfm.config.MessagesProvider.TOO_LONG_LAST_NAME;
+import static com.pfm.config.MessagesProvider.TOO_LONG_PASSWORD;
+import static com.pfm.config.MessagesProvider.TOO_LONG_USERNAME;
 import static com.pfm.config.MessagesProvider.USERNAME_CONTAINS_WHITSPACE;
 import static com.pfm.config.MessagesProvider.USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -36,6 +40,10 @@ public class UserValidator {
       validationResults.add(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST));
     }
 
+    if (user.getUsername() != null && user.getUsername().length() > 20 ) {
+      validationResults.add(getMessage(TOO_LONG_USERNAME));
+    }
+
     if (user.getPassword() == null) {
       validationResults.add(getMessage(EMPTY_PASSWORD));
     }
@@ -44,12 +52,24 @@ public class UserValidator {
       validationResults.add(getMessage(PASSWORD_CONTAINS_WHITSPACE));
     }
 
+    if (user.getPassword() != null && user.getPassword().length() > 20) {
+      validationResults.add(getMessage(TOO_LONG_PASSWORD));
+    }
+
     if (user.getFirstName() == null || user.getFirstName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_FIRST_NAME));
     }
 
+    if (user.getFirstName() != null && user.getFirstName().length() > 20) {
+      validationResults.add(getMessage(TOO_LONG_FIRST_NAME));
+    }
+
     if (user.getLastName() == null || user.getLastName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_LAST_NAME));
+    }
+
+    if (user.getFirstName() != null && user.getLastName().length() > 20) {
+      validationResults.add(getMessage(TOO_LONG_LAST_NAME));
     }
 
     return validationResults;

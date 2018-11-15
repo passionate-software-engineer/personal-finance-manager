@@ -46,6 +46,10 @@ public class MessagesProvider {
   public static final String USERNAME_CONTAINS_WHITSPACE = "userValidator.usernameContainsWhitespaces";
   public static final String PASSWORD_CONTAINS_WHITSPACE = "userValidator.passwordContainsWhitespaces";
   public static final String USERNAME_OR_PASSWORD_IS_INCORRECT = "userController.usernameOrPassowrdIsIncorrect";
+  public static final String TOO_LONG_USERNAME = "Username can be 20 characters max";
+  public static final String TOO_LONG_PASSWORD = "Password can be 20 characters max ";
+  public static final String TOO_LONG_FIRST_NAME = "First name can be 20 characters max";
+  public static final String TOO_LONG_LAST_NAME = "Last name can be 20 characters max";
 
   public static final String MAIN_CATEGORY = "historyInfoProvider.mainCategory";
 
