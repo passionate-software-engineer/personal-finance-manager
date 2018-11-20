@@ -286,7 +286,15 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
-  protected void deleteTransactionById(long id, String token) throws Exception {
+  protected void callRestToUpdateTransacion(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(transactionRequest)))
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToDeleteTransactionById(long id, String token) throws Exception {
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());

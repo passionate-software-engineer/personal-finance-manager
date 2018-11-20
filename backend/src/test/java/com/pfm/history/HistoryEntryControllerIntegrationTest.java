@@ -10,25 +10,23 @@ import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
 import com.pfm.category.Category;
 import com.pfm.helpers.IntegrationTestsBase;
-import com.pfm.helpers.TestTransactionProvider;
 import com.pfm.history.HistoryEntry.Type;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -309,11 +307,11 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     Account account = accountMilleniumBalance100();
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
-    Transaction transaction = TestTransactionProvider.carTransactionWithNoAccountAndNoCategory();
+    Transaction transaction = carTransactionWithNoAccountAndNoCategory();
     callRestToAddTransactionAndReturnId(transaction, accountId, categoryId, token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
 
@@ -380,7 +378,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     final long accountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaBalance100000(), token);
     final long accountIngId = callRestServiceToAddAccountAndReturnId(accountIngBalance9999(), token);
 
-    Transaction transaction = TestTransactionProvider.carTransactionWithNoAccountAndNoCategory();
+    Transaction transaction = carTransactionWithNoAccountAndNoCategory();
     final long transactionId = callRestToAddTransactionAndReturnId(transaction, accountIdeaId, categoryCarId, token);
 
     List<AccountPriceEntry> accountPriceEntriesUpdated = new ArrayList<>();
@@ -400,77 +398,185 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
         .accountPriceEntries(accountPriceEntriesUpdated)
         .build();
 
-    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertTransactionToTransactionRequest(updatedTransaction))))
-        .andExpect(status()
-            .isOk());
+    callRestToUpdateTransacion(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
-
     List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(7L)
+        .id(15L)
         .name("description")
         .oldValue(transaction.getDescription())
         .newValue(updatedTransaction.getDescription())
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(8L)
+        .id(16L)
         .name("categoryId")
         .oldValue(categoryCar().getName())
         .newValue(categoryFood().getName())
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(17L)
         .name("date")
         .oldValue(transaction.getDate().toString())
         .newValue(updatedTransaction.getDate().toString())
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(10L)
+        .id(18L)
         .name("accountPriceEntries")
         .oldValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
-        .newValue(String.format("[%s : %s, %s : %s]", accountIdeaBalance100000().getName(), "55.00", accountIngBalance9999().getName(), "65.00"))
+        .newValue(String
+            .format("[%s : %s, %s : %s]", accountIdeaBalance100000().getName(), updatedTransaction.getAccountPriceEntries().get(0).getPrice(),
+                accountIngBalance9999().getName(), updatedTransaction.getAccountPriceEntries().get(1).getPrice()))
         .build());
 
-//    List<HistoryInfo> historyInfosOfUpdatingAccountExpected = new ArrayList<>();
-//
-//    historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-//        .id(5L)
-//        .name("name")
-//        .newValue(account.getName())
-//        .oldValue(account.getName())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-//        .id(6L)
-//        .name("balance")
-//        .newValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
-//        .oldValue(account.getBalance().toString())
-//        .build());
+    List<HistoryInfo> historyInfosOfUpdatingAccountIdeaSubstractAmountExpected = new ArrayList<>();
+
+    historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
+        .id(19L)
+        .name("name")
+        .newValue(accountIdeaBalance100000().getName())
+        .oldValue(accountIdeaBalance100000().getName())
+        .build());
+
+    historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
+        .id(20L)
+        .name("balance")
+        .newValue(accountIdeaBalance100000().getBalance().toString())
+        .oldValue(accountIdeaBalance100000().getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
+        .build());
+
+    List<HistoryInfo> historyInfosOfUpdatingAccountIdeaAddAmountExpected = new ArrayList<>();
+
+    historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
+        .id(21L)
+        .name("name")
+        .newValue(accountIdeaBalance100000().getName())
+        .oldValue(accountIdeaBalance100000().getName())
+        .build());
+
+    historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
+        .id(22L)
+        .name("balance")
+        .oldValue(accountIdeaBalance100000().getBalance().toString())
+        .newValue(accountIdeaBalance100000().getBalance().add(updatedTransaction.getAccountPriceEntries().get(0).getPrice()).toString())
+        .build());
+
+    List<HistoryInfo> historyInfosOfUpdatingAccountIngAddAmountExpected = new ArrayList<>();
+
+    historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
+        .id(23L)
+        .name("name")
+        .newValue(accountIngBalance9999().getName())
+        .oldValue(accountIngBalance9999().getName())
+        .build());
+
+    historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
+        .id(24L)
+        .name("balance")
+        .oldValue(accountIngBalance9999().getBalance().toString())
+        .newValue(accountIngBalance9999().getBalance().add(updatedTransaction.getAccountPriceEntries().get(1).getPrice()).toString())
+        .build());
 
     assertThat(historyEntries, hasSize(10));
-//    assertThat(historyEntries.get(6).getObject(), equalTo(Account.class.getSimpleName()));
-//    assertThat(historyEntries.get(6).getType(), equalTo(Type.UPDATE));
-//    assertThat(historyEntries.get(6).getUserId(), equalTo(userId));
-//    assertThat(historyEntries.get(6).getEntries(), equalTo(historyInfosOfUpdatingAccountExpected));
-//    assertThat(historyEntries.get(7).getObject(), equalTo(Account.class.getSimpleName()));
-//    assertThat(historyEntries.get(7).getType(), equalTo(Type.UPDATE));
-//    assertThat(historyEntries.get(7).getUserId(), equalTo(userId));
-//    assertThat(historyEntries.get(7).getEntries(), equalTo(historyInfosOfUpdatingAccountExpected));
-//    assertThat(historyEntries.get(6).getObject(), equalTo(Transaction.class.getSimpleName()));
-//    assertThat(historyEntries.get(6).getType(), equalTo(Type.UPDATE));
-//    assertThat(historyEntries.get(6).getUserId(), equalTo(userId));
-    assertThat(historyEntries.get(9).getEntries(), equalTo(historyInfosOfUpdatingTransactionExpected));
+
+    assertThat(historyEntries.get(6).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(6).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(6).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(6).getEntries(), equalTo(historyInfosOfUpdatingTransactionExpected));
+
+    assertThat(historyEntries.get(7).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(7).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(7).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(7).getEntries(), equalTo(historyInfosOfUpdatingAccountIdeaSubstractAmountExpected));
+
+    assertThat(historyEntries.get(8).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(8).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(8).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(8).getEntries(), equalTo(historyInfosOfUpdatingAccountIdeaAddAmountExpected));
+
+    assertThat(historyEntries.get(9).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(9).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(9).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(9).getEntries(), equalTo(historyInfosOfUpdatingAccountIngAddAmountExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfDeletingTransaction() throws Exception {
+
+    //given
+    Category category = categoryCar();
+    final long categoryId = callRestToAddCategoryAndReturnId(category, token);
+
+    Account account = accountMilleniumBalance100();
+    final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Transaction transaction = carTransactionWithNoAccountAndNoCategory();
+    final long transactionId = callRestToAddTransactionAndReturnId(transaction, accountId, categoryId, token);
+    callRestToDeleteTransactionById(transactionId, token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(13L)
+        .name("description")
+        .oldValue(transaction.getDescription())
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(14L)
+        .name("categoryId")
+        .oldValue(category.getName())
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(15L)
+        .name("date")
+        .oldValue(transaction.getDate().toString())
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(16L)
+        .name("accountPriceEntries")
+        .oldValue(String.format("[%s : %s]", account.getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
+        .build());
+
+    List<HistoryInfo> historyInfosOfUpdatingAccountExpected = new ArrayList<>();
+
+    historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
+        .id(11L)
+        .name("name")
+        .newValue(account.getName())
+        .oldValue(account.getName())
+        .build());
+
+    historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
+        .id(12L)
+        .name("balance")
+        .oldValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
+        .newValue(account.getBalance().toString())
+        .build());
+
+    assertThat(historyEntries, hasSize(6));
+    assertThat(historyEntries.get(5).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(5).getType(), equalTo(Type.DELETE));
+    assertThat(historyEntries.get(5).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(5).getEntries(), equalTo(historyInfosOfDeletingTransactionExpected));
+
+    assertThat(historyEntries.get(4).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(4).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(4).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(4).getEntries(), equalTo(historyInfosOfUpdatingAccountExpected));
   }
 
   private List<HistoryEntry> callRestServiceToReturnHistoryEntries(String token) throws Exception {
@@ -482,13 +588,6 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
             .andReturn().getResponse().getContentAsString();
 
     return getHistoryEntriesFromResponse(response);
-  }
-
-  private List<List<HistoryInfo>> callRestServiceToReturnHistoryInfos(String token) throws Exception {
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
-    return historyEntries.stream()
-        .map(HistoryEntry::getEntries)
-        .collect(Collectors.toList());
   }
 
   private List<HistoryEntry> getHistoryEntriesFromResponse(String response) throws Exception {

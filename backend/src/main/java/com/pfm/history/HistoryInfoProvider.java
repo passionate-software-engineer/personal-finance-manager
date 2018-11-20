@@ -117,82 +117,69 @@ public class HistoryInfoProvider {
         .collect(Collectors.toList());
   }
 
-  private SpecialFieldFunction<Field, Object, Long> getObjectForParentCategoryField() {
-    return (field, object, along) -> {
-      Category category = (Category) getValue(field, object);
-      return category == null ? getMessage(MessagesProvider.MAIN_CATEGORY) : category.getName();
-    };
+  private Object getObjectForParentCategoryField(Field field, Object object, Long along) {
+    Category category = (Category) getValue(field, object);
+    return category == null ? getMessage(MessagesProvider.MAIN_CATEGORY) : category.getName();
   }
 
-  private SpecialFieldFunction<Field, Object, Long> getObjectForCategoryField() {
-    return (field, object, along) -> {
-      final long categoryId = (Long) getValue(field, object);
-      return categoryService.getCategoryFromDbByIdAndUserId(categoryId, along).getName();
-    };
+  private Object getObjectForCategoryField(Field field, Object object, Long along) {
+    final long categoryId = (Long) getValue(field, object);
+    return categoryService.getCategoryFromDbByIdAndUserId(categoryId, along).getName();
   }
 
   @SuppressWarnings("unchecked")
-  private SpecialFieldFunction<Field, Object, Long> getObjectForNoSpecialField() {
-    return (field, object, along) ->
-        getValue(field, object);
+  private Object getObjectForCategoryIdsField(Field field, Object object, Long along) {
+    List<Long> categoryIds = (List<Long>) getValue(field, object);
+    List<String> categoriesName = new ArrayList<>();
+    for (long id : categoryIds) {
+      String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, along).getName();
+      categoriesName.add(accountName);
+    }
+    return categoriesName;
   }
 
   @SuppressWarnings("unchecked")
-  private SpecialFieldFunction<Field, Object, Long> getObjectForCategoryIdsField() {
-    return (field, object, along) -> {
-      List<Long> categoryIds = (List<Long>) getValue(field, object);
-      List<String> categoriesName = new ArrayList<>();
-      for (long id : categoryIds) {
-        String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, along).getName();
-        categoriesName.add(accountName);
-      }
-      return categoriesName;
-    };
+  private Object getObjectForAccountsIdsField(Field field, Object object, Long along) {
+    List<Long> accountsIds = (List<Long>) getValue(field, object);
+    List<String> accountsNames = new ArrayList<>();
+    for (long id : accountsIds) {
+      String accountName = accountService.getAccountFromDbByIdAndUserId(id, along).getName();
+      accountsNames.add(accountName);
+    }
+    return accountsNames;
   }
 
   @SuppressWarnings("unchecked")
-  private SpecialFieldFunction<Field, Object, Long> getObjectForAccountsIdsField() {
-    return (field, object, along) -> {
-      List<Long> accountsIds = (List<Long>) getValue(field, object);
-      List<String> accountsNames = new ArrayList<>();
-      for (long id : accountsIds) {
-        String accountName = accountService.getAccountFromDbByIdAndUserId(id, along).getName();
-        accountsNames.add(accountName);
-      }
-      return accountsNames;
-    };
+  private Object getObjectForAccountPriceEntriesField(Field field, Object object, Long along) {
+    List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
+    List<String> values = new ArrayList<>();
+    for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
+      Long accountId = accountPriceEntry.getAccountId();
+      Account account = accountService.getAccountFromDbByIdAndUserId(accountId, along);
+      values.add(String.format("%s : %s", account.getName(), accountPriceEntry.getPrice()));
+    }
+    return values;
   }
 
-  @SuppressWarnings("unchecked")
-  private SpecialFieldFunction<Field, Object, Long> getObjectForAccountPriceEntriesField() {
-    return (field, object, along) -> {
-      List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
-      List<String> values = new ArrayList<>();
-      for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
-        Long accountId = accountPriceEntry.getAccountId();
-        Account account = accountService.getAccountFromDbByIdAndUserId(accountId, along);
-        values.add(String.format("%s : %s", account.getName(), accountPriceEntry.getPrice()));
-      }
-      return values;
-    };
+  private Object getObjectForNoneField(Field field, Object object, Long along) {
+    return getValue(field, object);
   }
 
-  private Map<SpecialFieldType, SpecialFieldFunction<Field, Object, Long>> getSpecialFieldsMap() {
-    Map<SpecialFieldType, SpecialFieldFunction<Field, Object, Long>> map = new HashMap<>();
-    map.put(SpecialFieldType.PARENT_CATEGORY, getObjectForParentCategoryField());
-    map.put(SpecialFieldType.CATEGORY_IDS, getObjectForCategoryIdsField());
-    map.put(SpecialFieldType.CATEGORY, getObjectForCategoryField());
-    map.put(SpecialFieldType.ACCOUNT_IDS, getObjectForAccountsIdsField());
-    map.put(SpecialFieldType.ACCOUNT_PRICE_ENTRY, getObjectForAccountPriceEntriesField());
-    map.put(SpecialFieldType.NONE, getObjectForNoSpecialField());
-
+  private Map<SpecialFieldType, SpecialFieldFunction> getSpecialFieldsMap() {
+    Map<SpecialFieldType, SpecialFieldFunction> map = new HashMap<>();
+    map.put(SpecialFieldType.PARENT_CATEGORY, this::getObjectForParentCategoryField);
+    map.put(SpecialFieldType.CATEGORY_IDS, this::getObjectForCategoryIdsField);
+    map.put(SpecialFieldType.CATEGORY, this::getObjectForCategoryField);
+    map.put(SpecialFieldType.ACCOUNT_IDS, this::getObjectForAccountsIdsField);
+    map.put(SpecialFieldType.ACCOUNT_PRICE_ENTRY, this::getObjectForAccountPriceEntriesField);
+    map.put(SpecialFieldType.NONE, this::getObjectForNoneField);
     return map;
   }
 
   @FunctionalInterface
-  interface SpecialFieldFunction<F extends Field, O, L extends Long> {
+  interface SpecialFieldFunction {
 
-    Object apply(F field, O object, L along);
+    Object apply(Field field, Object object, Long along);
   }
 
 }
