@@ -9,29 +9,35 @@ import static com.pfm.helpers.TestAccountProvider.accountMilleniumBalance100;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
+import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
 import com.pfm.category.Category;
+import com.pfm.filter.Filter;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.history.HistoryEntry.Type;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
-public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
+class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   private static final String HISTORY_PATH = "/history";
 
@@ -70,6 +76,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(0).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
     assertThat(historyEntries.get(0).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(0).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(0).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -109,6 +116,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(1).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -143,6 +151,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(1).getType(), equalTo(Type.DELETE));
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -175,6 +184,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(0).getObject(), equalTo(Category.class.getSimpleName()));
     assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
     assertThat(historyEntries.get(0).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(0).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(0).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -213,6 +223,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(0).getObject(), equalTo(Category.class.getSimpleName()));
     assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
     assertThat(historyEntries.get(0).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(0).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -260,6 +271,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(2).getObject(), equalTo(Category.class.getSimpleName()));
     assertThat(historyEntries.get(2).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(2).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(2).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(2).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -294,6 +306,7 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(1).getObject(), equalTo(Category.class.getSimpleName()));
     assertThat(historyEntries.get(1).getType(), equalTo(Type.DELETE));
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
   }
 
@@ -358,13 +371,17 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
         .build());
 
     assertThat(historyEntries, hasSize(4));
+
     assertThat(historyEntries.get(2).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(2).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(2).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(2).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(2).getEntries(), equalTo(historyInfosOfUpdatingAccountExpected));
+
     assertThat(historyEntries.get(3).getObject(), equalTo(Transaction.class.getSimpleName()));
     assertThat(historyEntries.get(3).getType(), equalTo(Type.ADD));
     assertThat(historyEntries.get(3).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(3).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(3).getEntries(), equalTo(historyInfosOfAddingTransactionExpected));
   }
 
@@ -489,21 +506,25 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(historyEntries.get(6).getObject(), equalTo(Transaction.class.getSimpleName()));
     assertThat(historyEntries.get(6).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(6).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(6).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(6).getEntries(), equalTo(historyInfosOfUpdatingTransactionExpected));
 
     assertThat(historyEntries.get(7).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(7).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(7).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(7).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(7).getEntries(), equalTo(historyInfosOfUpdatingAccountIdeaSubstractAmountExpected));
 
     assertThat(historyEntries.get(8).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(8).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(8).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(8).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(8).getEntries(), equalTo(historyInfosOfUpdatingAccountIdeaAddAmountExpected));
 
     assertThat(historyEntries.get(9).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(9).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(9).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(9).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(9).getEntries(), equalTo(historyInfosOfUpdatingAccountIngAddAmountExpected));
   }
 
@@ -568,15 +589,270 @@ public class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase 
         .build());
 
     assertThat(historyEntries, hasSize(6));
-    assertThat(historyEntries.get(5).getObject(), equalTo(Transaction.class.getSimpleName()));
-    assertThat(historyEntries.get(5).getType(), equalTo(Type.DELETE));
-    assertThat(historyEntries.get(5).getUserId(), equalTo(userId));
-    assertThat(historyEntries.get(5).getEntries(), equalTo(historyInfosOfDeletingTransactionExpected));
 
     assertThat(historyEntries.get(4).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(4).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(4).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(4).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(4).getEntries(), equalTo(historyInfosOfUpdatingAccountExpected));
+
+    assertThat(historyEntries.get(5).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(5).getType(), equalTo(Type.DELETE));
+    assertThat(historyEntries.get(5).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(5).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(5).getEntries(), equalTo(historyInfosOfDeletingTransactionExpected));
+
+  }
+
+  @Test
+  public void shouldReturnHistoryOfAddingFilter() throws Exception {
+
+    //given
+    Category categoryCar = categoryCar();
+    Category categoryFood = categoryFood();
+    final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
+    final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood, token);
+
+    Account accountMillenium = accountMilleniumBalance100();
+    Account accountMbank = accountMbankBalance10();
+    final long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+    final long accountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMillenium, token);
+
+    Filter filter = filterFoodExpenses();
+    filter.setAccountIds(convertIdsToList(accountMbankId, accountMilleniumId));
+    filter.setCategoryIds(convertIdsToList(categoryCarId, categoryFoodId));
+    filter.setDateTo(null);
+
+    callRestServiceToAddFilterAndReturnId(convertFilterToFilterRequest(filter), token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    List<HistoryInfo> historyInfosOfAddingFilterExpected = new ArrayList<>();
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(9L)
+        .name("name")
+        .newValue(filter.getName())
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(10L)
+        .name("accountIds")
+        .newValue(String.format("[%s, %s]", accountMbank.getName(), accountMillenium.getName()))
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(11L)
+        .name("categoryIds")
+        .newValue(String.format("[%s, %s]", categoryCar.getName(), categoryFood.getName()))
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(12L)
+        .name("priceFrom")
+        .newValue(filter.getPriceFrom().toString())
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(13L)
+        .name("priceTo")
+        .newValue(filter.getPriceTo().toString())
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(14L)
+        .name("dateFrom")
+        .newValue(filter.getDateFrom().toString())
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(15L)
+        .name("dateTo")
+        .newValue(null)
+        .build());
+
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(16L)
+        .name("description")
+        .newValue(filter.getDescription())
+        .build());
+
+    assertThat(historyEntries, hasSize(5));
+    assertThat(historyEntries.get(4).getObject(), equalTo(Filter.class.getSimpleName()));
+    assertThat(historyEntries.get(4).getType(), equalTo(Type.ADD));
+    assertTrue(historyEntries.get(4).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(4).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(4).getEntries(), equalTo(historyInfosOfAddingFilterExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfUpdatingFilter() throws Exception {
+
+    //given
+    Category categoryCar = categoryCar();
+    Category categoryFood = categoryFood();
+    final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
+    final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood, token);
+
+    Account accountMillenium = accountMilleniumBalance100();
+    Account accountMbank = accountMbankBalance10();
+    final long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+    final long accountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMillenium, token);
+
+    Filter filter = filterFoodExpenses();
+    final long filterId = callRestServiceToAddFilterAndReturnId(convertFilterToFilterRequest(filter), token);
+
+    Filter updatedFilter = Filter.builder()
+        .name("updated name")
+        .accountIds(convertIdsToList(accountMbankId, accountMilleniumId))
+        .categoryIds(convertIdsToList(categoryCarId, categoryFoodId))
+        .priceFrom(filter.getPriceFrom().add(BigDecimal.ONE))
+        .priceTo(filter.getPriceTo().add(BigDecimal.ONE))
+        .dateFrom(filter.getDateFrom().plusDays(1))
+        .dateTo(filter.getDateTo().plusDays(1))
+        .description("updated description")
+        .build();
+
+    callRestServiceToUpdateFilter(filterId, convertFilterToFilterRequest(updatedFilter), token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    List<HistoryInfo> historyInfosOfUpdatingFilterExpected = new ArrayList<>();
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(17L)
+        .name("name")
+        .oldValue(filter.getName())
+        .newValue(updatedFilter.getName())
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(18L)
+        .name("accountIds")
+        .newValue(String.format("[%s, %s]", accountMbank.getName(), accountMillenium.getName()))
+        .oldValue("[]")
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(19L)
+        .name("categoryIds")
+        .newValue(String.format("[%s, %s]", categoryCar.getName(), categoryFood.getName()))
+        .oldValue("[]")
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(20L)
+        .name("priceFrom")
+        .oldValue(filter.getPriceFrom().toString())
+        .newValue(updatedFilter.getPriceFrom().toString())
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(21L)
+        .name("priceTo")
+        .newValue(updatedFilter.getPriceTo().toString())
+        .oldValue(filter.getPriceTo().toString())
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(22L)
+        .name("dateFrom")
+        .oldValue(filter.getDateFrom().toString())
+        .newValue(updatedFilter.getDateFrom().toString())
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(23L)
+        .name("dateTo")
+        .newValue(updatedFilter.getDateTo().toString())
+        .oldValue(filter.getDateTo().toString())
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(24L)
+        .name("description")
+        .oldValue(filter.getDescription())
+        .newValue(updatedFilter.getDescription())
+        .build());
+
+    assertThat(historyEntries, hasSize(6));
+    assertThat(historyEntries.get(5).getObject(), equalTo(Filter.class.getSimpleName()));
+    assertThat(historyEntries.get(5).getType(), equalTo(Type.UPDATE));
+    assertTrue(historyEntries.get(5).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(5).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(5).getEntries(), equalTo(historyInfosOfUpdatingFilterExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfDeletingFilter() throws Exception {
+
+    //given
+    Filter filter = filterFoodExpenses();
+    final long filterId = callRestServiceToAddFilterAndReturnId(convertFilterToFilterRequest(filter), token);
+
+    callRestToDeleteFilterById(filterId, token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    List<HistoryInfo> historyInfosOfDeletingFilterExpected = new ArrayList<>();
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(9L)
+        .name("name")
+        .oldValue(filter.getName())
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(10L)
+        .name("accountIds")
+        .oldValue("[]")
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(11L)
+        .name("categoryIds")
+        .oldValue("[]")
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(12L)
+        .name("priceFrom")
+        .oldValue(filter.getPriceFrom().toString())
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(13L)
+        .name("priceTo")
+        .oldValue(filter.getPriceTo().toString())
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(14L)
+        .name("dateFrom")
+        .oldValue(filter.getDateFrom().toString())
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(15L)
+        .name("dateTo")
+        .oldValue(filter.getDateTo().toString())
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(16L)
+        .name("description")
+        .oldValue(filter.getDescription())
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
+    assertThat(historyEntries.get(1).getObject(), equalTo(Filter.class.getSimpleName()));
+    assertThat(historyEntries.get(1).getType(), equalTo(Type.DELETE));
+    assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosOfDeletingFilterExpected));
   }
 
   private List<HistoryEntry> callRestServiceToReturnHistoryEntries(String token) throws Exception {
