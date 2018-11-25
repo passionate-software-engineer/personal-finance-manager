@@ -2,7 +2,7 @@ import {AccountsPage} from './AccountPage.po';
 import {LoginPage} from './LoginPage.po';
 import {RegisterPage} from './RegisterPage.po';
 import {v4 as uuid} from 'uuid';
-import {HistoryInfo} from '../../src/app/components/history/historyInfo';
+import {NavigationPage} from './NavigationPage.po';
 
 describe('workspace-project App', () => {
   let page: AccountsPage;
@@ -15,6 +15,8 @@ describe('workspace-project App', () => {
 
     const loginPage = new LoginPage();
     await loginPage.loginAs(username, password);
+
+
   });
 
   beforeEach(async () => {
@@ -26,16 +28,20 @@ describe('workspace-project App', () => {
 
   it('should display correct English descriptions', () => {
     // given
-
+    const navigationPage = new NavigationPage();
     // when
 
     // then
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
     expect(page.addAccountButton().getText()).toEqual('Add Account');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
-    expect(page.balanceHeader().getText()).toContain(HistoryInfo);
+    expect(page.balanceHeader().getText()).toEqual('Balance');
 
-    // TODO - add all remaining elements (including sort order, options etc)
+    expect(navigationPage.pfmLink().getText()).toEqual('Personal Finance Manager');
+    expect(navigationPage.transactionLink().getText()).toEqual('Transactions');
+    expect(navigationPage.accountsLink().getText()).toEqual('Accounts');
+    expect(navigationPage.historyLink().getText()).toEqual('History');
+
   });
 
   it('should add account', () => {
