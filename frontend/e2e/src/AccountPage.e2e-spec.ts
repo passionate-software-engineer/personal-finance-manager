@@ -2,9 +2,8 @@ import {AccountsPage} from './AccountPage.po';
 import {LoginPage} from './LoginPage.po';
 import {RegisterPage} from './RegisterPage.po';
 import {v4 as uuid} from 'uuid';
-import {NavigationPage} from './NavigationPage.po';
 
-describe('workspace-project App', () => {
+describe('Accounts page tests', () => {
   let page: AccountsPage;
 
   beforeAll(async () => {
@@ -22,26 +21,16 @@ describe('workspace-project App', () => {
   beforeEach(async () => {
     page = new AccountsPage();
     await page.navigateTo();
-
     await page.removeAllAccounts();
   });
 
   it('should display correct English descriptions', () => {
-    // given
-    const navigationPage = new NavigationPage();
-    // when
 
     // then
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
     expect(page.addAccountButton().getText()).toEqual('Add Account');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
     expect(page.balanceHeader().getText()).toEqual('Balance');
-
-    expect(navigationPage.pfmLink().getText()).toEqual('Personal Finance Manager');
-    expect(navigationPage.transactionLink().getText()).toEqual('Transactions');
-    expect(navigationPage.accountsLink().getText()).toEqual('Accounts');
-    expect(navigationPage.historyLink().getText()).toEqual('History');
-
   });
 
   it('should add account', () => {

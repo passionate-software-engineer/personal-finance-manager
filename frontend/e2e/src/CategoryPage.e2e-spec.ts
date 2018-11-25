@@ -3,7 +3,7 @@ import {RegisterPage} from './RegisterPage.po';
 import {v4 as uuid} from 'uuid';
 import {CategoryPage} from './CategoryPage.po';
 
-describe('workspace-project App', () => {
+describe('Category page tests', () => {
   let page: CategoryPage;
 
   beforeAll(async () => {
@@ -32,6 +32,7 @@ describe('workspace-project App', () => {
     expect(page.refreshCategoriesButton().getText()).toEqual('Refresh');
     expect(page.addCategoryButton().getText()).toEqual('Add Category');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
+    expect(page.parentCategoryHeader().getText()).toEqual('Parent Category');
     // TODO - add all remaining elements (including sort order, options etc)
   });
 
@@ -103,7 +104,7 @@ describe('workspace-project App', () => {
     page.assertParentCategory(page.categoryRowsAll().last(), parentCategoryName);
   });
 
-  it('should delete', () => {
+  it('should delete category', () => {
 
     // given
     page.addCategory('Car', 'Main Category');

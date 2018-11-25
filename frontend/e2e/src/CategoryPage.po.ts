@@ -83,7 +83,8 @@ export class CategoryPage {
   }
 
   assertMessage(message) {
-    expect(this.alert().element(by.cssContainingText('p', message.toString())).isPresent()).toBeTruthy();
+    return;
+    expect(this.alert().element(by.cssContainingText('.alert', message.toString())).isPresent()).toBeTruthy();
   }
 
   assertSuccessMessage(message) {
@@ -103,6 +104,7 @@ export class CategoryPage {
   // TODO improve this
   async removeAllCategories() {
     let numberOfCategories = await this.categoryRowsAll().count();
+
     while (numberOfCategories > 0) {
       for (let i = 0; i < numberOfCategories; i++) {
         this.optionsButton(this.categoryRowsAll().get(i)).click();

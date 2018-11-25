@@ -26,12 +26,12 @@
     </ul>
     <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
-        <a class="nav-link" routerLink="/register" routerLinkActive="active">
+        <a id="RegisterLink" class="nav-link" routerLink="/register" routerLinkActive="active">
           {{'navigation.register' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active">
+        <a id="LoginLink" class="nav-link" routerLink="/login" routerLinkActive="active">
           {{'navigation.login' | translate}}
         </a>
       </li>
@@ -41,7 +41,7 @@
           {{currentUser.firstName}} {{currentUser.lastName}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/login" (click)="logout()">
+          <a id="LogoutLink" class="dropdown-item" routerLink="/login" (click)="logout()">
             {{'navigation.logout' | translate}}
           </a>
         </div>

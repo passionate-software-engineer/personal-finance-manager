@@ -10,6 +10,18 @@ export class LoginPage {
     return element(by.id('LoginButton'));
   }
 
+  registerLink() {
+    return element(by.id('RegisterLinkLoginPage'));
+  }
+
+  usernameLabel() {
+    return element(by.id('UsernameLabel'));
+  }
+
+  passwordLabel() {
+    return element(by.id('PasswordLabel'));
+  }
+
   typeUser(username: string) {
     return element(by.id('LoginUsernameInput')).sendKeys(username);
   }
@@ -32,5 +44,4 @@ export class LoginPage {
     const until = protractor.ExpectedConditions;
     browser.wait(until.presenceOf(this.loggedInUserButton()), 3000, 'Waiting for login page to load');
   }
-
 }
