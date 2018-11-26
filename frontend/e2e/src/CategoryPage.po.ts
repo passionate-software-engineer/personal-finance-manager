@@ -83,8 +83,8 @@ export class CategoryPage {
   }
 
   assertMessage(message) {
-    return;
-    expect(this.alert().element(by.cssContainingText('.alert', message.toString())).isPresent()).toBeTruthy();
+    const first = element.all(by.id('Alerts')).all(by.css('alert-list')).get(0);
+    expect(first.getText()).toEqual(message);
   }
 
   assertSuccessMessage(message) {

@@ -24,16 +24,12 @@ describe('Category page tests', () => {
   });
 
   it('should display correct English descriptions', () => {
-    // given
-
-    // when
 
     // then
     expect(page.refreshCategoriesButton().getText()).toEqual('Refresh');
     expect(page.addCategoryButton().getText()).toEqual('Add Category');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
     expect(page.parentCategoryHeader().getText()).toEqual('Parent Category');
-    // TODO - add all remaining elements (including sort order, options etc)
   });
 
   it('should add category', () => {
