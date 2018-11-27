@@ -23,7 +23,7 @@ describe('Category page tests', () => {
     await page.removeAllCategories();
   });
 
-  it('should display correct English descriptions', () => {
+  it('should display correct English descriptions on category page', () => {
 
     // then
     expect(page.refreshCategoriesButton().getText()).toEqual('Refresh');

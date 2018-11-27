@@ -5,10 +5,10 @@
     </option>
   </select>
   <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
-  <button class="btn btn-success" (click)="addFilter()">{{'transaction.save' | translate}}</button>
-  <button class="btn btn-warning" (click)="updateFilter()">{{'transaction.update' | translate}}</button>
-  <button class="btn btn-primary" (click)="resetFilter()">{{'transaction.reset' | translate}}</button>
-  <button class="btn btn-danger" (click)="deleteFilter()">{{'transaction.delete' | translate}}</button>
+  <button id="AddFilterBtn" class="btn btn-success" (click)="addFilter()">{{'transaction.save' | translate}}</button>
+  <button id="UpdateFilterBtn" class="btn btn-warning" (click)="updateFilter()">{{'transaction.update' | translate}}</button>
+  <button id="ResetFilterBtn" class="btn btn-primary" (click)="resetFilter()">{{'transaction.reset' | translate}}</button>
+  <button id="DeleteFilterBtn" class="btn btn-danger" (click)="deleteFilter()">{{'transaction.delete' | translate}}</button>
 </div>
 
 <div class="float-left">
@@ -111,27 +111,27 @@
   <tr id="TransactionRow" *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
 
     <!--Date-->
-    <td *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
+    <td id="DateReadOnly" *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
     <td *ngIf="transaction.editMode">
       <input id="EditTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="transaction.editedTransaction.date">
     </td>
 
     <!--Description-->
-    <td *ngIf="!transaction.editMode">{{transaction.description}}</td>
+    <td id="DescriptionReadOnly" *ngIf="!transaction.editMode">{{transaction.description}}</td>
     <td *ngIf="transaction.editMode">
       <input id="EditTransactionDescriptionInput" class="form-control" type="text" [(ngModel)]="transaction.editedTransaction.description">
     </td>
 
     <!--Price-->
-    <td class="right aligned" *ngIf="!transaction.editMode"><p *ngFor="let entry of transaction.accountPriceEntries">{{entry.price | number:'0.2'}}</p></td>
+    <td class="right aligned" *ngIf="!transaction.editMode"><p id="PricesReadOnly" *ngFor="let entry of transaction.accountPriceEntries">{{entry.price | number:'0.2'}}</p></td>
     <td *ngIf="transaction.editMode">
       <input id="EditTransactionPriceInput" *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
     </td>
 
     <!--Account-->
-    <td id="EditTransactionAccountSelects" *ngIf="!transaction.editMode"><p *ngFor="let entry of transaction.accountPriceEntries">{{entry.account.name}}</p></td>
+    <td *ngIf="!transaction.editMode"><p id="AccountsReadOnly" *ngFor="let entry of transaction.accountPriceEntries">{{entry.account.name}}</p></td>
     <td *ngIf="transaction.editMode">
-      <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
+      <select id="EditTransactionAccountSelects" *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
         </option>
@@ -139,8 +139,8 @@
     </td>
 
     <!--Category-->
-    <td id="EditTransactionCategorySelect" *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
-    <td *ngIf="transaction.editMode">
+    <td id="CategoryReadOnly" *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
+    <td id="EditTransactionCategorySelect" *ngIf="transaction.editMode">
       <select class="form-control" [(ngModel)]="transaction.editedTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}

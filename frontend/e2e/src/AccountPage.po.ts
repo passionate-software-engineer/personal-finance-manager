@@ -74,8 +74,8 @@ export class AccountsPage {
     expect(row.element(by.id('NameReadOnly')).getText()).toEqual(expectedText);
   }
 
-  assertAccountBalance(row, expectedText) {
-    expect(row.element(by.id('BalanceReadOnly')).getText()).toEqual(expectedText);
+  assertAccountBalance(row, expectedBalance) {
+    expect(row.element(by.id('BalanceReadOnly')).getText()).toEqual(expectedBalance);
   }
 
   assertSuccessMessage(message) {

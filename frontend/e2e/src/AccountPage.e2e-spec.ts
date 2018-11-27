@@ -14,8 +14,6 @@ describe('Accounts page tests', () => {
 
     const loginPage = new LoginPage();
     await loginPage.loginAs(username, password);
-
-
   });
 
   beforeEach(async () => {

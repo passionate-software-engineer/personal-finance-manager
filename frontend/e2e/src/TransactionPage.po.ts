@@ -6,6 +6,8 @@ export class TransactionAndFilterPage {
     return browser.get('/transactions');
   }
 
+  // transaction
+
   addTransactionButton() {
     return element(by.id('AddTransactionBtn'));
   }
@@ -18,7 +20,7 @@ export class TransactionAndFilterPage {
     return element(by.id('DateHeader'));
   }
 
-  nameHeader() {
+  descriptionHeader() {
     return element(by.id('NameHeader'));
   }
 
@@ -78,15 +80,11 @@ export class TransactionAndFilterPage {
     return element(by.id('EditTransactionCategorySelect'));
   }
 
-  newTransactionSaveButton() {
-    return element(by.id('newTransactionSaveButton'));
-  }
-
   editTransactionSaveButton() {
     return element(by.id('EditTransactionSaveBtn'));
   }
 
-  TransactionRows() {
+  transactionRows() {
     return element.all(by.id('TransactionRow'));
   }
 
@@ -106,5 +104,92 @@ export class TransactionAndFilterPage {
     return element.all(by.id('Alert'));
   }
 
+  assertDate(date) {
+    expect(element(by.id('DateReadOnly')).getText()).toEqual(date);
+  }
+
+  assertDescription(description) {
+    expect(element(by.id('DescriptionReadOnly')).getText()).toEqual(description);
+  }
+
+  assertCategory(name) {
+    expect(element(by.id('CategoryReadOnly')).getText()).toEqual(name);
+  }
+
+  assertPrices(priceOne: Number, priceTwo: Number) {
+    expect(element.all(by.id('PricesReadOnly')).get(0).getText()).toEqual(priceOne.toFixed(2));
+
+    if (priceTwo !== null) {
+      expect(element.all(by.id('PricesReadOnly')).get(1).getText()).toEqual(priceTwo.toFixed(2));
+    }
+  }
+
+  assertAccounts(accountOne, accountTwo) {
+    expect(element.all(by.id('AccountsReadOnly')).get(0).getText()).toEqual(accountOne);
+
+    if (accountTwo !== null) {
+      expect(element.all(by.id('AccountsReadOnly')).get(1).getText()).toEqual(accountTwo);
+    }
+  }
+
+  addTransaction(date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
+    this.navigateTo();
+    this.addTransactionButton().click();
+    this.newTransactionDateInput().sendKeys(date);
+    this.newTransactionDescriptionInput().sendKeys(description);
+    this.newTransactionPriceInput().get(0).sendKeys(priceOne);
+
+    if (priceTwo !== null) {
+      this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
+    }
+
+    this.newTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
+
+    if (accountNameTwo !== null) {
+      this.newTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
+    }
+
+    this.newTransactionCategorySelect().element(by.cssContainingText('option', categoryName)).click();
+
+    this.newTransactionSaveButton().click();
+  }
+
+  deleteTransaction(row) {
+    this.optionsButton(row).click();
+    this.deleteButton(row).click();
+
+    browser.switchTo().alert().accept();
+
+  }
+
+  async removeAllTransactions() {
+    let numberOfTransactions = await this.transactionRows().count();
+
+    while (numberOfTransactions > 0) {
+      this.deleteTransaction(this.transactionRows().first());
+
+      numberOfTransactions = await this.transactionRows().count();
+    }
+
+    expect(this.transactionRows().count()).toEqual(0);
+  }
+
+  // filter
+
+  addFilterButton() {
+    return element(by.id('AddFilterBtn'));
+  }
+
+  updateFilterButton() {
+    return element(by.id('UpdateFilterBtn'));
+  }
+
+  resetFilterButton() {
+    return element(by.id('ResetFilterBtn'));
+  }
+
+  deleteFilterButton() {
+    return element(by.id('DeleteFilterBtn'));
+  }
 
 }

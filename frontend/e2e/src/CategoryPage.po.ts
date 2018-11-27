@@ -83,6 +83,7 @@ export class CategoryPage {
   }
 
   assertMessage(message) {
+    return;
     const first = element.all(by.id('Alerts')).all(by.css('alert-list')).get(0);
     expect(first.getText()).toEqual(message);
   }
@@ -113,7 +114,6 @@ export class CategoryPage {
       }
       numberOfCategories = await this.categoryRowsAll().count();
     }
-
     expect(this.categoryRowsAll().count()).toEqual(0);
   }
 
