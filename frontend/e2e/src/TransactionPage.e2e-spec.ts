@@ -68,7 +68,7 @@ describe('Transaction page tests', () => {
 
     transactionPage.assertDescription('desc');
     transactionPage.assertDate('22/11/2018');
-    transactionPage.assertPrices(100, null);
+    transactionPage.assertPrices('100.00', null);
     transactionPage.assertAccounts('Mbank', null);
     transactionPage.assertCategory('Car');
 
@@ -78,7 +78,7 @@ describe('Transaction page tests', () => {
 
   it('should add transaction with two accounts', () => {
 
-    // given
+    // givene
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
 
@@ -94,13 +94,48 @@ describe('Transaction page tests', () => {
 
     transactionPage.assertDescription('desc');
     transactionPage.assertDate('22/11/2018');
-    transactionPage.assertPrices(100, 50);
+    transactionPage.assertPrices('100.00', '50.00');
     transactionPage.assertAccounts('Mbank', 'Alior');
     transactionPage.assertCategory('Car');
 
     accountPage.navigateTo();
     accountPage.assertAccountBalance(accountPage.accountRows().get(0), '550.00');
     accountPage.assertAccountBalance(accountPage.accountRows().get(1), '1,100.00');
+  });
+
+  it('should update transaction ', () => {
+
+    // given
+    categoryPage.navigateTo();
+    categoryPage.addCategory('Car', 'Main Category');
+    categoryPage.addCategory('Food', 'Main Category');
+
+    accountPage.navigateTo();
+    accountPage.addAccount('Mbank', 1000);
+    accountPage.addAccount('Alior', 500);
+
+    accountPage.addAccount('Millenium', 10000);
+    accountPage.addAccount('Ing', 5000);
+
+    transactionPage.addTransaction(22112018, 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+
+    // when
+    transactionPage.updateTransaction(transactionPage.transactionRows().first(), 23112018, 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
+
+    // then
+    expect(transactionPage.transactionRows().count()).toEqual(1);
+
+    transactionPage.assertDescription('updated description');
+    transactionPage.assertDate('23/11/2018');
+    transactionPage.assertPrices('1,000.00', '500.00');
+    transactionPage.assertAccounts('Millenium', 'Ing');
+    transactionPage.assertCategory('Food');
+
+    accountPage.navigateTo();
+    accountPage.assertAccountBalance(accountPage.accountRows().get(0), '500.00');
+    accountPage.assertAccountBalance(accountPage.accountRows().get(1), '5,500.00');
+    accountPage.assertAccountBalance(accountPage.accountRows().get(2), '1,000.00');
+    accountPage.assertAccountBalance(accountPage.accountRows().get(3), '11,000.00');
   });
 
   it('should delete transaction', () => {

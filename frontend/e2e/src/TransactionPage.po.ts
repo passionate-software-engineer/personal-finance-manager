@@ -116,11 +116,11 @@ export class TransactionAndFilterPage {
     expect(element(by.id('CategoryReadOnly')).getText()).toEqual(name);
   }
 
-  assertPrices(priceOne: Number, priceTwo: Number) {
-    expect(element.all(by.id('PricesReadOnly')).get(0).getText()).toEqual(priceOne.toFixed(2));
+  assertPrices(priceOne, priceTwo) {
+    expect(element.all(by.id('PricesReadOnly')).get(0).getText()).toEqual(priceOne);
 
     if (priceTwo !== null) {
-      expect(element.all(by.id('PricesReadOnly')).get(1).getText()).toEqual(priceTwo.toFixed(2));
+      expect(element.all(by.id('PricesReadOnly')).get(1).getText()).toEqual(priceTwo);
     }
   }
 
@@ -154,12 +154,38 @@ export class TransactionAndFilterPage {
     this.newTransactionSaveButton().click();
   }
 
+  updateTransaction(row, date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
+    this.navigateTo();
+    this.optionsButton(row).click();
+    this.editButton(row).click();
+    this.editTransactionDateInput().sendKeys(date);
+    this.editTransactionDescriptionInput().clear();
+    this.editTransactionDescriptionInput().sendKeys(description);
+
+    this.editTransactionPriceInput().get(0).clear();
+    this.editTransactionPriceInput().get(0).sendKeys(priceOne);
+
+    if (priceTwo !== null) {
+      this.editTransactionPriceInput().get(1).clear();
+      this.editTransactionPriceInput().get(1).sendKeys(priceTwo);
+    }
+
+    this.editTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
+
+    if (accountNameTwo !== null) {
+      this.editTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
+    }
+
+    this.editTransactionCategorySelect().element(by.cssContainingText('option', categoryName)).click();
+
+    this.editTransactionSaveButton().click();
+  }
+
   deleteTransaction(row) {
     this.optionsButton(row).click();
     this.deleteButton(row).click();
 
     browser.switchTo().alert().accept();
-
   }
 
   async removeAllTransactions() {

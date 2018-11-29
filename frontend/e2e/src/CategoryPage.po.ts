@@ -104,16 +104,22 @@ export class CategoryPage {
 
   // TODO improve this
   async removeAllCategories() {
+    await this.navigateTo();
     let numberOfCategories = await this.categoryRowsAll().count();
-
-    while (numberOfCategories > 0) {
-      for (let i = 0; i < numberOfCategories; i++) {
-        this.optionsButton(this.categoryRowsAll().get(i)).click();
-        this.deleteButton(this.categoryRowsAll().get(i)).click();
-        browser.switchTo().alert().accept();
+    if (numberOfCategories === 0) {
+      return;
+    }
+    while (numberOfCategories > 1) {
+      if (!this.categoryRowsAll().first().element(by.id('ParentCategoryReadOnly')).getText()) {
+        this.deleteCategory(this.categoryRowsAll().first());
+      } else {
+        this.deleteCategory(this.categoryRowsAll().last());
       }
       numberOfCategories = await this.categoryRowsAll().count();
     }
+
+    this.deleteCategory(this.categoryRowsAll().first());
+
     expect(this.categoryRowsAll().count()).toEqual(0);
   }
 
