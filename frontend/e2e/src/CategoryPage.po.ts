@@ -109,16 +109,10 @@ export class CategoryPage {
     if (numberOfCategories === 0) {
       return;
     }
-    while (numberOfCategories > 1) {
-      if (!this.categoryRowsAll().first().element(by.id('ParentCategoryReadOnly')).getText()) {
-        this.deleteCategory(this.categoryRowsAll().first());
-      } else {
-        this.deleteCategory(this.categoryRowsAll().last());
-      }
+    while (numberOfCategories > 0) {
+      this.deleteCategory(this.categoryRowsAll().last());
       numberOfCategories = await this.categoryRowsAll().count();
     }
-
-    this.deleteCategory(this.categoryRowsAll().first());
 
     expect(this.categoryRowsAll().count()).toEqual(0);
   }
