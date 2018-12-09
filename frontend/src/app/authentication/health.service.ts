@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ServiceBase} from '../helpers/service-base';
-import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 
 const PATH = 'actuator/health';
 
@@ -11,8 +10,8 @@ const PATH = 'actuator/health';
 })
 export class HealthService extends ServiceBase {
 
-  constructor(http: HttpClient, alertService: AlertsService) {
-    super(http, alertService);
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getHealthStatus(): Observable<string> {

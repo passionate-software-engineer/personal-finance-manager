@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Account} from '../account';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {ServiceBase} from '../../../helpers/service-base';
 
 const PATH = 'accounts';
@@ -12,8 +11,8 @@ const PATH = 'accounts';
 })
 export class AccountService extends ServiceBase {
 
-  constructor(http: HttpClient, alertService: AlertsService) {
-    super(http, alertService);
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   private static accountToAccountRequest(account: Account) {

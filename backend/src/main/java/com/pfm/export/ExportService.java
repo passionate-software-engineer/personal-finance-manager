@@ -46,7 +46,9 @@ public class ExportService {
 
     List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap, userId);
     result.setPeriods(periods);
-    result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
+    if (periods.size() > 0) {
+      result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
+    }
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
 
     // TODO export / import filters

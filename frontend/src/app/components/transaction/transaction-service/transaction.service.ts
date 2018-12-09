@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
-import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {TransactionResponse} from './transaction-response';
 import {ServiceBase} from '../../../helpers/service-base';
 
@@ -13,8 +12,8 @@ const PATH = 'transactions';
 })
 export class TransactionService extends ServiceBase {
 
-  constructor(http: HttpClient, alertService: AlertsService) {
-    super(http, alertService);
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   private static transactionToTransactionRequest(transaction: Transaction) {

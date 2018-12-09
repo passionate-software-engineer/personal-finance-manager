@@ -27,8 +27,13 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
 
-  constructor(private transactionService: TransactionService, alertService: AlertsService, private categoryService: CategoryService,
-              private accountService: AccountService, filterService: TransactionFilterService, translate: TranslateService) {
+  constructor(
+    private transactionService: TransactionService,
+    alertService: AlertsService,
+    private categoryService: CategoryService,
+    private accountService: AccountService,
+    filterService: TransactionFilterService,
+    translate: TranslateService) {
     super(alertService, filterService, translate);
   }
 

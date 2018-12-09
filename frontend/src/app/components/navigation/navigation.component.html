@@ -23,6 +23,10 @@
         <a id="HistoryLink" class="nav-link" routerLink="/history" routerLinkActive="active">{{'navigation.history' | translate}}
         </a>
       </li>
+      <li [routerLinkActive]="['active']" class="nav-item">
+        <a class="nav-link" routerLink="/export" routerLinkActive="active">{{'navigation.exportImport' | translate}}
+        </a>
+      </li>
     </ul>
     <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
