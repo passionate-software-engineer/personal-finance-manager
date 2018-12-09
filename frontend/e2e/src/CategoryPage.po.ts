@@ -84,22 +84,12 @@ export class CategoryPage {
 
   assertMessage(message) {
     return;
-    const first = element.all(by.id('Alerts')).all(by.css('alert-list')).get(0);
-    expect(first.getText()).toEqual(message);
+    // const first = element.all(by.id('Alerts')).all(by.css('alert-list')).get(0);
+    // expect(first.getText()).toEqual(message);
   }
 
   assertSuccessMessage(message) {
     return;
-    // const EC = protractor.ExpectedConditions;
-    // browser.wait(EC.visibilityOf(this.alert()), 1000, 'Custom Error Message');
-
-
-    // chai.expect(this.alert().element(by.cssContainingText('p', message.toString())).isPresent()).to.be.true;
-// according to your preference of assertion style
-    // const until = protractor.ExpectedConditions;
-    // browser.wait(until.presenceOf(element(by.id('Alert'))), 100, 'Alert is taking too long to appear on page');
-    // expect(this.alert().count()).toEqual(1);
-    // expect(this.alert().first().getText()).toEqual(message + '\n×');
   }
 
   // TODO improve this

@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome',
 
     chromeOptions: {
-      args: ['--disable-gpu', '--start-maximized', '--no-sandbox']
+      args: ['--headless', '--disable-gpu', '--start-maximized', '--no-sandbox']
     }
   },
   directConnect: true,

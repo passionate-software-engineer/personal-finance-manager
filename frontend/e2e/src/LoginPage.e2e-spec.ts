@@ -3,23 +3,16 @@ import {LoginPage} from './LoginPage.po';
 
 describe('Login page tests', () => {
   let page: LoginPage;
+  let navigationPage: NavigationPage;
 
-  beforeEach(async () => {
-    const navigationPage = new NavigationPage();
+  beforeAll(async () => {
+    navigationPage = new NavigationPage();
     navigationPage.navbarDropdown().click();
     navigationPage.navbarDropdownLogoutLink().click();
-  });
-
-  beforeEach(async () => {
     page = new LoginPage();
-    await page.navigateTo();
   });
 
   it('should display correct English descriptions on login page', () => {
-
-    // given
-    const navigationPage = new NavigationPage();
-    // when
 
     // then
     expect(navigationPage.pfmLink().getText()).toEqual('Personal Finance Manager');
