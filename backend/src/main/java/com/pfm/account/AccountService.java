@@ -1,6 +1,5 @@
 package com.pfm.account;
 
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -59,10 +58,6 @@ public class AccountService {
 
   public boolean isAccountNameAlreadyUsed(long userId, String name) {
     return accountRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
-  }
-
-  public void updateAccountBalance(long accountId, BigDecimal newBalance) {
-    accountRepository.updateAccountBalance(newBalance, accountId);
   }
 
   public boolean accountDoesNotExistByIdAndUserId(long accountId, long userId) {

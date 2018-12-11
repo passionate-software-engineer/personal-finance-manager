@@ -45,5 +45,4 @@ public final class Transaction {
   @JsonIgnore
   private Long userId;
 
-
 }
