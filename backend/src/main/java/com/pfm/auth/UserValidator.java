@@ -23,9 +23,14 @@ import org.springframework.util.StringUtils;
 @AllArgsConstructor
 public class UserValidator {
 
+  static final int PASSWORD_MAX_LENGTH = 255;
+  static final int FIRST_NAME_MAX_LENGTH = 255;
+  static final int LAST_NAME_MAX_LENGTH = 255;
+  static final int USERNAME_MAX_LENGTH = 255;
+
   private UserService userService;
 
-  public List<String> validateUser(User user) {
+  List<String> validateUser(User user) {
     List<String> validationResults = new ArrayList<>();
 
     if (user.getUsername() == null) {
@@ -40,8 +45,8 @@ public class UserValidator {
       validationResults.add(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST));
     }
 
-    if (user.getUsername() != null && user.getUsername().length() > 20 ) {
-      validationResults.add(getMessage(TOO_LONG_USERNAME));
+    if (user.getUsername() != null && user.getUsername().length() > USERNAME_MAX_LENGTH) {
+      validationResults.add(String.format(getMessage(TOO_LONG_USERNAME), USERNAME_MAX_LENGTH));
     }
 
     if (user.getPassword() == null) {
@@ -52,24 +57,24 @@ public class UserValidator {
       validationResults.add(getMessage(PASSWORD_CONTAINS_WHITSPACE));
     }
 
-    if (user.getPassword() != null && user.getPassword().length() > 20) {
-      validationResults.add(getMessage(TOO_LONG_PASSWORD));
+    if (user.getPassword() != null && user.getPassword().length() > PASSWORD_MAX_LENGTH) {
+      validationResults.add(String.format(getMessage(TOO_LONG_PASSWORD), PASSWORD_MAX_LENGTH));
     }
 
     if (user.getFirstName() == null || user.getFirstName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_FIRST_NAME));
     }
 
-    if (user.getFirstName() != null && user.getFirstName().length() > 20) {
-      validationResults.add(getMessage(TOO_LONG_FIRST_NAME));
+    if (user.getFirstName() != null && user.getFirstName().length() > FIRST_NAME_MAX_LENGTH) {
+      validationResults.add(String.format(getMessage(TOO_LONG_FIRST_NAME), FIRST_NAME_MAX_LENGTH));
     }
 
     if (user.getLastName() == null || user.getLastName().trim().equals("")) {
       validationResults.add(getMessage(EMPTY_LAST_NAME));
     }
 
-    if (user.getFirstName() != null && user.getLastName().length() > 20) {
-      validationResults.add(getMessage(TOO_LONG_LAST_NAME));
+    if (user.getFirstName() != null && user.getLastName().length() > LAST_NAME_MAX_LENGTH) {
+      validationResults.add(String.format(getMessage(TOO_LONG_LAST_NAME), LAST_NAME_MAX_LENGTH));
     }
 
     return validationResults;
