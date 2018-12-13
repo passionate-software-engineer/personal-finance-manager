@@ -1,4 +1,6 @@
-<button class="btn btn-primary" type="button" (click)="onRefreshHistory()">{{'button.refresh' | translate}}</button>
+<button class="btn btn-primary" type="button" (click)="onRefreshHistory()">{{'button.refresh' |
+  translate}}
+</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -6,7 +8,7 @@
 
 
     <!--Date-->
-    <th [class.active]="order === 'date'" (click)="setOrder('date')"  width="30%" >
+    <th [class.active]="order === 'date'" (click)="setOrder('date')" width="30%">
       {{'history.date' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
@@ -30,7 +32,16 @@
     <td>{{histor.date | date: "yyyy-MM-dd HH:mm"}}</td>
 
     <!--Entry-->
-    <td>{{histor.entry}}</td>
+    <td>
+      {{histor.type}} {{histor.object}}
+      <ul *ngFor="let entry of histor.entries">
+
+        <li> field name : {{entry.name}}</li>
+        <li> old value : {{entry.oldValue}}</li>
+        <li> new value : {{entry.newValue}}</li>
+
+      </ul>
+    </td>
 
   </tbody>
 </table>

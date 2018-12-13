@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.filter.FilterService;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CategoryValidator {
 
-  //TODO possible can simplify this
+  //ENHANCEMENT possible can simplify this L
 
   private CategoryService categoryService;
   private FilterService filterService;
@@ -41,8 +42,9 @@ public class CategoryValidator {
       checkForDuplicatedName(validationResults, category, userId);
     }
 
-    // TODO check category.getParentCategory().getId() != null
-    if (category.getParentCategory() != null && categoryService.categoryExistByIdAndUserId(category.getParentCategory().getId(), userId)
+    if (category.getParentCategory() != null
+        && category.getParentCategory().getId() != null
+        && categoryService.categoryExistByIdAndUserId(category.getParentCategory().getId(), userId)
         && !categoryService.canBeParentCategory(id, category.getParentCategory().getId(), userId)) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
@@ -65,7 +67,11 @@ public class CategoryValidator {
       validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
     }
 
-    if (category.getParentCategory() != null
+    if (category.getParentCategory() != null && category.getParentCategory().getId() == null) {
+      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY));
+    }
+
+    if (category.getParentCategory() != null && category.getParentCategory().getId() != null
         && !categoryService.idExist(category.getParentCategory().getId())) {
       validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST));
     }
@@ -91,5 +97,4 @@ public class CategoryValidator {
 
     return validationErrors;
   }
-
 }

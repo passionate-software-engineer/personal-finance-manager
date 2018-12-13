@@ -2,8 +2,8 @@
 
 # Script works correctly only on clean database - will fail if any entry already exists (e.g. account name)
 
-# TODO Use loops and arrays instead of copy pasting
-# TODO error handling
+# ENHANCEMENT Use loops and arrays instead of copy pasting
+# ENHANCEMENT error handling - stop on error
 
 # Add accounts
 ACCOUNT_ALIOR=$(curl -X POST "http://localhost:8088/accounts" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"balance\": 1438.89, \"name\": \"Alior Bank savings\"}")

@@ -19,6 +19,15 @@ public class CategoryService {
     return categoryRepository.findByIdAndUserId(id, userId);
   }
 
+  public Category getCategoryFromDbByIdAndUserId(long id, long userId) {
+    Optional<Category> categoryByIdAndUserId = getCategoryByIdAndUserId(id, userId);
+    if (!categoryByIdAndUserId.isPresent()) {
+      throw new IllegalStateException("CATEGORY with id : " + id + " does not exist in database");
+    }
+
+    return categoryByIdAndUserId.get();
+  }
+
   public List<Category> getCategories(long userId) {
     return categoryRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Category::getId))
@@ -45,7 +54,7 @@ public class CategoryService {
   public void updateCategory(long id, long userId, Category category) {
     Optional<Category> receivedCategory = getCategoryByIdAndUserId(id, userId);
     if (!receivedCategory.isPresent()) {
-      throw new IllegalStateException("Category with id : " + id + " does not exist in database");
+      throw new IllegalStateException("CATEGORY with id : " + id + " does not exist in database");
     }
 
     Category categoryToUpdate = receivedCategory.get();
@@ -56,7 +65,7 @@ public class CategoryService {
     } else {
       Optional<Category> parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId);
       if (!parentCategory.isPresent()) {
-        throw new IllegalStateException("Category with id : " + category.getParentCategory().getId()
+        throw new IllegalStateException("CATEGORY with id : " + category.getParentCategory().getId()
             + " does not exist in database");
       }
       categoryToUpdate.setParentCategory(parentCategory.get());
@@ -90,7 +99,7 @@ public class CategoryService {
       return true; // we cannot continue as parent category is null but we need it's id. No parent is trying to use this category as parent so it's ok
     }
 
-    // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare
+    // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare - good place to show measuring
     return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId(), userId);
   }
 

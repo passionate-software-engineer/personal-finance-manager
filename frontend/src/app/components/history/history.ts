@@ -1,6 +1,10 @@
+import {HistoryInfo} from './historyInfo';
+
 export class History {
   id: number;
   date: string;
-  entry: string;
+  type: string;
+  object: string;
+  entries: HistoryInfo[];
   editMode = false;
 }

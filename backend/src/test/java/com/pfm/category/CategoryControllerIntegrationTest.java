@@ -162,7 +162,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     categoryToUpdate.setName("Second Home");
 
     //when
-    callRestToUpdateCategory(homeCategoryId, categoryToCategoryRequest(categoryToUpdate), token);
+    callRestToUpdateCategory(homeCategoryId, convertCategoryToCategoryRequest(categoryToUpdate), token);
 
     //then
     categoryToUpdate.setId(homeCategoryId);
@@ -199,7 +199,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .header(HttpHeaders.AUTHORIZATION, token)
-            .content(json(categoryToCategoryRequest(categoryOil()))).contentType(JSON_CONTENT_TYPE))
+            .content(json(convertCategoryToCategoryRequest(categoryOil()))).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
 
@@ -208,7 +208,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    CategoryRequest categoryToUpdate = categoryToCategoryRequest(categoryCar());
+    CategoryRequest categoryToUpdate = convertCategoryToCategoryRequest(categoryCar());
     categoryToUpdate.setParentCategoryId(NOT_EXISTING_ID);
 
     //when
@@ -228,7 +228,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
-    CategoryRequest newCategoryContent = categoryToCategoryRequest(categoryCar());
+    CategoryRequest newCategoryContent = convertCategoryToCategoryRequest(categoryCar());
     newCategoryContent.setParentCategoryId(foodCategoryId);
 
     // when // TODO require space after comment start (checkstyle) :)
@@ -292,7 +292,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     List<Category> categories = callRestToGetAllCategories(token);
-    Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, categoryToCategoryRequest(categoryHome));
+    Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, convertCategoryToCategoryRequest(categoryHome));
     assertThat(categories.size(), is(equalTo(1)));
     assertFalse(categories.contains(deletedCategory));
   }

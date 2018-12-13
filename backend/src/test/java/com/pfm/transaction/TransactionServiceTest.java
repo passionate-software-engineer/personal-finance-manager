@@ -6,9 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.pfm.account.AccountService;
-import com.pfm.category.CategoryService;
-import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,39 +22,18 @@ public class TransactionServiceTest {
   @Mock
   private TransactionRepository transactionRepository;
 
-  @Mock
-  private AccountService accountService;
-
-  @Mock
-  private CategoryService categoryService;
-
   @InjectMocks
   private TransactionService transactionService;
 
   @Test
   public void shouldReturnExceptionCausedByIdDoesNotExistInDb() {
 
+    //given
+    when(transactionRepository.findByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
+
     //when
     Throwable exception = assertThrows(IllegalStateException.class, () -> transactionService.deleteTransaction(NOT_EXISTING_ID, MOCK_USER_ID));
     assertThat(exception.getMessage(), is(equalTo("Transaction with id: " + NOT_EXISTING_ID + " does not exist in database")));
-  }
-
-  @Test
-  public void shouldReturnExceptionCausedByAccountIdDoesNotExistInDb() {
-    //given
-    Transaction transaction = Transaction.builder()
-        .accountPriceEntries(Collections.singletonList(
-            AccountPriceEntry.builder().id(null).accountId(NOT_EXISTING_ID).build()
-        ))
-        .build();
-
-    when(transactionRepository.findByIdAndUserId(1L, MOCK_USER_ID)).thenReturn(Optional.of(transaction));
-    when(accountService.getAccountByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
-
-    //when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> transactionService.updateTransaction(1L, MOCK_USER_ID, transaction));
-
-    assertThat(exception.getMessage(), is(equalTo("Account with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }
 
 }

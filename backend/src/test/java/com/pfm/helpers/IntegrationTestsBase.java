@@ -120,6 +120,22 @@ public abstract class IntegrationTestsBase {
     return getAccountsFromResponse(response);
   }
 
+  protected void callRestToDeleteAccountById(long id, String token) throws Exception {
+    mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + id)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToUpdateAccount(long id, AccountRequest accountRequest, String token) throws Exception {
+    mockMvc
+        .perform(put(ACCOUNTS_SERVICE_PATH + "/" + id)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(accountRequest))
+            .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isOk());
+  }
+
   private List<Account> getAccountsFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Account.class));
@@ -131,13 +147,13 @@ public abstract class IntegrationTestsBase {
 
   //category
   protected long callRestToAddCategoryAndReturnId(Category category, String token) throws Exception {
-    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
 
   protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category, long parentCategoryId, String token)
       throws Exception {
-    CategoryRequest categoryRequest = categoryToCategoryRequest(category);
+    CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
     categoryRequest.setParentCategoryId(parentCategoryId);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
@@ -207,7 +223,7 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  protected CategoryRequest categoryToCategoryRequest(Category category) {
+  protected CategoryRequest convertCategoryToCategoryRequest(Category category) {
     return CategoryRequest.builder()
         .name(category.getName())
         .parentCategoryId(category.getParentCategory() == null ? null : category.getParentCategory().getId())
@@ -270,7 +286,15 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
-  protected void deleteTransactionById(long id, String token) throws Exception {
+  protected void callRestToUpdateTransacion(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(transactionRequest)))
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToDeleteTransactionById(long id, String token) throws Exception {
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());

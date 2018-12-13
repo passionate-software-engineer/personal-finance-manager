@@ -12,14 +12,15 @@ spring:
           lob:
             non_contextual_creation: true
 
-
+# TODO wrap log file for days
 logging:
   pattern:
     console: "%d [%15.15t] [%36X{Correlation-Id}] %-5p %-30.30c{3}  - %m%n"
   level:
     com.pfm: INFO
-    org.springframework.jdbc.core.StatementCreatorUtils: TRACE
-    #  TODO log values in hibernate logs
+    org.hibernate.type: TRACE
+    org.hibernate.SQL: DEBUG
+    org.springframework.transaction: DEBUG
 
 management:
   endpoints:

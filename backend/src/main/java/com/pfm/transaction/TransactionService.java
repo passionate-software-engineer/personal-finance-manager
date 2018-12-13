@@ -2,6 +2,7 @@ package com.pfm.transaction;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.history.HistoryEntryService;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +22,7 @@ public class TransactionService {
   private AccountPriceEntriesRepository accountPriceEntriesRepository;
   private TransactionRepository transactionRepository;
   private AccountService accountService;
+  private HistoryEntryService historyEntryService;
 
   public Optional<Transaction> getTransactionByIdAndUserId(long id, long userId) {
     return transactionRepository.findByIdAndUserId(id, userId);
@@ -72,6 +74,7 @@ public class TransactionService {
     for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
       subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
     }
+
     transactionRepository.deleteById(id);
   }
 
@@ -89,20 +92,23 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToAdd, BigDecimal::subtract);
   }
 
-  // TODO history - account state updated
   private void addAmountToAccount(long accountId, long userId, BigDecimal amountToSubtract) {
     updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add);
   }
 
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
-    Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
+    Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
 
-    if (!account.isPresent()) {
-      throw new IllegalStateException("Account with id: " + accountId + " does not exist in database");
-    }
+    BigDecimal newBalance = operation.apply(account.getBalance(), amount);
 
-    BigDecimal newBalance = operation.apply(account.get().getBalance(), amount);
-    accountService.updateAccountBalance(accountId, newBalance);
+    Account accountWithNewBalance = Account.builder()
+        .name(account.getName())
+        .balance(newBalance)
+        .build();
+
+    historyEntryService.addHistoryEntryOnUpdate(account, accountWithNewBalance, userId);
+
+    accountService.updateAccount(accountId, userId, accountWithNewBalance);
   }
 
   public boolean transactionExistByAccountId(long accountId) {
@@ -113,7 +119,4 @@ public class TransactionService {
     return transactionRepository.existsByCategoryId(categoryId);
   }
 
-  public boolean transactionExistByTransactionIdAndUserId(long transactionId, long userId) {
-    return transactionRepository.existsByIdAndUserId(transactionId, userId);
-  }
 }

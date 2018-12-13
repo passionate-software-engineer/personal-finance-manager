@@ -14,8 +14,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryAnimals;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestFilterProvider.convertAccountIdsToList;
-import static com.pfm.helpers.TestFilterProvider.convertCategoryIdsToList;
+import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterExpensesOver1000;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
@@ -51,9 +50,6 @@ import org.springframework.http.HttpHeaders;
 
 public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
-  //TODO we should unify approach with final keyword before variables couse checkstyle force us to use it some circumstances.
-  //It looks a bit stragne to use it sometimes and sometimes not.
-
   @Test
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilter() throws Exception {
 
@@ -68,8 +64,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //when
     FilterRequest filterToAdd = convertFilterToFilterRequest(filterExpensesOver1000());
-    filterToAdd.setCategoryIds(convertCategoryIdsToList(marianCategoryFoodId));
-    filterToAdd.setAccountIds(convertAccountIdsToList(marianAccountMbankId));
+    filterToAdd.setCategoryIds(convertIdsToList(marianCategoryFoodId));
+    filterToAdd.setAccountIds(convertIdsToList(marianAccountMbankId));
 
     mockMvc
         .perform(post(FILTERS_SERVICE_PATH)
@@ -98,8 +94,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //when
     FilterRequest updatedFilter = convertFilterToFilterRequest(filterExpensesOver1000());
-    updatedFilter.setAccountIds(convertAccountIdsToList(zdzislawAccountIdeaId));
-    updatedFilter.setCategoryIds(convertCategoryIdsToList(zdzislawCategoryHomeId));
+    updatedFilter.setAccountIds(convertIdsToList(zdzislawAccountIdeaId));
+    updatedFilter.setCategoryIds(convertIdsToList(zdzislawCategoryHomeId));
 
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + marianOver1000ExpensesFilter)
@@ -413,8 +409,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         marianCategoryCarId, marianToken);
 
     Filter filterExpensesOver1000ToAdd = filterExpensesOver1000();
-    filterExpensesOver1000ToAdd.setCategoryIds(convertCategoryIdsToList(marianCategoryFoodId, marianCategoryCarId));
-    filterExpensesOver1000ToAdd.setAccountIds(convertAccountIdsToList(marianAccountMilleniumId, marianAccountMbankId));
+    filterExpensesOver1000ToAdd.setCategoryIds(convertIdsToList(marianCategoryFoodId, marianCategoryCarId));
+    filterExpensesOver1000ToAdd.setAccountIds(convertIdsToList(marianAccountMilleniumId, marianAccountMbankId));
     final long marianExpensesOver1000FilterId = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000ToAdd, marianToken);
 
     //zdzislaw
@@ -429,8 +425,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         zdzislawCategoryHomeId, zdzislawToken);
 
     Filter filterHomeExpensesToAdd = filterHomeExpensesUpTo200();
-    filterHomeExpensesToAdd.setAccountIds(convertAccountIdsToList(zdzislawAccountIngId, zdzislawAccountIdeaId));
-    filterHomeExpensesToAdd.setCategoryIds(convertCategoryIdsToList(zdzislawCategoryHomeId));
+    filterHomeExpensesToAdd.setAccountIds(convertIdsToList(zdzislawAccountIngId, zdzislawAccountIdeaId));
+    filterHomeExpensesToAdd.setCategoryIds(convertIdsToList(zdzislawCategoryHomeId));
     final long zdzislawHomeExpensesFilterId = callRestServiceToAddFilterAndReturnId(filterHomeExpensesToAdd, zdzislawToken);
 
     //then
@@ -571,13 +567,13 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, marianToken)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(categoryToCategoryRequest(category))))
+        .content(json(convertCategoryToCategoryRequest(category))))
         .andExpect(status().isOk());
 
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(categoryToCategoryRequest(category))))
+        .content(json(convertCategoryToCategoryRequest(category))))
         .andExpect(status().isOk());
   }
 }

@@ -3,7 +3,7 @@ import {LoginPage} from './LoginPage.po';
 import {RegisterPage} from './RegisterPage.po';
 import {v4 as uuid} from 'uuid';
 
-describe('workspace-project App', () => {
+describe('Accounts page tests', () => {
   let page: AccountsPage;
 
   beforeAll(async () => {
@@ -19,22 +19,16 @@ describe('workspace-project App', () => {
   beforeEach(async () => {
     page = new AccountsPage();
     await page.navigateTo();
-
     await page.removeAllAccounts();
   });
 
   it('should display correct English descriptions', () => {
-    // given
-
-    // when
 
     // then
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
     expect(page.addAccountButton().getText()).toEqual('Add Account');
     expect(page.nameHeader().getText()).toEqual('Name ▼');
     expect(page.balanceHeader().getText()).toEqual('Balance');
-
-    // TODO - add all remaining elements (including sort order, options etc)
   });
 
   it('should add account', () => {

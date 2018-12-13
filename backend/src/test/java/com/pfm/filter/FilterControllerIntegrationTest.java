@@ -8,8 +8,7 @@ import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
-import static com.pfm.helpers.TestFilterProvider.convertAccountIdsToList;
-import static com.pfm.helpers.TestFilterProvider.convertCategoryIdsToList;
+import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
@@ -52,8 +51,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     Long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
-    homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
-    homeExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
+    homeExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
+    homeExpensesFilterToAdd.setAccountIds(convertIdsToList(accountId));
 
     //when
     Long filterId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd, token);
@@ -73,8 +72,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
-    carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountId));
-    carExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryId));
+    carExpensesFilterToAdd.setAccountIds(convertIdsToList(accountId));
+    carExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
     long filterId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd, token);
 
     //when
@@ -96,17 +95,17 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
-    homeExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryHomeId));
+    homeExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryHomeId));
     final long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd, token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
-    carExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountMbankId, accountJacekId));
-    carExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryCarId));
+    carExpensesFilterToAdd.setAccountIds(convertIdsToList(accountMbankId, accountJacekId));
+    carExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryCarId));
     final long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd, token);
 
     FilterRequest foodExpensesFilterToAdd = convertFilterToFilterRequest(filterFoodExpenses());
-    foodExpensesFilterToAdd.setAccountIds(convertAccountIdsToList(accountJacekId));
-    foodExpensesFilterToAdd.setCategoryIds(convertCategoryIdsToList(categoryFoodId));
+    foodExpensesFilterToAdd.setAccountIds(convertIdsToList(accountJacekId));
+    foodExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryFoodId));
     long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(foodExpensesFilterToAdd, token);
 
     //when
@@ -167,8 +166,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
         .description("Car")
         .dateFrom(LocalDate.of(2017, 1, 1))
         .dateTo(LocalDate.of(2017, 1, 31))
-        .categoryIds(convertCategoryIdsToList(categoryId))
-        .accountIds(convertAccountIdsToList(accountId))
+        .categoryIds(convertIdsToList(categoryId))
+        .accountIds(convertIdsToList(accountId))
         .build();
 
     //when
@@ -218,8 +217,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
-        .accountIds(convertAccountIdsToList(1L))
-        .categoryIds(convertCategoryIdsToList(1L))
+        .accountIds(convertIdsToList(1L))
+        .categoryIds(convertIdsToList(1L))
         .dateFrom(LocalDate.of(2018, 1, 1))
         .dateTo(LocalDate.of(2017, 1, 1))
         .priceFrom(convertDoubleToBigDecimal(100))
@@ -260,8 +259,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     final long filterId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
     FilterRequest filterRequestWithValidationErrors = new FilterRequest();
     filterRequestWithValidationErrors.setName(" ");
-    filterRequestWithValidationErrors.setAccountIds(convertAccountIdsToList(1L));
-    filterRequestWithValidationErrors.setCategoryIds(convertCategoryIdsToList(1L));
+    filterRequestWithValidationErrors.setAccountIds(convertIdsToList(1L));
+    filterRequestWithValidationErrors.setCategoryIds(convertIdsToList(1L));
     filterRequestWithValidationErrors.setDateFrom(LocalDate.of(2018, 1, 1));
     filterRequestWithValidationErrors.setDateTo(LocalDate.of(2017, 1, 1));
     filterRequestWithValidationErrors.setPriceFrom(convertDoubleToBigDecimal(100));
@@ -284,7 +283,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
 
     Filter filter = filterCarExpenses();
-    filter.setAccountIds(convertAccountIdsToList(jacekAccountId));
+    filter.setAccountIds(convertIdsToList(jacekAccountId));
     callRestServiceToAddFilterAndReturnId(filter, token);
 
     mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + jacekAccountId)
@@ -301,7 +300,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
     Filter filter = filterCarExpenses();
-    filter.setCategoryIds(convertCategoryIdsToList(carCategoryId));
+    filter.setCategoryIds(convertIdsToList(carCategoryId));
     callRestServiceToAddFilterAndReturnId(filter, token);
 
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)

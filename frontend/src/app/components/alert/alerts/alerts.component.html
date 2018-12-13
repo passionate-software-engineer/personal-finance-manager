@@ -1,5 +1,5 @@
-<div id="Alert" *ngFor="let alert of alerts" class="{{ cssClass(alert) }} alert-dismissable">
-  {{alert.message}} <!-- TODO group alerts into single group if are of the same type (color) so user don't get multiple popups -->
+<div id="alerts" *ngFor="let alert of alerts" class="{{ cssClass(alert) }} alert-dismissable">
+  <p class="alert-list">{{alert.message}} </p><!-- TODO group alerts into single group if are of the same type (color) so user don't get multiple popups -->
   <a class="close" (click)="removeAlert(alert)">&times;</a>
 </div>
 

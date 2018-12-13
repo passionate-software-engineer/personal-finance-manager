@@ -7,6 +7,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,7 @@ public class AccountController implements AccountApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> addAccount(@RequestBody AccountRequest accountRequest) {
     long userId = userProvider.getCurrentUserId();
 
@@ -63,11 +65,12 @@ public class AccountController implements AccountApi {
 
     Account createdAccount = accountService.addAccount(userId, account);
     log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
-    historyEntryService.addEntryOnAdd(createdAccount, userId);
+    historyEntryService.addHistoryEntryOnAdd(createdAccount, userId);
     return ResponseEntity.ok(createdAccount.getId());
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest) {
     long userId = userProvider.getCurrentUserId();
 
@@ -86,8 +89,8 @@ public class AccountController implements AccountApi {
     }
 
     Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
-    historyEntryService.addEntryOnUpdate(accountToUpdate, account, userId);
 
+    historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);
     accountService.updateAccount(accountId, userId, account);
 
     log.info("Account with id {} was successfully updated", accountId);
@@ -96,6 +99,7 @@ public class AccountController implements AccountApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> deleteAccount(@PathVariable long accountId) {
     long userId = userProvider.getCurrentUserId();
 
@@ -111,10 +115,10 @@ public class AccountController implements AccountApi {
     }
 
     Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    historyEntryService.addHistoryEntryOnDelete(account, userId);
     log.info("Attempting to delete account with id {}", accountId);
     accountService.deleteAccount(accountId);
 
-    historyEntryService.addEntryOnDelete(account, userId);
     log.info("Account with id {} was deleted successfully", accountId);
 
     return ResponseEntity.ok().build();

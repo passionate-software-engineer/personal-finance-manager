@@ -21,6 +21,7 @@ public class MessagesProvider {
   public static final String CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS = "categoryValidator.categoryWithProvidedNameAlreadyExists";
   public static final String CATEGORY_IS_USED_IN_TRANSACTION = "categoryValidator.categoryIsUsedInTransaction";
   public static final String CATEGORY_IS_USED_IN_FILTER = "categoryValidator.categoryIsUsedInFilter";
+  public static final String PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY = "categoryValidator.parentCategoryIdIsEmpty";
 
   public static final String EMPTY_TRANSACTION_NAME = "transactionValidator.emptyTransactionName";
   public static final String EMPTY_TRANSACTION_CATEGORY = "transactionValidator.emptyTransactionCategory";
@@ -45,6 +46,8 @@ public class MessagesProvider {
   public static final String USERNAME_CONTAINS_WHITSPACE = "userValidator.usernameContainsWhitespaces";
   public static final String PASSWORD_CONTAINS_WHITSPACE = "userValidator.passwordContainsWhitespaces";
   public static final String USERNAME_OR_PASSWORD_IS_INCORRECT = "userController.usernameOrPassowrdIsIncorrect";
+
+  public static final String MAIN_CATEGORY = "historyInfoProvider.mainCategory";
 
   public static final String INTERNAL_ERROR = "internalError";
   public static final String IMPORT_NOT_POSSIBLE = "importValidator.importNotPossibleBecauseOfExistingData";

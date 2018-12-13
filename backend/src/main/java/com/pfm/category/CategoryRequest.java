@@ -17,6 +17,6 @@ public class CategoryRequest {
   @ApiModelProperty(value = "Parent category id", example = "1")
   private Long parentCategoryId;
 
-  @ApiModelProperty(value = "Category name", required = true, example = "Eating out")
+  @ApiModelProperty(value = "CATEGORY name", required = true, example = "Eating out")
   private String name;
 }

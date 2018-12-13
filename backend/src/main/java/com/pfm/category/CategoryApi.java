@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("categories")
 @CrossOrigin
-@Api(value = "Category", description = "Controller used to list / add / update / delete categories.")
+@Api(value = "CATEGORY", description = "Controller used to list / add / update / delete categories.")
 public interface CategoryApi {
 
   @ApiOperation(value = "Find category by id", response = Category.class, authorizations = {@Authorization(value = "Bearer")})

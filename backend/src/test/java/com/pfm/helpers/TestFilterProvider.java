@@ -17,12 +17,25 @@ public class TestFilterProvider {
 
   public static Filter filterFoodExpenses() {
     return Filter.builder()
-        .name("Food expenses")
+        .name("Food")
         .dateFrom(DATE_OF_1ST_MARCH_2018)
         .dateTo(DATE_OF_31ST_MARCH_2018)
         .priceFrom(convertDoubleToBigDecimal(100))
         .priceTo(convertDoubleToBigDecimal(300))
-        .description("Food")
+        .description("Food expenses")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .build();
+  }
+
+  public static Filter filterFoodExpensesJuly() {
+    return Filter.builder()
+        .name("Food july")
+        .dateFrom(LocalDate.now().minusDays(10))
+        .dateTo(LocalDate.now())
+        .priceFrom(convertDoubleToBigDecimal(110))
+        .priceTo(convertDoubleToBigDecimal(330))
+        .description("Food expenses july")
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
         .build();
@@ -56,11 +69,15 @@ public class TestFilterProvider {
         .build();
   }
 
-  public static List<Long> convertCategoryIdsToList(Long... categoryIds) {
-    return Arrays.asList(categoryIds);
+  public static Filter filterWithNameOnly() {
+    return Filter.builder()
+        .name("Food")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .build();
   }
 
-  public static List<Long> convertAccountIdsToList(Long... accountIds) {
-    return Arrays.asList(accountIds);
+  public static List<Long> convertIdsToList(Long... ids) {
+    return Arrays.asList(ids);
   }
 }

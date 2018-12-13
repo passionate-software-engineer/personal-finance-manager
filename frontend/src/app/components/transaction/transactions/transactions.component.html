@@ -5,17 +5,17 @@
     </option>
   </select>
   <input class="form-control" type="text" [(ngModel)]="selectedFilter.name"/>
-  <button class="btn btn-success" (click)="addFilter()">{{'transaction.save' | translate}}</button>
-  <button class="btn btn-warning" (click)="updateFilter()">{{'transaction.update' | translate}}</button>
-  <button class="btn btn-primary" (click)="resetFilter()">{{'transaction.reset' | translate}}</button>
-  <button class="btn btn-danger" (click)="deleteFilter()">{{'transaction.delete' | translate}}</button>
+  <button id="AddFilterBtn" class="btn btn-success" (click)="addFilter()">{{'transaction.save' | translate}}</button>
+  <button id="UpdateFilterBtn" class="btn btn-warning" (click)="updateFilter()">{{'transaction.update' | translate}}</button>
+  <button id="ResetFilterBtn" class="btn btn-primary" (click)="resetFilter()">{{'transaction.reset' | translate}}</button>
+  <button id="DeleteFilterBtn" class="btn btn-danger" (click)="deleteFilter()">{{'transaction.delete' | translate}}</button>
 </div>
 
 <div class="float-left">
-  <button class="btn btn-success" type="button" (click)="addingMode = !addingMode">
+  <button id="AddTransactionBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
     {{'transaction.addTransaction' | translate}}
   </button>
-  <button class="btn btn-primary" type="button" (click)="getTransactions()">{{'button.refresh' | translate}}</button>
+  <button id="RefreshTransactionsBtn" class="btn btn-primary" type="button" (click)="getTransactions()">{{'button.refresh' | translate}}</button>
 </div>
 
 <table class="table table-bordered table-striped table-hover">
@@ -23,35 +23,35 @@
   <tr>
 
     <!--Date-->
-    <th class="width: 25%" [class.active]="order === 'date'" (click)="setOrder('date')">
+    <th id="DateHeader" class="width: 25%" [class.active]="order === 'date'" (click)="setOrder('date')">
       {{'transaction.date' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Description-->
-    <th [class.active]="order === 'description'" (click)="setOrder('description')">
+    <th id="NameHeader" [class.active]="order === 'description'" (click)="setOrder('description')">
       {{'transaction.description' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Price-->
-    <th [class.active]="order === 'price'" (click)="setOrder('price')">
+    <th id="PriceHeader" [class.active]="order === 'price'" (click)="setOrder('price')">
       {{ 'transaction.price' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Account-->
-    <th [class.active]="order === 'account.name'" (click)="setOrder('account.name')">
+    <th id="AccountHeader" [class.active]="order === 'account.name'" (click)="setOrder('account.name')">
       {{'transaction.account' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
 
     <!--Category-->
-    <th [class.active]="order === 'category.name'" (click)="setOrder('category.name')">
+    <th id="CategoryHeader" [class.active]="order === 'category.name'" (click)="setOrder('category.name')">
       {{'transaction.category' | translate}}
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
@@ -108,30 +108,30 @@
     </td>
   </tr>
 
-  <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
+  <tr id="TransactionRow" *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
 
     <!--Date-->
-    <td *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
+    <td id="DateReadOnly" *ngIf="!transaction.editMode">{{transaction.date | date:'dd/MM/yyyy'}}</td>
     <td *ngIf="transaction.editMode">
-      <input class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="transaction.editedTransaction.date">
+      <input id="EditTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="transaction.editedTransaction.date">
     </td>
 
     <!--Description-->
-    <td *ngIf="!transaction.editMode">{{transaction.description}}</td>
+    <td id="DescriptionReadOnly" *ngIf="!transaction.editMode">{{transaction.description}}</td>
     <td *ngIf="transaction.editMode">
-      <input class="form-control" type="text" [(ngModel)]="transaction.editedTransaction.description">
+      <input id="EditTransactionDescriptionInput" class="form-control" type="text" [(ngModel)]="transaction.editedTransaction.description">
     </td>
 
     <!--Price-->
-    <td class="right aligned" *ngIf="!transaction.editMode"><p *ngFor="let entry of transaction.accountPriceEntries">{{entry.price | number:'0.2'}}</p></td>
+    <td class="right aligned" *ngIf="!transaction.editMode"><p id="PricesReadOnly" *ngFor="let entry of transaction.accountPriceEntries">{{entry.price | number:'0.2'}}</p></td>
     <td *ngIf="transaction.editMode">
-      <input *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
+      <input id="EditTransactionPriceInput" *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
     </td>
 
     <!--Account-->
-    <td *ngIf="!transaction.editMode"><p *ngFor="let entry of transaction.accountPriceEntries">{{entry.account.name}}</p></td>
+    <td *ngIf="!transaction.editMode"><p id="AccountsReadOnly" *ngFor="let entry of transaction.accountPriceEntries">{{entry.account.name}}</p></td>
     <td *ngIf="transaction.editMode">
-      <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
+      <select id="EditTransactionAccountSelects" *ngFor="let entry of transaction.editedTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
         </option>
@@ -139,8 +139,8 @@
     </td>
 
     <!--Category-->
-    <td *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
-    <td *ngIf="transaction.editMode">
+    <td id="CategoryReadOnly" *ngIf="!transaction.editMode">{{transaction.category.name}}</td>
+    <td id="EditTransactionCategorySelect" *ngIf="transaction.editMode">
       <select class="form-control" [(ngModel)]="transaction.editedTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
@@ -149,21 +149,21 @@
     </td>
 
     <td *ngIf="transaction.editMode">
-      <button class="btn btn-success" (click)="updateTransaction(transaction)">{{'button.save' | translate}}</button>
+      <button id="EditTransactionSaveBtn" class="btn btn-success" (click)="updateTransaction(transaction)">{{'button.save' | translate}}</button>
       <button class="btn btn-danger" (click)="transaction.editMode=false">{{'button.exit' | translate}}</button>
     </td>
 
     <td *ngIf="!transaction.editMode">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">{{'button.options' | translate}}
+        <button id="OptionsBtn" class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">{{'button.options' | translate}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="btn btn-warning btn-block" (click)="onShowEditMode(transaction)">{{'button.edit' | translate}}</button>
+            <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(transaction)">{{'button.edit' | translate}}</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-block" (click)="deleteTransaction(transaction)">{{'button.delete' | translate}}</button>
+            <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteTransaction(transaction)">{{'button.delete' | translate}}</button>
           </li>
         </ul>
       </div>
@@ -174,23 +174,23 @@
   <tr *ngIf="addingMode">
     <!--Date-->
     <td>
-      <input class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="newTransaction.date">
+      <input id="NewTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="newTransaction.date">
     </td>
 
     <!--Description-->
     <td>
-      <input class="form-control" type="text" [(ngModel)]="newTransaction.description">
+      <input id="NewTransactionDescriptionInput" class="form-control" type="text" [(ngModel)]="newTransaction.description">
     </td>
 
     <!--Price-->
     <td>
-      <input *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
+      <input id="NewTransactionPriceInput" *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control" type="number" [(ngModel)]="entry.price">
       <!--<input type="number" min="0.00" max="10000.00" step="0.01" />-->
     </td>
 
     <!--Account-->
     <td>
-      <select *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
+      <select id="newTransactionAccountSelects" *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control" [(ngModel)]="entry.account">
         <option *ngFor="let account of accounts" [ngValue]="account">
           {{account.name}}
         </option>
@@ -199,7 +199,7 @@
 
     <!--Category-->
     <td>
-      <select class="form-control" [(ngModel)]="newTransaction.category">
+      <select id="newTransactionCategorySelect" class="form-control" [(ngModel)]="newTransaction.category">
         <option *ngFor="let category of categories" [ngValue]="category">
           {{category.name}}
         </option>
@@ -207,7 +207,7 @@
     </td>
 
     <td>
-      <button class="btn btn-success" (click)="addTransaction()">{{'button.save' | translate}}</button>
+      <button id="newTransactionSaveButton" class="btn btn-success" (click)="addTransaction()">{{'button.save' | translate}}</button>
       <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
   </tr>

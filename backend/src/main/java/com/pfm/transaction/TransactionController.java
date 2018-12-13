@@ -7,6 +7,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
@@ -62,16 +64,18 @@ public class TransactionController implements TransactionApi {
 
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
-    historyEntryService.addEntryOnAdd(createdTransaction, userId);
+    historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
 
     return ResponseEntity.ok(createdTransaction.getId());
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!transactionService.transactionExistByTransactionIdAndUserId(transactionId, userId)) {
+    Optional<Transaction> transactionByIdAndUserId = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    if (!transactionByIdAndUserId.isPresent()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
@@ -85,8 +89,8 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
-    historyEntryService.addEntryOnUpdate(transactionToUpdate, transaction, userId);
 
+    historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, transaction, userId);
     transactionService.updateTransaction(transactionId, userId, transaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
@@ -94,6 +98,7 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
+  @Transactional
   public ResponseEntity<?> deleteTransaction(@PathVariable long transactionId) {
     long userId = userProvider.getCurrentUserId();
 
@@ -104,7 +109,7 @@ public class TransactionController implements TransactionApi {
     Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
-    historyEntryService.addEntryOnDelete(transactionToDelete, userId);
+    historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
 
     log.info("Transaction with id {} was deleted successfully", transactionId);
     return ResponseEntity.ok().build();
