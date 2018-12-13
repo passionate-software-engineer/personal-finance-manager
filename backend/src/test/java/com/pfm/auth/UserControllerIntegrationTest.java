@@ -5,6 +5,10 @@ import static com.pfm.config.MessagesProvider.EMPTY_LAST_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_PASSWORD;
 import static com.pfm.config.MessagesProvider.EMPTY_USERNAME;
 import static com.pfm.config.MessagesProvider.PASSWORD_CONTAINS_WHITSPACE;
+import static com.pfm.config.MessagesProvider.TOO_LONG_FIRST_NAME;
+import static com.pfm.config.MessagesProvider.TOO_LONG_LAST_NAME;
+import static com.pfm.config.MessagesProvider.TOO_LONG_PASSWORD;
+import static com.pfm.config.MessagesProvider.TOO_LONG_USERNAME;
 import static com.pfm.config.MessagesProvider.USERNAME_CONTAINS_WHITSPACE;
 import static com.pfm.config.MessagesProvider.USERNAME_OR_PASSWORD_IS_INCORRECT;
 import static com.pfm.config.MessagesProvider.USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST;
@@ -163,6 +167,47 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))))
         .andExpect(jsonPath("$[2]", is(getMessage(EMPTY_FIRST_NAME))))
         .andExpect(jsonPath("$[3]", is(getMessage(EMPTY_LAST_NAME))));
+  }
+
+  @Test
+  public void shouldReturnErrorsCausedByTooLongUserPasswordUsernameFirstNameLastName() throws Exception {
+
+    //given
+    User user = User.builder()
+        .firstName("A".repeat(UserValidator.FIRST_NAME_MAX_LENGTH + 1))
+        .lastName("B".repeat(UserValidator.LAST_NAME_MAX_LENGTH + 1))
+        .password("C".repeat(UserValidator.PASSWORD_MAX_LENGTH + 1))
+        .username("D".repeat(UserValidator.USERNAME_MAX_LENGTH + 1))
+        .build();
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(user)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(4)))
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(TOO_LONG_USERNAME), UserValidator.USERNAME_MAX_LENGTH))))
+        .andExpect(jsonPath("$[1]", is(String.format(getMessage(TOO_LONG_PASSWORD), UserValidator.PASSWORD_MAX_LENGTH))))
+        .andExpect(jsonPath("$[2]", is(String.format(getMessage(TOO_LONG_FIRST_NAME), UserValidator.FIRST_NAME_MAX_LENGTH))))
+        .andExpect(jsonPath("$[3]", is(String.format(getMessage(TOO_LONG_LAST_NAME), UserValidator.LAST_NAME_MAX_LENGTH))));
+  }
+
+  @Test
+  public void shouldRegisterUserCorrectlyWithMaxAllowedPasswordUsernameFirstNameLastNameLength() throws Exception {
+
+    //given
+    User user = User.builder()
+        .firstName("A".repeat(UserValidator.FIRST_NAME_MAX_LENGTH))
+        .lastName("B".repeat(UserValidator.LAST_NAME_MAX_LENGTH))
+        .password("C".repeat(UserValidator.PASSWORD_MAX_LENGTH))
+        .username("D".repeat(UserValidator.USERNAME_MAX_LENGTH))
+        .build();
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(user)))
+        .andExpect(status().isOk());
   }
 
   @ParameterizedTest
