@@ -41,6 +41,12 @@ export class HealthCheckTask {
 
           const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
           if (tokenExpirationTime != null) {
+
+            const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
+            if (expireTimeInSeconds < 90) {
+              this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
+            }
+
             if (new Date(tokenExpirationTime) < new Date()) {
               this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
               this.authenticationService.logout();
@@ -52,6 +58,26 @@ export class HealthCheckTask {
       });
     });
 
+  }
+
+  private promptForPasswordAndTryToExtendSession(expireTimeInSeconds) {
+    const password = prompt('Your session will expire in ' + expireTimeInSeconds
+      + ' seconds, please enter a password to extend it.', '');
+    if (password != null) {
+      const username = this.authenticationService.getLoggedInUser().username;
+      this.authenticationService.login(username, password)
+        .subscribe(
+          data => {
+            const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
+            if (tokenExpirationTime != null) {
+              const expireTimeInMinutes = Math.round((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
+              alert('Your session was extended for next ' + expireTimeInMinutes + ' minutes, thank you.');
+            }
+          },
+          error => {
+            alert('Provided credentials were invalid, please try again on next prompt.');
+          });
+    }
   }
 
   private stopHealthCheckTask(): void {
