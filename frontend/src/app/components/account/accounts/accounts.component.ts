@@ -5,6 +5,8 @@ import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
+import {CurrencyService} from '../currency-service/currency.service';
+import {Currency} from '../currency';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -16,22 +18,36 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 
 export class AccountsComponent extends Sortable implements OnInit {
+  supportedCurrencies: Currency[];
   accounts: Account[] = [];
   addingMode = false;
   newAccount: Account = new Account();
 
-  constructor(private accountService: AccountService, private alertService: AlertsService, private translate: TranslateService) {
+  constructor(
+    private accountService: AccountService,
+    private currencyService: CurrencyService,
+    private alertService: AlertsService,
+    private translate: TranslateService) {
     super('name');
   }
 
   ngOnInit() {
     this.getAccounts();
+    this.getCurrencies(); // TODO - call in parallel
   }
 
   getAccounts(): void {
     this.accountService.getAccounts()
       .subscribe(accounts => {
         this.accounts = accounts;
+      });
+  }
+
+  getCurrencies(): void {
+    this.currencyService.getCurrencies()
+      .subscribe(currencies => {
+        this.supportedCurrencies = currencies;
+        this.newAccount.currency = this.supportedCurrencies[0];
       });
   }
 
@@ -53,6 +69,14 @@ export class AccountsComponent extends Sortable implements OnInit {
     account.editedAccount = new Account();
     account.editedAccount.name = account.name;
     account.editedAccount.balance = account.balance;
+
+    // need to set exactly same object
+    for (const currency of this.supportedCurrencies) {
+      if (currency.name === account.currency.name) {
+        account.editedAccount.currency = currency;
+        break;
+      }
+    }
   }
 
   onEditAccount(account: Account) {
@@ -63,6 +87,8 @@ export class AccountsComponent extends Sortable implements OnInit {
     editedAccount.id = account.id;
     editedAccount.name = account.editedAccount.name;
     editedAccount.balance = account.editedAccount.balance;
+    editedAccount.currency = account.editedAccount.currency;
+
     this.accountService.editAccount(editedAccount)
       .subscribe(() => {
         this.alertService.success(this.translate.instant('message.accountEdited'));
@@ -85,6 +111,7 @@ export class AccountsComponent extends Sortable implements OnInit {
         this.accounts.push(this.newAccount);
         this.addingMode = false;
         this.newAccount = new Account();
+        this.newAccount.currency = this.supportedCurrencies[0];
       });
   }
 
@@ -147,9 +174,10 @@ export class AccountsComponent extends Sortable implements OnInit {
     let sum = 0;
 
     for (let i = 0; i < this.accounts.length; ++i) {
-      sum += +this.accounts[i].balance;
+      sum += +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
     }
 
     return sum;
   }
+
 }

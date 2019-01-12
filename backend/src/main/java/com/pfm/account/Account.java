@@ -1,13 +1,16 @@
 package com.pfm.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pfm.currency.Currency;
 import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +35,10 @@ public final class Account {
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   @HistoryField
   private BigDecimal balance;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @ApiModelProperty(value = "Account's currency", required = true, example = "USD")
+  private Currency currency;
 
   @JsonIgnore
   private Long userId;

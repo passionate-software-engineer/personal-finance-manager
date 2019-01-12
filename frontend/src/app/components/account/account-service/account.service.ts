@@ -18,7 +18,8 @@ export class AccountService extends ServiceBase {
   private static accountToAccountRequest(account: Account) {
     return {
       name: account.name,
-      balance: account.balance
+      balance: account.balance,
+      currencyId: account.currency.id
     };
   }
 

@@ -48,6 +48,7 @@ public class AccountService {
     Account accountToUpdate = accountFromDb.get();
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
+    accountToUpdate.setCurrency(account.getCurrency());
 
     accountRepository.save(accountToUpdate);
   }

@@ -1,6 +1,7 @@
 package com.pfm.account;
 
 import com.pfm.auth.UserProvider;
+import com.pfm.currency.CurrencyService;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class AccountController implements AccountApi {
   private AccountService accountService;
   private AccountValidator accountValidator;
   private HistoryEntryService historyEntryService;
+  private CurrencyService currencyService;
   private UserProvider userProvider;
 
   @Override
@@ -55,7 +57,7 @@ public class AccountController implements AccountApi {
 
     log.info("Saving account {} to the database", accountRequest.getName());
 
-    Account account = convertAccountRequestToAccount(accountRequest);
+    Account account = convertAccountRequestToAccount(accountRequest, userId);
 
     List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
     if (!validationResult.isEmpty()) {
@@ -78,7 +80,7 @@ public class AccountController implements AccountApi {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
-    Account account = convertAccountRequestToAccount(accountRequest);
+    Account account = convertAccountRequestToAccount(accountRequest, userId);
 
     log.info("Updating account with id {}", accountId);
     List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
@@ -124,10 +126,11 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  private Account convertAccountRequestToAccount(AccountRequest accountRequest) {
+  private Account convertAccountRequestToAccount(AccountRequest accountRequest, long userId) {
     return Account.builder()
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
+        .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
         .build();
   }
 }
