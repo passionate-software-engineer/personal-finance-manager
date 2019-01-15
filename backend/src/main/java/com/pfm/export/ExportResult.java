@@ -85,6 +85,8 @@ final class ExportResult {
 
     private BigDecimal balance;
 
+    private String currency;
+
   }
 
   @Data

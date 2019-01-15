@@ -10,8 +10,8 @@ public class UserInitializationService {
 
   private CurrencyService currencyService;
 
-  public void initializeUser(User user) {
-    currencyService.addDefaultCurrencies(user.getId());
+  public void initializeUser(long userId) {
+    currencyService.addDefaultCurrencies(userId);
   }
 
 }

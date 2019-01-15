@@ -4,6 +4,8 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.currency.Currency;
+import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,7 @@ public class ImportService {
   private TransactionService transactionService;
   private AccountService accountService;
   private CategoryService categoryService;
+  private CurrencyService currencyService;
 
   void importData(@RequestBody ExportResult inputData, long userId) {
     Map<String, Long> categoryNameToIdMap = importCategoriesAndMapCategoryNamesToIds(inputData, userId);
@@ -70,11 +74,20 @@ public class ImportService {
   }
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) {
+    List<Currency> currencies = currencyService.getCurrencies(userId); // ENHANCEMENT can be replaced with HashMap
+
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {
+      Optional<Currency> currencyOptional = currencies.stream().filter(currency -> currency.getName().equals(account.getCurrency())).findAny();
+
+      if (currencyOptional.isEmpty()) {
+        throw new IllegalStateException("Currency with name '" + account.getCurrency() + "' does not exist.");
+      }
+
       Account accountToSave = Account.builder()
           .name(account.getName())
           .balance(account.getBalance())
+          .currency(currencyOptional.get())
           .build();
 
       Account savedAccount = accountService.addAccount(userId, accountToSave);

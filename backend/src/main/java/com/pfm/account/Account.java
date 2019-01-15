@@ -5,7 +5,6 @@ import com.pfm.currency.Currency;
 import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +35,7 @@ public final class Account {
   @HistoryField
   private BigDecimal balance;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @ApiModelProperty(value = "Account's currency", required = true, example = "USD")
   private Currency currency;
 

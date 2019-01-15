@@ -20,6 +20,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
       Account account = accounts.get(counter.getAndIncrement());
       account.setBalance(getRandomBalance());
       account.setName(getRandomName());
+      account.setCurrency(account.getCurrency());
 
       int statusCode = given()
           .contentType(ContentType.JSON)
@@ -29,6 +30,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
           .put(invoiceServicePath(account.getId()))
           .statusCode();
 
+      // TODO - it has no effect - exception will be ignored by executor - need to add custom uncaught exception handler
       assertThat(statusCode, is(200));
 
     });

@@ -44,7 +44,7 @@ public class UserController { // TODO extract API interface
 
     long userId = userService.registerUser(user).getId();
 
-    userInitializationService.initializeUser(user);
+    userInitializationService.initializeUser(user.getId());
 
     return ResponseEntity.ok(userId);
   }

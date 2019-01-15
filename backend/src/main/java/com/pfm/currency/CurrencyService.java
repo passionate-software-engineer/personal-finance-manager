@@ -16,6 +16,10 @@ public class CurrencyService {
 
   private CurrencyRepository currencyRepository;
 
+  public Optional<Currency> findCurrencyByIdAndUserId(long currencyId, long userId) {
+    return currencyRepository.findByIdAndUserId(currencyId, userId);
+  }
+
   public Currency getCurrencyByIdAndUserId(long currencyId, long userId) {
     Optional<Currency> currencyOptional = currencyRepository.findByIdAndUserId(currencyId, userId);
     if (!currencyOptional.isPresent()) {
@@ -27,6 +31,7 @@ public class CurrencyService {
   public List<Currency> getCurrencies(long userId) {
     return currencyRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Currency::getName))
+        .peek(currency -> currency.setUserId(null)) // controllers do not return userId, removing it also from service to have stable tests
         .collect(Collectors.toList());
   }
 

@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,7 +49,11 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Long categoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    Long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+
+    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
     homeExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
@@ -69,7 +74,11 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
     carExpensesFilterToAdd.setAccountIds(convertIdsToList(accountId));
@@ -89,10 +98,16 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), token);
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
-    long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
+    final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long categoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), token);
+
+    Account accountJacek = accountJacekBalance1000();
+    accountJacek.setCurrency(currencyService.getCurrencies(userId).get(2));
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(2));
+    long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
     homeExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryHomeId));
@@ -156,7 +171,11 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long accountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
 
     FilterRequest filterCarExpensesToUpdate = FilterRequest.builder()
@@ -280,7 +299,10 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorWhenTryingToDeleteAccountUsedInFilter() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Filter filter = filterCarExpenses();
     filter.setAccountIds(convertIdsToList(jacekAccountId));

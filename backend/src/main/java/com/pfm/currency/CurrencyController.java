@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @AllArgsConstructor
 @RestController
-public class CurrencyController implements CurrencyAPI {
+public class CurrencyController implements CurrencyApi {
 
   private CurrencyService currencyService;
   private UserProvider userProvider;

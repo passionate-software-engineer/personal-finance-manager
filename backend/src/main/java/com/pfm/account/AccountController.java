@@ -3,6 +3,7 @@ package com.pfm.account;
 import com.pfm.auth.UserProvider;
 import com.pfm.currency.CurrencyService;
 import com.pfm.history.HistoryEntryService;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -57,6 +58,11 @@ public class AccountController implements AccountApi {
 
     log.info("Saving account {} to the database", accountRequest.getName());
 
+    // need to do validation before conversion of request as it will throw error otherwise
+    if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
+      return ResponseEntity.badRequest().body(Collections.singletonList("No currency with id " + accountRequest.getCurrencyId() + " was found"));
+    }
+
     Account account = convertAccountRequestToAccount(accountRequest, userId);
 
     List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
@@ -76,10 +82,16 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
+    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
+
+    // need to do validation before conversion of request as it will throw error otherwise
+    if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
+      return ResponseEntity.badRequest().body(Collections.singletonList("No currency with id " + accountRequest.getCurrencyId() + " was found"));
+    }
+
     Account account = convertAccountRequestToAccount(accountRequest, userId);
 
     log.info("Updating account with id {}", accountId);
@@ -132,5 +144,13 @@ public class AccountController implements AccountApi {
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
         .build();
+  }
+
+  private boolean isProvidedCurrencyIdIncorrect(@RequestBody AccountRequest accountRequest, long userId) {
+    if (currencyService.findCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId).isEmpty()) {
+      log.info("No currency with id {} was found, not able to update", accountRequest.getCurrencyId());
+      return true;
+    }
+    return false;
   }
 }

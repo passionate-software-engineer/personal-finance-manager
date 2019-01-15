@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("currencies")
 @CrossOrigin
 @Api(value = "Currencies", description = "Controller used to list / add / update / delete currencies.")
-public interface CurrencyAPI {
+public interface CurrencyApi {
 
   @ApiOperation(value = "Get list of all accounts", response = Account.class, responseContainer = "List",
       authorizations = {@Authorization(value = "Bearer")})

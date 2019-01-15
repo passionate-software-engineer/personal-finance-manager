@@ -16,6 +16,7 @@ import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
+import com.pfm.currency.CurrencyService;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
@@ -65,6 +66,9 @@ public abstract class IntegrationTestsBase {
   protected CategoryService categoryService;
 
   @Autowired
+  protected CurrencyService currencyService;
+
+  @Autowired
   protected Flyway flyway;
 
   protected String token;
@@ -98,6 +102,7 @@ public abstract class IntegrationTestsBase {
     return AccountRequest.builder()
         .name(account.getName())
         .balance(account.getBalance())
+        .currencyId(account.getCurrency().getId())
         .build();
   }
 
@@ -428,7 +433,10 @@ public abstract class IntegrationTestsBase {
                 .content(json(user))
                 .contentType(JSON_CONTENT_TYPE))
             .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
     return Long.parseLong(response);
   }
 

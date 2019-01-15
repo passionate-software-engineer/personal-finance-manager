@@ -38,6 +38,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
     when(userProvider.getCurrentUserId()).thenReturn(userId);
+    currencyService.addDefaultCurrencies(userId);
   }
 
   @Test
@@ -64,10 +65,12 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
     final Long accountId = accountService.addAccount(userId, account).getId();
 
     Account updatedAccount = accountMbankBalance10();
     updatedAccount.setName("updatedName");
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
 
     doThrow(IllegalStateException.class).when(accountService).updateAccount(any(Long.class), any(Long.class), any(Account.class));
 
@@ -89,7 +92,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
-
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
     final Long accountId = accountService.addAccount(userId, account).getId();
 
     doThrow(IllegalStateException.class).when(accountService).deleteAccount(accountId);

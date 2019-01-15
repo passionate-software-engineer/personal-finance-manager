@@ -58,7 +58,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Test
   public void shouldExportTransactions() throws Exception {
     // given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     callRestToAddCategoryAndReturnId(Category.builder()
         .name("Pizza")
@@ -106,6 +109,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries", hasSize(1)))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].account", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")));
+
+    // TODO assert currency is exported
   }
 
   @Test
@@ -144,11 +149,13 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     ExportAccount aliorAccount = ExportAccount.builder()
         .name("Alior Bank")
         .balance(BigDecimal.TEN)
+        .currency("USD")
         .build();
 
     ExportAccount ideaBankAccount = ExportAccount.builder()
         .name("Idea Bank")
         .balance(BigDecimal.ZERO)
+        .currency("PLN")
         .build();
 
     input.setInitialAccountsState(Arrays.asList(aliorAccount, ideaBankAccount));

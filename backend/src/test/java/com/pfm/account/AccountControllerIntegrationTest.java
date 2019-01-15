@@ -52,6 +52,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
 
     //when
     String response =
@@ -82,7 +83,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByEmptyNameField(String name, BigDecimal balance) throws Exception {
 
     //given
-    AccountRequest accountRequest = AccountRequest.builder().name(name).balance(balance).build();
+    AccountRequest accountRequest = AccountRequest.builder()
+        .name(name)
+        .balance(balance)
+        .currencyId(currencyService.getCurrencies(userId).get(0).getId())
+        .build();
 
     //when
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
@@ -100,7 +105,9 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
-    Long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     //when
     mockMvc
@@ -130,7 +137,10 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account accountJacek = accountJacekBalance1000();
+    accountJacek.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
 
     Long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek, token);
     Long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
@@ -157,8 +167,12 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
     Account updatedAccount = accountMbankBalance10();
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
 
     //when
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
@@ -183,10 +197,15 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
 
     //given
-    Long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest updatedAccount = AccountRequest.builder()
-        .name(accountMbankBalance10().getName())
-        .balance(convertDoubleToBigDecimal(666)).build();
+        .name(account.getName())
+        .balance(convertDoubleToBigDecimal(666))
+        .currencyId(account.getCurrency().getId())
+        .build();
 
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .header(HttpHeaders.AUTHORIZATION, token)
@@ -202,6 +221,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(equalTo(updatedAccount.getName()))))
         .andExpect(jsonPath("$.balance", is(equalTo(updatedAccount.getBalance().toString()))))
+        .andExpect(jsonPath("$.currency.name", is(equalTo(account.getCurrency().getName()))))
         .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
@@ -209,12 +229,18 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
 
     //given
-    callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account jacekAccount = accountJacekBalance1000();
+    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
 
     AccountRequest updatedAccount = AccountRequest.builder()
-        .name(accountMbankBalance10().getName())
+        .name(account.getName())
         .balance(convertDoubleToBigDecimal(432))
+        .currencyId(account.getCurrency().getId())
         .build();
 
     //when
@@ -245,10 +271,13 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest accountToUpdate = AccountRequest.builder()
         .name("")
         .balance(account.getBalance())
+        .currencyId(account.getCurrency().getId())
         .build();
 
     //when
@@ -265,7 +294,10 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldDeleteAccount() throws Exception {
 
     //given
-    long accountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     //when
     mockMvc
@@ -289,10 +321,13 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest accountRequestToAdd = AccountRequest.builder()
         .name(account.getName())
         .balance(convertDoubleToBigDecimal(100))
+        .currencyId(account.getCurrency().getId())
         .build();
 
     //when
