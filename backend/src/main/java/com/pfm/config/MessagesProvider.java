@@ -14,6 +14,8 @@ public class MessagesProvider {
   public static final String ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS = "accountValidator.accountWithProvidedNameAlreadyExists";
   public static final String ACCOUNT_IS_USED_IN_TRANSACTION = "accountValidator.accountIsUsedInTransaction";
   public static final String ACCOUNT_IS_USED_IN_FILTER = "accountValidator.accountIsUsedInFilter";
+  public static final String ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST = "accountValidator.accountCurrencyIdDoesNotExist";
+  public static final String ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST = "accountValidator.accountCurrencyNameDoesNotExist";
 
   public static final String EMPTY_CATEGORY_NAME = "categoryValidator.emptyCategoryName";
   public static final String PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST = "categoryValidator.providedParentCategoryDoesNotExist";

@@ -39,7 +39,11 @@ public class ExportImportController implements ExportImportApi {
 
     // TODO validate input - if all required fields are present
 
-    importService.importData(inputData, userId);
+    try {
+      importService.importData(inputData, userId);
+    } catch (ImportFailedException ex) {
+      return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }

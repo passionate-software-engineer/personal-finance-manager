@@ -1,5 +1,8 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import com.pfm.auth.UserProvider;
 import com.pfm.currency.CurrencyService;
 import com.pfm.history.HistoryEntryService;
@@ -60,7 +63,7 @@ public class AccountController implements AccountApi {
 
     // need to do validation before conversion of request as it will throw error otherwise
     if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
-      return ResponseEntity.badRequest().body(Collections.singletonList("No currency with id " + accountRequest.getCurrencyId() + " was found"));
+      return returnBadRequestCurrencyDoesNotExist(accountRequest);
     }
 
     Account account = convertAccountRequestToAccount(accountRequest, userId);
@@ -89,7 +92,7 @@ public class AccountController implements AccountApi {
 
     // need to do validation before conversion of request as it will throw error otherwise
     if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
-      return ResponseEntity.badRequest().body(Collections.singletonList("No currency with id " + accountRequest.getCurrencyId() + " was found"));
+      return returnBadRequestCurrencyDoesNotExist(accountRequest);
     }
 
     Account account = convertAccountRequestToAccount(accountRequest, userId);
@@ -152,5 +155,10 @@ public class AccountController implements AccountApi {
       return true;
     }
     return false;
+  }
+
+  private ResponseEntity<?> returnBadRequestCurrencyDoesNotExist(@RequestBody AccountRequest accountRequest) {
+    return ResponseEntity.badRequest()
+        .body(Collections.singletonList(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), accountRequest.getCurrencyId())));
   }
 }

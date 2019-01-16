@@ -1,5 +1,8 @@
 package com.pfm.export;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
@@ -23,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +40,8 @@ public class ImportService {
   private CategoryService categoryService;
   private CurrencyService currencyService;
 
-  void importData(@RequestBody ExportResult inputData, long userId) {
+  @Transactional
+  void importData(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
     Map<String, Long> categoryNameToIdMap = importCategoriesAndMapCategoryNamesToIds(inputData, userId);
     Map<String, Long> accountNameToIdMap = importAccountsAndMapAccountNamesToIds(inputData, userId);
 
@@ -73,7 +78,7 @@ public class ImportService {
     transactionService.addTransaction(userId, newTransaction);
   }
 
-  private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) {
+  private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
     List<Currency> currencies = currencyService.getCurrencies(userId); // ENHANCEMENT can be replaced with HashMap
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
@@ -81,7 +86,7 @@ public class ImportService {
       Optional<Currency> currencyOptional = currencies.stream().filter(currency -> currency.getName().equals(account.getCurrency())).findAny();
 
       if (currencyOptional.isEmpty()) {
-        throw new IllegalStateException("Currency with name '" + account.getCurrency() + "' does not exist.");
+        throw new ImportFailedException(String.format(getMessage(ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST), account.getCurrency()));
       }
 
       Account accountToSave = Account.builder()

@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
@@ -98,6 +99,28 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(2)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_NAME))))
         .andExpect(jsonPath("$[1]", is(getMessage(EMPTY_ACCOUNT_BALANCE))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByNotExistingCurrencyOnAddAccount() throws Exception {
+
+    //given
+    long notExistingCurrencyId = 3124151L;
+
+    AccountRequest accountRequest = AccountRequest.builder()
+        .name("mBank")
+        .balance(BigDecimal.TEN)
+        .currencyId(notExistingCurrencyId)
+        .build();
+
+    //when
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), notExistingCurrencyId))));
   }
 
   @Test
@@ -252,6 +275,32 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]",
             is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByNotExistingCurrencyOnUpdateAccount() throws Exception {
+
+    //given
+    long notExistingCurrencyId = 3124151L;
+
+    Account jacekAccount = accountJacekBalance1000();
+    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
+
+    AccountRequest updatedAccount = AccountRequest.builder()
+        .name(jacekAccount.getName())
+        .balance(convertDoubleToBigDecimal(4322))
+        .currencyId(notExistingCurrencyId)
+        .build();
+
+    //when
+    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedAccount)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), notExistingCurrencyId))));
   }
 
   @Test
