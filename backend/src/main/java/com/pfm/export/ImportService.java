@@ -83,6 +83,10 @@ public class ImportService {
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {
+      if (account.getCurrency() == null) { // backward compatibility - set default currency
+        account.setCurrency("PLN");
+      }
+
       Optional<Currency> currencyOptional = currencies.stream().filter(currency -> currency.getName().equals(account.getCurrency())).findAny();
 
       if (currencyOptional.isEmpty()) {

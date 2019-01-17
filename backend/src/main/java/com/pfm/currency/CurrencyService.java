@@ -1,5 +1,8 @@
 package com.pfm.currency;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +26,7 @@ public class CurrencyService {
   public Currency getCurrencyByIdAndUserId(long currencyId, long userId) {
     Optional<Currency> currencyOptional = currencyRepository.findByIdAndUserId(currencyId, userId);
     if (!currencyOptional.isPresent()) {
-      throw new IllegalStateException("Currency with id: " + currencyId + " does not exist in database");
+      throw new IllegalStateException(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), currencyId));
     }
     return currencyOptional.get();
   }
@@ -31,7 +34,6 @@ public class CurrencyService {
   public List<Currency> getCurrencies(long userId) {
     return currencyRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(Currency::getName))
-        .peek(currency -> currency.setUserId(null)) // controllers do not return userId, removing it also from service to have stable tests
         .collect(Collectors.toList());
   }
 

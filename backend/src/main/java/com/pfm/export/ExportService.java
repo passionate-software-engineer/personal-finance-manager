@@ -162,6 +162,7 @@ public class ExportService {
         .map(account -> ExportAccount.builder()
             .name(account.getName())
             .balance(account.getBalance())
+            .currency(account.getCurrency().getName())
             .build()
         )
         .collect(Collectors.toList());
@@ -172,6 +173,7 @@ public class ExportService {
         .map(account -> ExportAccount.builder()
             .balance(account.getBalance())
             .name(account.getName())
+            .currency(account.getCurrency())
             .build()
         )
         .collect(Collectors.toList());

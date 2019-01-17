@@ -32,8 +32,8 @@ export class AccountsComponent extends Sortable implements OnInit {
   }
 
   ngOnInit() {
-    this.getAccounts();
     this.getCurrencies(); // TODO - call in parallel
+    this.getAccounts();
   }
 
   getAccounts(): void {
@@ -116,6 +116,7 @@ export class AccountsComponent extends Sortable implements OnInit {
   }
 
   onRefreshAccounts() {
+    this.getCurrencies(); // TODO - call in parallel
     this.getAccounts();
   }
 

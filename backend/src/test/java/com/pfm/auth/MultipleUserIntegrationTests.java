@@ -491,6 +491,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //then
     final List<Account> accountsMarian = callRestToGetAllAccounts(marianToken);
 
+    marianAccountCurrency.setUserId(null); // services do not return userId - it's private information
+
     Account marianAccountMbankExpected = accountMbankBalance10();
     marianAccountMbankExpected.setId(marianAccountMbankId);
     marianAccountMbankExpected.setCurrency(marianAccountCurrency);
@@ -508,6 +510,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     assertThat(accountsMarian, containsInAnyOrder(marianAccountMbankExpected, marianAccountMilleniumExpected));
 
     final List<Account> accountsZdzislaw = callRestToGetAllAccounts(zdzislawToken);
+
+    zdzislawAccountCurrency.setUserId(null); // services do not return userId - it's private information
 
     Account zdzislawAccountIngExpected = accountIngBalance9999();
     zdzislawAccountIngExpected.setId(zdzislawAccountIngId);

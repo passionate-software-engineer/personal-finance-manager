@@ -158,7 +158,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     ExportAccount ideaBankAccount = ExportAccount.builder()
         .name("Idea Bank")
         .balance(BigDecimal.ZERO)
-        .currency("PLN")
+        // should default to PLN
         .build();
 
     input.setInitialAccountsState(Arrays.asList(aliorAccount, ideaBankAccount));

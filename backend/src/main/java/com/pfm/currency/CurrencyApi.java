@@ -20,6 +20,6 @@ public interface CurrencyApi {
   @GetMapping
   ResponseEntity<List<Currency>> getCurrencies();
 
-  // TODO add support to database and modifying currencies
+  // TODO add support for adding, modifying, deleting currencies
 }
 
