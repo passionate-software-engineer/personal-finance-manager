@@ -7,12 +7,16 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import com.pfm.auth.UserProvider;
+import com.pfm.currency.Currency;
+import com.pfm.currency.CurrencyService;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.history.HistoryEntryService;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,9 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
   @MockBean
   private UserProvider userProvider;
+
+  @SpyBean
+  private CurrencyService currencyService;
 
   @SpyBean
   private AccountService accountService;
@@ -46,7 +53,8 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
-    doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
+    doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), anyLong());
+    when(currencyService.findCurrencyByIdAndUserId(anyLong(), anyLong())).thenReturn(Optional.of(new Currency()));
 
     // when
     try {
