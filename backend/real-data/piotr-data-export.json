@@ -1,6 +1,6 @@
 {
   "sumOfAllFundsAtTheBeginningOfExport": "114742.44",
-  "sumOfAllFundsAtTheEndOfExport": "265810.98",
+  "sumOfAllFundsAtTheEndOfExport": "269007.10",
   "initialAccountsState": [
     {
       "name": "kantor Alior - PLN",
@@ -94,7 +94,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "2654.15"
+      "balance": "3654.15"
     },
     {
       "name": "IKE",
@@ -106,7 +106,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "275.11"
+      "balance": "51.11"
     },
     {
       "name": "Gotówka - EUR",
@@ -114,11 +114,11 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "45008.75"
+      "balance": "46083.76"
     },
     {
       "name": "Monika - pożyczka",
-      "balance": "1000.00"
+      "balance": "0.00"
     },
     {
       "name": "Seba - pożyczka",
@@ -126,11 +126,11 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "0.00"
+      "balance": "758.54"
     },
     {
       "name": "mBank",
-      "balance": "8148.43"
+      "balance": "9735.00"
     },
     {
       "name": "Idea Bank - lokaty",
@@ -320,7 +320,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7956.54"
+          "balance": "10265.51"
         },
         {
           "name": "IKE",
@@ -340,7 +340,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "43126.61"
+          "balance": "43172.13"
         },
         {
           "name": "Monika - pożyczka",
@@ -356,7 +356,7 @@
         },
         {
           "name": "mBank",
-          "balance": "10893.94"
+          "balance": "8493.94"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -394,7 +394,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "2654.15"
+          "balance": "3654.15"
         },
         {
           "name": "IKE",
@@ -406,7 +406,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "275.11"
+          "balance": "51.11"
         },
         {
           "name": "Gotówka - EUR",
@@ -414,11 +414,11 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "45008.75"
+          "balance": "46083.76"
         },
         {
           "name": "Monika - pożyczka",
-          "balance": "1000.00"
+          "balance": "0.00"
         },
         {
           "name": "Seba - pożyczka",
@@ -426,11 +426,11 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "0.00"
+          "balance": "758.54"
         },
         {
           "name": "mBank",
-          "balance": "8148.43"
+          "balance": "9735.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -793,6 +793,21 @@
           ]
         },
         {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "date": "2019-01-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.48"
+            }
+          ]
+        },
+        {
           "description": "Basen - karnet",
           "category": "Sport",
           "date": "2019-01-10",
@@ -869,10 +884,300 @@
               "price": "-270.00"
             }
           ]
+        },
+        {
+          "description": "hydraulik",
+          "category": "Remont domu",
+          "date": "2019-01-11",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-200.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "100.00"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka od Ani",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-12",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-700.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "700.00"
+            }
+          ]
+        },
+        {
+          "description": "Chrzciny",
+          "category": "Przychody",
+          "date": "2019-01-13",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "1000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-500.00"
+            }
+          ]
+        },
+        {
+          "description": "Monika - zwrot pozyczki",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-14",
+          "accountPriceEntries": [
+            {
+              "account": "Monika - pożyczka",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Hydraulik - garaz",
+          "category": "Remont domu",
+          "date": "2019-01-15",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-600.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "300.00"
+            }
+          ]
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-01-15",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Zwrot - uslugi elektroniczne",
+          "category": "Inne Przychody",
+          "date": "2019-01-15",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "19.98"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-9.99"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka od Ani",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-16",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-800.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "800.00"
+            }
+          ]
+        },
+        {
+          "description": "Wymiana walut",
+          "category": "Wymiana walut",
+          "date": "2019-01-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-7881.50"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "8258.54"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7500.00"
+            },
+            {
+              "account": "mBank",
+              "price": "7500.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Crossover",
+          "date": "2019-01-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "7881.50"
+            }
+          ]
+        },
+        {
+          "description": "Garaz remont",
+          "category": "Remont domu",
+          "date": "2019-01-17",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-1900.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "950.00"
+            }
+          ]
+        },
+        {
+          "description": "Szatnia",
+          "category": "Wyjazdy",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-4.00"
+            }
+          ]
+        },
+        {
+          "description": "Chusteczki",
+          "category": "Zdrowie",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1.20"
+            }
+          ]
+        },
+        {
+          "description": "Swietlik - przedluzka",
+          "category": "Remont domu",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-270.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "135.00"
+            }
+          ]
+        },
+        {
+          "description": "Catering - chrzciny",
+          "category": "Jedzenie",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-800.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "400.00"
+            }
+          ]
+        },
+        {
+          "description": "Wars - obiad",
+          "category": "Jedzenie",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-12.00"
+            }
+          ]
+        },
+        {
+          "description": "Hotel - Warszawa",
+          "category": "Edukacja",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-405.42"
+            }
+          ]
+        },
+        {
+          "description": "Szkolenie - doplata - Instynktowne uwodzenie",
+          "category": "Edukacja",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Gumy do zucia",
+          "category": "Jedzenie",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-5.59"
+            }
+          ]
+        },
+        {
+          "description": "Kawa",
+          "category": "Jedzenie",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-17.90"
+            }
+          ]
+        },
+        {
+          "description": "Obiad - Zlote Tarasy",
+          "category": "Jedzenie",
+          "date": "2019-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-21.30"
+            }
+          ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "272307.52",
-      "sumOfAllFundsAtTheEndOfPeriod": "265810.98"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "272262.01",
+      "sumOfAllFundsAtTheEndOfPeriod": "269007.10"
     },
     {
       "startDate": "2018-12-01",
@@ -896,7 +1201,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "3171.88"
+          "balance": "5480.85"
         },
         {
           "name": "IKE",
@@ -916,7 +1221,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17598.85"
+          "balance": "17644.37"
         },
         {
           "name": "Monika - pożyczka",
@@ -932,7 +1237,7 @@
         },
         {
           "name": "mBank",
-          "balance": "32896.84"
+          "balance": "30496.84"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -970,7 +1275,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7956.54"
+          "balance": "10265.51"
         },
         {
           "name": "IKE",
@@ -990,7 +1295,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "43126.61"
+          "balance": "43172.13"
         },
         {
           "name": "Monika - pożyczka",
@@ -1006,7 +1311,7 @@
         },
         {
           "name": "mBank",
-          "balance": "10893.94"
+          "balance": "8493.94"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2179,8 +2484,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "269725.59",
-      "sumOfAllFundsAtTheEndOfPeriod": "272307.52"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "269680.08",
+      "sumOfAllFundsAtTheEndOfPeriod": "272262.01"
     },
     {
       "startDate": "2018-11-01",
@@ -2204,7 +2509,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "3531.66"
+          "balance": "5840.63"
         },
         {
           "name": "IKE",
@@ -2224,7 +2529,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "14630.13"
+          "balance": "14675.65"
         },
         {
           "name": "Monika - pożyczka",
@@ -2240,7 +2545,7 @@
         },
         {
           "name": "mBank",
-          "balance": "23129.19"
+          "balance": "20729.19"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2278,7 +2583,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "3171.88"
+          "balance": "5480.85"
         },
         {
           "name": "IKE",
@@ -2298,7 +2603,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17598.85"
+          "balance": "17644.37"
         },
         {
           "name": "Monika - pożyczka",
@@ -2314,7 +2619,7 @@
         },
         {
           "name": "mBank",
-          "balance": "32896.84"
+          "balance": "30496.84"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -2991,8 +3296,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "265185.23",
-      "sumOfAllFundsAtTheEndOfPeriod": "269725.59"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "265139.72",
+      "sumOfAllFundsAtTheEndOfPeriod": "269680.08"
     },
     {
       "startDate": "2018-10-01",
@@ -3016,7 +3321,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7859.59"
+          "balance": "10168.56"
         },
         {
           "name": "IKE",
@@ -3036,7 +3341,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1971.88"
+          "balance": "-1926.36"
         },
         {
           "name": "Monika - pożyczka",
@@ -3052,7 +3357,7 @@
         },
         {
           "name": "mBank",
-          "balance": "10943.99"
+          "balance": "8543.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -3090,7 +3395,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "3531.66"
+          "balance": "5840.63"
         },
         {
           "name": "IKE",
@@ -3110,7 +3415,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "14630.13"
+          "balance": "14675.65"
         },
         {
           "name": "Monika - pożyczka",
@@ -3126,7 +3431,7 @@
         },
         {
           "name": "mBank",
-          "balance": "23129.19"
+          "balance": "20729.19"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -4198,8 +4503,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "268425.48",
-      "sumOfAllFundsAtTheEndOfPeriod": "265185.23"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "268379.97",
+      "sumOfAllFundsAtTheEndOfPeriod": "265139.72"
     },
     {
       "startDate": "2018-09-01",
@@ -4223,7 +4528,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "6766.70"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -4243,7 +4548,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-3610.70"
+          "balance": "-3565.18"
         },
         {
           "name": "Monika - pożyczka",
@@ -4259,7 +4564,7 @@
         },
         {
           "name": "mBank",
-          "balance": "21208.91"
+          "balance": "18808.91"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -4297,7 +4602,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "7859.59"
+          "balance": "10168.56"
         },
         {
           "name": "IKE",
@@ -4317,7 +4622,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-1971.88"
+          "balance": "-1926.36"
         },
         {
           "name": "Monika - pożyczka",
@@ -4333,7 +4638,7 @@
         },
         {
           "name": "mBank",
-          "balance": "10943.99"
+          "balance": "8543.99"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -5085,8 +5390,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "262163.26",
-      "sumOfAllFundsAtTheEndOfPeriod": "268425.48"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "262117.75",
+      "sumOfAllFundsAtTheEndOfPeriod": "268379.97"
     },
     {
       "startDate": "2018-08-01",
@@ -5110,7 +5415,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9463.13"
+          "balance": "11772.10"
         },
         {
           "name": "IKE",
@@ -5130,7 +5435,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5778.13"
+          "balance": "-5732.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -5146,7 +5451,7 @@
         },
         {
           "name": "mBank",
-          "balance": "396.55"
+          "balance": "-2003.45"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -5184,7 +5489,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "6766.70"
+          "balance": "9075.67"
         },
         {
           "name": "IKE",
@@ -5204,7 +5509,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-3610.70"
+          "balance": "-3565.18"
         },
         {
           "name": "Monika - pożyczka",
@@ -5220,7 +5525,7 @@
         },
         {
           "name": "mBank",
-          "balance": "21208.91"
+          "balance": "18808.91"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -6130,8 +6435,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "232593.91",
-      "sumOfAllFundsAtTheEndOfPeriod": "262163.26"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "232548.40",
+      "sumOfAllFundsAtTheEndOfPeriod": "262117.75"
     },
     {
       "startDate": "2018-07-01",
@@ -6155,7 +6460,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "20643.91"
+          "balance": "22952.88"
         },
         {
           "name": "IKE",
@@ -6175,7 +6480,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-3367.92"
+          "balance": "-3322.40"
         },
         {
           "name": "Monika - pożyczka",
@@ -6191,7 +6496,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -6229,7 +6534,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "9463.13"
+          "balance": "11772.10"
         },
         {
           "name": "IKE",
@@ -6249,7 +6554,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5778.13"
+          "balance": "-5732.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -6265,7 +6570,7 @@
         },
         {
           "name": "mBank",
-          "balance": "396.55"
+          "balance": "-2003.45"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -6874,8 +7179,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "242901.34",
-      "sumOfAllFundsAtTheEndOfPeriod": "232593.91"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "242855.83",
+      "sumOfAllFundsAtTheEndOfPeriod": "232548.40"
     },
     {
       "startDate": "2018-06-01",
@@ -6899,7 +7204,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "14716.81"
+          "balance": "17025.78"
         },
         {
           "name": "IKE",
@@ -6919,7 +7224,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "4036.82"
+          "balance": "4082.34"
         },
         {
           "name": "Monika - pożyczka",
@@ -6935,7 +7240,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -6973,7 +7278,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "20643.91"
+          "balance": "22952.88"
         },
         {
           "name": "IKE",
@@ -6993,7 +7298,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-3367.92"
+          "balance": "-3322.40"
         },
         {
           "name": "Monika - pożyczka",
@@ -7009,7 +7314,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -7678,8 +7983,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "212338.75",
-      "sumOfAllFundsAtTheEndOfPeriod": "242901.34"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "212293.24",
+      "sumOfAllFundsAtTheEndOfPeriod": "242855.83"
     },
     {
       "startDate": "2018-05-01",
@@ -7703,7 +8008,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "10721.22"
+          "balance": "13030.19"
         },
         {
           "name": "IKE",
@@ -7723,7 +8028,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-2458.14"
+          "balance": "-2412.62"
         },
         {
           "name": "Monika - pożyczka",
@@ -7739,7 +8044,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -7777,7 +8082,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "14716.81"
+          "balance": "17025.78"
         },
         {
           "name": "IKE",
@@ -7797,7 +8102,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "4036.82"
+          "balance": "4082.34"
         },
         {
           "name": "Monika - pożyczka",
@@ -7813,7 +8118,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -8237,8 +8542,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "189219.44",
-      "sumOfAllFundsAtTheEndOfPeriod": "212338.75"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "189173.93",
+      "sumOfAllFundsAtTheEndOfPeriod": "212293.24"
     },
     {
       "startDate": "2018-04-01",
@@ -8262,7 +8567,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5431.92"
+          "balance": "7740.89"
         },
         {
           "name": "IKE",
@@ -8282,7 +8587,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "1572.09"
+          "balance": "1617.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -8298,7 +8603,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -8336,7 +8641,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "10721.22"
+          "balance": "13030.19"
         },
         {
           "name": "IKE",
@@ -8356,7 +8661,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-2458.14"
+          "balance": "-2412.62"
         },
         {
           "name": "Monika - pożyczka",
@@ -8372,7 +8677,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -8777,8 +9082,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "187960.33",
-      "sumOfAllFundsAtTheEndOfPeriod": "189219.44"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "187914.82",
+      "sumOfAllFundsAtTheEndOfPeriod": "189173.93"
     },
     {
       "startDate": "2018-03-01",
@@ -8802,7 +9107,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5296.19"
+          "balance": "7605.16"
         },
         {
           "name": "IKE",
@@ -8822,7 +9127,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4993.02"
+          "balance": "-4947.50"
         },
         {
           "name": "Monika - pożyczka",
@@ -8838,7 +9143,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -8876,7 +9181,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5431.92"
+          "balance": "7740.89"
         },
         {
           "name": "IKE",
@@ -8896,7 +9201,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "1572.09"
+          "balance": "1617.61"
         },
         {
           "name": "Monika - pożyczka",
@@ -8912,7 +9217,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -9672,8 +9977,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "151006.45",
-      "sumOfAllFundsAtTheEndOfPeriod": "187960.33"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "150960.94",
+      "sumOfAllFundsAtTheEndOfPeriod": "187914.82"
     },
     {
       "startDate": "2018-02-01",
@@ -9697,7 +10002,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-1833.27"
+          "balance": "475.70"
         },
         {
           "name": "IKE",
@@ -9717,7 +10022,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5081.28"
+          "balance": "-5035.76"
         },
         {
           "name": "Monika - pożyczka",
@@ -9733,7 +10038,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -9771,7 +10076,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "5296.19"
+          "balance": "7605.16"
         },
         {
           "name": "IKE",
@@ -9791,7 +10096,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-4993.02"
+          "balance": "-4947.50"
         },
         {
           "name": "Monika - pożyczka",
@@ -9807,7 +10112,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -10363,8 +10668,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "115106.32",
-      "sumOfAllFundsAtTheEndOfPeriod": "151006.45"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "115060.81",
+      "sumOfAllFundsAtTheEndOfPeriod": "150960.94"
     },
     {
       "startDate": "2018-01-01",
@@ -10462,7 +10767,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "-1833.27"
+          "balance": "475.70"
         },
         {
           "name": "IKE",
@@ -10482,7 +10787,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "-5081.28"
+          "balance": "-5035.76"
         },
         {
           "name": "Monika - pożyczka",
@@ -10498,7 +10803,7 @@
         },
         {
           "name": "mBank",
-          "balance": "0.00"
+          "balance": "-2400.00"
         },
         {
           "name": "Idea Bank - lokaty",
@@ -10772,21 +11077,6 @@
           ]
         },
         {
-          "description": "Leasing",
-          "category": "Leasing samochodu",
-          "date": "2018-01-10",
-          "accountPriceEntries": [
-            {
-              "account": "Idea Bank",
-              "price": "-2308.97"
-            },
-            {
-              "account": "Ania - rozliczenie",
-              "price": "1154.48"
-            }
-          ]
-        },
-        {
           "description": "Spar - zakupy",
           "category": "Zakupy",
           "date": "2018-01-12",
@@ -10947,6 +11237,21 @@
             {
               "account": "Ania - rozliczenie",
               "price": "2.37"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal - rozliczenie",
+          "category": "Remont domu",
+          "date": "2018-01-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2400.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1200.00"
             }
           ]
         },
@@ -11277,7 +11582,7 @@
         }
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": "114742.44",
-      "sumOfAllFundsAtTheEndOfPeriod": "115106.32"
+      "sumOfAllFundsAtTheEndOfPeriod": "115060.81"
     }
   ]
 }
