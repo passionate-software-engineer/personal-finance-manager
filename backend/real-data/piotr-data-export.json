@@ -1,6 +1,6 @@
 {
-  "sumOfAllFundsAtTheBeginningOfExport": "114742.44",
-  "sumOfAllFundsAtTheEndOfExport": "269007.10",
+  "sumOfAllFundsAtTheBeginningOfExport": "113441.58",
+  "sumOfAllFundsAtTheEndOfExport": "267706.24",
   "initialAccountsState": [
     {
       "name": "kantor Alior - PLN",
@@ -10,17 +10,17 @@
     {
       "name": "kantor Alior - USD",
       "balance": "85980.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "2617.22",
-      "currency": "PLN"
+      "balance": "1668.16",
+      "currency": "EUR"
     },
     {
       "name": "kantor Alior - GBP",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "GBP"
     },
     {
       "name": "Idea Bank",
@@ -44,8 +44,8 @@
     },
     {
       "name": "Gotówka - EUR",
-      "balance": "84.43",
-      "currency": "PLN"
+      "balance": "70.92",
+      "currency": "EUR"
     },
     {
       "name": "Ania - rozliczenie",
@@ -80,7 +80,7 @@
     {
       "name": "Revolut - USD",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "Santander",
@@ -89,8 +89,8 @@
     },
     {
       "name": "Revolut - EUR",
-      "balance": "0.00",
-      "currency": "PLN"
+      "balance": "-338.29",
+      "currency": "EUR"
     }
   ],
   "finalAccountsState": [
@@ -102,17 +102,17 @@
     {
       "name": "kantor Alior - USD",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "1241.98",
-      "currency": "PLN"
+      "balance": "292.92",
+      "currency": "EUR"
     },
     {
       "name": "kantor Alior - GBP",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "GBP"
     },
     {
       "name": "Idea Bank",
@@ -136,8 +136,8 @@
     },
     {
       "name": "Gotówka - EUR",
-      "balance": "17.68",
-      "currency": "PLN"
+      "balance": "4.17",
+      "currency": "EUR"
     },
     {
       "name": "Ania - rozliczenie",
@@ -172,7 +172,7 @@
     {
       "name": "Revolut - USD",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "Santander",
@@ -181,8 +181,8 @@
     },
     {
       "name": "Revolut - EUR",
-      "balance": "442.70",
-      "currency": "PLN"
+      "balance": "104.41",
+      "currency": "EUR"
     }
   ],
   "categories": [
@@ -346,17 +346,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1665.98",
-          "currency": "PLN"
+          "balance": "716.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -380,8 +380,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -416,7 +416,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -425,8 +425,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "379.48",
-          "currency": "PLN"
+          "balance": "41.19",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -438,17 +438,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1241.98",
-          "currency": "PLN"
+          "balance": "292.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -472,8 +472,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -508,7 +508,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -517,8 +517,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "442.70",
-          "currency": "PLN"
+          "balance": "104.41",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -1248,8 +1248,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "272262.01",
-      "sumOfAllFundsAtTheEndOfPeriod": "269007.10"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "270961.15",
+      "sumOfAllFundsAtTheEndOfPeriod": "267706.24"
     },
     {
       "startDate": "2018-12-01",
@@ -1263,17 +1263,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "19703.75",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00",
-          "currency": "PLN"
+          "balance": "-643.06",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -1297,8 +1297,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -1333,7 +1333,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -1342,8 +1342,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1355,17 +1355,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1665.98",
-          "currency": "PLN"
+          "balance": "716.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -1389,8 +1389,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -1425,7 +1425,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -1434,8 +1434,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "379.48",
-          "currency": "PLN"
+          "balance": "41.19",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -2592,8 +2592,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "269680.08",
-      "sumOfAllFundsAtTheEndOfPeriod": "272262.01"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "268379.22",
+      "sumOfAllFundsAtTheEndOfPeriod": "270961.15"
     },
     {
       "startDate": "2018-11-01",
@@ -2607,17 +2607,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "7165.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00",
-          "currency": "PLN"
+          "balance": "-643.06",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -2641,8 +2641,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -2677,7 +2677,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -2686,8 +2686,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -2699,17 +2699,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "19703.75",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00",
-          "currency": "PLN"
+          "balance": "-643.06",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -2733,8 +2733,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -2769,7 +2769,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -2778,8 +2778,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -3440,8 +3440,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "265139.72",
-      "sumOfAllFundsAtTheEndOfPeriod": "269680.08"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "263838.86",
+      "sumOfAllFundsAtTheEndOfPeriod": "268379.22"
     },
     {
       "startDate": "2018-10-01",
@@ -3455,17 +3455,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "53737.50",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00",
-          "currency": "PLN"
+          "balance": "-643.06",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -3489,8 +3489,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -3525,7 +3525,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -3534,8 +3534,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -3547,17 +3547,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "7165.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00",
-          "currency": "PLN"
+          "balance": "-643.06",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -3581,8 +3581,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -3617,7 +3617,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -3626,8 +3626,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -4683,8 +4683,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "268379.97",
-      "sumOfAllFundsAtTheEndOfPeriod": "265139.72"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "267079.11",
+      "sumOfAllFundsAtTheEndOfPeriod": "263838.86"
     },
     {
       "startDate": "2018-09-01",
@@ -4698,17 +4698,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "27755.78",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1570.79",
-          "currency": "PLN"
+          "balance": "621.73",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -4732,8 +4732,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -4768,7 +4768,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -4777,8 +4777,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -4790,17 +4790,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "53737.50",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "306.00",
-          "currency": "PLN"
+          "balance": "-643.06",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -4824,8 +4824,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -4860,7 +4860,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -4869,8 +4869,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -5606,8 +5606,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "262117.75",
-      "sumOfAllFundsAtTheEndOfPeriod": "268379.97"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "260816.89",
+      "sumOfAllFundsAtTheEndOfPeriod": "267079.11"
     },
     {
       "startDate": "2018-08-01",
@@ -5621,17 +5621,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "134433.31",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78",
-          "currency": "PLN"
+          "balance": "1126.72",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -5655,8 +5655,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -5691,7 +5691,7 @@
         {
           "name": "Revolut - USD",
           "balance": "1791.25",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -5700,8 +5700,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -5713,17 +5713,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "27755.78",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "1570.79",
-          "currency": "PLN"
+          "balance": "621.73",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -5747,8 +5747,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -5783,7 +5783,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -5792,8 +5792,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -6687,8 +6687,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "232548.40",
-      "sumOfAllFundsAtTheEndOfPeriod": "262117.75"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "231247.54",
+      "sumOfAllFundsAtTheEndOfPeriod": "260816.89"
     },
     {
       "startDate": "2018-07-01",
@@ -6702,17 +6702,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "114640.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78",
-          "currency": "PLN"
+          "balance": "1126.72",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -6736,8 +6736,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -6772,7 +6772,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -6781,8 +6781,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -6794,17 +6794,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "134433.31",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78",
-          "currency": "PLN"
+          "balance": "1126.72",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -6828,8 +6828,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -6864,7 +6864,7 @@
         {
           "name": "Revolut - USD",
           "balance": "1791.25",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -6873,8 +6873,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -7467,8 +7467,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "242855.83",
-      "sumOfAllFundsAtTheEndOfPeriod": "232548.40"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "241554.97",
+      "sumOfAllFundsAtTheEndOfPeriod": "231247.54"
     },
     {
       "startDate": "2018-06-01",
@@ -7482,17 +7482,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "164795.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2330.18",
-          "currency": "PLN"
+          "balance": "1381.12",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -7516,8 +7516,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "8.41",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -7552,7 +7552,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -7561,8 +7561,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -7574,17 +7574,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "114640.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2075.78",
-          "currency": "PLN"
+          "balance": "1126.72",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -7608,8 +7608,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -7644,7 +7644,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -7653,8 +7653,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -8307,8 +8307,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "212293.24",
-      "sumOfAllFundsAtTheEndOfPeriod": "242855.83"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "210992.38",
+      "sumOfAllFundsAtTheEndOfPeriod": "241554.97"
     },
     {
       "startDate": "2018-05-01",
@@ -8322,17 +8322,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "154047.54",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "481.88",
-          "currency": "PLN"
+          "balance": "-467.18",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -8356,8 +8356,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "8.41",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -8392,7 +8392,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -8401,8 +8401,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -8414,17 +8414,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "164795.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2330.18",
-          "currency": "PLN"
+          "balance": "1381.12",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -8448,8 +8448,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "8.41",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -8484,7 +8484,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -8493,8 +8493,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -8902,8 +8902,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "189173.93",
-      "sumOfAllFundsAtTheEndOfPeriod": "212293.24"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "187873.07",
+      "sumOfAllFundsAtTheEndOfPeriod": "210992.38"
     },
     {
       "startDate": "2018-04-01",
@@ -8917,17 +8917,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "154047.50",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "481.88",
-          "currency": "PLN"
+          "balance": "-467.18",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -8951,8 +8951,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "8.41",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -8987,7 +8987,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -8996,8 +8996,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -9009,17 +9009,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "154047.54",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "481.88",
-          "currency": "PLN"
+          "balance": "-467.18",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -9043,8 +9043,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "8.41",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9079,7 +9079,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9088,8 +9088,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -9478,8 +9478,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "187914.82",
-      "sumOfAllFundsAtTheEndOfPeriod": "189173.93"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "186613.96",
+      "sumOfAllFundsAtTheEndOfPeriod": "187873.07"
     },
     {
       "startDate": "2018-03-01",
@@ -9493,17 +9493,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "121805.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2290.58",
-          "currency": "PLN"
+          "balance": "1341.52",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -9527,8 +9527,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "82.68",
-          "currency": "PLN"
+          "balance": "69.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9563,7 +9563,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9572,8 +9572,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -9585,17 +9585,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "154047.50",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "481.88",
-          "currency": "PLN"
+          "balance": "-467.18",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -9619,8 +9619,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "8.41",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9655,7 +9655,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9664,8 +9664,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -10409,8 +10409,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "150960.94",
-      "sumOfAllFundsAtTheEndOfPeriod": "187914.82"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "149660.08",
+      "sumOfAllFundsAtTheEndOfPeriod": "186613.96"
     },
     {
       "startDate": "2018-02-01",
@@ -10424,17 +10424,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "100310.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3479.85",
-          "currency": "PLN"
+          "balance": "2530.79",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -10458,8 +10458,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "106.00",
-          "currency": "PLN"
+          "balance": "92.49",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -10494,7 +10494,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -10503,8 +10503,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -10516,17 +10516,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "121805.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2290.58",
-          "currency": "PLN"
+          "balance": "1341.52",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -10550,8 +10550,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "82.68",
-          "currency": "PLN"
+          "balance": "69.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -10586,7 +10586,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -10595,8 +10595,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -11136,8 +11136,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "115060.81",
-      "sumOfAllFundsAtTheEndOfPeriod": "150960.94"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "113759.95",
+      "sumOfAllFundsAtTheEndOfPeriod": "149660.08"
     },
     {
       "startDate": "2018-01-01",
@@ -11151,17 +11151,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "85980.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2617.22",
-          "currency": "PLN"
+          "balance": "1668.16",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -11185,8 +11185,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "84.43",
-          "currency": "PLN"
+          "balance": "70.92",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -11221,7 +11221,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -11230,8 +11230,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -11243,17 +11243,17 @@
         {
           "name": "kantor Alior - USD",
           "balance": "100310.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "3479.85",
-          "currency": "PLN"
+          "balance": "2530.79",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "GBP"
         },
         {
           "name": "Idea Bank",
@@ -11277,8 +11277,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "106.00",
-          "currency": "PLN"
+          "balance": "92.49",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -11313,7 +11313,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -11322,8 +11322,8 @@
         },
         {
           "name": "Revolut - EUR",
-          "balance": "0.00",
-          "currency": "PLN"
+          "balance": "-338.29",
+          "currency": "EUR"
         }
       ],
       "transactions": [
@@ -12085,8 +12085,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "114742.44",
-      "sumOfAllFundsAtTheEndOfPeriod": "115060.81"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "113441.58",
+      "sumOfAllFundsAtTheEndOfPeriod": "113759.95"
     }
   ]
 }
