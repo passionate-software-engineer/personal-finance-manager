@@ -7,12 +7,16 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import com.pfm.auth.UserProvider;
+import com.pfm.currency.Currency;
+import com.pfm.currency.CurrencyService;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.history.HistoryEntryService;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,9 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
   private UserProvider userProvider;
 
   @SpyBean
+  private CurrencyService currencyService;
+
+  @SpyBean
   private AccountService accountService;
 
   @Autowired
@@ -38,6 +45,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
     when(userProvider.getCurrentUserId()).thenReturn(userId);
+    currencyService.addDefaultCurrencies(userId);
   }
 
   @Test
@@ -45,7 +53,8 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
-    doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
+    doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), anyLong());
+    when(currencyService.findCurrencyByIdAndUserId(anyLong(), anyLong())).thenReturn(Optional.of(new Currency()));
 
     // when
     try {
@@ -64,10 +73,12 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
     final Long accountId = accountService.addAccount(userId, account).getId();
 
     Account updatedAccount = accountMbankBalance10();
     updatedAccount.setName("updatedName");
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
 
     doThrow(IllegalStateException.class).when(accountService).updateAccount(any(Long.class), any(Long.class), any(Account.class));
 
@@ -89,7 +100,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
-
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
     final Long accountId = accountService.addAccount(userId, account).getId();
 
     doThrow(IllegalStateException.class).when(accountService).deleteAccount(accountId);

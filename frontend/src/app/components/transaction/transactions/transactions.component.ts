@@ -277,5 +277,17 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   }
 
+  allFiltredTransactionsBalance() {
+    let sum = 0;
+
+    for (let i = 0; i < this.transactions.length; ++i) {
+      for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
+        sum += +this.transactions[i].accountPriceEntries[j].price;
+      }
+    }
+
+    return sum;
+  }
+
 
 }

@@ -1,7 +1,12 @@
 package com.pfm.account;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
+
 import com.pfm.auth.UserProvider;
+import com.pfm.currency.CurrencyService;
 import com.pfm.history.HistoryEntryService;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -20,6 +25,7 @@ public class AccountController implements AccountApi {
   private AccountService accountService;
   private AccountValidator accountValidator;
   private HistoryEntryService historyEntryService;
+  private CurrencyService currencyService;
   private UserProvider userProvider;
 
   @Override
@@ -55,7 +61,12 @@ public class AccountController implements AccountApi {
 
     log.info("Saving account {} to the database", accountRequest.getName());
 
-    Account account = convertAccountRequestToAccount(accountRequest);
+    // need to do validation before conversion of request as it will throw error otherwise
+    if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
+      return returnBadRequestCurrencyDoesNotExist(accountRequest);
+    }
+
+    Account account = convertAccountRequestToAccount(accountRequest, userId);
 
     List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
     if (!validationResult.isEmpty()) {
@@ -74,11 +85,17 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> updateAccount(@PathVariable long accountId, @RequestBody AccountRequest accountRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
+    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
-    Account account = convertAccountRequestToAccount(accountRequest);
+
+    // need to do validation before conversion of request as it will throw error otherwise
+    if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
+      return returnBadRequestCurrencyDoesNotExist(accountRequest);
+    }
+
+    Account account = convertAccountRequestToAccount(accountRequest, userId);
 
     log.info("Updating account with id {}", accountId);
     List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
@@ -124,10 +141,24 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  private Account convertAccountRequestToAccount(AccountRequest accountRequest) {
+  private Account convertAccountRequestToAccount(AccountRequest accountRequest, long userId) {
     return Account.builder()
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
+        .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
         .build();
+  }
+
+  private boolean isProvidedCurrencyIdIncorrect(@RequestBody AccountRequest accountRequest, long userId) {
+    if (currencyService.findCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId).isEmpty()) {
+      log.info("No currency with id {} was found, not able to update", accountRequest.getCurrencyId());
+      return true;
+    }
+    return false;
+  }
+
+  private ResponseEntity<?> returnBadRequestCurrencyDoesNotExist(@RequestBody AccountRequest accountRequest) {
+    return ResponseEntity.badRequest()
+        .body(Collections.singletonList(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), accountRequest.getCurrencyId())));
   }
 }

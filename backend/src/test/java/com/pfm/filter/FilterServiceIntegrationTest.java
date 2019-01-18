@@ -41,9 +41,12 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfFilterExistByAccountId() {
-
     //given
+    currencyService.addDefaultCurrencies(userId);
+
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+
     long accountId = accountService.addAccount(userId, account).getId();
 
     Filter filter = filterFoodExpenses();

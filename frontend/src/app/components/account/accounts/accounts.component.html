@@ -20,6 +20,11 @@
       <span [hidden]="reverse">▼</span>
       <span [hidden]="!reverse">▲</span>
     </th>
+
+    <th>{{'account.currency' | translate}}</th>
+
+    <th>{{'account.balancePLN' | translate}}</th>
+
     <th></th>
   </tr>
   </thead>
@@ -27,7 +32,7 @@
   <tbody>
   <tr id="AccountRow" *ngFor="let account of accounts | orderBy: order:reverse:'case-insensitive'">
 
-    <!--Name-->
+    <!-- Name -->
     <td *ngIf="account.editMode">
       <input id="EditAccountNameInput" class="form-control" type="text" [(ngModel)]="account.editedAccount.name">
     </td>
@@ -35,10 +40,35 @@
 
     <!--Balance-->
     <td *ngIf="account.editMode">
-      <input id="EditAccountBalanceInput" class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"></td>
-    <td id="BalanceReadOnly" *ngIf="!account.editMode"> {{account.balance | number:'0.2-2'}}</td>
+      <input id="EditAccountBalanceInput" class="form-control" type="number" [(ngModel)]="account.editedAccount.balance">
+    </td>
+    <td id="BalanceReadOnly" *ngIf="!account.editMode">
+      {{account.balance | number:'0.2-2'}}
+    </td>
 
+    <!-- Currency -->
+    <td *ngIf="account.editMode">
+      <select id="EditAccountCurrencySelect" class="form-control" [(ngModel)]="account.editedAccount.currency">
+        <option *ngFor="let currency of supportedCurrencies" [ngValue]="currency">
+          {{currency.name}}
+        </option>
+      </select>
+    </td>
 
+    <td *ngIf="!account.editMode">
+      {{account.currency.name}}
+    </td>
+
+    <!-- Balance PLN -->
+    <td *ngIf="account.editMode">
+      {{account.editedAccount.balance * account.editedAccount.currency.exchangeRate | number:'0.2-2'}}
+    </td>
+
+    <td *ngIf="!account.editMode">
+      {{account.balance * account.currency.exchangeRate| number:'0.2-2'}}
+    </td>
+
+    <!-- Options -->
     <td *ngIf="!account.editMode">
       <div class="dropdown">
         <button id="OptionsBtn" class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">
@@ -55,6 +85,8 @@
         </ul>
       </div>
     </td>
+
+    <!-- Edit mode buttons -->
     <td *ngIf="account.editMode" id="EditAccountSaveExitBtn">
       <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">{{'button.save' | translate}}</button>
       <button id="EditAccountExitBtn" class="btn btn-danger" (click)="account.editMode=false">{{'button.exit' | translate}}</button>
@@ -63,27 +95,51 @@
   </tr>
 
   <tr *ngIf="addingMode">
-    <!--Name-->
+    <!-- Name -->
     <td>
       <input id="NewAccountNameInput" class="form-control" type="text" [(ngModel)]="newAccount.name">
     </td>
+
     <!--Balance-->
     <td>
-      <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance"></td>
+      <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance">
+    </td>
+
+    <!-- Currency -->
+    <td>
+      <select id="NewAccountCurrencySelect" class="form-control" [(ngModel)]="newAccount.currency">
+        <option *ngFor="let currency of supportedCurrencies" [ngValue]="currency">
+          {{currency.name}}
+        </option>
+      </select>
+    </td>
+
+    <!-- Balance PLN -->
+    <td>{{newAccount.balance * newAccount.currency.exchangeRate | number:'0.2-2' }}</td>
+
+    <!-- Buttons -->
     <td id="NewAccountSaveExitBtn">
       <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">{{'button.save' | translate}}</button>
       <button id="NewAccountExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
+
   </tr>
 
   <tr>
-    <!--Name-->
-    <td>
-    </td>
-    <!--Balance-->
+    <!-- Name -->
+    <td></td>
+
+    <!-- Currency -->
+    <td></td>
+
+    <!-- Currency -->
+    <td></td>
+
+    <!--Balance PLN -->
     <td id="BalanceOfAllAccounts">{{allAccountsBalance() | number:'0.2-2'}}</td>
-    <td>
-    </td>
+
+    <!-- Buttons -->
+    <td></td>
   </tr>
   </tbody>
 </table>

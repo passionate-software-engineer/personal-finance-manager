@@ -39,6 +39,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
+import com.pfm.currency.Currency;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -54,13 +55,17 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilter() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
     //when
     FilterRequest filterToAdd = convertFilterToFilterRequest(filterExpensesOver1000());
@@ -83,13 +88,17 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
-    long marianOver1000ExpensesFilter = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000(), marianToken);
+    long zdzislawUserId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaBalance100000(), zdzislawToken);
+    final long marianOver1000ExpensesFilter = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000(), marianToken);
+
+    Account account = accountIdeaBalance100000();
+    account.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
+
+    long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(account, zdzislawToken);
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
 
     //when
@@ -114,6 +123,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
@@ -153,13 +163,18 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateTransaction() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     final long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
         marianCategoryFoodId, marianToken);
 
@@ -181,13 +196,18 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteTransaction() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
         marianCategoryFoodId, marianToken);
 
@@ -204,6 +224,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
@@ -228,6 +249,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
@@ -244,12 +266,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateAccount() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
     //when
     AccountRequest updatedAccount = AccountRequest.builder()
@@ -269,12 +295,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteAccount() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
     //when
     mockMvc
@@ -287,12 +317,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransaction() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+    callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
 
     //when
@@ -315,17 +349,24 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransactionInUpdateMethod() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
+
+    long zdzislawUserId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
-    long marianFoodTransactionId = callRestToAddTransactionAndReturnId(carTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
+    final long marianFoodTransactionId = callRestToAddTransactionAndReturnId(carTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
         marianCategoryCarId, marianToken);
 
-    long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaBalance100000(), zdzislawToken);
+    Account zdzislawAccount = accountIdeaBalance100000();
+    zdzislawAccount.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
+
+    long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(zdzislawAccount, zdzislawToken);
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
 
     //when
@@ -387,20 +428,30 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldRegisterTwoUsersAndAddAccountsCatgoriesTransaction() throws Exception {
+  public void shouldRegisterTwoUsersAndAddAccountsCategoriesTransaction() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
+    currencyService.addDefaultCurrencies(marianUserId);
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    long zdzislawUserId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    currencyService.addDefaultCurrencies(zdzislawUserId);
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     //when
 
     //marian
-    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), marianToken);
-    long marianAccountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMilleniumBalance100(), marianToken);
+    Currency marianAccountCurrency = currencyService.getCurrencies(marianUserId).get(0);
+
+    Account accountMbankMarian = accountMbankBalance10();
+    accountMbankMarian.setCurrency(marianAccountCurrency);
+    long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankMarian, marianToken);
+
+    Account accountMilleniumMarian = accountMilleniumBalance100();
+    accountMilleniumMarian.setCurrency(marianAccountCurrency);
+    long marianAccountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMilleniumMarian, marianToken);
+
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
     final long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
@@ -414,8 +465,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     final long marianExpensesOver1000FilterId = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000ToAdd, marianToken);
 
     //zdzislaw
-    long zdzislawAccountIngId = callRestServiceToAddAccountAndReturnId(accountIngBalance9999(), zdzislawToken);
-    long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaBalance100000(), zdzislawToken);
+    Currency zdzislawAccountCurrency = currencyService.getCurrencies(zdzislawUserId).get(1);
+
+    Account accountIngZdzislaw = accountIngBalance9999();
+    accountIngZdzislaw.setCurrency(zdzislawAccountCurrency);
+    long zdzislawAccountIngId = callRestServiceToAddAccountAndReturnId(accountIngZdzislaw, zdzislawToken);
+
+    Account accountIdeaZdzislaw = accountIdeaBalance100000();
+    accountIdeaZdzislaw.setCurrency(zdzislawAccountCurrency);
+    long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaZdzislaw, zdzislawToken);
+
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
     long zdzislawCategoryAnimalsId = callRestToAddCategoryAndReturnId(categoryAnimals(), zdzislawToken);
     final long zdzislawTransactionAnimalsId = callRestToAddTransactionAndReturnId(animalsTransactionWithNoAccountAndNoCategory(),
@@ -432,13 +491,17 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //then
     final List<Account> accountsMarian = callRestToGetAllAccounts(marianToken);
 
+    marianAccountCurrency.setUserId(null); // services do not return userId - it's private information
+
     Account marianAccountMbankExpected = accountMbankBalance10();
     marianAccountMbankExpected.setId(marianAccountMbankId);
+    marianAccountMbankExpected.setCurrency(marianAccountCurrency);
     marianAccountMbankExpected
         .setBalance(accountMbankBalance10().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
     Account marianAccountMilleniumExpected = accountMilleniumBalance100();
     marianAccountMilleniumExpected.setId(marianAccountMilleniumId);
+    marianAccountMilleniumExpected.setCurrency(marianAccountCurrency);
     marianAccountMilleniumExpected
         .setBalance(
             accountMilleniumBalance100().getBalance().add(carTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
@@ -448,13 +511,17 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     final List<Account> accountsZdzislaw = callRestToGetAllAccounts(zdzislawToken);
 
+    zdzislawAccountCurrency.setUserId(null); // services do not return userId - it's private information
+
     Account zdzislawAccountIngExpected = accountIngBalance9999();
     zdzislawAccountIngExpected.setId(zdzislawAccountIngId);
+    zdzislawAccountIngExpected.setCurrency(zdzislawAccountCurrency);
     zdzislawAccountIngExpected.setBalance(
         accountIngBalance9999().getBalance().add(animalsTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
     Account zdzislawAccountIdeaExpected = accountIdeaBalance100000();
     zdzislawAccountIdeaExpected.setId(zdzislawAccountIdeaId);
+    zdzislawAccountIdeaExpected.setCurrency(zdzislawAccountCurrency);
     zdzislawAccountIdeaExpected.setBalance(
         accountIdeaBalance100000().getBalance().add(homeTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
@@ -530,12 +597,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldAccountWithTheSameNameToDifferentUsers() throws Exception {
 
     //given
-    callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    currencyService.addDefaultCurrencies(marianUserId);
+
+    long zdzislawUserId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    currencyService.addDefaultCurrencies(zdzislawUserId);
 
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
 
     //when
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
@@ -543,6 +614,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         .contentType(JSON_CONTENT_TYPE)
         .content(json(convertAccountToAccountRequest(account))))
         .andExpect(status().isOk());
+
+    account.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
 
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, zdzislawToken)

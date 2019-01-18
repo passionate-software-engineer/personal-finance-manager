@@ -18,6 +18,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.currency.CurrencyService;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -42,10 +43,14 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
   @Autowired
   private CategoryService categoryService;
 
+  @Autowired
+  private CurrencyService currencyService;
+
   @BeforeEach
   public void before() {
     super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
+    currencyService.addDefaultCurrencies(userId);
   }
 
   @Test
@@ -54,6 +59,8 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     Account savedAccount = accountService.addAccount(userId, account);
 
     Transaction transaction = new Transaction();
@@ -83,6 +90,8 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setCurrency(currencyService.getCurrencies(userId).get(1));
+
     Account savedAccount = accountService.addAccount(userId, account);
 
     Category category = categoryCar();
@@ -125,6 +134,8 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setCurrency(currencyService.getCurrencies(userId).get(1));
+
     Account savedAccount = accountService.addAccount(userId, account);
 
     Category category = categoryOil();
@@ -172,6 +183,8 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+
     Account savedAccount = accountService.addAccount(userId, account);
 
     long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
@@ -202,6 +215,8 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setCurrency(currencyService.getCurrencies(userId).get(1));
+
     Account savedAccount = accountService.addAccount(userId, account);
 
     long categoryId = categoryService.addCategory(categoryHome(), userId).getId();

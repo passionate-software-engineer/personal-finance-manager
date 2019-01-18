@@ -104,6 +104,7 @@ public class TransactionService {
     Account accountWithNewBalance = Account.builder()
         .name(account.getName())
         .balance(newBalance)
+        .currency(account.getCurrency())
         .build();
 
     historyEntryService.addHistoryEntryOnUpdate(account, accountWithNewBalance, userId);

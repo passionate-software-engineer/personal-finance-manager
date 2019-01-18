@@ -18,4 +18,7 @@ public class AccountRequest {
 
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   private BigDecimal balance;
+
+  @ApiModelProperty(value = "Account's currency id", required = true, example = "1")
+  private long currencyId;
 }

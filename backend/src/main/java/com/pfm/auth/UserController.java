@@ -21,6 +21,7 @@ public class UserController { // TODO extract API interface
 
   private UserService userService;
   private UserValidator userValidator;
+  private UserInitializationService userInitializationService;
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
@@ -42,6 +43,9 @@ public class UserController { // TODO extract API interface
     }
 
     long userId = userService.registerUser(user).getId();
+
+    userInitializationService.initializeUser(user.getId());
+
     return ResponseEntity.ok(userId);
   }
 }

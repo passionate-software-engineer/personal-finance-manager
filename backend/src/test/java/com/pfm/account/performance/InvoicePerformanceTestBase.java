@@ -11,6 +11,7 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
+import com.pfm.currency.Currency;
 import io.restassured.http.ContentType;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -39,6 +40,7 @@ public abstract class InvoicePerformanceTestBase {
   static final int THREAD_COUNT = 24;
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
+  private static final String CURRENCIES_SERVICE_PATH = "http://localhost:%d/currencies";
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
@@ -79,6 +81,10 @@ public abstract class InvoicePerformanceTestBase {
     return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
+  private String currenciesServicePath() {
+    return String.format(CURRENCIES_SERVICE_PATH, port);
+  }
+
   @PostConstruct
   public void before() throws Exception {
     final User defaultUser = userMarian();
@@ -89,18 +95,29 @@ public abstract class InvoicePerformanceTestBase {
         .post(usersServicePath() + "/register");
     token = authenticateUserAndGetToken(defaultUser);
 
-    for (int i = 0; i < 10; ++i) {
+    Currency[] currencies = getCurrencies();
 
-      Account account = addAndReturnAccount();
+    for (int i = 0; i < 10; ++i) {
+      Account account = addAndReturnAccount(currencies);
 
       accounts.add(account);
     }
   }
 
-  Account addAndReturnAccount() {
+  protected Currency[] getCurrencies() {
+    return given()
+          .header("Authorization", token)
+          .when()
+          .get(currenciesServicePath())
+          .getBody()
+          .as(Currency[].class);
+  }
+
+  Account addAndReturnAccount(Currency[] currencies) {
     AccountRequest accountRequest = AccountRequest.builder()
         .name(UUID.randomUUID().toString())
         .balance(getRandomBalance())
+        .currencyId(currencies[0].getId())
         .build();
 
     String response = given()
@@ -112,12 +129,14 @@ public abstract class InvoicePerformanceTestBase {
         .getBody()
         .asString();
 
-    Long accountId = Long.parseLong(response);
-    return Account.builder()
-        .id(accountId)
-        .name(accountRequest.getName())
-        .balance(accountRequest.getBalance())
-        .build();
+    long accountId = Long.parseLong(response);
+
+    return given()
+        .header("Authorization", token)
+        .when()
+        .get(invoiceServicePath() + "/" + accountId)
+        .getBody()
+        .as(Account.class);
   }
 
   @AfterEach
@@ -165,6 +184,7 @@ public abstract class InvoicePerformanceTestBase {
     return AccountRequest.builder()
         .name(account.getName())
         .balance(account.getBalance())
+        .currencyId(account.getCurrency().getId())
         .build();
   }
 

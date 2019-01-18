@@ -31,6 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.account.Account;
 import com.pfm.config.MessagesProvider.Language;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
@@ -54,7 +55,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldAddTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     BigDecimal expectedPrice = accountJacekBalance1000().getBalance()
         .add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice());
@@ -76,7 +80,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldDeleteTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
     Transaction transactionToAdd = foodTransactionWithNoAccountAndNoCategory();
@@ -103,7 +110,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldGetTransactions() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
@@ -128,8 +138,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldUpdateTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
-    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbankBalance10(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     final long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
@@ -165,7 +181,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorWhenTryingToDeleteAccountUsedInTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
     callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
@@ -182,13 +201,16 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInTransaction() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
     callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
-    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + jacekAccountId)
+    mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + foodCategoryId)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
@@ -199,7 +221,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnValidationErrorInUpdateMethod() throws Exception {
 
     //given
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(accountJacekBalance1000(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
     final long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,

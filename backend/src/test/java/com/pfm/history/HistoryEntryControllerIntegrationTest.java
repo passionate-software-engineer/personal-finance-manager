@@ -52,6 +52,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
     callRestServiceToAddAccountAndReturnId(account, token);
 
     //when
@@ -85,9 +86,12 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     Account updatedAccount = accountMbankBalance10();
     updatedAccount.setName("updatedName");
     updatedAccount.setBalance(convertDoubleToBigDecimal(999));
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
 
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     callRestToUpdateAccount(accountId, convertAccountToAccountRequest(updatedAccount), token);
@@ -118,6 +122,8 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
     assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
+
+    // TODO currrency change assertion
   }
 
   @Test
@@ -125,6 +131,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     //given
     Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
 
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     callRestToDeleteAccountById(accountId, token);
@@ -318,6 +325,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
     Account account = accountMilleniumBalance100();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Transaction transaction = carTransactionWithNoAccountAndNoCategory();
@@ -392,8 +400,13 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    final long accountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaBalance100000(), token);
-    final long accountIngId = callRestServiceToAddAccountAndReturnId(accountIngBalance9999(), token);
+    Account accountIdea = accountIdeaBalance100000();
+    accountIdea.setCurrency(currencyService.getCurrencies(userId).get(0));
+    final long accountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdea, token);
+
+    Account accountIng = accountIngBalance9999();
+    accountIng.setCurrency(currencyService.getCurrencies(userId).get(1));
+    final long accountIngId = callRestServiceToAddAccountAndReturnId(accountIng, token);
 
     Transaction transaction = carTransactionWithNoAccountAndNoCategory();
     final long transactionId = callRestToAddTransactionAndReturnId(transaction, accountIdeaId, categoryCarId, token);
@@ -536,6 +549,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
     Account account = accountMilleniumBalance100();
+    account.setCurrency(currencyService.getCurrencies(userId).get(1));
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Transaction transaction = carTransactionWithNoAccountAndNoCategory();
@@ -614,7 +628,11 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood, token);
 
     Account accountMillenium = accountMilleniumBalance100();
+    accountMillenium.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(1));
+
     final long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
     final long accountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMillenium, token);
 
@@ -696,7 +714,11 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood, token);
 
     Account accountMillenium = accountMilleniumBalance100();
+    accountMillenium.setCurrency(currencyService.getCurrencies(userId).get(0));
+
     Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(1));
+
     final long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
     final long accountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMillenium, token);
 
