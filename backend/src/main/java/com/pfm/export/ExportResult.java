@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 final class ExportResult {
 
-  private BigDecimal sumOfAllFundsAtTheBeginningOfExport;
-  private BigDecimal sumOfAllFundsAtTheEndOfExport;
+  private ExportFundsSummary sumOfAllFundsAtTheBeginningOfExport;
+  private ExportFundsSummary sumOfAllFundsAtTheEndOfExport;
 
   private List<ExportAccount> initialAccountsState = new ArrayList<>();
   private List<ExportAccount> finalAccountsState = new ArrayList<>();
@@ -35,7 +36,7 @@ final class ExportResult {
     private LocalDate endDate;
 
     @Builder.Default
-    private List<ExportAccount> accountStateAtTheBeginingOfPeriod = new ArrayList<>();
+    private List<ExportAccount> accountStateAtTheBeginningOfPeriod = new ArrayList<>();
 
     @Builder.Default
     private List<ExportAccount> accountStateAtTheEndOfPeriod = new ArrayList<>();
@@ -43,8 +44,8 @@ final class ExportResult {
     @Builder.Default
     private Collection<ExportTransaction> transactions = new ArrayList<>();
 
-    private BigDecimal sumOfAllFundsAtTheBeginningOfPeriod;
-    private BigDecimal sumOfAllFundsAtTheEndOfPeriod;
+    private ExportFundsSummary sumOfAllFundsAtTheBeginningOfPeriod;
+    private ExportFundsSummary sumOfAllFundsAtTheEndOfPeriod;
 
   }
 
@@ -98,5 +99,17 @@ final class ExportResult {
     private String account;
 
     private BigDecimal price;
+  }
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  static final class ExportFundsSummary {
+
+    private Map<String, BigDecimal> currencyToFundsMap;
+
+    private BigDecimal sumOfAllFundsInBaseCurrency;
+
   }
 }

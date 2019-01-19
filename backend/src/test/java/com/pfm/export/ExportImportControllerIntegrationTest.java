@@ -10,7 +10,9 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.hasValue;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,6 +28,7 @@ import com.pfm.config.MessagesProvider;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
+import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -62,7 +65,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   public void shouldExportTransactions() throws Exception {
     // given
     Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -81,8 +84,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
         .header("Authorization", token))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport", is("1000.00")))
-        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport", is("1010.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("1000.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.sumOfAllFundsInBaseCurrency", is("1010.00")))
         .andExpect(jsonPath("initialAccountsState", hasSize(1)))
         .andExpect(jsonPath("initialAccountsState[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("initialAccountsState[0].balance", is("1000.00")))
@@ -97,11 +100,11 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods", hasSize(1)))
         .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
         .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))
-        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod", is("1000.00")))
-        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod", is("1010.00")))
-        .andExpect(jsonPath("periods[0].accountStateAtTheBeginingOfPeriod", hasSize(1)))
-        .andExpect(jsonPath("periods[0].accountStateAtTheBeginingOfPeriod[0].name", is(accountJacekBalance1000().getName())))
-        .andExpect(jsonPath("periods[0].accountStateAtTheBeginingOfPeriod[0].balance", is("1000.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.sumOfAllFundsInBaseCurrency", is("1000.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.sumOfAllFundsInBaseCurrency", is("1010.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod", hasSize(1)))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].balance", is("1000.00")))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod", hasSize(1)))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].balance", is("1010.00")))
@@ -114,6 +117,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")));
 
     // TODO assert currency is exported
+    // TODO assert map of currencies
   }
 
   @Test
@@ -126,12 +130,23 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
         // then
         .andExpect(status().isOk())
-        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport", is("0.00")))
-        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap", hasKey("EUR")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap", hasKey("PLN")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap", hasKey("GBP")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap", hasKey("USD")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap", hasValue("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.sumOfAllFundsInBaseCurrency", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap", hasKey("EUR")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap", hasKey("PLN")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap", hasKey("GBP")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap", hasKey("USD")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap", hasValue("0.00")))
         .andExpect(jsonPath("initialAccountsState", hasSize(0)))
         .andExpect(jsonPath("finalAccountsState", hasSize(0)))
         .andExpect(jsonPath("categories", hasSize(0)))
         .andExpect(jsonPath("periods", hasSize(0)));
+
   }
 
   @Test
@@ -177,13 +192,13 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .build();
 
     ExportPeriod period = ExportPeriod.builder()
-        .accountStateAtTheBeginingOfPeriod(Arrays.asList(aliorAccount, ideaBankAccount))
+        .accountStateAtTheBeginningOfPeriod(Arrays.asList(aliorAccount, ideaBankAccount))
         .accountStateAtTheEndOfPeriod(Arrays.asList(aliorAccount, ideaBankAccount))
         .startDate(LocalDate.MIN)
         .endDate(LocalDate.MAX)
         .transactions(Collections.singletonList(transaction))
-        .sumOfAllFundsAtTheBeginningOfPeriod(BigDecimal.TEN)
-        .sumOfAllFundsAtTheEndOfPeriod(BigDecimal.TEN)
+        .sumOfAllFundsAtTheBeginningOfPeriod(ExportFundsSummary.builder().sumOfAllFundsInBaseCurrency(BigDecimal.TEN).build())
+        .sumOfAllFundsAtTheEndOfPeriod(ExportFundsSummary.builder().sumOfAllFundsInBaseCurrency(BigDecimal.TEN).build())
         .build();
 
     input.setPeriods(Collections.singletonList(period));
