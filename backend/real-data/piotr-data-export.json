@@ -1,5 +1,5 @@
 {
-  "sumOfAllFundsAtTheBeginningOfExport": "114695.80",
+  "sumOfAllFundsAtTheBeginningOfExport": "114742.44",
   "sumOfAllFundsAtTheEndOfExport": "269007.10",
   "initialAccountsState": [
     {
@@ -44,7 +44,7 @@
     },
     {
       "name": "Gotówka - EUR",
-      "balance": "37.79",
+      "balance": "84.43",
       "currency": "PLN"
     },
     {
@@ -10458,7 +10458,7 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "59.36",
+          "balance": "106.00",
           "currency": "PLN"
         },
         {
@@ -11061,7 +11061,7 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka - EUR",
-              "price": "23.32"
+              "price": "-23.32"
             },
             {
               "account": "Ania - rozliczenie",
@@ -11136,7 +11136,7 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "115014.17",
+      "sumOfAllFundsAtTheBeginningOfPeriod": "115060.81",
       "sumOfAllFundsAtTheEndOfPeriod": "150960.94"
     },
     {
@@ -11185,7 +11185,7 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "37.79",
+          "balance": "84.43",
           "currency": "PLN"
         },
         {
@@ -11277,7 +11277,7 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "59.36",
+          "balance": "106.00",
           "currency": "PLN"
         },
         {
@@ -12085,8 +12085,8 @@
           ]
         }
       ],
-      "sumOfAllFundsAtTheBeginningOfPeriod": "114695.80",
-      "sumOfAllFundsAtTheEndOfPeriod": "115014.17"
+      "sumOfAllFundsAtTheBeginningOfPeriod": "114742.44",
+      "sumOfAllFundsAtTheEndOfPeriod": "115060.81"
     }
   ]
 }
