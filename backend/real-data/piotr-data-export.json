@@ -1,21 +1,21 @@
 {
   "sumOfAllFundsAtTheBeginningOfExport": {
     "currencyToFundsMap": {
-      "EUR": "19.91",
-      "PLN": "114658.01",
+      "EUR": "638.83",
+      "PLN": "112040.79",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "114742.43"
+    "sumOfAllFundsInBaseCurrency": "114749.43"
   },
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
-      "EUR": "4.17",
-      "PLN": "270038.66",
+      "EUR": "297.09",
+      "PLN": "267747.44",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "270056.34"
+    "sumOfAllFundsInBaseCurrency": "269007.10"
   },
   "initialAccountsState": [
     {
@@ -30,8 +30,8 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "2617.22",
-      "currency": "PLN"
+      "balance": "618.92",
+      "currency": "EUR"
     },
     {
       "name": "kantor Alior - GBP",
@@ -122,8 +122,8 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "2291.22",
-      "currency": "PLN"
+      "balance": "292.92",
+      "currency": "EUR"
     },
     {
       "name": "kantor Alior - GBP",
@@ -366,8 +366,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2391.22",
-          "currency": "PLN"
+          "balance": "392.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -458,8 +458,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2291.22",
-          "currency": "PLN"
+          "balance": "292.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1266,21 +1266,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "272969.57",
+          "EUR": "397.09",
+          "PLN": "270578.35",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "272987.25"
+        "sumOfAllFundsInBaseCurrency": "272262.01"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "270038.66",
+          "EUR": "297.09",
+          "PLN": "267747.44",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "270056.34"
+        "sumOfAllFundsInBaseCurrency": "269007.10"
       }
     },
     {
@@ -1299,8 +1299,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2070.47",
-          "currency": "PLN"
+          "balance": "72.17",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -1391,8 +1391,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2391.22",
-          "currency": "PLN"
+          "balance": "392.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2626,21 +2626,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "271426.87",
+          "EUR": "76.34",
+          "PLN": "269356.40",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "271444.55"
+        "sumOfAllFundsInBaseCurrency": "269680.08"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "272969.57",
+          "EUR": "397.09",
+          "PLN": "270578.35",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "272987.25"
+        "sumOfAllFundsInBaseCurrency": "272262.01"
       }
     },
     {
@@ -2659,8 +2659,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2070.47",
-          "currency": "PLN"
+          "balance": "72.17",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -2751,8 +2751,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2070.47",
-          "currency": "PLN"
+          "balance": "72.17",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3490,21 +3490,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "266886.51",
+          "EUR": "76.34",
+          "PLN": "264816.04",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "266904.19"
+        "sumOfAllFundsInBaseCurrency": "265139.72"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "271426.87",
+          "EUR": "76.34",
+          "PLN": "269356.40",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "271444.55"
+        "sumOfAllFundsInBaseCurrency": "269680.08"
       }
     },
     {
@@ -3523,8 +3523,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2070.47",
-          "currency": "PLN"
+          "balance": "72.17",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -3615,8 +3615,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2070.47",
-          "currency": "PLN"
+          "balance": "72.17",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -4749,21 +4749,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "270126.76",
+          "EUR": "76.34",
+          "PLN": "268056.29",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "270144.44"
+        "sumOfAllFundsInBaseCurrency": "268379.97"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "266886.51",
+          "EUR": "76.34",
+          "PLN": "264816.04",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "266904.19"
+        "sumOfAllFundsInBaseCurrency": "265139.72"
       }
     },
     {
@@ -4782,8 +4782,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2368.77",
-          "currency": "PLN"
+          "balance": "370.47",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -4874,8 +4874,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2070.47",
-          "currency": "PLN"
+          "balance": "72.17",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -5688,21 +5688,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "262898.05",
+          "EUR": "374.64",
+          "PLN": "260529.28",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "262915.73"
+        "sumOfAllFundsInBaseCurrency": "262117.75"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "270126.76",
+          "EUR": "76.34",
+          "PLN": "268056.29",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "270144.44"
+        "sumOfAllFundsInBaseCurrency": "268379.97"
       }
     },
     {
@@ -5721,8 +5721,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2487.87",
-          "currency": "PLN"
+          "balance": "489.57",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -5813,8 +5813,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2368.77",
-          "currency": "PLN"
+          "balance": "370.47",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -6785,21 +6785,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "232942.81",
+          "EUR": "493.74",
+          "PLN": "230454.94",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232960.49"
+        "sumOfAllFundsInBaseCurrency": "232548.40"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "262898.05",
+          "EUR": "374.64",
+          "PLN": "260529.28",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "262915.73"
+        "sumOfAllFundsInBaseCurrency": "262117.75"
       }
     },
     {
@@ -6818,8 +6818,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2487.87",
-          "currency": "PLN"
+          "balance": "489.57",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -6910,8 +6910,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2487.87",
-          "currency": "PLN"
+          "balance": "489.57",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -7581,21 +7581,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "243250.24",
+          "EUR": "493.74",
+          "PLN": "240762.37",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "243267.92"
+        "sumOfAllFundsInBaseCurrency": "242855.83"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "232942.81",
+          "EUR": "493.74",
+          "PLN": "230454.94",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232960.49"
+        "sumOfAllFundsInBaseCurrency": "232548.40"
       }
     },
     {
@@ -7614,8 +7614,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2547.87",
-          "currency": "PLN"
+          "balance": "549.57",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -7706,8 +7706,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2487.87",
-          "currency": "PLN"
+          "balance": "489.57",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -8437,21 +8437,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "5.17",
-          "PLN": "212489.01",
+          "EUR": "554.74",
+          "PLN": "209941.14",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "212510.93"
+        "sumOfAllFundsInBaseCurrency": "212293.24"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "4.17",
-          "PLN": "243250.24",
+          "EUR": "493.74",
+          "PLN": "240762.37",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "243267.92"
+        "sumOfAllFundsInBaseCurrency": "242855.83"
       }
     },
     {
@@ -8470,8 +8470,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2111.95",
-          "currency": "PLN"
+          "balance": "113.65",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -8562,8 +8562,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2547.87",
-          "currency": "PLN"
+          "balance": "549.57",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -9048,21 +9048,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "5.17",
-          "PLN": "190782.08",
+          "EUR": "118.82",
+          "PLN": "188670.13",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "190804.00"
+        "sumOfAllFundsInBaseCurrency": "189173.93"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "5.17",
-          "PLN": "212489.01",
+          "EUR": "554.74",
+          "PLN": "209941.14",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "212510.93"
+        "sumOfAllFundsInBaseCurrency": "212293.24"
       }
     },
     {
@@ -9081,8 +9081,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2111.95",
-          "currency": "PLN"
+          "balance": "113.65",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -9173,8 +9173,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2111.95",
-          "currency": "PLN"
+          "balance": "113.65",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -9640,21 +9640,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "5.17",
-          "PLN": "189522.97",
+          "EUR": "118.82",
+          "PLN": "187411.02",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "189544.89"
+        "sumOfAllFundsInBaseCurrency": "187914.82"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "5.17",
-          "PLN": "190782.08",
+          "EUR": "118.82",
+          "PLN": "188670.13",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "190804.00"
+        "sumOfAllFundsInBaseCurrency": "189173.93"
       }
     },
     {
@@ -9673,8 +9673,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2538.53",
-          "currency": "PLN"
+          "balance": "540.23",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -9765,8 +9765,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2111.95",
-          "currency": "PLN"
+          "balance": "113.65",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -10587,21 +10587,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "19.50",
-          "PLN": "151126.21",
+          "EUR": "559.73",
+          "PLN": "148587.68",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "151208.89"
+        "sumOfAllFundsInBaseCurrency": "150960.94"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "5.17",
-          "PLN": "189522.97",
+          "EUR": "118.82",
+          "PLN": "187411.02",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "189544.89"
+        "sumOfAllFundsInBaseCurrency": "187914.82"
       }
     },
     {
@@ -10620,8 +10620,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2820.67",
-          "currency": "PLN"
+          "balance": "822.37",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -10712,8 +10712,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2538.53",
-          "currency": "PLN"
+          "balance": "540.23",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -11330,21 +11330,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "25.00",
-          "PLN": "114295.63",
+          "EUR": "847.37",
+          "PLN": "111474.96",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "114401.63"
+        "sumOfAllFundsInBaseCurrency": "115067.81"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "19.50",
-          "PLN": "151126.21",
+          "EUR": "559.73",
+          "PLN": "148587.68",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "151208.89"
+        "sumOfAllFundsInBaseCurrency": "150960.94"
       }
     },
     {
@@ -11363,8 +11363,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2617.22",
-          "currency": "PLN"
+          "balance": "618.92",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -11455,8 +11455,8 @@
         },
         {
           "name": "kantor Alior - EUR",
-          "balance": "2820.67",
-          "currency": "PLN"
+          "balance": "822.37",
+          "currency": "EUR"
         },
         {
           "name": "kantor Alior - GBP",
@@ -12295,21 +12295,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "19.91",
-          "PLN": "114658.01",
+          "EUR": "638.83",
+          "PLN": "112040.79",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "114742.43"
+        "sumOfAllFundsInBaseCurrency": "114749.43"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "25.00",
-          "PLN": "114295.63",
+          "EUR": "847.37",
+          "PLN": "111474.96",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "114401.63"
+        "sumOfAllFundsInBaseCurrency": "115067.81"
       }
     }
   ]
