@@ -4,9 +4,12 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
+import com.pfm.currency.Currency;
+import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
+import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.transaction.AccountPriceEntry;
@@ -33,13 +36,14 @@ public class ExportService {
   private TransactionService transactionService;
   private AccountService accountService;
   private CategoryService categoryService;
+  private CurrencyService currencyService;
 
   ExportResult exportData(long userId) {
     ExportResult result = new ExportResult();
 
     result.setCategories(prepareExportCategories(userId));
     result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts(userId)));
-    result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState()));
+    result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState(), userId));
 
     List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions(userId), userId);
     Map<String, List<ExportTransaction>> monthToTransactionMap = groupTransactionsByMonth(exportTransactions);
@@ -47,9 +51,9 @@ public class ExportService {
     List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap, userId);
     result.setPeriods(periods);
     if (periods.size() > 0) {
-      result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginingOfPeriod());
+      result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod());
     }
-    result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState()));
+    result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState(), userId));
 
     // TODO export / import filters
 
@@ -68,10 +72,10 @@ public class ExportService {
       subtractTransactionsValuesFromAccountStateToCalculateStateBeforeTransactions(transactionsInMonth, accountsStateAtTheBeginingOfPeriod);
 
       ExportPeriod period = ExportPeriod.builder()
-          .accountStateAtTheBeginingOfPeriod(accountsStateAtTheBeginingOfPeriod)
+          .accountStateAtTheBeginningOfPeriod(accountsStateAtTheBeginingOfPeriod)
           .accountStateAtTheEndOfPeriod(accountsStateAtTheEndOfPeriod)
-          .sumOfAllFundsAtTheBeginningOfPeriod(calculateSumOfFunds(accountsStateAtTheBeginingOfPeriod))
-          .sumOfAllFundsAtTheEndOfPeriod(calculateSumOfFunds(accountsStateAtTheEndOfPeriod))
+          .sumOfAllFundsAtTheBeginningOfPeriod(calculateSumOfFunds(accountsStateAtTheBeginingOfPeriod, userId))
+          .sumOfAllFundsAtTheEndOfPeriod(calculateSumOfFunds(accountsStateAtTheEndOfPeriod, userId))
           .startDate(LocalDate.parse(transactionsInMonth.getKey()))
           .endDate(LocalDate.parse(transactionsInMonth.getKey()).plusMonths(1).minusDays(1))
           .transactions(transactionsInMonth.getValue())
@@ -183,8 +187,29 @@ public class ExportService {
     return String.format("%04d-%02d-01", date.getYear(), date.getMonth().getValue());
   }
 
-  private BigDecimal calculateSumOfFunds(List<ExportAccount> accounts) {
-    return accounts.stream().map(ExportAccount::getBalance).reduce(BigDecimal.ZERO, BigDecimal::add);
+  private ExportFundsSummary calculateSumOfFunds(List<ExportAccount> accounts, long userId) {
+    List<Currency> currencies = currencyService.getCurrencies(userId);
+
+    // ENHANCEMENT change to stream
+    Map<String, BigDecimal> currencyToExchangeRate = new HashMap<>();
+    Map<String, BigDecimal> currencyToBalanceMap = new HashMap<>();
+    for (Currency currency : currencies) {
+      currencyToExchangeRate.put(currency.getName(), currency.getExchangeRate());
+      currencyToBalanceMap.put(currency.getName(), BigDecimal.ZERO);
+    }
+
+    BigDecimal sumOfAllFunds = accounts.stream()
+        .map(account -> account.getBalance().multiply(currencyToExchangeRate.get(account.getCurrency())))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    for (ExportAccount account : accounts) {
+      currencyToBalanceMap.put(account.getCurrency(), currencyToBalanceMap.get(account.getCurrency()).add(account.getBalance()));
+    }
+
+    return ExportFundsSummary.builder()
+        .sumOfAllFundsInBaseCurrency(sumOfAllFunds)
+        .currencyToFundsMap(currencyToBalanceMap)
+        .build();
   }
 
 }
