@@ -1,17 +1,17 @@
 {
   "sumOfAllFundsAtTheBeginningOfExport": {
     "currencyToFundsMap": {
-      "EUR": "0.00",
-      "PLN": "114742.44",
+      "EUR": "19.91",
+      "PLN": "114658.01",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "114742.44"
+    "sumOfAllFundsInBaseCurrency": "114742.43"
   },
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
-      "EUR": "0.00",
-      "PLN": "269007.10",
+      "EUR": "4.17",
+      "PLN": "268989.42",
       "GBP": "0.00",
       "USD": "0.00"
     },
@@ -60,8 +60,8 @@
     },
     {
       "name": "Gotówka - EUR",
-      "balance": "84.43",
-      "currency": "PLN"
+      "balance": "19.91",
+      "currency": "EUR"
     },
     {
       "name": "Ania - rozliczenie",
@@ -152,8 +152,8 @@
     },
     {
       "name": "Gotówka - EUR",
-      "balance": "17.68",
-      "currency": "PLN"
+      "balance": "4.17",
+      "currency": "EUR"
     },
     {
       "name": "Ania - rozliczenie",
@@ -396,8 +396,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -488,8 +488,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -1266,8 +1266,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "272262.01",
+          "EUR": "4.17",
+          "PLN": "272244.33",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -1275,8 +1275,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "269007.10",
+          "EUR": "4.17",
+          "PLN": "268989.42",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -1329,8 +1329,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -1421,8 +1421,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -2626,8 +2626,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "269680.08",
+          "EUR": "4.17",
+          "PLN": "269662.40",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -2635,8 +2635,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "272262.01",
+          "EUR": "4.17",
+          "PLN": "272244.33",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -2689,8 +2689,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -2781,8 +2781,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -3490,8 +3490,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "265139.72",
+          "EUR": "4.17",
+          "PLN": "265122.04",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -3499,8 +3499,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "269680.08",
+          "EUR": "4.17",
+          "PLN": "269662.40",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -3553,8 +3553,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -3645,8 +3645,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -4749,8 +4749,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "268379.97",
+          "EUR": "4.17",
+          "PLN": "268362.29",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -4758,8 +4758,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "265139.72",
+          "EUR": "4.17",
+          "PLN": "265122.04",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -4812,8 +4812,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -4904,8 +4904,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -5688,8 +5688,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "262117.75",
+          "EUR": "4.17",
+          "PLN": "262100.07",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -5697,8 +5697,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "268379.97",
+          "EUR": "4.17",
+          "PLN": "268362.29",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -5751,8 +5751,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -5843,8 +5843,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -6785,8 +6785,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "232548.40",
+          "EUR": "4.17",
+          "PLN": "232530.72",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -6794,8 +6794,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "262117.75",
+          "EUR": "4.17",
+          "PLN": "262100.07",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -6848,8 +6848,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -6940,8 +6940,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -7581,8 +7581,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "242855.83",
+          "EUR": "4.17",
+          "PLN": "242838.15",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -7590,8 +7590,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "232548.40",
+          "EUR": "4.17",
+          "PLN": "232530.72",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -7644,8 +7644,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "5.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -7736,8 +7736,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "17.68",
-          "currency": "PLN"
+          "balance": "4.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -8204,7 +8204,7 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka - EUR",
-              "price": "-4.24"
+              "price": "-1.00"
             },
             {
               "account": "Ania - rozliczenie",
@@ -8437,8 +8437,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "212293.24",
+          "EUR": "5.17",
+          "PLN": "212271.32",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -8446,8 +8446,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "242855.83",
+          "EUR": "4.17",
+          "PLN": "242838.15",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -8500,8 +8500,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "5.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -8592,8 +8592,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "5.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9048,8 +9048,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "189173.93",
+          "EUR": "5.17",
+          "PLN": "189152.01",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -9057,8 +9057,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "212293.24",
+          "EUR": "5.17",
+          "PLN": "212271.32",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -9111,8 +9111,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "5.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9203,8 +9203,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "5.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9640,8 +9640,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "187914.82",
+          "EUR": "5.17",
+          "PLN": "187892.90",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -9649,8 +9649,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "189173.93",
+          "EUR": "5.17",
+          "PLN": "189152.01",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -9703,8 +9703,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "82.68",
-          "currency": "PLN"
+          "balance": "19.50",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -9795,8 +9795,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "21.92",
-          "currency": "PLN"
+          "balance": "5.17",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -10292,7 +10292,7 @@
             },
             {
               "account": "Gotówka - EUR",
-              "price": "-60.76"
+              "price": "-14.33"
             }
           ]
         },
@@ -10587,8 +10587,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "150960.94",
+          "EUR": "19.50",
+          "PLN": "150878.26",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -10596,8 +10596,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "187914.82",
+          "EUR": "5.17",
+          "PLN": "187892.90",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -10650,8 +10650,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "106.00",
-          "currency": "PLN"
+          "balance": "25.00",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -10742,8 +10742,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "82.68",
-          "currency": "PLN"
+          "balance": "19.50",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -11253,7 +11253,7 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka - EUR",
-              "price": "-23.32"
+              "price": "-5.50"
             },
             {
               "account": "Ania - rozliczenie",
@@ -11330,8 +11330,8 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "115060.81",
+          "EUR": "25.00",
+          "PLN": "114954.81",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -11339,8 +11339,8 @@
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "150960.94",
+          "EUR": "19.50",
+          "PLN": "150878.26",
           "GBP": "0.00",
           "USD": "0.00"
         },
@@ -11393,8 +11393,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "84.43",
-          "currency": "PLN"
+          "balance": "19.91",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -11485,8 +11485,8 @@
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "106.00",
-          "currency": "PLN"
+          "balance": "25.00",
+          "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
@@ -11634,7 +11634,7 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka - EUR",
-              "price": "4240.00"
+              "price": "1000.00"
             },
             {
               "account": "kantor Alior - EUR",
@@ -11664,7 +11664,7 @@
           "accountPriceEntries": [
             {
               "account": "Gotówka - EUR",
-              "price": "-4240.00"
+              "price": "-1000.00"
             },
             {
               "account": "Ania - rozliczenie",
@@ -12030,7 +12030,7 @@
             },
             {
               "account": "Gotówka - EUR",
-              "price": "21.57"
+              "price": "5.09"
             }
           ]
         },
@@ -12295,17 +12295,17 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "114742.44",
+          "EUR": "19.91",
+          "PLN": "114658.01",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "114742.44"
+        "sumOfAllFundsInBaseCurrency": "114742.43"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "0.00",
-          "PLN": "115060.81",
+          "EUR": "25.00",
+          "PLN": "114954.81",
           "GBP": "0.00",
           "USD": "0.00"
         },
