@@ -2,11 +2,11 @@
   "sumOfAllFundsAtTheBeginningOfExport": {
     "currencyToFundsMap": {
       "EUR": "638.83",
-      "PLN": "112040.79",
+      "PLN": "26060.79",
       "GBP": "0.00",
-      "USD": "0.00"
+      "USD": "23999.99"
     },
-    "sumOfAllFundsInBaseCurrency": "114749.43"
+    "sumOfAllFundsInBaseCurrency": "114689.39"
   },
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
@@ -25,8 +25,8 @@
     },
     {
       "name": "kantor Alior - USD",
-      "balance": "85980.00",
-      "currency": "PLN"
+      "balance": "23999.99",
+      "currency": "USD"
     },
     {
       "name": "kantor Alior - EUR",
@@ -118,7 +118,7 @@
     {
       "name": "kantor Alior - USD",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "kantor Alior - EUR",
@@ -362,7 +362,7 @@
         {
           "name": "kantor Alior - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -454,7 +454,7 @@
         {
           "name": "kantor Alior - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1294,8 +1294,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "19703.75",
-          "currency": "PLN"
+          "balance": "5500.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1387,7 +1387,7 @@
         {
           "name": "kantor Alior - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -1556,7 +1556,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "3582.50"
+              "price": "1000.00"
             },
             {
               "account": "Revolut - USD",
@@ -1705,7 +1705,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -1735,7 +1735,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             },
             {
               "account": "kantor Alior - EUR",
@@ -1750,7 +1750,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-16121.25"
+              "price": "-4500.00"
             },
             {
               "account": "Revolut - USD",
@@ -1829,7 +1829,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "4800.55"
+              "price": "1340.00"
             }
           ]
         },
@@ -1903,7 +1903,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-11965.55"
+              "price": "-3340.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -1952,7 +1952,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -2227,7 +2227,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -2261,7 +2261,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -2627,11 +2627,11 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "269356.40",
+          "PLN": "249652.65",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "5500.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269680.08"
+        "sumOfAllFundsInBaseCurrency": "269666.33"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
@@ -2654,8 +2654,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "7165.00",
-          "currency": "PLN"
+          "balance": "2000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2746,8 +2746,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "19703.75",
-          "currency": "PLN"
+          "balance": "5500.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -2987,7 +2987,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3121,7 +3121,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-8598.00"
+              "price": "-2400.00"
             },
             {
               "account": "Revolut - USD",
@@ -3162,7 +3162,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "6448.50"
+              "price": "1800.00"
             }
           ]
         },
@@ -3323,7 +3323,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "7881.50"
+              "price": "2200.00"
             }
           ]
         },
@@ -3446,7 +3446,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-358.25"
+              "price": "-100.00"
             },
             {
               "account": "Revolut - USD",
@@ -3491,20 +3491,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "264816.04",
+          "PLN": "257651.04",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "2000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "265139.72"
+        "sumOfAllFundsInBaseCurrency": "265134.72"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "269356.40",
+          "PLN": "249652.65",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "5500.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269680.08"
+        "sumOfAllFundsInBaseCurrency": "269666.33"
       }
     },
     {
@@ -3518,8 +3518,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "53737.50",
-          "currency": "PLN"
+          "balance": "15000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -3610,8 +3610,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "7165.00",
-          "currency": "PLN"
+          "balance": "2000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -3765,7 +3765,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -3795,7 +3795,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "Revolut - USD",
@@ -3933,7 +3933,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "2264.14"
+              "price": "632.00"
             }
           ]
         },
@@ -3944,7 +3944,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "Revolut - USD",
@@ -4104,7 +4104,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -4265,7 +4265,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-9429.14"
+              "price": "-2632.00"
             }
           ]
         },
@@ -4295,7 +4295,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-10747.50"
+              "price": "-3000.00"
             }
           ]
         },
@@ -4310,7 +4310,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         },
@@ -4336,7 +4336,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -4589,7 +4589,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-14330.00"
+              "price": "-4000.00"
             },
             {
               "account": "Revolut - USD",
@@ -4623,7 +4623,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "2597.31"
+              "price": "725.00"
             }
           ]
         },
@@ -4638,7 +4638,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-9762.31"
+              "price": "-2725.00"
             }
           ]
         },
@@ -4701,7 +4701,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         },
@@ -4716,7 +4716,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         },
@@ -4727,7 +4727,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -4750,20 +4750,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "268056.29",
+          "PLN": "214318.79",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "15000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "268379.97"
+        "sumOfAllFundsInBaseCurrency": "268342.47"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "264816.04",
+          "PLN": "257651.04",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "2000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "265139.72"
+        "sumOfAllFundsInBaseCurrency": "265134.72"
       }
     },
     {
@@ -4777,8 +4777,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "27755.78",
-          "currency": "PLN"
+          "balance": "7747.60",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -4869,8 +4869,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "53737.50",
-          "currency": "PLN"
+          "balance": "15000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -5110,7 +5110,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -5218,7 +5218,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -5289,7 +5289,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-528.78"
+              "price": "-147.60"
             }
           ]
         },
@@ -5363,7 +5363,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2149.50"
+              "price": "-600.00"
             },
             {
               "account": "kantor Alior - EUR",
@@ -5419,7 +5419,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -5541,7 +5541,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -5689,20 +5689,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "374.64",
-          "PLN": "260529.28",
+          "PLN": "232773.50",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "7747.60"
         },
-        "sumOfAllFundsInBaseCurrency": "262117.75"
+        "sumOfAllFundsInBaseCurrency": "262098.38"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "268056.29",
+          "PLN": "214318.79",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "15000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "268379.97"
+        "sumOfAllFundsInBaseCurrency": "268342.47"
       }
     },
     {
@@ -5716,8 +5716,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "134433.31",
-          "currency": "PLN"
+          "balance": "37525.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -5808,8 +5808,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "27755.78",
-          "currency": "PLN"
+          "balance": "7747.60",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -5911,7 +5911,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7111.27"
+              "price": "1985.00"
             }
           ]
         },
@@ -6041,7 +6041,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7111.26"
+              "price": "1985.00"
             }
           ]
         },
@@ -6149,7 +6149,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-1773.34"
+              "price": "-495.00"
             },
             {
               "account": "Revolut - USD",
@@ -6209,7 +6209,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-2507.75"
+              "price": "-700.00"
             },
             {
               "account": "Revolut - USD",
@@ -6269,7 +6269,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-1074.75"
+              "price": "-300.00"
             },
             {
               "account": "Revolut - USD",
@@ -6329,7 +6329,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-17912.50"
+              "price": "-5000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -6344,7 +6344,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-17912.50"
+              "price": "-5000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -6359,7 +6359,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-17912.50"
+              "price": "-5000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -6374,7 +6374,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-35825.00"
+              "price": "-10000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -6389,7 +6389,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-35825.00"
+              "price": "-10000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -6404,7 +6404,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-17912.50"
+              "price": "-5000.00"
             },
             {
               "account": "Revolut - USD",
@@ -6449,7 +6449,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -6475,7 +6475,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "27.23"
+              "price": "7.60"
             }
           ]
         },
@@ -6490,7 +6490,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "6232.55"
+              "price": "1739.72"
             }
           ]
         },
@@ -6612,7 +6612,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -6671,7 +6671,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -6701,7 +6701,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "1.00"
+              "price": "0.28"
             }
           ]
         },
@@ -6786,20 +6786,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "230454.94",
+          "PLN": "96021.63",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "37525.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232548.40"
+        "sumOfAllFundsInBaseCurrency": "232454.59"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "374.64",
-          "PLN": "260529.28",
+          "PLN": "232773.50",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "7747.60"
         },
-        "sumOfAllFundsInBaseCurrency": "262117.75"
+        "sumOfAllFundsInBaseCurrency": "262098.38"
       }
     },
     {
@@ -6813,8 +6813,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "114640.00",
-          "currency": "PLN"
+          "balance": "32000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -6905,8 +6905,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "134433.31",
-          "currency": "PLN"
+          "balance": "37525.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -6997,7 +6997,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             },
             {
               "account": "Revolut - USD",
@@ -7071,7 +7071,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-6806.75"
+              "price": "-1900.00"
             },
             {
               "account": "Idea Bank",
@@ -7097,7 +7097,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7111.26"
+              "price": "1985.00"
             }
           ]
         },
@@ -7186,7 +7186,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7111.26"
+              "price": "1985.00"
             }
           ]
         },
@@ -7279,7 +7279,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7111.26"
+              "price": "1985.00"
             }
           ]
         },
@@ -7401,7 +7401,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "8848.78"
+              "price": "2470.00"
             }
           ]
         },
@@ -7582,20 +7582,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "240762.37",
+          "PLN": "126122.37",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "32000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "242855.83"
+        "sumOfAllFundsInBaseCurrency": "242775.83"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "230454.94",
+          "PLN": "96021.63",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "37525.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232548.40"
+        "sumOfAllFundsInBaseCurrency": "232454.59"
       }
     },
     {
@@ -7609,8 +7609,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "164795.00",
-          "currency": "PLN"
+          "balance": "46000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -7701,8 +7701,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "114640.00",
-          "currency": "PLN"
+          "balance": "32000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -7793,7 +7793,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -7985,7 +7985,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -8137,7 +8137,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -8174,7 +8174,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-21495.00"
+              "price": "-6000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -8234,7 +8234,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7111.26"
+              "price": "1985.00"
             }
           ]
         },
@@ -8245,7 +8245,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-28606.26"
+              "price": "-7985.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -8260,7 +8260,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-14330.00"
+              "price": "-4000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -8290,7 +8290,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-14330.00"
+              "price": "-4000.00"
             },
             {
               "account": "kantor Alior - PLN",
@@ -8438,20 +8438,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "554.74",
-          "PLN": "209941.14",
+          "PLN": "45146.14",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "46000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "212293.24"
+        "sumOfAllFundsInBaseCurrency": "212178.24"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "240762.37",
+          "PLN": "126122.37",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "32000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "242855.83"
+        "sumOfAllFundsInBaseCurrency": "242775.83"
       }
     },
     {
@@ -8465,8 +8465,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "154047.54",
-          "currency": "PLN"
+          "balance": "43000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -8557,8 +8557,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "164795.00",
-          "currency": "PLN"
+          "balance": "46000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -8664,7 +8664,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -8675,7 +8675,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-12538.75"
+              "price": "-3500.00"
             },
             {
               "account": "Idea Bank",
@@ -8690,7 +8690,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-5373.79"
+              "price": "-1500.00"
             },
             {
               "account": "kantor Alior - EUR",
@@ -8790,7 +8790,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -8864,7 +8864,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -8916,7 +8916,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -9049,20 +9049,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "188670.13",
+          "PLN": "34622.59",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "43000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "189173.93"
+        "sumOfAllFundsInBaseCurrency": "189066.39"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "554.74",
-          "PLN": "209941.14",
+          "PLN": "45146.14",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "46000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "212293.24"
+        "sumOfAllFundsInBaseCurrency": "212178.24"
       }
     },
     {
@@ -9076,8 +9076,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "154047.50",
-          "currency": "PLN"
+          "balance": "42999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -9168,8 +9168,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "154047.54",
-          "currency": "PLN"
+          "balance": "43000.00",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -9308,7 +9308,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -9330,7 +9330,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "-28660.00"
+              "price": "-8000.00"
             },
             {
               "account": "Idea Bank",
@@ -9419,7 +9419,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -9482,7 +9482,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.04"
+              "price": "2000.01"
             }
           ]
         },
@@ -9545,7 +9545,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -9641,20 +9641,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "187411.02",
+          "PLN": "33363.52",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "42999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "187914.82"
+        "sumOfAllFundsInBaseCurrency": "187807.28"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "188670.13",
+          "PLN": "34622.59",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "43000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "189173.93"
+        "sumOfAllFundsInBaseCurrency": "189066.39"
       }
     },
     {
@@ -9668,8 +9668,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "121805.00",
-          "currency": "PLN"
+          "balance": "33999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -9760,8 +9760,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "154047.50",
-          "currency": "PLN"
+          "balance": "42999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -9852,7 +9852,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -9941,7 +9941,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         },
@@ -9967,7 +9967,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -10049,7 +10049,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -10142,7 +10142,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -10448,7 +10448,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -10588,20 +10588,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "559.73",
-          "PLN": "148587.68",
+          "PLN": "26782.68",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "33999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "150960.94"
+        "sumOfAllFundsInBaseCurrency": "150875.90"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "187411.02",
+          "PLN": "33363.52",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "42999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "187914.82"
+        "sumOfAllFundsInBaseCurrency": "187807.28"
       }
     },
     {
@@ -10615,8 +10615,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "100310.00",
-          "currency": "PLN"
+          "balance": "27999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -10707,8 +10707,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "121805.00",
-          "currency": "PLN"
+          "balance": "33999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -10825,7 +10825,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -10955,7 +10955,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -10981,7 +10981,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             }
           ]
         },
@@ -11078,7 +11078,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -11186,7 +11186,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -11331,20 +11331,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "847.37",
-          "PLN": "111474.96",
+          "PLN": "11164.96",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "27999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "115067.81"
+        "sumOfAllFundsInBaseCurrency": "114997.77"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "559.73",
-          "PLN": "148587.68",
+          "PLN": "26782.68",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "33999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "150960.94"
+        "sumOfAllFundsInBaseCurrency": "150875.90"
       }
     },
     {
@@ -11358,8 +11358,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "85980.00",
-          "currency": "PLN"
+          "balance": "23999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -11450,8 +11450,8 @@
         },
         {
           "name": "kantor Alior - USD",
-          "balance": "100310.00",
-          "currency": "PLN"
+          "balance": "27999.99",
+          "currency": "USD"
         },
         {
           "name": "kantor Alior - EUR",
@@ -11557,7 +11557,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         },
@@ -11601,7 +11601,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -11623,7 +11623,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "985.19"
+              "price": "275.00"
             }
           ]
         },
@@ -11825,7 +11825,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-985.19"
+              "price": "-275.00"
             }
           ]
         },
@@ -11918,7 +11918,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -12015,7 +12015,7 @@
           "accountPriceEntries": [
             {
               "account": "kantor Alior - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -12288,7 +12288,7 @@
             },
             {
               "account": "kantor Alior - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         }
@@ -12296,20 +12296,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "638.83",
-          "PLN": "112040.79",
+          "PLN": "26060.79",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "23999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "114749.43"
+        "sumOfAllFundsInBaseCurrency": "114689.39"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "847.37",
-          "PLN": "111474.96",
+          "PLN": "11164.96",
           "GBP": "0.00",
-          "USD": "0.00"
+          "USD": "27999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "115067.81"
+        "sumOfAllFundsInBaseCurrency": "114997.77"
       }
     }
   ]
