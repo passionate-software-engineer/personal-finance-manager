@@ -57,9 +57,9 @@
         </ul>
       </div>
     </td>
-    <td *ngIf="category.editMode">
+    <td *ngIf="category.editMode" id="EditCategorySaveExitBtn">
       <button id="EditCategorySaveBtn" class="btn btn-success" (click)="onEditCategory(category)">{{'button.save' | translate}}</button>
-      <button class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
+      <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>
@@ -80,9 +80,9 @@
       </div>
     </td>
 
-    <td>
+    <td id="NewCategorySaveExitBtn">
       <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">{{'button.save' | translate}}</button>
-      <button class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
+      <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
     </td>
 
   </tr>

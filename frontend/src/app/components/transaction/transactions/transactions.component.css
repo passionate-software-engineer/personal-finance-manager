@@ -5,3 +5,7 @@ thead th {
 .table-hover tr:hover{
   background: rgba(190, 229, 235, 0.5);
 }
+
+#BalanceOfAllFiltredTransaction{
+  font-weight: bold;
+}

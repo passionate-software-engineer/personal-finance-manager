@@ -38,3 +38,5 @@ gradle-app.setting
 
 frontend/.scannerwork
 .DS_Store
+
+.angulardoc.json
