@@ -96,7 +96,7 @@
     {
       "name": "Revolut - USD",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "Santander",
@@ -188,7 +188,7 @@
     {
       "name": "Revolut - USD",
       "balance": "0.00",
-      "currency": "PLN"
+      "currency": "USD"
     },
     {
       "name": "Santander",
@@ -432,7 +432,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -524,7 +524,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -545,7 +545,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-8777.12"
+              "price": "-2450.00"
             },
             {
               "account": "Revolut - PLN",
@@ -575,7 +575,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "8777.12"
+              "price": "2450.00"
             }
           ]
         },
@@ -861,7 +861,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -939,7 +939,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "Revolut - PLN",
@@ -1096,7 +1096,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7881.50"
+              "price": "-2200.00"
             },
             {
               "account": "Revolut - PLN",
@@ -1126,7 +1126,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7881.50"
+              "price": "2200.00"
             }
           ]
         },
@@ -1365,7 +1365,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -1457,7 +1457,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -1545,7 +1545,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "3582.50"
+              "price": "1000.00"
             }
           ]
         },
@@ -1560,7 +1560,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "-3582.50"
+              "price": "-1000.00"
             }
           ]
         },
@@ -1754,7 +1754,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "16121.25"
+              "price": "4500.00"
             }
           ]
         },
@@ -1780,7 +1780,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-11320.70"
+              "price": "-3160.00"
             },
             {
               "account": "Revolut - PLN",
@@ -1825,7 +1825,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-4800.55"
+              "price": "-1340.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -1866,7 +1866,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -1948,7 +1948,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -2179,7 +2179,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -2257,7 +2257,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -2425,7 +2425,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-8598.00"
+              "price": "-2400.00"
             },
             {
               "account": "Revolut - PLN",
@@ -2455,7 +2455,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "8598.00"
+              "price": "2400.00"
             }
           ]
         },
@@ -2725,7 +2725,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -2817,7 +2817,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -3095,7 +3095,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-8598.00"
+              "price": "-2400.00"
             }
           ]
         },
@@ -3125,7 +3125,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "8598.00"
+              "price": "2400.00"
             }
           ]
         },
@@ -3136,7 +3136,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3158,7 +3158,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-6448.50"
+              "price": "-1800.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -3308,7 +3308,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3319,7 +3319,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7881.50"
+              "price": "-2200.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -3349,7 +3349,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7341.83"
+              "price": "-2049.36"
             },
             {
               "account": "Revolut - PLN",
@@ -3379,7 +3379,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-181.42"
+              "price": "-50.64"
             }
           ]
         },
@@ -3390,7 +3390,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3450,7 +3450,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "358.25"
+              "price": "100.00"
             }
           ]
         },
@@ -3589,7 +3589,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -3681,7 +3681,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -3799,7 +3799,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3832,7 +3832,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3843,7 +3843,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-14330.00"
+              "price": "-4000.00"
             },
             {
               "account": "Revolut - PLN",
@@ -3929,7 +3929,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-2264.14"
+              "price": "-632.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -3948,7 +3948,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -3959,7 +3959,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-4900.86"
+              "price": "-1368.00"
             },
             {
               "account": "Revolut - PLN",
@@ -4474,7 +4474,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-7165.00"
+              "price": "-2000.00"
             },
             {
               "account": "Revolut - PLN",
@@ -4489,7 +4489,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "7165.00"
+              "price": "2000.00"
             }
           ]
         },
@@ -4537,7 +4537,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-268.69"
+              "price": "-75.00"
             },
             {
               "account": "Revolut - PLN",
@@ -4552,7 +4552,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-11464.00"
+              "price": "-3200.00"
             },
             {
               "account": "Revolut - PLN",
@@ -4593,7 +4593,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "14330.00"
+              "price": "4000.00"
             }
           ]
         },
@@ -4619,7 +4619,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-2597.31"
+              "price": "-725.00"
             },
             {
               "account": "kantor Alior - USD",
@@ -4848,7 +4848,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -4940,7 +4940,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -5786,8 +5786,8 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1791.25",
-          "currency": "PLN"
+          "balance": "500.00",
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -5879,7 +5879,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -6153,7 +6153,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "1773.34"
+              "price": "495.00"
             }
           ]
         },
@@ -6164,7 +6164,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-1791.25"
+              "price": "-500.00"
             },
             {
               "account": "Revolut - PLN",
@@ -6213,7 +6213,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "2507.75"
+              "price": "700.00"
             }
           ]
         },
@@ -6224,7 +6224,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-698.59"
+              "price": "-195.00"
             },
             {
               "account": "Revolut - PLN",
@@ -6273,7 +6273,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "1074.75"
+              "price": "300.00"
             }
           ]
         },
@@ -6284,7 +6284,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-4657.25"
+              "price": "-1300.00"
             },
             {
               "account": "Revolut - PLN",
@@ -6408,7 +6408,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "17912.50"
+              "price": "5000.00"
             }
           ]
         },
@@ -6419,7 +6419,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-11651.72"
+              "price": "-3252.40"
             },
             {
               "account": "Revolut - PLN",
@@ -6471,7 +6471,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-27.23"
+              "price": "-7.60"
             },
             {
               "account": "kantor Alior - USD",
@@ -6486,7 +6486,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-6232.55"
+              "price": "-1739.72"
             },
             {
               "account": "kantor Alior - USD",
@@ -6697,7 +6697,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-1.00"
+              "price": "-0.28"
             },
             {
               "account": "kantor Alior - USD",
@@ -6786,11 +6786,11 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "96021.63",
+          "PLN": "94230.38",
           "GBP": "0.00",
-          "USD": "37525.00"
+          "USD": "38025.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232454.59"
+        "sumOfAllFundsInBaseCurrency": "232453.34"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
@@ -6884,7 +6884,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -6975,8 +6975,8 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1791.25",
-          "currency": "PLN"
+          "balance": "500.00",
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -7001,7 +7001,7 @@
             },
             {
               "account": "Revolut - USD",
-              "price": "3582.50"
+              "price": "1000.00"
             }
           ]
         },
@@ -7338,7 +7338,7 @@
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-1791.25"
+              "price": "-500.00"
             }
           ]
         },
@@ -7591,11 +7591,11 @@
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "96021.63",
+          "PLN": "94230.38",
           "GBP": "0.00",
-          "USD": "37525.00"
+          "USD": "38025.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232454.59"
+        "sumOfAllFundsInBaseCurrency": "232453.34"
       }
     },
     {
@@ -7680,7 +7680,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -7772,7 +7772,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -8536,7 +8536,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -8628,7 +8628,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9147,7 +9147,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9239,7 +9239,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9739,7 +9739,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -9831,7 +9831,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -10686,7 +10686,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -10778,7 +10778,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -11429,7 +11429,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
@@ -11521,7 +11521,7 @@
         {
           "name": "Revolut - USD",
           "balance": "0.00",
-          "currency": "PLN"
+          "currency": "USD"
         },
         {
           "name": "Santander",
