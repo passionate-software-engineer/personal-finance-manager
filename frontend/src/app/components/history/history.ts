@@ -6,5 +6,4 @@ export class History {
   type: string;
   object: string;
   entries: HistoryInfo[];
-  editMode = false;
 }
