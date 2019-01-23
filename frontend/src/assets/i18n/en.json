@@ -90,5 +90,10 @@
   "filters.showAllFilterName": "All transactions",
   "history.date": "Date",
   "history.entry": "Entry",
+  "history.entryType" : "Type",
+  "history.entryObject" : "Object",
+  "history.entryField" : "Field",
+  "history.oldValue" : "Old value",
+  "history.newValue" : "New value",
   "import.noContentProvided": "No data to import was provided"
 }
