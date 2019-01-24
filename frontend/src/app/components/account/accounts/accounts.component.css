@@ -1,9 +1,27 @@
-
-
-table{
+table {
   max-width: 100%;
 }
 
-table tr:last-child{
+th,
+td {
+  width: 20%;
+}
+
+table tr:last-child {
   font-weight: bold;
+}
+
+#EditAccountSaveExitBtn {
+  width: 100%;
+}
+
+#boxCurrencies {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.thBoxCurrencies,
+.tdBoxCurrencies {
+  width: 25%;
 }
