@@ -26,7 +26,7 @@ thead th.active span {
 
 /* -------------------------- Buttons -------------------------- */
 
-.dropdown-menu{
+.dropdown-menu {
   width: 100%;
 }
 
@@ -36,33 +36,32 @@ thead th.active span {
 #RefreshCategoriesBtn,
 #RefreshHistoryBtn,
 #ExportServiceBtn,
-#ImportServiceBtn
-{
+#ImportServiceBtn {
   width: 150px;
   margin: 0 10px;
   margin-bottom: 20px;
 }
 
-.dropdown{
+.dropdown {
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
 }
 
-#OptionsBtn{
+#OptionsBtn {
   max-width: 95%;
   margin: 5px auto;
 }
 
-.dropdown ul{
+.dropdown ul {
   max-width: 95.5%;
   min-width: 50px;
   margin: 1px auto;
   padding: 5px;
 }
 
-.dropdown-menu li{
+.dropdown-menu li {
   max-width: 100%;
   display: flex;
   flex-direction: column;
@@ -72,7 +71,7 @@ thead th.active span {
 }
 
 #EditBtn,
-#DeleteBtn{
+#DeleteBtn {
   min-width: 50px;
   max-width: 95%;
   margin: 5px 10px;;
@@ -81,7 +80,7 @@ thead th.active span {
 #EditAccountSaveExitBtn,
 #EditCategorySaveExitBtn,
 #NewAccountSaveExitBtn,
-#NewCategorySaveExitBtn{
+#NewCategorySaveExitBtn {
   display: flex;
   justify-content: space-between;
 }
@@ -93,18 +92,18 @@ thead th.active span {
 #NewAccountSaveBtn,
 #NewAccountExitBtn,
 #NewCategorySaveBtn,
-#NewCategoryExitBtn{
+#NewCategoryExitBtn {
   width: 47.5%;
 }
 
-.table-hover tr:hover{
+.table-hover tr:hover {
   background: rgba(190, 229, 235, 0.5);
 }
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 991px) {
 
   #EditBtn,
-  #DeleteBtn{
+  #DeleteBtn {
     min-width: 50px;
     max-width: 95%;
     margin: 5px 10px;;

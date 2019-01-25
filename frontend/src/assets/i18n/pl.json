@@ -90,10 +90,10 @@
   "filters.showAllFilterName": "Wszystkie transakcje",
   "history.date": "Data",
   "history.entry": "Wpis",
-  "history.entryType" : "Typ",
-  "history.entryObject" : "Obiekt",
-  "history.entryField" : "Pole",
-  "history.oldValue" : "Stara wartość",
-  "history.newValue" : "Nowa wartość",
+  "history.entryType": "Typ",
+  "history.entryObject": "Obiekt",
+  "history.entryField": "Pole",
+  "history.oldValue": "Stara wartość",
+  "history.newValue": "Nowa wartość",
   "import.noContentProvided": "Nie podano danych do zaimportowania"
 }

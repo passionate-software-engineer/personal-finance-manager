@@ -120,7 +120,8 @@ xdescribe('Transaction page tests', () => { // TODO - fix tests for transactions
     transactionPage.addTransaction(22112018, 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
 
     // when
-    transactionPage.updateTransaction(transactionPage.transactionRows().first(), 23112018, 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
+    transactionPage.updateTransaction(transactionPage.transactionRows().first(),
+      23112018, 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);

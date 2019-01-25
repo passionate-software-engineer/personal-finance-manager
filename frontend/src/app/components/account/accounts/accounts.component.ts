@@ -1,3 +1,4 @@
+import {Currency} from './../currency';
 import {Component, OnInit} from '@angular/core';
 import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
@@ -6,7 +7,6 @@ import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyService} from '../currency-service/currency.service';
-import {Currency} from '../currency';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -16,7 +16,6 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-
 export class AccountsComponent extends Sortable implements OnInit {
   supportedCurrencies: Currency[];
   accounts: Account[] = [];
@@ -27,7 +26,8 @@ export class AccountsComponent extends Sortable implements OnInit {
     private accountService: AccountService,
     private currencyService: CurrencyService,
     private alertService: AlertsService,
-    private translate: TranslateService) {
+    private translate: TranslateService
+  ) {
     super('name');
   }
 
@@ -37,30 +37,29 @@ export class AccountsComponent extends Sortable implements OnInit {
   }
 
   getAccounts(): void {
-    this.accountService.getAccounts()
-      .subscribe(accounts => {
-        this.accounts = accounts;
-      });
+    this.accountService.getAccounts().subscribe(accounts => {
+      this.accounts = accounts;
+    });
   }
 
   getCurrencies(): void {
-    this.currencyService.getCurrencies()
-      .subscribe(currencies => {
-        this.supportedCurrencies = currencies;
-        this.newAccount.currency = this.supportedCurrencies[0];
-      });
+    this.currencyService.getCurrencies().subscribe(currencies => {
+      this.supportedCurrencies = currencies;
+      this.newAccount.currency = this.supportedCurrencies[0];
+    });
   }
 
   deleteAccount(account) {
     if (confirm(this.translate.instant('message.wantDeleteAccount'))) {
-      this.accountService.deleteAccount(account.id)
-        .subscribe(() => {
-          this.alertService.success(this.translate.instant('message.accountDeleted'));
-          const index: number = this.accounts.indexOf(account);
-          if (index !== -1) {
-            this.accounts.splice(index, 1);
-          }
-        });
+      this.accountService.deleteAccount(account.id).subscribe(() => {
+        this.alertService.success(
+          this.translate.instant('message.accountDeleted')
+        );
+        const index: number = this.accounts.indexOf(account);
+        if (index !== -1) {
+          this.accounts.splice(index, 1);
+        }
+      });
     }
   }
 
@@ -89,12 +88,13 @@ export class AccountsComponent extends Sortable implements OnInit {
     editedAccount.balance = account.editedAccount.balance;
     editedAccount.currency = account.editedAccount.currency;
 
-    this.accountService.editAccount(editedAccount)
-      .subscribe(() => {
-        this.alertService.success(this.translate.instant('message.accountEdited'));
-        Object.assign(account, editedAccount);
-        // TODO - get object from server
-      });
+    this.accountService.editAccount(editedAccount).subscribe(() => {
+      this.alertService.success(
+        this.translate.instant('message.accountEdited')
+      );
+      Object.assign(account, editedAccount);
+      // TODO - get object from server
+    });
   }
 
   onAddAccount() {
@@ -102,17 +102,16 @@ export class AccountsComponent extends Sortable implements OnInit {
       return;
     }
 
-    this.accountService.addAccount(this.newAccount)
-      .subscribe(id => {
-        this.alertService.success(this.translate.instant('message.accountAdded'));
-        this.newAccount.id = id;
+    this.accountService.addAccount(this.newAccount).subscribe(id => {
+      this.alertService.success(this.translate.instant('message.accountAdded'));
+      this.newAccount.id = id;
 
-        // TODO - get object from server
-        this.accounts.push(this.newAccount);
-        this.addingMode = false;
-        this.newAccount = new Account();
-        this.newAccount.currency = this.supportedCurrencies[0];
-      });
+      // TODO - get object from server
+      this.accounts.push(this.newAccount);
+      this.addingMode = false;
+      this.newAccount = new Account();
+      this.newAccount.currency = this.supportedCurrencies[0];
+    });
   }
 
   onRefreshAccounts() {
@@ -121,28 +120,43 @@ export class AccountsComponent extends Sortable implements OnInit {
   }
 
   validateAccount(account: Account): boolean {
-    if ((account.name == null || account.name.trim() === '')
-      && (!account.balance)) { // TODO change validation to validate all at once, not break on error
-      this.alertService.error(this.translate.instant('message.accountNameEmpty'));
-      this.alertService.error(this.translate.instant('message.accountBalanceEmpty'));
+    if (
+      (account.name == null || account.name.trim() === '') &&
+      !account.balance
+    ) {
+      // TODO change validation to validate all at once, not break on error
+      this.alertService.error(
+        this.translate.instant('message.accountNameEmpty')
+      );
+      this.alertService.error(
+        this.translate.instant('message.accountBalanceEmpty')
+      );
       return false;
     }
     if (account.name == null || account.name === '') {
-      this.alertService.error(this.translate.instant('message.accountNameEmpty'));
+      this.alertService.error(
+        this.translate.instant('message.accountNameEmpty')
+      );
       return false;
     }
     if (account.name.length > 100) {
-      this.alertService.error(this.translate.instant('message.accountNameTooLong'));
+      this.alertService.error(
+        this.translate.instant('message.accountNameTooLong')
+      );
       return false;
     }
 
     if (account.balance == null) {
-      this.alertService.error(this.translate.instant('message.accountBalanceEmpty'));
+      this.alertService.error(
+        this.translate.instant('message.accountBalanceEmpty')
+      );
       return false;
     }
 
     if (!isNumeric(account.balance)) {
-      this.alertService.error(this.translate.instant('message.balanceNotCorrect'));
+      this.alertService.error(
+        this.translate.instant('message.balanceNotCorrect')
+      );
       return false;
     }
 
@@ -164,8 +178,16 @@ export class AccountsComponent extends Sortable implements OnInit {
       return false;
     }
 
-    if (this.accounts.filter(account => account.name.toLocaleLowerCase() === accountToValidate.name.toLocaleLowerCase()).length > 0) {
-      this.alertService.error(this.translate.instant('message.accountNameExists'));
+    if (
+      this.accounts.filter(
+        account =>
+          account.name.toLocaleLowerCase() ===
+          accountToValidate.name.toLocaleLowerCase()
+      ).length > 0
+    ) {
+      this.alertService.error(
+        this.translate.instant('message.accountNameExists')
+      );
       return false;
     }
     return true;
@@ -175,10 +197,21 @@ export class AccountsComponent extends Sortable implements OnInit {
     let sum = 0;
 
     for (let i = 0; i < this.accounts.length; ++i) {
-      sum += +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
+      sum +=
+        +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
     }
 
     return sum;
   }
 
+  allAccountsBalanceCurrencies(currencyName: string) {
+    let sum = 0;
+
+    for (let i = 0; i < this.accounts.length; ++i) {
+      if (this.accounts[i].currency.name === currencyName) {
+        sum += +this.accounts[i].balance;
+      }
+    }
+    return sum;
+  }
 }
