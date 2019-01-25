@@ -53,6 +53,7 @@ pipeline {
                         sh '''
                            cd frontend
                            npm install
+                           npm install -g tslint typescript
                            tslint --config tslint.json --project tsconfig.json
                            ng build
                            '''
