@@ -52,8 +52,8 @@ pipeline {
                     steps {
                         sh '''
                            cd frontend
-                           tslint --config tslint.json --project tsconfig.json
                            npm install
+                           tslint --config tslint.json --project tsconfig.json
                            ng build
                            '''
                     }
