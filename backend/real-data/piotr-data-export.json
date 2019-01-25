@@ -11,11 +11,11 @@
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
       "EUR": "401.50",
-      "PLN": "267304.74",
+      "PLN": "274722.84",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "269007.10"
+    "sumOfAllFundsInBaseCurrency": "276425.20"
   },
   "initialAccountsState": [
     {
@@ -132,7 +132,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "3654.15",
+      "balance": "5229.65",
       "currency": "PLN"
     },
     {
@@ -147,7 +147,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "51.11",
+      "balance": "13.10",
       "currency": "PLN"
     },
     {
@@ -157,7 +157,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "46083.76",
+      "balance": "47639.17",
       "currency": "PLN"
     },
     {
@@ -172,12 +172,12 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "758.54",
+      "balance": "304.13",
       "currency": "PLN"
     },
     {
       "name": "mBank",
-      "balance": "9735.00",
+      "balance": "14618.48",
       "currency": "PLN"
     },
     {
@@ -192,7 +192,7 @@
     },
     {
       "name": "Santander",
-      "balance": "456.98",
+      "balance": "353.11",
       "currency": "PLN"
     },
     {
@@ -468,7 +468,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "3654.15",
+          "balance": "5229.65",
           "currency": "PLN"
         },
         {
@@ -483,7 +483,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "51.11",
+          "balance": "13.10",
           "currency": "PLN"
         },
         {
@@ -493,7 +493,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "46083.76",
+          "balance": "47639.17",
           "currency": "PLN"
         },
         {
@@ -508,12 +508,12 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "758.54",
+          "balance": "304.13",
           "currency": "PLN"
         },
         {
           "name": "mBank",
-          "balance": "9735.00",
+          "balance": "14618.48",
           "currency": "PLN"
         },
         {
@@ -528,7 +528,7 @@
         },
         {
           "name": "Santander",
-          "balance": "456.98",
+          "balance": "353.11",
           "currency": "PLN"
         },
         {
@@ -1262,6 +1262,239 @@
               "price": "-21.30"
             }
           ]
+        },
+        {
+          "description": "Szatnia",
+          "category": "Wyjazdy",
+          "date": "2019-01-19",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-6.00"
+            }
+          ]
+        },
+        {
+          "description": "Klub - wejsciowka",
+          "category": "Wyjazdy",
+          "date": "2019-01-19",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Obiad",
+          "category": "Jedzenie",
+          "date": "2019-01-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-17.99"
+            }
+          ]
+        },
+        {
+          "description": "Kolacja - burger",
+          "category": "Jedzenie",
+          "date": "2019-01-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-42.00"
+            }
+          ]
+        },
+        {
+          "description": "Przewodnik - Wlochy",
+          "category": "Wyjazdy",
+          "date": "2019-01-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-49.84"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "24.42"
+            }
+          ]
+        },
+        {
+          "description": "Zwrot podatku - IKZE",
+          "category": "Przychody",
+          "date": "2019-01-22",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1013.00"
+            }
+          ]
+        },
+        {
+          "description": "Woda",
+          "category": "Jedzenie",
+          "date": "2019-01-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-3.00"
+            }
+          ]
+        },
+        {
+          "description": "Parking - Galeria",
+          "category": "Wyjazdy",
+          "date": "2019-01-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-2.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1.00"
+            }
+          ]
+        },
+        {
+          "description": "Sok - so coffee",
+          "category": "Jedzenie",
+          "date": "2019-01-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-20.90"
+            }
+          ]
+        },
+        {
+          "description": "Apteka",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-01-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-59.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "29.99"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - Zlote tarasy",
+          "category": "Jedzenie",
+          "date": "2019-01-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-18.00"
+            }
+          ]
+        },
+        {
+          "description": "Nauka programowania - Pawel",
+          "category": "Przychody",
+          "date": "2019-01-23",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "562.50"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-01-23",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7545.59"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-23",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-8000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "8000.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Crossover",
+          "date": "2019-01-23",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Silownia - bieznia",
+          "category": "Sport",
+          "date": "2019-01-24",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-12.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal - 1 grosz grzejnik :)",
+          "category": "Remont domu",
+          "date": "2019-01-24",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-0.01"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal + obrobka drewna",
+          "category": "Remont domu",
+          "date": "2019-01-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-3000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1500.00"
+            }
+          ]
+        },
+        {
+          "description": "Lewiatan - husteczki i powerade",
+          "category": "Zakupy",
+          "date": "2019-01-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6.69"
+            }
+          ]
         }
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
@@ -1276,11 +1509,11 @@
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "401.50",
-          "PLN": "267304.74",
+          "PLN": "274722.84",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269007.10"
+        "sumOfAllFundsInBaseCurrency": "276425.20"
       }
     },
     {
