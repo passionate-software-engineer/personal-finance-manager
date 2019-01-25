@@ -98,8 +98,8 @@
       <!-- Balance PLN -->
       <td *ngIf="account.editMode">
         {{
-          account.editedAccount.balance *
-            account.editedAccount.currency.exchangeRate | number: "0.2-2"
+        account.editedAccount.balance *
+        account.editedAccount.currency.exchangeRate | number: "0.2-2"
         }}
       </td>
 
@@ -200,8 +200,8 @@
       <!-- Balance PLN -->
       <td>
         {{
-          newAccount.balance * newAccount.currency.exchangeRate
-            | number: "0.2-2"
+        newAccount.balance * newAccount.currency.exchangeRate
+          | number: "0.2-2"
         }}
       </td>
 
@@ -245,12 +245,11 @@
   </tbody>
 </table>
 
-<!-- BOX WITH CURRENCY  -->
+<!-- Summary by currency  -->
 
 <table
   id="boxCurrencies"
-  class="table table-bordered table-striped table-hover"
->
+  class="table table-bordered table-striped table-hover">
   <thead class="thead-dark">
     <tr>
       <th class="thBoxCurrencies">{{ "account.currency" | translate }}</th>
@@ -268,16 +267,13 @@
       <td class="tdBoxCurrencies">{{ currency.name }}</td>
 
       <td class="tdBoxCurrencies">
-        {{ allAccountsBalanceBox(currency.name) | number: "0.2-2" }}
+        {{ allAccountsBalanceCurrencies(currency.name) | number: "0.2-2" }}
       </td>
 
       <td class="tdBoxCurrencies">{{ currency.exchangeRate }}</td>
 
       <td class="tdBoxCurrencies">
-        {{
-          currency.exchangeRate * allAccountsBalanceBox(currency.name)
-            | number: "0.2-2"
-        }}
+        {{ currency.exchangeRate * allAccountsBalanceCurrencies(currency.name) | number: "0.2-2" }}
       </td>
     </tr>
 
@@ -288,7 +284,7 @@
 
       <td class="tdBoxCurrencies">RAZEM</td>
 
-      <td id="BalanceOfAllAccounts" class="tdBoxCurrencies">
+      <td id="BalanceOfAllAccountsCurrenciesSummary" class="tdBoxCurrencies">
         {{ allAccountsBalance() | number: "0.2-2" }}
       </td>
     </tr>

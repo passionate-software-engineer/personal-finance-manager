@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {v4 as uuid} from 'uuid';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class HeadersInterceptor implements HttpInterceptor {

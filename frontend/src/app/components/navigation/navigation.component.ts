@@ -50,5 +50,5 @@ export class NavigationComponent implements OnInit {
   switchLanguage = (language: string) => {
     this.translate.use(language);
     localStorage.setItem('language', language);
-  };
+  }
 }
