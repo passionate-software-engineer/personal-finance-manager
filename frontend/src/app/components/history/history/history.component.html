@@ -6,35 +6,36 @@
   <thead class="thead-dark">
   <tr>
 
-    <!-- Date -->
-    <th [class.active]="order === 'date'" (click)="setOrder('date')" width="30%">
-      {{'history.date' | translate}}
-      <span [hidden]="reverse">▼</span>
-      <span [hidden]="!reverse">▲</span>
-    </th>
 
-    <!-- Event type -->
+      <!--Date-->
+      <th [class.active]="order === 'date'" (click)="setOrder('date')" width="30%">
+        {{'history.date' | translate}}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
+
+      <!-- Event type -->
     <th>{{'history.entryType' | translate}}</th>
 
     <!-- Event object -->
     <th>{{'history.entryObject' | translate}}</th>
 
     <!-- Entry -->
-    <th [class.active]="order === 'entry'" (click)="setOrder('entry')">
-      {{'history.entry' | translate}}
-      <span [hidden]="reverse">▼</span>
-      <span [hidden]="!reverse">▲</span>
-    </th>
+      <th [class.active]="order === 'entry'" (click)="setOrder('entry')">
+        {{'history.entry' | translate}}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
 
     <th></th>
   </tr>
   </thead>
 
   <tbody>
-  <tr *ngFor="let historyEntry of history | orderBy: order:reverse:'case-insensitive'">
+    <tr *ngFor="let historyEntry of history | orderBy: order:reverse:'case-insensitive'">
 
-    <!-- Date -->
-    <td style="text-align: center">{{historyEntry.date | date: "yyyy-MM-dd HH:mm"}}</td>
+      <!-- Date -->
+      <td style="text-align: center">{{historyEntry.date | date: "yyyy-MM-dd HH:mm"}}</td>
 
     <!-- Event -->
     <td style="text-align: center">{{historyEntry.type}} </td>
@@ -42,10 +43,9 @@
     <!-- Event object -->
     <th style="text-align: center">{{historyEntry.object}}</th>
 
-    <!-- Entry -->
-    <td>
-
-      <table>
+      <!--Entry-->
+      <td>
+        <table>
         <thead>
         <tr>
           <th>{{'history.entryField' | translate}}</th>
@@ -54,7 +54,7 @@
             {{'history.oldValue' | translate}}
           </th>
           <th *ngIf="historyEntry.type === 'UPDATE' || historyEntry.type === 'ADD' " style="text-align: center">
-            {{'history.newValue' | translate}}
+        {{'history.newValue' | translate}}
           </th>
         </tr>
         </thead>
