@@ -1,0 +1,41 @@
+#tableHistory,
+#tableHistoryEntry{
+  width: 100%;
+}
+
+#tableHistoryEntry{
+  background-color: #ffffff;
+}
+
+#thHistoryDate,
+#thHistoryType,
+#thHistoryObject{
+  width: 20%;
+}
+
+#thHistoryEntry{
+  width: 40%;
+}
+
+#tableHistoryEntry th{
+  background-color: #5988b9;
+  color: #ffffff;
+}
+
+#tableHistoryEntry table{
+  width: 100%;
+}
+
+.tableHistoryEntryField{
+  width: 0px;
+}
+
+.tableHistoryEntryOldValue,
+.tableHistoryEntryNewValue{
+  width: 38%;
+  text-align: center;
+}
+
+.textcenter{
+  text-align: center;
+}
