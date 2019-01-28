@@ -20,6 +20,9 @@
         <span [hidden]="reverse">▼</span>
         <span [hidden]="!reverse">▲</span>
       </th>
+      <th>
+        {{'category.sum' | translate}}
+      </th>
       <th></th>
     </tr>
   </thead>
@@ -42,6 +45,10 @@
       </td>
       <td id="ParentCategoryReadOnly" *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
 
+      <td>
+          <p id="PriceSummary">{{ getAllTransactionsBalance(category.id) | number:'0.2' }}</p>
+      </td>
+
       <td *ngIf="!category.editMode">
         <div class="dropdown">
           <button id="OptionsBtn" class="btn btn-primary dropdown-toggle btn-block" type="button"
@@ -58,6 +65,7 @@
           </ul>
         </div>
       </td>
+
       <td *ngIf="category.editMode" id="EditCategorySaveExitBtn">
         <button id="EditCategorySaveBtn" class="btn btn-success" (click)="onEditCategory(category)">{{'button.save' | translate}}</button>
         <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
@@ -80,7 +88,7 @@
           </select>
         </div>
       </td>
-
+      <td></td>
       <td id="NewCategorySaveExitBtn">
         <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">{{'button.save' | translate}}</button>
         <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
