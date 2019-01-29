@@ -80,7 +80,8 @@ thead th.active span {
 #EditAccountSaveExitBtn,
 #EditCategorySaveExitBtn,
 #NewAccountSaveExitBtn,
-#NewCategorySaveExitBtn {
+#NewCategorySaveExitBtn,
+#EditAccountSaveExitBtn {
   display: flex;
   justify-content: space-between;
 }
@@ -92,7 +93,11 @@ thead th.active span {
 #NewAccountSaveBtn,
 #NewAccountExitBtn,
 #NewCategorySaveBtn,
-#NewCategoryExitBtn {
+#NewCategoryExitBtn,
+#EditTransactionExitBtn,
+#newTransactionSaveButton,
+#EditTransactionSaveBtn,
+#EditTransactionExitBtn {
   width: 47.5%;
 }
 

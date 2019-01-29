@@ -11,7 +11,8 @@ table tr:last-child {
   font-weight: bold;
 }
 
-#EditAccountSaveExitBtn {
+#EditAccountSaveExitBtn,
+#NewAccountSaveExitBtn {
   width: 100%;
 }
 
