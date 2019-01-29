@@ -27,6 +27,28 @@
     </tr>
   </thead>
   <tbody>
+
+    <tr *ngIf="addingMode">
+      <!--Name-->
+      <td>
+        <input id="NewCategoryNameInput" class="form-control" type="text" [(ngModel)]="newCategory.name">
+      </td>
+      <td>
+        <div class="form-group">
+          <select id="NewParentCategorySelect" class="form-control" [(ngModel)]="newCategory.parentCategory"
+                  name="selectedParentCategory">
+            <option [ngValue]="null">{{'category.mainCategory' | translate}}</option>
+            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+          </select>
+        </div>
+      </td>
+      <td></td>
+      <td id="NewCategorySaveExitBtn">
+        <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">{{'button.save' | translate}}</button>
+        <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
+      </td>
+    </tr>
+
     <tr id="CategoryRow" *ngFor="let category of categories | orderBy: order:reverse:'case-insensitive'">
 
       <!--Name-->
@@ -69,29 +91,6 @@
       <td *ngIf="category.editMode" id="EditCategorySaveExitBtn">
         <button id="EditCategorySaveBtn" class="btn btn-success" (click)="onEditCategory(category)">{{'button.save' | translate}}</button>
         <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
-      </td>
-
-    </tr>
-
-    <tr *ngIf="addingMode">
-
-      <!--Name-->
-      <td>
-        <input id="NewCategoryNameInput" class="form-control" type="text" [(ngModel)]="newCategory.name">
-      </td>
-      <td>
-        <div class="form-group">
-          <select id="NewParentCategorySelect" class="form-control" [(ngModel)]="newCategory.parentCategory"
-                  name="selectedParentCategory">
-            <option [ngValue]="null">{{'category.mainCategory' | translate}}</option>
-            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-          </select>
-        </div>
-      </td>
-      <td></td>
-      <td id="NewCategorySaveExitBtn">
-        <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">{{'button.save' | translate}}</button>
-        <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
       </td>
 
     </tr>

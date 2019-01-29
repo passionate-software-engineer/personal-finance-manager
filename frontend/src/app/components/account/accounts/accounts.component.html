@@ -47,6 +47,46 @@
   </thead>
 
   <tbody>
+
+    <tr *ngIf="addingMode">
+      <!-- Name -->
+      <td>
+        <input id="NewAccountNameInput" class="form-control" type="text" [(ngModel)]="newAccount.name" />
+      </td>
+
+      <!--Balance-->
+      <td>
+        <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance" />
+      </td>
+
+      <!-- Currency -->
+      <td>
+        <select id="NewAccountCurrencySelect" class="form-control" [(ngModel)]="newAccount.currency">
+          <option *ngFor="let currency of supportedCurrencies" [ngValue]="currency">
+            {{ currency.name }}
+          </option>
+        </select>
+      </td>
+
+      <!-- Balance PLN -->
+      <td>
+        {{
+        newAccount.balance * newAccount.currency.exchangeRate
+        | number: "0.2-2"
+        }}
+      </td>
+
+      <!-- Buttons -->
+      <td id="NewAccountSaveExitBtn">
+        <button id="NewAccountSaveBtn" class="btn btn-success" (click)="onAddAccount()">
+          {{ "button.save" | translate }}
+        </button>
+        <button id="NewAccountExitBtn" class="btn btn-danger" (click)="addingMode = false">
+          {{ "button.exit" | translate }}
+        </button>
+      </td>
+    </tr>
+
     <tr
       id="AccountRow"
       *ngFor="
@@ -154,70 +194,6 @@
           id="EditAccountExitBtn"
           class="btn btn-danger"
           (click)="account.editMode = false"
-        >
-          {{ "button.exit" | translate }}
-        </button>
-      </td>
-    </tr>
-
-    <tr *ngIf="addingMode">
-      <!-- Name -->
-      <td>
-        <input
-          id="NewAccountNameInput"
-          class="form-control"
-          type="text"
-          [(ngModel)]="newAccount.name"
-        />
-      </td>
-
-      <!--Balance-->
-      <td>
-        <input
-          id="NewAccountBalanceInput"
-          class="form-control"
-          type="number"
-          [(ngModel)]="newAccount.balance"
-        />
-      </td>
-
-      <!-- Currency -->
-      <td>
-        <select
-          id="NewAccountCurrencySelect"
-          class="form-control"
-          [(ngModel)]="newAccount.currency"
-        >
-          <option
-            *ngFor="let currency of supportedCurrencies"
-            [ngValue]="currency"
-          >
-            {{ currency.name }}
-          </option>
-        </select>
-      </td>
-
-      <!-- Balance PLN -->
-      <td>
-        {{
-        newAccount.balance * newAccount.currency.exchangeRate
-          | number: "0.2-2"
-        }}
-      </td>
-
-      <!-- Buttons -->
-      <td id="NewAccountSaveExitBtn">
-        <button
-          id="NewAccountSaveBtn"
-          class="btn btn-success"
-          (click)="onAddAccount()"
-        >
-          {{ "button.save" | translate }}
-        </button>
-        <button
-          id="NewAccountExitBtn"
-          class="btn btn-danger"
-          (click)="addingMode = false"
         >
           {{ "button.exit" | translate }}
         </button>
