@@ -1,9 +1,12 @@
+import { TransactionService } from './../../transaction/transaction-service/transaction.service';
 import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
+import { Transaction } from '../../transaction/transaction';
+import { TransactionResponse } from '../../transaction/transaction-service/transaction-response';
 
 @Component({ // TODO categories in dropdows should display with parent category e.g. Car > Parts (try using filter for it)
   selector: 'app-categories',
@@ -14,19 +17,32 @@ export class CategoriesComponent extends Sortable implements OnInit {
   categories: Category[] = [];
   addingMode = false;
   newCategory: Category = new Category();
+  transactions: TransactionResponse[] = [];
 
-  constructor(private categoryService: CategoryService, private alertService: AlertsService, private translate: TranslateService) {
+  constructor(
+    private categoryService: CategoryService,
+    private alertService: AlertsService,
+    private translate: TranslateService,
+    private transactionService: TransactionService) {
     super('name');
   }
 
   ngOnInit() {
     this.getCategories();
+    this.getTransactions();
   }
 
   getCategories(): void {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
+      });
+  }
+
+  getTransactions(): void {
+    this.transactionService.getTransactions()
+      .subscribe(transactions => {
+        this.transactions = transactions;
       });
   }
 
@@ -143,4 +159,21 @@ export class CategoriesComponent extends Sortable implements OnInit {
     }
     return true;
   }
+
+  getAllTransactionsBalance(categoryId: number) {
+    let sum = 0;
+
+    for (let i = 0; i < this.transactions.length; ++i) {
+      if (this.transactions[i].categoryId !== categoryId) {
+        continue;
+      }
+      for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
+        sum += +this.transactions[i].accountPriceEntries[j].price;
+      }
+    }
+
+    return sum;
+  }
+
+
 }

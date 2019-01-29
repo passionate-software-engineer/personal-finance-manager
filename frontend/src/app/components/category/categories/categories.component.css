@@ -1,0 +1,8 @@
+th, td{
+  width: 25%;
+}
+
+#EditCategorySaveExitBtn,
+#NewCategorySaveExitBtn{
+  width: 100%;
+}
