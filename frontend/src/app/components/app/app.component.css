@@ -1,3 +1,19 @@
 #component-box {
   text-align: center;
 }
+
+#component-box{
+  position: relative;
+  top: 0;
+}
+
+app-alerts{
+  position: absolute;
+  top: 100px;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  border-radius: 20px;
+  font-weight: bold;
+  height: 0px;
+}
