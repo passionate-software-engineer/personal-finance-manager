@@ -1,0 +1,6 @@
+.close{
+  position: absolute;
+  right: 10px;
+  bottom: 15%;
+  font-weight: bold;
+}
