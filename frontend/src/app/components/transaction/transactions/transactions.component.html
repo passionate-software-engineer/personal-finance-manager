@@ -116,12 +116,12 @@
     <tr *ngIf="addingMode">
         <!--Date-->
         <td>
-          <input id="NewTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [(ngModel)]="newTransaction.date">
+          <input id="NewTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [ngModel] ="newTransaction.date | date:'yyyy-MM-dd'" (ngModelChange)="newTransaction.date = $event">
         </td>
 
         <!--Description-->
         <td>
-          <input id="NewTransactionDescriptionInput" class="form-control" type="text" [(ngModel)]="newTransaction.description">
+          <input id="NewTransactionDescriptionInput" class="form-control" type="text" [(ngModel)]="newTransaction.description" >
         </td>
 
         <!--Price-->

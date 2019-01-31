@@ -67,6 +67,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
     this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
     this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+    this.newTransaction.date = new Date();
   }
 
   getTransactions(): void {
@@ -204,6 +205,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
             this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
             this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+            this.newTransaction.date = new Date();
           });
       });
   }
