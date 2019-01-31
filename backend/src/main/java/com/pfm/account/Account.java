@@ -5,6 +5,7 @@ import com.pfm.currency.Currency;
 import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,9 +36,12 @@ public final class Account {
   @HistoryField
   private BigDecimal balance;
 
-  @ManyToOne
+  @ManyToOne // TODO should not return all currency information, only id
   @ApiModelProperty(value = "Account's currency", required = true, example = "USD")
   private Currency currency;
+
+  @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
+  private LocalDate lastVerificationDate;
 
   @JsonIgnore
   private Long userId;
