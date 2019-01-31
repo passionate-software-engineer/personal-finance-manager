@@ -9,10 +9,10 @@
 
 app-alerts{
   position: absolute;
-  top: 100px;
-  left: 5%;
-  right: 5%;
-  width: 90%;
+  top: 60px;
+  left: 1%;
+  right: 1%;
+  width: 98%;
   border-radius: 20px;
   font-weight: bold;
   height: 0px;
