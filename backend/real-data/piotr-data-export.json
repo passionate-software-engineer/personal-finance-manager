@@ -10,12 +10,12 @@
   },
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
-      "EUR": "401.50",
-      "PLN": "274722.84",
+      "EUR": "315.50",
+      "PLN": "273888.15",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "276425.20"
+    "sumOfAllFundsInBaseCurrency": "275225.87"
   },
   "initialAccountsState": [
     {
@@ -122,7 +122,7 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "292.92",
+      "balance": "206.92",
       "currency": "EUR"
     },
     {
@@ -132,7 +132,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "5229.65",
+      "balance": "5226.57",
       "currency": "PLN"
     },
     {
@@ -147,7 +147,7 @@
     },
     {
       "name": "Gotówka",
-      "balance": "13.10",
+      "balance": "113.10",
       "currency": "PLN"
     },
     {
@@ -157,7 +157,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "47639.17",
+      "balance": "47183.17",
       "currency": "PLN"
     },
     {
@@ -172,12 +172,12 @@
     },
     {
       "name": "Revolut - PLN",
-      "balance": "304.13",
+      "balance": "310.79",
       "currency": "PLN"
     },
     {
       "name": "mBank",
-      "balance": "14618.48",
+      "balance": "14136.21",
       "currency": "PLN"
     },
     {
@@ -351,6 +351,284 @@
   ],
   "periods": [
     {
+      "startDate": "2019-02-01",
+      "endDate": "2019-02-28",
+      "accountStateAtTheBeginningOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "292.92",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "5229.65",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "113.10",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "4.17",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "47177.37",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "310.79",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "14214.70",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "353.11",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "104.41",
+          "currency": "EUR"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "206.92",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "5226.57",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "113.10",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "4.17",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "47183.17",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "310.79",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "14136.21",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "150000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "353.11",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "104.41",
+          "currency": "EUR"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "Ksiegowy - doplata",
+          "category": "Księgowość",
+          "date": "2019-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-3.08"
+            }
+          ]
+        },
+        {
+          "description": "Dan - ubezpieczenie nurkowe",
+          "category": "Inne Koszty",
+          "date": "2019-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-86.00"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2019-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "Biedronka - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-11.60"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "5.80"
+            }
+          ]
+        },
+        {
+          "description": "Deska do plywania",
+          "category": "Sport",
+          "date": "2019-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-24.99"
+            }
+          ]
+        },
+        {
+          "description": "Avatar",
+          "category": "Sport",
+          "date": "2019-02-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-22.00"
+            }
+          ]
+        }
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "401.50",
+          "PLN": "273963.92",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "275666.28"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "315.50",
+          "PLN": "273888.15",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "275225.87"
+      }
+    },
+    {
       "startDate": "2019-01-01",
       "endDate": "2019-01-31",
       "accountStateAtTheBeginningOfPeriod": [
@@ -483,7 +761,7 @@
         },
         {
           "name": "Gotówka",
-          "balance": "13.10",
+          "balance": "113.10",
           "currency": "PLN"
         },
         {
@@ -493,7 +771,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "47639.17",
+          "balance": "47177.37",
           "currency": "PLN"
         },
         {
@@ -508,12 +786,12 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "304.13",
+          "balance": "310.79",
           "currency": "PLN"
         },
         {
           "name": "mBank",
-          "balance": "14618.48",
+          "balance": "14214.70",
           "currency": "PLN"
         },
         {
@@ -1495,6 +1773,374 @@
               "price": "-6.69"
             }
           ]
+        },
+        {
+          "description": "zestaw do rolowania",
+          "category": "Sport",
+          "date": "2019-01-25",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-109.80"
+            }
+          ]
+        },
+        {
+          "description": "Kino - Diablo",
+          "category": "Rozrywka",
+          "date": "2019-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-28.50"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-71.56"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "35.78"
+            }
+          ]
+        },
+        {
+          "description": "woda w kinie",
+          "category": "Jedzenie",
+          "date": "2019-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6.00"
+            }
+          ]
+        },
+        {
+          "description": "gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-250.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "250.00"
+            }
+          ]
+        },
+        {
+          "description": "Schronisko skrzyczne",
+          "category": "Jedzenie",
+          "date": "2019-01-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-37.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "10.00"
+            }
+          ]
+        },
+        {
+          "description": "Plonac w atmosferze - ksiazka",
+          "category": "Rozrywka",
+          "date": "2019-01-27",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-47.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-01-27",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-276.06"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "138.03"
+            }
+          ]
+        },
+        {
+          "description": "Parking narty",
+          "category": "Sport",
+          "date": "2019-01-27",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-40.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "20.00"
+            }
+          ]
+        },
+        {
+          "description": "Plytki na poddasze",
+          "category": "Remont domu",
+          "date": "2019-01-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1671.02"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "835.51"
+            }
+          ]
+        },
+        {
+          "description": "Sklad budowlany - materialy",
+          "category": "Remont domu",
+          "date": "2019-01-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2974.86"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1487.43"
+            }
+          ]
+        },
+        {
+          "description": "Apteka",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-01-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-14.99"
+            }
+          ]
+        },
+        {
+          "description": "Pieczywo",
+          "category": "Jedzenie",
+          "date": "2019-01-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-15.99"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "8.00"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka ",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-800.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "800.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7506.66"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Crossover",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7500.00"
+            },
+            {
+              "account": "mBank",
+              "price": "7500.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal - rozliczenie",
+          "category": "Remont domu",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1400.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "700.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal - rozliczenie - gotowka",
+          "category": "Remont domu",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-920.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "460.00"
+            }
+          ]
+        },
+        {
+          "description": "Podatek od nieruchomosci",
+          "category": "Inne Koszty",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-171.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "85.50"
+            }
+          ]
+        },
+        {
+          "description": "Plytki transport + wniesienie",
+          "category": "Remont domu",
+          "date": "2019-01-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "15.00"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - dziecko",
+          "category": "Dziecko",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-737.35"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - rachunki",
+          "category": "Rachunki",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-964.86"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - samochod",
+          "category": "Paliwo",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-155.27"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - remont",
+          "category": "Remont domu",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1870.98"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-456.42"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - leki i lekarze",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-25.88"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - kosmetyki, chemia",
+          "category": "Kosmetyki",
+          "date": "2019-01-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-36.29"
+            }
+          ]
         }
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
@@ -1509,11 +2155,11 @@
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "401.50",
-          "PLN": "274722.84",
+          "PLN": "273963.92",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "276425.20"
+        "sumOfAllFundsInBaseCurrency": "275666.28"
       }
     },
     {
