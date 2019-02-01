@@ -47,7 +47,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
 
-    long accountId = accountService.addAccount(userId, account).getId();
+    long accountId = accountService.saveAccount(userId, account).getId();
 
     Filter filter = filterFoodExpenses();
     filter.setAccountIds(Collections.singletonList(accountId));

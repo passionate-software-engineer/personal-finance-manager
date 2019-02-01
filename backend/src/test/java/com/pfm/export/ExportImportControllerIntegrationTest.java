@@ -246,7 +246,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Test
   public void shouldReturnErrorWhenDataIsImportedAgain() throws Exception {
     // given
-    accountService.addAccount(userId, TestAccountProvider.accountJacekBalance1000());
+    accountService.saveAccount(userId, TestAccountProvider.accountJacekBalance1000());
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)

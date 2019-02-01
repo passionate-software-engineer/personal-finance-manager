@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import com.pfm.auth.UserProvider;
 import com.pfm.currency.CurrencyService;
 import com.pfm.history.HistoryEntryService;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -74,7 +75,7 @@ public class AccountController implements AccountApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Account createdAccount = accountService.addAccount(userId, account);
+    Account createdAccount = accountService.saveAccount(userId, account);
     log.info("Saving account to the database was successful. Account id is {}", createdAccount.getId());
     historyEntryService.addHistoryEntryOnAdd(createdAccount, userId);
     return ResponseEntity.ok(createdAccount.getId());
@@ -111,6 +112,25 @@ public class AccountController implements AccountApi {
     accountService.updateAccount(accountId, userId, account);
 
     log.info("Account with id {} was successfully updated", accountId);
+
+    return ResponseEntity.ok().build();
+  }
+
+  @Override
+  public ResponseEntity<?> markAccountAsVerifiedToday(long accountId) {
+    long userId = userProvider.getCurrentUserId();
+
+    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+      log.info("No account with id {} was found, not able to update", accountId);
+      return ResponseEntity.notFound().build();
+    }
+
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    account.setLastVerificationDate(LocalDate.now());
+
+    accountService.saveAccount(userId, account);
+
+    // TODO add history entry on confirming account state
 
     return ResponseEntity.ok().build();
   }

@@ -99,7 +99,7 @@ public class ImportService {
           .currency(currencyOptional.get())
           .build();
 
-      Account savedAccount = accountService.addAccount(userId, accountToSave);
+      Account savedAccount = accountService.saveAccount(userId, accountToSave);
       accountNameToIdMap.put(savedAccount.getName(), savedAccount.getId());
     }
     return accountNameToIdMap;
