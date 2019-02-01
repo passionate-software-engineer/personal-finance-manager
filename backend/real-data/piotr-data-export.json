@@ -11,11 +11,11 @@
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
       "EUR": "315.50",
-      "PLN": "273888.15",
+      "PLN": "273888.14",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "275225.87"
+    "sumOfAllFundsInBaseCurrency": "275225.86"
   },
   "initialAccountsState": [
     {
@@ -157,7 +157,7 @@
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "47183.17",
+      "balance": "47183.16",
       "currency": "PLN"
     },
     {
@@ -203,36 +203,31 @@
   ],
   "categories": [
     {
-      "name": "Dziecko"
+      "name": "Dziecko",
+      "parentCategoryName": "Koszty"
     },
     {
-      "name": "Rozrywka"
+      "name": "Rozrywka",
+      "parentCategoryName": "Koszty"
     },
     {
-      "name": "Rachunki"
+      "name": "Rachunki",
+      "parentCategoryName": "Koszty"
     },
     {
-      "name": "TV",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Woda",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Nurkowanie"
+      "name": "Nurkowanie",
+      "parentCategoryName": "Rozrywka"
     },
     {
       "name": "Wymiana walut"
     },
     {
-      "name": "Sport"
+      "name": "Sport",
+      "parentCategoryName": "Koszty"
     },
     {
-      "name": "Leki, lekarze, higiena"
-    },
-    {
-      "name": "Zdrowie"
+      "name": "Leki, lekarze, higiena",
+      "parentCategoryName": "Koszty"
     },
     {
       "name": "Rozliczenie miesiąca"
@@ -244,15 +239,8 @@
       "name": "Koszty prowadzenia firmy"
     },
     {
-      "name": "Prąd",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Internet",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Remont domu"
+      "name": "Remont domu",
+      "parentCategoryName": "Koszty"
     },
     {
       "name": "Crossover",
@@ -271,11 +259,8 @@
       "parentCategoryName": "Koszty prowadzenia firmy"
     },
     {
-      "name": "Zakupy"
-    },
-    {
-      "name": "Zakupy - jedzenie",
-      "parentCategoryName": "Zakupy"
+      "name": "Zakupy",
+      "parentCategoryName": "Koszty"
     },
     {
       "name": "Wyjazdy"
@@ -289,30 +274,16 @@
       "parentCategoryName": "Przychody"
     },
     {
-      "name": "Transport"
+      "name": "Transport",
+      "parentCategoryName": "Koszty"
     },
     {
-      "name": "Inne Koszty"
+      "name": "Edukacja",
+      "parentCategoryName": "Koszty"
     },
     {
-      "name": "Opłaty i prowizje"
-    },
-    {
-      "name": "Edukacja"
-    },
-    {
-      "name": "Samochód"
-    },
-    {
-      "name": "Telefon",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Śmieci",
-      "parentCategoryName": "Rachunki"
-    },
-    {
-      "name": "Kosmetyki"
+      "name": "Samochód",
+      "parentCategoryName": "Koszty"
     },
     {
       "name": "Jedzenie",
@@ -331,22 +302,18 @@
       "parentCategoryName": "Samochód"
     },
     {
-      "name": "Utrzymanie domu"
-    },
-    {
-      "name": "Gaz",
-      "parentCategoryName": "Rachunki"
+      "name": "Utrzymanie domu",
+      "parentCategoryName": "Koszty"
     },
     {
       "name": "Przelewy między kontami"
     },
     {
-      "name": "Inne Przychody",
-      "parentCategoryName": "Przychody"
-    },
-    {
       "name": "ZUS",
       "parentCategoryName": "Koszty prowadzenia firmy"
+    },
+    {
+      "name": "Koszty"
     }
   ],
   "periods": [
@@ -401,7 +368,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "47177.37",
+          "balance": "47177.36",
           "currency": "PLN"
         },
         {
@@ -493,7 +460,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "47183.17",
+          "balance": "47183.16",
           "currency": "PLN"
         },
         {
@@ -551,7 +518,7 @@
         },
         {
           "description": "Dan - ubezpieczenie nurkowe",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2019-02-01",
           "accountPriceEntries": [
             {
@@ -612,20 +579,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "401.50",
-          "PLN": "273963.92",
+          "PLN": "273963.91",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "275666.28"
+        "sumOfAllFundsInBaseCurrency": "275666.27"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "315.50",
-          "PLN": "273888.15",
+          "PLN": "273888.14",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "275225.87"
+        "sumOfAllFundsInBaseCurrency": "275225.86"
       }
     },
     {
@@ -679,7 +646,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "43172.13",
+          "balance": "43172.12",
           "currency": "PLN"
         },
         {
@@ -771,7 +738,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "47177.37",
+          "balance": "47177.36",
           "currency": "PLN"
         },
         {
@@ -1339,7 +1306,7 @@
         },
         {
           "description": "Zwrot - uslugi elektroniczne",
-          "category": "Inne Przychody",
+          "category": "Przychody",
           "date": "2019-01-15",
           "accountPriceEntries": [
             {
@@ -1436,7 +1403,7 @@
         },
         {
           "description": "Chusteczki",
-          "category": "Zdrowie",
+          "category": "Leki, lekarze, higiena",
           "date": "2019-01-18",
           "accountPriceEntries": [
             {
@@ -2037,7 +2004,7 @@
         },
         {
           "description": "Podatek od nieruchomosci",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2019-01-30",
           "accountPriceEntries": [
             {
@@ -2133,7 +2100,7 @@
         },
         {
           "description": "Rozliczenie - kosmetyki, chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2019-01-31",
           "accountPriceEntries": [
             {
@@ -2146,20 +2113,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "486.59",
-          "PLN": "270198.87",
+          "PLN": "270198.86",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "272262.01"
+        "sumOfAllFundsInBaseCurrency": "272262.00"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "401.50",
-          "PLN": "273963.92",
+          "PLN": "273963.91",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "275666.28"
+        "sumOfAllFundsInBaseCurrency": "275666.27"
       }
     },
     {
@@ -2213,7 +2180,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17644.37",
+          "balance": "17644.36",
           "currency": "PLN"
         },
         {
@@ -2305,7 +2272,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "43172.13",
+          "balance": "43172.12",
           "currency": "PLN"
         },
         {
@@ -2512,7 +2479,7 @@
         },
         {
           "description": "Prowizja za wyplate",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-12-07",
           "accountPriceEntries": [
             {
@@ -3031,7 +2998,7 @@
         },
         {
           "description": "Telefon - nju mobile",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-12-17",
           "accountPriceEntries": [
             {
@@ -3232,7 +3199,7 @@
         },
         {
           "description": "Alpenverein",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-12-21",
           "accountPriceEntries": [
             {
@@ -3506,20 +3473,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "249652.65",
+          "PLN": "249652.64",
           "GBP": "0.00",
           "USD": "5500.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269666.33"
+        "sumOfAllFundsInBaseCurrency": "269666.32"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "486.59",
-          "PLN": "270198.87",
+          "PLN": "270198.86",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "272262.01"
+        "sumOfAllFundsInBaseCurrency": "272262.00"
       }
     },
     {
@@ -3573,7 +3540,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "14675.65",
+          "balance": "14675.64",
           "currency": "PLN"
         },
         {
@@ -3665,7 +3632,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "17644.37",
+          "balance": "17644.36",
           "currency": "PLN"
         },
         {
@@ -4021,7 +3988,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-11-15",
           "accountPriceEntries": [
             {
@@ -4335,7 +4302,7 @@
         },
         {
           "description": "doladowanie konta",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-11-30",
           "accountPriceEntries": [
             {
@@ -4356,13 +4323,68 @@
           ]
         },
         {
-          "description": "Ania - rozliczenie miesiaca",
-          "category": "Rozliczenie miesiąca",
+          "description": "Rozliczenie miesiaca - dziecko",
+          "category": "Dziecko",
           "date": "2018-11-30",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-5699.51"
+              "price": "-1866.95"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - rachunki",
+          "category": "Rachunki",
+          "date": "2018-11-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-257.18"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - samochod",
+          "category": "Samochód",
+          "date": "2018-11-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-8.00"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - spozywcze",
+          "category": "Jedzenie",
+          "date": "2018-11-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-637.21"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - dom",
+          "category": "Remont domu",
+          "date": "2018-11-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2865.98"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - kosmetyki, chemia",
+          "category": "Leki, lekarze, higiena",
+          "date": "2018-11-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-64.19"
             }
           ]
         }
@@ -4370,20 +4392,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "257651.04",
+          "PLN": "257651.03",
           "GBP": "0.00",
           "USD": "2000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "265134.72"
+        "sumOfAllFundsInBaseCurrency": "265134.71"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "249652.65",
+          "PLN": "249652.64",
           "GBP": "0.00",
           "USD": "5500.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269666.33"
+        "sumOfAllFundsInBaseCurrency": "269666.32"
       }
     },
     {
@@ -4529,7 +4551,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "14675.65",
+          "balance": "14675.64",
           "currency": "PLN"
         },
         {
@@ -5109,7 +5131,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-10-15",
           "accountPriceEntries": [
             {
@@ -5262,7 +5284,7 @@
         },
         {
           "description": "Fryzjer",
-          "category": "Zdrowie",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-10-20",
           "accountPriceEntries": [
             {
@@ -5559,13 +5581,72 @@
           ]
         },
         {
-          "description": "Rozliczenie miesiaca",
-          "category": "Rozliczenie miesiąca",
+          "description": "Rozliczenie miesiaca - dziecko",
+          "category": "Dziecko",
           "date": "2018-10-30",
           "accountPriceEntries": [
             {
               "account": "Ania - rozliczenie",
-              "price": "-5436.21"
+              "price": "-461.88"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - rachunki",
+          "category": "Rachunki",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-311.05"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - samochod",
+          "category": "Paliwo",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-100.07"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - jedzenie",
+          "category": "Jedzenie",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-32.50"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1215.29"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - dom",
+          "category": "Remont domu",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-3274.20"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie miesiaca - kosmetyki",
+          "category": "Leki, lekarze, higiena",
+          "date": "2018-10-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-41.23"
             }
           ]
         },
@@ -5638,11 +5719,11 @@
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "257651.04",
+          "PLN": "257651.03",
           "GBP": "0.00",
           "USD": "2000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "265134.72"
+        "sumOfAllFundsInBaseCurrency": "265134.71"
       }
     },
     {
@@ -6174,7 +6255,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-09-17",
           "accountPriceEntries": [
             {
@@ -6363,7 +6444,7 @@
         },
         {
           "description": "Lekarstwa",
-          "category": "Zdrowie",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-09-24",
           "accountPriceEntries": [
             {
@@ -6389,7 +6470,7 @@
         },
         {
           "description": "Badania",
-          "category": "Zdrowie",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-09-25",
           "accountPriceEntries": [
             {
@@ -6555,7 +6636,7 @@
         },
         {
           "description": "Chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-09-30",
           "accountPriceEntries": [
             {
@@ -7334,7 +7415,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-08-16",
           "accountPriceEntries": [
             {
@@ -7534,7 +7615,7 @@
         },
         {
           "description": "Fryzjer",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-08-30",
           "accountPriceEntries": [
             {
@@ -7641,7 +7722,7 @@
         },
         {
           "description": "Kosmetyki, chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-08-30",
           "accountPriceEntries": [
             {
@@ -7652,7 +7733,7 @@
         },
         {
           "description": "Drobne wydatki",
-          "category": "Inne Przychody",
+          "category": "Koszty",
           "date": "2018-08-30",
           "accountPriceEntries": [
             {
@@ -7982,7 +8063,7 @@
         },
         {
           "description": "Fryzjer",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-07-06",
           "accountPriceEntries": [
             {
@@ -8448,7 +8529,7 @@
         },
         {
           "description": "Kosmetyki, chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-07-31",
           "accountPriceEntries": [
             {
@@ -8896,7 +8977,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-06-15",
           "accountPriceEntries": [
             {
@@ -9000,7 +9081,7 @@
         },
         {
           "description": "Drobne wydatki",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-06-20",
           "accountPriceEntries": [
             {
@@ -9271,7 +9352,7 @@
         },
         {
           "description": "Drobne wydatki",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-06-30",
           "accountPriceEntries": [
             {
@@ -9304,7 +9385,7 @@
         },
         {
           "description": "Kosmetyki, chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-06-30",
           "accountPriceEntries": [
             {
@@ -9616,7 +9697,7 @@
         },
         {
           "description": "Leki",
-          "category": "Zdrowie",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-05-08",
           "accountPriceEntries": [
             {
@@ -9712,7 +9793,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-05-15",
           "accountPriceEntries": [
             {
@@ -9893,7 +9974,7 @@
         },
         {
           "description": "Kosmetyki, chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-05-31",
           "accountPriceEntries": [
             {
@@ -9915,7 +9996,7 @@
         },
         {
           "description": "Inne",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-05-31",
           "accountPriceEntries": [
             {
@@ -10149,7 +10230,7 @@
         },
         {
           "description": "Idea Bank Premia",
-          "category": "Inne Przychody",
+          "category": "Przychody",
           "date": "2018-04-02",
           "accountPriceEntries": [
             {
@@ -10315,7 +10396,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-04-16",
           "accountPriceEntries": [
             {
@@ -10507,7 +10588,7 @@
         },
         {
           "description": "Kosmetyki, chemia",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-04-30",
           "accountPriceEntries": [
             {
@@ -10737,7 +10818,7 @@
         },
         {
           "description": "Idea Bank Premia",
-          "category": "Inne Przychody",
+          "category": "Przychody",
           "date": "2018-03-02",
           "accountPriceEntries": [
             {
@@ -10748,7 +10829,7 @@
         },
         {
           "description": "BAR RESTAURANTE LA GAVBARLOVENTO ESP",
-          "category": "Zakupy - jedzenie",
+          "category": "Jedzenie",
           "date": "2018-03-02",
           "accountPriceEntries": [
             {
@@ -10934,7 +11015,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-03-15",
           "accountPriceEntries": [
             {
@@ -11410,7 +11491,7 @@
         },
         {
           "description": "Kabelek i poczta",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-03-31",
           "accountPriceEntries": [
             {
@@ -11454,7 +11535,7 @@
         },
         {
           "description": "Kosmetyki",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-03-31",
           "accountPriceEntries": [
             {
@@ -11721,7 +11802,7 @@
         },
         {
           "description": "Idea Bank Premia",
-          "category": "Inne Przychody",
+          "category": "Przychody",
           "date": "2018-02-02",
           "accountPriceEntries": [
             {
@@ -11963,7 +12044,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-02-15",
           "accountPriceEntries": [
             {
@@ -12127,7 +12208,7 @@
         },
         {
           "description": "Drobne wydatki",
-          "category": "Inne Koszty",
+          "category": "Koszty",
           "date": "2018-02-27",
           "accountPriceEntries": [
             {
@@ -12197,7 +12278,7 @@
         },
         {
           "description": "Kosmetyki",
-          "category": "Kosmetyki",
+          "category": "Leki, lekarze, higiena",
           "date": "2018-02-28",
           "accountPriceEntries": [
             {
@@ -12416,7 +12497,7 @@
       "transactions": [
         {
           "description": "Idea Bank Premia",
-          "category": "Inne Przychody",
+          "category": "Przychody",
           "date": "2018-01-02",
           "accountPriceEntries": [
             {
@@ -12583,7 +12664,7 @@
         },
         {
           "description": "Prowizja za 2 wyplate",
-          "category": "Opłaty i prowizje",
+          "category": "Rachunki",
           "date": "2018-01-06",
           "accountPriceEntries": [
             {
@@ -12736,7 +12817,7 @@
         },
         {
           "description": "Telefon",
-          "category": "Telefon",
+          "category": "Rachunki",
           "date": "2018-01-15",
           "accountPriceEntries": [
             {
@@ -12982,7 +13063,7 @@
         },
         {
           "description": "Abonament RTV",
-          "category": "TV",
+          "category": "Rachunki",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
@@ -12993,7 +13074,7 @@
         },
         {
           "description": "Gaz",
-          "category": "Gaz",
+          "category": "Rachunki",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
@@ -13004,7 +13085,7 @@
         },
         {
           "description": "Internet",
-          "category": "Internet",
+          "category": "Rachunki",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
@@ -13015,7 +13096,7 @@
         },
         {
           "description": "Prąd",
-          "category": "Prąd",
+          "category": "Rachunki",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
@@ -13026,7 +13107,7 @@
         },
         {
           "description": "Śmieci",
-          "category": "Śmieci",
+          "category": "Rachunki",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
@@ -13037,7 +13118,7 @@
         },
         {
           "description": "Woda",
-          "category": "Woda",
+          "category": "Rachunki",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
@@ -13125,7 +13206,7 @@
         },
         {
           "description": "Jedzenie - zakupy",
-          "category": "Zakupy - jedzenie",
+          "category": "Jedzenie",
           "date": "2018-01-31",
           "accountPriceEntries": [
             {
