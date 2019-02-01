@@ -1,12 +1,13 @@
-import { TransactionService } from './../../transaction/transaction-service/transaction.service';
+import {TransactionService} from './../../transaction/transaction-service/transaction.service';
 import {Component, OnInit} from '@angular/core';
 import {Category} from '../category';
 import {CategoryService} from '../category-service/category.service';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
-import { Transaction } from '../../transaction/transaction';
-import { TransactionResponse } from '../../transaction/transaction-service/transaction-response';
+import {TransactionResponse} from '../../transaction/transaction-service/transaction-response';
+import {AccountService} from '../../account/account-service/account.service';
+import {Account} from '../../account/account';
 
 @Component({ // TODO categories in dropdows should display with parent category e.g. Car > Parts (try using filter for it)
   selector: 'app-categories',
@@ -15,28 +16,50 @@ import { TransactionResponse } from '../../transaction/transaction-service/trans
 })
 export class CategoriesComponent extends Sortable implements OnInit {
   categories: Category[] = [];
+  accounts: Account[] = [];
   addingMode = false;
   newCategory: Category = new Category();
   transactions: TransactionResponse[] = [];
+  last12Months: Date[] = [];
 
   constructor(
     private categoryService: CategoryService,
     private alertService: AlertsService,
     private translate: TranslateService,
-    private transactionService: TransactionService) {
+    private transactionService: TransactionService,
+    private accountService: AccountService
+  ) {
     super('name');
+    this.calculateLast12Months();
   }
 
   ngOnInit() {
-    this.getCategories();
-    this.getTransactions();
-  }
-
-  getCategories(): void {
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
+
+        this.accountService.getAccounts()
+          .subscribe(accounts => {
+            this.accounts = accounts;
+            this.getTransactions();
+          });
       });
+  }
+
+  calculateLast12Months() {
+    const today = new Date();
+    for (let i = 0; i <= today.getMonth() + 12; ++i) {
+
+      let year = today.getFullYear();
+      let month = today.getMonth() - i;
+
+      if (month < 1) {
+        month += 12;
+        year -= 1;
+      }
+
+      this.last12Months.push(new Date(year, month, 1));
+    }
   }
 
   getTransactions(): void {
@@ -109,7 +132,7 @@ export class CategoriesComponent extends Sortable implements OnInit {
   }
 
   onRefreshCategories() {
-    this.getCategories();
+    this.ngOnInit();
   }
 
   getParentCategoryName(category): string {
@@ -160,7 +183,8 @@ export class CategoriesComponent extends Sortable implements OnInit {
     return true;
   }
 
-  getAllTransactionsBalance(categoryId: number) {
+  // TODO parent category should sum values of child categories
+  getAllTransactionsBalance(categoryId: number): number {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {
@@ -168,7 +192,53 @@ export class CategoriesComponent extends Sortable implements OnInit {
         continue;
       }
       for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
-        sum += +this.transactions[i].accountPriceEntries[j].price;
+        let exchangeRate = 1.0;
+        for (const account of this.accounts) { // TODO use hashmap
+          if (account.id === this.transactions[i].accountPriceEntries[j].accountId) {
+            exchangeRate = +account.currency.exchangeRate;
+          }
+        }
+
+
+        sum += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
+      }
+    }
+
+    return sum;
+  }
+
+  getBalanceOfTransactionsInGivenCategoryAndMonth(categoryId: number, beginningOfMonth: Date): number {
+    let sum = 0;
+
+    let year = beginningOfMonth.getFullYear();
+    let month = beginningOfMonth.getMonth() + 1;
+    if (month > 12) {
+      month -= 12;
+      year += 1;
+    }
+
+    const beginningOfNextMonth = new Date(year, month, 1);
+
+
+    for (let i = 0; i < this.transactions.length; ++i) {
+      if (this.transactions[i].categoryId !== categoryId) {
+        continue;
+      }
+      for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
+        const transactionDate = new Date(this.transactions[i].date);
+        if (transactionDate < beginningOfMonth || transactionDate >= beginningOfNextMonth) {
+          continue;
+        }
+
+        let exchangeRate = 1.0;
+        for (const account of this.accounts) { // TODO use hashmap
+          if (account.id === this.transactions[i].accountPriceEntries[j].accountId) {
+            exchangeRate = +account.currency.exchangeRate;
+          }
+        }
+
+
+        sum += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
       }
     }
 

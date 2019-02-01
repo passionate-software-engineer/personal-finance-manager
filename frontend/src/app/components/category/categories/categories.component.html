@@ -68,7 +68,7 @@
       <td id="ParentCategoryReadOnly" *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
 
       <td>
-          <p id="PriceSummary">{{ getAllTransactionsBalance(category.id) | number:'0.2' }}</p>
+        <p id="PriceSummary">{{ getAllTransactionsBalance(category.id) | number:'0.2' }}</p>
       </td>
 
       <td *ngIf="!category.editMode">
@@ -93,6 +93,23 @@
         <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
       </td>
 
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <th></th>
+    <th *ngFor="let month of last12Months">
+      {{ month | date:'MMMM yyyy' }}
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td> {{category.name}} </td>
+      <td *ngFor="let month of last12Months">
+        {{ getBalanceOfTransactionsInGivenCategoryAndMonth(category.id, month) | number:'0.2' }}
+      </td>
     </tr>
   </tbody>
 </table>
