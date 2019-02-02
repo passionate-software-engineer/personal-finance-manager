@@ -61,7 +61,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     account.setUserId(userId);
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
 
-    Account savedAccount = accountService.addAccount(userId, account);
+    Account savedAccount = accountService.saveAccount(userId, account);
 
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
@@ -92,7 +92,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     account.setUserId(userId);
     account.setCurrency(currencyService.getCurrencies(userId).get(1));
 
-    Account savedAccount = accountService.addAccount(userId, account);
+    Account savedAccount = accountService.saveAccount(userId, account);
 
     Category category = categoryCar();
     category.setUserId(userId);
@@ -136,7 +136,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     account.setUserId(userId);
     account.setCurrency(currencyService.getCurrencies(userId).get(1));
 
-    Account savedAccount = accountService.addAccount(userId, account);
+    Account savedAccount = accountService.saveAccount(userId, account);
 
     Category category = categoryOil();
     category.setUserId(userId);
@@ -185,7 +185,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     account.setUserId(userId);
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
 
-    Account savedAccount = accountService.addAccount(userId, account);
+    Account savedAccount = accountService.saveAccount(userId, account);
 
     long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
 
@@ -217,7 +217,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     account.setUserId(userId);
     account.setCurrency(currencyService.getCurrencies(userId).get(1));
 
-    Account savedAccount = accountService.addAccount(userId, account);
+    Account savedAccount = accountService.saveAccount(userId, account);
 
     long categoryId = categoryService.addCategory(categoryHome(), userId).getId();
 

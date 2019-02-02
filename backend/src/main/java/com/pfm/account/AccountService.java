@@ -33,7 +33,7 @@ public class AccountService {
         .collect(Collectors.toList());
   }
 
-  public Account addAccount(long userId, Account account) {
+  public Account saveAccount(long userId, Account account) {
     account.setUserId(userId);
     return accountRepository.save(account);
   }

@@ -33,7 +33,7 @@ export class HealthCheckTask {
   private startHealthCheckTask(): void {
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(15 * 1000).subscribe(eventNumber => {
+      this.healthCheckTask = interval(30 * 1000).subscribe(eventNumber => {
 
         this.ngZone.run(() => {
           // no need to do anything - error handler will do the job
@@ -43,7 +43,7 @@ export class HealthCheckTask {
           if (tokenExpirationTime != null) {
 
             const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
-            if (expireTimeInSeconds < 90) {
+            if (expireTimeInSeconds < 120) {
               this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
             }
 

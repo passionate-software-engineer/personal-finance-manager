@@ -96,7 +96,7 @@ public class AccountServiceTest {
     when(accountRepository.save(accountToSave)).thenReturn(accountToSave);
 
     //when
-    Account account = accountService.addAccount(MOCK_USER_ID, accountToSave);
+    Account account = accountService.saveAccount(MOCK_USER_ID, accountToSave);
 
     //then
     assertNotNull(account);

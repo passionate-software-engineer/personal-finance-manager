@@ -21,6 +21,7 @@ logging:
     org.hibernate.type: TRACE
     org.hibernate.SQL: DEBUG
     org.springframework.transaction: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation: DEBUG
 
 management:
   endpoints:

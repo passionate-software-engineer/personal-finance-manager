@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +36,11 @@ public interface AccountApi {
   // TODO try to separate response type for each status call 200/400
   @PutMapping(value = "/{accountId}")
   ResponseEntity<?> updateAccount(@PathVariable long accountId, AccountRequest accountRequest);
+
+  @ApiOperation(value = "Update an existing account by setting lastVerificationDate to today", response = Void.class, authorizations = {
+      @Authorization(value = "Bearer")})
+  @PatchMapping(value = "/{accountId}/markAccountAsVerifiedToday")
+  ResponseEntity<?> markAccountAsVerifiedToday(@PathVariable long accountId);
 
   @ApiOperation(value = "Delete an existing account", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @DeleteMapping(value = "/{accountId}")

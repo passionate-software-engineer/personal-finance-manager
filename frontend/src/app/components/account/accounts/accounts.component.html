@@ -42,6 +42,8 @@
 
       <th>{{ "account.balancePLN" | translate }}</th>
 
+      <th>{{ "account.lastVerificationDate" | translate }}</th>
+
       <th></th>
     </tr>
   </thead>
@@ -51,12 +53,12 @@
     <tr *ngIf="addingMode">
       <!-- Name -->
       <td>
-        <input id="NewAccountNameInput" class="form-control" type="text" [(ngModel)]="newAccount.name" />
+        <input id="NewAccountNameInput" class="form-control" type="text" [(ngModel)]="newAccount.name"/>
       </td>
 
       <!--Balance-->
       <td>
-        <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance" />
+        <input id="NewAccountBalanceInput" class="form-control" type="number" [(ngModel)]="newAccount.balance"/>
       </td>
 
       <!-- Currency -->
@@ -72,8 +74,11 @@
       <td>
         {{
         newAccount.balance * newAccount.currency.exchangeRate
-        | number: "0.2-2"
+          | number: "0.2-2"
         }}
+      </td>
+
+      <td>
       </td>
 
       <!-- Buttons -->
@@ -147,6 +152,11 @@
         {{ account.balance * account.currency.exchangeRate | number: "0.2-2" }}
       </td>
 
+      <!-- Last verification date -->
+      <td>
+        {{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
+      </td>
+
       <!-- Options -->
       <td *ngIf="!account.editMode">
         <div class="dropdown">
@@ -166,6 +176,15 @@
                 (click)="onShowEditMode(account)"
               >
                 {{ "button.edit" | translate }}
+              </button>
+            </li>
+            <li>
+              <button
+                id="UpdateLastVerificationDateBtn"
+                class="btn btn-info btn-block"
+                (click)="confirmAccountBalance(account)"
+              >
+                {{ "button.updateLastVerificationDate" | translate }}
               </button>
             </li>
             <li>
@@ -200,6 +219,7 @@
       </td>
     </tr>
 
+    <!-- Balance row -->
     <tr>
       <!-- Name -->
       <td></td>
@@ -213,6 +233,10 @@
       <!--Balance PLN -->
       <td id="BalanceOfAllAccounts">
         {{ allAccountsBalance() | number: "0.2-2" }}
+      </td>
+
+      <!-- Last verification date -->
+      <td>
       </td>
 
       <!-- Buttons -->

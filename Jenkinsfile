@@ -17,7 +17,7 @@ pipeline {
     stages {
 
 	stage('Dependency check') {
-            parallel { // TODO send email when new versions available
+            parallel { // TODO send email when new versions available // TODO timeout and retry if takes more than 30s
                 stage('BACKEND') {
                     steps {
                         sh '''
@@ -32,6 +32,7 @@ pipeline {
                         sh '''
                            cd frontend
                            ncu > ncu_output.txt
+                           cat ncu_output.txt
                            '''
                     }
                 }

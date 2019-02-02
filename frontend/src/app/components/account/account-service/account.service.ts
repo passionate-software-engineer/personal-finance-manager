@@ -39,4 +39,8 @@ export class AccountService extends ServiceBase {
     return this.http.put<Account>(ServiceBase.apiUrl(PATH, account.id), AccountService.accountToAccountRequest(account), this.contentType);
   }
 
+  markAccountAsVerifiedToday(account: Account): Observable<any> {
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAccountAsVerifiedToday'), '', this.contentType);
+  }
+
 }

@@ -2,6 +2,7 @@ package com.pfm.account;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,4 +22,7 @@ public class AccountRequest {
 
   @ApiModelProperty(value = "Account's currency id", required = true, example = "1")
   private long currencyId;
+
+  @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
+  private LocalDate lastVerificationDate;
 }
