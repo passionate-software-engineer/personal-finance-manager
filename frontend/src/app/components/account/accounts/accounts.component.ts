@@ -78,6 +78,16 @@ export class AccountsComponent extends Sortable implements OnInit {
     }
   }
 
+  confirmAccountBalance(account: Account) {
+    this.accountService.markAccountAsVerifiedToday(account).subscribe(() => {
+        this.alertService.success(
+          this.translate.instant('message.accountVerificationDateSetToToday')
+        );
+        account.lastVerificationDate = new Date();
+      }
+    );
+  }
+
   onEditAccount(account: Account) {
     if (!this.validateAccount(account.editedAccount)) {
       return;

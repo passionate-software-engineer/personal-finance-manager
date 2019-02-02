@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -23,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
@@ -214,6 +217,51 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.name", is(updatedAccount.getName())))
         .andExpect(jsonPath("$.balance", is(updatedAccount.getBalance().toString())))
         .andExpect(jsonPath("$.userId").doesNotExist());
+  }
+
+  @Test
+  public void shouldUpdateAccountLastVerificationDate() throws Exception {
+
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    //when
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andDo(print())
+        .andExpect(status().isOk());
+
+    //then
+    mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
+        .andExpect(jsonPath("$.lastVerificationDate", is(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("$.userId").doesNotExist());
+  }
+
+  @Test
+  public void shouldReturnInvoiceNotFoundWhenTryingToUpdateNotExistingInvoiceLastVerificationDate() throws Exception {
+
+    //given
+    int accountId = 1500;
+
+    //when
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andDo(print())
+        // then
+        .andExpect(status().isNotFound());
   }
 
   @Test

@@ -44,4 +44,27 @@ public class RestExceptionHandlerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", containsString(expectedMessage)));
 
   }
+
+  @Test
+  public void shouldReceiveUserFriendlyFormattedMessageOnBadRequestError() throws Exception {
+    // given
+
+    final String correlationId = UUID.randomUUID().toString();
+    String expectedMessage = String.format(MessagesProvider.getMessage(MessagesProvider.BAD_REQUEST), correlationId,
+        LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)); // ignoring time as it may differ in seconds / milliseconds
+    expectedMessage = expectedMessage.substring(0, expectedMessage.length() - 1); // remove "
+
+    String body = json(userMarian());
+    body = body.replace("username", "username123"); // no such field exists so bad request will be returned
+    // when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
+        .header(CorrelationIdFilter.CORRELATION_ID, correlationId)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(body))
+
+        // then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", containsString(expectedMessage)));
+
+  }
 }

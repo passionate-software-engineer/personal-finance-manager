@@ -6,6 +6,7 @@ export class Account {
   balance = 0;
   currency: Currency;
   editMode = false;
+  lastVerificationDate: Date;
   editedAccount: Account;
 }
 
