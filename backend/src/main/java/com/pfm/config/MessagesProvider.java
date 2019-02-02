@@ -56,6 +56,7 @@ public class MessagesProvider {
   public static final String MAIN_CATEGORY = "historyInfoProvider.mainCategory";
 
   public static final String INTERNAL_ERROR = "internalError";
+  public static final String BAD_REQUEST = "badRequest";
   public static final String IMPORT_NOT_POSSIBLE = "importValidator.importNotPossibleBecauseOfExistingData";
 
   private static final ResourceBundle englishBundle = ResourceBundle.getBundle("messages", new Locale("en"));
