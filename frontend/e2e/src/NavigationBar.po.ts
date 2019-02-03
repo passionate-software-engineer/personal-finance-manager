@@ -1,6 +1,6 @@
 import {by, element} from 'protractor';
 
-export class NavigationPage {
+export class NavigationBar {
 
   pfmLink() {
     return element(by.id('PfmLink'));

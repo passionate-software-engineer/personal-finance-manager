@@ -8,7 +8,7 @@ pipeline {
         string(name: 'EC2_INSTANCE', defaultValue: 'ec2-3-120-209-115.eu-central-1.compute.amazonaws.com', description: 'EC2 instance for backend service')
     }
     options {
-        timeout(time: 20, unit: 'MINUTES')
+        timeout(time: 40, unit: 'MINUTES')
         timestamps()
     }
     triggers {
