@@ -61,7 +61,7 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Mbank', 1000);
 
     // when
-    transactionPage.addTransaction('01012018', 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('01/01/2018', 'desc', 100, null, 'Mbank', null, 'Car');
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -87,13 +87,13 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Alior', 500);
 
     // when
-    transactionPage.addTransaction('22/11/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+    transactionPage.addTransaction('02/02/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     transactionPage.assertDescription('desc');
-    transactionPage.assertDate('22/11/2018');
+    transactionPage.assertDate('02/02/2018');
     transactionPage.assertPrices('100.00', '50.00');
     transactionPage.assertAccounts('Mbank', 'Alior');
     transactionPage.assertCategory('Car');
@@ -117,17 +117,17 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Millenium', 10000);
     accountPage.addAccount('Ing', 5000);
 
-    transactionPage.addTransaction('22/11/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+    transactionPage.addTransaction('03/03/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
 
     // when
     transactionPage.updateTransaction(transactionPage.transactionRows().first(),
-      '23/11/2018', 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
+      '05/05/2018', 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     transactionPage.assertDescription('updated description');
-    transactionPage.assertDate('23/11/2018');
+    transactionPage.assertDate('05/05/2018');
     transactionPage.assertPrices('1,000.00', '500.00');
     transactionPage.assertAccounts('Millenium', 'Ing');
     transactionPage.assertCategory('Food');
@@ -148,7 +148,7 @@ describe('Transaction page tests', () => {
     accountPage.navigateTo();
     accountPage.addAccount('Mbank', 1000);
 
-    transactionPage.addTransaction('22/11/2018', 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('07/07/2018', 'desc', 100, null, 'Mbank', null, 'Car');
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     // when
