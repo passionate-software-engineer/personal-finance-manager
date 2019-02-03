@@ -292,5 +292,13 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return sum;
   }
 
+  private parseDate(dateString: string): Date {
+    if (dateString) {
+      return new Date(dateString);
+    } else {
+      return null;
+    }
+  }
+
 
 }

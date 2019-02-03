@@ -85,7 +85,7 @@ export class CategoryPage {
   assertMessage(message) {
     return;
     // const first = element.all(by.id('Alerts')).all(by.css('alert-list')).get(0);
-    // expect(first.getText()).toEqual(message);
+    // expect(first.getText()).toEqual(message); // TODO add message assertions
   }
 
   assertSuccessMessage(message) {

@@ -116,7 +116,7 @@
     <tr *ngIf="addingMode">
         <!--Date-->
         <td>
-          <input id="NewTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [ngModel] ="newTransaction.date | date:'yyyy-MM-dd'" (ngModelChange)="newTransaction.date = $event">
+          <input id="NewTransactionDateInput" class="form-control" type="date" min="2015-01-01" max="2025-12-31" [ngModel] ="newTransaction.date | date:'yyyy-MM-dd'" (ngModelChange)="newTransaction.date = parseDate($event)">
         </td>
 
         <!--Description-->
@@ -152,7 +152,7 @@
 
         <td id="EditAccountSaveExitBtn">
           <button id="newTransactionSaveButton" class="btn btn-success" (click)="addTransaction()">{{'button.save' | translate}}</button>
-          <button class="btn btn-danger" (click)="addingMode=false" id="EditTransactionExitBtn">{{'button.exit' | translate}}</button>
+          <button class="btn btn-danger" (click)="addingMode=false" id="AddTransactionExitBtn">{{'button.exit' | translate}}</button>
         </td>
       </tr>
 

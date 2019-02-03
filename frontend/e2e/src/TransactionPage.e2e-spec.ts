@@ -5,7 +5,7 @@ import {CategoryPage} from './CategoryPage.po';
 import {AccountsPage} from './AccountPage.po';
 import {TransactionAndFilterPage} from './TransactionPage.po';
 
-xdescribe('Transaction page tests', () => { // TODO - fix tests for transactions
+describe('Transaction page tests', () => {
   const transactionPage = new TransactionAndFilterPage();
   const accountPage = new AccountsPage();
   const categoryPage = new CategoryPage();
