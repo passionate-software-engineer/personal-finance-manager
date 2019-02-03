@@ -61,7 +61,7 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Mbank', 1000);
 
     // when
-    transactionPage.addTransaction('22/11/2018', 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('2018-11-22', 'desc', 100, null, 'Mbank', null, 'Car');
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
