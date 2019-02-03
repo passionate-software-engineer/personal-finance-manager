@@ -61,13 +61,13 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Mbank', 1000);
 
     // when
-    transactionPage.addTransaction(22112018, 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('01012018', 'desc', 100, null, 'Mbank', null, 'Car');
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     transactionPage.assertDescription('desc');
-    transactionPage.assertDate('22/11/2018');
+    transactionPage.assertDate('01/01/2018');
     transactionPage.assertPrices('100.00', null);
     transactionPage.assertAccounts('Mbank', null);
     transactionPage.assertCategory('Car');
