@@ -4,4 +4,6 @@ export class Category {
   parentCategory: Category = null;
   editMode = false;
   editedCategory: Category;
+  sumOfAllTransactions: number;
 }
+

@@ -1,27 +1,31 @@
 <button id="AddCategoryBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
   {{'category.addCategory' | translate}}
 </button>
-<button id="RefreshCategoriesBtn" class="btn btn-primary" type="button" (click)="onRefreshCategories()">{{'button.refresh' | translate}}</button>
+<button id="RefreshCategoriesBtn" class="btn btn-primary" type="button" (click)="onRefreshCategories()">
+  {{'button.refresh' | translate}}
+</button>
 
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
 
       <!--Name-->
-      <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
+      <th id="NameHeader" [class.active]="sortableCategoriesTable.order === 'name'" (click)="sortableCategoriesTable.setOrder('name')">
         {{'category.name' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="sortableCategoriesTable.reverse">▼</span>
+        <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
       </th>
 
       <!--Parent Category-->
-      <th id="ParentCategoryHeader" [class.active]="order === 'parentCategory.name'" (click)="setOrder('parentCategory.name')">
+      <th id="ParentCategoryHeader" [class.active]="sortableCategoriesTable.order === 'parentCategory.name'" (click)="sortableCategoriesTable.setOrder('parentCategory.name')">
         {{'category.parentCategory' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="sortableCategoriesTable.reverse">▼</span>
+        <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
       </th>
-      <th>
+      <th id="SumHeader" [class.active]="sortableCategoriesTable.order === 'sumOfAllTransactions'" (click)="sortableCategoriesTable.setOrder('sumOfAllTransactions')">
         {{'category.sum' | translate}}
+        <span [hidden]="sortableCategoriesTable.reverse">▼</span>
+        <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
       </th>
       <th></th>
     </tr>
@@ -35,77 +39,107 @@
       </td>
       <td>
         <div class="form-group">
-          <select id="NewParentCategorySelect" class="form-control" [(ngModel)]="newCategory.parentCategory"
-                  name="selectedParentCategory">
-            <option [ngValue]="null">{{'category.mainCategory' | translate}}</option>
-            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+          <select id="NewParentCategorySelect" class="form-control" [(ngModel)]="newCategory.parentCategory" name="selectedParentCategory">
+            <option [ngValue]="null">
+              {{'category.mainCategory' | translate}}
+            </option>
+            <option *ngFor="let category of categories" [ngValue]="category">
+              {{category.name}}
+            </option>
           </select>
         </div>
       </td>
       <td></td>
       <td id="NewCategorySaveExitBtn">
-        <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">{{'button.save' | translate}}</button>
-        <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">{{'button.exit' | translate}}</button>
+        <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">
+          {{'button.save' | translate}}
+        </button>
+        <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">
+          {{'button.exit' | translate}}
+        </button>
       </td>
     </tr>
 
-    <tr id="CategoryRow" *ngFor="let category of categories | orderBy: order:reverse:'case-insensitive'">
+    <tr id="CategoryRow" *ngFor="let category of categories | orderBy: sortableCategoriesTable.order:sortableCategoriesTable.reverse:'case-insensitive'">
 
       <!--Name-->
       <td *ngIf="category.editMode">
         <input id="EditCategoryNameInput" class="form-control" type="text" [(ngModel)]="category.editedCategory.name">
       </td>
-      <td id="NameReadOnly" *ngIf="!category.editMode">{{category.name}}</td>
+      <td id="NameReadOnly" *ngIf="!category.editMode">
+        {{category.name}}
+      </td>
 
       <!--Parent Category-->
       <td *ngIf="category.editMode">
         <select id="EditParentCategorySelect" class="form-control" [(ngModel)]="category.editedCategory.parentCategory">
           <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
             {{parCategory.name}}
-          <option [ngValue]="null">{{'category.mainCategory' | translate}}</option>
+          <option [ngValue]="null">
+            {{'category.mainCategory' | translate}}
+          </option>
         </select>
       </td>
-      <td id="ParentCategoryReadOnly" *ngIf="!category.editMode">{{getParentCategoryName(category)}}</td>
+      <td id="ParentCategoryReadOnly" *ngIf="!category.editMode">
+        {{getParentCategoryName(category)}}
+      </td>
 
       <td>
-        <p id="PriceSummary">{{ getAllTransactionsBalance(category.id) | number:'0.2' }}</p>
+        <p id="PriceSummary">
+          {{ category.sumOfAllTransactions | number:'0.2' }}
+        </p>
       </td>
 
       <td *ngIf="!category.editMode">
         <div class="dropdown">
-          <button id="OptionsBtn" class="btn btn-primary dropdown-toggle btn-block" type="button"
-                  data-toggle="dropdown">{{'button.options' | translate}}
+          <button id="OptionsBtn" class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">
+            {{'button.options' | translate}}
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
             <li>
-              <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(category)">{{'button.edit' | translate}}</button>
+              <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(category)">
+                {{'button.edit' | translate}}
+              </button>
             </li>
             <li>
-              <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteCategory(category)">{{'button.delete' | translate}}</button>
+              <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteCategory(category)">
+                {{'button.delete' | translate}}
+              </button>
             </li>
           </ul>
         </div>
       </td>
 
       <td *ngIf="category.editMode" id="EditCategorySaveExitBtn">
-        <button id="EditCategorySaveBtn" class="btn btn-success" (click)="onEditCategory(category)">{{'button.save' | translate}}</button>
-        <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">{{'button.exit' | translate}}</button>
+        <button id="EditCategorySaveBtn" class="btn btn-success" (click)="onEditCategory(category)">
+          {{'button.save' | translate}}
+        </button>
+        <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">
+          {{'button.exit' | translate}}
+        </button>
       </td>
 
     </tr>
   </tbody>
 </table>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-month">
   <thead class="thead-dark">
-    <th></th>
-    <th *ngFor="let month of last12Months">
-      {{ month | date:'MMMM yyyy' }}
-    </th>
+    <tr>
+      <th [class.active]="sortableSummaryTable.order === 'name'" (click)="sortableSummaryTable.setOrder('name')">
+      {{'category.name' | translate}}
+        <span [hidden]="sortableSummaryTable.reverse">▼</span>
+        <span [hidden]="!sortableSummaryTable.reverse">▲</span>
+      </th>
+      <th *ngFor="let month of last12Months">
+        {{ month | date:'MMMM yyyy' }}
+      </th>
+    </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let category of categories">
+    <!-- <tr *ngFor="let category of categories"> -->
+    <tr *ngFor="let category of categories | orderBy: sortableSummaryTable.order:sortableSummaryTable.reverse:'case-insensitive'">
       <td> {{category.name}} </td>
       <td *ngFor="let month of last12Months">
         {{ getBalanceOfTransactionsInGivenCategoryAndMonth(category.id, month) | number:'0.2' }}

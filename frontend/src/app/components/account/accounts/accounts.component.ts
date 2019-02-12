@@ -39,6 +39,10 @@ export class AccountsComponent extends Sortable implements OnInit {
   getAccounts(): void {
     this.accountService.getAccounts().subscribe(accounts => {
       this.accounts = accounts;
+      for( let i = 0; i < this.accounts.length; i++){
+        this.accounts[i].balancePLN = this.accounts[i].balance * this.accounts[i].currency.exchangeRate;
+        this.accounts[i].balance = +this.accounts[i].balance;
+      }
     });
   }
 
@@ -97,6 +101,7 @@ export class AccountsComponent extends Sortable implements OnInit {
     editedAccount.name = account.editedAccount.name;
     editedAccount.balance = account.editedAccount.balance;
     editedAccount.currency = account.editedAccount.currency;
+    editedAccount.balancePLN = editedAccount.balance * editedAccount.currency.exchangeRate;
 
     this.accountService.editAccount(editedAccount).subscribe(() => {
       this.alertService.success(
@@ -115,7 +120,7 @@ export class AccountsComponent extends Sortable implements OnInit {
     this.accountService.addAccount(this.newAccount).subscribe(id => {
       this.alertService.success(this.translate.instant('message.accountAdded'));
       this.newAccount.id = id;
-
+      this.newAccount.balancePLN = this.newAccount.balance * this.newAccount.currency.exchangeRate;
       // TODO - get object from server
       this.accounts.push(this.newAccount);
       this.addingMode = false;

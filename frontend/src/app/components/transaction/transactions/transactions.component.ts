@@ -55,10 +55,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
+        this.categories.sort((categories1, categories2) => (categories1.name > categories2.name ? 1 : -1));
 
         this.accountService.getAccounts()
           .subscribe(accounts => {
             this.accounts = accounts;
+            this.accounts.sort((accounts1, accounts2) => (accounts1.name > accounts2.name ? 1 : -1));
             this.getTransactions();
             this.getFilters();
           });
@@ -91,6 +93,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 accountPriceEntry.account = account;
               }
             }
+
+            accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
 
             transaction.accountPriceEntries.push(accountPriceEntry);
           }

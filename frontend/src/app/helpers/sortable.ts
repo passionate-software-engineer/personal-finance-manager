@@ -1,4 +1,4 @@
-export abstract class Sortable {
+export class Sortable {
 
   public order: string;
   public reverse = false;
@@ -13,4 +13,5 @@ export abstract class Sortable {
     }
     this.order = value;
   }
+
 }

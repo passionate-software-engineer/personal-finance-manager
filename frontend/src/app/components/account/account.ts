@@ -8,5 +8,6 @@ export class Account {
   editMode = false;
   lastVerificationDate: Date;
   editedAccount: Account;
+  balancePLN = 0;
 }
 
