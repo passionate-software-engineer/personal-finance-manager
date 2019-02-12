@@ -1,17 +1,7 @@
-<button
-  id="AddAccountBtn"
-  class="btn btn-success"
-  type="button"
-  (click)="addingMode = !addingMode"
->
+<button id="AddAccountBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
   {{ "account.addAccount" | translate }}
 </button>
-<button
-  id="RefreshAccountsBtn"
-  class="btn btn-primary"
-  type="button"
-  (click)="onRefreshAccounts()"
->
+<button id="RefreshAccountsBtn" class="btn btn-primary" type="button" (click)="onRefreshAccounts()">
   {{ "button.refresh" | translate }}
 </button>
 
@@ -19,30 +9,36 @@
   <thead class="thead-dark">
     <tr>
       <!--Name-->
-      <th
-        id="NameHeader"
-        [class.active]="order === 'name'"
-        (click)="setOrder('name')"
-      >
-        {{ "account.name" | translate }} <span [hidden]="reverse">▼</span>
+      <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
+        {{ "account.name" | translate }}
+        <span [hidden]="reverse">▼</span>
         <span [hidden]="!reverse">▲</span>
       </th>
 
       <!--Balance-->
-      <th
-        id="BalanceHeader"
-        [class.active]="order === 'balance'"
-        (click)="setOrder('balance')"
-      >
-        {{ "account.balance" | translate }} <span [hidden]="reverse">▼</span>
+      <th id="BalanceHeader" [class.active]="order === 'balance'" (click)="setOrder('balance')">
+        {{ "account.balance" | translate }}
+        <span [hidden]="reverse">▼</span>
         <span [hidden]="!reverse">▲</span>
       </th>
 
-      <th>{{ "account.currency" | translate }}</th>
+      <th id="CurrencyHeader" [class.active]="order === 'currency.name'" (click)="setOrder('currency.name')">
+        {{ "account.currency" | translate }}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
 
-      <th>{{ "account.balancePLN" | translate }}</th>
+      <th id="BalancePLNHeader" [class.active]="order === 'balancePLN'" (click)="setOrder('balancePLN')">
+        {{"account.balancePLN" | translate }}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
 
-      <th>{{ "account.lastVerificationDate" | translate }}</th>
+      <th id="DateHeader" [class.active]="order === 'lastVerificationDate'" (click)="setOrder('lastVerificationDate')">
+        {{"account.lastVerificationDate" | translate }}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
 
       <th></th>
     </tr>
@@ -72,9 +68,7 @@
 
       <!-- Balance PLN -->
       <td>
-        {{
-        newAccount.balance * newAccount.currency.exchangeRate
-          | number: "0.2-2"
+        {{ newAccount.balance * newAccount.currency.exchangeRate | number: "0.2-2"
         }}
       </td>
 
@@ -92,31 +86,18 @@
       </td>
     </tr>
 
-    <tr
-      id="AccountRow"
-      *ngFor="
-        let account of (accounts | orderBy: order:reverse:'case-insensitive')
-      "
-    >
+    <tr id="AccountRow" *ngFor="let account of (accounts | orderBy: order:reverse:'case-insensitive')">
       <!-- Name -->
       <td *ngIf="account.editMode">
-        <input
-          id="EditAccountNameInput"
-          class="form-control"
-          type="text"
-          [(ngModel)]="account.editedAccount.name"
-        />
+        <input id="EditAccountNameInput" class="form-control" type="text" [(ngModel)]="account.editedAccount.name"/>
       </td>
-      <td id="NameReadOnly" *ngIf="!account.editMode">{{ account.name }}</td>
+      <td id="NameReadOnly" *ngIf="!account.editMode">
+        {{ account.name }}
+      </td>
 
       <!--Balance-->
       <td *ngIf="account.editMode">
-        <input
-          id="EditAccountBalanceInput"
-          class="form-control"
-          type="number"
-          [(ngModel)]="account.editedAccount.balance"
-        />
+        <input id="EditAccountBalanceInput" class="form-control" type="number" [(ngModel)]="account.editedAccount.balance"/>
       </td>
       <td id="BalanceReadOnly" *ngIf="!account.editMode">
         {{ account.balance | number: "0.2-2" }}
@@ -124,32 +105,24 @@
 
       <!-- Currency -->
       <td *ngIf="account.editMode">
-        <select
-          id="EditAccountCurrencySelect"
-          class="form-control"
-          [(ngModel)]="account.editedAccount.currency"
-        >
-          <option
-            *ngFor="let currency of supportedCurrencies"
-            [ngValue]="currency"
-          >
+        <select id="EditAccountCurrencySelect" class="form-control" [(ngModel)]="account.editedAccount.currency">
+          <option *ngFor="let currency of supportedCurrencies" [ngValue]="currency">
             {{ currency.name }}
           </option>
         </select>
       </td>
 
-      <td *ngIf="!account.editMode">{{ account.currency.name }}</td>
+      <td *ngIf="!account.editMode">
+        {{ account.currency.name }}
+      </td>
 
       <!-- Balance PLN -->
       <td *ngIf="account.editMode">
-        {{
-        account.editedAccount.balance *
-        account.editedAccount.currency.exchangeRate | number: "0.2-2"
-        }}
+        {{ account.editedAccount.balance * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
       </td>
 
       <td *ngIf="!account.editMode">
-        {{ account.balance * account.currency.exchangeRate | number: "0.2-2" }}
+        {{ account.balancePLN | number: "0.2-2" }}
       </td>
 
       <!-- Last verification date -->
@@ -160,39 +133,23 @@
       <!-- Options -->
       <td *ngIf="!account.editMode">
         <div class="dropdown">
-          <button
-            id="OptionsBtn"
-            class="btn btn-primary btn-block dropdown-toggle"
-            type="button"
-            data-toggle="dropdown"
-          >
-            {{ "button.options" | translate }} <span class="caret"></span>
+          <button id="OptionsBtn" class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+            {{ "button.options" | translate }}
+            <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
             <li>
-              <button
-                id="EditBtn"
-                class="btn btn-warning btn-block"
-                (click)="onShowEditMode(account)"
-              >
+              <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(account)">
                 {{ "button.edit" | translate }}
               </button>
             </li>
             <li>
-              <button
-                id="UpdateLastVerificationDateBtn"
-                class="btn btn-info btn-block"
-                (click)="confirmAccountBalance(account)"
-              >
+              <button id="UpdateLastVerificationDateBtn" class="btn btn-info btn-block" (click)="confirmAccountBalance(account)">
                 {{ "button.updateLastVerificationDate" | translate }}
               </button>
             </li>
             <li>
-              <button
-                id="DeleteBtn"
-                class="btn btn-danger btn-block"
-                (click)="deleteAccount(account)"
-              >
+              <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteAccount(account)">
                 {{ "button.delete" | translate }}
               </button>
             </li>
@@ -202,18 +159,10 @@
 
       <!-- Edit mode buttons -->
       <td *ngIf="account.editMode" id="EditAccountSaveExitBtn">
-        <button
-          id="EditAccountSaveBtn"
-          class="btn btn-success"
-          (click)="onEditAccount(account)"
-        >
+        <button id="EditAccountSaveBtn" class="btn btn-success" (click)="onEditAccount(account)">
           {{ "button.save" | translate }}
         </button>
-        <button
-          id="EditAccountExitBtn"
-          class="btn btn-danger"
-          (click)="account.editMode = false"
-        >
+        <button id="EditAccountExitBtn" class="btn btn-danger"  (click)="account.editMode = false">
           {{ "button.exit" | translate }}
         </button>
       </td>
@@ -247,30 +196,40 @@
 
 <!-- Summary by currency  -->
 
-<table
-  id="boxCurrencies"
-  class="table table-bordered table-striped table-hover">
+<table id="boxCurrencies" class="table table-bordered table-striped table-hover">
   <thead class="thead-dark">
     <tr>
-      <th class="thBoxCurrencies">{{ "account.currency" | translate }}</th>
+      <th class="thBoxCurrencies">
+        {{ "account.currency" | translate }}
+      </th>
 
-      <th class="thBoxCurrencies">{{ "account.balance" | translate }}</th>
+      <th class="thBoxCurrencies">
+        {{ "account.balance" | translate }}
+      </th>
 
-      <th class="thBoxCurrencies">{{ "account.exchangeRate" | translate }}</th>
+      <th class="thBoxCurrencies">
+        {{ "account.exchangeRate" | translate }}
+      </th>
 
-      <th class="thBoxCurrencies">{{ "account.balancePLN" | translate }}</th>
+      <th class="thBoxCurrencies">
+        {{ "account.balancePLN" | translate }}
+      </th>
     </tr>
   </thead>
 
   <tbody>
     <tr *ngFor="let currency of supportedCurrencies">
-      <td class="tdBoxCurrencies">{{ currency.name }}</td>
+      <td class="tdBoxCurrencies">
+        {{ currency.name }}
+      </td>
 
       <td class="tdBoxCurrencies">
         {{ allAccountsBalanceCurrencies(currency.name) | number: "0.2-2" }}
       </td>
 
-      <td class="tdBoxCurrencies">{{ currency.exchangeRate }}</td>
+      <td class="tdBoxCurrencies">
+        {{ currency.exchangeRate }}
+      </td>
 
       <td class="tdBoxCurrencies">
         {{ currency.exchangeRate * allAccountsBalanceCurrencies(currency.name) | number: "0.2-2" }}
@@ -282,7 +241,9 @@
 
       <td class="tdBoxCurrencies"></td>
 
-      <td class="tdBoxCurrencies">RAZEM</td>
+      <td class="tdBoxCurrencies">
+        RAZEM
+      </td>
 
       <td id="BalanceOfAllAccountsCurrenciesSummary" class="tdBoxCurrencies">
         {{ allAccountsBalance() | number: "0.2-2" }}

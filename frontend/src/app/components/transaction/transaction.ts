@@ -14,4 +14,5 @@ export class Transaction {
 export class AccountPriceEntry {
   account: Account;
   price: number;
+  pricePLN: number;
 }

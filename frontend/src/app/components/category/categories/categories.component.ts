@@ -14,13 +14,15 @@ import {Account} from '../../account/account';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
-export class CategoriesComponent extends Sortable implements OnInit {
+export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
   newCategory: Category = new Category();
   transactions: TransactionResponse[] = [];
   last12Months: Date[] = [];
+  sortableCategoriesTable: Sortable = new Sortable('name');
+  sortableSummaryTable: Sortable = new Sortable('name');
 
   constructor(
     private categoryService: CategoryService,
@@ -29,7 +31,6 @@ export class CategoriesComponent extends Sortable implements OnInit {
     private transactionService: TransactionService,
     private accountService: AccountService
   ) {
-    super('name');
     this.calculateLast12Months();
   }
 
@@ -41,7 +42,13 @@ export class CategoriesComponent extends Sortable implements OnInit {
         this.accountService.getAccounts()
           .subscribe(accounts => {
             this.accounts = accounts;
-            this.getTransactions();
+            this.transactionService.getTransactions()
+              .subscribe(transactions => {
+                this.transactions = transactions;
+                for( let i = 0; i < this.categories.length; i++){
+                  this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
+                }
+            });
           });
       });
   }
@@ -60,13 +67,6 @@ export class CategoriesComponent extends Sortable implements OnInit {
 
       this.last12Months.push(new Date(year, month, 1));
     }
-  }
-
-  getTransactions(): void {
-    this.transactionService.getTransactions()
-      .subscribe(transactions => {
-        this.transactions = transactions;
-      });
   }
 
   deleteCategory(category) {

@@ -14,13 +14,18 @@
       </th>
 
       <!-- Event type -->
-      <th id="thHistoryType">{{'history.entryType' | translate}}</th>
+      <th [class.active]="order === 'type'" (click)="setOrder('type')" id="thHistoryType">{{'history.entryType' | translate}}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
+      </th>
 
       <!-- Event object -->
-      <th id="thHistoryObject">{{'history.entryObject' | translate}}</th>
+      <th [class.active]="order === 'object'" (click)="setOrder('object')" id="thHistoryObject">{{'history.entryObject' | translate}}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span></th>
 
       <!-- Entry -->
-      <th [class.active]="order === 'entry'" (click)="setOrder('entry')" id="thHistoryEntry">
+      <th id="thHistoryEntry">
         {{'history.entry' | translate}}
         <span [hidden]="reverse">▼</span>
         <span [hidden]="!reverse">▲</span>

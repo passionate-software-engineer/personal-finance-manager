@@ -6,3 +6,10 @@ th, td{
 #NewCategorySaveExitBtn{
   width: 100%;
 }
+
+.table-month{
+  max-width: 100%;
+  table-layout: fixed;
+}
+
+
