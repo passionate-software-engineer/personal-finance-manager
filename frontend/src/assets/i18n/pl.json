@@ -6,6 +6,7 @@
   "account.exchangeRate": "Kurs",
   "account.currency": "Waluta",
   "account.lastVerificationDate": "Data potwierdzenia salda",
+  "account.total": "Razem",
   "category.addCategory": "Dodaj Kategorię",
   "category.name": "Nazwa",
   "category.parentCategory": "Kategoria Nadrzędna",

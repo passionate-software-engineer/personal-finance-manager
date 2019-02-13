@@ -45,7 +45,7 @@ export class CategoriesComponent implements OnInit {
             this.transactionService.getTransactions()
               .subscribe(transactions => {
                 this.transactions = transactions;
-                for( let i = 0; i < this.categories.length; i++){
+                for (let i = 0; i < this.categories.length; i++) {
                   this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
                 }
             });
