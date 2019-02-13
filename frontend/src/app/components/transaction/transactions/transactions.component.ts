@@ -150,6 +150,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 }
               }
 
+              accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+
               returnedTransaction.accountPriceEntries.push(accountPriceEntry);
             }
 
@@ -192,6 +194,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                   accountPriceEntry.account = account;
                 }
               }
+
+              accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
 
               returnedTransaction.accountPriceEntries.push(accountPriceEntry);
             }

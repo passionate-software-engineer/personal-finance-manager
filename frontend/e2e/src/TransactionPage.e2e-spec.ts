@@ -68,7 +68,7 @@ describe('Transaction page tests', () => {
 
     transactionPage.assertDescription('desc');
     transactionPage.assertDate('01/01/2018');
-    transactionPage.assertPrices('100.00', null);
+    transactionPage.assertPrices('100.00 EUR (424.00 PLN)', null);
     transactionPage.assertAccounts('Mbank', null);
     transactionPage.assertCategory('Car');
 
@@ -94,7 +94,7 @@ describe('Transaction page tests', () => {
 
     transactionPage.assertDescription('desc');
     transactionPage.assertDate('02/02/2018');
-    transactionPage.assertPrices('100.00', '50.00');
+    transactionPage.assertPrices('100.00 EUR (424.00 PLN)', '50.00 EUR (212.00 PLN)');
     transactionPage.assertAccounts('Mbank', 'Alior');
     transactionPage.assertCategory('Car');
 
@@ -128,7 +128,7 @@ describe('Transaction page tests', () => {
 
     transactionPage.assertDescription('updated description');
     transactionPage.assertDate('05/05/2018');
-    transactionPage.assertPrices('1,000.00', '500.00');
+    transactionPage.assertPrices('1,000.00 EUR (4,240.00 PLN)', '500.00 EUR (2,120.00 PLN)');
     transactionPage.assertAccounts('Millenium', 'Ing');
     transactionPage.assertCategory('Food');
 
