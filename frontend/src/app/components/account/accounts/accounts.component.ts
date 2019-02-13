@@ -39,7 +39,7 @@ export class AccountsComponent extends Sortable implements OnInit {
   getAccounts(): void {
     this.accountService.getAccounts().subscribe(accounts => {
       this.accounts = accounts;
-      for( let i = 0; i < this.accounts.length; i++){
+      for (let i = 0; i < this.accounts.length; i++) {
         this.accounts[i].balancePLN = this.accounts[i].balance * this.accounts[i].currency.exchangeRate;
         this.accounts[i].balance = +this.accounts[i].balance;
       }

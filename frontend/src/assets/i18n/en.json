@@ -6,6 +6,7 @@
   "account.exchangeRate": "Exchange rate",
   "account.currency": "Currency",
   "account.lastVerificationDate": "Balance verification date",
+  "account.total": "Total",
   "category.addCategory": "Add Category",
   "category.name": "Name",
   "category.parentCategory": "Parent Category",
