@@ -71,7 +71,8 @@ thead th.active span {
 }
 
 #EditBtn,
-#DeleteBtn {
+#DeleteBtn,
+#UpdateLastVerificationDateBtn {
   min-width: 50px;
   max-width: 95%;
   margin: 5px 10px;;
