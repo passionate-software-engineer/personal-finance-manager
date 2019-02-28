@@ -25,6 +25,7 @@ final class ExportResult {
   private List<ExportCategory> categories = new ArrayList<>();
 
   private List<ExportPeriod> periods = new ArrayList<>();
+  private List<ExportFilter> filters = new ArrayList<>();
 
   @Data
   @Builder
@@ -57,6 +58,30 @@ final class ExportResult {
 
     private String name;
     private String parentCategoryName;
+
+  }
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  static final class ExportFilter {
+
+    private String name;
+
+    private List<String> accounts;
+
+    private List<String> categories;
+
+    private BigDecimal priceFrom;
+
+    private BigDecimal priceTo;
+
+    private LocalDate dateFrom;
+
+    private LocalDate dateTo;
+
+    private String description;
 
   }
 
