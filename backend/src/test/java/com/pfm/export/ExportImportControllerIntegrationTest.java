@@ -33,7 +33,6 @@ import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.filter.Filter;
-import com.pfm.filter.FilterService;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestAccountProvider;
 import com.pfm.transaction.Transaction;
@@ -43,7 +42,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -158,7 +156,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
 
     // when
-    mockMvc.perform(get(EXPORT_SERVICE_PATH)   //TODO // add assertions for remaining
+    mockMvc.perform(get(EXPORT_SERVICE_PATH) // TODO add assertions for remaining
         .header("Authorization", token))
 
         // then
