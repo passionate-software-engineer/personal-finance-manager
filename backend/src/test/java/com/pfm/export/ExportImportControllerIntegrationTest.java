@@ -158,8 +158,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
 
     // when
-    mockMvc.perform(get(EXPORT_SERVICE_PATH)   // sprawdzic, testo sprwadza co sie dzieje gdy sa puste dane. nie pobra danych tylko wypluwa defulatowe
-        .header("Authorization", token))  // sprawdzic na koncu czy gradle buduje apke
+    mockMvc.perform(get(EXPORT_SERVICE_PATH)   //TODO // add assertions for remaining
+        .header("Authorization", token))
 
         // then
         .andExpect(status().isOk())
