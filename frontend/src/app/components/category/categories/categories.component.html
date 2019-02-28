@@ -12,20 +12,20 @@
       <!--Name-->
       <th id="NameHeader" [class.active]="sortableCategoriesTable.order === 'name'" (click)="sortableCategoriesTable.setOrder('name')">
         {{'category.name' | translate}}
-        <span [hidden]="sortableCategoriesTable.reverse">▼</span>
-        <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
+        <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
+        <span [hidden]="sortableCategoriesTable.reverse">▲</span>
       </th>
 
       <!--Parent Category-->
       <th id="ParentCategoryHeader" [class.active]="sortableCategoriesTable.order === 'parentCategory.name'" (click)="sortableCategoriesTable.setOrder('parentCategory.name')">
         {{'category.parentCategory' | translate}}
-        <span [hidden]="sortableCategoriesTable.reverse">▼</span>
-        <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
+        <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
+        <span [hidden]="sortableCategoriesTable.reverse">▲</span>
       </th>
       <th id="SumHeader" [class.active]="sortableCategoriesTable.order === 'sumOfAllTransactions'" (click)="sortableCategoriesTable.setOrder('sumOfAllTransactions')">
         {{'category.sum' | translate}}
-        <span [hidden]="sortableCategoriesTable.reverse">▼</span>
-        <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
+        <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
+        <span [hidden]="sortableCategoriesTable.reverse">▲</span>
       </th>
       <th></th>
     </tr>
@@ -129,8 +129,8 @@
     <tr>
       <th [class.active]="sortableSummaryTable.order === 'name'" (click)="sortableSummaryTable.setOrder('name')">
       {{'category.name' | translate}}
-        <span [hidden]="sortableSummaryTable.reverse">▼</span>
-        <span [hidden]="!sortableSummaryTable.reverse">▲</span>
+        <span [hidden]="!sortableSummaryTable.reverse">▼</span>
+        <span [hidden]="sortableSummaryTable.reverse">▲</span>
       </th>
       <th *ngFor="let month of last12Months">
         {{ month | date:'MMMM yyyy' }}
@@ -143,6 +143,13 @@
       <td> {{category.name}} </td>
       <td *ngFor="let month of last12Months">
         {{ getBalanceOfTransactionsInGivenCategoryAndMonth(category.id, month) | number:'0.2' }}
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td *ngFor="let month of last12Months">
+        {{getBalanceOfTransactionsInGivenMonth(month) | number:'0.2'}}
       </td>
     </tr>
   </tbody>

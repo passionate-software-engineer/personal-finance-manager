@@ -221,7 +221,7 @@ export class CategoriesComponent implements OnInit {
 
 
     for (let i = 0; i < this.transactions.length; ++i) {
-      if (this.transactions[i].categoryId !== categoryId) {
+      if (categoryId !== null && this.transactions[i].categoryId !== categoryId) {
         continue;
       }
       for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
@@ -245,5 +245,8 @@ export class CategoriesComponent implements OnInit {
     return sum;
   }
 
+  getBalanceOfTransactionsInGivenMonth(beginningOfMonth: Date){
+    return this.getBalanceOfTransactionsInGivenCategoryAndMonth(null, beginningOfMonth);
+  }
 
 }

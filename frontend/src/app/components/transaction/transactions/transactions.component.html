@@ -29,36 +29,36 @@
       <!--Date-->
       <th id="DateHeader" class="width15" [class.active]="order === 'date'" (click)="setOrder('date')">
         {{'transaction.date' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!--Description-->
       <th id="NameHeader" [class.active]="order === 'description'" (click)="setOrder('description')" class="width20">
         {{'transaction.description' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!--Price-->
       <th id="PriceHeader" [class.active]="order === 'accountPriceEntries[0].pricePLN'" (click)="setOrder('accountPriceEntries[0].pricePLN')" class="width15">
         {{ 'transaction.price' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!--Account-->
       <th id="AccountHeader" [class.active]="order === 'accountPriceEntries[0].account.name'" (click)="setOrder('accountPriceEntries[0].account.name')" class="width15">
         {{'transaction.account' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!--Category-->
       <th id="CategoryHeader" [class.active]="order === 'category.name'" (click)="setOrder('category.name')" class="width20">
         {{'transaction.category' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <th class="width15">

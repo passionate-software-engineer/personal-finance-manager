@@ -11,33 +11,33 @@
       <!--Name-->
       <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
         {{ "account.name" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!--Balance-->
       <th id="BalanceHeader" [class.active]="order === 'balance'" (click)="setOrder('balance')">
         {{ "account.balance" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <th id="CurrencyHeader" [class.active]="order === 'currency.name'" (click)="setOrder('currency.name')">
         {{ "account.currency" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <th id="BalancePLNHeader" [class.active]="order === 'balancePLN'" (click)="setOrder('balancePLN')">
         {{"account.balancePLN" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <th id="DateHeader" [class.active]="order === 'lastVerificationDate'" (click)="setOrder('lastVerificationDate')">
         {{"account.lastVerificationDate" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <th></th>
