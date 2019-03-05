@@ -21,6 +21,8 @@ export class AccountsComponent extends Sortable implements OnInit {
   accounts: Account[] = [];
   addingMode = false;
   newAccount: Account = new Account();
+  sortableCategoriesTable2: Sortable = new Sortable('name');
+  sortableSummaryTable2: Sortable = new Sortable('name');
 
   constructor(
     private accountService: AccountService,

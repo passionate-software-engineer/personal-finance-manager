@@ -22,11 +22,17 @@
         <span [hidden]="!reverse">▲</span>
       </th>
 
-      <th id="CurrencyHeader" [class.active]="order === 'currency.name'" (click)="setOrder('currency.name')">
+      <!-- <th id="CurrencyHeader" [class.active]="order === 'currency.name'" (click)="setOrder('currency.name')">
         {{ "account.currency" | translate }}
         <span [hidden]="reverse">▼</span>
         <span [hidden]="!reverse">▲</span>
-      </th>
+      </th> -->
+
+      <th id="CurrencyHeader" [class.active]="sortableCategoriesTable2.order === 'currency.name'" (click)="sortableCategoriesTable2.setOrder('currency.name')">
+          {{ "account.currency" | translate }}
+          <span [hidden]="sortableCategoriesTable2.reverse">▼</span>
+          <span [hidden]="!sortableCategoriesTable2.reverse">▲</span>
+        </th>
 
       <th id="BalancePLNHeader" [class.active]="order === 'balancePLN'" (click)="setOrder('balancePLN')">
         {{"account.balancePLN" | translate }}
@@ -201,20 +207,35 @@
 <table id="boxCurrencies" class="table table-bordered table-striped table-hover">
   <thead class="thead-dark">
     <tr>
-      <th class="thBoxCurrencies">
+
+        <!-- <th id="CurrencyHeader" [class.active]="order === 'currency.name'" (click)="setOrder('currency.name')">
+            {{ "account.currency" | translate }}
+            <span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span>
+          </th> -->
+
+        <th class="thBoxCurrencies"  [class.active]="sortableSummaryTable2.order === 'currency.name'" (click)="sortableSummaryTable2.setOrder('currency.name')">
         {{ "account.currency" | translate }}
+        <span [hidden]="sortableSummaryTable2.reverse">▼</span>
+        <span [hidden]="!sortableSummaryTable2.reverse">▲</span>
       </th>
 
       <th class="thBoxCurrencies">
         {{ "account.balance" | translate }}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
       </th>
 
       <th class="thBoxCurrencies">
         {{ "account.exchangeRate" | translate }}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
       </th>
 
       <th class="thBoxCurrencies">
         {{ "account.balancePLN" | translate }}
+        <span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span>
       </th>
     </tr>
   </thead>

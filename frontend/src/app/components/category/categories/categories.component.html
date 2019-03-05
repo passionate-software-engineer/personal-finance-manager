@@ -127,13 +127,33 @@
 <table class="table table-bordered table-striped table-month">
   <thead class="thead-dark">
     <tr>
+
+
+        <!-- <th id="NameHeader" [class.active]="sortableCategoriesTable.order === 'name'" (click)="sortableCategoriesTable.setOrder('name')">
+            {{'category.name' | translate}}
+            <span [hidden]="sortableCategoriesTable.reverse">▼</span>
+            <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
+          </th> -->
+
       <th [class.active]="sortableSummaryTable.order === 'name'" (click)="sortableSummaryTable.setOrder('name')">
-      {{'category.name' | translate}}
+        {{'category.name' | translate}}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
       <th *ngFor="let month of last12Months">
         {{ month | date:'MMMM yyyy' }}
+        <span [hidden]="sortableSummaryTable.reverse">▼</span>
+        <span [hidden]="!sortableSummaryTable.reverse">▲</span>
+      </th>
+      <th>
+        SUMA
+        <span [hidden]="sortableSummaryTable.reverse">▼</span>
+        <span [hidden]="!sortableSummaryTable.reverse">▲</span>
+      </th>
+      <th>
+        ŚREDNIA
+        <span [hidden]="sortableSummaryTable.reverse">▼</span>
+        <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
     </tr>
   </thead>
@@ -143,6 +163,12 @@
       <td> {{category.name}} </td>
       <td *ngFor="let month of last12Months">
         {{ getBalanceOfTransactionsInGivenCategoryAndMonth(category.id, month) | number:'0.2' }}
+      </td>
+      <td>
+        {{ category.sumOfAllTransactions | number:'0.2' }}
+      </td>
+      <td>
+        {{ category.sumOfAllTransactions / last12Months.length  | number:'0.2' }}
       </td>
     </tr>
   </tbody>

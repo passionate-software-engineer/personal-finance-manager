@@ -98,7 +98,8 @@ thead th.active span {
 #EditTransactionExitBtn,
 #newTransactionSaveButton,
 #EditTransactionSaveBtn,
-#EditTransactionExitBtn {
+#EditTransactionExitBtn,
+#AddTransactionExitBtn {
   width: 47.5%;
 }
 

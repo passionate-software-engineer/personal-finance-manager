@@ -13,5 +13,4 @@ export class Sortable {
     }
     this.order = value;
   }
-
 }
