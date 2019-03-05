@@ -42,7 +42,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +82,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, token);
 
     Filter filter = filterFoodExpenses();
+    filter.getCategoryIds().add(foodCategoryId);
+    filter.getAccountIds().add(jacekAccountId);
     callRestServiceToAddFilterAndReturnId(filter, token);
     // when
     // then
@@ -138,8 +139,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].account", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")))
         .andExpect(jsonPath("filters[0].name", is("Food")))
-        .andExpect(jsonPath("filters[0].accounts", Matchers.empty()))
-        .andExpect(jsonPath("filters[0].categories", Matchers.empty()))
+        .andExpect(jsonPath("filters[0].accounts", hasSize(1)))
+        .andExpect(jsonPath("filters[0].accounts[0]", is("Jacek Millenium Bank savings")))
+        .andExpect(jsonPath("filters[0].categories", hasSize(1)))
+        .andExpect(jsonPath("filters[0].categories[0]", is("Food")))
         .andExpect(jsonPath("filters[0].priceFrom", is("100.00")))
         .andExpect(jsonPath("filters[0].priceTo", is("300.00")))
         .andExpect(jsonPath("filters[0].dateFrom", is("2018-03-01")))
@@ -156,7 +159,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
 
     // when
-    mockMvc.perform(get(EXPORT_SERVICE_PATH) // TODO add assertions for remaining
+    mockMvc.perform(get(EXPORT_SERVICE_PATH)
         .header("Authorization", token))
 
         // then
@@ -176,7 +179,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("initialAccountsState", hasSize(0)))
         .andExpect(jsonPath("finalAccountsState", hasSize(0)))
         .andExpect(jsonPath("categories", hasSize(0)))
-        .andExpect(jsonPath("periods", hasSize(0)));
+        .andExpect(jsonPath("periods", hasSize(0)))
+        .andExpect(jsonPath("filters", hasSize(0)));
 
   }
 
