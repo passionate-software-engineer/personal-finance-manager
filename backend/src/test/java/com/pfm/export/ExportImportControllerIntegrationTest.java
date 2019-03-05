@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static java.math.RoundingMode.HALF_UP;
@@ -31,6 +32,7 @@ import com.pfm.export.ExportResult.ExportCategory;
 import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
+import com.pfm.filter.Filter;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestAccountProvider;
 import com.pfm.transaction.Transaction;
@@ -79,19 +81,32 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
     callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, token);
 
+    Filter filter = filterFoodExpenses();
+    filter.getCategoryIds().add(foodCategoryId);
+    filter.getAccountIds().add(jacekAccountId);
+    callRestServiceToAddFilterAndReturnId(filter, token);
     // when
     // then
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
         .header("Authorization", token))
         .andExpect(status().isOk())
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("1000.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.PLN", is("1000.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.USD", is("0.00")))
         .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.sumOfAllFundsInBaseCurrency", is("1010.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.PLN", is("1010.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.USD", is("0.00")))
         .andExpect(jsonPath("initialAccountsState", hasSize(1)))
         .andExpect(jsonPath("initialAccountsState[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("initialAccountsState[0].balance", is("1000.00")))
         .andExpect(jsonPath("finalAccountsState", hasSize(1)))
         .andExpect(jsonPath("finalAccountsState[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("finalAccountsState[0].balance", is("1010.00")))
+        .andExpect(jsonPath("finalAccountsState[0].currency", is("PLN")))
         .andExpect(jsonPath("categories", hasSize(2)))
         .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
         .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
@@ -100,21 +115,40 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods", hasSize(1)))
         .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
         .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))
-        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.sumOfAllFundsInBaseCurrency", is("1000.00")))
-        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.sumOfAllFundsInBaseCurrency", is("1010.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.PLN", is("1000.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.USD", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.PLN", is("1010.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.USD", is("0.00")))
         .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod", hasSize(1)))
         .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].balance", is("1000.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].currency", is("PLN")))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod", hasSize(1)))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].balance", is("1010.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].currency", is("PLN")))
         .andExpect(jsonPath("periods[0].transactions", hasSize(1)))
         .andExpect(jsonPath("periods[0].transactions[0].description", is(transactionToAddFood.getDescription())))
         .andExpect(jsonPath("periods[0].transactions[0].category", is(categoryFood().getName())))
         .andExpect(jsonPath("periods[0].transactions[0].date", is(transactionToAddFood.getDate().toString())))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries", hasSize(1)))
         .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].account", is(accountJacekBalance1000().getName())))
-        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")));
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")))
+        .andExpect(jsonPath("filters[0].name", is("Food")))
+        .andExpect(jsonPath("filters[0].accounts", hasSize(1)))
+        .andExpect(jsonPath("filters[0].accounts[0]", is("Jacek Millenium Bank savings")))
+        .andExpect(jsonPath("filters[0].categories", hasSize(1)))
+        .andExpect(jsonPath("filters[0].categories[0]", is("Food")))
+        .andExpect(jsonPath("filters[0].priceFrom", is("100.00")))
+        .andExpect(jsonPath("filters[0].priceTo", is("300.00")))
+        .andExpect(jsonPath("filters[0].dateFrom", is("2018-03-01")))
+        .andExpect(jsonPath("filters[0].dateTo", is("2018-03-31")))
+        .andExpect(jsonPath("filters[0].description", is("Food expenses")))
+    ;
 
     // TODO assert currency is exported
     // TODO assert map of currencies
@@ -145,7 +179,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("initialAccountsState", hasSize(0)))
         .andExpect(jsonPath("finalAccountsState", hasSize(0)))
         .andExpect(jsonPath("categories", hasSize(0)))
-        .andExpect(jsonPath("periods", hasSize(0)));
+        .andExpect(jsonPath("periods", hasSize(0)))
+        .andExpect(jsonPath("filters", hasSize(0)));
 
   }
 
