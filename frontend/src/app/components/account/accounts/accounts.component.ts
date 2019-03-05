@@ -226,7 +226,7 @@ export class AccountsComponent extends Sortable implements OnInit {
 
     for (let i = 0; i < this.accounts.length; ++i) {
       if (this.accounts[i].currency.name === currencyName) {
-        sum += +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
+        sum += +this.accounts[i].balance;
       }
     }
     return sum;

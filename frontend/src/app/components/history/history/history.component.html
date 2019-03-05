@@ -9,26 +9,26 @@
       <!--Date-->
       <th [class.active]="order === 'date'" (click)="setOrder('date')" id="thHistoryDate">
         {{'history.date' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!-- Event type -->
       <th [class.active]="order === 'type'" (click)="setOrder('type')" id="thHistoryType">{{'history.entryType' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!-- Event object -->
       <th [class.active]="order === 'object'" (click)="setOrder('object')" id="thHistoryObject">{{'history.entryObject' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span></th>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span></th>
 
       <!-- Entry -->
       <th id="thHistoryEntry">
         {{'history.entry' | translate}}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
       </th>
 
       <!-- <th></th> -->

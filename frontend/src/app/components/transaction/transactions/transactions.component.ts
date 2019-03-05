@@ -55,12 +55,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
-        this.categories.sort((categories1, categories2) => (categories1.name > categories2.name ? 1 : -1));
+        this.categories.sort((categories1, categories2) => (categories1.name.toLowerCase() > categories2.name.toLowerCase() ? 1 : -1));
 
         this.accountService.getAccounts()
           .subscribe(accounts => {
             this.accounts = accounts;
-            this.accounts.sort((accounts1, accounts2) => (accounts1.name > accounts2.name ? 1 : -1));
+            this.accounts.sort((accounts1, accounts2) => (accounts1.name.toLowerCase() > accounts2.name.toLowerCase() ? 1 : -1));
             this.getTransactions();
             this.getFilters();
           });
