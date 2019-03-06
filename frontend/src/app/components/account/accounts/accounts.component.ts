@@ -29,7 +29,8 @@ export class AccountsComponent implements OnInit {
     private currencyService: CurrencyService,
     private alertService: AlertsService,
     private translate: TranslateService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getCurrencies(); // TODO - call in parallel
@@ -42,9 +43,10 @@ export class AccountsComponent implements OnInit {
         this.accounts[i].balancePLN = this.accounts[i].balance * this.accounts[i].currency.exchangeRate;
         this.accounts[i].balance = +this.accounts[i].balance;
       }
-      for (let i = 0; i < this.supportedCurrencies.length; i++){
+      for (let i = 0; i < this.supportedCurrencies.length; i++) {
         this.supportedCurrencies[i].allAccountsBalance = this.allAccountsBalanceCurrencies(this.supportedCurrencies[i].name);
-        this.supportedCurrencies[i].allAccountsBalancePLN = this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
+        this.supportedCurrencies[i].allAccountsBalancePLN =
+          this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
       }
     });
   }

@@ -28,7 +28,7 @@ describe('Category page tests', () => {
     // then
     expect(page.refreshCategoriesButton().getText()).toEqual('Refresh');
     expect(page.addCategoryButton().getText()).toEqual('Add Category');
-    expect(page.nameHeader().getText()).toEqual('Name ▼');
+    expect(page.nameHeader().getText()).toEqual('Name ▲');
     expect(page.parentCategoryHeader().getText()).toEqual('Parent Category');
   });
 

@@ -48,7 +48,7 @@ export class CategoriesComponent implements OnInit {
                 for (let i = 0; i < this.categories.length; i++) {
                   this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
                 }
-            });
+              });
           });
       });
   }
@@ -245,11 +245,11 @@ export class CategoriesComponent implements OnInit {
     return sum;
   }
 
-  getBalanceOfTransactionsInGivenMonth(beginningOfMonth: Date){
+  getBalanceOfTransactionsInGivenMonth(beginningOfMonth: Date) {
     return this.getBalanceOfTransactionsInGivenCategoryAndMonth(null, beginningOfMonth);
   }
 
-  getBalanceOfAllTransactions(){
+  getBalanceOfAllTransactions() {
     return this.getAllTransactionsBalance(null);
   }
 }
