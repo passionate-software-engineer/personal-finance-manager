@@ -27,7 +27,7 @@ describe('Accounts page tests', () => {
     // then
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
     expect(page.addAccountButton().getText()).toEqual('Add Account');
-    expect(page.nameHeader().getText()).toEqual('Name ▼');
+    expect(page.nameHeader().getText()).toEqual('Name ▲');
     expect(page.balanceHeader().getText()).toEqual('Balance');
   });
 

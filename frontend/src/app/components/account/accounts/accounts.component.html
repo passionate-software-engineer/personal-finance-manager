@@ -9,35 +9,35 @@
   <thead class="thead-dark">
     <tr>
       <!--Name-->
-      <th id="NameHeader" [class.active]="order === 'name'" (click)="setOrder('name')">
+      <th id="NameHeader" [class.active]="sortableAccountsTable.order === 'name'" (click)="sortableAccountsTable.setOrder('name')">
         {{ "account.name" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
       <!--Balance-->
-      <th id="BalanceHeader" [class.active]="order === 'balance'" (click)="setOrder('balance')">
+      <th id="BalanceHeader" [class.active]="sortableAccountsTable.order === 'balance'" (click)="sortableAccountsTable.setOrder('balance')">
         {{ "account.balance" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
-      <th id="CurrencyHeader" [class.active]="order === 'currency.name'" (click)="setOrder('currency.name')">
+      <th id="CurrencyHeader" [class.active]="sortableAccountsTable.order === 'currency.name'" (click)="sortableAccountsTable.setOrder('currency.name')">
         {{ "account.currency" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="!sortableAccountsTable.reverse">▲</span>
       </th>
 
-      <th id="BalancePLNHeader" [class.active]="order === 'balancePLN'" (click)="setOrder('balancePLN')">
+      <th id="BalancePLNHeader" [class.active]="sortableAccountsTable.order === 'balancePLN'" (click)="sortableAccountsTable.setOrder('balancePLN')">
         {{"account.balancePLN" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
-      <th id="DateHeader" [class.active]="order === 'lastVerificationDate'" (click)="setOrder('lastVerificationDate')">
+      <th id="DateHeader" [class.active]="sortableAccountsTable.order === 'lastVerificationDate'" (click)="sortableAccountsTable.setOrder('lastVerificationDate')">
         {{"account.lastVerificationDate" | translate }}
-        <span [hidden]="reverse">▼</span>
-        <span [hidden]="!reverse">▲</span>
+        <span [hidden]="!sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
       <th></th>
@@ -86,7 +86,7 @@
       </td>
     </tr>
 
-    <tr id="AccountRow" *ngFor="let account of (accounts | orderBy: order:reverse:'case-insensitive')">
+    <tr id="AccountRow" *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
       <!-- Name -->
       <td *ngIf="account.editMode">
         <input id="EditAccountNameInput" class="form-control" type="text" [(ngModel)]="account.editedAccount.name"/>
@@ -201,32 +201,40 @@
 <table id="boxCurrencies" class="table table-bordered table-striped table-hover">
   <thead class="thead-dark">
     <tr>
-      <th class="thBoxCurrencies">
+        <th class="thBoxCurrencies"  [class.active]="sortableCurrencyTable.order === 'name'" (click)="sortableCurrencyTable.setOrder('name')">
         {{ "account.currency" | translate }}
+        <span [hidden]="sortableCurrencyTable.reverse">▼</span>
+        <span [hidden]="!sortableCurrencyTable.reverse">▲</span>
       </th>
 
-      <th class="thBoxCurrencies">
+      <th class="thBoxCurrencies" [class.active]="sortableCurrencyTable.order === 'allAccountsBalance'" (click)="sortableCurrencyTable.setOrder('allAccountsBalance')">
         {{ "account.balance" | translate }}
+        <span [hidden]="sortableCurrencyTable.reverse">▼</span>
+        <span [hidden]="!sortableCurrencyTable.reverse">▲</span>
       </th>
 
-      <th class="thBoxCurrencies">
+      <th class="thBoxCurrencies" [class.active]="sortableCurrencyTable.order === 'exchangeRate'" (click)="sortableCurrencyTable.setOrder('exchangeRate')">
         {{ "account.exchangeRate" | translate }}
+        <span [hidden]="sortableCurrencyTable.reverse">▼</span>
+        <span [hidden]="!sortableCurrencyTable.reverse">▲</span>
       </th>
 
-      <th class="thBoxCurrencies">
+      <th class="thBoxCurrencies" [class.active]="sortableCurrencyTable.order === 'allAccountsBalancePLN'" (click)="sortableCurrencyTable.setOrder('allAccountsBalancePLN')">
         {{ "account.balancePLN" | translate }}
+        <span [hidden]="sortableCurrencyTable.reverse">▼</span>
+        <span [hidden]="!sortableCurrencyTable.reverse">▲</span>
       </th>
     </tr>
   </thead>
 
   <tbody>
-    <tr *ngFor="let currency of supportedCurrencies">
+    <tr *ngFor="let currency of (supportedCurrencies | orderBy: sortableCurrencyTable.order:sortableCurrencyTable.reverse:'case-insensitive')">
       <td class="tdBoxCurrencies">
         {{ currency.name }}
       </td>
 
       <td class="tdBoxCurrencies">
-        {{ allAccountsBalanceCurrencies(currency.name) | number: "0.2-2" }}
+        {{ currency.allAccountsBalance | number: "0.2-2" }}
       </td>
 
       <td class="tdBoxCurrencies">
@@ -234,7 +242,7 @@
       </td>
 
       <td class="tdBoxCurrencies">
-        {{ currency.exchangeRate * allAccountsBalanceCurrencies(currency.name) | number: "0.2-2" }}
+        {{ currency.allAccountsBalancePLN | number: "0.2-2" }}
       </td>
     </tr>
 

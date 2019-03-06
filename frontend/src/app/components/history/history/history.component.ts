@@ -15,7 +15,7 @@ export class HistoryComponent extends Sortable implements OnInit {
   history: History[] = [];
 
   constructor(private historyService: HistoryService, private alertService: AlertsService) {
-    super('name');
+    super('date', true);
   }
 
   ngOnInit() {

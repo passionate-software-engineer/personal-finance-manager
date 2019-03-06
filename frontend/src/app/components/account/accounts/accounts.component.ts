@@ -16,11 +16,13 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-export class AccountsComponent extends Sortable implements OnInit {
+export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
   accounts: Account[] = [];
   addingMode = false;
   newAccount: Account = new Account();
+  sortableAccountsTable: Sortable = new Sortable('name');
+  sortableCurrencyTable: Sortable = new Sortable('name');
 
   constructor(
     private accountService: AccountService,
@@ -28,12 +30,10 @@ export class AccountsComponent extends Sortable implements OnInit {
     private alertService: AlertsService,
     private translate: TranslateService
   ) {
-    super('name');
   }
 
   ngOnInit() {
     this.getCurrencies(); // TODO - call in parallel
-    this.getAccounts();
   }
 
   getAccounts(): void {
@@ -43,6 +43,11 @@ export class AccountsComponent extends Sortable implements OnInit {
         this.accounts[i].balancePLN = this.accounts[i].balance * this.accounts[i].currency.exchangeRate;
         this.accounts[i].balance = +this.accounts[i].balance;
       }
+      for (let i = 0; i < this.supportedCurrencies.length; i++) {
+        this.supportedCurrencies[i].allAccountsBalance = this.allAccountsBalanceCurrencies(this.supportedCurrencies[i].name);
+        this.supportedCurrencies[i].allAccountsBalancePLN =
+          this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
+      }
     });
   }
 
@@ -50,7 +55,11 @@ export class AccountsComponent extends Sortable implements OnInit {
     this.currencyService.getCurrencies().subscribe(currencies => {
       this.supportedCurrencies = currencies;
       this.newAccount.currency = this.supportedCurrencies[0];
+
+      this.getAccounts();
     });
+
+
   }
 
   deleteAccount(account) {
@@ -224,7 +233,7 @@ export class AccountsComponent extends Sortable implements OnInit {
 
     for (let i = 0; i < this.accounts.length; ++i) {
       if (this.accounts[i].currency.name === currencyName) {
-        sum += +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
+        sum += +this.accounts[i].balance;
       }
     }
     return sum;

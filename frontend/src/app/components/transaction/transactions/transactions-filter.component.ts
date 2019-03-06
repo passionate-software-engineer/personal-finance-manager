@@ -18,7 +18,7 @@ export class FiltersComponentBase extends Sortable {
   filters: TransactionFilter[] = [];
 
   constructor(protected alertService: AlertsService, private filterService: TransactionFilterService, public translate: TranslateService) {
-    super('date');
+    super('date', true);
   }
 
   onFilterChange() {
@@ -171,10 +171,10 @@ export class FiltersComponentBase extends Sortable {
 
   sortFilters() {
     this.filters.sort(function (a, b) {
-      if (a.name < b.name) {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
         return -1;
       }
-      if (a.name > b.name) {
+      if (a.name.toLowerCase() > b.name.toLowerCase()) {
         return 1;
       }
       return 0;
