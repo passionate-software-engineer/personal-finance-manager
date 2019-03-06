@@ -9,9 +9,11 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
+import com.pfm.export.ExportResult.ExportFilter;
 import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
+import com.pfm.filter.FilterService;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -37,10 +39,12 @@ public class ExportService {
   private AccountService accountService;
   private CategoryService categoryService;
   private CurrencyService currencyService;
+  private FilterService filterService;
 
   ExportResult exportData(long userId) {
     ExportResult result = new ExportResult();
 
+    result.setFilters(prepareExportFilters(userId));
     result.setCategories(prepareExportCategories(userId));
     result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts(userId)));
     result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState(), userId));
@@ -157,6 +161,28 @@ public class ExportService {
             .name(category.getName())
             .parentCategoryName(category.getParentCategory() != null ? category.getParentCategory().getName() : null)
             .build()
+        )
+        .collect(Collectors.toList());
+  }
+
+  private List<ExportFilter> prepareExportFilters(long userId) {
+    return filterService.getAllFilters(userId)
+        .stream()
+        .map(filter -> ExportFilter.builder()
+            .name(filter.getName())
+            .priceFrom(filter.getPriceFrom())
+            .priceTo(filter.getPriceTo())
+            .dateFrom(filter.getDateFrom())
+            .dateTo(filter.getDateTo())
+            .description(filter.getDescription())
+            .accounts(filter.getAccountIds().stream()
+                .map(accountId -> accountService.getAccountByIdAndUserId(accountId, userId).orElse(new Account()).getName())
+                .collect(Collectors.toList()))
+            .categories(filter.getCategoryIds().stream()
+                .map(categoryId -> categoryService.getCategoryByIdAndUserId(categoryId, userId).orElse(new Category()).getName())
+                .collect(Collectors.toList()))
+            .build()
+
         )
         .collect(Collectors.toList());
   }
