@@ -49,11 +49,11 @@ export class CategoriesComponent implements OnInit {
                   this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
                   this.categories[i].sumOfAllTransactionsInMonth = [];
 
-                  for (let j = 0; j < this.last12Months.length; j++){
-                    this.categories[i].sumOfAllTransactionsInMonth.push( this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
-
+                  for (let j = 0; j < this.last12Months.length; j++) {
+                    this.categories[i].sumOfAllTransactionsInMonth.push(
+                      this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
                   }
-                };
+                }
               });
           });
       });
