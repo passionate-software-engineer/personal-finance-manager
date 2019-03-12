@@ -17,12 +17,14 @@
       </th>
 
       <!--Parent Category-->
-      <th id="ParentCategoryHeader" [class.active]="sortableCategoriesTable.order === 'parentCategory.name'" (click)="sortableCategoriesTable.setOrder('parentCategory.name')">
+      <th id="ParentCategoryHeader" [class.active]="sortableCategoriesTable.order === 'parentCategory.name'"
+          (click)="sortableCategoriesTable.setOrder('parentCategory.name')">
         {{'category.parentCategory' | translate}}
         <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
         <span [hidden]="sortableCategoriesTable.reverse">▲</span>
       </th>
-      <th id="SumHeader" [class.active]="sortableCategoriesTable.order === 'sumOfAllTransactions'" (click)="sortableCategoriesTable.setOrder('sumOfAllTransactions')">
+      <th id="SumHeader" [class.active]="sortableCategoriesTable.order === 'sumOfAllTransactions'"
+          (click)="sortableCategoriesTable.setOrder('sumOfAllTransactions')">
         {{'category.sum' | translate}}
         <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
         <span [hidden]="sortableCategoriesTable.reverse">▲</span>
@@ -60,7 +62,8 @@
       </td>
     </tr>
 
-    <tr id="CategoryRow" *ngFor="let category of categories | orderBy: sortableCategoriesTable.order:sortableCategoriesTable.reverse:'case-insensitive'">
+    <tr id="CategoryRow"
+        *ngFor="let category of categories | orderBy: sortableCategoriesTable.order:sortableCategoriesTable.reverse:'case-insensitive'">
 
       <!--Name-->
       <td *ngIf="category.editMode">
@@ -134,41 +137,34 @@
 <table class="table table-bordered table-striped table-month">
   <thead class="thead-dark">
     <tr>
-        <!-- <th id="NameHeader" [class.active]="sortableCategoriesTable.order === 'name'" (click)="sortableCategoriesTable.setOrder('name')">
-            {{'category.name' | translate}}
-            <span [hidden]="sortableCategoriesTable.reverse">▼</span>
-            <span [hidden]="!sortableCategoriesTable.reverse">▲</span>
-          </th> -->
-
       <th [class.active]="sortableSummaryTable.order === 'name'" (click)="sortableSummaryTable.setOrder('name')">
         {{'category.name' | translate}}
         <span [hidden]="!sortableSummaryTable.reverse">▼</span>
         <span [hidden]="sortableSummaryTable.reverse">▲</span>
-
       </th>
-      <th *ngFor="let month of last12Months">
+      <th *ngFor="let month of last12Months; let i = index" [class.active]="sortableSummaryTable.order === 'sumOfAllTransactionsInMonth.'+i"
+          (click)="sortableSummaryTable.setOrder('sumOfAllTransactionsInMonth.'+i)">
         {{ month | date:'MMMM yyyy' }}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
-      <th>
-        SUMA
+      <th [class.active]="sortableSummaryTable.order === 'sumOfAllTransactions'" (click)="sortableSummaryTable.setOrder('sumOfAllTransactions')">
+        {{'category.sum' | translate}}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
-      <th>
-        ŚREDNIA
+      <th [class.active]="sortableSummaryTable.order === 'sumOfAllTransactions'" (click)="sortableSummaryTable.setOrder('sumOfAllTransactions')">
+        {{'category.average' | translate}}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
     </tr>
   </thead>
   <tbody>
-    <!-- <tr *ngFor="let category of categories"> -->
     <tr *ngFor="let category of categories | orderBy: sortableSummaryTable.order:sortableSummaryTable.reverse:'case-insensitive'">
       <td> {{category.name}} </td>
-      <td *ngFor="let month of last12Months">
-        {{ getBalanceOfTransactionsInGivenCategoryAndMonth(category.id, month) | number:'0.2' }}
+      <td *ngFor="let monthSum of category.sumOfAllTransactionsInMonth">
+        {{ monthSum | number:'0.2' }}
       </td>
       <td>
         {{ category.sumOfAllTransactions | number:'0.2' }}
