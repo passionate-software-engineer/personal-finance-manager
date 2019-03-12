@@ -5,5 +5,6 @@ export class Category {
   editMode = false;
   editedCategory: Category;
   sumOfAllTransactions: number;
+  sumOfAllTransactionsInMonth: number[] = [];
 }
 
