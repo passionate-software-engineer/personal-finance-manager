@@ -142,7 +142,7 @@
         <span [hidden]="!sortableSummaryTable.reverse">▼</span>
         <span [hidden]="sortableSummaryTable.reverse">▲</span>
       </th>
-      <th *ngFor="let month of last12Months; let i = index" [class.active]="sortableSummaryTable.order === 'sumOfAllTransactionsInMonth'+i"
+      <th *ngFor="let month of last12Months; let i = index" [class.active]="sortableSummaryTable.order === 'sumOfAllTransactionsInMonth.'+i"
           (click)="sortableSummaryTable.setOrder('sumOfAllTransactionsInMonth.'+i)">
         {{ month | date:'MMMM yyyy' }}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
