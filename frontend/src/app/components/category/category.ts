@@ -4,6 +4,7 @@ export class Category {
   parentCategory: Category = null;
   editMode = false;
   editedCategory: Category;
+  averageOfAllTransactions: number;
   sumOfAllTransactions: number;
   sumOfAllTransactionsInMonth: number[] = [];
 }
