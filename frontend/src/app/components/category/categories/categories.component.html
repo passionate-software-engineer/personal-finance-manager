@@ -153,7 +153,7 @@
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
-      <th [class.active]="sortableSummaryTable.order === 'sumOfAllTransactions'" (click)="sortableSummaryTable.setOrder('sumOfAllTransactions')">
+      <th [class.active]="sortableSummaryTable.order === 'averageOfAllTransactions'" (click)="sortableSummaryTable.setOrder('averageOfAllTransactions')">
         {{'category.average' | translate}}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
@@ -170,12 +170,36 @@
         {{ category.sumOfAllTransactions | number:'0.2' }}
       </td>
       <td>
-        {{ category.sumOfAllTransactions / last12Months.length  | number:'0.2' }}
+        {{ category.averageOfAllTransactions | number:'0.2' }}
+      </td>
+    </tr>
+    <tr>
+      <td>{{'category.revenues' | translate}}</td>
+      <td *ngFor="let month of last12Months">
+        {{getIncomeOfAllTransactionsInGivenMonth(month) | number:'0.2'}}
+      </td>
+      <td>
+        {{ getIncomeBalanceOfAllTransactions() | number:'0.2' }}</td>
+      <td>
+        {{ getIncomeBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
       </td>
     </tr>
 
     <tr>
-      <td></td>
+      <td>{{'category.costs' | translate}}</td>
+      <td *ngFor="let month of last12Months">
+        {{getCostOfAllTransactionsInGivenMonth(month) | number:'0.2'}}
+      </td>
+      <td>
+        {{ getCostBalanceOfAllTransactions() | number:'0.2' }}
+      </td>
+      <td>
+          {{ getCostBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
+      </td>
+    </tr>
+
+    <tr>
+      <td>{{'category.sum' | translate}}</td>
       <td *ngFor="let month of last12Months">
         {{getBalanceOfTransactionsInGivenMonth(month) | number:'0.2'}}
       </td>
@@ -186,5 +210,6 @@
         {{ getBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
       </td>
     </tr>
+
   </tbody>
 </table>
