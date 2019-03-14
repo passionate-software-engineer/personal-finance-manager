@@ -191,7 +191,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   // TODO parent category should sum values of child categories
-  getAllTransactionsBalance(categoryId: number,  onlyIncome: boolean = false, onlyCost: boolean = false): number {
+  getAllTransactionsBalance(categoryId: number, onlyIncome: boolean = false, onlyCost: boolean = false): number {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {
