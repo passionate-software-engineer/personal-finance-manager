@@ -5,6 +5,7 @@ import static com.pfm.config.MessagesProvider.IMPORT_NOT_POSSIBLE;
 import com.pfm.account.AccountService;
 import com.pfm.auth.UserProvider;
 import com.pfm.config.MessagesProvider;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,11 @@ public class ExportImportController implements ExportImportApi {
   private ImportService importService;
   private UserProvider userProvider;
   private AccountService accountService;
+  private ImportValidator importValidator;
 
   @Override
   public ExportResult exportData() {
     long userId = userProvider.getCurrentUserId();
-
     return exportService.exportData(userId);
   }
 
@@ -38,6 +39,11 @@ public class ExportImportController implements ExportImportApi {
     }
 
     // TODO validate input - if all required fields are present
+    List<String> validationResult = importValidator.validate(userId, inputData);
+    if (!validationResult.isEmpty()) {
+      log.info("Import data is not valid {}", validationResult);
+      return ResponseEntity.badRequest().body(validationResult);
+    }
 
     try {
       importService.importData(inputData, userId);

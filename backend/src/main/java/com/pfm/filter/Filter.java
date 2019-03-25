@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -18,6 +17,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Data
 @Builder
@@ -34,12 +35,14 @@ public final class Filter {
   @HistoryField
   private String name;
 
+  @LazyCollection(LazyCollectionOption.FALSE)
   @ElementCollection
   @Column(name = "account_id")
   @HistoryField(fieldType = SpecialFieldType.ACCOUNT_IDS)
   //ENHANCEMENT add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> accountIds;
 
+  @LazyCollection(LazyCollectionOption.FALSE)
   @ElementCollection
   @Column(name = "category_id")
   @HistoryField(fieldType = SpecialFieldType.CATEGORY_IDS)

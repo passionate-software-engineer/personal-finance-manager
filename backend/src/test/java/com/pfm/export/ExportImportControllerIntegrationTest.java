@@ -4,8 +4,10 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXI
 import static com.pfm.config.MessagesProvider.IMPORT_NOT_POSSIBLE;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
@@ -33,6 +35,7 @@ import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.filter.Filter;
+import com.pfm.filter.FilterService;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestAccountProvider;
 import com.pfm.transaction.Transaction;
@@ -56,6 +59,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
   @Autowired
   private TransactionService transactionService;
+
+  @Autowired
+  private FilterService filterService;
 
   @BeforeEach
   public void setup() throws Exception {
@@ -326,6 +332,92 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         // then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", is(String.format(getMessage(ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST), japaneaseAccount.getCurrency()))));
+  }
+
+  @Test
+  public void shouldImportFilters() throws Exception {
+    // given
+    ExportResult input = new ExportResult();
+
+    ExportResult.ExportFilter filter = new ExportResult.ExportFilter();
+    input.setFilters(Collections.singletonList(filter)); // singletonList - lista 1-elementowa
+    final String filterName = "Pawel";
+    filter.setName(filterName);
+    final String filterDescription = "some description";
+    filter.setDescription(filterDescription);
+    final LocalDate filterFromDate = LocalDate.of(2000, 01, 01);
+    filter.setDateFrom(filterFromDate);
+    final LocalDate filterFromTo = LocalDate.of(2020, 01, 01);
+    filter.setDateTo(filterFromTo);
+    final BigDecimal filterPriceFrom = BigDecimal.valueOf(99L, 2);
+    filter.setPriceFrom(filterPriceFrom);
+    final BigDecimal filterPriceTo = BigDecimal.valueOf(19999L, 2);
+    filter.setPriceTo(filterPriceTo);
+    input.setCategories(Collections.singletonList(
+        ExportCategory.builder()
+            .name(categoryOil().getName())
+            .build()
+        )
+    );
+    filter.setCategories(Collections.singletonList(categoryOil().getName()));
+
+    input.setInitialAccountsState(Collections.singletonList(ExportAccount.builder()
+            .name(accountMbankBalance10().getName())
+            .balance(accountMbankBalance10().getBalance())
+            .currency(accountMbankBalance10().getCurrency().getName())
+            .build()
+        )
+    );
+    filter.setAccounts(Collections.singletonList(accountMbankBalance10().getName()));
+
+    // when
+    mockMvc.perform(post(IMPORT_SERVICE_PATH)
+        .header("Authorization", token)
+        .content(json(input))
+        .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isCreated());
+
+    // then
+
+    List<Filter> filters
+        = filterService.getAllFilters(userId);
+    assertThat(filters, hasSize(1));
+    assertThat(filters.get(0).getName(), is(filterName));
+    assertThat(filters.get(0).getDateFrom(), is(filterFromDate));
+    assertThat(filters.get(0).getDateTo(), is(filterFromTo));
+    assertThat(filters.get(0).getDescription(), is(filterDescription));
+    assertThat(filters.get(0).getPriceFrom(), is(filterPriceFrom));
+    assertThat(filters.get(0).getPriceTo(), is(filterPriceTo));
+    assertThat(filters.get(0).getCategoryIds(), hasSize(1));
+    assertThat(filters.get(0).getCategoryIds().get(0), is(1L));
+    assertThat(filters.get(0).getAccountIds(), hasSize(1));
+    assertThat(filters.get(0).getAccountIds().get(0), is(6L));
+
+  }
+
+  @Test
+  public void sendFilterWithoutName() throws Exception {
+
+    // given
+    ExportResult input = new ExportResult();
+    ExportResult.ExportFilter filterEmptyString = ExportResult.ExportFilter.builder().name("").build();
+    ExportResult.ExportFilter filterNullObject = ExportResult.ExportFilter.builder().name(null).build();
+    ExportResult.ExportFilter filterWithWhiteblanks = ExportResult.ExportFilter.builder().name("   ").build();
+    input.setFilters(Arrays.asList(filterEmptyString, filterNullObject, filterWithWhiteblanks));
+
+    // when
+    mockMvc.perform(post(IMPORT_SERVICE_PATH)
+        .header("Authorization", token)
+        .content(json(input))
+        .contentType(JSON_CONTENT_TYPE))
+
+        // then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(3)))
+        .andExpect(jsonPath("$[0]", is("Filter is missing name")))
+        .andExpect(jsonPath("$[1]", is("Filter is missing name")))
+        .andExpect(jsonPath("$[2]", is("Filter is missing name")));
+
   }
 
 }

@@ -12,8 +12,11 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportCategory;
+import com.pfm.export.ExportResult.ExportFilter;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
+import com.pfm.filter.Filter;
+import com.pfm.filter.FilterService;
 import com.pfm.helpers.topology.Graph;
 import com.pfm.helpers.topology.Graph.Node;
 import com.pfm.helpers.topology.TopologicalSortProvider;
@@ -39,11 +42,13 @@ public class ImportService {
   private AccountService accountService;
   private CategoryService categoryService;
   private CurrencyService currencyService;
+  private FilterService filterService;
 
   @Transactional
   void importData(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
     Map<String, Long> categoryNameToIdMap = importCategoriesAndMapCategoryNamesToIds(inputData, userId);
     Map<String, Long> accountNameToIdMap = importAccountsAndMapAccountNamesToIds(inputData, userId);
+    importFilters(inputData, userId, accountNameToIdMap, categoryNameToIdMap);
 
     for (ExportPeriod period : inputData.getPeriods()) {
       for (ExportTransaction transaction : period.getTransactions()) {
@@ -51,6 +56,30 @@ public class ImportService {
       }
     }
 
+  }
+
+  private void importFilters(ExportResult inputData, long userId, Map<String, Long> accountNameToIdMap, Map<String, Long> categoryNameToIdMap) {
+    for (ExportFilter importedFilter : inputData.getFilters()) {
+      Filter filter = new Filter();
+      filter.setName(importedFilter.getName());
+      filter.setDateFrom(importedFilter.getDateFrom());
+      filter.setDateTo(importedFilter.getDateTo());
+      filter.setDescription(importedFilter.getDescription());
+      filter.setPriceFrom(importedFilter.getPriceFrom());
+      filter.setPriceTo(importedFilter.getPriceTo());
+      if (importedFilter.getAccounts() != null) {
+        filter.setAccountIds(importedFilter.getAccounts().stream()
+            .map(accountNameToIdMap::get)
+            .collect(Collectors.toList()));
+      }
+      if (importedFilter.getCategories() != null) {
+        filter.setCategoryIds(importedFilter.getCategories().stream()
+            .map(categoryNameToIdMap::get)
+            .collect(Collectors.toList()));
+      }
+
+      filterService.addFilter(userId, filter);
+    }
   }
 
   // ENHANCEMENT add checking account state during import based on period start and end balances & overall account states
