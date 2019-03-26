@@ -47,6 +47,13 @@ export class CategoriesComponent implements OnInit {
                 this.transactions = transactions;
                 for (let i = 0; i < this.categories.length; i++) {
                   this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
+                  this.categories[i].sumOfAllTransactionsInMonth = [];
+                  this.categories[i].averageOfAllTransactions = this.categories[i].sumOfAllTransactions / this.last12Months.length;
+
+                  for (let j = 0; j < this.last12Months.length; j++) {
+                    this.categories[i].sumOfAllTransactionsInMonth.push(
+                      this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
+                  }
                 }
               });
           });
@@ -184,13 +191,16 @@ export class CategoriesComponent implements OnInit {
   }
 
   // TODO parent category should sum values of child categories
-  getAllTransactionsBalance(categoryId: number): number {
+  getAllTransactionsBalance(categoryId: number, onlyIncome: boolean = false, onlyCost: boolean = false): number {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {
       if (categoryId !== null && this.transactions[i].categoryId !== categoryId) {
         continue;
       }
+
+      let sumOfAllAccountPriceEntries = 0;
+
       for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
         let exchangeRate = 1.0;
         for (const account of this.accounts) { // TODO use hashmap
@@ -199,15 +209,24 @@ export class CategoriesComponent implements OnInit {
           }
         }
 
+        sumOfAllAccountPriceEntries += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
 
-        sum += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
+      }
+
+      if ((onlyIncome && sumOfAllAccountPriceEntries > 0) || (onlyCost && sumOfAllAccountPriceEntries < 0 ) || (!onlyIncome && !onlyCost)) {
+        sum += sumOfAllAccountPriceEntries;
       }
     }
 
     return sum;
   }
 
-  getBalanceOfTransactionsInGivenCategoryAndMonth(categoryId: number, beginningOfMonth: Date): number {
+  getBalanceOfTransactionsInGivenCategoryAndMonth(
+    categoryId: number,
+    beginningOfMonth: Date,
+    onlyIncome: boolean = false,
+    onlyCost: boolean = false
+  ): number {
     let sum = 0;
 
     let year = beginningOfMonth.getFullYear();
@@ -219,11 +238,13 @@ export class CategoriesComponent implements OnInit {
 
     const beginningOfNextMonth = new Date(year, month, 1);
 
-
     for (let i = 0; i < this.transactions.length; ++i) {
       if (categoryId !== null && this.transactions[i].categoryId !== categoryId) {
         continue;
       }
+
+      let sumOfAllAccountPriceEntries = 0;
+
       for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
         const transactionDate = new Date(this.transactions[i].date);
         if (transactionDate < beginningOfMonth || transactionDate >= beginningOfNextMonth) {
@@ -237,8 +258,11 @@ export class CategoriesComponent implements OnInit {
           }
         }
 
+        sumOfAllAccountPriceEntries += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
+      }
 
-        sum += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
+      if ((onlyIncome && sumOfAllAccountPriceEntries > 0) || (onlyCost && sumOfAllAccountPriceEntries < 0 ) || (!onlyIncome && !onlyCost)) {
+        sum += sumOfAllAccountPriceEntries;
       }
     }
 
@@ -249,7 +273,23 @@ export class CategoriesComponent implements OnInit {
     return this.getBalanceOfTransactionsInGivenCategoryAndMonth(null, beginningOfMonth);
   }
 
+  getIncomeOfAllTransactionsInGivenMonth(beginningOfMonth: Date) {
+    return this.getBalanceOfTransactionsInGivenCategoryAndMonth(null, beginningOfMonth, true);
+  }
+
+  getCostOfAllTransactionsInGivenMonth(beginningOfMonth: Date) {
+    return this.getBalanceOfTransactionsInGivenCategoryAndMonth(null, beginningOfMonth, false, true);
+  }
+
   getBalanceOfAllTransactions() {
     return this.getAllTransactionsBalance(null);
+  }
+
+  getIncomeBalanceOfAllTransactions() {
+    return this.getAllTransactionsBalance(null, true);
+  }
+
+  getCostBalanceOfAllTransactions() {
+    return this.getAllTransactionsBalance(null, false, true);
   }
 }
