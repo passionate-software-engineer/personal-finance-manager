@@ -337,10 +337,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Test
   public void shouldImportFilters() throws Exception {
     // given
-    ExportResult input = new ExportResult();
+    final ExportResult input = new ExportResult();
 
-    ExportResult.ExportFilter filter = new ExportResult.ExportFilter();
-    input.setFilters(Collections.singletonList(filter)); // singletonList - lista 1-elementowa
+    final ExportResult.ExportFilter filter = new ExportResult.ExportFilter();
     final String filterName = "Pawel";
     filter.setName(filterName);
     final String filterDescription = "some description";
@@ -370,6 +369,11 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     );
     filter.setAccounts(Collections.singletonList(accountMbankBalance10().getName()));
 
+    ExportResult.ExportFilter emptyFilter = new ExportResult.ExportFilter();
+    emptyFilter.setName("All empty");
+
+    input.setFilters(Arrays.asList(filter, emptyFilter));
+
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
         .header("Authorization", token)
@@ -381,7 +385,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     List<Filter> filters
         = filterService.getAllFilters(userId);
-    assertThat(filters, hasSize(1));
+    assertThat(filters, hasSize(2));
     assertThat(filters.get(0).getName(), is(filterName));
     assertThat(filters.get(0).getDateFrom(), is(filterFromDate));
     assertThat(filters.get(0).getDateTo(), is(filterFromTo));
