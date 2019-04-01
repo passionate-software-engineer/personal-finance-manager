@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImportValidator {
 
-  List<String> validate(long userId, ExportResult inputData) {
+  List<String> validate(ExportResult inputData) {
     List<String> validationResults = new ArrayList<>();
     for (ExportResult.ExportFilter filter : inputData.getFilters()) {
       if (filter.getName() == null || "".equals(filter.getName().trim())) {
