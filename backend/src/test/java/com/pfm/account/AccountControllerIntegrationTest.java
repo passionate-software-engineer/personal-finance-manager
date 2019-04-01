@@ -220,6 +220,41 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldSetAccountAsArchived() throws Exception {
+
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.archived", is(false)));
+
+    //when
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andDo(print())
+        .andExpect(status().isOk());
+
+    //then
+    mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
+        .andExpect(jsonPath("$.archived", is(true)))
+        .andExpect(jsonPath("$.userId").doesNotExist());
+  }
+
+  @Test
   public void shouldUpdateAccountLastVerificationDate() throws Exception {
 
     //given
@@ -249,7 +284,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnInvoiceNotFoundWhenTryingToUpdateNotExistingInvoiceLastVerificationDate() throws Exception {
+  public void shouldReturnAccountNotFoundWhenTryingToUpdateNotExistingAccountLastVerificationDate() throws Exception {
 
     //given
     int accountId = 1500;
@@ -257,6 +292,22 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //when
     mockMvc.perform(
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andDo(print())
+        // then
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldReturnAccountNotFoundWhenTryingToArchiveNotExistingAccount() throws Exception {
+
+    //given
+    int accountId = 1500;
+
+    //when
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andDo(print())

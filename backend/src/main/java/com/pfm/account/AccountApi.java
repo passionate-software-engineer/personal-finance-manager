@@ -42,6 +42,11 @@ public interface AccountApi {
   @PatchMapping(value = "/{accountId}/markAccountAsVerifiedToday")
   ResponseEntity<?> markAccountAsVerifiedToday(@PathVariable long accountId);
 
+  @ApiOperation(value = "Archive the account", response = Void.class, authorizations = {
+      @Authorization(value = "Bearer")})
+  @PatchMapping(value = "/{accountId}/markAsArchived")
+  ResponseEntity<?> markAccountAsArchived(@PathVariable long accountId);
+
   @ApiOperation(value = "Delete an existing account", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @DeleteMapping(value = "/{accountId}")
   ResponseEntity<?> deleteAccount(@PathVariable long accountId);
