@@ -102,6 +102,8 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
+    // comment for push
+
     historyInfosExpected.add(HistoryInfo.builder()
         .id(3L)
         .name("name")
