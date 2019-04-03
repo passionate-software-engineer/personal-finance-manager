@@ -73,6 +73,12 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .newValue(account.getBalance().toString())
         .build());
 
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(3L)
+        .name("archived")
+        .newValue(String.valueOf(account.isArchived()))
+        .build());
+
     assertThat(historyEntries, hasSize(1));
     assertThat(historyEntries.get(0).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
@@ -367,14 +373,14 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(5L)
+        .id(6L)
         .name("name")
         .newValue(account.getName())
         .oldValue(account.getName())
         .build());
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(6L)
+        .id(7L)
         .name("balance")
         .newValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .oldValue(account.getBalance().toString())
@@ -651,49 +657,49 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfAddingFilterExpected = new ArrayList<>();
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(11L)
         .name("name")
         .newValue(filter.getName())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(10L)
+        .id(12L)
         .name("accountIds")
         .newValue(String.format("[%s, %s]", accountMbank.getName(), accountMillenium.getName()))
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(13L)
         .name("categoryIds")
         .newValue(String.format("[%s, %s]", categoryCar.getName(), categoryFood.getName()))
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(14L)
         .name("priceFrom")
         .newValue(filter.getPriceFrom().toString())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(15L)
         .name("priceTo")
         .newValue(filter.getPriceTo().toString())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(14L)
+        .id(16L)
         .name("dateFrom")
         .newValue(filter.getDateFrom().toString())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(15L)
+        .id(17L)
         .name("dateTo")
         .newValue(null)
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(16L)
+        .id(18L)
         .name("description")
         .newValue(filter.getDescription())
         .build());
