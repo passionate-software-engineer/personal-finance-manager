@@ -106,11 +106,11 @@ public abstract class InvoicePerformanceTestBase {
 
   protected Currency[] getCurrencies() {
     return given()
-          .header("Authorization", token)
-          .when()
-          .get(currenciesServicePath())
-          .getBody()
-          .as(Currency[].class);
+        .header("Authorization", token)
+        .when()
+        .get(currenciesServicePath())
+        .getBody()
+        .as(Currency[].class);
   }
 
   Account addAndReturnAccount(Currency[] currencies) {

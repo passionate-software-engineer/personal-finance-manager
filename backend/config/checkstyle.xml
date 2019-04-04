@@ -24,7 +24,7 @@
     <property name="eachLine" value="true"/>
   </module>
 
-  <module name="SuppressWarningsFilter" />
+  <module name="SuppressWarningsFilter"/>
   <module name="TreeWalker">
     <module name="SuppressWarningsHolder"/>
     <module name="OuterTypeFilename"/>

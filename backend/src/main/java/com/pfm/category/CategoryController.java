@@ -25,6 +25,26 @@ public class CategoryController implements CategoryApi {
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
 
+  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+    Long parentCategoryId = categoryRequest.getParentCategoryId();
+
+    if (parentCategoryId == null) {
+      return Category.builder()
+          .id(null)
+          .name(categoryRequest.getName())
+          .parentCategory(null)
+          .build();
+    }
+
+    return Category.builder()
+        .id(null)
+        .name(categoryRequest.getName())
+        .parentCategory(Category.builder().id(parentCategoryId).build())
+        .build();
+  }
+
+  // TODO return only parent category id - not the entire object / objects chain
+
   @Override
   public ResponseEntity<Category> getCategoryById(@PathVariable long categoryId) {
     long userId = userProvider.getCurrentUserId();
@@ -40,8 +60,6 @@ public class CategoryController implements CategoryApi {
     log.info("CATEGORY with id {} was successfully retrieved", categoryId);
     return ResponseEntity.ok(category.get());
   }
-
-  // TODO return only parent category id - not the entire object / objects chain
 
   @Override
   public ResponseEntity<List<Category>> getCategories() {
@@ -137,23 +155,5 @@ public class CategoryController implements CategoryApi {
     log.info("Category with id {} was deleted successfully", categoryId);
 
     return ResponseEntity.ok().build();
-  }
-
-  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
-    Long parentCategoryId = categoryRequest.getParentCategoryId();
-
-    if (parentCategoryId == null) {
-      return Category.builder()
-          .id(null)
-          .name(categoryRequest.getName())
-          .parentCategory(null)
-          .build();
-    }
-
-    return Category.builder()
-        .id(null)
-        .name(categoryRequest.getName())
-        .parentCategory(Category.builder().id(parentCategoryId).build())
-        .build();
   }
 }

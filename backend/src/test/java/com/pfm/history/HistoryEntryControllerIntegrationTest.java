@@ -56,9 +56,8 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestServiceToAddAccountAndReturnId(account, token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -111,20 +110,27 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     // comment for push
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(3L)
+        .id(4L)
         .name("name")
         .newValue(updatedAccount.getName())
         .oldValue(account.getName())
         .build());
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(4L)
+        .id(5L)
         .name("balance")
         .newValue(updatedAccount.getBalance().toString())
         .oldValue(account.getBalance().toString())
         .build());
 
-    assertThat(historyEntries, hasSize(3));
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("archived")
+        .newValue(String.valueOf(account.isArchived()))
+        .oldValue(String.valueOf(account.isArchived()))
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
     assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(1).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
@@ -151,15 +157,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(3L)
+        .id(4L)
         .name("name")
         .oldValue(account.getName())
         .build());
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(4L)
+        .id(5L)
         .name("balance")
         .oldValue(account.getBalance().toString())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("archived")
+        .oldValue(String.valueOf(account.isArchived()))
         .build());
 
     assertThat(historyEntries, hasSize(2));
@@ -347,25 +359,25 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(7L)
+        .id(9L)
         .name("description")
         .newValue(transaction.getDescription())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(8L)
+        .id(10L)
         .name("categoryId")
         .newValue(category.getName())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(11L)
         .name("date")
         .newValue(transaction.getDate().toString())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(10L)
+        .id(12L)
         .name("accountPriceEntries")
         .newValue(String.format("[%s : %s]", account.getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
@@ -384,6 +396,13 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .name("balance")
         .newValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .oldValue(account.getBalance().toString())
+        .build());
+
+    historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
+        .id(8L)
+        .name("archived")
+        .newValue(String.valueOf(account.isArchived()))
+        .oldValue(String.valueOf(account.isArchived()))
         .build());
 
     assertThat(historyEntries, hasSize(4));
@@ -571,25 +590,25 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(16L)
         .name("description")
         .oldValue(transaction.getDescription())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(14L)
+        .id(17L)
         .name("categoryId")
         .oldValue(category.getName())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(15L)
+        .id(18L)
         .name("date")
         .oldValue(transaction.getDate().toString())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(16L)
+        .id(19L)
         .name("accountPriceEntries")
         .oldValue(String.format("[%s : %s]", account.getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
@@ -597,17 +616,24 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(13L)
         .name("name")
         .newValue(account.getName())
         .oldValue(account.getName())
         .build());
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(14L)
         .name("balance")
         .oldValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .newValue(account.getBalance().toString())
+        .build());
+
+    historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
+        .id(15L)
+        .name("archived")
+        .newValue(String.valueOf(account.isArchived()))
+        .oldValue(String.valueOf(account.isArchived()))
         .build());
 
     assertThat(historyEntries, hasSize(6));
