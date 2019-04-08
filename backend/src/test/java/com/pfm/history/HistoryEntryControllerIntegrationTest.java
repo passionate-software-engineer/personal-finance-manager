@@ -102,7 +102,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToUpdateAccount(accountId, convertAccountToAccountRequest(updatedAccount), token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
@@ -151,7 +151,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToDeleteAccountById(accountId, token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
