@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +43,7 @@ public final class Account {
   private Currency currency;
 
   @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
+  //TODO Add annotation historyField
   private LocalDate lastVerificationDate;
 
   @JsonIgnore
@@ -49,4 +52,15 @@ public final class Account {
   @ApiModelProperty(value = "Information if account is archived", example = "false")
   private boolean archived;
 
+  @ApiModelProperty(value = "Account type, e.g. loan, current, investment", example = "LOAN")
+  @Enumerated(EnumType.STRING)
+  private AccountType accountType;
+
+  public enum AccountType {
+    LOAN,
+    CURRENT,
+    INVESTMENT,
+    SAFETY_FUND;
+
+  }
 }

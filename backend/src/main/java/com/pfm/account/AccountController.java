@@ -180,6 +180,7 @@ public class AccountController implements AccountApi {
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
+        .accountType(accountRequest.getAccountType())
         .build();
   }
 

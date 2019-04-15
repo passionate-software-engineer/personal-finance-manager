@@ -60,7 +60,7 @@ class HistoryInfoProviderTest {
     when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
 
     //when
-    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(transaction, USER_ID);
+    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryInfosOnAdd(transaction, USER_ID);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
@@ -99,7 +99,7 @@ class HistoryInfoProviderTest {
     lenient().when(accountService.getAccountFromDbByIdAndUserId(2L, 1L)).thenReturn(accountIngBalance9999());
 
     //when
-    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(filter, USER_ID);
+    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryInfosOnAdd(filter, USER_ID);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
@@ -146,7 +146,7 @@ class HistoryInfoProviderTest {
     category.setParentCategory(categoryCar());
 
     //when
-    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(category, USER_ID);
+    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryInfosOnAdd(category, USER_ID);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
@@ -168,7 +168,7 @@ class HistoryInfoProviderTest {
     Category category = categoryCar();
 
     //when
-    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(category, USER_ID);
+    final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryInfosOnAdd(category, USER_ID);
 
     //then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
@@ -419,7 +419,7 @@ class HistoryInfoProviderTest {
     Account account = new Account();
 
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> historyInfoProvider.createHistoryEntryOnAdd(account, USER_ID));
+        () -> historyInfoProvider.createHistoryInfosOnAdd(account, USER_ID));
 
     assertThat(exception.getMessage(), is("Field value is null"));
   }

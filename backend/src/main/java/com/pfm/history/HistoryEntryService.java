@@ -24,11 +24,11 @@ public class HistoryEntryService {
   }
 
   public void addHistoryEntryOnAdd(Object object, long userId) {
-    List<HistoryInfo> historyEntryOnAdd = historyInfoProvider.createHistoryEntryOnAdd(object, userId);
+    List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryInfosOnAdd(object, userId);
     HistoryEntry historyEntry = HistoryEntry.builder()
         .date(ZonedDateTime.now())
         .type(Type.ADD)
-        .entries(historyEntryOnAdd)
+        .entries(historyInfos)
         .object(object.getClass().getSimpleName())
         .userId(userId)
         .build();

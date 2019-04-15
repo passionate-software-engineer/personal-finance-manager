@@ -49,6 +49,7 @@ public class AccountService {
     accountToUpdate.setName(account.getName());
     accountToUpdate.setBalance(account.getBalance());
     accountToUpdate.setCurrency(account.getCurrency());
+    accountToUpdate.setAccountType(account.getAccountType());
 
     accountRepository.save(accountToUpdate);
   }

@@ -26,7 +26,7 @@ public class HistoryInfoProvider {
   private AccountService accountService;
   private CategoryService categoryService;
 
-  public List<HistoryInfo> createHistoryEntryOnAdd(Object newObject, long userId) {
+  public List<HistoryInfo> createHistoryInfosOnAdd(Object newObject, long userId) {
 
     List<HistoryInfo> historyInfos = new ArrayList<>();
 
@@ -95,19 +95,9 @@ public class HistoryInfoProvider {
 
     if (value == null && !field.getAnnotation(HistoryField.class).nullable()) {
       throw new IllegalStateException("Field value is null");
-    }
 
+    }
     return value == null ? null : value.toString();
-  }
-
-  Object getValue(Field field, Object object) {
-    Object value;
-    try {
-      value = field.get(object);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    }
-    return value;
   }
 
   private List<Field> getFieldsDeclaredAsHistoryFields(Field[] fields) {
@@ -120,6 +110,16 @@ public class HistoryInfoProvider {
   private Object getObjectForParentCategoryField(Field field, Object object, Long along) {
     Category category = (Category) getValue(field, object);
     return category == null ? getMessage(MessagesProvider.MAIN_CATEGORY) : category.getName();
+  }
+
+  Object getValue(Field field, Object object) {
+    Object value;
+    try {
+      value = field.get(object);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    }
+    return value;
   }
 
   private Object getObjectForCategoryField(Field field, Object object, Long along) {

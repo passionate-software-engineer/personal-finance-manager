@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import com.pfm.account.Account.AccountType;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,4 +26,7 @@ public class AccountRequest {
 
   @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
   private LocalDate lastVerificationDate;
+
+  @ApiModelProperty(value = "Account type, e.g. loan, current, investment", example = "LOAN")
+  private AccountType accountType;
 }
