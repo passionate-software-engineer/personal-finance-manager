@@ -43,4 +43,8 @@ export class AccountService extends ServiceBase {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAccountAsVerifiedToday'), '', this.contentType);
   }
 
+  archiveAccount(account: Account): Observable<any> {
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsArchived'), '', this.contentType);
+  }
+
 }

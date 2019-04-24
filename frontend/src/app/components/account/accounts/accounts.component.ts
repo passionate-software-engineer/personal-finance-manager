@@ -105,6 +105,16 @@ export class AccountsComponent implements OnInit {
         );
   }
 
+  archiveAccount(account: Account) {
+    this.accountService.archiveAccount(account).subscribe(() => {
+        this.alertService.success(
+          this.translate.instant('TODO message.accountVerificationDateSetToToday')
+        );
+        account.archived = true;
+      }
+    );
+  }
+
   onEditAccount(account: Account) {
     if (!this.validateAccount(account.editedAccount)) {
       return;
