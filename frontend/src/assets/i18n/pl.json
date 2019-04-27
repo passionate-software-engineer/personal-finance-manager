@@ -15,6 +15,7 @@
   "category.average": "Średnia",
   "category.income": "Przychody",
   "category.costs": "Koszty",
+  "category.monthBalance": "Balans kont",
   "message.noConnectivity": "Brak połączenia z serwerem, proszę spróbować później",
   "message.somethingWentWrong": "Coś poszło nie tak, proszę spróbować później",
   "message.internalSystemError": "Wewnętrzny błąd systemu, proszę spróbować później",

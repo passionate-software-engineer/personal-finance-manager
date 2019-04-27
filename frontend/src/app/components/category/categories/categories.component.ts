@@ -67,7 +67,7 @@ export class CategoriesComponent implements OnInit {
       let year = today.getFullYear();
       let month = today.getMonth() - i;
 
-      if (month < 1) {
+      if (month < 0) {
         month += 12;
         year -= 1;
       }
@@ -213,7 +213,7 @@ export class CategoriesComponent implements OnInit {
 
       }
 
-      if ((onlyIncome && sumOfAllAccountPriceEntries > 0) || (onlyCost && sumOfAllAccountPriceEntries < 0 ) || (!onlyIncome && !onlyCost)) {
+      if ((onlyIncome && sumOfAllAccountPriceEntries > 0) || (onlyCost && sumOfAllAccountPriceEntries < 0) || (!onlyIncome && !onlyCost)) {
         sum += sumOfAllAccountPriceEntries;
       }
     }
@@ -261,7 +261,7 @@ export class CategoriesComponent implements OnInit {
         sumOfAllAccountPriceEntries += +this.transactions[i].accountPriceEntries[j].price * exchangeRate;
       }
 
-      if ((onlyIncome && sumOfAllAccountPriceEntries > 0) || (onlyCost && sumOfAllAccountPriceEntries < 0 ) || (!onlyIncome && !onlyCost)) {
+      if ((onlyIncome && sumOfAllAccountPriceEntries > 0) || (onlyCost && sumOfAllAccountPriceEntries < 0) || (!onlyIncome && !onlyCost)) {
         sum += sumOfAllAccountPriceEntries;
       }
     }
@@ -291,5 +291,48 @@ export class CategoriesComponent implements OnInit {
 
   getCostBalanceOfAllTransactions() {
     return this.getAllTransactionsBalance(null, false, true);
+  }
+
+  private balanceOfAllAccounts() {
+    let sum = 0;
+
+    for (let i = 0; i < this.accounts.length; ++i) {
+      sum +=
+        +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
+    }
+
+    return sum;
+  }
+
+  private getCanonicalFormForDate(date: Date) {
+    return 100 * date.getFullYear() + date.getMonth() + 1;
+  }
+
+  getBalanceOfAllAccountsAtTheEndOfMonth(beginningOfMonth: Date) {
+    let accountsBalance = this.balanceOfAllAccounts();
+    let processedMonth = new Date();
+    processedMonth = new Date(processedMonth.getFullYear(), processedMonth.getMonth(), 1);
+
+    let processedMonthInCananicalFormat = this.getCanonicalFormForDate(processedMonth);
+    const beginningOfMonthInCanonicalFormat = this.getCanonicalFormForDate(beginningOfMonth);
+
+    while (processedMonthInCananicalFormat > beginningOfMonthInCanonicalFormat) {
+      accountsBalance -= this.getBalanceOfTransactionsInGivenMonth(processedMonth);
+
+      let year = processedMonth.getFullYear();
+      let month = processedMonth.getMonth() - 1;
+
+      if (month < 0) {
+        month += 12;
+        year -= 1;
+      }
+
+      processedMonth.setMonth(month);
+      processedMonth.setFullYear(year);
+
+      processedMonthInCananicalFormat = this.getCanonicalFormForDate(processedMonth);
+    }
+
+    return accountsBalance;
   }
 }
