@@ -15,6 +15,7 @@
   "category.average": "Average",
   "category.income": "Income",
   "category.costs": "Costs",
+  "category.monthBalance": "Accounts balance",
   "message.noConnectivity": "No connectivity with server, please try again later",
   "message.somethingWentWrong": "Something went wrong, please try again later",
   "message.internalSystemError": "Internal system error, please try again later",

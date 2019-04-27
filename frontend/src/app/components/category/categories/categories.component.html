@@ -211,5 +211,18 @@
       </td>
     </tr>
 
+    <tr>
+      <td>{{'category.monthBalance' | translate}}</td>
+      <td *ngFor="let month of last12Months">
+        {{getBalanceOfAllAccountsAtTheEndOfMonth(month) | number:'0.2'}}
+      </td>
+      <td>
+
+      </td>
+      <td>
+
+      </td>
+    </tr>
+
   </tbody>
 </table>
