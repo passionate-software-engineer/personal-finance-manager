@@ -99,11 +99,10 @@
       </button>
     </td>
   </tr>
-
-  <tr id="AccountRow"
-      *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
-    <!-- Name -->
-    <div *ngIf="archivedCheckboxState ||!archivedCheckboxState && !account.archived">
+  <ng-container
+    *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
+    <tr id="AccountRow" *ngIf="archivedCheckboxState ||!archivedCheckboxState && !account.archived">
+      <!-- Name -->
       <td *ngIf="account.editMode">
         <input id="EditAccountNameInput" class="form-control" type="text"
                [(ngModel)]="account.editedAccount.name"/>
@@ -198,8 +197,9 @@
           {{ "button.exit" | translate }}
         </button>
       </td>
-    </div>
-  </tr>
+    </tr>
+  </ng-container>
+
 
   <!-- Balance row -->
   <tr>
