@@ -148,7 +148,7 @@
       </td>
 
       <!-- Last verification date -->
-      <td>
+      <td [ngClass]="{'font-italic':account.archived}">
         {{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
       </td>
 
