@@ -102,7 +102,7 @@
   <ng-container
     *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
     <tr id="AccountRow"
-        *ngIf="archivedCheckboxState ||(!archivedCheckboxState && !account.archived)">
+        *ngIf="archivedCheckboxState ||!account.archived">
       <!-- Name -->
       <td *ngIf="account.editMode">
         <input id="EditAccountNameInput" class="form-control" type="text"
