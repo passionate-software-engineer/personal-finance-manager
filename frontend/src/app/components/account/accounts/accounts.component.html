@@ -10,9 +10,6 @@
   show archived accounts
 </label>
 
-<!--<input name="archivedAccounts" type="checkbox"-->
-<!--       value="asxd">Show archived accounts-->
-<!--**************************************************start*****************************************************************************************-->
 <table class="table table-bordered table-striped table-hover">
   <thead class="thead-dark">
 
@@ -106,12 +103,13 @@
   <tr id="AccountRow"
       *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
     <!-- Name -->
-    <div #divTable *ngIf="archivedCheckboxState ||!archivedCheckboxState && !account.archived">
+    <div *ngIf="archivedCheckboxState ||!archivedCheckboxState && !account.archived">
       <td *ngIf="account.editMode">
         <input id="EditAccountNameInput" class="form-control" type="text"
                [(ngModel)]="account.editedAccount.name"/>
       </td>
-      <td id="NameReadOnly" *ngIf="!account.editMode">
+      <td [ngClass]="{'font-italic':account.archived}" id="NameReadOnly"
+          *ngIf="!account.editMode">
         {{ account.name}}
       </td>
 
@@ -120,7 +118,8 @@
         <input id="EditAccountBalanceInput" class="form-control" type="number"
                [(ngModel)]="account.editedAccount.balance"/>
       </td>
-      <td id="BalanceReadOnly" *ngIf="!account.editMode">
+      <td [ngClass]="{'font-italic':account.archived}" id="BalanceReadOnly"
+          *ngIf="!account.editMode">
         {{ account.balance | number: "0.2-2" }}
       </td>
 
@@ -134,7 +133,7 @@
         </select>
       </td>
 
-      <td *ngIf="!account.editMode">
+      <td [ngClass]="{'font-italic':account.archived}" *ngIf="!account.editMode">
         {{ account.currency.name }}
       </td>
 
@@ -144,7 +143,7 @@
       * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
       </td>
 
-      <td *ngIf="!account.editMode">
+      <td [ngClass]="{'font-italic':account.archived}" *ngIf="!account.editMode">
         {{ account.balancePLN | number: "0.2-2" }}
       </td>
 
