@@ -59,6 +59,7 @@
   "message.dataExportedSuccessfully": "Data was exported successfully",
   "message.dataImportedSuccessfully": "Data was imported successfully",
   "message.accountVerificationDateSetToToday": "Account balance verification date was updated successfully",
+  "message.accountArchived": "Account archived",
   "navigation.transactions": "Transactions",
   "navigation.categories": "Categories",
   "navigation.accounts": "Accounts",

@@ -109,7 +109,7 @@ export class AccountsComponent implements OnInit {
   archiveAccount(account: Account) {
     this.accountService.archiveAccount(account).subscribe(() => {
         this.alertService.success(
-          this.translate.instant('TODO message.accountVerificationDateSetToToday')
+          this.translate.instant('message.accountArchived')
         );
         account.archived = true;
       }
