@@ -116,14 +116,14 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .oldValue(account.getBalance().toString())
         .build());
 
-    assertThat(historyEntries, hasSize(3));
+    assertThat(historyEntries, hasSize(2));
     assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
     assertThat(historyEntries.get(1).getType(), equalTo(Type.UPDATE));
     assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
     assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
 
-    // TODO currrency change assertion
+    // TODO currency change assertion
   }
 
   @Test
