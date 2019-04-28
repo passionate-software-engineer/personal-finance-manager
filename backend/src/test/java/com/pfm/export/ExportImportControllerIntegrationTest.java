@@ -340,6 +340,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     final ExportResult input = new ExportResult();
 
     final ExportResult.ExportFilter filter = new ExportResult.ExportFilter();
+
     final String filterName = "Pawel";
     filter.setName(filterName);
     final String filterDescription = "some description";
@@ -396,6 +397,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(filters.get(0).getCategoryIds().get(0), is(1L));
     assertThat(filters.get(0).getAccountIds(), hasSize(1));
     assertThat(filters.get(0).getAccountIds().get(0), is(6L));
+
+    // TODO empty filter assertions
 
   }
 

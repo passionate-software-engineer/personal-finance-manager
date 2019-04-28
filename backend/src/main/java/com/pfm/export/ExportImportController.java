@@ -39,7 +39,7 @@ public class ExportImportController implements ExportImportApi {
     }
 
     // TODO validate input - if all required fields are present
-    List<String> validationResult = importValidator.validate(userId, inputData);
+    List<String> validationResult = importValidator.validate(inputData);
     if (!validationResult.isEmpty()) {
       log.info("Import data is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
