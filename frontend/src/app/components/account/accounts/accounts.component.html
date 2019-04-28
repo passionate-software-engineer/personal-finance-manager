@@ -6,7 +6,7 @@
 </button>
 
 <label>
-  <input type="checkbox" name="checkbox" (change)="archivedCheckboxState = !archivedCheckboxState">
+  <input type="checkbox" (change)="archivedCheckboxState = !archivedCheckboxState">
   show archived accounts
 </label>
 
@@ -50,7 +50,7 @@
       <span [hidden]="!sortableAccountsTable.reverse">▼</span>
       <span [hidden]="sortableAccountsTable.reverse">▲</span>
     </th>
-
+    <!--   below th may be redundant -->
     <th></th>
   </tr>
   </thead>
@@ -101,7 +101,8 @@
   </tr>
   <ng-container
     *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
-    <tr id="AccountRow" *ngIf="archivedCheckboxState ||!archivedCheckboxState && !account.archived">
+    <tr id="AccountRow"
+        *ngIf="archivedCheckboxState ||(!archivedCheckboxState && !account.archived)">
       <!-- Name -->
       <td *ngIf="account.editMode">
         <input id="EditAccountNameInput" class="form-control" type="text"
