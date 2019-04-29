@@ -106,12 +106,23 @@ export class AccountsComponent implements OnInit {
         );
   }
 
+  //TODO lukasz two methods below - code duplication
   archiveAccount(account: Account) {
     this.accountService.archiveAccount(account).subscribe(() => {
         this.alertService.success(
           this.translate.instant('message.accountArchived')
         );
         account.archived = true;
+      }
+    );
+  }
+
+  makeAccountActive(account: Account) {
+    this.accountService.archiveAccount(account).subscribe(() => {
+        this.alertService.success(
+          this.translate.instant('message.accountMadeActive')
+        );
+        account.archived = false;
       }
     );
   }

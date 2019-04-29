@@ -176,10 +176,16 @@
                 {{ "button.updateLastVerificationDate" | translate }}
               </button>
             </li>
-            <li>
+            <li *ngIf="!account.archived">
               <button id="ArchiveBtn" class="btn btn-warning btn-block"
                       (click)="archiveAccount(account)">
                 {{ "button.archive" | translate }}
+              </button>
+            </li>
+            <li *ngIf="account.archived">
+              <button id="Make active" class="btn btn-warning btn-block"
+                      (click)="makeAccountActive(account)">
+                {{ "button.makeActive" | translate }}
               </button>
             </li>
             <li>
