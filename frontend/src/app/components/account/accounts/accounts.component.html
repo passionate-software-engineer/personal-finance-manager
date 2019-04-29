@@ -164,7 +164,7 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li>
+            <li *ngIf="!account.archived">
               <button id="EditBtn" class="btn btn-warning btn-block"
                       (click)="onShowEditMode(account)">
                 {{ "button.edit" | translate }}
@@ -188,7 +188,7 @@
                 {{ "button.makeActive" | translate }}
               </button>
             </li>
-            <li>
+            <li *ngIf="!account.archived">
               <button id="DeleteBtn" class="btn btn-danger btn-block"
                       (click)="deleteAccount(account)">
                 {{ "button.delete" | translate }}
