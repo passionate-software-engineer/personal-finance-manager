@@ -155,6 +155,22 @@ public class AccountController implements AccountApi {
   }
 
   @Override
+  public ResponseEntity<?> markAccountAsActive(long accountId) {
+    long userId = userProvider.getCurrentUserId();
+    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+      log.info("No account with id {} was found, not able to update", accountId);
+      return ResponseEntity.notFound().build();
+    }
+
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    account.setArchived(false);
+
+    accountService.saveAccount(userId, account);
+
+    return ResponseEntity.ok().build();
+  }
+
+  @Override
   @Transactional
   public ResponseEntity<?> deleteAccount(@PathVariable long accountId) {
     long userId = userProvider.getCurrentUserId();
