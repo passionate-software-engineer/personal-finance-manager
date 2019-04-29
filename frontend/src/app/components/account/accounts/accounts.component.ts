@@ -118,7 +118,7 @@ export class AccountsComponent implements OnInit {
   }
 
   makeAccountActive(account: Account) {
-    this.accountService.archiveAccount(account).subscribe(() => {
+    this.accountService.makeAccountActive(account).subscribe(() => {
         this.alertService.success(
           this.translate.instant('message.accountMadeActive')
         );

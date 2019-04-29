@@ -47,4 +47,8 @@ export class AccountService extends ServiceBase {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsArchived'), '', this.contentType);
   }
 
+  makeAccountActive(account: Account): Observable<any> {
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsActive'), '', this.contentType);
+  }
+
 }
