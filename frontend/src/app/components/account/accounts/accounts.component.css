@@ -27,3 +27,8 @@ table tr:last-child {
 .tdBoxCurrencies {
   width: 25%;
 }
+
+.showArchivedCheckbox {
+  text-align: right;
+  margin-right: 3%;
+}
