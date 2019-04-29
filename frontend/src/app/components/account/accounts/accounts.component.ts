@@ -20,7 +20,7 @@ export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
   accounts: Account[] = [];
   addingMode = false;
-  archivedCheckboxState: boolean = false;
+  showArchivedCheckboxState: boolean = false;
   newAccount: Account = new Account();
   sortableAccountsTable: Sortable = new Sortable('name');
   sortableCurrencyTable: Sortable = new Sortable('name');
