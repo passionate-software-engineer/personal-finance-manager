@@ -112,9 +112,7 @@
       <select multiple class="form-control" [(ngModel)]="selectedFilter.accounts"
               (ngModelChange)="filterTransactions()">
         <option *ngFor="let account of accounts" [ngValue]="account">
-          <ng-container *ngIf="!account.archived">
-            {{account.name}}
-          </ng-container>
+          {{account.name}}
         </option>
       </select>
     </td>
@@ -160,9 +158,11 @@
       <select id="newTransactionAccountSelects"
               *ngFor="let entry of newTransaction.accountPriceEntries" class="form-control"
               [(ngModel)]="entry.account">
-        <option *ngFor="let account of accounts" [ngValue]="account">
-          {{account.name}}
-        </option>
+        <ng-container *ngFor="let account of accounts">
+          <option *ngIf="!account.archived" [ngValue]="account">
+            {{account.name}}
+          </option>
+        </ng-container>
       </select>
     </td>
 

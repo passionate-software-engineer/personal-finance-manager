@@ -21,6 +21,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   transactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
+  inActiveAccounts: Account[] = [];
+  activeAccounts: Account[] = [];
   addingMode = false;
   newTransaction = new Transaction();
   selectedFilter = new TransactionFilter();
@@ -53,18 +55,26 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     // TODO do in parallel with forkJoin (not working for some reason)
     this.categoryService.getCategories()
-        .subscribe(categories => {
-          this.categories = categories;
-          this.categories.sort((categories1, categories2) => (categories1.name.toLowerCase() > categories2.name.toLowerCase() ? 1 : -1));
+    .subscribe(categories => {
+      this.categories = categories;
+      this.categories.sort((categories1, categories2) => (categories1.name.toLowerCase() > categories2.name.toLowerCase() ? 1 : -1));
 
-          this.accountService.getAccounts()
-              .subscribe(accounts => {
-                this.accounts = accounts;
-                this.accounts.sort((accounts1, accounts2) => (accounts1.name.toLowerCase() > accounts2.name.toLowerCase() ? 1 : -1));
-                this.getTransactions();
-                this.getFilters();
-              });
-        });
+      this.accountService.getAccounts()
+      .subscribe(accounts => {
+        this.accounts = accounts;
+        this.accounts.sort((accounts1, accounts2) => (accounts1.name.toLowerCase() > accounts2.name.toLowerCase() ? 1 : -1));
+        this.getTransactions();
+        this.getFilters();
+      });
+    });
+
+    for (const account of this.accounts) {
+      if (!account.archived) {
+        this.inActiveAccounts.push(account);
+      } else {
+        this.activeAccounts.push(account)
+      }
+    }
 
     // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
     this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
@@ -74,53 +84,53 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   getTransactions(): void {
     this.transactionService.getTransactions()
-        .subscribe(transactions => {
-          this.transactions = [];
-          this.allTransactions = [];
-          for (const transactionResponse of transactions) {
-            const transaction = new Transaction();
-            transaction.date = transactionResponse.date;
-            transaction.id = transactionResponse.id;
-            transaction.description = transactionResponse.description;
+    .subscribe(transactions => {
+      this.transactions = [];
+      this.allTransactions = [];
+      for (const transactionResponse of transactions) {
+        const transaction = new Transaction();
+        transaction.date = transactionResponse.date;
+        transaction.id = transactionResponse.id;
+        transaction.description = transactionResponse.description;
 
-            for (const entry of transactionResponse.accountPriceEntries) {
-              const accountPriceEntry = new AccountPriceEntry();
-              accountPriceEntry.price = +entry.price; // + added to convert to number
+        for (const entry of transactionResponse.accountPriceEntries) {
+          const accountPriceEntry = new AccountPriceEntry();
+          accountPriceEntry.price = +entry.price; // + added to convert to number
 
-              // need to have same object to allow dropdown to work correctly
-              for (const account of this.accounts) { // TODO use hashmap
-                if (account.id === entry.accountId) {
-                  accountPriceEntry.account = account;
-                }
-              }
-
-              accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
-              transaction.accountPriceEntries.push(accountPriceEntry);
+          // need to have same object to allow dropdown to work correctly
+          for (const account of this.accounts) { // TODO use hashmap
+            if (account.id === entry.accountId) {
+              accountPriceEntry.account = account;
             }
-
-            for (const category of this.categories) {
-              if (category.id === transactionResponse.categoryId) {
-                transaction.category = category;
-              }
-            }
-
-            this.transactions.push(transaction);
-            this.allTransactions.push(transaction);
           }
 
-          super.filterTransactions();
-        });
+          accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+
+          transaction.accountPriceEntries.push(accountPriceEntry);
+        }
+
+        for (const category of this.categories) {
+          if (category.id === transactionResponse.categoryId) {
+            transaction.category = category;
+          }
+        }
+
+        this.transactions.push(transaction);
+        this.allTransactions.push(transaction);
+      }
+
+      super.filterTransactions();
+    });
   }
 
   deleteTransaction(transactionToDelete) {
     if (confirm(this.translate.instant('message.wantDeleteTransaction'))) {
       this.transactionService.deleteTransaction(transactionToDelete.id)
-          .subscribe(() => {
-            this.alertService.success(this.translate.instant('message.transactionDeleted'));
-            this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
-            this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
-          });
+      .subscribe(() => {
+        this.alertService.success(this.translate.instant('message.transactionDeleted'));
+        this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
+        this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
+      });
     }
   }
 
@@ -130,41 +140,41 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
 
     this.transactionService.editTransaction(transaction.editedTransaction)
-        .subscribe(() => {
-          this.alertService.success(this.translate.instant('message.transactionEdited'));
-          this.transactionService.getTransaction(transaction.id)
-              .subscribe(updatedTransaction => {
-                const returnedTransaction = new Transaction(); // TODO dupliated code
-                returnedTransaction.date = updatedTransaction.date;
-                returnedTransaction.id = updatedTransaction.id;
-                returnedTransaction.description = updatedTransaction.description;
+    .subscribe(() => {
+      this.alertService.success(this.translate.instant('message.transactionEdited'));
+      this.transactionService.getTransaction(transaction.id)
+      .subscribe(updatedTransaction => {
+        const returnedTransaction = new Transaction(); // TODO dupliated code
+        returnedTransaction.date = updatedTransaction.date;
+        returnedTransaction.id = updatedTransaction.id;
+        returnedTransaction.description = updatedTransaction.description;
 
-                for (const entry of updatedTransaction.accountPriceEntries) {
-                  const accountPriceEntry = new AccountPriceEntry();
-                  accountPriceEntry.price = +entry.price; // + added to convert to number
+        for (const entry of updatedTransaction.accountPriceEntries) {
+          const accountPriceEntry = new AccountPriceEntry();
+          accountPriceEntry.price = +entry.price; // + added to convert to number
 
-                  // need to have same object to allow dropdown to work correctly
-                  for (const account of this.accounts) { // TODO use hashmap
-                    if (account.id === entry.accountId) {
-                      accountPriceEntry.account = account;
-                    }
-                  }
+          // need to have same object to allow dropdown to work correctly
+          for (const account of this.accounts) { // TODO use hashmap
+            if (account.id === entry.accountId) {
+              accountPriceEntry.account = account;
+            }
+          }
 
-                  accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+          accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
 
-                  returnedTransaction.accountPriceEntries.push(accountPriceEntry);
-                }
+          returnedTransaction.accountPriceEntries.push(accountPriceEntry);
+        }
 
-                for (const category of this.categories) {
-                  if (category.id === updatedTransaction.categoryId) {
-                    returnedTransaction.category = category;
-                  }
-                }
+        for (const category of this.categories) {
+          if (category.id === updatedTransaction.categoryId) {
+            returnedTransaction.category = category;
+          }
+        }
 
 
-                Object.assign(transaction, returnedTransaction);
-              });
-        });
+        Object.assign(transaction, returnedTransaction);
+      });
+    });
   }
 
   addTransaction() {
@@ -173,49 +183,49 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
 
     this.transactionService.addTransaction(this.newTransaction)
-        .subscribe(id => {
-          this.alertService.success(this.translate.instant('message.transactionAdded'));
-          this.transactionService.getTransaction(id)
-              .subscribe(createdTransaction => {
+    .subscribe(id => {
+      this.alertService.success(this.translate.instant('message.transactionAdded'));
+      this.transactionService.getTransaction(id)
+      .subscribe(createdTransaction => {
 
-                // TODO duplicate with above method
-                const returnedTransaction = new Transaction();
-                returnedTransaction.date = createdTransaction.date;
-                returnedTransaction.id = createdTransaction.id;
-                returnedTransaction.description = createdTransaction.description;
+        // TODO duplicate with above method
+        const returnedTransaction = new Transaction();
+        returnedTransaction.date = createdTransaction.date;
+        returnedTransaction.id = createdTransaction.id;
+        returnedTransaction.description = createdTransaction.description;
 
-                for (const entry of createdTransaction.accountPriceEntries) {
-                  const accountPriceEntry = new AccountPriceEntry();
-                  accountPriceEntry.price = +entry.price; // + added to convert to number
+        for (const entry of createdTransaction.accountPriceEntries) {
+          const accountPriceEntry = new AccountPriceEntry();
+          accountPriceEntry.price = +entry.price; // + added to convert to number
 
-                  // need to have same object to allow dropdown to work correctly
-                  for (const account of this.accounts) { // TODO use hashmap
-                    if (account.id === entry.accountId) {
-                      accountPriceEntry.account = account;
-                    }
-                  }
+          // need to have same object to allow dropdown to work correctly
+          for (const account of this.accounts) { // TODO use hashmap
+            if (account.id === entry.accountId) {
+              accountPriceEntry.account = account;
+            }
+          }
 
-                  accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+          accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
 
-                  returnedTransaction.accountPriceEntries.push(accountPriceEntry);
-                }
+          returnedTransaction.accountPriceEntries.push(accountPriceEntry);
+        }
 
-                for (const category of this.categories) {
-                  if (category.id === createdTransaction.categoryId) {
-                    returnedTransaction.category = category;
-                  }
-                }
+        for (const category of this.categories) {
+          if (category.id === createdTransaction.categoryId) {
+            returnedTransaction.category = category;
+          }
+        }
 
-                this.transactions.push(returnedTransaction);
-                this.allTransactions.push(returnedTransaction);
-                this.addingMode = false;
-                this.newTransaction = new Transaction();
-                // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
-                this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.date = new Date();
-              });
-        });
+        this.transactions.push(returnedTransaction);
+        this.allTransactions.push(returnedTransaction);
+        this.addingMode = false;
+        this.newTransaction = new Transaction();
+        // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
+        this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+        this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+        this.newTransaction.date = new Date();
+      });
+    });
   }
 
   private validateTransaction(transaction: Transaction): boolean {
