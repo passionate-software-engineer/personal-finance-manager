@@ -62,7 +62,6 @@ export class AccountsComponent implements OnInit {
           this.getAccounts();
         });
 
-
   }
 
   deleteAccount(account) {
@@ -108,23 +107,13 @@ export class AccountsComponent implements OnInit {
 
   // TODO lukasz two methods below - code duplication
   archiveAccount(account: Account) {
-    this.accountService.archiveAccount(account).subscribe(() => {
-        this.alertService.success(
-          this.translate.instant('message.accountArchived')
-        );
-        account.archived = true;
-      }
-    );
+    const key = 'message.accountArchived';
+    this.setAccountStatus(account, key, false);
   }
 
   makeAccountActive(account: Account) {
-    this.accountService.makeAccountActive(account).subscribe(() => {
-        this.alertService.success(
-          this.translate.instant('message.accountMadeActive')
-        );
-        account.archived = false;
-      }
-    );
+    const key = 'message.accountMadeActive';
+    this.setAccountStatus(account, key, true);
   }
 
   onEditAccount(account: Account) {
@@ -221,7 +210,6 @@ export class AccountsComponent implements OnInit {
       this.alertService.error(this.translate.instant('message.balanceTooLow'));
       return false;
     }
-
     return true;
   }
 
@@ -229,7 +217,6 @@ export class AccountsComponent implements OnInit {
     if (!this.validateAccount(accountToValidate)) {
       return false;
     }
-
     if (
       this.accounts.filter(
         account =>
@@ -252,7 +239,6 @@ export class AccountsComponent implements OnInit {
       sum +=
         +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
     }
-
     return sum;
   }
 
@@ -265,5 +251,15 @@ export class AccountsComponent implements OnInit {
       }
     }
     return sum;
+  }
+
+  private setAccountStatus(account: Account, key: string, setActive: boolean) {
+    this.accountService.makeAccountActive(account).subscribe(() => {
+        this.alertService.success(
+          this.translate.instant(key)
+        );
+        account.archived = setActive;
+      }
+    );
   }
 }
