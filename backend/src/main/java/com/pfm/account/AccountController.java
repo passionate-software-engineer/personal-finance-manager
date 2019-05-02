@@ -139,35 +139,13 @@ public class AccountController implements AccountApi {
   public ResponseEntity<?> markAccountAsArchived(long accountId) {
     long userId = userProvider.getCurrentUserId();
 
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
-      log.info("No account with id {} was found, not able to update", accountId);
-      return ResponseEntity.notFound().build();
-    }
-
-    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
-    account.setArchived(true);
-
-    accountService.saveAccount(userId, account);
-
-    // TODO add history entry on setting account as archived
-
-    return ResponseEntity.ok().build();
+    return getResponseEntity(accountId, userId, true);
   }
 
   @Override
   public ResponseEntity<?> markAccountAsActive(long accountId) {
     long userId = userProvider.getCurrentUserId();
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
-      log.info("No account with id {} was found, not able to update", accountId);
-      return ResponseEntity.notFound().build();
-    }
-
-    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
-    account.setArchived(false);
-
-    accountService.saveAccount(userId, account);
-
-    return ResponseEntity.ok().build();
+    return getResponseEntity(accountId, userId, false);
   }
 
   @Override
@@ -215,5 +193,19 @@ public class AccountController implements AccountApi {
   private ResponseEntity<?> returnBadRequestCurrencyDoesNotExist(@RequestBody AccountRequest accountRequest) {
     return ResponseEntity.badRequest()
         .body(Collections.singletonList(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), accountRequest.getCurrencyId())));
+  }
+
+  private ResponseEntity<?> getResponseEntity(long accountId, long userId, boolean archived) {
+    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+      log.info("No account with id {} was found, not able to update", accountId);
+      return ResponseEntity.notFound().build();
+    }
+
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    account.setArchived(archived);
+
+    accountService.saveAccount(userId, account);
+
+    return ResponseEntity.ok().build();
   }
 }
