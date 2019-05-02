@@ -20,7 +20,7 @@ export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
   accounts: Account[] = [];
   addingMode = false;
-  showArchivedCheckboxState: boolean = false;
+  showArchivedCheckboxState = false;
   newAccount: Account = new Account();
   sortableAccountsTable: Sortable = new Sortable('name');
   sortableCurrencyTable: Sortable = new Sortable('name');
@@ -106,7 +106,7 @@ export class AccountsComponent implements OnInit {
         );
   }
 
-  //TODO lukasz two methods below - code duplication
+  // TODO lukasz two methods below - code duplication
   archiveAccount(account: Account) {
     this.accountService.archiveAccount(account).subscribe(() => {
         this.alertService.success(

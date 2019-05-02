@@ -9,6 +9,6 @@ export class Account {
   lastVerificationDate: Date;
   editedAccount: Account;
   balancePLN = 0;
-  archived: boolean = false;
+  archived = false;
 }
 

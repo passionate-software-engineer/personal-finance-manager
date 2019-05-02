@@ -72,7 +72,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       if (!account.archived) {
         this.inActiveAccounts.push(account);
       } else {
-        this.activeAccounts.push(account)
+        this.activeAccounts.push(account);
       }
     }
 
