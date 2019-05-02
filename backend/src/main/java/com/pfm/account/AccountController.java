@@ -202,6 +202,7 @@ public class AccountController implements AccountApi {
     }
 
     Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
+//    log.info("Attempting to set account {} with id {} ", archived ? "active" : "archived", accountId);
     account.setArchived(archived);
 
     accountService.saveAccount(userId, account);

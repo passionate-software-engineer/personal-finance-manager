@@ -254,11 +254,11 @@ export class AccountsComponent implements OnInit {
   }
 
   private setAccountStatus(account: Account, key: string, setActive: boolean) {
-    this.accountService.makeAccountActive(account).subscribe(() => {
+    this.accountService.setAccountStatus(account, setActive).subscribe(() => {
         this.alertService.success(
           this.translate.instant(key)
         );
-        account.archived = setActive;
+      account.archived = !setActive;
       }
     );
   }
