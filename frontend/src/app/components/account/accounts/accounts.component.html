@@ -53,7 +53,7 @@
       <span [hidden]="!sortableAccountsTable.reverse">▼</span>
       <span [hidden]="sortableAccountsTable.reverse">▲</span>
     </th>
-    <!--   below th may be redundant -->
+
     <th></th>
   </tr>
   </thead>
@@ -170,7 +170,7 @@
                 {{ "button.edit" | translate }}
               </button>
             </li>
-            <li>
+            <li *ngIf="!account.archived">
               <button id="UpdateLastVerificationDateBtn" class="btn btn-info btn-block"
                       (click)="confirmAccountBalance(account)">
                 {{ "button.updateLastVerificationDate" | translate }}
