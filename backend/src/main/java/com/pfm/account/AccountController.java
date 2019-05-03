@@ -145,6 +145,7 @@ public class AccountController implements AccountApi {
   @Override
   public ResponseEntity<?> markAccountAsActive(long accountId) {
     long userId = userProvider.getCurrentUserId();
+
     return getResponseEntity(accountId, userId, false);
   }
 

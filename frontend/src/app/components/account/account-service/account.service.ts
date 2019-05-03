@@ -43,20 +43,9 @@ export class AccountService extends ServiceBase {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAccountAsVerifiedToday'), '', this.contentType);
   }
 
-  archiveAccount(account: Account): Observable<any> {
-    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsArchived'), '', this.contentType);
-  }
-
-  makeAccountActive(account: Account): Observable<any> {
-    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsActive'), '', this.contentType);
-  }
-
-  setAccountStatus(account: Account, setActive: boolean): Observable<any> {
-    if (setActive) {
-      return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsActive'), '', this.contentType);
-    } else {
-      return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAsArchived'), '', this.contentType);
-    }
+  setAccountStatus(account: Account, toBeActive: boolean): Observable<any> {
+    const pathEnd = toBeActive ? '/markAsActive' : '/markAsArchived';
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + pathEnd), '', this.contentType);
   }
 
 }

@@ -107,13 +107,13 @@ export class AccountsComponent implements OnInit {
 
   // TODO lukasz two methods below - code duplication
   archiveAccount(account: Account) {
-    const key = 'message.accountArchived';
-    this.setAccountStatus(account, key, false);
+    const translationKey = 'message.accountArchived';
+    this.setAccountStatus(account, translationKey, false);
   }
 
   makeAccountActive(account: Account) {
-    const key = 'message.accountMadeActive';
-    this.setAccountStatus(account, key, true);
+    const translationKey = 'message.accountMadeActive';
+    this.setAccountStatus(account, translationKey, true);
   }
 
   onEditAccount(account: Account) {
@@ -253,12 +253,12 @@ export class AccountsComponent implements OnInit {
     return sum;
   }
 
-  private setAccountStatus(account: Account, key: string, setActive: boolean) {
-    this.accountService.setAccountStatus(account, setActive).subscribe(() => {
+  private setAccountStatus(account: Account, translationKey: string, toBeActive: boolean) {
+    this.accountService.setAccountStatus(account, toBeActive).subscribe(() => {
         this.alertService.success(
-          this.translate.instant(key)
+          this.translate.instant(translationKey)
         );
-      account.archived = !setActive;
+      account.archived = !toBeActive;
       }
     );
   }
