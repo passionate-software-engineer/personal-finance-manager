@@ -202,11 +202,13 @@ public class AccountController implements AccountApi {
     }
 
     Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
-//    log.info("Attempting to set account {} with id {} ", archived ? "active" : "archived", accountId);
+    if (archived) {
+      log.info("Attempting to set account status as {} with id {} ", "archived", accountId);
+    } else {
+      log.info("Attempting to set account status as {} with id {} ", "active", accountId);
+    }
     account.setArchived(archived);
-
     accountService.saveAccount(userId, account);
-
     return ResponseEntity.ok().build();
   }
 }
