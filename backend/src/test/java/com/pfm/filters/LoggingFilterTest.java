@@ -107,14 +107,14 @@ public class LoggingFilterTest {
 
   @BeforeEach
   public void prepareLogger() {
-    Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
+    final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.addAppender(mockAppender);
     logger.setLevel(Level.DEBUG);
   }
 
   @AfterEach
   public void tearDown() {
-    Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
+    final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.detachAppender(mockAppender);
   }
 
@@ -127,7 +127,7 @@ public class LoggingFilterTest {
 
     //then
     verify(mockAppender, times(4)).doAppend(captorLoggingEvent.capture());
-    List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+    final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
     assertThat(resultLog, hasSize(4));
 
@@ -158,7 +158,7 @@ public class LoggingFilterTest {
 
     //then
     verify(mockAppender, times(6)).doAppend(captorLoggingEvent.capture());
-    List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+    final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
     assertThat(resultLog, hasSize(6));
 
@@ -199,7 +199,7 @@ public class LoggingFilterTest {
 
     //then
     verify(mockAppender, times(6)).doAppend(captorLoggingEvent.capture());
-    List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+    final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
     assertThat(resultLog, hasSize(6));
 
@@ -239,7 +239,7 @@ public class LoggingFilterTest {
 
     //then
     verify(mockAppender, times(7)).doAppend(captorLoggingEvent.capture());
-    List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+    final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
     assertThat(resultLog, hasSize(7));
 
@@ -284,7 +284,7 @@ public class LoggingFilterTest {
 
     //then
     verify(mockAppender, times(7)).doAppend(captorLoggingEvent.capture());
-    List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
+    final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
     assertThat(resultLog, hasSize(7));
 
@@ -338,7 +338,7 @@ public class LoggingFilterTest {
   @Test
   public void shouldNotLogAnythingIfErrorLevelSetForLogger() throws ServletException, IOException {
     //given
-    Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
+    final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.setLevel(Level.ERROR);
 
     //when
