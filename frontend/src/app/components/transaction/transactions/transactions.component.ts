@@ -21,8 +21,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   transactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
-  inActiveAccounts: Account[] = [];
-  activeAccounts: Account[] = [];
   addingMode = false;
   newTransaction = new Transaction();
   selectedFilter = new TransactionFilter();
@@ -67,14 +65,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         this.getFilters();
       });
     });
-
-    for (const account of this.accounts) {
-      if (!account.archived) {
-        this.inActiveAccounts.push(account);
-      } else {
-        this.activeAccounts.push(account);
-      }
-    }
 
     // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
     this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
@@ -317,6 +307,5 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       return null;
     }
   }
-
 
 }

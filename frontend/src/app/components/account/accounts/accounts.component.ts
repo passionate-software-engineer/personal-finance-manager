@@ -105,15 +105,12 @@ export class AccountsComponent implements OnInit {
         );
   }
 
-  // TODO lukasz two methods below - code duplication
   archiveAccount(account: Account) {
-    const translationKey = 'message.accountArchived';
-    this.setAccountStatus(account, translationKey, false);
+    this.setAccountStatus(account, 'message.accountArchived', false);
   }
 
   makeAccountActive(account: Account) {
-    const translationKey = 'message.accountMadeActive';
-    this.setAccountStatus(account, translationKey, true);
+    this.setAccountStatus(account, 'message.accountMadeActive', true);
   }
 
   onEditAccount(account: Account) {
