@@ -1,2 +1,2 @@
 ALTER TABLE account
-  ADD archived BOOLEAN;
+    ADD archived BOOLEAN;
