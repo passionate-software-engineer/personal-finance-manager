@@ -119,13 +119,13 @@ public class AccountController implements AccountApi {
   @Override
   public ResponseEntity<?> markAccountAsVerifiedToday(long accountId) {
     long userId = userProvider.getCurrentUserId();
-    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
 
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+    if (!accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
 
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
     account.setLastVerificationDate(LocalDate.now());
 
     accountService.saveAccount(userId, account);
