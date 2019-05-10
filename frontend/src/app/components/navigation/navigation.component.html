@@ -1,57 +1,114 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a id="PfmLink" class="navbar-brand" routerLink="/" routerLinkActive="active">Personal Finance Manager</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-          aria-expanded="false" aria-label="Toggle navigation">
+  <a
+    id="PfmLink"
+    class="navbar-brand"
+    routerLink="/"
+    routerLinkActive="active">Personal Finance Manager
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div
+    class="collapse navbar-collapse"
+    id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a id="TransactionLink" class="nav-link" routerLink="/transactions" routerLinkActive="active">{{'navigation.transactions' | translate}}
+        <a
+          id="TransactionLink"
+          class="nav-link"
+          routerLink="/transactions"
+          routerLinkActive="active">{{'navigation.transactions' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a id="CategoriesLink" class="nav-link" routerLink="/categories" routerLinkActive="active">{{'navigation.categories' | translate}}
+        <a
+          id="CategoriesLink"
+          class="nav-link"
+          routerLink="/categories"
+          routerLinkActive="active">{{'navigation.categories' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a id="AccountsLink" class="nav-link" routerLink="/accounts" routerLinkActive="active">{{'navigation.accounts' | translate}}
+        <a
+          id="AccountsLink"
+          class="nav-link"
+          routerLink="/accounts"
+          routerLinkActive="active">{{'navigation.accounts' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a id="HistoryLink" class="nav-link" routerLink="/history" routerLinkActive="active">{{'navigation.history' | translate}}
+        <a
+          id="HistoryLink"
+          class="nav-link"
+          routerLink="/history"
+          routerLinkActive="active">{{'navigation.history' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a class="nav-link" routerLink="/export" routerLinkActive="active">{{'navigation.exportImport' | translate}}
+        <a
+          class="nav-link"
+          routerLink="/export"
+          routerLinkActive="active">{{'navigation.exportImport' | translate}}
         </a>
       </li>
     </ul>
     <ul [routerLinkActive]="['active']" class="navbar-nav navbar-right">
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
-        <a id="RegisterLink" class="nav-link" routerLink="/register" routerLinkActive="active">
+        <a
+          id="RegisterLink"
+          class="nav-link"
+          routerLink="/register"
+          routerLinkActive="active">
           {{'navigation.register' | translate}}
         </a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item" *ngIf="!isUserLoggedIn()">
-        <a id="LoginLink" class="nav-link" routerLink="/login" routerLinkActive="active">
+        <a
+          id="LoginLink"
+          class="nav-link"
+          routerLink="/login"
+          routerLinkActive="active">
           {{'navigation.login' | translate}}
         </a>
       </li>
-      <li id="NavigationBarLoggedInUser" class="nav-item dropdown" *ngIf="isUserLoggedIn()">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false">
+      <li
+        id="NavigationBarLoggedInUser"
+        class="nav-item dropdown" *ngIf="isUserLoggedIn()">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false">
           {{currentUser.firstName}} {{currentUser.lastName}}
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a id="LogoutLink" class="dropdown-item" routerLink="/login" (click)="logout()">
+        <div
+          class="dropdown-menu"
+          aria-labelledby="navbarDropdown">
+          <a
+            id="LogoutLink"
+            class="dropdown-item"
+            routerLink="/login" (click)="logout()">
             {{'navigation.logout' | translate}}
           </a>
         </div>
       </li>
     </ul>
-    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN</button>
-    <button class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL</button>
+    <button
+      class="btn btn-secondary btn-sm" (click)="switchLanguage('en')">EN
+    </button>
+    <button
+      class="btn btn-secondary btn-sm" (click)="switchLanguage('pl')">PL
+    </button>
   </div>
 </nav>

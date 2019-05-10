@@ -36,28 +36,28 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.getCategories()
-      .subscribe(categories => {
-        this.categories = categories;
+        .subscribe(categories => {
+          this.categories = categories;
 
-        this.accountService.getAccounts()
-          .subscribe(accounts => {
-            this.accounts = accounts;
-            this.transactionService.getTransactions()
-              .subscribe(transactions => {
-                this.transactions = transactions;
-                for (let i = 0; i < this.categories.length; i++) {
-                  this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
-                  this.categories[i].sumOfAllTransactionsInMonth = [];
-                  this.categories[i].averageOfAllTransactions = this.categories[i].sumOfAllTransactions / this.last12Months.length;
+          this.accountService.getAccounts()
+              .subscribe(accounts => {
+                this.accounts = accounts;
+                this.transactionService.getTransactions()
+                    .subscribe(transactions => {
+                      this.transactions = transactions;
+                      for (let i = 0; i < this.categories.length; i++) {
+                        this.categories[i].sumOfAllTransactions = this.getAllTransactionsBalance(this.categories[i].id);
+                        this.categories[i].sumOfAllTransactionsInMonth = [];
+                        this.categories[i].averageOfAllTransactions = this.categories[i].sumOfAllTransactions / this.last12Months.length;
 
-                  for (let j = 0; j < this.last12Months.length; j++) {
-                    this.categories[i].sumOfAllTransactionsInMonth.push(
-                      this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
-                  }
-                }
+                        for (let j = 0; j < this.last12Months.length; j++) {
+                          this.categories[i].sumOfAllTransactionsInMonth.push(
+                            this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
+                        }
+                      }
+                    });
               });
-          });
-      });
+        });
   }
 
   calculateLast12Months() {
@@ -79,13 +79,13 @@ export class CategoriesComponent implements OnInit {
   deleteCategory(category) {
     if (confirm(this.translate.instant('message.wantDeleteCategory'))) {
       this.categoryService.deleteCategory(category.id)
-        .subscribe(() => {
-          this.alertService.success(this.translate.instant('message.categoryDeleted'));
-          const index: number = this.categories.indexOf(category);
-          if (index !== -1) {
-            this.categories.splice(index, 1);
-          }
-        });
+          .subscribe(() => {
+            this.alertService.success(this.translate.instant('message.categoryDeleted'));
+            const index: number = this.categories.indexOf(category);
+            if (index !== -1) {
+              this.categories.splice(index, 1);
+            }
+          });
     }
   }
 
@@ -113,12 +113,12 @@ export class CategoriesComponent implements OnInit {
     }
 
     this.categoryService.editCategory(category.editedCategory)
-      .subscribe(() => {
-        this.alertService.success(this.translate.instant('message.categoryEdited'));
-        Object.assign(category, category.editedCategory);
-        category.editedCategory = new Category();
-        // TODO get category from server
-      });
+        .subscribe(() => {
+          this.alertService.success(this.translate.instant('message.categoryEdited'));
+          Object.assign(category, category.editedCategory);
+          category.editedCategory = new Category();
+          // TODO get category from server
+        });
   }
 
   onAddCategory() {
@@ -127,15 +127,15 @@ export class CategoriesComponent implements OnInit {
     }
 
     this.categoryService.addCategory(this.newCategory)
-      .subscribe(id => {
-        this.newCategory.id = id;
-        this.categories.push(this.newCategory);
-        this.newCategory = new Category();
-        this.alertService.success(this.translate.instant('message.categoryAdded'));
-        this.addingMode = false;
+        .subscribe(id => {
+          this.newCategory.id = id;
+          this.categories.push(this.newCategory);
+          this.newCategory = new Category();
+          this.alertService.success(this.translate.instant('message.categoryAdded'));
+          this.addingMode = false;
 
-        // TODO get category from server
-      });
+          // TODO get category from server
+        });
   }
 
   onRefreshCategories() {

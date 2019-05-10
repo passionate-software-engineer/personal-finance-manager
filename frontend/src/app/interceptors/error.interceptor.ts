@@ -20,35 +20,36 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return next.handle(request).pipe(catchError(err => {
+    return next.handle(request)
+               .pipe(catchError(err => {
 
-      // auto logout if 401 response returned from api
-      if (err.status === 401) {
-        if (this.authenticationService.isUserLoggedIn()) {
-          this.authenticationService.logout();
-        }
-        this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-        this.alertService.error(this.translate.instant('message.loggedOut'));
-        return throwError('');
-      }
+                 // auto logout if 401 response returned from api
+                 if (err.status === 401) {
+                   if (this.authenticationService.isUserLoggedIn()) {
+                     this.authenticationService.logout();
+                   }
+                   this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+                   this.alertService.error(this.translate.instant('message.loggedOut'));
+                   return throwError('');
+                 }
 
-      if (err.status === 0) {
-        if (this.authenticationService.isUserLoggedIn()) {
-          this.authenticationService.logout();
-        }
-        this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-        this.alertService.error(this.translate.instant('message.noConnectivity'));
-        return throwError('');
-      }
+                 if (err.status === 0) {
+                   if (this.authenticationService.isUserLoggedIn()) {
+                     this.authenticationService.logout();
+                   }
+                   this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+                   this.alertService.error(this.translate.instant('message.noConnectivity'));
+                   return throwError('');
+                 }
 
-      if (err.status === 500) {
-        this.alertService.error(this.translate.instant('message.somethingWentWrong'));
-        return throwError('');
-      }
+                 if (err.status === 500) {
+                   this.alertService.error(this.translate.instant('message.somethingWentWrong'));
+                   return throwError('');
+                 }
 
-      this.alertService.error(err.error || this.translate.instant('message.internalSystemError'));
+                 this.alertService.error(err.error || this.translate.instant('message.internalSystemError'));
 
-      return throwError('');
-    }));
+                 return throwError('');
+               }));
   }
 }

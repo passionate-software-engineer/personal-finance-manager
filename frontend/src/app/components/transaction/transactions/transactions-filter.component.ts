@@ -39,13 +39,13 @@ export class FiltersComponentBase extends Sortable {
 
   getFilters(): void {
     this.filterService.getFilters()
-      .subscribe(filters => {
-        for (const filter of filters) {
-          const processedFilter = this.processFilter(filter);
-          this.filters.push(processedFilter);
-        }
-        this.setCurrentFilter();
-      });
+        .subscribe(filters => {
+          for (const filter of filters) {
+            const processedFilter = this.processFilter(filter);
+            this.filters.push(processedFilter);
+          }
+          this.setCurrentFilter();
+        });
   }
 
   addFilter() {
@@ -54,18 +54,18 @@ export class FiltersComponentBase extends Sortable {
     }
 
     this.filterService.addFilter(this.selectedFilter)
-      .subscribe(id => {
-        this.alertService.success(this.translate.instant('message.filterAdded'));
-        this.filterService.getFilter(id)
-          .subscribe(createdFilter => {
-            const processedFilter = this.processFilter(createdFilter);
-            this.filters.push(processedFilter);
-            this.sortFilters();
+        .subscribe(id => {
+          this.alertService.success(this.translate.instant('message.filterAdded'));
+          this.filterService.getFilter(id)
+              .subscribe(createdFilter => {
+                const processedFilter = this.processFilter(createdFilter);
+                this.filters.push(processedFilter);
+                this.sortFilters();
 
-            this.originalFilter = processedFilter;
-            this.onFilterChange();
-          });
-      });
+                this.originalFilter = processedFilter;
+                this.onFilterChange();
+              });
+        });
   }
 
   resetFilter() {
@@ -83,19 +83,19 @@ export class FiltersComponentBase extends Sortable {
     }
 
     this.filterService.updateFilter(this.selectedFilter)
-      .subscribe(() => {
-        this.alertService.success(this.translate.instant('message.filterUpdated'));
-        this.filterService.getFilter(this.selectedFilter.id)
-          .subscribe(createdFilter => {
-            const processedFilter = this.processFilter(createdFilter);
-            this.filters = this.filters.filter(filter => filter !== this.originalFilter);
-            this.filters.push(processedFilter);
-            this.sortFilters();
+        .subscribe(() => {
+          this.alertService.success(this.translate.instant('message.filterUpdated'));
+          this.filterService.getFilter(this.selectedFilter.id)
+              .subscribe(createdFilter => {
+                const processedFilter = this.processFilter(createdFilter);
+                this.filters = this.filters.filter(filter => filter !== this.originalFilter);
+                this.filters.push(processedFilter);
+                this.sortFilters();
 
-            this.originalFilter = processedFilter;
-            this.onFilterChange();
-          });
-      });
+                this.originalFilter = processedFilter;
+                this.onFilterChange();
+              });
+        });
   }
 
   deleteFilter() {
@@ -106,12 +106,12 @@ export class FiltersComponentBase extends Sortable {
 
     if (confirm(this.translate.instant('message.filterSureDelete') + this.originalFilter.name + '"?')) {
       this.filterService.deleteFilter(this.originalFilter.id)
-        .subscribe(() => {
-          this.alertService.success(this.translate.instant('message.filterDelete'));
-          this.filters = this.filters.filter(filter => filter !== this.originalFilter);
+          .subscribe(() => {
+            this.alertService.success(this.translate.instant('message.filterDelete'));
+            this.filters = this.filters.filter(filter => filter !== this.originalFilter);
 
-          this.setCurrentFilter();
-        });
+            this.setCurrentFilter();
+          });
     }
   }
 
@@ -211,37 +211,38 @@ export class FiltersComponentBase extends Sortable {
 
     if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !== '') {
       this.transactions = this.transactions
-        .filter(transaction => new Date(transaction.date).getTime() >= new Date(this.selectedFilter.dateFrom).getTime());
+                              .filter(transaction => new Date(transaction.date).getTime() >= new Date(this.selectedFilter.dateFrom).getTime());
     }
 
     if (this.selectedFilter.dateTo !== undefined && this.selectedFilter.dateTo !== null && this.selectedFilter.dateTo !== '') {
       this.transactions = this.transactions
-        .filter(transaction => new Date(transaction.date).getTime() <= new Date(this.selectedFilter.dateTo).getTime());
+                              .filter(transaction => new Date(transaction.date).getTime() <= new Date(this.selectedFilter.dateTo).getTime());
     }
 
     if (this.selectedFilter.description !== undefined && this.selectedFilter.description !== null) {
       this.transactions = this.transactions
-        .filter(transaction => transaction.description.toLowerCase().indexOf(this.selectedFilter.description.toLowerCase()) !== -1);
+                              .filter(transaction => transaction.description.toLowerCase()
+                                                                .indexOf(this.selectedFilter.description.toLowerCase()) !== -1);
     }
 
     if (this.selectedFilter.accounts !== undefined && this.selectedFilter.accounts.length > 0) {
       this.transactions = this.transactions
-        .filter(transaction => {
-            for (const accountPriceEntry of transaction.accountPriceEntries) {
-              if (this.selectedFilter.accounts.indexOf(accountPriceEntry.account) !== -1) {
-                return true;
-              }
-            }
-            return false;
-          }
-        )
+                              .filter(transaction => {
+                                  for (const accountPriceEntry of transaction.accountPriceEntries) {
+                                    if (this.selectedFilter.accounts.indexOf(accountPriceEntry.account) !== -1) {
+                                      return true;
+                                    }
+                                  }
+                                  return false;
+                                }
+                              )
       ;
     }
 
     if (this.selectedFilter.categories !== undefined && this.selectedFilter.categories.length > 0) {
       const allCategories = this.getAllChildCategoriesIncludingParent(this.selectedFilter.categories);
       this.transactions = this.transactions
-        .filter(transaction => allCategories.indexOf(transaction.category) !== -1);
+                              .filter(transaction => allCategories.indexOf(transaction.category) !== -1);
     }
   }
 

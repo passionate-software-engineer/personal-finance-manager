@@ -42,14 +42,14 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authenticationService.login(this.username(), this.password())
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.router.navigate([returnUrl]);
-        },
-        error => {
-          this.loading = false;
-        });
+        .pipe(first())
+        .subscribe(
+          data => {
+            this.router.navigate([returnUrl]);
+          },
+          error => {
+            this.loading = false;
+          });
   }
 
   private password() {
