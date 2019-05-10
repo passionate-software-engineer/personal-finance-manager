@@ -37,42 +37,45 @@ export class AccountsComponent implements OnInit {
   }
 
   getAccounts(): void {
-    this.accountService.getAccounts().subscribe(accounts => {
-      this.accounts = accounts;
-      for (let i = 0; i < this.accounts.length; i++) {
-        this.accounts[i].balancePLN = this.accounts[i].balance * this.accounts[i].currency.exchangeRate;
-        this.accounts[i].balance = +this.accounts[i].balance;
-      }
-      for (let i = 0; i < this.supportedCurrencies.length; i++) {
-        this.supportedCurrencies[i].allAccountsBalance = this.allAccountsBalanceCurrencies(this.supportedCurrencies[i].name);
-        this.supportedCurrencies[i].allAccountsBalancePLN =
-          this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
-      }
-    });
+    this.accountService.getAccounts()
+        .subscribe(accounts => {
+          this.accounts = accounts;
+          for (let i = 0; i < this.accounts.length; i++) {
+            this.accounts[i].balancePLN = this.accounts[i].balance * this.accounts[i].currency.exchangeRate;
+            this.accounts[i].balance = +this.accounts[i].balance;
+          }
+          for (let i = 0; i < this.supportedCurrencies.length; i++) {
+            this.supportedCurrencies[i].allAccountsBalance = this.allAccountsBalanceCurrencies(this.supportedCurrencies[i].name);
+            this.supportedCurrencies[i].allAccountsBalancePLN =
+              this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
+          }
+        });
   }
 
   getCurrencies(): void {
-    this.currencyService.getCurrencies().subscribe(currencies => {
-      this.supportedCurrencies = currencies;
-      this.newAccount.currency = this.supportedCurrencies[0];
+    this.currencyService.getCurrencies()
+        .subscribe(currencies => {
+          this.supportedCurrencies = currencies;
+          this.newAccount.currency = this.supportedCurrencies[0];
 
-      this.getAccounts();
-    });
+          this.getAccounts();
+        });
 
 
   }
 
   deleteAccount(account) {
     if (confirm(this.translate.instant('message.wantDeleteAccount'))) {
-      this.accountService.deleteAccount(account.id).subscribe(() => {
-        this.alertService.success(
-          this.translate.instant('message.accountDeleted')
-        );
-        const index: number = this.accounts.indexOf(account);
-        if (index !== -1) {
-          this.accounts.splice(index, 1);
-        }
-      });
+      this.accountService.deleteAccount(account.id)
+          .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountDeleted')
+            );
+            const index: number = this.accounts.indexOf(account);
+            if (index !== -1) {
+              this.accounts.splice(index, 1);
+            }
+          });
     }
   }
 
@@ -92,13 +95,14 @@ export class AccountsComponent implements OnInit {
   }
 
   confirmAccountBalance(account: Account) {
-    this.accountService.markAccountAsVerifiedToday(account).subscribe(() => {
-        this.alertService.success(
-          this.translate.instant('message.accountVerificationDateSetToToday')
+    this.accountService.markAccountAsVerifiedToday(account)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountVerificationDateSetToToday')
+            );
+            account.lastVerificationDate = new Date();
+          }
         );
-        account.lastVerificationDate = new Date();
-      }
-    );
   }
 
   onEditAccount(account: Account) {
@@ -112,13 +116,14 @@ export class AccountsComponent implements OnInit {
     editedAccount.currency = account.editedAccount.currency;
     editedAccount.balancePLN = editedAccount.balance * editedAccount.currency.exchangeRate;
 
-    this.accountService.editAccount(editedAccount).subscribe(() => {
-      this.alertService.success(
-        this.translate.instant('message.accountEdited')
-      );
-      Object.assign(account, editedAccount);
-      // TODO - get object from server
-    });
+    this.accountService.editAccount(editedAccount)
+        .subscribe(() => {
+          this.alertService.success(
+            this.translate.instant('message.accountEdited')
+          );
+          Object.assign(account, editedAccount);
+          // TODO - get object from server
+        });
   }
 
   onAddAccount() {
@@ -126,16 +131,17 @@ export class AccountsComponent implements OnInit {
       return;
     }
 
-    this.accountService.addAccount(this.newAccount).subscribe(id => {
-      this.alertService.success(this.translate.instant('message.accountAdded'));
-      this.newAccount.id = id;
-      this.newAccount.balancePLN = this.newAccount.balance * this.newAccount.currency.exchangeRate;
-      // TODO - get object from server
-      this.accounts.push(this.newAccount);
-      this.addingMode = false;
-      this.newAccount = new Account();
-      this.newAccount.currency = this.supportedCurrencies[0];
-    });
+    this.accountService.addAccount(this.newAccount)
+        .subscribe(id => {
+          this.alertService.success(this.translate.instant('message.accountAdded'));
+          this.newAccount.id = id;
+          this.newAccount.balancePLN = this.newAccount.balance * this.newAccount.currency.exchangeRate;
+          // TODO - get object from server
+          this.accounts.push(this.newAccount);
+          this.addingMode = false;
+          this.newAccount = new Account();
+          this.newAccount.currency = this.supportedCurrencies[0];
+        });
   }
 
   onRefreshAccounts() {

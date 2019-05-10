@@ -22,10 +22,10 @@ export class ImportExportComponent {
 
   callExportService(): void {
     this.importExportService.getExportContent()
-      .subscribe(exportContent => {
-        this.alertService.success(this.translate.instant('message.dataExportedSuccessfully'));
-        this.exportContent = JSON.stringify(exportContent, null, 2);
-      });
+        .subscribe(exportContent => {
+          this.alertService.success(this.translate.instant('message.dataExportedSuccessfully'));
+          this.exportContent = JSON.stringify(exportContent, null, 2);
+        });
   }
 
   callImportService(): void {
@@ -35,9 +35,9 @@ export class ImportExportComponent {
     }
 
     this.importExportService.importContent(this.exportContent)
-      .subscribe(() => {
-        this.alertService.success(this.translate.instant('message.dataImportedSuccessfully'));
-      });
+        .subscribe(() => {
+          this.alertService.success(this.translate.instant('message.dataImportedSuccessfully'));
+        });
   }
 
 }

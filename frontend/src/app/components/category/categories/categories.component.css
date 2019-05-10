@@ -1,13 +1,13 @@
-th, td{
+th, td {
   width: 25%;
 }
 
 #EditCategorySaveExitBtn,
-#NewCategorySaveExitBtn{
+#NewCategorySaveExitBtn {
   width: 100%;
 }
 
-.table-month{
+.table-month {
   max-width: 100%;
   table-layout: fixed;
 }

@@ -15,29 +15,30 @@ export class AlertsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.alertService.getAlert().subscribe((alert: Alert) => {
-      if (!alert) {
-        // clear alerts when an empty alert is received
-        this.alerts = [];
-        return;
-      }
-      if (alert.type === AlertType.Error) {
-        setTimeout(() => {
-          if (this.alerts && this.alerts.length > 0) {
-            this.alerts.shift();
+    this.alertService.getAlert()
+        .subscribe((alert: Alert) => {
+          if (!alert) {
+            // clear alerts when an empty alert is received
+            this.alerts = [];
+            return;
           }
-        }, 10000);
-      } else {
-        setTimeout(() => {
-          if (this.alerts && this.alerts.length > 0) {
-            this.alerts.shift();
+          if (alert.type === AlertType.Error) {
+            setTimeout(() => {
+              if (this.alerts && this.alerts.length > 0) {
+                this.alerts.shift();
+              }
+            }, 10000);
+          } else {
+            setTimeout(() => {
+              if (this.alerts && this.alerts.length > 0) {
+                this.alerts.shift();
+              }
+            }, 3000);
           }
-        }, 3000);
-      }
 
-      // add alert to array
-      this.alerts.push(alert);
-    });
+          // add alert to array
+          this.alerts.push(alert);
+        });
   }
 
   removeAlert(alert: Alert) {

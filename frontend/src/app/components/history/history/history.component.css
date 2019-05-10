@@ -1,41 +1,41 @@
 #tableHistory,
-#tableHistoryEntry{
+#tableHistoryEntry {
   width: 100%;
 }
 
-#tableHistoryEntry{
+#tableHistoryEntry {
   background-color: #ffffff;
 }
 
 #thHistoryDate,
 #thHistoryType,
-#thHistoryObject{
+#thHistoryObject {
   width: 20%;
 }
 
-#thHistoryEntry{
+#thHistoryEntry {
   width: 40%;
 }
 
-#tableHistoryEntry th{
+#tableHistoryEntry th {
   background-color: #5988b9;
   color: #ffffff;
 }
 
-#tableHistoryEntry table{
+#tableHistoryEntry table {
   width: 100%;
 }
 
-.tableHistoryEntryField{
+.tableHistoryEntryField {
   width: 0px;
 }
 
 .tableHistoryEntryOldValue,
-.tableHistoryEntryNewValue{
+.tableHistoryEntryNewValue {
   width: 38%;
   text-align: center;
 }
 
-.textcenter{
+.textcenter {
   text-align: center;
 }

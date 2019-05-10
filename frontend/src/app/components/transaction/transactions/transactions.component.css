@@ -1,5 +1,5 @@
 
-.buttons{
+.buttons {
   margin: 0 auto;
   margin-top: -20px;
   padding: 0;
@@ -11,7 +11,7 @@
 
 .buttons button,
 .buttons input,
-.buttons select{
+.buttons select {
   margin: 0 5px;
 }
 
@@ -24,10 +24,10 @@
   font-weight: bold;
 }
 
-.width15{
+.width15 {
   width: 15%;
 }
 
-.width20{
+.width20 {
   width: 20%;
 }

@@ -33,11 +33,13 @@ export class HealthCheckTask {
   private startHealthCheckTask(): void {
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(30 * 1000).subscribe(eventNumber => {
+      this.healthCheckTask = interval(30 * 1000)
+      .subscribe(eventNumber => {
 
         this.ngZone.run(() => {
           // no need to do anything - error handler will do the job
-          this.healthService.getHealthStatus().subscribe();
+          this.healthService.getHealthStatus()
+              .subscribe();
 
           const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
           if (tokenExpirationTime != null) {
@@ -66,17 +68,17 @@ export class HealthCheckTask {
     if (password != null) {
       const username = this.authenticationService.getLoggedInUser().username;
       this.authenticationService.login(username, password)
-        .subscribe(
-          data => {
-            const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
-            if (tokenExpirationTime != null) {
-              const expireTimeInMinutes = Math.round((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
-              alert('Your session was extended for next ' + expireTimeInMinutes + ' minutes, thank you.');
-            }
-          },
-          error => {
-            alert('Provided credentials were invalid, please try again on next prompt.');
-          });
+          .subscribe(
+            data => {
+              const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
+              if (tokenExpirationTime != null) {
+                const expireTimeInMinutes = Math.round((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
+                alert('Your session was extended for next ' + expireTimeInMinutes + ' minutes, thank you.');
+              }
+            },
+            error => {
+              alert('Provided credentials were invalid, please try again on next prompt.');
+            });
     }
   }
 

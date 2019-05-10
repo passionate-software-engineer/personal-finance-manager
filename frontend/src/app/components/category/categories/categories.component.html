@@ -1,7 +1,13 @@
-<button id="AddCategoryBtn" class="btn btn-success" type="button" (click)="addingMode = !addingMode">
+<button id="AddCategoryBtn"
+        class="btn btn-success"
+        type="button"
+        (click)="addingMode = !addingMode">
   {{'category.addCategory' | translate}}
 </button>
-<button id="RefreshCategoriesBtn" class="btn btn-primary" type="button" (click)="onRefreshCategories()">
+<button id="RefreshCategoriesBtn"
+        class="btn btn-primary"
+        type="button"
+        (click)="onRefreshCategories()">
   {{'button.refresh' | translate}}
 </button>
 
@@ -10,20 +16,24 @@
     <tr>
 
       <!--Name-->
-      <th id="NameHeader" [class.active]="sortableCategoriesTable.order === 'name'" (click)="sortableCategoriesTable.setOrder('name')">
+      <th id="NameHeader"
+          [class.active]="sortableCategoriesTable.order === 'name'"
+          (click)="sortableCategoriesTable.setOrder('name')">
         {{'category.name' | translate}}
         <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
         <span [hidden]="sortableCategoriesTable.reverse">▲</span>
       </th>
 
       <!--Parent Category-->
-      <th id="ParentCategoryHeader" [class.active]="sortableCategoriesTable.order === 'parentCategory.name'"
+      <th id="ParentCategoryHeader"
+          [class.active]="sortableCategoriesTable.order === 'parentCategory.name'"
           (click)="sortableCategoriesTable.setOrder('parentCategory.name')">
         {{'category.parentCategory' | translate}}
         <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
         <span [hidden]="sortableCategoriesTable.reverse">▲</span>
       </th>
-      <th id="SumHeader" [class.active]="sortableCategoriesTable.order === 'sumOfAllTransactions'"
+      <th id="SumHeader"
+          [class.active]="sortableCategoriesTable.order === 'sumOfAllTransactions'"
           (click)="sortableCategoriesTable.setOrder('sumOfAllTransactions')">
         {{'category.sum' | translate}}
         <span [hidden]="!sortableCategoriesTable.reverse">▼</span>
@@ -37,15 +47,22 @@
     <tr *ngIf="addingMode">
       <!--Name-->
       <td>
-        <input id="NewCategoryNameInput" class="form-control" type="text" [(ngModel)]="newCategory.name">
+        <input id="NewCategoryNameInput"
+               class="form-control"
+               type="text"
+               [(ngModel)]="newCategory.name">
       </td>
       <td>
         <div class="form-group">
-          <select id="NewParentCategorySelect" class="form-control" [(ngModel)]="newCategory.parentCategory" name="selectedParentCategory">
+          <select id="NewParentCategorySelect"
+                  class="form-control"
+                  [(ngModel)]="newCategory.parentCategory"
+                  name="selectedParentCategory">
             <option [ngValue]="null">
               {{'category.mainCategory' | translate}}
             </option>
-            <option *ngFor="let category of categories" [ngValue]="category">
+            <option *ngFor="let category of categories"
+                    [ngValue]="category">
               {{category.name}}
             </option>
           </select>
@@ -53,10 +70,14 @@
       </td>
       <td></td>
       <td id="NewCategorySaveExitBtn">
-        <button id="NewCategorySaveBtn" class="btn btn-success" (click)="onAddCategory()">
+        <button id="NewCategorySaveBtn"
+                class="btn btn-success"
+                (click)="onAddCategory()">
           {{'button.save' | translate}}
         </button>
-        <button id="NewCategoryExitBtn" class="btn btn-danger" (click)="addingMode=false">
+        <button id="NewCategoryExitBtn"
+                class="btn btn-danger"
+                (click)="addingMode=false">
           {{'button.exit' | translate}}
         </button>
       </td>
@@ -67,23 +88,31 @@
 
       <!--Name-->
       <td *ngIf="category.editMode">
-        <input id="EditCategoryNameInput" class="form-control" type="text" [(ngModel)]="category.editedCategory.name">
+        <input id="EditCategoryNameInput"
+               class="form-control"
+               type="text"
+               [(ngModel)]="category.editedCategory.name">
       </td>
-      <td id="NameReadOnly" *ngIf="!category.editMode">
+      <td id="NameReadOnly"
+          *ngIf="!category.editMode">
         {{category.name}}
       </td>
 
       <!--Parent Category-->
       <td *ngIf="category.editMode">
-        <select id="EditParentCategorySelect" class="form-control" [(ngModel)]="category.editedCategory.parentCategory">
-          <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)" [ngValue]="parCategory">
+        <select id="EditParentCategorySelect"
+                class="form-control"
+                [(ngModel)]="category.editedCategory.parentCategory">
+          <option *ngFor="let parCategory of getListOfPossibleParentCategories(category)"
+                  [ngValue]="parCategory">
             {{parCategory.name}}
           <option [ngValue]="null">
             {{'category.mainCategory' | translate}}
           </option>
         </select>
       </td>
-      <td id="ParentCategoryReadOnly" *ngIf="!category.editMode">
+      <td id="ParentCategoryReadOnly"
+          *ngIf="!category.editMode">
         {{getParentCategoryName(category)}}
       </td>
 
@@ -95,18 +124,25 @@
 
       <td *ngIf="!category.editMode">
         <div class="dropdown">
-          <button id="OptionsBtn" class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">
+          <button id="OptionsBtn"
+                  class="btn btn-primary dropdown-toggle btn-block"
+                  type="button"
+                  data-toggle="dropdown">
             {{'button.options' | translate}}
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
             <li>
-              <button id="EditBtn" class="btn btn-warning btn-block" (click)="onShowEditMode(category)">
+              <button id="EditBtn"
+                      class="btn btn-warning btn-block"
+                      (click)="onShowEditMode(category)">
                 {{'button.edit' | translate}}
               </button>
             </li>
             <li>
-              <button id="DeleteBtn" class="btn btn-danger btn-block" (click)="deleteCategory(category)">
+              <button id="DeleteBtn"
+                      class="btn btn-danger btn-block"
+                      (click)="deleteCategory(category)">
                 {{'button.delete' | translate}}
               </button>
             </li>
@@ -114,11 +150,16 @@
         </div>
       </td>
 
-      <td *ngIf="category.editMode" id="EditCategorySaveExitBtn">
-        <button id="EditCategorySaveBtn" class="btn btn-success" (click)="onEditCategory(category)">
+      <td *ngIf="category.editMode"
+          id="EditCategorySaveExitBtn">
+        <button id="EditCategorySaveBtn"
+                class="btn btn-success"
+                (click)="onEditCategory(category)">
           {{'button.save' | translate}}
         </button>
-        <button id="EditCategoryExitBtn" class="btn btn-danger" (click)="category.editMode=false">
+        <button id="EditCategoryExitBtn"
+                class="btn btn-danger"
+                (click)="category.editMode=false">
           {{'button.exit' | translate}}
         </button>
       </td>
@@ -137,23 +178,27 @@
 <table class="table table-bordered table-striped table-month">
   <thead class="thead-dark">
     <tr>
-      <th [class.active]="sortableSummaryTable.order === 'name'" (click)="sortableSummaryTable.setOrder('name')">
+      <th [class.active]="sortableSummaryTable.order === 'name'"
+          (click)="sortableSummaryTable.setOrder('name')">
         {{'category.name' | translate}}
         <span [hidden]="!sortableSummaryTable.reverse">▼</span>
         <span [hidden]="sortableSummaryTable.reverse">▲</span>
       </th>
-      <th *ngFor="let month of last12Months; let i = index" [class.active]="sortableSummaryTable.order === 'sumOfAllTransactionsInMonth.'+i"
+      <th *ngFor="let month of last12Months; let i = index"
+          [class.active]="sortableSummaryTable.order === 'sumOfAllTransactionsInMonth.'+i"
           (click)="sortableSummaryTable.setOrder('sumOfAllTransactionsInMonth.'+i)">
         {{ month | date:'MMMM yyyy' }}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
-      <th [class.active]="sortableSummaryTable.order === 'sumOfAllTransactions'" (click)="sortableSummaryTable.setOrder('sumOfAllTransactions')">
+      <th [class.active]="sortableSummaryTable.order === 'sumOfAllTransactions'"
+          (click)="sortableSummaryTable.setOrder('sumOfAllTransactions')">
         {{'category.sum' | translate}}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
       </th>
-      <th [class.active]="sortableSummaryTable.order === 'averageOfAllTransactions'" (click)="sortableSummaryTable.setOrder('averageOfAllTransactions')">
+      <th [class.active]="sortableSummaryTable.order === 'averageOfAllTransactions'"
+          (click)="sortableSummaryTable.setOrder('averageOfAllTransactions')">
         {{'category.average' | translate}}
         <span [hidden]="sortableSummaryTable.reverse">▼</span>
         <span [hidden]="!sortableSummaryTable.reverse">▲</span>
@@ -194,7 +239,7 @@
         {{ getCostBalanceOfAllTransactions() | number:'0.2' }}
       </td>
       <td>
-          {{ getCostBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
+        {{ getCostBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
       </td>
     </tr>
 

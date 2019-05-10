@@ -1,26 +1,36 @@
-<button id="RefreshHistoryBtn" class="btn btn-primary" type="button" (click)="onRefreshHistory()">
+<button id="RefreshHistoryBtn"
+        class="btn btn-primary"
+        type="button"
+        (click)="onRefreshHistory()">
   {{'button.refresh' |  translate}}
 </button>
 
-<table id="tableHistory" class="table table-bordered table-striped">
+<table id="tableHistory"
+       class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
 
       <!--Date-->
-      <th [class.active]="order === 'date'" (click)="setOrder('date')" id="thHistoryDate">
+      <th [class.active]="order === 'date'"
+          (click)="setOrder('date')"
+          id="thHistoryDate">
         {{'history.date' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
 
       <!-- Event type -->
-      <th [class.active]="order === 'type'" (click)="setOrder('type')" id="thHistoryType">{{'history.entryType' | translate}}
+      <th [class.active]="order === 'type'"
+          (click)="setOrder('type')"
+          id="thHistoryType">{{'history.entryType' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
 
       <!-- Event object -->
-      <th [class.active]="order === 'object'" (click)="setOrder('object')" id="thHistoryObject">{{'history.entryObject' | translate}}
+      <th [class.active]="order === 'object'"
+          (click)="setOrder('object')"
+          id="thHistoryObject">{{'history.entryObject' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span></th>
 
@@ -53,10 +63,12 @@
           <thead>
             <tr>
               <th class="tableHistoryEntryField">{{'history.entryField' | translate}}</th>
-              <th *ngIf="historyEntry.type === 'UPDATE' || historyEntry.type === 'DELETE'" class="tableHistoryEntryOldValue">
+              <th *ngIf="historyEntry.type === 'UPDATE' || historyEntry.type === 'DELETE'"
+                  class="tableHistoryEntryOldValue">
                 {{'history.oldValue' | translate}}
               </th>
-              <th *ngIf="historyEntry.type === 'UPDATE' || historyEntry.type === 'ADD'" class="tableHistoryEntryNewValue">
+              <th *ngIf="historyEntry.type === 'UPDATE' || historyEntry.type === 'ADD'"
+                  class="tableHistoryEntryNewValue">
                 {{'history.newValue' | translate}}
               </th>
             </tr>
@@ -66,10 +78,13 @@
               <td>{{entry.name}}</td>
 
               <!-- 2 identical entries - display as single cell in 2 columns -->
-              <td colspan="2" *ngIf="entry.oldValue === entry.newValue && entry.name !== 'accountPriceEntries'"
-              class="tableHistoryEntryOldValue">{{entry.oldValue}}</td>
+              <td colspan="2"
+                  *ngIf="entry.oldValue === entry.newValue && entry.name !== 'accountPriceEntries'"
+                  class="tableHistoryEntryOldValue">{{entry.oldValue}}</td>
 
-              <td colspan="2" *ngIf="entry.oldValue === entry.newValue && entry.name === 'accountPriceEntries'" class="textcenter">
+              <td colspan="2"
+                  *ngIf="entry.oldValue === entry.newValue && entry.name === 'accountPriceEntries'"
+                  class="textcenter">
                 <table>
                   <tr *ngFor="let accountPriceEntry of entry.oldAccountPriceEntries">
                     <td class="textcenter">{{accountPriceEntry.accountName}}</td>
@@ -79,10 +94,12 @@
               </td>
 
               <!-- Only new entry - display as single cell in 2 columns -->
-              <td colspan="2" *ngIf="entry.newValue != null && entry.oldValue == null && entry.name !== 'accountPriceEntries'"
+              <td colspan="2"
+                  *ngIf="entry.newValue != null && entry.oldValue == null && entry.name !== 'accountPriceEntries'"
                   class="textcenter">{{entry.newValue}}</td>
 
-              <td colspan="2" *ngIf="entry.newValue != null && entry.oldValue == null && entry.name === 'accountPriceEntries'"
+              <td colspan="2"
+                  *ngIf="entry.newValue != null && entry.oldValue == null && entry.name === 'accountPriceEntries'"
                   class="textcenter">
                 <table>
                   <tr *ngFor="let accountPriceEntry of entry.newAccountPriceEntries">
@@ -93,12 +110,14 @@
               </td>
 
               <!-- Only old entry - display as single cell in 2 columns -->
-              <td colspan="2" *ngIf="entry.newValue == null && entry.oldValue != null && entry.name !== 'accountPriceEntries'"
+              <td colspan="2"
+                  *ngIf="entry.newValue == null && entry.oldValue != null && entry.name !== 'accountPriceEntries'"
                   class="textcenter">
                 {{entry.oldValue}}
               </td>
 
-              <td colspan="2" *ngIf="entry.newValue == null && entry.oldValue != null && entry.name === 'accountPriceEntries'"
+              <td colspan="2"
+                  *ngIf="entry.newValue == null && entry.oldValue != null && entry.name === 'accountPriceEntries'"
                   class="textcenter">
                 <table>
                   <tr *ngFor="let accountPriceEntry of entry.oldAccountPriceEntries">

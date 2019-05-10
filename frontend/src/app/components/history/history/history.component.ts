@@ -24,66 +24,66 @@ export class HistoryComponent extends Sortable implements OnInit {
 
   getHistory(): void {
     this.historyService.getHistory()
-      .subscribe(history => {
-        this.history = history;
-        for (const historyEntry of history) {
-          if ((historyEntry.type !== 'ADD' && historyEntry.type !== 'UPDATE') || historyEntry.object !== 'Transaction') {
-            continue;
-          }
-
-          for (const entry of historyEntry.entries) {
-            if (entry.name !== 'accountPriceEntries') {
+        .subscribe(history => {
+          this.history = history;
+          for (const historyEntry of history) {
+            if ((historyEntry.type !== 'ADD' && historyEntry.type !== 'UPDATE') || historyEntry.object !== 'Transaction') {
               continue;
             }
 
-            entry.newAccountPriceEntries = [];
-            entry.newValue = entry.newValue.replace('[', '{\"');
-            entry.newValue = entry.newValue.replace(']', '}');
-            entry.newValue = entry.newValue.replace(/ : /g, '\" : ');
-            entry.newValue = entry.newValue.replace(/, /g, ', \"');
-            const parsedNewValue = this.objToStrMap(JSON.parse(entry.newValue));
+            for (const entry of historyEntry.entries) {
+              if (entry.name !== 'accountPriceEntries') {
+                continue;
+              }
 
-            parsedNewValue.forEach((value: number, key: string) => {
-              const accountPriceEntry = new HistoryAccountPriceEntry();
-              accountPriceEntry.accountName = key;
-              accountPriceEntry.amount = value;
-              entry.newAccountPriceEntries.push(accountPriceEntry);
-            });
+              entry.newAccountPriceEntries = [];
+              entry.newValue = entry.newValue.replace('[', '{\"');
+              entry.newValue = entry.newValue.replace(']', '}');
+              entry.newValue = entry.newValue.replace(/ : /g, '\" : ');
+              entry.newValue = entry.newValue.replace(/, /g, ', \"');
+              const parsedNewValue = this.objToStrMap(JSON.parse(entry.newValue));
 
-            // TODO - simplify - no need to convert to map first
+              parsedNewValue.forEach((value: number, key: string) => {
+                const accountPriceEntry = new HistoryAccountPriceEntry();
+                accountPriceEntry.accountName = key;
+                accountPriceEntry.amount = value;
+                entry.newAccountPriceEntries.push(accountPriceEntry);
+              });
+
+              // TODO - simplify - no need to convert to map first
+            }
           }
-        }
 
-        // TODO - remove duplicated code
-        for (const historyEntry of history) {
-          if ((historyEntry.type !== 'DELETE' && historyEntry.type !== 'UPDATE') || historyEntry.object !== 'Transaction') {
-            continue;
-          }
-
-          for (const entry of historyEntry.entries) {
-            if (entry.name !== 'accountPriceEntries') {
+          // TODO - remove duplicated code
+          for (const historyEntry of history) {
+            if ((historyEntry.type !== 'DELETE' && historyEntry.type !== 'UPDATE') || historyEntry.object !== 'Transaction') {
               continue;
             }
 
-            entry.oldAccountPriceEntries = [];
-            entry.oldValue = entry.oldValue.replace('[', '{\"');
-            entry.oldValue = entry.oldValue.replace(']', '}');
-            entry.oldValue = entry.oldValue.replace(/ : /g, '\" : ');
-            entry.oldValue = entry.oldValue.replace(/, /g, ', \"');
-            const parsedNewValue = this.objToStrMap(JSON.parse(entry.oldValue));
+            for (const entry of historyEntry.entries) {
+              if (entry.name !== 'accountPriceEntries') {
+                continue;
+              }
 
-            parsedNewValue.forEach((value: number, key: string) => {
-              const accountPriceEntry = new HistoryAccountPriceEntry();
-              accountPriceEntry.accountName = key;
-              accountPriceEntry.amount = value;
-              entry.oldAccountPriceEntries.push(accountPriceEntry);
-            });
+              entry.oldAccountPriceEntries = [];
+              entry.oldValue = entry.oldValue.replace('[', '{\"');
+              entry.oldValue = entry.oldValue.replace(']', '}');
+              entry.oldValue = entry.oldValue.replace(/ : /g, '\" : ');
+              entry.oldValue = entry.oldValue.replace(/, /g, ', \"');
+              const parsedNewValue = this.objToStrMap(JSON.parse(entry.oldValue));
 
-            // TODO - simplify - no need to convert to map first
+              parsedNewValue.forEach((value: number, key: string) => {
+                const accountPriceEntry = new HistoryAccountPriceEntry();
+                accountPriceEntry.accountName = key;
+                accountPriceEntry.amount = value;
+                entry.oldAccountPriceEntries.push(accountPriceEntry);
+              });
+
+              // TODO - simplify - no need to convert to map first
+            }
           }
-        }
 
-      });
+        });
   }
 
   objToStrMap(obj) {
