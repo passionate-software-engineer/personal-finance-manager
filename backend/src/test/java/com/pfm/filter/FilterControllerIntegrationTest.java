@@ -46,7 +46,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddFilter() throws Exception {
-
     //given
     Long categoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
@@ -71,7 +70,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetFilterById() throws Exception {
-
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
@@ -95,7 +93,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAllFilters() throws Exception {
-
     //given
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
@@ -143,7 +140,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteFilter() throws Exception {
-
     //given
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
     long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(filterFoodExpenses(), token);
@@ -168,7 +164,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateFilter() throws Exception {
-
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
@@ -201,7 +196,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingIdInGetMethod() throws Exception {
-
     //when
     mockMvc
         .perform(get(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -211,7 +205,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingIdInDeleteMethod() throws Exception {
-
     //when
     mockMvc
         .perform(delete(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -221,7 +214,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingIdInUpdateMethod() throws Exception {
-
     //when
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -233,7 +225,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInAddMethod() throws Exception {
-
     //given
     FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
         .accountIds(convertIdsToList(1L))
@@ -255,7 +246,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInAddMethodSecondCase() throws Exception {
-
     //given
     FilterRequest filterRequestWithValidationErrors = FilterRequest.builder()
         .dateFrom(LocalDate.of(2018, 1, 1))
@@ -273,7 +263,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByValidationErrorsIdInUpdateMethod() throws Exception {
-
     //given
     final long filterId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
     FilterRequest filterRequestWithValidationErrors = new FilterRequest();
@@ -297,7 +286,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorWhenTryingToDeleteAccountUsedInFilter() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -317,7 +305,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInFilter() throws Exception {
-
     //given
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 

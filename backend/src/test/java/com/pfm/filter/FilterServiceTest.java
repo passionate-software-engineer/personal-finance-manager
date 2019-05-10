@@ -27,7 +27,6 @@ public class FilterServiceTest {
 
   @Test
   public void shouldReturnExceptionCausedByIdDoesNotExistInDb() {
-
     //given
     when(filterRepository.findByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
 

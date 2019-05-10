@@ -55,7 +55,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRollbackAccountStateUpdateWhenSaveFailsBecauseOfInvalidData() {
-
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
@@ -86,7 +85,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRollbackAccountStateUpdateWhenDeleteFailsBecauseOfInvalidData() {
-
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
@@ -130,7 +128,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRollbackAccountStateUpdateWhenUpdateFailsBecauseOfInvalidData() {
-
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
@@ -179,7 +176,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfTransactionExistByAccountId() {
-
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
@@ -211,7 +207,6 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfTransactionExistByCategoryId() {
-
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);

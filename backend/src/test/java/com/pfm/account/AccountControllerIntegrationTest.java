@@ -55,7 +55,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddAccount() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -87,7 +86,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCausedByEmptyNameField(String name, BigDecimal balance) throws Exception {
-
     //given
     AccountRequest accountRequest = AccountRequest.builder()
         .name(name)
@@ -108,7 +106,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingCurrencyOnAddAccount() throws Exception {
-
     //given
     long notExistingCurrencyId = 3124151L;
 
@@ -130,7 +127,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAccountById() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -151,7 +147,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingId() throws Exception {
-
     //when
     mockMvc
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -161,7 +156,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAllAccounts() throws Exception {
-
     //given
     Account accountJacek = accountJacekBalance1000();
     accountJacek.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -191,7 +185,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -245,7 +238,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is((int) accountId)))
+        .andExpect(jsonPath("$.id", is((int)accountId)))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
         .andExpect(jsonPath("$.archived", is(true)))
@@ -287,7 +280,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnAccountNotFoundWhenTryingToMakeActiveNotExistingAccount() throws Exception {
-
     //given
     int accountId = 2500;
 
@@ -302,7 +294,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateAccountLastVerificationDate() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -330,7 +321,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnAccountNotFoundWhenTryingToUpdateNotExistingAccountLastVerificationDate() throws Exception {
-
     //given
     int accountId = 1500;
 
@@ -345,7 +335,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnAccountNotFoundWhenTryingToArchiveNotExistingAccount() throws Exception {
-
     //given
     int accountId = 1500;
 
@@ -360,7 +349,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -391,7 +379,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -420,7 +407,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingCurrencyOnUpdateAccount() throws Exception {
-
     //given
     long notExistingCurrencyId = 3124151L;
 
@@ -446,7 +432,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
-
     //when
     mockMvc
         .perform(put(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -458,7 +443,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -482,7 +466,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -498,7 +481,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
-
     //when
     mockMvc
         .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -508,7 +490,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByExistingAccountName() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));

@@ -37,7 +37,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldGetCategoryById() {
-
     //given
     Category categoryCar = categoryCar();
     when(categoryRepository.findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID)).thenReturn(Optional.of(categoryCar));
@@ -55,7 +54,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldGetCategories() {
-
     //given
     Category categoryCar = categoryCar();
     Category categoryHome = categoryHome();
@@ -73,9 +71,7 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldAddCategory() {
-
     //given
-
     Category category = categoryCar();
     when(categoryRepository.save(category)).thenReturn(category);
 
@@ -88,7 +84,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldThrowIllegalStateExceptionWhenNotExistingParentIdWasProvided() {
-
     //given
     Category category = Category.builder()
         .name("does not matter")
@@ -128,7 +123,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldDeleteCategory() {
-
     //given
     long id = 1;
     doNothing().when(categoryRepository).deleteById(id);
@@ -142,7 +136,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldUpdateCategory() {
-
     //given
     Category category = categoryCar();
     when(categoryRepository.findByIdAndUserId(category.getId(), MOCK_USER_ID)).thenReturn(Optional.of(category));
@@ -159,7 +152,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldUpdateCategoryWithParentCategory() {
-
     //given
     Category categoryCar = categoryCar();
     Category categoryOil = categoryOil();
@@ -179,7 +171,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
-
     //given
     long id = 1;
     when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
@@ -195,7 +186,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInGetMethod() {
-
     //given
     long id = 1;
     when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
@@ -209,7 +199,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdOfParentCategoryNotExist() {
-
     //given
     Category categoryOil = categoryOil();
     Category categoryCar = categoryCar();
@@ -228,7 +217,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldCheckIfCategoryExist() {
-
     //given
     long id = 1;
     when(categoryRepository.existsById(id)).thenReturn(true);
@@ -242,7 +230,6 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldThrowExceptionWhenPassedParentCategoryWhichDoesNotExist() {
-
     //given
     long notExistingCategoryId = 5L;
     when(categoryRepository.findByIdAndUserId(notExistingCategoryId, MOCK_USER_ID)).thenReturn(Optional.empty());

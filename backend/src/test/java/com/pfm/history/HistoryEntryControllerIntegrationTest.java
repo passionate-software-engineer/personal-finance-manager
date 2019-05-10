@@ -49,7 +49,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -83,7 +82,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -128,7 +126,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -164,7 +161,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingCategoryWithNoParentCategory() throws Exception {
-
     //given
     Category category = categoryOil();
     callRestToAddCategoryAndReturnId(category, token);
@@ -197,7 +193,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingCategoryWithParentCategory() throws Exception {
-
     //given
     Category category = categoryOil();
     Category parentCategory = categoryCar();
@@ -236,7 +231,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingCategory() throws Exception {
-
     //given
     Category category = categoryOil();
     Category parentCategory = categoryCar();
@@ -284,7 +278,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingCategory() throws Exception {
-
     //given
     Category category = categoryOil();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
@@ -319,7 +312,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingTransaction() throws Exception {
-
     //given
     Category category = categoryCar();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
@@ -395,7 +387,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingTransaction() throws Exception {
-
     //given
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -543,7 +534,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingTransaction() throws Exception {
-
     //given
     Category category = categoryCar();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
@@ -620,7 +610,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingFilter() throws Exception {
-
     //given
     Category categoryCar = categoryCar();
     Category categoryFood = categoryFood();
@@ -706,7 +695,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingFilter() throws Exception {
-
     //given
     Category categoryCar = categoryCar();
     Category categoryFood = categoryFood();
@@ -809,7 +797,6 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingFilter() throws Exception {
-
     //given
     Filter filter = filterFoodExpenses();
     final long filterId = callRestServiceToAddFilterAndReturnId(convertFilterToFilterRequest(filter), token);

@@ -42,7 +42,6 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenCategoryAddFailed() {
-
     //given
     Category category = categoryCar();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
@@ -61,7 +60,6 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenCategoryUpdateFailed() {
-
     //given
     Category category = categoryCar();
     final Long categoryId = categoryService.addCategory(category, userId).getId();
@@ -85,7 +83,6 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenCategoryDeleteFailed() {
-
     //given
     Category category = categoryCar();
     final Long categoryId = categoryService.addCategory(category, userId).getId();

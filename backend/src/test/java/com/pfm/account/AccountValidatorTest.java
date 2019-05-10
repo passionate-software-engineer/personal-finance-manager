@@ -32,7 +32,6 @@ public class AccountValidatorTest {
 
   @Test
   public void validateAccountForUpdate() {
-
     //given
     long id = 1;
 
@@ -48,7 +47,6 @@ public class AccountValidatorTest {
 
   @Test
   public void shouldReturnValidationErrorIfAccountNameAndBalanceIsEmpty() {
-
     //given
     long id = 10L;
     when(accountService.getAccountByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));

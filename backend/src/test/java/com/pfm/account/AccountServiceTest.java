@@ -36,7 +36,6 @@ public class AccountServiceTest {
 
   @Test
   public void shouldGetAccountById() {
-
     //given
     Account account = accountMbankBalance10();
     account.setId(1L);
@@ -136,7 +135,6 @@ public class AccountServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
-
     //given
     long id = 1;
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
@@ -152,7 +150,6 @@ public class AccountServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInGetMethod() {
-
     //given
     long id = 1;
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());

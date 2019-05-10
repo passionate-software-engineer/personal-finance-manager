@@ -53,7 +53,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilter() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -85,7 +84,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilterInUpdateMethod() throws Exception {
-
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -119,7 +117,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateFilter() throws Exception {
-
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -143,7 +140,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDelteFilter() throws Exception {
-
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -161,7 +157,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateTransaction() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -194,7 +189,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteTransaction() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -220,7 +214,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateCategory() throws Exception {
-
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -245,7 +238,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteCategory() throws Exception {
-
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -264,7 +256,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateAccount() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -293,7 +284,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteAccount() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -315,7 +305,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransaction() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -347,7 +336,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransactionInUpdateMethod() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -387,7 +375,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedCausedByWrongToken() throws Exception {
-
     //given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
@@ -399,7 +386,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedCausedByEmptyToken() throws Exception {
-
     //given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
@@ -411,7 +397,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedCausedByNullToken() throws Exception {
-
     //given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
@@ -429,7 +414,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterTwoUsersAndAddAccountsCategoriesTransaction() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     currencyService.addDefaultCurrencies(marianUserId);
@@ -595,7 +579,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldAccountWithTheSameNameToDifferentUsers() throws Exception {
-
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -626,7 +609,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldAddCategoryWithTheSameNameToDifferentUsers() throws Exception {
-
     //given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());

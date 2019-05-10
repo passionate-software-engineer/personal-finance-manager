@@ -30,7 +30,6 @@ public class CategoryValidatorTest {
 
   @Test
   public void validateCategoryForUpdate() {
-
     //given
     long id = 1L;
     when(categoryService.getCategoryByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
@@ -45,7 +44,6 @@ public class CategoryValidatorTest {
 
   @Test
   public void validateCategoryForUpdateWhenParentCategoryIdIsNull() {
-
     //given
     Category category = Category.builder()
         .name("CATEGORY")

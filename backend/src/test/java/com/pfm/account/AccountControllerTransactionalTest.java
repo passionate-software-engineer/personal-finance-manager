@@ -50,7 +50,6 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenAccountAddFailed() {
-
     //given
     Account account = accountMbankBalance10();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), anyLong());
@@ -70,7 +69,6 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenAccountUpdateFailed() {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -97,7 +95,6 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenAccountDeleteFailed() {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));

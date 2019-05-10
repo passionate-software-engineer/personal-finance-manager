@@ -63,7 +63,6 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfFilterExistByCategoryId() {
-
     //given
     Category category = categoryCar();
     Long categoryId = categoryService.addCategory(category, userId).getId();

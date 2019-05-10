@@ -53,7 +53,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddTransaction() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -78,7 +77,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteTransaction() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -108,7 +106,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetTransactions() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -136,7 +133,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateTransaction() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -179,7 +175,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorWhenTryingToDeleteAccountUsedInTransaction() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -199,7 +194,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInTransaction() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -219,7 +213,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationErrorInUpdateMethod() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -245,7 +238,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyFields() throws Exception {
-
     //given
     TransactionRequest transactionToAdd = new TransactionRequest();
 
@@ -265,7 +257,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyDescription() throws Exception {
-
     //given
     TransactionRequest transactionToAdd = TransactionRequest.builder()
         .description(" ")
@@ -294,7 +285,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingTransactionIdInGetMethod() throws Exception {
-
     //when
     mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
@@ -303,7 +293,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingTransactionIdInDeleteMethod() throws Exception {
-
     //when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
@@ -312,7 +301,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingTransactionIdInUpdateMethod() throws Exception {
-
     //when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token)
