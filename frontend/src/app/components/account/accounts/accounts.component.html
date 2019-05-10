@@ -184,7 +184,7 @@
             </li>
             <li *ngIf="account.archived">
               <button id="Make active" class="btn btn-warning btn-block"
-                      (click)="makeAccountActive(account)">
+                      (click)="restoreAccount(account)">
                 {{ "button.makeActive" | translate }}
               </button>
             </li>

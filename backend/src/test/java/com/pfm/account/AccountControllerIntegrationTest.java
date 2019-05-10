@@ -238,7 +238,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is((int)accountId)))
+        .andExpect(jsonPath("$.id", is((int) accountId)))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
         .andExpect(jsonPath("$.archived", is(true)))

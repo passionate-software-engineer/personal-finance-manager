@@ -43,7 +43,15 @@ export class AccountService extends ServiceBase {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + '/markAccountAsVerifiedToday'), '', this.contentType);
   }
 
-  setAccountStatus(account: Account, toBeActive: boolean): Observable<any> {
+  restoreAccount(account: Account): Observable<any> {
+    return this.setAccountStatus(account, true);
+  }
+
+  archiveAccount(account: Account): Observable<any> {
+    return this.setAccountStatus(account, false);
+  }
+
+  private setAccountStatus(account: Account, toBeActive: boolean): Observable<any> {
     const pathEnd = toBeActive ? '/markAsActive' : '/markAsArchived';
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + account.id + pathEnd), '', this.contentType);
   }

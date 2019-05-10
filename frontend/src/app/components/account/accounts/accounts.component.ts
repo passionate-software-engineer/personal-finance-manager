@@ -105,13 +105,13 @@ export class AccountsComponent implements OnInit {
         );
   }
 
-  archiveAccount(account: Account) {
-    this.setAccountStatus(account, 'message.accountArchived', false);
+  /*archiveAccount(account: Account) {
+    this.restoreAccount(account, 'message.accountArchived', false);
   }
 
   makeAccountActive(account: Account) {
-    this.setAccountStatus(account, 'message.accountMadeActive', true);
-  }
+    this.restoreAccount(account, 'message.accountMadeActive', true);
+  }*/
 
   onEditAccount(account: Account) {
     if (!this.validateAccount(account.editedAccount)) {
@@ -250,13 +250,26 @@ export class AccountsComponent implements OnInit {
     return sum;
   }
 
-  private setAccountStatus(account: Account, translationKey: string, toBeActive: boolean) {
-    this.accountService.setAccountStatus(account, toBeActive).subscribe(() => {
-        this.alertService.success(
-          this.translate.instant(translationKey)
+  restoreAccount(account: Account) {
+    this.accountService.restoreAccount(account)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountMadeActive')
+            );
+            account.archived = false;
+          }
         );
-      account.archived = !toBeActive;
-      }
-    );
   }
+
+  archiveAccount(account: Account) {
+    this.accountService.archiveAccount(account)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountArchived')
+            );
+            account.archived = true;
+          }
+        );
+  }
+
 }
