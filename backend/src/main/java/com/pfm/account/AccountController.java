@@ -119,13 +119,13 @@ public class AccountController implements AccountApi {
   @Override
   public ResponseEntity<?> markAccountAsVerifiedToday(long accountId) {
     long userId = userProvider.getCurrentUserId();
+    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
 
     if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
 
-    Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
     account.setLastVerificationDate(LocalDate.now());
 
     accountService.saveAccount(userId, account);
@@ -197,18 +197,16 @@ public class AccountController implements AccountApi {
   }
 
   private ResponseEntity<?> performArchiveOperation(long accountId, long userId, boolean shouldArchive) {
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+    Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
+
+    if (!account.isPresent()) {
       log.info("No account with id {} was found, not able to update", accountId);
       return ResponseEntity.notFound().build();
     }
+    log.info("Attempting to set account status as {} with id {} ", shouldArchive ? "archived" : "active", accountId);
+    account.get().setArchived(shouldArchive);
+    accountService.saveAccount(userId, account.get());
+    return ResponseEntity.ok().build();
 
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isPresent()) {
-      Account account = accountService.getAccountByIdAndUserId(accountId, userId).get();
-      log.info("Attempting to set account status as {} with id {} ", shouldArchive ? "archived" : "active", accountId);
-      account.setArchived(shouldArchive);
-      accountService.saveAccount(userId, account);
-      return ResponseEntity.ok().build();
-    }
-    return ResponseEntity.notFound().build();
   }
 }

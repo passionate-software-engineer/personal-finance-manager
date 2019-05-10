@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,7 +76,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andDo(print()).andExpect(status().isOk())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
@@ -143,7 +142,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
@@ -179,7 +177,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(ACCOUNTS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andDo(print()).andExpect(status().isOk())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
         .andExpect(jsonPath("$[0].id", is(accountJacekId.intValue())))
         .andExpect(jsonPath("$[0].name", is(accountJacek.getName())))
@@ -208,7 +206,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(convertAccountToAccountRequest(updatedAccount))))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -241,7 +238,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -275,7 +271,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ACTIVE)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -319,7 +314,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -345,7 +339,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         // then
         .andExpect(status().isNotFound());
   }
@@ -361,7 +354,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         // then
         .andExpect(status().isNotFound());
   }
@@ -384,7 +376,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedAccount)))
-        .andDo(print())
         .andExpect(status().isOk());
 
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
