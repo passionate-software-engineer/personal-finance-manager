@@ -36,6 +36,9 @@ import org.springframework.http.HttpHeaders;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
+  public static final String MARK_AS_ARCHIVED = "/markAsArchived";
+  public static final String MARK_AS_ACTIVE = "/markAsActive";
+
   private static Collection<Object[]> emptyAccountNameParameters() {
     return Arrays.asList(new Object[][]{
         {"", null},
@@ -221,7 +224,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldSetAccountAsArchived() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -236,7 +238,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andDo(print())
@@ -256,7 +258,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldSetAccountAsActive() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -264,15 +265,14 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsActive")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ACTIVE)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andDo(print())
@@ -298,10 +298,9 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsActive")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ACTIVE)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         // then
         .andExpect(status().isNotFound());
   }
@@ -359,7 +358,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andDo(print())
