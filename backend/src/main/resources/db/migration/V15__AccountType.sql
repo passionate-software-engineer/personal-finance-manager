@@ -1,0 +1,2 @@
+ALTER TABLE account
+  ADD account_type VARCHAR(30) NOT NULL DEFAULT 'CURRENT';

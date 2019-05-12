@@ -61,8 +61,6 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok(category.get());
   }
 
-  // TODO return only parent category id - not the entire object / objects chain
-
   @Override
   public ResponseEntity<List<Category>> getCategories() {
     long userId = userProvider.getCurrentUserId();

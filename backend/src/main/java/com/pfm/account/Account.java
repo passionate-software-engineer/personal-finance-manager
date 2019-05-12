@@ -61,6 +61,5 @@ public final class Account {
     CURRENT,
     INVESTMENT,
     SAFETY_FUND;
-
   }
 }
