@@ -159,4 +159,3 @@ public class CategoryController implements CategoryApi {
     return ResponseEntity.ok().build();
   }
 }
-}
