@@ -54,4 +54,3 @@ public interface AccountApi {
   @DeleteMapping(value = "/{accountId}")
   ResponseEntity<?> deleteAccount(@PathVariable long accountId);
 }
-
