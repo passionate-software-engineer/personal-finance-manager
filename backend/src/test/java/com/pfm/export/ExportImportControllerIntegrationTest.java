@@ -404,7 +404,6 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
   @Test
   public void sendFilterWithoutName() throws Exception {
-
     // given
     ExportResult input = new ExportResult();
     ExportResult.ExportFilter filterEmptyString = ExportResult.ExportFilter.builder().name("").build();
@@ -428,3 +427,4 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   }
 
 }
+

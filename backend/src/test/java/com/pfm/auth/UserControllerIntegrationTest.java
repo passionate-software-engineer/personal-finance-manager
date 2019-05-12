@@ -99,7 +99,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingUser() throws Exception {
-
     //given
     User user = userMarian();
 
@@ -113,7 +112,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserPassword() throws Exception {
-
     //given
     User user = userMarian();
     callRestToRegisterUserAndReturnUserId(user);
@@ -130,7 +128,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNullUserPasswordUsernameFirstNameLastName() throws Exception {
-
     //given
     User user = User.builder().build();
 
@@ -148,7 +145,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyUserPasswordUsernameFirstNameLastName() throws Exception {
-
     //given
     User user = User.builder()
         .firstName("   ")
@@ -171,7 +167,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorsCausedByTooLongUserPasswordUsernameFirstNameLastName() throws Exception {
-
     //given
     User user = User.builder()
         .firstName("A".repeat(UserValidator.FIRST_NAME_MAX_LENGTH + 1))
@@ -194,7 +189,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterUserCorrectlyWithMaxAllowedPasswordUsernameFirstNameLastNameLength() throws Exception {
-
     //given
     User user = User.builder()
         .firstName("A".repeat(UserValidator.FIRST_NAME_MAX_LENGTH))
@@ -213,7 +207,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @MethodSource("usernameAndPasswordWithWhitespaces")
   public void shouldReturnErrorCausedByWhiteSpacesInUsernameAndPassword(String username, String password) throws Exception {
-
     //given
     User user = User.builder()
         .username(username)
@@ -229,4 +222,5 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))));
   }
+
 }

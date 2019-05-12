@@ -308,5 +308,4 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
   }
 
-
 }

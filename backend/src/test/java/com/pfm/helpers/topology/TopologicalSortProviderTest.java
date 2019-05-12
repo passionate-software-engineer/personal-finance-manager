@@ -18,7 +18,6 @@ class TopologicalSortProviderTest {
   @Test
   void shouldSortGraphTopologically() {
     // given
-
     Node<String> two = new Node<>("2");
     Node<String> nine = new Node<>("9");
     Node<String> ten = new Node<>("10");
@@ -93,7 +92,6 @@ class TopologicalSortProviderTest {
   // just to get coverage
   @Test
   void shouldNotThrowExceptionWhenCreatingObject() {
-
     // when
     TopologicalSortProvider provider = new TopologicalSortProvider();
 

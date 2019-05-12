@@ -20,6 +20,7 @@ export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
   accounts: Account[] = [];
   addingMode = false;
+  showArchivedCheckboxState = false;
   newAccount: Account = new Account();
   sortableAccountsTable: Sortable = new Sortable('name');
   sortableCurrencyTable: Sortable = new Sortable('name');
@@ -60,7 +61,6 @@ export class AccountsComponent implements OnInit {
 
           this.getAccounts();
         });
-
 
   }
 
@@ -199,7 +199,6 @@ export class AccountsComponent implements OnInit {
       this.alertService.error(this.translate.instant('message.balanceTooLow'));
       return false;
     }
-
     return true;
   }
 
@@ -207,7 +206,6 @@ export class AccountsComponent implements OnInit {
     if (!this.validateAccount(accountToValidate)) {
       return false;
     }
-
     if (
       this.accounts.filter(
         account =>
@@ -230,7 +228,6 @@ export class AccountsComponent implements OnInit {
       sum +=
         +this.accounts[i].balance * +this.accounts[i].currency.exchangeRate;
     }
-
     return sum;
   }
 
@@ -244,4 +241,27 @@ export class AccountsComponent implements OnInit {
     }
     return sum;
   }
+
+  restoreAccount(account: Account) {
+    this.accountService.restoreAccount(account)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountMadeActive')
+            );
+            account.archived = false;
+          }
+        );
+  }
+
+  archiveAccount(account: Account) {
+    this.accountService.archiveAccount(account)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountArchived')
+            );
+            account.archived = true;
+          }
+        );
+  }
+
 }

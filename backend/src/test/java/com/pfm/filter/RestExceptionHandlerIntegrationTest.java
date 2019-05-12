@@ -48,7 +48,6 @@ public class RestExceptionHandlerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReceiveUserFriendlyFormattedMessageOnBadRequestError() throws Exception {
     // given
-
     final String correlationId = UUID.randomUUID().toString();
     String expectedMessage = String.format(MessagesProvider.getMessage(MessagesProvider.BAD_REQUEST), correlationId,
         LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)); // ignoring time as it may differ in seconds / milliseconds

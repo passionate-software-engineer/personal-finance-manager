@@ -26,7 +26,6 @@ public class HistoryEntryServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByTwoArgumentsOfDifferentTypes() {
-
     //given
     Account account = new Account();
     Category category = new Category();

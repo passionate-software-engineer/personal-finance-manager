@@ -42,7 +42,6 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenFilterAddFailed() {
-
     //given
     Filter filter = filterFoodExpenses();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
@@ -61,7 +60,6 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenFilterUpdateFailed() {
-
     //given
     Filter filter = filterFoodExpenses();
     final Long filterId = filterService.addFilter(userId, filter).getId();
@@ -86,7 +84,6 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenFilterDeleteFailed() {
-
     //given
     Filter filter = filterFoodExpenses();
     final Long filterId = filterService.addFilter(userId, filter).getId();

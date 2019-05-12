@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,6 +35,9 @@ import org.springframework.http.HttpHeaders;
 
 public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
+  public static final String MARK_AS_ARCHIVED = "/markAsArchived";
+  public static final String MARK_AS_ACTIVE = "/markAsActive";
+
   private static Collection<Object[]> emptyAccountNameParameters() {
     return Arrays.asList(new Object[][]{
         {"", null},
@@ -53,7 +55,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddAccount() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -74,7 +75,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andDo(print()).andExpect(status().isOk())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
@@ -85,7 +86,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCausedByEmptyNameField(String name, BigDecimal balance) throws Exception {
-
     //given
     AccountRequest accountRequest = AccountRequest.builder()
         .name(name)
@@ -106,7 +106,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingCurrencyOnAddAccount() throws Exception {
-
     //given
     long notExistingCurrencyId = 3124151L;
 
@@ -128,7 +127,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAccountById() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -140,7 +138,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
@@ -150,7 +147,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingId() throws Exception {
-
     //when
     mockMvc
         .perform(get(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -160,7 +156,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAllAccounts() throws Exception {
-
     //given
     Account accountJacek = accountJacekBalance1000();
     accountJacek.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -176,7 +171,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(ACCOUNTS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andDo(print()).andExpect(status().isOk())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
         .andExpect(jsonPath("$[0].id", is(accountJacekId.intValue())))
         .andExpect(jsonPath("$[0].name", is(accountJacek.getName())))
@@ -190,7 +185,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateAccount() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -205,7 +199,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(convertAccountToAccountRequest(updatedAccount))))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -221,12 +214,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldSetAccountAsArchived() throws Exception {
-
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
 
-    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
         .header(HttpHeaders.AUTHORIZATION, token))
@@ -236,10 +228,9 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -247,7 +238,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.id", is((int) accountId)))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
         .andExpect(jsonPath("$.archived", is(true)))
@@ -255,20 +246,24 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldUpdateAccountLastVerificationDate() throws Exception {
-
+  public void shouldSetAccountAsActive() throws Exception {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
 
-    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ACTIVE)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         .andExpect(status().isOk());
 
     //then
@@ -276,7 +271,48 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(jsonPath("$.id", is(accountId.intValue())))
+        .andExpect(jsonPath("$.id", is((int) accountId)))
+        .andExpect(jsonPath("$.name", is(account.getName())))
+        .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
+        .andExpect(jsonPath("$.archived", is(false)))
+        .andExpect(jsonPath("$.userId").doesNotExist());
+  }
+
+  @Test
+  public void shouldReturnAccountNotFoundWhenTryingToMakeActiveNotExistingAccount() throws Exception {
+    //given
+    int accountId = 2500;
+
+    //when
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ACTIVE)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        // then
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldUpdateAccountLastVerificationDate() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    //when
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
+
+    //then
+    mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.id", is((int) accountId)))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
         .andExpect(jsonPath("$.lastVerificationDate", is(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
@@ -285,7 +321,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnAccountNotFoundWhenTryingToUpdateNotExistingAccountLastVerificationDate() throws Exception {
-
     //given
     int accountId = 1500;
 
@@ -294,30 +329,26 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAccountAsVerifiedToday")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         // then
         .andExpect(status().isNotFound());
   }
 
   @Test
   public void shouldReturnAccountNotFoundWhenTryingToArchiveNotExistingAccount() throws Exception {
-
     //given
     int accountId = 1500;
 
     //when
     mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + "/markAsArchived")
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andDo(print())
         // then
         .andExpect(status().isNotFound());
   }
 
   @Test
   public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -333,7 +364,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedAccount)))
-        .andDo(print())
         .andExpect(status().isOk());
 
     mockMvc.perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
@@ -349,7 +379,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByDuplicatedNameWhileUpdatingAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -378,7 +407,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingCurrencyOnUpdateAccount() throws Exception {
-
     //given
     long notExistingCurrencyId = 3124151L;
 
@@ -404,7 +432,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
-
     //when
     mockMvc
         .perform(put(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -416,7 +443,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotValidAccountUpdateMethod() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -440,7 +466,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteAccount() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -456,7 +481,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
-
     //when
     mockMvc
         .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
@@ -466,7 +490,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByExistingAccountName() throws Exception {
-
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));

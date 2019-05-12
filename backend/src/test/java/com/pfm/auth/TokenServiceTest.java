@@ -16,8 +16,7 @@ public class TokenServiceTest {
   private final TokenService tokenService = new TokenService(tokens);
 
   @Test
-  public void shouldThrowExeptionCausedByNullExpiryTime() {
-
+  public void shouldThrowExceptionCausedByNullExpiryTime() {
     //given
     Token token = new Token("Token", 1L, null);
     tokens.put(token.getToken(), token);
@@ -32,7 +31,6 @@ public class TokenServiceTest {
 
   @Test
   public void shouldReturnFalseCausedByExpiredToken() {
-
     //given
     Token token = new Token("Token", 1L, ZonedDateTime.now());
     tokens.put(token.getToken(), token);
@@ -42,8 +40,7 @@ public class TokenServiceTest {
   }
 
   @Test
-  public void shouldThrowExeptionCausedByNotExisitingToken() {
-
+  public void shouldThrowExceptionCausedByNotExistingToken() {
     //given
     String token = "Fake Token";
     tokens.put(token, null);

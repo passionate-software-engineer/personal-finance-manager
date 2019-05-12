@@ -171,7 +171,6 @@
       </td>
     </tr>
 
-
     <tr *ngIf="addingMode">
       <!--Date-->
       <td>
@@ -208,10 +207,12 @@
                 *ngFor="let entry of newTransaction.accountPriceEntries"
                 class="form-control"
                 [(ngModel)]="entry.account">
-          <option *ngFor="let account of accounts"
-                  [ngValue]="account">
-            {{account.name}}
-          </option>
+          <ng-container *ngFor="let account of accounts">
+            <option *ngIf="!account.archived"
+                    [ngValue]="account">
+              {{account.name}}
+            </option>
+          </ng-container>
         </select>
       </td>
 
@@ -236,7 +237,6 @@
                 id="AddTransactionExitBtn">{{'button.exit' | translate}}</button>
       </td>
     </tr>
-
 
     <tr id="TransactionRow"
         *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'">
@@ -269,7 +269,8 @@
         <p id="PricesReadOnly"
            *ngFor="let entry of transaction.accountPriceEntries">
           {{entry.price | number:'0.2'}} {{entry.account.currency.name}}
-          <span *ngIf="entry.account.currency.name != 'PLN'">({{entry.pricePLN | number:'0.2'}} PLN)</span>
+          <span *ngIf="entry.account.currency.name != 'PLN'">({{entry.pricePLN | number:'0.2'}}
+            PLN)</span>
         </p>
       </td>
       <td *ngIf="transaction.editMode">

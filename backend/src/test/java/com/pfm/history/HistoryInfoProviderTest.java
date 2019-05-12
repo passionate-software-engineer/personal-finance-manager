@@ -54,7 +54,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForTransaction() {
-
     //given
     Transaction transaction = getTransaction();
     when(categoryService.getCategoryFromDbByIdAndUserId(1L, 1L)).thenReturn(categoryCar());
@@ -87,7 +86,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForFilter() {
-
     //given
     Filter filter = filterFoodExpenses();
     filter.setCategoryIds(convertIdsToList(1L, 2L));
@@ -143,7 +141,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForCategory() {
-
     //given
     Category category = categoryOil();
     category.setParentCategory(categoryCar());
@@ -167,7 +164,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForCategoryWithNoParentCategory() {
-
     //given
     Category category = categoryCar();
 
@@ -190,7 +186,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnUpdateForCategory() {
-
     //given
     Category category = categoryOil();
     category.setParentCategory(categoryCar());
@@ -217,7 +212,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnUpdateForFilter() {
-
     //given
     Filter filter = filterFoodExpenses();
     filter.setCategoryIds(convertIdsToList(1L));
@@ -291,7 +285,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnUpdateForTransaction() {
-
     //given
     Transaction transaction = getTransaction();
     Transaction updatedTransaction = getTransactionWithNewValues();
@@ -366,7 +359,6 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnDeleteForFilter() {
-
     //given
     Filter filter = filterFoodExpenses();
     filter.setCategoryIds(convertIdsToList(1L, 2L));
@@ -424,7 +416,6 @@ class HistoryInfoProviderTest {
 
   @Test
   public void shouldThrowExceptionInGetValueFromFieldMethod() {
-
     Account account = new Account();
 
     Throwable exception = assertThrows(IllegalStateException.class,
