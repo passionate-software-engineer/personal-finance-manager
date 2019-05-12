@@ -1,2 +1,2 @@
 ALTER TABLE account
-    ADD last_verification_date DATE;
+  ADD last_verification_date DATE;

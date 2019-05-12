@@ -105,14 +105,6 @@ export class AccountsComponent implements OnInit {
         );
   }
 
-  /*archiveAccount(account: Account) {
-    this.restoreAccount(account, 'message.accountArchived', false);
-  }
-
-  makeAccountActive(account: Account) {
-    this.restoreAccount(account, 'message.accountMadeActive', true);
-  }*/
-
   onEditAccount(account: Account) {
     if (!this.validateAccount(account.editedAccount)) {
       return;
