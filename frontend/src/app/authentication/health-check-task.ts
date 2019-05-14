@@ -46,6 +46,9 @@ export class HealthCheckTask {
 
             const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
             if (expireTimeInSeconds < 120) {
+              /**
+               * send request to extend session if access token is about to expire instead popping window
+               */
               this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
             }
 
@@ -62,6 +65,10 @@ export class HealthCheckTask {
 
   }
 
+  /**
+   *
+   * instead this method write new one sending refresh token to /users/refresh
+   */
   private promptForPasswordAndTryToExtendSession(expireTimeInSeconds) {
     const password = prompt('Your session will expire in ' + expireTimeInSeconds
       + ' seconds, please enter a password to extend it.', '');

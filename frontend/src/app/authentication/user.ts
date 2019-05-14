@@ -1,4 +1,7 @@
-﻿export class User {
+﻿/**
+ * Update this class to store refresh token
+ */
+export class User {
   id: number;
   username: string;
   password: string;

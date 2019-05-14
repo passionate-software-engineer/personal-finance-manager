@@ -14,6 +14,11 @@ public class TokenService {
 
   private HashMap<String, Token> tokens = new HashMap<>();
 
+  /**   [LOGGING IN]
+   * possibly need method like generateTokens (both access and refresh) to return it to userService
+   * @param user
+   * @return
+   */
   public Token generateToken(User user) {
 
     UUID uuid = UUID.randomUUID();

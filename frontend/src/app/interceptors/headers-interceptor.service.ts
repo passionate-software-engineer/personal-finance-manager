@@ -14,10 +14,19 @@ export class HeadersInterceptor implements HttpInterceptor {
 
     // add authorization header with jwt token if available
     const currentUser = this.authenticationService.getLoggedInUser();
-    if (currentUser && currentUser.token) {
+    /**
+     * check presence of refresh token? - possibly not as refresh will be required when we need to extend session
+     *
+     * if(currentuser && accessToken  - while we want to extend session
+     * Authorization: `${currentUser.refreshToken}`,  ?
+     */
+    if (currentUser && currentUser.token) {    // if(logged-in)
 
       request = request.clone({
         setHeaders: {
+          /**
+           * append refreshToken to header, but not here I think, as refresh will be required when we need to extend session
+           */
           Authorization: `${currentUser.token}`,
           'Correlation-Id': uuid(),
           'Language': localStorage.getItem('language')

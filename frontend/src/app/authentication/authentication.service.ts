@@ -21,10 +21,17 @@ export class AuthenticationService {
     this.currentUserSource.next(user);
   }
 
+  /**
+   *  [LOGGING IN] Here I expect refresh token as well, need to store it along with access token
+   *
+   *   */
   public login(username: string, password: string) {
     return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, {username: username, password: password})
                .pipe(map(user => {
                  // login successful if there's a jwt token in the response
+                 /**
+                  * [LOGGING IN] check presence of refresh token as well
+                  */
                  if (user && user.token) {
                    // store user details and jwt token in local storage to keep user logged in between page refreshes
                    localStorage.setItem('currentUser', JSON.stringify(user));

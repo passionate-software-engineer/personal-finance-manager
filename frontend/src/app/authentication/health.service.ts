@@ -14,6 +14,9 @@ export class HealthService extends ServiceBase {
     super(http);
   }
 
+  /**
+   * sends to /actuator/health
+   */
   getHealthStatus(): Observable<string> {
     return this.http.get<string>(ServiceBase.apiUrl(PATH));
   }
