@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {HealthService} from './health.service';
+import {UserService} from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class HealthCheckTask {
     private ngZone: NgZone,
     private healthService: HealthService,
     private translate: TranslateService,
-    private alertService: AlertsService) {
+    private alertService: AlertsService,
+    private userService: UserService) {
 
     authenticationService.currentUserObservable.subscribe(user => {
       if (user.token != null) {
@@ -40,6 +42,10 @@ export class HealthCheckTask {
           // no need to do anything - error handler will do the job
           this.healthService.getHealthStatus()
               .subscribe();
+
+          this.userService.extendToken('hello from frontend')
+          .subscribe();
+
 
           const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
           if (tokenExpirationTime != null) {

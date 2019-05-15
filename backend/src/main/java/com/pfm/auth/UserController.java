@@ -51,5 +51,11 @@ public class UserController { // TODO extract API interface
 
     return ResponseEntity.ok(userId);
   }
+
+  @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+  public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
+    return ResponseEntity.ok(refreshToken);
+  }
+
 }
 
