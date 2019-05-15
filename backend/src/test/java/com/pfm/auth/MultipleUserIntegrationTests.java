@@ -378,7 +378,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, "Wrong token")
+            .header(HttpHeaders.AUTHORIZATION, "Wrong accessToken")
             .content(json(convertAccountToAccountRequest(accountJacekBalance1000())))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isUnauthorized());

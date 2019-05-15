@@ -16,6 +16,8 @@ public final class UserDetails {
   private String username;
   private String firstName;
   private String lastName;
-  private String token;
-  private ZonedDateTime tokenExpirationTime;
+  private String accessToken;
+  private ZonedDateTime accessTokenExpirationTime;
+  private String refreshToken;
+  private ZonedDateTime refreshTokenExpirationTime;
 }

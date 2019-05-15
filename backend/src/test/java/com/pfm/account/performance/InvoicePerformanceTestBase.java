@@ -177,7 +177,7 @@ public abstract class InvoicePerformanceTestBase {
         .getBody()
         .print();
 
-    return jsonToAuthResponse(response).getToken();
+    return jsonToAuthResponse(response).getAccessToken();
   }
 
   AccountRequest convertAccountToAccountRequest(Account account) {

@@ -447,7 +447,7 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
-    return jsonToAuthResponse(response).getToken();
+    return jsonToAuthResponse(response).getAccessToken();
   }
 
   public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {

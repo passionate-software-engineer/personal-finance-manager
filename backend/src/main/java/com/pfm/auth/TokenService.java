@@ -14,12 +14,10 @@ public class TokenService {
 
   private HashMap<String, Token> tokens = new HashMap<>();
 
-  /**   [LOGGING IN]
-   * possibly need method like generateTokens (both access and refresh) to return it to userService
-   *
-   *
+  /**
+   * [LOGGING IN] possibly need method like generateTokens (both access and refresh) to return it to userService
    */
-  public Token generateToken(User user) {
+  public Token generateAccessToken(User user) {
 
     UUID uuid = UUID.randomUUID();
     Token token = new Token(uuid.toString(), user.getId(), ZonedDateTime.now().plusMinutes(15));
@@ -27,14 +25,14 @@ public class TokenService {
     return token;
   }
 
-  public boolean validateToken(String token) {
+  public boolean validateAccessToken(String token) {
     Token tokenFromDb = tokens.get(token);
 
     if (tokenFromDb == null) {
       return false;
     }
 
-    ZonedDateTime expiryDate = tokenFromDb.getExpiryDate();
+    ZonedDateTime expiryDate = tokenFromDb.getRefreshTokenExpiryDate();
     if (expiryDate == null) {
       tokens.remove(token);
       throw new IllegalStateException("Token expiry time does not exist");
@@ -43,14 +41,17 @@ public class TokenService {
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
-  public long getUserIdBasedOnToken(String token) {
+  public long getUserIdBasedOnAccessToken(String token) {
     Token tokenFromDb = tokens.get(token);
 
     if (tokenFromDb == null) {
-      throw new IllegalStateException("Provided token does not exist");
+      throw new IllegalStateException("Provided accessToken does not exist");
     }
 
     return tokenFromDb.getUserId();
   }
 
+  public String generateAccessToken(String refreshToken) {
+    return null;
+  }
 }

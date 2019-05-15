@@ -22,6 +22,7 @@ public class UserController { // TODO extract API interface
   private UserService userService;
   private UserValidator userValidator;
   private UserInitializationService userInitializationService;
+  private TokenService tokenService;
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
@@ -54,6 +55,7 @@ public class UserController { // TODO extract API interface
 
   @RequestMapping(value = "/refresh", method = RequestMethod.POST)
   public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
+    String newAccessToken= tokenService.generateAccessToken(refreshToken);
     return ResponseEntity.ok(refreshToken);
   }
 

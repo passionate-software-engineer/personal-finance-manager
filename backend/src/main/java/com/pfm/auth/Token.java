@@ -8,8 +8,9 @@ import lombok.Getter;
 @Getter
 class Token {
 
-  private String token;
   private long userId;
-  private ZonedDateTime expiryDate;
-
+  private String accessToken;
+  private ZonedDateTime accessTokenExpiryDate;
+  private String refreshToken;
+  private ZonedDateTime refreshTokenExpiryDate;
 }

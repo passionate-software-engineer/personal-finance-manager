@@ -24,12 +24,12 @@ export class AuthenticationService {
   public login(username: string, password: string) {
     return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, {username: username, password: password})
                .pipe(map(user => {
-                 // login successful if there's a jwt token in the response
+                 // login successful if there's a jwt accessToken in the response
                  /**
-                  * [LOGGING IN] I expect refresh token being returned along with accessToken, on successful login, but I think
+                  * [LOGGING IN] I expect refresh accessToken being returned along with accessToken, on successful login, but I think
                   */
-                 if (user && user.token) {
-                   // store user details and jwt token in local storage to keep user logged in between page refreshes
+                 if (user && user.accessToken) {
+                   // store user details and jwt accessToken in local storage to keep user logged in between page refreshes
                    localStorage.setItem('currentUser', JSON.stringify(user));
                    this.updateCurrentUser(user);
                  }
@@ -55,6 +55,6 @@ export class AuthenticationService {
   }
 
   public isUserLoggedIn(): boolean {
-    return this.getLoggedInUser().token != null;
+    return this.getLoggedInUser().accessToken != null;
   }
 }

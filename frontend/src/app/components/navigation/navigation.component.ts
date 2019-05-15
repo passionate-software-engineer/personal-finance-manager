@@ -34,7 +34,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authenticationService.getLoggedInUser();
-    if (this.currentUser.token != null) { // TODO ugly trick to notify health check to start on page load when user is signed in
+    if (this.currentUser.accessToken != null) { // TODO ugly trick to notify health check to start on page load when user is signed in
       this.authenticationService.updateCurrentUser(this.currentUser);
     }
   }

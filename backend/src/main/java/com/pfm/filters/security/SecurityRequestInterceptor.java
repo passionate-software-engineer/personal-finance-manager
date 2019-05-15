@@ -50,13 +50,13 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
     }
 
     if (isTokenCorrect(requestToken)) {
-      long userIdFromToken = tokenService.getUserIdBasedOnToken(requestToken);
+      long userIdFromToken = tokenService.getUserIdBasedOnAccessToken(requestToken);
       userProvider.setUser(userIdFromToken);
       return true;
     } else {
-      logger.error("Request token \"" + requestToken + "\" is incorrect");
+      logger.error("Request accessToken \"" + requestToken + "\" is incorrect");
       response.setContentType("text/plain");
-      response.getWriter().write("Request token \"" + requestToken + "\" is incorrect");
+      response.getWriter().write("Request accessToken \"" + requestToken + "\" is incorrect");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       response.setHeader("Access-Control-Allow-Origin", "*");
       return false;
@@ -70,6 +70,6 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
   }
 
   private boolean isTokenCorrect(String token) {
-    return tokenService.validateToken(token);
+    return tokenService.validateAccessToken(token);
   }
 }

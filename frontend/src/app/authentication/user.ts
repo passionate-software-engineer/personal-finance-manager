@@ -1,5 +1,5 @@
 ﻿/**
- * Update this class to store refresh token
+ * Update this class to store refresh accessToken
  */
 export class User {
   id: number;
@@ -7,6 +7,8 @@ export class User {
   password: string;
   firstName: string;
   lastName: string;
-  token: string;
-  tokenExpirationTime: string;
+  accessToken: string;
+  accessTokenExpirationTime: string;
+  refreshToken: string;
+  refershTokenExpirationTime: string;
 }

@@ -24,7 +24,7 @@ export class HealthCheckTask {
     private userService: UserService) {
 
     authenticationService.currentUserObservable.subscribe(user => {
-      if (user.token != null) {
+      if (user.accessToken != null) {
         this.startHealthCheckTask();
       } else {
         this.stopHealthCheckTask();
@@ -47,13 +47,13 @@ export class HealthCheckTask {
           .subscribe();
 
 
-          const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
+          const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
           if (tokenExpirationTime != null) {
 
             const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
             if (expireTimeInSeconds < 120) {
               /**
-               * send request to extend session if access token is about to expire instead of popping out window
+               * send request to extend session if access accessToken is about to expire instead of popping out window
                */
               this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
             }
@@ -73,7 +73,7 @@ export class HealthCheckTask {
 
   /**
    *
-   * instead this method write new one for sending refresh token to /users/refresh
+   * instead this method write new one for sending refresh accessToken to /users/refresh
    */
   private promptForPasswordAndTryToExtendSession(expireTimeInSeconds) {
     const password = prompt('Your session will expire in ' + expireTimeInSeconds
@@ -83,7 +83,7 @@ export class HealthCheckTask {
       this.authenticationService.login(username, password)
           .subscribe(
             data => {
-              const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
+              const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
               if (tokenExpirationTime != null) {
                 const expireTimeInMinutes = Math.round((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
                 alert('Your session was extended for next ' + expireTimeInMinutes + ' minutes, thank you.');

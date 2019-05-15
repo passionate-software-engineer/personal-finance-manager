@@ -23,7 +23,7 @@ public class TokenServiceTest {
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.validateToken(token.getToken()));
+        () -> tokenService.validateAccessToken(token.getToken()));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Token expiry time does not exist")));
@@ -36,7 +36,7 @@ public class TokenServiceTest {
     tokens.put(token.getToken(), token);
 
     //then
-    assertFalse(tokenService.validateToken(token.getToken()));
+    assertFalse(tokenService.validateAccessToken(token.getToken()));
   }
 
   @Test
@@ -47,10 +47,10 @@ public class TokenServiceTest {
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.getUserIdBasedOnToken("Not existing Token"));
+        () -> tokenService.getUserIdBasedOnAccessToken("Not existing Token"));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Provided token does not exist")));
+    assertThat(exception.getMessage(), is(equalTo("Provided accessToken does not exist")));
 
   }
 }
