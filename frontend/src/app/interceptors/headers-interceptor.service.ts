@@ -17,7 +17,7 @@ export class HeadersInterceptor implements HttpInterceptor {
     /**
      * check presence of refresh token? - possibly not as refresh will be required when we need to extend session
      *
-     * if(currentuser && accessToken  - while we want to extend session
+     * if(currentuser && accessToken  - when we want to extend session
      * Authorization: `${currentUser.refreshToken}`,  ?
      */
     if (currentUser && currentUser.token) {    // if(logged-in)
@@ -25,7 +25,8 @@ export class HeadersInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           /**
-           * append refreshToken to header, but not here I think, as refresh will be required when we need to extend session
+           * append refreshToken to header or replace refresh token with Refresh token, but not here I think, as refresh will be required when we
+           * need to extend session
            */
           Authorization: `${currentUser.token}`,
           'Correlation-Id': uuid(),

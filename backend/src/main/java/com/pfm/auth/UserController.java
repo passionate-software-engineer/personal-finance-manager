@@ -27,8 +27,7 @@ public class UserController { // TODO extract API interface
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
     Optional<UserDetails> authResponse = userService.authenticateUser(userToAuthenticate);
 /**
- * returnes response to Frontend   AuthenticationService.ts, method login
-
+ *[LOGGING IN] returns response to Frontend   AuthenticationService.ts, method login
  *
  */
     return authResponse.<ResponseEntity<?>>map(ResponseEntity::ok)

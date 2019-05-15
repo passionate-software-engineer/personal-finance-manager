@@ -32,7 +32,7 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
       return true;
     }
 /**
- *   when  from Frontend (user logs in)  ->  /users/authenticate mathches the pattern (true),
+ *   when  from Frontend (user logs in)  ->  /users/authenticate matches the pattern (true),
  *   request received by UserController (line 26)
  */
     if (request.getRequestURI().matches(pattern)) {
