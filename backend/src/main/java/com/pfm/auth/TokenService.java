@@ -69,6 +69,7 @@ public class TokenService {
     if (refreshToken == null) {
       throw new IllegalArgumentException("Provided user cannot be null");
     }
+
     long userId = getUserIdBasedOnRefreshToken(refreshToken);
     UUID newAccessTokenUuid = UUID.randomUUID();
     Tokens tokens = tokensStorage.get(userId);
@@ -95,7 +96,6 @@ public class TokenService {
     }
     ZonedDateTime expiryDate = tokensFromDb.getRefreshTokenExpiryDate();
     if (expiryDate == null) {
-      //removes
       tokensStorage.remove(tokensFromDb.getAccessToken());
       throw new IllegalStateException("RefreshToken expiry time does not exist");
     }

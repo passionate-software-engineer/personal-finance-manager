@@ -32,7 +32,7 @@ public class TokenServiceTest {
   }
 
   @Test
-  public void shouldReturnFalseCausedByExpiredToken() {
+  public void shouldReturnFalseCausedByExpiredAccessToken() {
     //given
     Tokens tokens = new Tokens(1L, "Tokens", ZonedDateTime.now());
     this.tokens.put(tokens.getAccessToken(), tokens);
@@ -68,6 +68,31 @@ public class TokenServiceTest {
 
     //then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken expiry time does not exist")));
+  }
+
+  @Test
+  public void shouldReturnFalseCausedByExpiredRefreshToken() {
+    //given
+    Tokens tokens = new Tokens(1L, "accessToken", ZonedDateTime.now().plusMinutes(15), "refreshToken", ZonedDateTime.now());
+    this.refreshTokenMap.put("refreshToken", tokens);
+
+    //then
+    assertFalse(tokenService.validateRefreshToken(tokens.getRefreshToken()));
+  }
+
+  @Test
+  public void shouldThrowExceptionCausedByNotExistingRefreshToken() {
+    //given
+    String token = "Fake Tokens";
+    this.refreshTokenMap.put(token,null);
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class,
+        () -> tokenService.getUserIdBasedOnRefreshToken("Not existing Tokens"));
+
+    //then
+    assertThat(exception.getMessage(), is(equalTo("Provided refreshToken does not exist")));
+
   }
 
 }
