@@ -22,15 +22,11 @@ public class TokenService {
 
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
-    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), refreshTokenUuid.toString(),
-        ZonedDateTime.now().plusMinutes(60));
+    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(2), refreshTokenUuid.toString(),
+        ZonedDateTime.now().plusMinutes(6));
     tokensStorage.put(tokens.getAccessToken(), tokens);
     refreshTokenMap.put(tokens.getRefreshToken(), tokens);
 
-    boolean isRefreshContained = refreshTokenMap.containsKey(tokens.getRefreshToken());
-   Tokens fromMapTokens = refreshTokenMap.get(tokens.getRefreshToken());
-    boolean isRefreshContainedValue = refreshTokenMap.containsValue(tokens.getRefreshToken());
-    //boolean isRefreshContained2 = tokensStorage.containsValue(refreshToken);
     return tokens;
   }
 
@@ -81,7 +77,7 @@ public class TokenService {
       throw new IllegalStateException("Provided user does not exist");
     }
 
-    Tokens tokensToUpdate = new Tokens(userId, newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), tokens.getRefreshToken(),
+    Tokens tokensToUpdate = new Tokens(userId, newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(2), tokens.getRefreshToken(),
         tokens.getRefreshTokenExpiryDate());
 
     tokensStorage.put(tokensToUpdate.getAccessToken(), tokensToUpdate);
@@ -93,9 +89,6 @@ public class TokenService {
     if (refreshToken == null) {
       throw new IllegalStateException("Provided refreshToken does not exist");
     }
-    boolean isRefreshContained = refreshTokenMap.containsKey(refreshToken);
-    boolean isRefreshContainedValue = refreshTokenMap.containsValue(refreshToken);
-    boolean isRefreshContained2 = tokensStorage.containsValue(refreshToken);
 
     Tokens tokensFromDb = refreshTokenMap.get(refreshToken);
 

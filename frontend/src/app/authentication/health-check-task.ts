@@ -43,10 +43,6 @@ export class HealthCheckTask {
           this.healthService.getHealthStatus()
               .subscribe();
 
-          this.userService.extendToken('hello from frontend')
-          .subscribe();
-
-
           const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
           if (tokenExpirationTime != null) {
 
@@ -55,7 +51,10 @@ export class HealthCheckTask {
               /**
                * send request to extend session if access accessToken is about to expire instead of popping out window
                */
-              this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
+             // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
+              const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+              this.userService.extendToken(currentUser.refreshToken)
+                  .subscribe();
             }
 
             if (new Date(tokenExpirationTime) < new Date()) {
