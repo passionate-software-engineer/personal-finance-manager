@@ -223,4 +223,42 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))));
   }
 
+  @Test
+  public void shouldReturnUnauthorizedForNullRefreshTokenDuringRefreshRequest() throws Exception {
+//given
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(null)))
+        .andExpect(status().isUnauthorized());
+
+    //then
+
+
+
+  /* mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(user)))
+      .andExpect(status().isBadRequest())
+      .andExpect(jsonPath("$", hasSize(1)))
+      .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
+    */
+  }
+
+  @Test
+  public void shouldReturnOkOnSuccessfulRefreshRequest() throws Exception {
+//given
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(token)))
+        .andExpect(status().isOk());
+
+  }
 }

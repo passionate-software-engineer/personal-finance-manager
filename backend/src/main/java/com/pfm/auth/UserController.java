@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,14 +56,11 @@ public class UserController { // TODO extract API interface
 
   @RequestMapping(value = "/refresh", method = RequestMethod.POST)
   public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
-    if (refreshToken == null) {
-      return ResponseEntity.badRequest().body("nulllllllll refressssshhToken");
-    }
     if (!tokenService.validateRefreshToken(refreshToken)) {
-
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     String newAccessToken = tokenService.generateAccessToken(refreshToken);
-    return ResponseEntity.ok(refreshToken);
+    return ResponseEntity.ok(newAccessToken);
   }
 
 }
