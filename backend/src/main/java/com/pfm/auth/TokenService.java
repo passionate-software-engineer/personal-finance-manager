@@ -25,13 +25,17 @@ public class TokenService {
     Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), refreshTokenUuid.toString(),
         ZonedDateTime.now().plusMinutes(60));
     tokensStorage.put(tokens.getAccessToken(), tokens);
-    refreshTokenMap.put(refreshTokenUuid.toString(), tokens);
+    refreshTokenMap.put(tokens.getRefreshToken(), tokens);
+
+    boolean isRefreshContained = refreshTokenMap.containsKey(tokens.getRefreshToken());
+   Tokens fromMapTokens = refreshTokenMap.get(tokens.getRefreshToken());
+    boolean isRefreshContainedValue = refreshTokenMap.containsValue(tokens.getRefreshToken());
+    //boolean isRefreshContained2 = tokensStorage.containsValue(refreshToken);
     return tokens;
   }
 
   public boolean validateAccessToken(String token) {
     Tokens tokensFromDb = tokensStorage.get(token);
-
     if (tokensFromDb == null) {
       return false;
     }
@@ -72,7 +76,7 @@ public class TokenService {
 
     long userId = getUserIdBasedOnRefreshToken(refreshToken);
     UUID newAccessTokenUuid = UUID.randomUUID();
-    Tokens tokens = tokensStorage.get(userId);
+    Tokens tokens = refreshTokenMap.get(refreshToken);
     if (tokens == null) {
       throw new IllegalStateException("Provided user does not exist");
     }
@@ -89,6 +93,10 @@ public class TokenService {
     if (refreshToken == null) {
       throw new IllegalStateException("Provided refreshToken does not exist");
     }
+    boolean isRefreshContained = refreshTokenMap.containsKey(refreshToken);
+    boolean isRefreshContainedValue = refreshTokenMap.containsValue(refreshToken);
+    boolean isRefreshContained2 = tokensStorage.containsValue(refreshToken);
+
     Tokens tokensFromDb = refreshTokenMap.get(refreshToken);
 
     if (tokensFromDb == null) {

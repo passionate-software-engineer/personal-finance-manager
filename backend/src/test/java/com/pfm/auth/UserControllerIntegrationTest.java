@@ -225,7 +225,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedForNullRefreshTokenDuringRefreshRequest() throws Exception {
-//given
+    //given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -250,14 +250,15 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnOkOnSuccessfulRefreshRequest() throws Exception {
-//given
+    //given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
-    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+    Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
+    String refreshToken= tokens.getRefreshToken();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(token)))
+        .content(refreshToken))
         .andExpect(status().isOk());
 
   }

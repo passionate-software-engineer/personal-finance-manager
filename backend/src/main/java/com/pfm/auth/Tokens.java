@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+public
 class Tokens {
 
   private long userId;
