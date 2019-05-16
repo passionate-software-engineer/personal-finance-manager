@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 public class TokenServiceTest {
 
   private final HashMap<String, Tokens> tokens = new HashMap<>();
-  private final TokenService tokenService = new TokenService(tokens);
+  private HashMap<String, Tokens> refreshTokenMap = new HashMap<>();
+
+  private final TokenService tokenService = new TokenService(tokens, refreshTokenMap);
 
   @Test
   public void shouldThrowExceptionCausedByNullAccessTokenExpiryTime() {
@@ -53,4 +55,19 @@ public class TokenServiceTest {
     assertThat(exception.getMessage(), is(equalTo("Provided accessToken does not exist")));
 
   }
+
+  @Test
+  public void shouldThrowExceptionCausedByNullRefreshTokenExpiryTime() {
+    //given
+    Tokens tokens = new Tokens(1L, "accessToken", ZonedDateTime.now().plusMinutes(15), "refreshToken", null);
+    this.refreshTokenMap.put("refreshToken",tokens);
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class,
+        () -> tokenService.validateRefreshToken(tokens.getRefreshToken()));
+
+    //then
+    assertThat(exception.getMessage(), is(equalTo("RefreshToken expiry time does not exist")));
+  }
+
 }

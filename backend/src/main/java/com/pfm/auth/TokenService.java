@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
   private HashMap<String, Tokens> tokensStorage = new HashMap<>();
+  private HashMap<String, Tokens> refreshTokenMap = new HashMap<>();
 
   /**
    * [LOGGING IN] possibly need method like generateTokens (both access and refresh) to return it to userService
@@ -21,8 +22,10 @@ public class TokenService {
 
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
-    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15),refreshTokenUuid.toString(),ZonedDateTime.now().plusMinutes(60));
+    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), refreshTokenUuid.toString(),
+        ZonedDateTime.now().plusMinutes(60));
     tokensStorage.put(tokens.getAccessToken(), tokens);
+    refreshTokenMap.put(refreshTokenUuid.toString(), tokens);
     return tokens;
   }
 
@@ -42,8 +45,8 @@ public class TokenService {
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
-  public long getUserIdBasedOnAccessToken(String token) {
-    Tokens tokensFromDb = tokensStorage.get(token);
+  public long getUserIdBasedOnAccessToken(String accessToken) {
+    Tokens tokensFromDb = tokensStorage.get(accessToken);
 
     if (tokensFromDb == null) {
       throw new IllegalStateException("Provided accessToken does not exist");
@@ -52,7 +55,53 @@ public class TokenService {
     return tokensFromDb.getUserId();
   }
 
-  public String generateAccessToken(String refreshToken) {
-    return null;
+  public long getUserIdBasedOnRefreshToken(String refreshToken) {
+    Tokens tokensFromDb = refreshTokenMap.get(refreshToken);
+
+    if (tokensFromDb == null) {
+      throw new IllegalStateException("Provided refreshToken does not exist");
+    }
+
+    return tokensFromDb.getUserId();
   }
+
+  public String generateAccessToken(String refreshToken) {
+    if (refreshToken == null) {
+      throw new IllegalArgumentException("Provided user cannot be null");
+    }
+    long userId = getUserIdBasedOnRefreshToken(refreshToken);
+    UUID newAccessTokenUuid = UUID.randomUUID();
+    Tokens tokens = tokensStorage.get(userId);
+    if (tokens == null) {
+      throw new IllegalStateException("Provided user does not exist");
+    }
+
+    Tokens tokensToUpdate = new Tokens(userId, newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), tokens.getRefreshToken(),
+        tokens.getRefreshTokenExpiryDate());
+
+    tokensStorage.put(tokensToUpdate.getAccessToken(), tokensToUpdate);
+    refreshTokenMap.put(tokensToUpdate.getRefreshToken(), tokensToUpdate);
+    return tokensToUpdate.getAccessToken();
+  }
+
+  public boolean validateRefreshToken(String refreshToken) {
+    if (refreshToken == null) {
+      throw new IllegalStateException("Provided refreshToken does not exist");
+    }
+    Tokens tokensFromDb = refreshTokenMap.get(refreshToken);
+
+    if (tokensFromDb == null) {
+      return false;
+    }
+    ZonedDateTime expiryDate = tokensFromDb.getRefreshTokenExpiryDate();
+    if (expiryDate == null) {
+      //removes
+      tokensStorage.remove(tokensFromDb.getAccessToken());
+      throw new IllegalStateException("RefreshToken expiry time does not exist");
+    }
+
+    return expiryDate.isAfter(ZonedDateTime.now());
+
+  }
+
 }
