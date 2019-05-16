@@ -93,7 +93,7 @@ public abstract class InvoicePerformanceTestBase {
         .contentType(ContentType.JSON)
         .body(defaultUser)
         .post(usersServicePath() + "/register");
-    token = authenticateUserAndGetToken(defaultUser);
+    token = authenticateUserAndgetAccessToken(defaultUser);
 
     Currency[] currencies = getCurrencies();
 
@@ -169,7 +169,7 @@ public abstract class InvoicePerformanceTestBase {
     return mapper.writeValueAsString(object);
   }
 
-  private String authenticateUserAndGetToken(User user) throws Exception {
+  private String authenticateUserAndgetAccessToken(User user) throws Exception {
     String response = given()
         .contentType(ContentType.JSON)
         .body(json(user))

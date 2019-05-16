@@ -32,10 +32,10 @@ public class UserService {
 /** user successfully authenticated here
  * need to get refreshToken and return it ALONG with accessToken
  */
-    Token token = tokenService.generateAccessToken(userFromDb);
+    Tokens tokens = tokenService.generateTokens(userFromDb);
 
     UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
-        userFromDb.getLastName(), token.getAccessToken(), token.getAccessTokenExpiryDate(),token.getRefreshToken(),token.getRefreshTokenExpiryDate());
+        userFromDb.getLastName(), tokens.getAccessToken(), tokens.getAccessTokenExpiryDate(), tokens.getRefreshToken(), tokens.getRefreshTokenExpiryDate());
 
     return Optional.of(userDetails);
   }

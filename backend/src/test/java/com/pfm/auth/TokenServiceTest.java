@@ -12,42 +12,42 @@ import org.junit.jupiter.api.Test;
 
 public class TokenServiceTest {
 
-  private final HashMap<String, Token> tokens = new HashMap<>();
+  private final HashMap<String, Tokens> tokens = new HashMap<>();
   private final TokenService tokenService = new TokenService(tokens);
 
   @Test
-  public void shouldThrowExceptionCausedByNullExpiryTime() {
+  public void shouldThrowExceptionCausedByNullAccessTokenExpiryTime() {
     //given
-    Token token = new Token("Token", 1L, null);
-    tokens.put(token.getToken(), token);
+    Tokens tokens = new Tokens(1L, "accessToken", null);
+    this.tokens.put(tokens.getAccessToken(), tokens);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.validateAccessToken(token.getToken()));
+        () -> tokenService.validateAccessToken(tokens.getAccessToken()));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Token expiry time does not exist")));
+    assertThat(exception.getMessage(), is(equalTo("Tokens expiry time does not exist")));
   }
 
   @Test
   public void shouldReturnFalseCausedByExpiredToken() {
     //given
-    Token token = new Token("Token", 1L, ZonedDateTime.now());
-    tokens.put(token.getToken(), token);
+    Tokens tokens = new Tokens(1L, "Tokens", ZonedDateTime.now());
+    this.tokens.put(tokens.getAccessToken(), tokens);
 
     //then
-    assertFalse(tokenService.validateAccessToken(token.getToken()));
+    assertFalse(tokenService.validateAccessToken(tokens.getAccessToken()));
   }
 
   @Test
   public void shouldThrowExceptionCausedByNotExistingToken() {
     //given
-    String token = "Fake Token";
+    String token = "Fake Tokens";
     tokens.put(token, null);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.getUserIdBasedOnAccessToken("Not existing Token"));
+        () -> tokenService.getUserIdBasedOnAccessToken("Not existing Tokens"));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Provided accessToken does not exist")));

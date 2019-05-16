@@ -12,43 +12,44 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class TokenService {
 
-  private HashMap<String, Token> tokens = new HashMap<>();
+  private HashMap<String, Tokens> tokensStorage = new HashMap<>();
 
   /**
    * [LOGGING IN] possibly need method like generateTokens (both access and refresh) to return it to userService
    */
-  public Token generateAccessToken(User user) {
+  public Tokens generateTokens(User user) {
 
-    UUID uuid = UUID.randomUUID();
-    Token token = new Token(uuid.toString(), user.getId(), ZonedDateTime.now().plusMinutes(15));
-    tokens.put(token.getToken(), token);
-    return token;
+    UUID accessTokenUuid = UUID.randomUUID();
+    UUID refreshTokenUuid = UUID.randomUUID();
+    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15),refreshTokenUuid.toString(),ZonedDateTime.now().plusMinutes(60));
+    tokensStorage.put(tokens.getAccessToken(), tokens);
+    return tokens;
   }
 
   public boolean validateAccessToken(String token) {
-    Token tokenFromDb = tokens.get(token);
+    Tokens tokensFromDb = tokensStorage.get(token);
 
-    if (tokenFromDb == null) {
+    if (tokensFromDb == null) {
       return false;
     }
 
-    ZonedDateTime expiryDate = tokenFromDb.getRefreshTokenExpiryDate();
+    ZonedDateTime expiryDate = tokensFromDb.getAccessTokenExpiryDate();
     if (expiryDate == null) {
-      tokens.remove(token);
-      throw new IllegalStateException("Token expiry time does not exist");
+      tokensStorage.remove(token);
+      throw new IllegalStateException("Tokens expiry time does not exist");
     }
 
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
   public long getUserIdBasedOnAccessToken(String token) {
-    Token tokenFromDb = tokens.get(token);
+    Tokens tokensFromDb = tokensStorage.get(token);
 
-    if (tokenFromDb == null) {
+    if (tokensFromDb == null) {
       throw new IllegalStateException("Provided accessToken does not exist");
     }
 
-    return tokenFromDb.getUserId();
+    return tokensFromDb.getUserId();
   }
 
   public String generateAccessToken(String refreshToken) {
