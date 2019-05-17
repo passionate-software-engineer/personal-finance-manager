@@ -15,7 +15,7 @@ export class UserService {
   }
 
   extendToken(token: String) {
-    return this.http.post(`${environment.apiUrl}/users/refresh`, token);
+    return this.http.post<String>(`${environment.apiUrl}/users/refresh`, token);
   }
 
 }

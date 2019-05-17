@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -60,8 +61,17 @@ public class UserController { // TODO extract API interface
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     String newAccessToken = tokenService.generateAccessToken(refreshToken);
-    return ResponseEntity.ok(newAccessToken);
+    //return ResponseEntity.ok(newAccessToken);
+
+    return ResponseEntity.ok(new RefreshToken(newAccessToken));
+    //return ResponseEntity.ok(new User(1L,"lala","pass","name","lastname"));
   }
 
+  @AllArgsConstructor
+  @Data
+  public static class RefreshToken {
+
+    private String refreshToken;
+  }
 }
 
