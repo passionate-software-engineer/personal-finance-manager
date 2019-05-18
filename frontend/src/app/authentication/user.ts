@@ -10,5 +10,5 @@ export class User {
   accessToken: string;
   accessTokenExpirationTime: string;
   refreshToken: string;
-  refershTokenExpirationTime: string;
+  refreshTokenExpirationTime: string;
 }

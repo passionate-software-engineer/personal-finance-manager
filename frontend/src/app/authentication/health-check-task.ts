@@ -56,14 +56,17 @@ export class HealthCheckTask {
               this.userService.extendToken(currentUser.refreshToken)
                   .subscribe(
                     newAccessToken => {
-                      console.log('response token expiration time: ', newAccessToken.tokenExpiryDate),
-                      console.log('response token: ', newAccessToken.token),
+                      console.log('received token: ', newAccessToken.token),
+                      console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
+                      console.log('refresh token: ', currentUser.refreshToken),
+                      console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
+                      console.log(' '),
                         currentUser.accessToken = newAccessToken.token;
                       currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
                       localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                     },
-                    err => console.log('errror = ', err),
+                    err => console.log('error = ', err.toString()),
                   )
               ;
 
