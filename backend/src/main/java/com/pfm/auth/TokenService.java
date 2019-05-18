@@ -15,15 +15,12 @@ public class TokenService {
   private HashMap<String, Tokens> tokensStorage = new HashMap<>();
   private HashMap<String, Tokens> refreshTokenMap = new HashMap<>();
 
-  /**
-   * [LOGGING IN] possibly need method like generateTokens (both access and refresh) to return it to userService
-   */
   public Tokens generateTokens(User user) {
 
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
-    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(2), refreshTokenUuid.toString(),
-        ZonedDateTime.now().plusMinutes(6));
+    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(1), refreshTokenUuid.toString(),
+        ZonedDateTime.now().plusMinutes(2));
     tokensStorage.put(tokens.getAccessToken(), tokens);
     refreshTokenMap.put(tokens.getRefreshToken(), tokens);
 

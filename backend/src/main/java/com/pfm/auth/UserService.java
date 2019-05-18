@@ -29,9 +29,7 @@ public class UserService {
     if (!BCrypt.checkpw(userToAuthenticate.getPassword(), userFromDb.getPassword())) {
       return Optional.empty();
     }
-/** user successfully authenticated here
- * need to get refreshToken and return it ALONG with accessToken
- */
+
     Tokens tokens = tokenService.generateTokens(userFromDb);
 
     UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),

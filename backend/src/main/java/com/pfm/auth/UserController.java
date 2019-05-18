@@ -6,7 +6,6 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,10 +28,7 @@ public class UserController { // TODO extract API interface
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
     Optional<UserDetails> authResponse = userService.authenticateUser(userToAuthenticate);
-/**
- *[LOGGING IN] returns response to Frontend   AuthenticationService.ts, method login
- *
- */
+
     return authResponse.<ResponseEntity<?>>map(ResponseEntity::ok)
         .orElseGet(() ->
             ResponseEntity.badRequest().body(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT)));
@@ -61,15 +57,8 @@ public class UserController { // TODO extract API interface
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     Token newAccessToken = tokenService.generateAccessToken(refreshToken);
-    //return ResponseEntity.ok(newAccessToken);
 
     return ResponseEntity.ok(newAccessToken);
   }
 
-  @AllArgsConstructor
-  @Data
-  public static class RefreshToken {
-
-    private String refreshToken;
-  }
 }

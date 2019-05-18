@@ -48,28 +48,24 @@ export class HealthCheckTask {
 
             const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
             if (expireTimeInSeconds < 120) {
-              /**
-               * send request to extend session if access accessToken is about to expire instead of popping out window
-               */
-                // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
+
+              // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
               const currentUser = JSON.parse(localStorage.getItem('currentUser'));
               this.userService.extendToken(currentUser.refreshToken)
                   .subscribe(
                     newAccessToken => {
                       console.log('received token: ', newAccessToken.token),
-                      console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
-                      console.log('refresh token: ', currentUser.refreshToken),
-                      console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
-                      console.log(' '),
+                        console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
+                        console.log('refresh token: ', currentUser.refreshToken),
+                        console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
+                        console.log(' '),
                         currentUser.accessToken = newAccessToken.token;
                       currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
                       localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                     },
                     err => console.log('error = ', err.toString()),
-                  )
-              ;
-
+                  );
             }
 
             if (new Date(tokenExpirationTime) < new Date()) {
@@ -85,10 +81,6 @@ export class HealthCheckTask {
 
   }
 
-  /**
-   *
-   * instead this method write new one for sending refresh accessToken to /users/refresh
-   */
   private promptForPasswordAndTryToExtendSession(expireTimeInSeconds) {
     const password = prompt('Your session will expire in ' + expireTimeInSeconds
       + ' seconds, please enter a password to extend it.', '');

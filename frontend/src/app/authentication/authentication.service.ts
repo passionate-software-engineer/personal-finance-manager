@@ -25,9 +25,7 @@ export class AuthenticationService {
     return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, {username: username, password: password})
                .pipe(map(user => {
                  // login successful if there's a jwt accessToken in the response
-                 /**
-                  * [LOGGING IN] I expect refresh accessToken being returned along with accessToken, on successful login, but I think
-                  */
+
                  if (user && user.accessToken) {
                    // store user details and jwt accessToken in local storage to keep user logged in between page refreshes
                    localStorage.setItem('currentUser', JSON.stringify(user));
