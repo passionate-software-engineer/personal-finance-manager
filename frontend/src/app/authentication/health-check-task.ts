@@ -55,11 +55,15 @@ export class HealthCheckTask {
               const currentUser = JSON.parse(localStorage.getItem('currentUser'));
               this.userService.extendToken(currentUser.refreshToken)
                   .subscribe(
-                    res => console.log('response', res),
+                    newAccessToken => {
+                      console.log('response', newAccessToken),
+                        currentUser.accessToken = newAccessToken;
+                      localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-
+                    },
                     err => console.log('errror = ', err),
-                  );
+                  )
+              ;
 
             }
 
