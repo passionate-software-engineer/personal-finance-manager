@@ -60,11 +60,10 @@ public class UserController { // TODO extract API interface
     if (!tokenService.validateRefreshToken(refreshToken)) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    String newAccessToken = tokenService.generateAccessToken(refreshToken);
+    Token newAccessToken = tokenService.generateAccessToken(refreshToken);
     //return ResponseEntity.ok(newAccessToken);
 
-    return ResponseEntity.ok(new RefreshToken(newAccessToken));
-    //return ResponseEntity.ok(new User(1L,"lala","pass","name","lastname"));
+    return ResponseEntity.ok(newAccessToken);
   }
 
   @AllArgsConstructor
@@ -74,4 +73,3 @@ public class UserController { // TODO extract API interface
     private String refreshToken;
   }
 }
-

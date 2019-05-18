@@ -65,7 +65,7 @@ public class TokenService {
     return tokensFromDb.getUserId();
   }
 
-  public String generateAccessToken(String refreshToken) {
+  public Token generateAccessToken(String refreshToken) {
     if (refreshToken == null) {
       throw new IllegalArgumentException("Provided user cannot be null");
     }
@@ -82,7 +82,7 @@ public class TokenService {
 
     tokensStorage.put(tokensToUpdate.getAccessToken(), tokensToUpdate);
     refreshTokenMap.put(tokensToUpdate.getRefreshToken(), tokensToUpdate);
-    return tokensToUpdate.getAccessToken();
+    return new Token(tokensToUpdate.getAccessToken(), tokensToUpdate.getAccessTokenExpiryDate());
   }
 
   public boolean validateRefreshToken(String refreshToken) {
