@@ -46,32 +46,36 @@ export class HealthCheckTask {
           const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
           if (tokenExpirationTime != null) {
 
-            const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
-            if (expireTimeInSeconds < 120) {
+            if (true) {
 
-              // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
-              const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-              this.userService.extendToken(currentUser.refreshToken)
-                  .subscribe(
-                    newAccessToken => {
-                      console.log('received token: ', newAccessToken.token),
-                        console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
-                        console.log('refresh token: ', currentUser.refreshToken),
-                        console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
-                        console.log(' '),
-                        currentUser.accessToken = newAccessToken.token;
-                      currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
-                      localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                    },
-                    err => console.log('error = ', err.toString()),
-                  );
-            }
+              const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
+              if (expireTimeInSeconds < 120) {
 
-            if (new Date(tokenExpirationTime) < new Date()) {
-              this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-              this.authenticationService.logout();
-              this.alertService.error(this.translate.instant('message.loggedOut'));
+                // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                this.userService.extendToken(currentUser.refreshToken)
+                    .subscribe(
+                      newAccessToken => {
+                        console.log('received token: ', newAccessToken.token),
+                          console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
+                          console.log('refresh token: ', currentUser.refreshToken),
+                          console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
+                          console.log(' '),
+                          currentUser.accessToken = newAccessToken.token;
+                        currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                      },
+                      err => console.log('error = ', err.toString()),
+                    );
+              }
+
+              if (new Date(tokenExpirationTime) < new Date()) {
+                this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+                this.authenticationService.logout();
+                this.alertService.error(this.translate.instant('message.loggedOut'));
+              }
             }
           }
         });
