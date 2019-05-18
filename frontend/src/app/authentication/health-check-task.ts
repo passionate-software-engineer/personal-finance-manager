@@ -44,10 +44,11 @@ export class HealthCheckTask {
               .subscribe();
 
           const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-          if (tokenExpirationTime != null) {
+          const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+          const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
 
-            if (true) {
-
+          if (refreshTokenExpirationTimeInSeconds > 60) {
+            if (tokenExpirationTime != null) {
 
               const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
               if (expireTimeInSeconds < 120) {
@@ -77,6 +78,8 @@ export class HealthCheckTask {
                 this.alertService.error(this.translate.instant('message.loggedOut'));
               }
             }
+          } else {
+
           }
         });
 
