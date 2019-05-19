@@ -108,29 +108,28 @@ export class HealthCheckTask {
   }
 
   private promptForPasswordAndTryToExtendSession(expireTimeInSeconds?) {
-    const password = prompt('Your session will expire in ' + expireTimeInSeconds
-      + ' seconds, please enter a password to extend it.', '');
+    const password = prompt('Your session has expired, please enter a password to extend it.', '');
     if (password != null) {
       const username = this.authenticationService.getLoggedInUser().username;
       this.authenticationService.login(username, password)
           .subscribe(
             data => {
-              const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-              if (tokenExpirationTime != null) {
-                const expireTimeInMinutes = Math.round((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
-                alert('Your session was extended for next ' + expireTimeInMinutes + ' minutes, thank you.');
+              const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+              if (refreshTokenExpirationTime != null) {
+                const refreshTokenExpireTimeInMinutes = Math.round((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
+                alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
               }
             },
             error => {
-              this.terminateSessionAndNavigateToLoginRoute();
+              this.terminateSessionAndNavigateToLoginPage();
             });
     } else {
-     this.terminateSessionAndNavigateToLoginRoute();
+     this.terminateSessionAndNavigateToLoginPage();
 
     }
   }
 
-  private terminateSessionAndNavigateToLoginRoute() {
+  private terminateSessionAndNavigateToLoginPage() {
     this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
     this.authenticationService.logout();
     this.alertService.error(this.translate.instant('message.loggedOut'));
