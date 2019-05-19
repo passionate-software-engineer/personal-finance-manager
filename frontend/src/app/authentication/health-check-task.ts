@@ -13,6 +13,8 @@ import {UserService} from './user.service';
 export class HealthCheckTask {
 
   private healthCheckTask: Subscription;
+  private isSessionExtensionInProgress = false;
+  private number = 0;
 
   constructor(
     private router: Router,
@@ -47,18 +49,20 @@ export class HealthCheckTask {
           const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
           const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
 
-          if (refreshTokenExpirationTimeInSeconds > 60) {
+          if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 10) {
             if (tokenExpirationTime != null) {
 
               const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
-              if (expireTimeInSeconds < 120) {
+              if (expireTimeInSeconds < 30) {
+                this.isSessionExtensionInProgress = false;
 
                 // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 this.userService.extendToken(currentUser.refreshToken)
                     .subscribe(
                       newAccessToken => {
-                        console.log('received token: ', newAccessToken.token),
+                        console.log('number: ', ++this.number),
+                          console.log('received token: ', newAccessToken.token),
                           console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
                           console.log('refresh token: ', currentUser.refreshToken),
                           console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
@@ -79,7 +83,12 @@ export class HealthCheckTask {
               }
             }
           } else {
+            if (!this.isSessionExtensionInProgress) {
+              this.isSessionExtensionInProgress = true;
+              console.log('wndow: ', ++this.number),
 
+                this.promptForPasswordAndTryToExtendSession();
+            }
           }
         });
 
@@ -88,7 +97,7 @@ export class HealthCheckTask {
 
   }
 
-  private promptForPasswordAndTryToExtendSession(expireTimeInSeconds) {
+  private promptForPasswordAndTryToExtendSession(expireTimeInSeconds?) {
     const password = prompt('Your session will expire in ' + expireTimeInSeconds
       + ' seconds, please enter a password to extend it.', '');
     if (password != null) {
@@ -103,7 +112,8 @@ export class HealthCheckTask {
               }
             },
             error => {
-              alert('Provided credentials were invalid, please try again on next prompt.');
+              alert('Provided credentials were invalid. Logging out');
+              this.authenticationService.logout();
             });
     }
   }
