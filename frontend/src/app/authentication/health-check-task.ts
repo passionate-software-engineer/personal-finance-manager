@@ -13,9 +13,9 @@ import {UserService} from './user.service';
 export class HealthCheckTask {
 
   private healthCheckTask: Subscription;
-  private isSessionExtensionInProgress = false;
   private number = 0;
   private healthCheckTaskCounter = 0;
+  private isPromptAlreadyOnScreen = false;
 
   constructor(
     private router: Router,
@@ -39,7 +39,7 @@ export class HealthCheckTask {
 
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(10 * 1000)
+      this.healthCheckTask = interval(5 * 1000)
       .subscribe(eventNumber => {
         console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
@@ -55,6 +55,9 @@ export class HealthCheckTask {
             const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
 
             if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 10) {
+
+              this.isPromptAlreadyOnScreen = false;
+
               console.log('       refreshToken expiration > 10');
               console.log('');
 
@@ -62,7 +65,6 @@ export class HealthCheckTask {
 
                 const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
                 if (expireTimeInSeconds < 30) {
-                  this.isSessionExtensionInProgress = false;
 
                   // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
                   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -92,11 +94,10 @@ export class HealthCheckTask {
                 }
               }
             } else {
-              if (this.authenticationService.isUserLoggedIn() && !this.isSessionExtensionInProgress) {
-                this.isSessionExtensionInProgress = true;
+              if (this.authenticationService.isUserLoggedIn() && !this.isPromptAlreadyOnScreen) {
                 console.log('window: ', ++this.number),
-
-                  this.promptForPasswordAndTryToExtendSession();
+                  this.isPromptAlreadyOnScreen = true;
+                this.promptForPasswordAndTryToExtendSession();
               }
             }
           });
