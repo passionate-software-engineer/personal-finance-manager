@@ -27,21 +27,19 @@ export class HealthCheckTask {
     private userService: UserService) {
 
     authenticationService.currentUserObservable.subscribe(user => {
-      if (user.accessToken != null) {
+      if (user.accessToken != null && this.healthCheckTask == null) {
         this.startHealthCheckTask();
-      } else {
+      } else if (user.accessToken == null) {
         this.stopHealthCheckTask();
       }
     });
   }
 
   private startHealthCheckTask(): void {
-//fixme should not logoyt here
-    this.authenticationService.logout();
 
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(5 * 1000)
+      this.healthCheckTask = interval(10 * 1000)
       .subscribe(eventNumber => {
         console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
@@ -67,7 +65,7 @@ export class HealthCheckTask {
                   this.isSessionExtensionInProgress = false;
 
                   // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
-                  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
                   this.userService.extendToken(currentUser.refreshToken)
                       .subscribe(
                         newAccessToken => {
@@ -79,7 +77,8 @@ export class HealthCheckTask {
                             console.log(' '),
                             currentUser.accessToken = newAccessToken.token;
                           currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
-                          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                          sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                         },
                         err => console.log('error = ', err.toString()),
@@ -130,5 +129,6 @@ export class HealthCheckTask {
 
   private stopHealthCheckTask(): void {
     this.healthCheckTask.unsubscribe();
+    this.healthCheckTask = null;
   }
 }
