@@ -15,6 +15,7 @@ export class HealthCheckTask {
   private healthCheckTask: Subscription;
   private isSessionExtensionInProgress = false;
   private number = 0;
+  private healthCheckTaskCounter = 0;
 
   constructor(
     private router: Router,
@@ -35,62 +36,71 @@ export class HealthCheckTask {
   }
 
   private startHealthCheckTask(): void {
+//fixme should not logoyt here
+    this.authenticationService.logout();
+
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
       this.healthCheckTask = interval(5 * 1000)
       .subscribe(eventNumber => {
+        console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
-        this.ngZone.run(() => {
-          // no need to do anything - error handler will do the job
-          this.healthService.getHealthStatus()
-              .subscribe();
+          this.ngZone.run(() => {
+            console.log('    ng-Zone.run'),
 
-          const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-          const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
-          const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
+              // no need to do anything - error handler will do the job
+              this.healthService.getHealthStatus()
+                  .subscribe();
 
-          if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 10) {
-            if (tokenExpirationTime != null) {
+            const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
+            const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+            const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
 
-              const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
-              if (expireTimeInSeconds < 30) {
-                this.isSessionExtensionInProgress = false;
+            if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 10) {
+              console.log('       refreshToken expiration > 10');
+              console.log('');
 
-                // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                this.userService.extendToken(currentUser.refreshToken)
-                    .subscribe(
-                      newAccessToken => {
-                        console.log('number: ', ++this.number),
-                          console.log('received token: ', newAccessToken.token),
-                          console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
-                          console.log('refresh token: ', currentUser.refreshToken),
-                          console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
-                          console.log(' '),
-                          currentUser.accessToken = newAccessToken.token;
-                        currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
-                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+              if (tokenExpirationTime != null) {
 
-                      },
-                      err => console.log('error = ', err.toString()),
-                    );
+                const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
+                if (expireTimeInSeconds < 30) {
+                  this.isSessionExtensionInProgress = false;
+
+                  // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
+                  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                  this.userService.extendToken(currentUser.refreshToken)
+                      .subscribe(
+                        newAccessToken => {
+                          console.log('number: ', ++this.number),
+                            console.log('received token: ', newAccessToken.token),
+                            console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
+                            console.log('refresh token: ', currentUser.refreshToken),
+                            console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
+                            console.log(' '),
+                            currentUser.accessToken = newAccessToken.token;
+                          currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
+                          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                        },
+                        err => console.log('error = ', err.toString()),
+                      );
+                }
+
+                if (new Date(tokenExpirationTime) < new Date()) {
+                  this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+                  this.authenticationService.logout();
+                  this.alertService.error(this.translate.instant('message.loggedOut'));
+                }
               }
+            } else {
+              if (this.authenticationService.isUserLoggedIn() && !this.isSessionExtensionInProgress) {
+                this.isSessionExtensionInProgress = true;
+                console.log('window: ', ++this.number),
 
-              if (new Date(tokenExpirationTime) < new Date()) {
-                this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-                this.authenticationService.logout();
-                this.alertService.error(this.translate.instant('message.loggedOut'));
+                  this.promptForPasswordAndTryToExtendSession();
               }
             }
-          } else {
-            if (!this.isSessionExtensionInProgress) {
-              this.isSessionExtensionInProgress = true;
-              console.log('wndow: ', ++this.number),
-
-                this.promptForPasswordAndTryToExtendSession();
-            }
-          }
-        });
+          });
 
       });
     });
