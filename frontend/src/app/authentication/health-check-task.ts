@@ -15,7 +15,7 @@ export class HealthCheckTask {
   private healthCheckTask: Subscription;
   private number = 0;
   private healthCheckTaskCounter = 0;
-  private isPromptAlreadyOnScreen = false;
+  private isPromptAlreadyShowed = false;
 
   constructor(
     private router: Router,
@@ -56,7 +56,7 @@ export class HealthCheckTask {
 
             if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 10) {
 
-              this.isPromptAlreadyOnScreen = false;
+              this.isPromptAlreadyShowed = false;
 
               console.log('       refreshToken expiration > 10');
               console.log('');
@@ -67,7 +67,7 @@ export class HealthCheckTask {
                 if (expireTimeInSeconds < 30) {
 
                   // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
-                  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                   this.userService.extendToken(currentUser.refreshToken)
                       .subscribe(
                         newAccessToken => {
@@ -80,7 +80,7 @@ export class HealthCheckTask {
                             currentUser.accessToken = newAccessToken.token;
                           currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
 
-                          sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                          localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                         },
                         err => console.log('error = ', err.toString()),
@@ -94,9 +94,9 @@ export class HealthCheckTask {
                 }
               }
             } else {
-              if (this.authenticationService.isUserLoggedIn() && !this.isPromptAlreadyOnScreen) {
+              if (this.authenticationService.isUserLoggedIn() && !this.isPromptAlreadyShowed) {
                 console.log('window: ', ++this.number),
-                  this.isPromptAlreadyOnScreen = true;
+                  this.isPromptAlreadyShowed = true;
                 this.promptForPasswordAndTryToExtendSession();
               }
             }
@@ -122,10 +122,18 @@ export class HealthCheckTask {
               }
             },
             error => {
-              alert('Provided credentials were invalid. Logging out');
-              this.authenticationService.logout();
+              this.terminateSessionAndNavigateToLoginRoute();
             });
+    } else {
+     this.terminateSessionAndNavigateToLoginRoute();
+
     }
+  }
+
+  private terminateSessionAndNavigateToLoginRoute() {
+    this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+    this.authenticationService.logout();
+    this.alertService.error(this.translate.instant('message.loggedOut'));
   }
 
   private stopHealthCheckTask(): void {
