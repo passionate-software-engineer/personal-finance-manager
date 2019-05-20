@@ -39,7 +39,7 @@ export class HealthCheckTask {
 
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(5 * 1000)
+      this.healthCheckTask = interval(30 * 1000)
       .subscribe(eventNumber => {
         console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
@@ -54,7 +54,7 @@ export class HealthCheckTask {
             const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
             const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
 
-            if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 10) {
+            if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 15) {
 
               this.isPromptAlreadyShowed = false;
 
@@ -66,7 +66,6 @@ export class HealthCheckTask {
                 const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
                 if (expireTimeInSeconds < 30) {
 
-                  // this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
                   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                   this.userService.extendToken(currentUser.refreshToken)
                       .subscribe(
@@ -107,7 +106,7 @@ export class HealthCheckTask {
 
   }
 
-  private promptForPasswordAndTryToExtendSession(expireTimeInSeconds?) {
+  private promptForPasswordAndTryToExtendSession() {
     const password = prompt('Your session has expired, please enter a password to extend it.', '');
     if (password != null) {
       const username = this.authenticationService.getLoggedInUser().username;
