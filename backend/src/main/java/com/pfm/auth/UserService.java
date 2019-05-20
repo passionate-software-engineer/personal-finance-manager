@@ -33,7 +33,8 @@ public class UserService {
     Tokens tokens = tokenService.generateTokens(userFromDb);
 
     UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
-        userFromDb.getLastName(), tokens.getAccessToken(), tokens.getAccessTokenExpiryDate(), tokens.getRefreshToken(), tokens.getRefreshTokenExpiryDate());
+        userFromDb.getLastName(), tokens.getAccessToken(), tokens.getAccessTokenExpiryDate(), tokens.getRefreshToken(),
+        tokens.getRefreshTokenExpiryDate());
 
     return Optional.of(userDetails);
   }

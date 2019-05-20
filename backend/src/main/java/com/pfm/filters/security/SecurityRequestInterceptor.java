@@ -31,10 +31,7 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
     if ("OPTIONS".equals(request.getMethod())) {
       return true;
     }
-/**
- *   when  from Frontend (user logs in)  ->  /users/authenticate matches the pattern (true),
- *   request received by UserController (line 26)
- */
+
     if (request.getRequestURI().matches(pattern)) {
       return true;
     }

@@ -63,17 +63,11 @@ public class TokenService {
   }
 
   public Token generateAccessToken(String refreshToken) {
-    if (refreshToken == null) {
-      throw new IllegalArgumentException("Provided user cannot be null");
-    }
+    validateRefreshToken(refreshToken);
 
     long userId = getUserIdBasedOnRefreshToken(refreshToken);
-    UUID newAccessTokenUuid = UUID.randomUUID();
     Tokens tokens = refreshTokenMap.get(refreshToken);
-    if (tokens == null) {
-      throw new IllegalStateException("Provided user does not exist");
-    }
-
+    UUID newAccessTokenUuid = UUID.randomUUID();
     Tokens tokensToUpdate = new Tokens(userId, newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(2), tokens.getRefreshToken(),
         tokens.getRefreshTokenExpiryDate());
 
@@ -84,9 +78,8 @@ public class TokenService {
 
   public boolean validateRefreshToken(String refreshToken) {
     if (refreshToken == null) {
-      throw new IllegalStateException("Provided refreshToken does not exist");
+      throw new IllegalStateException("RefreshToken cannot be null");
     }
-
     Tokens tokensFromDb = refreshTokenMap.get(refreshToken);
 
     if (tokensFromDb == null) {
@@ -97,9 +90,7 @@ public class TokenService {
       tokensStorage.remove(tokensFromDb.getAccessToken());
       throw new IllegalStateException("RefreshToken expiry time does not exist");
     }
-
     return expiryDate.isAfter(ZonedDateTime.now());
-
   }
 
 }

@@ -96,7 +96,7 @@ export class HealthCheckTask {
             data => {
               const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
               if (refreshTokenExpirationTime != null) {
-                const refreshTokenExpireTimeInMinutes = Math.round(this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) / 60);
+                const refreshTokenExpireTimeInMinutes = this.getTokenExpirationTimeInMinutes(refreshTokenExpirationTime);
                 alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
               }
             },
@@ -105,8 +105,11 @@ export class HealthCheckTask {
             });
     } else {
       this.terminateSessionAndNavigateToLoginPage();
-
     }
+  }
+
+  private getTokenExpirationTimeInMinutes(refreshTokenExpirationTime) {
+    return Math.round(this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) / 60);
   }
 
   private getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) {
@@ -128,4 +131,3 @@ export class HealthCheckTask {
     this.healthCheckTask = null;
   }
 }
-

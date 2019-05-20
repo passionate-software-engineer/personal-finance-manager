@@ -6,8 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public
-class Tokens {
+public class Tokens {
 
   private long userId;
   private String accessToken;
@@ -19,7 +18,7 @@ class Tokens {
     this.userId = userId;
     this.accessToken = accessToken;
     this.accessTokenExpiryDate = accessTokenExpiryDate;
-    this.refreshToken="";
-    this.refreshTokenExpiryDate=ZonedDateTime.now();
+    this.refreshToken = "";
+    this.refreshTokenExpiryDate = ZonedDateTime.now();
   }
 }

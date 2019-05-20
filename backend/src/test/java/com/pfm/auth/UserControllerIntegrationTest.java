@@ -235,17 +235,6 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .content(json(null)))
         .andExpect(status().isUnauthorized());
 
-    //then
-
-
-
-  /* mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
-      .andExpect(status().isBadRequest())
-      .andExpect(jsonPath("$", hasSize(1)))
-      .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
-    */
   }
 
   @Test
@@ -253,7 +242,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     //given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
-    String refreshToken= tokens.getRefreshToken();
+    String refreshToken = tokens.getRefreshToken();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
