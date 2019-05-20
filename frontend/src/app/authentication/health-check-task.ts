@@ -37,95 +37,58 @@ export class HealthCheckTask {
 
   private startHealthCheckTask(): void {
 
+    function getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) {
+      return Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
+    }
+
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(30 * 1000)
-      .subscribe(eventNumber => {
-        console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
+        this.healthCheckTask = interval(30 * 1000)
+        .subscribe(eventNumber => {
+            console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
-          this.ngZone.run(() => {
-            console.log('    ng-Zone.run'),
+              this.ngZone.run(() => {
+                  console.log('    ng-Zone.run'),
 
-              // no need to do anything - error handler will do the job
-              this.healthService.getHealthStatus()
-                  .subscribe();
+                    // no need to do anything - error handler will do the job
+                    this.healthService.getHealthStatus()
+                        .subscribe();
 
-            const tokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-            const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
-            const refreshTokenExpirationTimeInSeconds = Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
+                  const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
+                  const accessTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(accessTokenExpirationTime);
 
-            if (this.authenticationService.getLoggedInUser() && refreshTokenExpirationTimeInSeconds > 15) {
+                  const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+                  const refreshTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(refreshTokenExpirationTime);
 
-              this.isPromptAlreadyShowed = false;
+                  if (this.authenticationService.getLoggedInUser()) {
+                    if (refreshTokenExpirationTimeInSeconds < 60) {
+                      this.promptForPasswordAndTryToExtendSession();
 
-              console.log('       refreshToken expiration > 10');
-              console.log('');
+                    } else if (accessTokenExpirationTimeInSeconds < 60) {
+                      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                      this.userService.extendToken(currentUser.refreshToken)
+                          .subscribe(
+                            newAccessToken => {
+                              currentUser.accessToken = newAccessToken.token;
+                              currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
 
-              if (tokenExpirationTime != null) {
-
-                const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
-                if (expireTimeInSeconds < 30) {
-
-                  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                  this.userService.extendToken(currentUser.refreshToken)
-                      .subscribe(
-                        newAccessToken => {
-                          console.log('number: ', ++this.number),
-                            console.log('received token: ', newAccessToken.token),
-                            console.log('received token expiration time: ', newAccessToken.tokenExpiryDate),
-                            console.log('refresh token: ', currentUser.refreshToken),
-                            console.log('refresh token expires at : ', currentUser.refreshTokenExpirationTime),
-                            console.log(' '),
-                            currentUser.accessToken = newAccessToken.token;
-                          currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
-
-                          localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                        },
-                        err => console.log('error = ', err.toString()),
-                      );
+                              localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                            },
+                            err => console.log('error = ', err.toString()),
+                          );
+                    }
+                  }
                 }
-
-                if (new Date(tokenExpirationTime) < new Date()) {
-                  this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-                  this.authenticationService.logout();
-                  this.alertService.error(this.translate.instant('message.loggedOut'));
-                }
-              }
-            } else {
-              if (this.authenticationService.isUserLoggedIn() && !this.isPromptAlreadyShowed) {
-                console.log('window: ', ++this.number),
-                  this.isPromptAlreadyShowed = true;
-                this.promptForPasswordAndTryToExtendSession();
-              }
-            }
-          });
-
-      });
-    });
-
+              );
+          }
+        );
+      }
+    );
   }
 
-  private promptForPasswordAndTryToExtendSession() {
-    const password = prompt('Your session has expired, please enter a password to extend it.', '');
-    if (password != null) {
-      const username = this.authenticationService.getLoggedInUser().username;
-      this.authenticationService.login(username, password)
-          .subscribe(
-            data => {
-              const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
-              if (refreshTokenExpirationTime != null) {
-                const refreshTokenExpireTimeInMinutes = Math.round((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
-                alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
-              }
-            },
-            error => {
-              this.terminateSessionAndNavigateToLoginPage();
-            });
-    } else {
-     this.terminateSessionAndNavigateToLoginPage();
 
-    }
+  private isExpired(date: string): boolean {
+    return new Date(date) < new Date();
   }
 
   private terminateSessionAndNavigateToLoginPage() {
@@ -139,3 +102,4 @@ export class HealthCheckTask {
     this.healthCheckTask = null;
   }
 }
+
