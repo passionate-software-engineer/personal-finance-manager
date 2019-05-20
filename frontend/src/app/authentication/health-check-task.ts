@@ -13,9 +13,6 @@ import {UserService} from './user.service';
 export class HealthCheckTask {
 
   private healthCheckTask: Subscription;
-  private number = 0;
-  private healthCheckTaskCounter = 0;
-  private isPromptAlreadyShowed = false;
 
   constructor(
     private router: Router,
@@ -37,59 +34,53 @@ export class HealthCheckTask {
 
   private startHealthCheckTask(): void {
 
-    function getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) {
-      return Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
-    }
-
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
         this.healthCheckTask = interval(5 * 1000)
         .subscribe(eventNumber => {
-            console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
-              this.ngZone.run(() => {
-                  console.log('    ng-Zone.run'),
+            this.ngZone.run(() => {
+                console.log('    ng-Zone.run'),
 
-                    // no need to do anything - error handler will do the job
-                    this.healthService.getHealthStatus()
-                        .subscribe();
+                  // no need to do anything - error handler will do the job
+                  this.healthService.getHealthStatus()
+                      .subscribe();
 
-                  const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-                  const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+                const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
+                const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
 
-                  if (this.isExpired(accessTokenExpirationTime) || this.isExpired(refreshTokenExpirationTime)) {
-                    this.terminateSessionAndNavigateToLoginPage();
-                  }
+                if (this.isExpired(accessTokenExpirationTime) || this.isExpired(refreshTokenExpirationTime)) {
+                  this.terminateSessionAndNavigateToLoginPage();
+                }
 
-                  const accessTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(accessTokenExpirationTime);
-                  const refreshTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(refreshTokenExpirationTime);
+                const accessTokenExpirationTimeInSeconds = this.getTokenExpirationTimeInSeconds(accessTokenExpirationTime);
+                const refreshTokenExpirationTimeInSeconds = this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime);
 
-                  if (this.authenticationService.getLoggedInUser()) {
-                    if (refreshTokenExpirationTimeInSeconds < 60) {
-                      if (this.healthCheckTask) {
-                        this.stopHealthCheckTask();
-                      }
-                      this.promptForPasswordAndTryToExtendSession();
-                      if (this.healthCheckTask == null) {
-                        this.startHealthCheckTask();
-                      }
-
-                    } else if (accessTokenExpirationTimeInSeconds < 60) {
-                      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                      this.userService.extendToken(currentUser.refreshToken)
-                          .subscribe(
-                            newAccessToken => {
-                              currentUser.accessToken = newAccessToken.token;
-                              currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
-
-                              localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                            },
-                            err => console.log('error = ', err.toString()),
-                          );
+                if (this.authenticationService.getLoggedInUser()) {
+                  if (refreshTokenExpirationTimeInSeconds < 60) {
+                    if (this.healthCheckTask) {
+                      this.stopHealthCheckTask();
                     }
+                    this.promptForPasswordAndTryToExtendSession();
+                    if (this.healthCheckTask == null) {
+                      this.startHealthCheckTask();
+                    }
+
+                  } else if (accessTokenExpirationTimeInSeconds < 60) {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    this.userService.extendToken(currentUser.refreshToken)
+                        .subscribe(
+                          newAccessToken => {
+                            currentUser.accessToken = newAccessToken.token;
+                            currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
+
+                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                          },
+                        );
                   }
                 }
-              );
+              }
+            );
           }
         );
       }
@@ -105,7 +96,7 @@ export class HealthCheckTask {
             data => {
               const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
               if (refreshTokenExpirationTime != null) {
-                const refreshTokenExpireTimeInMinutes = Math.round((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
+                const refreshTokenExpireTimeInMinutes = Math.round(this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) / 60);
                 alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
               }
             },
@@ -116,6 +107,10 @@ export class HealthCheckTask {
       this.terminateSessionAndNavigateToLoginPage();
 
     }
+  }
+
+  private getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) {
+    return Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
   }
 
   private isExpired(date: string): boolean {
