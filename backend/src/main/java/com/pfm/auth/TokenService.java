@@ -19,8 +19,8 @@ public class TokenService {
 
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
-    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), refreshTokenUuid.toString(),
-        ZonedDateTime.now().plusMinutes(60));
+    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(2), refreshTokenUuid.toString(),
+        ZonedDateTime.now().plusMinutes(3));
     tokensStorage.put(tokens.getAccessToken(), tokens);
     refreshTokenMap.put(tokens.getRefreshToken(), tokens);
 

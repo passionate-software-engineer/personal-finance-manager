@@ -43,7 +43,7 @@ export class HealthCheckTask {
 
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-        this.healthCheckTask = interval(30 * 1000)
+        this.healthCheckTask = interval(5 * 1000)
         .subscribe(eventNumber => {
             console.log('health-check-task @ interval', ++this.healthCheckTaskCounter),
 
@@ -55,14 +55,24 @@ export class HealthCheckTask {
                         .subscribe();
 
                   const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-                  const accessTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(accessTokenExpirationTime);
-
                   const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+
+                  if (this.isExpired(accessTokenExpirationTime) || this.isExpired(refreshTokenExpirationTime)) {
+                    this.terminateSessionAndNavigateToLoginPage();
+                  }
+
+                  const accessTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(accessTokenExpirationTime);
                   const refreshTokenExpirationTimeInSeconds = getTokenExpirationTimeInSeconds(refreshTokenExpirationTime);
 
                   if (this.authenticationService.getLoggedInUser()) {
                     if (refreshTokenExpirationTimeInSeconds < 60) {
+                      if (this.healthCheckTask) {
+                        this.stopHealthCheckTask();
+                      }
                       this.promptForPasswordAndTryToExtendSession();
+                      if (this.healthCheckTask == null) {
+                        this.startHealthCheckTask();
+                      }
 
                     } else if (accessTokenExpirationTimeInSeconds < 60) {
                       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -86,6 +96,27 @@ export class HealthCheckTask {
     );
   }
 
+  private promptForPasswordAndTryToExtendSession() {
+    const password = prompt('Your session has expired, please enter a password to extend it.', '');
+    if (password != null) {
+      const username = this.authenticationService.getLoggedInUser().username;
+      this.authenticationService.login(username, password)
+          .subscribe(
+            data => {
+              const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+              if (refreshTokenExpirationTime != null) {
+                const refreshTokenExpireTimeInMinutes = Math.round((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
+                alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
+              }
+            },
+            error => {
+              this.terminateSessionAndNavigateToLoginPage();
+            });
+    } else {
+      this.terminateSessionAndNavigateToLoginPage();
+
+    }
+  }
 
   private isExpired(date: string): boolean {
     return new Date(date) < new Date();
