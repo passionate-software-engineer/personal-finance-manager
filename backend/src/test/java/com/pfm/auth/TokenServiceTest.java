@@ -94,28 +94,6 @@ public class TokenServiceTest {
     assertThat(exception.getMessage(), is(equalTo("Provided refreshToken does not exist")));
   }
 
- /* @Test
-  public void shouldThrowExceptionCausedByNullRefreshTokenWhileGeneratingAccessToken() {
-    //when
-    Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.generateAccessToken(null));
-
-    //then
-    assertThat(exception.getMessage(), is(equalTo("RefreshToken cannot be null")));
-  }*/
-
-  @Test
-  public void shouldGenerateAccessToken() {
-    //given
-    String refreshToken = "23k4jh35ri3u232";
-
-    //when
-    Token accessToken = tokenService.generateAccessToken(refreshToken);
-
-    //then
-    assertThat(exception.getMessage(), is(equalTo("RefreshToken cannot be null")));
-  }
-
   @Test
   public void shouldThrowExceptionCausedByNullRefreshTokenWhileValidatingRefreshToken() {
     //when
