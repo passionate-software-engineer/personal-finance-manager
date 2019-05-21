@@ -36,7 +36,7 @@ export class HealthCheckTask {
 
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-        this.healthCheckTask = interval(5 * 1000)
+        this.healthCheckTask = interval(30 * 1000)
         .subscribe(eventNumber => {
 
             this.ngZone.run(() => {
