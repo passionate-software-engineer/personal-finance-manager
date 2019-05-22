@@ -12,16 +12,16 @@ import org.junit.jupiter.api.Test;
 
 public class TokenServiceTest {
 
-  private final HashMap<String, Tokens> tokens = new HashMap<>();
-  private HashMap<String, Tokens> refreshTokenMap = new HashMap<>();
+  private final HashMap<String, Tokens> accessTokensStorage = new HashMap<>();
+  private HashMap<String, Tokens> refreshTokenStorage = new HashMap<>();
 
-  private final TokenService tokenService = new TokenService(tokens, refreshTokenMap);
+  private final TokenService tokenService = new TokenService(accessTokensStorage, refreshTokenStorage);
 
   @Test
   public void shouldThrowExceptionCausedByNullAccessTokenExpiryTime() {
     //given
     Tokens tokens = new Tokens(1L, "accessToken", null);
-    this.tokens.put(tokens.getAccessToken(), tokens);
+    this.accessTokensStorage.put(tokens.getAccessToken(), tokens);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
@@ -35,7 +35,7 @@ public class TokenServiceTest {
   public void shouldReturnFalseCausedByExpiredAccessToken() {
     //given
     Tokens tokens = new Tokens(1L, "Tokens", ZonedDateTime.now());
-    this.tokens.put(tokens.getAccessToken(), tokens);
+    this.accessTokensStorage.put(tokens.getAccessToken(), tokens);
 
     //then
     assertFalse(tokenService.validateAccessToken(tokens.getAccessToken()));
@@ -45,7 +45,7 @@ public class TokenServiceTest {
   public void shouldThrowExceptionCausedByNotExistingToken() {
     //given
     String token = "Fake Tokens";
-    tokens.put(token, null);
+    accessTokensStorage.put(token, null);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
@@ -60,7 +60,7 @@ public class TokenServiceTest {
   public void shouldThrowExceptionCausedByNullRefreshTokenExpiryTime() {
     //given
     Tokens tokens = new Tokens(1L, "accessToken", ZonedDateTime.now().plusMinutes(15), "refreshToken", null);
-    this.refreshTokenMap.put("refreshToken", tokens);
+    this.refreshTokenStorage.put("refreshToken", tokens);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
@@ -74,7 +74,7 @@ public class TokenServiceTest {
   public void shouldReturnFalseCausedByExpiredRefreshToken() {
     //given
     Tokens tokens = new Tokens(1L, "accessToken", ZonedDateTime.now().plusMinutes(15), "refreshToken", ZonedDateTime.now());
-    this.refreshTokenMap.put("refreshToken", tokens);
+    this.refreshTokenStorage.put("refreshToken", tokens);
 
     //then
     assertFalse(tokenService.validateRefreshToken(tokens.getRefreshToken()));
@@ -84,7 +84,7 @@ public class TokenServiceTest {
   public void shouldThrowExceptionCausedByNotExistingRefreshToken() {
     //given
     String token = "Fake Tokens";
-    this.refreshTokenMap.put(token, null);
+    this.refreshTokenStorage.put(token, null);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
