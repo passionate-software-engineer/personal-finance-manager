@@ -4,6 +4,7 @@ import static com.pfm.config.MessagesProvider.EMPTY_FIRST_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_LAST_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_PASSWORD;
 import static com.pfm.config.MessagesProvider.EMPTY_USERNAME;
+import static com.pfm.config.MessagesProvider.INVALID_REFRESH_TOKEN;
 import static com.pfm.config.MessagesProvider.PASSWORD_CONTAINS_WHITSPACE;
 import static com.pfm.config.MessagesProvider.TOO_LONG_FIRST_NAME;
 import static com.pfm.config.MessagesProvider.TOO_LONG_LAST_NAME;
@@ -224,7 +225,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnUnauthorizedForNullRefreshTokenDuringRefreshRequest() throws Exception {
+  public void shouldReturnBadRequestForNullRefreshTokenDuringRefreshRequest() throws Exception {
     //given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
@@ -233,7 +234,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(null)))
-        .andExpect(status().isUnauthorized());
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$",is(getMessage(INVALID_REFRESH_TOKEN))));
 
   }
 

@@ -1,12 +1,12 @@
 package com.pfm.auth;
 
+import static com.pfm.config.MessagesProvider.INVALID_REFRESH_TOKEN;
 import static com.pfm.config.MessagesProvider.USERNAME_OR_PASSWORD_IS_INCORRECT;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,7 +54,9 @@ public class UserController { // TODO extract API interface
   @RequestMapping(value = "/refresh", method = RequestMethod.POST)
   public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
     if (!tokenService.validateRefreshToken(refreshToken)) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+      return ResponseEntity.badRequest().body(getMessage(INVALID_REFRESH_TOKEN));
+      //return ResponseEntity.badRequest().body("halololo");
+
     }
     Token newAccessToken = tokenService.generateAccessToken(refreshToken);
 
