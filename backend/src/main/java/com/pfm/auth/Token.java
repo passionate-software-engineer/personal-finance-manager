@@ -9,6 +9,6 @@ import lombok.Getter;
 public class Token {
 
   private String token;
-  private ZonedDateTime tokenExpiryDate;
+  private ZonedDateTime expiryDate;
 
 }
