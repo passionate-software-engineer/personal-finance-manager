@@ -31,7 +31,7 @@ public class TokenServiceTest {
         () -> tokenService.validateAccessToken(token.getValue()));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Tokens expiry time does not exist")));
+    assertThat(exception.getMessage(), is(equalTo("AccessToken expiry time does not exist")));
   }
 
   @Test

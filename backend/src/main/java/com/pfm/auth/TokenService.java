@@ -53,7 +53,8 @@ public class TokenService {
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
       accessTokensStorage.remove(token);
-      throw new IllegalStateException("Tokens expiry time does not exist");
+      refreshTokenStorage.remove(token);
+      throw new IllegalStateException("AccessToken expiry time does not exist");
     }
 
     return expiryDate.isAfter(ZonedDateTime.now());
@@ -86,7 +87,10 @@ public class TokenService {
 
     //long userId = getUserIdBasedOnRefreshToken(refreshToken).get();
     UUID newAccessTokenUuid = UUID.randomUUID();
-    Token newAccessToken = new Token(newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
+    Token newAccessToken = Token.builder()
+        .value(newAccessTokenUuid.toString())
+        .expiryDate(ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes))
+        .build();
 
     accessTokensStorage.put(newAccessToken.getValue(), newAccessToken);
     refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
@@ -105,6 +109,7 @@ public class TokenService {
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
       accessTokensStorage.remove(tokensFromDb.getValue());
+      refreshTokenStorage.remove(tokensFromDb.getValue());
       throw new IllegalStateException("RefreshToken expiry time does not exist");
     }
     return expiryDate.isAfter(ZonedDateTime.now());
