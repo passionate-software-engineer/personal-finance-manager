@@ -1,3 +1,6 @@
+accessTokenExpiryTimeInMinutes: 1
+refreshTokenExpiryTimeInMinutes: 2
+
 server:
   port: 8105
 logging:

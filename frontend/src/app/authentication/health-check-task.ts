@@ -6,6 +6,7 @@ import {AuthenticationService} from './authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {HealthService} from './health.service';
 import {UserService} from './user.service';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -36,15 +37,13 @@ export class HealthCheckTask {
 
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-        this.healthCheckTask = interval(30 * 1000)
+        this.healthCheckTask = interval(environment.healthCheckTaskIntervalInSeconds)
         .subscribe(eventNumber => {
 
             this.ngZone.run(() => {
-                console.log('    ng-Zone.run'),
-
-                  // no need to do anything - error handler will do the job
-                  this.healthService.getHealthStatus()
-                      .subscribe();
+                // no need to do anything - error handler will do the job
+                this.healthService.getHealthStatus()
+                    .subscribe();
 
                 const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
                 const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;

@@ -12,16 +12,17 @@ import org.junit.jupiter.api.Test;
 
 public class TokenServiceTest {
 
-  private final HashMap<String, Tokens> accessTokensStorage = new HashMap<>();
+  private HashMap<String, Tokens> accessTokensStorage = new HashMap<>();
   private HashMap<String, Tokens> refreshTokenStorage = new HashMap<>();
 
-  private final TokenService tokenService = new TokenService(accessTokensStorage, refreshTokenStorage);
+  private  TokenService tokenService = new TokenService(accessTokensStorage, refreshTokenStorage);
 
   @Test
   public void shouldThrowExceptionCausedByNullAccessTokenExpiryTime() {
     //given
     Tokens tokens = new Tokens(1L, "accessToken", null);
-    this.accessTokensStorage.put(tokens.getAccessToken(), tokens);
+    accessTokensStorage.put(tokens.getAccessToken(), tokens);
+    tokenService = new TokenService(accessTokensStorage,refreshTokenStorage);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
@@ -60,7 +61,7 @@ public class TokenServiceTest {
   public void shouldThrowExceptionCausedByNullRefreshTokenExpiryTime() {
     //given
     Tokens tokens = new Tokens(1L, "accessToken", ZonedDateTime.now().plusMinutes(15), "refreshToken", null);
-    this.refreshTokenStorage.put("refreshToken", tokens);
+    refreshTokenStorage.put("refreshToken", tokens);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,

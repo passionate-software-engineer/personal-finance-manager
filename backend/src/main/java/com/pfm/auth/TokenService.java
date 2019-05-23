@@ -2,25 +2,37 @@ package com.pfm.auth;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class TokenService {
 
-  private HashMap<String, Tokens> accessTokensStorage = new HashMap<>();
-  private HashMap<String, Tokens> refreshTokenStorage = new HashMap<>();
+  @Value("${accessTokenExpiryTimeInMinutes}")
+  private long accessTokenExpiryTimeInMinutes;
+
+  @Value("${refreshTokenExpiryTimeInMinutes}")
+  private long refreshTokenExpiryTimeInMinutes;
+
+  private Map<String, Tokens> accessTokensStorage = new HashMap<>();
+  private Map<String, Tokens> refreshTokenStorage = new HashMap<>();
+
+  public TokenService(Map<String, Tokens> accessTokensStorage, Map<String, Tokens> refreshTokenStorage) {
+    this.accessTokensStorage = accessTokensStorage;
+    this.refreshTokenStorage = refreshTokenStorage;
+  }
 
   public Tokens generateTokens(User user) {
 
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
-    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), refreshTokenUuid.toString(),
-        ZonedDateTime.now().plusMinutes(60));
+    Tokens tokens = new Tokens(user.getId(), accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes),
+        refreshTokenUuid.toString(),
+        ZonedDateTime.now().plusMinutes(refreshTokenExpiryTimeInMinutes));
     accessTokensStorage.put(tokens.getAccessToken(), tokens);
     refreshTokenStorage.put(tokens.getRefreshToken(), tokens);
 
@@ -68,8 +80,8 @@ public class TokenService {
     long userId = getUserIdBasedOnRefreshToken(refreshToken);
     Tokens tokens = refreshTokenStorage.get(refreshToken);
     UUID newAccessTokenUuid = UUID.randomUUID();
-    Tokens tokensToUpdate = new Tokens(userId, newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(15), tokens.getRefreshToken(),
-        tokens.getRefreshTokenExpiryDate());
+    Tokens tokensToUpdate = new Tokens(userId, newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes),
+        tokens.getRefreshToken(), tokens.getRefreshTokenExpiryDate());
 
     accessTokensStorage.put(tokensToUpdate.getAccessToken(), tokensToUpdate);
     refreshTokenStorage.put(tokensToUpdate.getRefreshToken(), tokensToUpdate);

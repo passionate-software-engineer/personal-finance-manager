@@ -1,4 +1,8 @@
 server.port: 8088
+
+accessTokenExpiryTimeInMinutes: 1
+refreshTokenExpiryTimeInMinutes: 2
+
 spring:
   profiles:
     active: local-h2
