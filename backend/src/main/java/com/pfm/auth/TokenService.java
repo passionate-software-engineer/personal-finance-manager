@@ -84,11 +84,9 @@ public class TokenService {
   public Token generateAccessToken(String refreshToken) {
     validateRefreshToken(refreshToken);
 
-    long userId = getUserIdBasedOnRefreshToken(refreshToken).get();
-    Token token = refreshTokenStorage.get(refreshToken);
+    //long userId = getUserIdBasedOnRefreshToken(refreshToken).get();
     UUID newAccessTokenUuid = UUID.randomUUID();
     Token newAccessToken = new Token(newAccessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
-    Tokens tokensToUpdate = new Tokens(userId, newAccessToken, refreshTokenStorage.get(refreshToken));
 
     accessTokensStorage.put(newAccessToken.getValue(), newAccessToken);
     refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
