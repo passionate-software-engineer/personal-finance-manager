@@ -242,7 +242,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     //given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
-    String refreshToken = tokens.getRefreshToken();
+    String refreshToken = tokens.getRefreshToken().getValue();
 
     //when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")

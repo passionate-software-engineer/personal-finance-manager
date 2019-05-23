@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class Token {
 
-  private String token;
+  private String value;
   private ZonedDateTime expiryDate;
 
 }

@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.auth.Token;
 import com.pfm.auth.Tokens;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
@@ -458,8 +459,9 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
     UserDetails authResponse = jsonToAuthResponse(response);
-    return new Tokens(authResponse.getId(), authResponse.getAccessToken(), authResponse.getAccessTokenExpirationTime(),
-        authResponse.getRefreshToken(), authResponse.getRefreshTokenExpirationTime());
+    return new Tokens(authResponse.getId(),new Token(authResponse.getAccessToken(),authResponse.getAccessTokenExpirationTime()),
+        new Token(authResponse.getRefreshToken(),authResponse.getRefreshTokenExpirationTime()));
+
   }
 
   public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {
