@@ -32,9 +32,14 @@ public class UserService {
 
     Tokens tokens = tokenService.generateTokens(userFromDb);
 
-    UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
-        userFromDb.getLastName(), tokens.getAccessToken().getValue(), tokens.getAccessToken().getExpiryDate(), tokens.getRefreshToken().getValue(),
-        tokens.getRefreshToken().getExpiryDate());
+    UserDetails userDetails = UserDetails.builder()
+        .id(userFromDb.getId())
+        .username(userFromDb.getUsername())
+        .firstName(userFromDb.getFirstName())
+        .lastName(userFromDb.getLastName())
+        .accessToken(tokens.getAccessToken())
+        .refreshToken(tokens.getRefreshToken())
+        .build();
 
     return Optional.of(userDetails);
   }
