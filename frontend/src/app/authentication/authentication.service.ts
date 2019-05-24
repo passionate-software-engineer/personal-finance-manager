@@ -53,6 +53,6 @@ export class AuthenticationService {
   }
 
   public isUserLoggedIn(): boolean {
-    return this.getLoggedInUser().accessToken != null;
+    return (this.getLoggedInUser().accessToken != null) && (this.getLoggedInUser().refreshToken != null);
   }
 }

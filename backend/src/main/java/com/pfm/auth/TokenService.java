@@ -49,6 +49,8 @@ public class TokenService {
     log.error("accessTokensStorage size= {} ", accessTokensStorage.size());
     log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
     log.error("tokensByUserId size= {}", tokensByUserId.size());
+    log.error("tokens1 size= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
+    log.error("tokens2 size= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
     return tokens;
   }
 
@@ -67,6 +69,8 @@ public class TokenService {
       log.error("accessTokensStorage size= {}", accessTokensStorage.size());
       log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
       log.error("tokensByUserId size= {}", tokensByUserId.size());
+      log.error("tokens1 value= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
+      log.error("tokens2 value= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
 
       throw new IllegalStateException("AccessToken expiry time does not exist");
     }
@@ -117,6 +121,8 @@ public class TokenService {
     log.error("accessTokensStorage size= {}", accessTokensStorage.size());
     log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
     log.error("tokensByUserId size= {}", tokensByUserId.size());
+    log.error("refreshtoken1 value= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
+    log.error("refreshtoken2 value= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
     //  refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
     return newAccessToken;
   }

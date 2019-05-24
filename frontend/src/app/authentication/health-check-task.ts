@@ -25,7 +25,7 @@ export class HealthCheckTask {
     private userService: UserService) {
 
     authenticationService.currentUserObservable.subscribe(user => {
-      if (user.accessToken!= null && this.healthCheckTask == null) {
+      if (user.accessToken != null && this.healthCheckTask == null) {
         this.startHealthCheckTask();
       } else if (user.accessToken == null) {
         this.stopHealthCheckTask();
@@ -41,9 +41,14 @@ export class HealthCheckTask {
         .subscribe(eventNumber => {
 
             this.ngZone.run(() => {
-                // no need to do anything - error handler will do the job
-                this.healthService.getHealthStatus()
-                    .subscribe();
+              // no need to do anything - error handler will do the job
+              this.healthService.getHealthStatus()
+                  .subscribe();
+
+              if (this.authenticationService.getLoggedInUser() ) {
+                console.log('access ',this.authenticationService.getLoggedInUser().accessToken.value)
+                console.log('refresh ',this.authenticationService.getLoggedInUser().refreshToken.value)
+                console.log('refresh ',this.authenticationService.getLoggedInUser().firstName)
 
                 const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessToken.expiryDate;
                 const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
@@ -58,11 +63,11 @@ export class HealthCheckTask {
                 if (this.authenticationService.getLoggedInUser()) {
                   if (refreshTokenExpirationTimeInSeconds < 60) {
                     if (this.healthCheckTask) {
-                      this.stopHealthCheckTask();
+                      // this.stopHealthCheckTask();
                     }
                     this.promptForPasswordAndTryToExtendSession();
                     if (this.healthCheckTask == null) {
-                      this.startHealthCheckTask();
+                      // this.startHealthCheckTask();
                     }
 
                   } else if (accessTokenExpirationTimeInSeconds < 60) {
@@ -79,7 +84,7 @@ export class HealthCheckTask {
                   }
                 }
               }
-            );
+            });
           }
         );
       }
