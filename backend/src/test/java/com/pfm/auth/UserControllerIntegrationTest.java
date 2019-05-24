@@ -258,4 +258,22 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(content().string(containsString("value")))
         .andExpect(content().string(containsString("expiryDate")));
   }
+
+  @Test
+  public void shouldReturnCorrectTokenAndRemoveOldOneFromTokensStore() throws Exception {
+    //given
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
+    String refreshToken = tokens.getRefreshToken().getValue();
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(refreshToken))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(not(nullValue()))))
+        .andExpect(content().string(containsString("value")))
+        .andExpect(content().string(containsString("expiryDate")));
+  }
+
 }

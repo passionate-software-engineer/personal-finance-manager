@@ -17,7 +17,7 @@ export class HeadersInterceptor implements HttpInterceptor {
     if (currentUser && currentUser.accessToken) {    // if(logged-in)
       request = request.clone({
         setHeaders: {
-          Authorization: `${currentUser.accessToken}`,
+          Authorization: `${currentUser.accessToken.value}`,
           'Correlation-Id': uuid(),
           'Language': localStorage.getItem('language')
         }

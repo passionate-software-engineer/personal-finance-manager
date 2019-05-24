@@ -25,7 +25,7 @@ export class HealthCheckTask {
     private userService: UserService) {
 
     authenticationService.currentUserObservable.subscribe(user => {
-      if (user.accessToken != null && this.healthCheckTask == null) {
+      if (user.accessToken!= null && this.healthCheckTask == null) {
         this.startHealthCheckTask();
       } else if (user.accessToken == null) {
         this.stopHealthCheckTask();
@@ -45,8 +45,8 @@ export class HealthCheckTask {
                 this.healthService.getHealthStatus()
                     .subscribe();
 
-                const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessTokenExpirationTime;
-                const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+                const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessToken.expiryDate;
+                const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
 
                 if (this.isExpired(accessTokenExpirationTime) || this.isExpired(refreshTokenExpirationTime)) {
                   this.terminateSessionAndNavigateToLoginPage();
@@ -67,11 +67,11 @@ export class HealthCheckTask {
 
                   } else if (accessTokenExpirationTimeInSeconds < 60) {
                     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    this.userService.extendToken(currentUser.refreshToken)
+                    this.userService.extendToken(currentUser.refreshToken.value)
                         .subscribe(
                           newAccessToken => {
-                            currentUser.accessToken = newAccessToken.token;
-                            currentUser.accessTokenExpirationTime = newAccessToken.tokenExpiryDate;
+                            currentUser.accessToken.value = newAccessToken.value;
+                            currentUser.accessToken.expiryDate = newAccessToken.expiryDate;
 
                             localStorage.setItem('currentUser', JSON.stringify(currentUser));
                           },
@@ -93,7 +93,7 @@ export class HealthCheckTask {
       this.authenticationService.login(username, password)
           .subscribe(
             data => {
-              const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshTokenExpirationTime;
+              const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
               if (refreshTokenExpirationTime != null) {
                 const refreshTokenExpireTimeInMinutes = this.getTokenExpirationTimeInMinutes(refreshTokenExpirationTime);
                 alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');

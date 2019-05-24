@@ -6,8 +6,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+@Slf4j
 
 @Service
 @RequiredArgsConstructor
@@ -37,10 +40,15 @@ public class TokenService {
     Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
     Token refreshToken = new Token(refreshTokenUuid.toString(), ZonedDateTime.now().plusMinutes(refreshTokenExpiryTimeInMinutes));
     Tokens tokens = new Tokens(user.getId(), accessToken, refreshToken);
+    if (tokensAlreadyExistForUser(user.getId())) {
+      removeTokens(user.getId());
+    }
     accessTokensStorage.put(accessToken.getValue(), accessToken);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     tokensByUserId.put(user.getId(), tokens);
-
+    log.error("accessTokensStorage size= {} ", accessTokensStorage.size());
+    log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
+    log.error("tokensByUserId size= {}", tokensByUserId.size());
     return tokens;
   }
 
@@ -52,8 +60,14 @@ public class TokenService {
 
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
+      long userId = getUserIdBasedOnAccessToken(token);
       accessTokensStorage.remove(token);
       refreshTokenStorage.remove(token);
+      tokensByUserId.remove(userId);
+      log.error("accessTokensStorage size= {}", accessTokensStorage.size());
+      log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
+      log.error("tokensByUserId size= {}", tokensByUserId.size());
+
       throw new IllegalStateException("AccessToken expiry time does not exist");
     }
 
@@ -85,15 +99,25 @@ public class TokenService {
   public Token generateAccessToken(String refreshToken) {
     validateRefreshToken(refreshToken);
 
-    //long userId = getUserIdBasedOnRefreshToken(refreshToken).get();
+    long userId = getUserIdBasedOnRefreshToken(refreshToken).get();
     UUID newAccessTokenUuid = UUID.randomUUID();
     Token newAccessToken = Token.builder()
         .value(newAccessTokenUuid.toString())
         .expiryDate(ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes))
         .build();
-
+    String expiringAccessToken = tokensByUserId.get(userId).getAccessToken().getValue();
+    accessTokensStorage.remove(expiringAccessToken);
     accessTokensStorage.put(newAccessToken.getValue(), newAccessToken);
-    refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
+    Token refreshTok = refreshTokenStorage.get(refreshToken);
+
+    Tokens tokens = new Tokens(userId, newAccessToken, refreshTok);
+
+    tokensByUserId.replace(userId, tokens);
+
+    log.error("accessTokensStorage size= {}", accessTokensStorage.size());
+    log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
+    log.error("tokensByUserId size= {}", tokensByUserId.size());
+    //  refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
     return newAccessToken;
   }
 
@@ -108,11 +132,24 @@ public class TokenService {
     }
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
+      Optional<Long> userId = getUserIdBasedOnRefreshToken(refreshToken);
       accessTokensStorage.remove(tokensFromDb.getValue());
       refreshTokenStorage.remove(tokensFromDb.getValue());
+      tokensByUserId.remove(userId);
+
       throw new IllegalStateException("RefreshToken expiry time does not exist");
     }
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
+  private boolean tokensAlreadyExistForUser(Long id) {
+    return tokensByUserId.containsKey(id);
+  }
+
+  private void removeTokens(Long id) {
+    Tokens tokensToBeRemoved = tokensByUserId.get(id);
+    accessTokensStorage.remove(tokensToBeRemoved.getAccessToken().getValue());
+    refreshTokenStorage.remove(tokensToBeRemoved.getRefreshToken().getValue());
+    tokensByUserId.remove(id);
+  }
 }
