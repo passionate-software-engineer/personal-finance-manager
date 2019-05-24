@@ -16,8 +16,12 @@ import static com.pfm.config.MessagesProvider.USER_WITH_PROVIDED_USERNAME_ALREAD
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -235,12 +239,11 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .contentType(JSON_CONTENT_TYPE)
         .content(json(null)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$",is(getMessage(INVALID_REFRESH_TOKEN))));
-
+        .andExpect(jsonPath("$", is(getMessage(INVALID_REFRESH_TOKEN))));
   }
 
   @Test
-  public void shouldReturnOkOnSuccessfulRefreshRequest() throws Exception {
+  public void shouldReturnNewAccessTokenOnSuccessfulRefreshRequest() throws Exception {
     //given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
@@ -250,7 +253,9 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
         .content(refreshToken))
-        .andExpect(status().isOk());
-
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(not(nullValue()))))
+        .andExpect(content().string(containsString("value")))
+        .andExpect(content().string(containsString("expiryDate")));
   }
 }
