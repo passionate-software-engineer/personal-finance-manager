@@ -20,7 +20,7 @@ public class TokenServiceTest {
   private  TokenService tokenService = new TokenService(accessTokensStorage, refreshTokenStorage,tokensByUserId);
 
   @Test
-  public void shouldThrowExceptionCausedByNullAccessTokenExpiryTime() {
+  public void shouldThrowExceptionCausedByNullAccessTokenExpiryDate() {
     //given
     Token token = new Token("accessToken",null);
     accessTokensStorage.put(token.getValue(), token);
@@ -61,7 +61,7 @@ public class TokenServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionCausedByNullRefreshTokenExpiryTime() {
+  public void shouldThrowExceptionCausedByNullRefreshTokenExpiryDate() {
     //given
     Token token = new Token("accessToken",null);
     refreshTokenStorage.put(token.getValue(), token);

@@ -46,13 +46,7 @@ public class TokenService {
     accessTokensStorage.put(accessToken.getValue(), accessToken);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     tokensByUserId.put(user.getId(), tokens);
-    log.error("accessTokensStorage size= {} ", accessTokensStorage.size());
-    log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
-    log.error("tokensByUserId size= {}", tokensByUserId.size());
-    log.error("tokens1 size= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
-    if (tokensByUserId.get(2L) != null) {
-    log.error("tokens2 size= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
-    }
+
     return tokens;
   }
 
@@ -115,17 +109,9 @@ public class TokenService {
     accessTokensStorage.remove(expiringAccessToken);
     accessTokensStorage.put(newAccessToken.getValue(), newAccessToken);
     Token refreshTok = refreshTokenStorage.get(refreshToken);
-
     Tokens tokens = new Tokens(userId, newAccessToken, refreshTok);
-
     tokensByUserId.replace(userId, tokens);
 
-    log.error("accessTokensStorage size= {}", accessTokensStorage.size());
-    log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
-    log.error("tokensByUserId size= {}", tokensByUserId.size());
-    log.error("refreshtoken1 value= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
-    //log.error("refreshtoken2 value= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
-    //  refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
     return newAccessToken;
   }
 
