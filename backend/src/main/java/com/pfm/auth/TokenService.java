@@ -50,7 +50,9 @@ public class TokenService {
     log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
     log.error("tokensByUserId size= {}", tokensByUserId.size());
     log.error("tokens1 size= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
+    if (tokensByUserId.get(2L) != null) {
     log.error("tokens2 size= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
+    }
     return tokens;
   }
 
@@ -122,7 +124,7 @@ public class TokenService {
     log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
     log.error("tokensByUserId size= {}", tokensByUserId.size());
     log.error("refreshtoken1 value= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
-    log.error("refreshtoken2 value= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
+    //log.error("refreshtoken2 value= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
     //  refreshTokenStorage.put(refreshToken, refreshTokenStorage.get(refreshToken));
     return newAccessToken;
   }
