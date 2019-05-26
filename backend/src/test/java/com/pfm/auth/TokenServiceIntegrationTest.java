@@ -53,8 +53,8 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
     //given
     final long userMarianId = callRestToRegisterUserAndReturnUserId(userMarian());
     final Tokens marianTokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
-    final long userZdzislawId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    Tokens zdzislawTokens = callRestToAuthenticateUserAndReturnTokens(userZdzislaw());
+    callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    callRestToAuthenticateUserAndReturnTokens(userZdzislaw());
 
     assertEquals(2, tokenService.getAccessTokensStorage().size());
     assertEquals(2, tokenService.getRefreshTokenStorage().size());
