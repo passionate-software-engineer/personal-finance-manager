@@ -3,6 +3,7 @@ package com.pfm.auth;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,7 +24,6 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
     tokenService.getAccessTokensStorage().clear();
     tokenService.getRefreshTokenStorage().clear();
     tokenService.getTokensByUserId().clear();
-
   }
 
   @Test
@@ -34,7 +34,6 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
     assertEquals(1, tokenService.getAccessTokensStorage().size());
     assertEquals(1, tokenService.getRefreshTokenStorage().size());
     assertEquals(1, tokenService.getTokensByUserId().size());
-
   }
 
   @Test
@@ -47,55 +46,52 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
     assertEquals(2, tokenService.getAccessTokensStorage().size());
     assertEquals(2, tokenService.getRefreshTokenStorage().size());
     assertEquals(2, tokenService.getTokensByUserId().size());
-
   }
 
   @Test
-  void shouldReturn1ForTwoLoggedInUsersWhenOneUserLoggedOut() throws Exception {
+  void shouldRemoveTokensForUserWhoTriesToExtendSessionWithExpiredRefreshToken() throws Exception {
     //given
-
-    long userMarianId = callRestToRegisterUserAndReturnUserId(userMarian());
-    Tokens marianTokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
-    long userZdzislawId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    final long userMarianId = callRestToRegisterUserAndReturnUserId(userMarian());
+    final Tokens marianTokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
+    final long userZdzislawId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
     Tokens zdzislawTokens = callRestToAuthenticateUserAndReturnTokens(userZdzislaw());
 
     assertEquals(2, tokenService.getAccessTokensStorage().size());
     assertEquals(2, tokenService.getRefreshTokenStorage().size());
     assertEquals(2, tokenService.getTokensByUserId().size());
+    makeRefreshTokenExpired(userMarianId);
 
     //when
-    makeRefreshTokenExpired(userMarian(),userMarianId);
-  //  System.out.println("sprawdz "+ tokenService.getRefreshTokenStorage().get(userMarian().getId()).getValue());
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
         .content(marianTokens.getRefreshToken().getValue()))
         .andExpect(status().isBadRequest());
 
     //then
+    assertNull(tokenService.getTokensByUserId().get(userMarianId));
+    assertNull(tokenService.getAccessTokensStorage().get(marianTokens.getAccessToken().getValue()));
+    assertNull(tokenService.getRefreshTokenStorage().get(marianTokens.getRefreshToken().getValue()));
     assertEquals(1, tokenService.getAccessTokensStorage().size());
     assertEquals(1, tokenService.getRefreshTokenStorage().size());
     assertEquals(1, tokenService.getTokensByUserId().size());
-
   }
 
-  private void makeRefreshTokenExpired(User user,long id) {
+  private void makeRefreshTokenExpired(long userId) {
     Map<Long, Tokens> tokensByUserId = tokenService.getTokensByUserId();
 
-    Token refreshToken = tokensByUserId.get(id).getRefreshToken();
+    Token refreshToken = tokensByUserId.get(userId).getRefreshToken();
     Token updatedRefreshToken = new Token(refreshToken.getValue(), ZonedDateTime.now());
-    Token accessToken = tokensByUserId.get(id).getAccessToken();
+    Token accessToken = tokensByUserId.get(userId).getAccessToken();
     Map<String, Token> updatedRefreshTokenStorage = tokenService.getRefreshTokenStorage();
 
-    updatedRefreshTokenStorage.replace(updatedRefreshToken.getValue(),updatedRefreshToken);
+    updatedRefreshTokenStorage.replace(updatedRefreshToken.getValue(), updatedRefreshToken);
     tokenService.setRefreshTokenStorage(updatedRefreshTokenStorage);
 
-    Tokens updatedTokens = new Tokens(id, accessToken, updatedRefreshToken);
+    Tokens updatedTokens = new Tokens(userId, accessToken, updatedRefreshToken);
 
     Map<Long, Tokens> updatedTokensByUserId = tokenService.getTokensByUserId();
-    updatedTokensByUserId.replace(id, updatedTokens);
+    updatedTokensByUserId.replace(userId, updatedTokens);
     tokenService.setTokensByUserId(updatedTokensByUserId);
-
-
   }
 
 }
