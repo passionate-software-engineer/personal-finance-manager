@@ -1,5 +1,5 @@
-accessTokenExpiryTimeInMinutes: 15
-refreshTokenExpiryTimeInMinutes: 60
+accessTokenExpiryTimeInMinutes: 1
+refreshTokenExpiryTimeInMinutes: 3
 
 server:
   port: 8105

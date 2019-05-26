@@ -6,7 +6,7 @@ import {AuthenticationService} from './authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {HealthService} from './health.service';
 import {UserService} from './user.service';
-import {environment} from "../../environments/environment";
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +45,11 @@ export class HealthCheckTask {
               this.healthService.getHealthStatus()
                   .subscribe();
 
-              if (this.authenticationService.getLoggedInUser() ) {
-                console.log('access ',this.authenticationService.getLoggedInUser().accessToken.value)
-                console.log('refresh ',this.authenticationService.getLoggedInUser().refreshToken.value)
-                console.log('refresh ',this.authenticationService.getLoggedInUser().firstName)
-                console.log('isUserLoggedIn ',this.authenticationService.isUserLoggedIn())
+              if (this.authenticationService.getLoggedInUser()) {
+                console.log('access ', this.authenticationService.getLoggedInUser().accessToken.value);
+                console.log('refresh ', this.authenticationService.getLoggedInUser().refreshToken.value);
+                console.log('refresh ', this.authenticationService.getLoggedInUser().firstName);
+                console.log('isUserLoggedIn ', this.authenticationService.isUserLoggedIn());
 
                 const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessToken.expiryDate;
                 const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
@@ -64,11 +64,11 @@ export class HealthCheckTask {
                 if (this.authenticationService.getLoggedInUser()) {
                   if (refreshTokenExpirationTimeInSeconds < 60) {
                     if (this.healthCheckTask) {
-                       this.stopHealthCheckTask();
+                      this.stopHealthCheckTask();
                     }
                     this.promptForPasswordAndTryToExtendSession();
                     if (this.healthCheckTask == null) {
-                       this.startHealthCheckTask();
+                      this.startHealthCheckTask();
                     }
 
                   } else if (accessTokenExpirationTimeInSeconds < 60) {
