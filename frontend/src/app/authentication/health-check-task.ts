@@ -49,6 +49,7 @@ export class HealthCheckTask {
                 console.log('access ',this.authenticationService.getLoggedInUser().accessToken.value)
                 console.log('refresh ',this.authenticationService.getLoggedInUser().refreshToken.value)
                 console.log('refresh ',this.authenticationService.getLoggedInUser().firstName)
+                console.log('isUserLoggedIn ',this.authenticationService.isUserLoggedIn())
 
                 const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessToken.expiryDate;
                 const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
