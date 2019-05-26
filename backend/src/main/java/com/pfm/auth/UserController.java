@@ -53,7 +53,7 @@ public class UserController { // TODO extract API interface
 
   @RequestMapping(value = "/refresh", method = RequestMethod.POST)
   public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
-    if (!tokenService.validateRefreshToken(refreshToken)) {
+    if (!tokenService.isRefreshTokenValid(refreshToken)) {
       return ResponseEntity.badRequest().body(getMessage(INVALID_REFRESH_TOKEN));
     }
     Token newAccessToken = tokenService.generateAccessToken(refreshToken);

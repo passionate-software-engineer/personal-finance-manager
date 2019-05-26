@@ -3,7 +3,6 @@ package com.pfm.auth;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +38,7 @@ public class TokenService {
     UUID refreshTokenUuid = UUID.randomUUID();
     Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
     Token refreshToken = new Token(refreshTokenUuid.toString(), ZonedDateTime.now().plusMinutes(refreshTokenExpiryTimeInMinutes));
-    Tokens tokens = new Tokens(user.getId(), accessToken, refreshToken);
+    final Tokens tokens = new Tokens(user.getId(), accessToken, refreshToken);
     if (tokensAlreadyExistForUser(user.getId())) {
       removeTokens(user.getId());
     }
@@ -62,12 +61,6 @@ public class TokenService {
       accessTokensStorage.remove(token);
       refreshTokenStorage.remove(token);
       tokensByUserId.remove(userId);
-      log.error("accessTokensStorage size= {}", accessTokensStorage.size());
-      log.error("refreshTokenStorage size= {}", refreshTokenStorage.size());
-      log.error("tokensByUserId size= {}", tokensByUserId.size());
-      log.error("tokens1 value= {}", tokensByUserId.get(1L).getRefreshToken().getValue());
-      log.error("tokens2 value= {}", tokensByUserId.get(2L).getRefreshToken().getValue());
-
       throw new IllegalStateException("AccessToken expiry time does not exist");
     }
 
@@ -85,7 +78,7 @@ public class TokenService {
     return token.getUserId();
   }
 
-  public Optional<Long> getUserIdBasedOnRefreshToken(String refreshToken) {
+  public long getUserIdBasedOnRefreshToken(String refreshToken) {
     Tokens token = tokensByUserId
         .values()
         .stream()
@@ -93,13 +86,13 @@ public class TokenService {
         .findFirst()
         .orElseThrow(() -> new IllegalStateException("Provided refreshToken does not exist"));
 
-    return Optional.of(token.getUserId());
+    return token.getUserId();
   }
 
   public Token generateAccessToken(String refreshToken) {
-    validateRefreshToken(refreshToken);
+    isRefreshTokenValid(refreshToken);
 
-    long userId = getUserIdBasedOnRefreshToken(refreshToken).get();
+    long userId = getUserIdBasedOnRefreshToken(refreshToken);
     UUID newAccessTokenUuid = UUID.randomUUID();
     Token newAccessToken = Token.builder()
         .value(newAccessTokenUuid.toString())
@@ -115,7 +108,7 @@ public class TokenService {
     return newAccessToken;
   }
 
-  public boolean validateRefreshToken(String refreshToken) {
+  public boolean isRefreshTokenValid(String refreshToken) {
     if (refreshToken == null) {
       throw new IllegalStateException("RefreshToken cannot be null");
     }
@@ -126,7 +119,7 @@ public class TokenService {
     }
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
-      Optional<Long> userId = getUserIdBasedOnRefreshToken(refreshToken);
+      long userId = getUserIdBasedOnRefreshToken(refreshToken);
       accessTokensStorage.remove(tokensFromDb.getValue());
       refreshTokenStorage.remove(tokensFromDb.getValue());
       tokensByUserId.remove(userId);

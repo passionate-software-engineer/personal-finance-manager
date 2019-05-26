@@ -17,18 +17,22 @@ public class TokenServiceTest {
   private Map<String, Token> refreshTokenStorage = new HashMap<>();
   private Map<Long, Tokens> tokensByUserId = new HashMap<>();
 
-  private  TokenService tokenService = new TokenService(accessTokensStorage, refreshTokenStorage,tokensByUserId);
+  private TokenService tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
   @Test
   public void shouldThrowExceptionCausedByNullAccessTokenExpiryDate() {
     //given
-    Token token = new Token("accessToken",null);
-    accessTokensStorage.put(token.getValue(), token);
-    tokenService = new TokenService(accessTokensStorage,refreshTokenStorage,tokensByUserId);
+    Token accessToken = new Token("accessToken", null);
+    accessTokensStorage.put(accessToken.getValue(), accessToken);
+    Token refreshToken = new Token("refreshToken", ZonedDateTime.now().plusMinutes(10));
+    refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
+    Tokens tokens = new Tokens(1L, accessToken, refreshToken);
+    tokensByUserId.put(1L, tokens);
+    tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.validateAccessToken(token.getValue()));
+        () -> tokenService.validateAccessToken(accessToken.getValue()));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("AccessToken expiry time does not exist")));
@@ -37,9 +41,9 @@ public class TokenServiceTest {
   @Test
   public void shouldReturnFalseCausedByExpiredAccessToken() {
     //given
-    Token token = new Token("accessToken",ZonedDateTime.now());
+    Token token = new Token("accessToken", ZonedDateTime.now());
     accessTokensStorage.put(token.getValue(), token);
-    tokenService = new TokenService(accessTokensStorage,refreshTokenStorage,tokensByUserId);
+    tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
     //then
     assertFalse(tokenService.validateAccessToken(token.getValue()));
@@ -57,19 +61,22 @@ public class TokenServiceTest {
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Provided accessToken does not exist")));
-
   }
 
   @Test
   public void shouldThrowExceptionCausedByNullRefreshTokenExpiryDate() {
     //given
-    Token token = new Token("accessToken",null);
-    refreshTokenStorage.put(token.getValue(), token);
+    Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(10));
+    accessTokensStorage.put(accessToken.getValue(), accessToken);
+    Token refreshToken = new Token("refreshToken", null);
+    refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
+    Tokens tokens = new Tokens(1L, accessToken, refreshToken);
+    tokensByUserId.put(1L, tokens);
+    tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.validateRefreshToken(token.getValue()));
-
+        () -> tokenService.isRefreshTokenValid(refreshToken.getValue()));
     //then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken expiry time does not exist")));
   }
@@ -77,11 +84,11 @@ public class TokenServiceTest {
   @Test
   public void shouldReturnFalseCausedByExpiredRefreshToken() {
     //given
-    Token token = new Token("accessToken",ZonedDateTime.now());
+    Token token = new Token("accessToken", ZonedDateTime.now());
     refreshTokenStorage.put(token.getValue(), token);
 
     //then
-    assertFalse(tokenService.validateRefreshToken(token.getValue()));
+    assertFalse(tokenService.isRefreshTokenValid(token.getValue()));
   }
 
   @Test
@@ -102,7 +109,7 @@ public class TokenServiceTest {
   public void shouldThrowExceptionCausedByNullRefreshTokenWhileValidatingRefreshToken() {
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> tokenService.validateRefreshToken(null));
+        () -> tokenService.isRefreshTokenValid(null));
 
     //then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken cannot be null")));
