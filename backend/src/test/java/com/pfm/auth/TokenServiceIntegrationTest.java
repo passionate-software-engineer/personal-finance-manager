@@ -80,18 +80,21 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
 
   private void makeRefreshTokenExpired(long userId) throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
     Map<Long, Tokens> tokensByUserId = tokenService.getTokensByUserId();
+
     Token refreshToken = tokensByUserId.get(userId).getRefreshToken();
     Token updatedRefreshToken = new Token(refreshToken.getValue(), ZonedDateTime.now());
-    Token accessToken = tokensByUserId.get(userId).getAccessToken();
+    final Token accessToken = tokensByUserId.get(userId).getAccessToken();
+
     Map<String, Token> updatedRefreshTokenStorage = tokenService.getRefreshTokenStorage();
 
     updatedRefreshTokenStorage.replace(updatedRefreshToken.getValue(), updatedRefreshToken);
     Field refreshTokenStorageField = Class.forName("com.pfm.auth.TokenService").getDeclaredField("refreshTokenStorage");
     refreshTokenStorageField.setAccessible(true);
-
     refreshTokenStorageField.set(new TokenService(), updatedRefreshTokenStorage);
     Tokens updatedTokens = new Tokens(userId, accessToken, updatedRefreshToken);
+
     Map<Long, Tokens> updatedTokensByUserId = tokenService.getTokensByUserId();
+
     updatedTokensByUserId.replace(userId, updatedTokens);
 
     Field tokensByUserIdField = Class.forName("com.pfm.auth.TokenService").getDeclaredField("tokensByUserId");
