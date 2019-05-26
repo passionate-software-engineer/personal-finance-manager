@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.helpers.IntegrationTestsBase;
+import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -59,6 +60,7 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
     assertEquals(2, tokenService.getAccessTokensStorage().size());
     assertEquals(2, tokenService.getRefreshTokenStorage().size());
     assertEquals(2, tokenService.getTokensByUserId().size());
+
     makeRefreshTokenExpired(userMarianId);
 
     //when
@@ -76,23 +78,25 @@ class TokenServiceIntegrationTest extends IntegrationTestsBase {
     assertEquals(1, tokenService.getTokensByUserId().size());
   }
 
-  private void makeRefreshTokenExpired(long userId) {
+  private void makeRefreshTokenExpired(long userId) throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
     Map<Long, Tokens> tokensByUserId = tokenService.getTokensByUserId();
-
     Token refreshToken = tokensByUserId.get(userId).getRefreshToken();
     Token updatedRefreshToken = new Token(refreshToken.getValue(), ZonedDateTime.now());
     Token accessToken = tokensByUserId.get(userId).getAccessToken();
     Map<String, Token> updatedRefreshTokenStorage = tokenService.getRefreshTokenStorage();
 
     updatedRefreshTokenStorage.replace(updatedRefreshToken.getValue(), updatedRefreshToken);
-    tokenService.setRefreshTokenStorage(updatedRefreshTokenStorage);
+    Field refreshTokenStorageField = Class.forName("com.pfm.auth.TokenService").getDeclaredField("refreshTokenStorage");
+    refreshTokenStorageField.setAccessible(true);
 
+    refreshTokenStorageField.set(new TokenService(), updatedRefreshTokenStorage);
     Tokens updatedTokens = new Tokens(userId, accessToken, updatedRefreshToken);
-
     Map<Long, Tokens> updatedTokensByUserId = tokenService.getTokensByUserId();
     updatedTokensByUserId.replace(userId, updatedTokens);
-    tokenService.setTokensByUserId(updatedTokensByUserId);
+
+    Field tokensByUserIdField = Class.forName("com.pfm.auth.TokenService").getDeclaredField("tokensByUserId");
+    tokensByUserIdField.setAccessible(true);
+
+    tokensByUserIdField.set(new TokenService(), updatedTokensByUserId);
   }
-
 }
-

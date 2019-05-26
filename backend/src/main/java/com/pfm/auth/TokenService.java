@@ -6,13 +6,12 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-
+@Getter
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -23,16 +22,10 @@ public class TokenService {
   @Value("${refreshTokenExpiryTimeInMinutes}")
   private long refreshTokenExpiryTimeInMinutes;
 
-  @Getter
-  @Setter
   private Map<String, Token> accessTokensStorage = new HashMap<>();
 
-  @Getter
-  @Setter
   private Map<String, Token> refreshTokenStorage = new HashMap<>();
 
-  @Getter
-  @Setter
   private Map<Long, Tokens> tokensByUserId = new HashMap<>();
 
   public TokenService(Map<String, Token> accessTokensStorage, Map<String, Token> refreshTokenStorage,
