@@ -19,7 +19,7 @@ export class HeadersInterceptor implements HttpInterceptor {
         setHeaders: {
           Authorization: `${currentUser.accessToken.value}`,
           'Correlation-Id': uuid(),
-          'Language': localStorage.getItem('language')
+          'Language': sessionStorage.getItem('language')
         }
       });
 
@@ -27,7 +27,7 @@ export class HeadersInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           'Correlation-Id': uuid(),
-          'Language': localStorage.getItem('language')
+          'Language': sessionStorage.getItem('language')
         }
       });
     }

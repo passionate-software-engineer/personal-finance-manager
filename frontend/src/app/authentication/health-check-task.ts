@@ -72,14 +72,14 @@ export class HealthCheckTask {
                     }
 
                   } else if (accessTokenExpirationTimeInSeconds < 60) {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
                     this.userService.extendToken(currentUser.refreshToken.value)
                         .subscribe(
                           newAccessToken => {
                             currentUser.accessToken.value = newAccessToken.value;
                             currentUser.accessToken.expiryDate = newAccessToken.expiryDate;
 
-                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
                           },
                         );
                   }
