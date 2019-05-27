@@ -81,16 +81,6 @@ public class TokenServiceTest {
     assertThat(exception.getMessage(), is(equalTo("RefreshToken expiry time does not exist")));
   }
 
-  /* @Test
-  public void shouldReturnFalseCausedByExpiredRefreshToken() {
-    //given
-    Token token = new Token("accessToken", ZonedDateTime.now());
-    refreshTokenStorage.put(token.getValue(), token);
-
-    //then
-    assertFalse(tokenService.isRefreshTokenValid(token.getValue()));
-   }*/
-
   @Test
   public void shouldThrowExceptionCausedByNotExistingRefreshToken() {
     //given
