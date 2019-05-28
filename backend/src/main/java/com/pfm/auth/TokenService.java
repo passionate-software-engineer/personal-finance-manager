@@ -31,7 +31,7 @@ public class TokenService {
     this.tokensByUserId = tokensByUserId;
   }
 
-  public Tokens generateTokens(User user) {
+  Tokens generateTokens(User user) {
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
     Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
@@ -80,7 +80,7 @@ public class TokenService {
     return token.getUserId();
   }
 
-  public Token generateAccessToken(String refreshToken) {
+  Token generateAccessToken(String refreshToken) {
     long userId = getUserIdBasedOnRefreshToken(refreshToken);
     UUID newAccessTokenUuid = UUID.randomUUID();
     Token newAccessToken = Token.builder()

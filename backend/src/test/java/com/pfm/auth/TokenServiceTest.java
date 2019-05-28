@@ -78,6 +78,7 @@ public class TokenServiceTest {
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> tokenService.isRefreshTokenValid(refreshToken.getValue()));
+
     //then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken expiry time does not exist")));
   }
