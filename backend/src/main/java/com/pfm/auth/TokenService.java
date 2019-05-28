@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -34,18 +32,12 @@ public class TokenService {
   }
 
   public Tokens generateTokens(User user) {
-
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
     Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
     Token refreshToken = new Token(refreshTokenUuid.toString(), ZonedDateTime.now().plusMinutes(refreshTokenExpiryTimeInMinutes));
     final Tokens tokens = new Tokens(user.getId(), accessToken, refreshToken);
-    if (tokensAlreadyExistForUser(user.getId())) {
-      removeAllTokens(user.getId());
-    }
-    accessTokensStorage.put(accessToken.getValue(), accessToken);
-    refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
-    tokensByUserId.put(user.getId(), tokens);
+    saveTokens(user, tokens);
 
     return tokens;
   }
@@ -96,7 +88,7 @@ public class TokenService {
         .expiryDate(ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes))
         .build();
 
-    updateTokenStorages(userId, newAccessToken, refreshToken);
+    updateTokens(userId, newAccessToken, refreshToken);
 
     return newAccessToken;
   }
@@ -124,10 +116,6 @@ public class TokenService {
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
-  private boolean tokensAlreadyExistForUser(Long id) {
-    return tokensByUserId.containsKey(id);
-  }
-
   private void removeAllTokens(Long id) {
     Tokens tokensToBeRemoved = tokensByUserId.get(id);
     accessTokensStorage.remove(tokensToBeRemoved.getAccessToken().getValue());
@@ -135,7 +123,7 @@ public class TokenService {
     tokensByUserId.remove(id);
   }
 
-  private void updateTokenStorages(long userId, Token newAccessToken, String refreshTokenValue) {
+  private void updateTokens(long userId, Token newAccessToken, String refreshTokenValue) {
     String expiringAccessToken = tokensByUserId.get(userId).getAccessToken().getValue();
     accessTokensStorage.remove(expiringAccessToken);
     accessTokensStorage.put(newAccessToken.getValue(), newAccessToken);
@@ -143,4 +131,13 @@ public class TokenService {
     Tokens tokens = new Tokens(userId, newAccessToken, refreshToken);
     tokensByUserId.replace(userId, tokens);
   }
+
+  private void saveTokens(User user, Tokens tokens) {
+    Token accessToken = tokens.getAccessToken();
+    Token refreshToken = tokens.getRefreshToken();
+    accessTokensStorage.put(accessToken.getValue(), accessToken);
+    refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
+    tokensByUserId.put(user.getId(), tokens);
+  }
+
 }
