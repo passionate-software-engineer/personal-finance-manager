@@ -2,6 +2,7 @@ package com.pfm.auth;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -82,6 +83,20 @@ public class TokenServiceTest {
   }
 
   @Test
+  public void shouldThrowExceptionCausedByExpiredRefreshToken() {
+    //given
+    Token token = new Token("accessToken", ZonedDateTime.now());
+    refreshTokenStorage.put(token.getValue(), token);
+
+    //when
+    Throwable exception = assertThrows(IllegalStateException.class,
+        () -> tokenService.getUserIdBasedOnRefreshToken(token.getValue()));
+
+    //then
+    assertThat(exception.getMessage(), is(equalTo("Provided refreshToken does not exist")));
+  }
+
+  @Test
   public void shouldThrowExceptionCausedByNotExistingRefreshToken() {
     //given
     String token = "Fake Tokens";
@@ -103,6 +118,28 @@ public class TokenServiceTest {
 
     //then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken cannot be null")));
+  }
+
+  @Test
+  public void shouldRemoveAllUserTokensForExpiredRefreshToken() {
+    //given
+    Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(15));
+    accessTokensStorage.put(accessToken.getValue(), accessToken);
+    Token refreshToken = new Token("refreshToken", ZonedDateTime.now());
+    refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
+    Tokens tokens = new Tokens(1L, accessToken, refreshToken);
+    tokensByUserId.put(1L, tokens);
+    assertThat(tokensByUserId.get(1L), is(equalTo(tokens)));
+    assertThat(accessTokensStorage.get(accessToken.getValue()), is(equalTo(accessToken)));
+    assertThat(refreshTokenStorage.get(refreshToken.getValue()), is(equalTo(refreshToken)));
+
+    //when
+    tokenService.isRefreshTokenValid(refreshToken.getValue());
+
+    //then
+    assertThat(tokensByUserId.get(1L), is(nullValue()));
+    assertThat(accessTokensStorage.get(accessToken.getValue()), is(nullValue()));
+    assertThat(refreshTokenStorage.get(refreshToken.getValue()), is(nullValue()));
   }
 
 }
