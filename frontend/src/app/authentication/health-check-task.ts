@@ -49,7 +49,7 @@ export class HealthCheckTask {
                 const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessToken.expiryDate;
                 const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
 
-                if (this.isExpired(accessTokenExpirationTime) || this.isExpired(refreshTokenExpirationTime)) {
+                if (this.isExpired(accessTokenExpirationTime) && this.isExpired(refreshTokenExpirationTime)) {
                   this.terminateSessionAndNavigateToLoginPage();
                 }
 
@@ -88,7 +88,7 @@ export class HealthCheckTask {
   }
 
   private promptForPasswordAndTryToExtendSession() {
-    const password = prompt('Your session has expired, please enter a password to extend it.', '');
+    const password = prompt(this.translate.instant('prompt.extend.session'), '');
     if (password != null) {
       const username = this.authenticationService.getLoggedInUser().username;
       this.authenticationService.login(username, password)
@@ -98,6 +98,8 @@ export class HealthCheckTask {
               if (refreshTokenExpirationTime != null) {
                 const refreshTokenExpireTimeInMinutes = this.getTokenExpirationTimeInMinutes(refreshTokenExpirationTime);
                 alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
+                alert(this.translate.instant('prompt.extend.session.info1') + refreshTokenExpireTimeInMinutes +
+                  this.translate.instant('prompt.extend.session.info2'));
               }
             },
             error => {
