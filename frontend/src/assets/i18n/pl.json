@@ -70,7 +70,7 @@
   "navigation.history": "Historia operacji",
   "navigation.exportImport": "Import/Eksport",
   "prompt.extend.session": "Twoja sesja wygasła, proszę podać hasło aby przedłużyć sesję",
-  "prompt.extend.session.info1": "Twoja sesja została przedóżona o ",
+  "prompt.extend.session.info1": "Twoja sesja została przedłużona o ",
   "prompt.extend.session.info2": " minut, dziękuję.",
   "register.firstName": "Imię",
   "register.firstNameIsRequired": "Imię jest wymagane",

@@ -97,7 +97,6 @@ export class HealthCheckTask {
               const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
               if (refreshTokenExpirationTime != null) {
                 const refreshTokenExpireTimeInMinutes = this.getTokenExpirationTimeInMinutes(refreshTokenExpirationTime);
-                alert('Your session was extended for next ' + refreshTokenExpireTimeInMinutes + ' minutes, thank you.');
                 alert(this.translate.instant('prompt.extend.session.info1') + refreshTokenExpireTimeInMinutes +
                   this.translate.instant('prompt.extend.session.info2'));
               }

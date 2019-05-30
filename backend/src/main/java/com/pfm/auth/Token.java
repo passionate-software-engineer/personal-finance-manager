@@ -1,5 +1,6 @@
 package com.pfm.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,6 @@ public class Token {
 
   private String value;
   private ZonedDateTime expiryDate;
+  @JsonIgnore
   private Long userId;
-
 }

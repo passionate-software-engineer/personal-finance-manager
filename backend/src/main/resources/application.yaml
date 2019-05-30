@@ -1,7 +1,7 @@
 server.port: 8088
 
-accessTokenExpiryTimeInMinutes: 15
-refreshTokenExpiryTimeInMinutes: 60
+accessTokenExpiryTimeInMinutes: 1
+refreshTokenExpiryTimeInMinutes: 2
 
 spring:
   profiles:
