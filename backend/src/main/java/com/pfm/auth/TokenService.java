@@ -51,7 +51,7 @@ public class TokenService {
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
       long userId = getUserIdBasedOnAccessToken(token);
-      removeAllTokens(userId);
+      removeAllTokensOfGivenUser(userId);
       throw new IllegalStateException("AccessToken expiry time does not exist");
     }
 
@@ -59,19 +59,19 @@ public class TokenService {
   }
 
   public long getUserIdBasedOnAccessToken(String accessToken) {
-    Token accessTok = accessTokensStorage.get(accessToken);
-    if (accessTok == null) {
+    Token accessTokenFromDb = accessTokensStorage.get(accessToken);
+    if (accessTokenFromDb == null) {
       throw new IllegalStateException("Provided accessToken does not exist");
     }
-    return accessTok.getUserId();
+    return accessTokenFromDb.getUserId();
   }
 
   public long getUserIdBasedOnRefreshToken(String refreshToken) {
-      Token refreTok = refreshTokenStorage.get(refreshToken);
-    if (refreTok == null) {
+    Token refreshTokenFromDb = refreshTokenStorage.get(refreshToken);
+    if (refreshTokenFromDb == null) {
       throw new IllegalStateException("Provided refreshToken does not exist");
     }
-      return refreTok.getUserId();
+    return refreshTokenFromDb.getUserId();
   }
 
   Token generateAccessToken(String refreshToken) {
@@ -99,18 +99,18 @@ public class TokenService {
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
       long userId = getUserIdBasedOnRefreshToken(refreshToken);
-      removeAllTokens(userId);
+      removeAllTokensOfGivenUser(userId);
 
       throw new IllegalStateException("RefreshToken expiry time does not exist");
     }
     if (!expiryDate.isAfter(ZonedDateTime.now())) {
       long userId = getUserIdBasedOnRefreshToken(refreshToken);
-      removeAllTokens(userId);
+      removeAllTokensOfGivenUser(userId);
     }
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
-  private void removeAllTokens(Long id) {
+  private void removeAllTokensOfGivenUser(Long id) {
     Tokens tokensToBeRemoved = tokensByUserId.get(id);
     accessTokensStorage.remove(tokensToBeRemoved.getAccessToken().getValue());
     refreshTokenStorage.remove(tokensToBeRemoved.getRefreshToken().getValue());
