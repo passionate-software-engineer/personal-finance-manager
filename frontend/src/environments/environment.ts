@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8088',
-  healthCheckTaskIntervalInSeconds: 5 * 1000,
+  healthCheckTaskIntervalInSeconds: 10 * 1000,
   accessTokenExpirationTimeInSecondsWarningLevel: 60,
   refreshTokenExpirationTimeInSecondsWarningLevel: 60
 };
