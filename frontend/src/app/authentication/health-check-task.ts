@@ -57,7 +57,7 @@ export class HealthCheckTask {
                 const refreshTokenExpirationTimeInSeconds = this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime);
 
                 if (this.authenticationService.getLoggedInUser()) {
-                  if (refreshTokenExpirationTimeInSeconds < environment.refreshTokenExpirationTimeInSecondsWarningLevel) {
+                  if (refreshTokenExpirationTimeInSeconds < environment.refreshTokenExpirationTimeWarningLevelInSeconds) {
                     if (this.healthCheckTask) {
                       this.stopHealthCheckTask();
                     }
@@ -66,7 +66,7 @@ export class HealthCheckTask {
                       this.startHealthCheckTask();
                     }
 
-                  } else if (accessTokenExpirationTimeInSeconds < environment.accessTokenExpirationTimeInSecondsWarningLevel) {
+                  } else if (accessTokenExpirationTimeInSeconds < environment.accessTokenExpirationTimeWarningLevelInSeconds) {
                     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
                     this.userService.extendToken(currentUser.refreshToken.value)
                         .subscribe(

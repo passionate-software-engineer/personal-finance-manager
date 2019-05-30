@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -34,8 +32,8 @@ public class TokenService {
   }
 
   Tokens generateTokens(User user) {
-    if (lastSessionTokensExist(user.getId())) {
-      removeAllTokensOfGivenUser(user.getId());
+    if (areLastSessionTokensExist(user.getId())) {
+      removeAllUserTokens(user.getId());
     }
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
@@ -56,7 +54,7 @@ public class TokenService {
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
       long userId = getUserIdBasedOnAccessToken(token);
-      removeAllTokensOfGivenUser(userId);
+      removeAllUserTokens(userId);
       throw new IllegalStateException("AccessToken expiry time does not exist");
     }
 
@@ -89,8 +87,7 @@ public class TokenService {
         .build();
 
     updateTokens(userId, newAccessToken, refreshToken);
-    logTokenStorages();
-    logAccessTokenDetails();
+
     return newAccessToken;
   }
 
@@ -106,23 +103,22 @@ public class TokenService {
     ZonedDateTime expiryDate = tokensFromDb.getExpiryDate();
     if (expiryDate == null) {
       long userId = getUserIdBasedOnRefreshToken(refreshToken);
-      removeAllTokensOfGivenUser(userId);
+      removeAllUserTokens(userId);
 
       throw new IllegalStateException("RefreshToken expiry time does not exist");
     }
     if (!expiryDate.isAfter(ZonedDateTime.now())) {
       long userId = getUserIdBasedOnRefreshToken(refreshToken);
-      removeAllTokensOfGivenUser(userId);
+      removeAllUserTokens(userId);
     }
     return expiryDate.isAfter(ZonedDateTime.now());
   }
 
-  private void removeAllTokensOfGivenUser(Long id) {
+  private void removeAllUserTokens(Long id) {
     Tokens tokensToBeRemoved = tokensByUserId.get(id);
     accessTokensStorage.remove(tokensToBeRemoved.getAccessToken().getValue());
     refreshTokenStorage.remove(tokensToBeRemoved.getRefreshToken().getValue());
     tokensByUserId.remove(id);
-    logTokenStorages();
   }
 
   private void updateTokens(long userId, Token newAccessToken, String refreshTokenValue) {
@@ -132,7 +128,6 @@ public class TokenService {
     Token refreshToken = refreshTokenStorage.get(refreshTokenValue);
     Tokens tokens = new Tokens(userId, newAccessToken, refreshToken);
     tokensByUserId.replace(userId, tokens);
-    logTokenStorages();
   }
 
   private void saveTokens(User user, Tokens tokens) {
@@ -141,21 +136,9 @@ public class TokenService {
     accessTokensStorage.put(accessToken.getValue(), accessToken);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     tokensByUserId.put(user.getId(), tokens);
-    logTokenStorages();
   }
 
-  private boolean lastSessionTokensExist(Long id) {
+  private boolean areLastSessionTokensExist(Long id) {
     return tokensByUserId.containsKey(id);
-  }
-
-  public void logTokenStorages() {
-    log.warn("access size = {}", accessTokensStorage.size());
-    log.warn("refresh size = {}", refreshTokenStorage.size());
-    log.warn("tokens size = {}", tokensByUserId.size());
-  }
-
-  public void logAccessTokenDetails() {
-    log.warn("access size = {}", accessTokensStorage.size());
-    // log.warn("refresh detail = {}", accessTokensStorage.values().stream().findFirst().get().getUserId().toString());
   }
 }

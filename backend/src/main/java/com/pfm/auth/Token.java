@@ -13,7 +13,6 @@ import lombok.NonNull;
 @Builder
 @Getter
 public class Token {
-
   private String value;
   private ZonedDateTime expiryDate;
   @JsonIgnore
