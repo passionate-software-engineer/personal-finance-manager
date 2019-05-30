@@ -14,5 +14,6 @@ public class Token {
 
   private String value;
   private ZonedDateTime expiryDate;
+  private Long userId;
 
 }

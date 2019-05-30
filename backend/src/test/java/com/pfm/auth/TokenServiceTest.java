@@ -23,9 +23,9 @@ public class TokenServiceTest {
   @Test
   public void shouldThrowExceptionCausedByNullAccessTokenExpiryDate() {
     //given
-    Token accessToken = new Token("accessToken", null);
+    Token accessToken = new Token("accessToken", null,1L);
     accessTokensStorage.put(accessToken.getValue(), accessToken);
-    Token refreshToken = new Token("refreshToken", ZonedDateTime.now().plusMinutes(10));
+    Token refreshToken = new Token("refreshToken", ZonedDateTime.now().plusMinutes(10),1L);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     Tokens tokens = new Tokens(1L, accessToken, refreshToken);
     tokensByUserId.put(1L, tokens);
@@ -42,7 +42,7 @@ public class TokenServiceTest {
   @Test
   public void shouldReturnFalseCausedByExpiredAccessToken() {
     //given
-    Token token = new Token("accessToken", ZonedDateTime.now());
+    Token token = new Token("accessToken", ZonedDateTime.now(),1L);
     accessTokensStorage.put(token.getValue(), token);
     tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
@@ -67,9 +67,9 @@ public class TokenServiceTest {
   @Test
   public void shouldThrowExceptionCausedByNullRefreshTokenExpiryDate() {
     //given
-    Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(10));
+    Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(10),1L);
     accessTokensStorage.put(accessToken.getValue(), accessToken);
-    Token refreshToken = new Token("refreshToken", null);
+    Token refreshToken = new Token("refreshToken", null,1L);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     Tokens tokens = new Tokens(1L, accessToken, refreshToken);
     tokensByUserId.put(1L, tokens);
@@ -86,7 +86,7 @@ public class TokenServiceTest {
   @Test
   public void shouldThrowExceptionCausedByExpiredRefreshToken() {
     //given
-    Token token = new Token("accessToken", ZonedDateTime.now());
+    Token token = new Token("accessToken", ZonedDateTime.now(),1L);
     refreshTokenStorage.put(token.getValue(), token);
 
     //when
@@ -124,9 +124,9 @@ public class TokenServiceTest {
   @Test
   public void shouldRemoveAllUserTokensForExpiredRefreshToken() {
     //given
-    Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(15));
+    Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(15),1L);
     accessTokensStorage.put(accessToken.getValue(), accessToken);
-    Token refreshToken = new Token("refreshToken", ZonedDateTime.now());
+    Token refreshToken = new Token("refreshToken", ZonedDateTime.now(),1L);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     Tokens tokens = new Tokens(1L, accessToken, refreshToken);
     tokensByUserId.put(1L, tokens);

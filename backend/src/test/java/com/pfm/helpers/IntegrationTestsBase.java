@@ -459,8 +459,9 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
     UserDetails authResponse = jsonToAuthResponse(response);
-    return new Tokens(authResponse.getId(), new Token(authResponse.getAccessToken().getValue(), authResponse.getAccessToken().getExpiryDate()),
-        new Token(authResponse.getRefreshToken().getValue(), authResponse.getRefreshToken().getExpiryDate()));
+  //fixme builder
+    return new Tokens(authResponse.getId(), new Token(authResponse.getAccessToken().getValue(), authResponse.getAccessToken().getExpiryDate(),userId),
+        new Token(authResponse.getRefreshToken().getValue(), authResponse.getRefreshToken().getExpiryDate(),userId));
 
   }
 

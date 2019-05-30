@@ -34,8 +34,8 @@ public class TokenService {
   Tokens generateTokens(User user) {
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
-    Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes));
-    Token refreshToken = new Token(refreshTokenUuid.toString(), ZonedDateTime.now().plusMinutes(refreshTokenExpiryTimeInMinutes));
+    Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes), user.getId());
+    Token refreshToken = new Token(refreshTokenUuid.toString(), ZonedDateTime.now().plusMinutes(refreshTokenExpiryTimeInMinutes), user.getId());
     final Tokens tokens = new Tokens(user.getId(), accessToken, refreshToken);
     saveTokens(user, tokens);
 
@@ -59,25 +59,19 @@ public class TokenService {
   }
 
   public long getUserIdBasedOnAccessToken(String accessToken) {
-    Tokens token = tokensByUserId
-        .values()
-        .stream()
-        .filter(tokens -> tokens.getAccessToken().getValue().equals(accessToken))
-        .findFirst()
-        .orElseThrow(() -> new IllegalStateException("Provided accessToken does not exist"));
-
-    return token.getUserId();
+    Token accessTok = accessTokensStorage.get(accessToken);
+    if (accessTok == null) {
+      throw new IllegalStateException("Provided accessToken does not exist");
+    }
+    return accessTok.getUserId();
   }
 
   public long getUserIdBasedOnRefreshToken(String refreshToken) {
-    Tokens token = tokensByUserId
-        .values()
-        .stream()
-        .filter(tokens -> tokens.getRefreshToken().getValue().equals(refreshToken))
-        .findFirst()
-        .orElseThrow(() -> new IllegalStateException("Provided refreshToken does not exist"));
-
-    return token.getUserId();
+      Token refreTok = refreshTokenStorage.get(refreshToken);
+    if (refreTok == null) {
+      throw new IllegalStateException("Provided refreshToken does not exist");
+    }
+      return refreTok.getUserId();
   }
 
   Token generateAccessToken(String refreshToken) {
