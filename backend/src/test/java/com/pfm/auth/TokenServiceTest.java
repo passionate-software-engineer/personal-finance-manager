@@ -96,6 +96,16 @@ public class TokenServiceTest {
     //then
     assertThat(exception.getMessage(), is(equalTo("Provided refreshToken does not exist")));
   }
+/*  public long getUserIdBasedOnRefreshToken(String refreshToken) {
+    Tokens token = tokensByUserId
+        .values()
+        .stream()
+        .filter(tokens -> tokens.getRefreshToken().getValue().equals(refreshToken))
+        .findFirst()
+        .orElseThrow(() -> new IllegalStateException("Provided refreshToken does not exist"));
+
+    return token.getUserId();
+  }*/
 
   @Test
   public void shouldThrowExceptionCausedByNotExistingRefreshToken() {
