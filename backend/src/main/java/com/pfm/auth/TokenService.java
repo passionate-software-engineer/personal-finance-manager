@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -83,7 +85,7 @@ public class TokenService {
         .build();
 
     updateTokens(userId, newAccessToken, refreshToken);
-
+    logTokenStorages();
     return newAccessToken;
   }
 
@@ -115,6 +117,7 @@ public class TokenService {
     accessTokensStorage.remove(tokensToBeRemoved.getAccessToken().getValue());
     refreshTokenStorage.remove(tokensToBeRemoved.getRefreshToken().getValue());
     tokensByUserId.remove(id);
+    logTokenStorages();
   }
 
   private void updateTokens(long userId, Token newAccessToken, String refreshTokenValue) {
@@ -124,6 +127,7 @@ public class TokenService {
     Token refreshToken = refreshTokenStorage.get(refreshTokenValue);
     Tokens tokens = new Tokens(userId, newAccessToken, refreshToken);
     tokensByUserId.replace(userId, tokens);
+    logTokenStorages();
   }
 
   private void saveTokens(User user, Tokens tokens) {
@@ -132,6 +136,12 @@ public class TokenService {
     accessTokensStorage.put(accessToken.getValue(), accessToken);
     refreshTokenStorage.put(refreshToken.getValue(), refreshToken);
     tokensByUserId.put(user.getId(), tokens);
+    logTokenStorages();
   }
 
+  public void logTokenStorages() {
+    log.warn("acccess size = {}", accessTokensStorage.size());
+    log.warn("refresh size = {}", refreshTokenStorage.size());
+    log.warn("tokens size = {}", tokensByUserId.size());
+  }
 }
