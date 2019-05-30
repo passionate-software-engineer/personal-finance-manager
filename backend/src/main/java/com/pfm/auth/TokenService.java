@@ -34,7 +34,7 @@ public class TokenService {
   }
 
   Tokens generateTokens(User user) {
-    if (tokensAlreadyExistForUser(user.getId())) {
+    if (lastSessionTokensExist(user.getId())) {
       removeAllTokensOfGivenUser(user.getId());
     }
     UUID accessTokenUuid = UUID.randomUUID();
@@ -83,12 +83,14 @@ public class TokenService {
     long userId = getUserIdBasedOnRefreshToken(refreshToken);
     UUID newAccessTokenUuid = UUID.randomUUID();
     Token newAccessToken = Token.builder()
+        .userId(userId)
         .value(newAccessTokenUuid.toString())
         .expiryDate(ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes))
         .build();
 
     updateTokens(userId, newAccessToken, refreshToken);
     logTokenStorages();
+    logAccessTokenDetails();
     return newAccessToken;
   }
 
@@ -142,9 +144,18 @@ public class TokenService {
     logTokenStorages();
   }
 
+  private boolean lastSessionTokensExist(Long id) {
+    return tokensByUserId.containsKey(id);
+  }
+
   public void logTokenStorages() {
-    log.warn("acccess size = {}", accessTokensStorage.size());
+    log.warn("access size = {}", accessTokensStorage.size());
     log.warn("refresh size = {}", refreshTokenStorage.size());
     log.warn("tokens size = {}", tokensByUserId.size());
+  }
+
+  public void logAccessTokenDetails() {
+    log.warn("access size = {}", accessTokensStorage.size());
+    // log.warn("refresh detail = {}", accessTokensStorage.values().stream().findFirst().get().getUserId().toString());
   }
 }
