@@ -34,6 +34,9 @@ public class TokenService {
   }
 
   Tokens generateTokens(User user) {
+    if (tokensAlreadyExistForUser(user.getId())) {
+      removeAllTokensOfGivenUser(user.getId());
+    }
     UUID accessTokenUuid = UUID.randomUUID();
     UUID refreshTokenUuid = UUID.randomUUID();
     Token accessToken = new Token(accessTokenUuid.toString(), ZonedDateTime.now().plusMinutes(accessTokenExpiryTimeInMinutes), user.getId());
