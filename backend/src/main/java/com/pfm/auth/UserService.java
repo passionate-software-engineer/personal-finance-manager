@@ -30,10 +30,16 @@ public class UserService {
       return Optional.empty();
     }
 
-    Token token = tokenService.generateToken(userFromDb);
+    Tokens tokens = tokenService.generateTokens(userFromDb);
 
-    UserDetails userDetails = new UserDetails(userFromDb.getId(), userFromDb.getUsername(), userFromDb.getFirstName(),
-        userFromDb.getLastName(), token.getToken(), token.getExpiryDate());
+    UserDetails userDetails = UserDetails.builder()
+        .id(userFromDb.getId())
+        .username(userFromDb.getUsername())
+        .firstName(userFromDb.getFirstName())
+        .lastName(userFromDb.getLastName())
+        .accessToken(tokens.getAccessToken())
+        .refreshToken(tokens.getRefreshToken())
+        .build();
 
     return Optional.of(userDetails);
   }

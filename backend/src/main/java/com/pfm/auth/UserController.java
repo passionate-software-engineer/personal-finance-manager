@@ -1,5 +1,6 @@
 package com.pfm.auth;
 
+import static com.pfm.config.MessagesProvider.INVALID_REFRESH_TOKEN;
 import static com.pfm.config.MessagesProvider.USERNAME_OR_PASSWORD_IS_INCORRECT;
 import static com.pfm.config.MessagesProvider.getMessage;
 
@@ -22,6 +23,7 @@ public class UserController { // TODO extract API interface
   private UserService userService;
   private UserValidator userValidator;
   private UserInitializationService userInitializationService;
+  private TokenService tokenService;
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate) {
@@ -48,5 +50,15 @@ public class UserController { // TODO extract API interface
 
     return ResponseEntity.ok(userId);
   }
-}
 
+  @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+  public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
+    if (!tokenService.isRefreshTokenValid(refreshToken)) {
+      return ResponseEntity.badRequest().body(getMessage(INVALID_REFRESH_TOKEN));
+    }
+    Token newAccessToken = tokenService.generateAccessToken(refreshToken);
+
+    return ResponseEntity.ok(newAccessToken);
+  }
+
+}

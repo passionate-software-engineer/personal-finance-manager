@@ -52,6 +52,7 @@ public class MessagesProvider {
   public static final String TOO_LONG_PASSWORD = "userValidator.tooLongPassword";
   public static final String TOO_LONG_FIRST_NAME = "userValidator.tooLongFirstName";
   public static final String TOO_LONG_LAST_NAME = "userValidator.tooLongLastName";
+  public static final String INVALID_REFRESH_TOKEN = "tokenService.invalidRefreshToken";
 
   public static final String MAIN_CATEGORY = "historyInfoProvider.mainCategory";
 

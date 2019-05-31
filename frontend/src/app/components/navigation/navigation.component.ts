@@ -23,10 +23,10 @@ export class NavigationComponent implements OnInit {
     authenticationService.currentUserObservable.subscribe(user => {
       this.currentUser = user;
     });
-    let language = localStorage.getItem('language');
+    let language = sessionStorage.getItem('language');
     if (language === null || language === undefined) {
       language = 'en';
-      localStorage.setItem('language', language);
+      sessionStorage.setItem('language', language);
     }
 
     translate.setDefaultLang(language);
@@ -34,7 +34,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authenticationService.getLoggedInUser();
-    if (this.currentUser.token != null) { // TODO ugly trick to notify health check to start on page load when user is signed in
+    if (this.currentUser.accessToken != null) { // TODO ugly trick to notify health check to start on page load when user is signed in
       this.authenticationService.updateCurrentUser(this.currentUser);
     }
   }
@@ -49,6 +49,6 @@ export class NavigationComponent implements OnInit {
 
   switchLanguage = (language: string) => {
     this.translate.use(language);
-    localStorage.setItem('language', language);
+    sessionStorage.setItem('language', language);
   }
 }

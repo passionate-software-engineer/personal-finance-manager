@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {HealthService} from './health.service';
+import {UserService} from './user.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,70 +21,114 @@ export class HealthCheckTask {
     private ngZone: NgZone,
     private healthService: HealthService,
     private translate: TranslateService,
-    private alertService: AlertsService) {
+    private alertService: AlertsService,
+    private userService: UserService) {
 
     authenticationService.currentUserObservable.subscribe(user => {
-      if (user.token != null) {
+      if (user.accessToken != null && this.healthCheckTask == null) {
         this.startHealthCheckTask();
-      } else {
+      } else if (user.accessToken == null) {
         this.stopHealthCheckTask();
       }
     });
   }
 
   private startHealthCheckTask(): void {
+
     this.ngZone.runOutsideAngular(() => { // needed for interval to work with protractor https://github.com/angular/protractor/issues/3349
 
-      this.healthCheckTask = interval(30 * 1000)
-      .subscribe(eventNumber => {
+        this.healthCheckTask = interval(environment.healthCheckTaskIntervalInSeconds)
+        .subscribe(eventNumber => {
 
-        this.ngZone.run(() => {
-          // no need to do anything - error handler will do the job
-          this.healthService.getHealthStatus()
-              .subscribe();
+            this.ngZone.run(() => {
+              // no need to do anything - error handler will do the job
+              this.healthService.getHealthStatus()
+                  .subscribe();
 
-          const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
-          if (tokenExpirationTime != null) {
+              if (this.authenticationService.getLoggedInUser()) {
+                const accessTokenExpirationTime = this.authenticationService.getLoggedInUser().accessToken.expiryDate;
+                const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
 
-            const expireTimeInSeconds = Math.floor((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000);
-            if (expireTimeInSeconds < 120) {
-              this.promptForPasswordAndTryToExtendSession(expireTimeInSeconds);
-            }
+                if (this.isExpired(accessTokenExpirationTime) && this.isExpired(refreshTokenExpirationTime)) {
+                  this.terminateSessionAndNavigateToLoginPage();
+                }
 
-            if (new Date(tokenExpirationTime) < new Date()) {
-              this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-              this.authenticationService.logout();
-              this.alertService.error(this.translate.instant('message.loggedOut'));
-            }
+                const accessTokenExpirationTimeInSeconds = this.getTokenExpirationTimeInSeconds(accessTokenExpirationTime);
+                const refreshTokenExpirationTimeInSeconds = this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime);
+
+                if (this.authenticationService.getLoggedInUser()) {
+                  if (refreshTokenExpirationTimeInSeconds < environment.refreshTokenExpirationTimeWarningLevelInSeconds) {
+                    if (this.healthCheckTask) {
+                      this.stopHealthCheckTask();
+                    }
+                    this.promptForPasswordAndTryToExtendSession();
+                    if (this.healthCheckTask == null) {
+                      this.startHealthCheckTask();
+                    }
+
+                  } else if (accessTokenExpirationTimeInSeconds < environment.accessTokenExpirationTimeWarningLevelInSeconds) {
+                    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                    this.userService.extendToken(currentUser.refreshToken.value)
+                        .subscribe(
+                          newAccessToken => {
+                            currentUser.accessToken.value = newAccessToken.value;
+                            currentUser.accessToken.expiryDate = newAccessToken.expiryDate;
+
+                            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                          },
+                        );
+                  }
+                }
+              }
+            });
           }
-        });
-
-      });
-    });
-
+        );
+      }
+    );
   }
 
-  private promptForPasswordAndTryToExtendSession(expireTimeInSeconds) {
-    const password = prompt('Your session will expire in ' + expireTimeInSeconds
-      + ' seconds, please enter a password to extend it.', '');
+  private promptForPasswordAndTryToExtendSession() {
+    const password = prompt(this.translate.instant('prompt.extend.session'), '');
     if (password != null) {
       const username = this.authenticationService.getLoggedInUser().username;
       this.authenticationService.login(username, password)
           .subscribe(
             data => {
-              const tokenExpirationTime = this.authenticationService.getLoggedInUser().tokenExpirationTime;
-              if (tokenExpirationTime != null) {
-                const expireTimeInMinutes = Math.round((new Date(tokenExpirationTime).getTime() - Date.now()) / 1000 / 60);
-                alert('Your session was extended for next ' + expireTimeInMinutes + ' minutes, thank you.');
+              const refreshTokenExpirationTime = this.authenticationService.getLoggedInUser().refreshToken.expiryDate;
+              if (refreshTokenExpirationTime != null) {
+                const refreshTokenExpireTimeInMinutes = this.getTokenExpirationTimeInMinutes(refreshTokenExpirationTime);
+                alert(this.translate.instant('prompt.extend.session.info1') + refreshTokenExpireTimeInMinutes +
+                  this.translate.instant('prompt.extend.session.info2'));
               }
             },
             error => {
-              alert('Provided credentials were invalid, please try again on next prompt.');
+              this.terminateSessionAndNavigateToLoginPage();
             });
+    } else {
+      this.terminateSessionAndNavigateToLoginPage();
     }
+  }
+
+  private getTokenExpirationTimeInMinutes(refreshTokenExpirationTime) {
+    return Math.round(this.getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) / 60);
+  }
+
+  private getTokenExpirationTimeInSeconds(refreshTokenExpirationTime) {
+    return Math.floor((new Date(refreshTokenExpirationTime).getTime() - Date.now()) / 1000);
+  }
+
+  private isExpired(date: string): boolean {
+    return new Date(date) < new Date();
+  }
+
+  private terminateSessionAndNavigateToLoginPage() {
+    this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+    this.authenticationService.logout();
+    this.alertService.error(this.translate.instant('message.loggedOut'));
   }
 
   private stopHealthCheckTask(): void {
     this.healthCheckTask.unsubscribe();
+    this.healthCheckTask = null;
   }
 }
