@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.auth.Token;
+import com.pfm.auth.Tokens;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
 import com.pfm.auth.UserService;
@@ -447,7 +449,33 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
-    return jsonToAuthResponse(response).getToken();
+    return jsonToAuthResponse(response).getAccessToken().getValue();
+  }
+
+  public Tokens callRestToAuthenticateUserAndReturnTokens(User user) throws Exception {
+    String response = mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(user)))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+    UserDetails authResponse = jsonToAuthResponse(response);
+
+    return new Tokens(
+        authResponse.getId(),
+
+        Token.builder()
+            .userId(userId)
+            .value(authResponse.getAccessToken().getValue())
+            .expiryDate(authResponse.getAccessToken().getExpiryDate())
+            .build(),
+
+        Token.builder()
+            .userId(userId)
+            .value(authResponse.getRefreshToken().getValue())
+            .expiryDate(authResponse.getRefreshToken().getExpiryDate())
+            .build()
+    );
+
   }
 
   public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {

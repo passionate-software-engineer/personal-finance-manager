@@ -36,8 +36,8 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
       return true;
     }
 
-    String requestToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-    if (requestToken == null || requestToken.isEmpty()) {
+    String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+    if (accessToken == null || accessToken.isEmpty()) {
       logger.error("Authorization header value is empty");
       response.setContentType("text/plain");
       response.getWriter().write("Authorization header value is empty");
@@ -46,14 +46,14 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
       return false;
     }
 
-    if (isTokenCorrect(requestToken)) {
-      long userIdFromToken = tokenService.getUserIdBasedOnToken(requestToken);
+    if (isTokenCorrect(accessToken)) {
+      long userIdFromToken = tokenService.getUserIdBasedOnAccessToken(accessToken);
       userProvider.setUser(userIdFromToken);
       return true;
     } else {
-      logger.error("Request token \"" + requestToken + "\" is incorrect");
+      logger.error("Request accessToken \"" + accessToken + "\" is incorrect");
       response.setContentType("text/plain");
-      response.getWriter().write("Request token \"" + requestToken + "\" is incorrect");
+      response.getWriter().write("Request accessToken \"" + accessToken + "\" is incorrect");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       response.setHeader("Access-Control-Allow-Origin", "*");
       return false;
@@ -67,6 +67,6 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
   }
 
   private boolean isTokenCorrect(String token) {
-    return tokenService.validateToken(token);
+    return tokenService.validateAccessToken(token);
   }
 }

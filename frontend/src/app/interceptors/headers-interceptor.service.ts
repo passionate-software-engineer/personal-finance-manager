@@ -12,15 +12,14 @@ export class HeadersInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // add authorization header with jwt token if available
+    // add authorization header with jwt accessToken if available
     const currentUser = this.authenticationService.getLoggedInUser();
-    if (currentUser && currentUser.token) {
-
+    if (currentUser && currentUser.accessToken) {    // if(logged-in)
       request = request.clone({
         setHeaders: {
-          Authorization: `${currentUser.token}`,
+          Authorization: `${currentUser.accessToken.value}`,
           'Correlation-Id': uuid(),
-          'Language': localStorage.getItem('language')
+          'Language': sessionStorage.getItem('language')
         }
       });
 
@@ -28,7 +27,7 @@ export class HeadersInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           'Correlation-Id': uuid(),
-          'Language': localStorage.getItem('language')
+          'Language': sessionStorage.getItem('language')
         }
       });
     }

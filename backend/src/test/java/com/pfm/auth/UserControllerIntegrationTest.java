@@ -4,6 +4,7 @@ import static com.pfm.config.MessagesProvider.EMPTY_FIRST_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_LAST_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_PASSWORD;
 import static com.pfm.config.MessagesProvider.EMPTY_USERNAME;
+import static com.pfm.config.MessagesProvider.INVALID_REFRESH_TOKEN;
 import static com.pfm.config.MessagesProvider.PASSWORD_CONTAINS_WHITSPACE;
 import static com.pfm.config.MessagesProvider.TOO_LONG_FIRST_NAME;
 import static com.pfm.config.MessagesProvider.TOO_LONG_LAST_NAME;
@@ -15,8 +16,12 @@ import static com.pfm.config.MessagesProvider.USER_WITH_PROVIDED_USERNAME_ALREAD
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -221,6 +226,54 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))
         .andExpect(jsonPath("$[1]", is(getMessage(PASSWORD_CONTAINS_WHITSPACE))));
+  }
+
+  @Test
+  public void shouldReturnBadRequestForNullRefreshTokenDuringRefreshRequest() throws Exception {
+    //given
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(null)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", is(getMessage(INVALID_REFRESH_TOKEN))));
+  }
+
+  @Test
+  public void shouldReturnNewAccessTokenOnSuccessfulRefreshRequest() throws Exception {
+    //given
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
+    String refreshToken = tokens.getRefreshToken().getValue();
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(refreshToken))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(not(nullValue()))))
+        .andExpect(content().string(containsString("value")))
+        .andExpect(content().string(containsString("expiryDate")));
+  }
+
+  @Test
+  public void shouldReturnCorrectTokenAndRemoveOldOneFromTokensStore() throws Exception {
+    //given
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
+    String refreshToken = tokens.getRefreshToken().getValue();
+
+    //when
+    mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
+        .contentType(JSON_CONTENT_TYPE)
+        .content(refreshToken))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(not(nullValue()))))
+        .andExpect(content().string(containsString("value")))
+        .andExpect(content().string(containsString("expiryDate")));
   }
 
 }

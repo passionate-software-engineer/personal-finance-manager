@@ -1,9 +1,11 @@
-﻿export class User {
+﻿import {Token} from './token';
+
+export class User {
   id: number;
   username: string;
   password: string;
   firstName: string;
   lastName: string;
-  token: string;
-  tokenExpirationTime: string;
+  accessToken: Token;
+  refreshToken: Token;
 }
