@@ -65,6 +65,24 @@ public class HistoryEntryService {
     saveHistoryEntry(historyEntry);
   }
 
+  public List<HistoryEntry> prepareExportHistory(List<HistoryEntry> historyEntries) {
+    return historyEntries.stream()
+        .map(historyEntry -> HistoryEntry.builder()
+            .date(historyEntry.getDate())
+            .type(historyEntry.getType())
+            .object(historyEntry.getObject())
+            .entries(historyEntry.getEntries().stream()
+                .map(entry -> HistoryInfo.builder()
+                    .name(entry.getName())
+                    .newValue(entry.getNewValue())
+                    .oldValue(entry.getOldValue())
+                    .build()
+                ).collect(Collectors.toList())
+            ).build()
+        ).collect(Collectors.toList());
+
+  }
+
   private void saveHistoryEntry(HistoryEntry historyEntry) {
     historyEntryRepository.save(historyEntry);
   }

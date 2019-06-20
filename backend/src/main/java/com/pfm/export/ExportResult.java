@@ -1,5 +1,6 @@
 package com.pfm.export;
 
+import com.pfm.history.HistoryEntry;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -135,6 +136,16 @@ final class ExportResult {
     private Map<String, BigDecimal> currencyToFundsMap;
 
     private BigDecimal sumOfAllFundsInBaseCurrency;
+
+  }
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  static final class ExportHistory {
+
+    private List<HistoryEntry> entries;
 
   }
 }
