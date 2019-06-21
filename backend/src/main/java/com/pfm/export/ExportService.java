@@ -14,6 +14,7 @@ import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.filter.FilterService;
+import com.pfm.history.HistoryEntryService;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -40,6 +41,7 @@ public class ExportService {
   private CategoryService categoryService;
   private CurrencyService currencyService;
   private FilterService filterService;
+  private HistoryEntryService historyEntryService;
 
   ExportResult exportData(long userId) {
     ExportResult result = new ExportResult();
@@ -58,6 +60,9 @@ public class ExportService {
       result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod());
     }
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState(), userId));
+    //fixme can be simplyfied
+    result.setExportHistoryEntries(historyEntryService.prepareExportHistory( historyEntryService.getHistoryEntries(userId)));
+    //result.setExportHistoryEntries( historyEntryService.getHistoryEntries(userId));
 
     // TODO export / import filters
 

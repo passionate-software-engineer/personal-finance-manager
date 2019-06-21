@@ -27,6 +27,7 @@ final class ExportResult {
 
   private List<ExportPeriod> periods = new ArrayList<>();
   private List<ExportFilter> filters = new ArrayList<>();
+  private List<HistoryEntry> exportHistoryEntries = new ArrayList<>();
 
   @Data
   @Builder
@@ -139,13 +140,4 @@ final class ExportResult {
 
   }
 
-  @Data
-  @Builder
-  @AllArgsConstructor
-  @NoArgsConstructor
-  static final class ExportHistory {
-
-    private List<HistoryEntry> entries;
-
-  }
 }
