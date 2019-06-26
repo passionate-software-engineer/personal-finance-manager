@@ -139,5 +139,4 @@ public final class ExportResult {
     private BigDecimal sumOfAllFundsInBaseCurrency;
 
   }
-
 }

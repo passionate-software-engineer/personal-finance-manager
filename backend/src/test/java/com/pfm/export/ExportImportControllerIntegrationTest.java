@@ -43,7 +43,6 @@ import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestAccountProvider;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
-import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -433,44 +432,44 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   }
 
   @Test
-  public void shouldExportedDateBeEqualToDataImported() throws Exception {
+  public void shouldImportDataFromUserMarianToUserZdzislaw() throws Exception {
     // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
     final LocalDateTime currentDate = LocalDateTime.now();
-    String exportSourceUserToken = token;
+    String userMarianToken = token;
 
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, exportSourceUserToken);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), exportSourceUserToken);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, userMarianToken);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), userMarianToken);
     callRestToAddCategoryAndReturnId(Category.builder()
         .name("Pizza")
         .parentCategory(Category.builder()
             .id(foodCategoryId)
             .build()
-        ).build(), exportSourceUserToken);
+        ).build(), userMarianToken);
 
     Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
-    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, exportSourceUserToken);
+    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, userMarianToken);
 
     Filter filter = filterFoodExpenses();
     filter.getCategoryIds().add(foodCategoryId);
     filter.getAccountIds().add(jacekAccountId);
-    callRestServiceToAddFilterAndReturnId(filter, exportSourceUserToken);
-    ExportResult exportedData = callRestToExportAllDataAndReturnExportResult(exportSourceUserToken);
+    callRestServiceToAddFilterAndReturnId(filter, userMarianToken);
+    ExportResult exportedData = callRestToExportAllDataAndReturnExportResult(userMarianToken);
 
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String importDestinationUserToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    String userZdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     //when
-    callRestToImportAllData(importDestinationUserToken, exportedData);
+    callRestToImportAllData(userZdzislawToken, exportedData);
 
-    ExportResult actual = callRestToExportAllDataAndReturnExportResult(importDestinationUserToken);
+    ExportResult actual = callRestToExportAllDataAndReturnExportResult(userZdzislawToken);
 
     //then
     assertEquals(exportedData, actual);
 
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
-        .header("Authorization", importDestinationUserToken))
+        .header("Authorization", userZdzislawToken))
         .andExpect(status().isOk())
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("1000.00")))
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.EUR", is("0.00")))
@@ -600,66 +599,4 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
   }
 
-  @Test
-  public void shouldImportTransactionBasic() throws Exception {
-    // given
-    File file = new File("src/test/resources/basic.json");
-    ExportResult importData = mapper.readValue(file, ExportResult.class);
-    //    assertThat(importData.getFinalAccountsState().size(),is(1));
-    //    assertThat(importData.getFinalAccountsState().get(0).getName(),is("a1"));
-    //    assertThat(importData.getFinalAccountsState().get(0).getBalance().toString() ,is("1.00"));
-    //    assertThat(importData.getFinalAccountsState().get(0).getCurrency(),is("EUR"));
-
-    // when
-    mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(importData))
-        .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isCreated());
-
-    // then
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String importDestinationUserToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
-
-    //when
-    callRestToImportAllData(importDestinationUserToken, importData);
-
-    ExportResult actual = callRestToExportAllDataAndReturnExportResult(importDestinationUserToken);
-
-    //assertThat(actual.getFinalAccountsState().size(),is(greaterThan(0)));
-    //assertThat(actual.getFinalAccountsState().get(0).getName(),is("a1"));
-
-    //then
-    assertEquals(importData, actual);
-
-  }
-
-  @Test
-  public void shouldImportTransactionBasicPlus() throws Exception {
-    // given
-    File file = new File("src/test/resources/basicPlus.json");
-    ExportResult importData = mapper.readValue(file, ExportResult.class);
-    assertThat(importData.getFinalAccountsState().size(), is(1));
-
-    // when
-    mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(importData))
-        .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isCreated());
-
-    // then
-
-    callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String importDestinationUserToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
-
-    //when
-    callRestToImportAllData(importDestinationUserToken, importData);
-
-    ExportResult actual = callRestToExportAllDataAndReturnExportResult(importDestinationUserToken);
-
-    //then
-    assertEquals(importData, actual);
-
-  }
 }
