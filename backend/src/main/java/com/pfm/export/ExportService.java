@@ -48,9 +48,9 @@ public class ExportService {
 
     result.setFilters(prepareExportFilters(userId));
     result.setCategories(prepareExportCategories(userId));
-    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts(userId)));
+    List<ExportAccount> accounts = convertToExportAccounts(accountService.getAccounts(userId));
+    result.setFinalAccountsState(accounts);
     result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState(), userId));
-
     List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions(userId), userId);
     Map<String, List<ExportTransaction>> monthToTransactionMap = groupTransactionsByMonth(exportTransactions);
 
@@ -59,11 +59,13 @@ public class ExportService {
     if (periods.size() > 0) {
       result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod());
     }
+    if (result.getInitialAccountsState().isEmpty()) {
+      result.setInitialAccountsState(accounts);
+    }
+
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState(), userId));
-    //fixme can be simplyfied
     result.setExportHistoryEntries(historyEntryService.prepareExportHistory(historyEntryService.getHistoryEntries(userId)));
     // TODO export / import filters
-
     return result;
   }
 
