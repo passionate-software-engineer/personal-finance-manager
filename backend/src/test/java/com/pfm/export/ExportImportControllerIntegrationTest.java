@@ -14,6 +14,7 @@ import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasValue;
@@ -44,6 +45,8 @@ import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -433,7 +436,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
-
+    LocalDateTime currentDate = LocalDateTime.now();
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     callRestToAddCategoryAndReturnId(Category.builder()
@@ -462,6 +465,135 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     //then
     assertEquals(exportedData, actual);
+
+    mockMvc.perform(get(EXPORT_SERVICE_PATH)
+        .header("Authorization", importedUserToken))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("1000.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.PLN", is("1000.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.USD", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.sumOfAllFundsInBaseCurrency", is("1010.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.PLN", is("1010.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap.USD", is("0.00")))
+        .andExpect(jsonPath("initialAccountsState", hasSize(1)))
+        .andExpect(jsonPath("initialAccountsState[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("initialAccountsState[0].balance", is("1000.00")))
+        .andExpect(jsonPath("finalAccountsState", hasSize(1)))
+        .andExpect(jsonPath("finalAccountsState[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("finalAccountsState[0].balance", is("1010.00")))
+        .andExpect(jsonPath("finalAccountsState[0].currency", is("PLN")))
+        .andExpect(jsonPath("categories", hasSize(2)))
+        .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
+        .andExpect(jsonPath("categories[1].name", is("Pizza")))
+        .andExpect(jsonPath("categories[1].parentCategoryName", is(categoryFood().getName())))
+        .andExpect(jsonPath("periods", hasSize(1)))
+        .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
+        .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.PLN", is("1000.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheBeginningOfPeriod.currencyToFundsMap.USD", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.EUR", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.PLN", is("1010.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.GBP", is("0.00")))
+        .andExpect(jsonPath("periods[0].sumOfAllFundsAtTheEndOfPeriod.currencyToFundsMap.USD", is("0.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod", hasSize(1)))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].balance", is("1000.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].currency", is("PLN")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod", hasSize(1)))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].name", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].balance", is("1010.00")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].currency", is("PLN")))
+        .andExpect(jsonPath("periods[0].transactions", hasSize(1)))
+        .andExpect(jsonPath("periods[0].transactions[0].description", is(transactionToAddFood.getDescription())))
+        .andExpect(jsonPath("periods[0].transactions[0].category", is(categoryFood().getName())))
+        .andExpect(jsonPath("periods[0].transactions[0].date", is(transactionToAddFood.getDate().toString())))
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries", hasSize(1)))
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].account", is(accountJacekBalance1000().getName())))
+        .andExpect(jsonPath("periods[0].transactions[0].accountPriceEntries[0].price", is("10.00")))
+        .andExpect(jsonPath("filters[0].name", is("Food")))
+        .andExpect(jsonPath("filters[0].accounts", hasSize(1)))
+        .andExpect(jsonPath("filters[0].accounts[0]", is("Jacek Millenium Bank savings")))
+        .andExpect(jsonPath("filters[0].categories", hasSize(1)))
+        .andExpect(jsonPath("filters[0].categories[0]", is("Food")))
+        .andExpect(jsonPath("filters[0].priceFrom", is("100.00")))
+        .andExpect(jsonPath("filters[0].priceTo", is("300.00")))
+        .andExpect(jsonPath("filters[0].dateFrom", is("2018-03-01")))
+        .andExpect(jsonPath("filters[0].dateTo", is("2018-03-31")))
+        .andExpect(jsonPath("filters[0].description", is("Food expenses")))
+        .andExpect(jsonPath("exportHistoryEntries", hasSize(6)))
+        .andExpect(jsonPath("exportHistoryEntries[0].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("exportHistoryEntries[0].type", is("ADD")))
+        .andExpect(jsonPath("exportHistoryEntries[0].object", is("Account")))
+        .andExpect(jsonPath("exportHistoryEntries[0].entries", hasSize(2)))
+        .andExpect(jsonPath("exportHistoryEntries[0].entries[0].name", is("name")))
+        .andExpect(jsonPath("exportHistoryEntries[0].entries[0].newValue", is("Jacek Millenium Bank savings")))
+        .andExpect(jsonPath("exportHistoryEntries[0].entries[1].name", is("balance")))
+        .andExpect(jsonPath("exportHistoryEntries[0].entries[1].newValue", is("1000.00")))
+        .andExpect(jsonPath("exportHistoryEntries[1].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("exportHistoryEntries[1].type", is("ADD")))
+        .andExpect(jsonPath("exportHistoryEntries[1].object", is("Category")))
+        .andExpect(jsonPath("exportHistoryEntries[1].entries", hasSize(2)))
+        .andExpect(jsonPath("exportHistoryEntries[1].entries[0].name", is("name")))
+        .andExpect(jsonPath("exportHistoryEntries[1].entries[0].newValue", is("Food")))
+        .andExpect(jsonPath("exportHistoryEntries[1].entries[1].name", is("parentCategory")))
+        .andExpect(jsonPath("exportHistoryEntries[1].entries[1].newValue", is("Main Category")))
+        .andExpect(jsonPath("exportHistoryEntries[2].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("exportHistoryEntries[2].type", is("ADD")))
+        .andExpect(jsonPath("exportHistoryEntries[2].object", is("Category")))
+        .andExpect(jsonPath("exportHistoryEntries[2].entries", hasSize(2)))
+        .andExpect(jsonPath("exportHistoryEntries[2].entries[0].name", is("name")))
+        .andExpect(jsonPath("exportHistoryEntries[2].entries[0].newValue", is("Pizza")))
+        .andExpect(jsonPath("exportHistoryEntries[2].entries[1].name", is("parentCategory")))
+        .andExpect(jsonPath("exportHistoryEntries[2].entries[1].newValue", is("Food")))
+        .andExpect(jsonPath("exportHistoryEntries[3].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("exportHistoryEntries[3].type", is("UPDATE")))
+        .andExpect(jsonPath("exportHistoryEntries[3].object", is("Account")))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries", hasSize(2)))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries[0].name", is("name")))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries[0].newValue", is("Jacek Millenium Bank savings")))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries[0].oldValue", is("Jacek Millenium Bank savings")))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries[1].name", is("balance")))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries[1].newValue", is("1010.00")))
+        .andExpect(jsonPath("exportHistoryEntries[3].entries[1].oldValue", is("1000.00")))
+        .andExpect(jsonPath("exportHistoryEntries[4].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("exportHistoryEntries[4].type", is("ADD")))
+        .andExpect(jsonPath("exportHistoryEntries[4].object", is("Transaction")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries", hasSize(4)))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[0].name", is("description")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[0].newValue", is("Food for birthday")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[1].name", is("categoryId")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[1].newValue", is("Food")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[2].name", is("date")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[2].newValue", is("2018-08-08")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[3].name", is("accountPriceEntries")))
+        .andExpect(jsonPath("exportHistoryEntries[4].entries[3].newValue", is("[Jacek Millenium Bank savings : 10.00]")))
+        .andExpect(jsonPath("exportHistoryEntries[5].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
+        .andExpect(jsonPath("exportHistoryEntries[5].type", is("ADD")))
+        .andExpect(jsonPath("exportHistoryEntries[5].object", is("Filter")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries", hasSize(8)))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[0].name", is("name")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[0].newValue", is("Food")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[1].name", is("accountIds")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[1].newValue", is("[Jacek Millenium Bank savings]")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[2].name", is("categoryIds")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[2].newValue", is("[Food]")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[3].name", is("priceFrom")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[3].newValue", is("100.00")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[4].name", is("priceTo")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[4].newValue", is("300.00")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[5].name", is("dateFrom")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[5].newValue", is("2018-03-01")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[6].name", is("dateTo")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[6].newValue", is("2018-03-31")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[7].name", is("description")))
+        .andExpect(jsonPath("exportHistoryEntries[5].entries[7].newValue", is("Food expenses")));
 
   }
 
