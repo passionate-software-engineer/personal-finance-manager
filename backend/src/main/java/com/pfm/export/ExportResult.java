@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-final class ExportResult {
+public final class ExportResult {
 
   private ExportFundsSummary sumOfAllFundsAtTheBeginningOfExport;
   private ExportFundsSummary sumOfAllFundsAtTheEndOfExport;

@@ -61,9 +61,7 @@ public class ExportService {
     }
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState(), userId));
     //fixme can be simplyfied
-    result.setExportHistoryEntries(historyEntryService.prepareExportHistory( historyEntryService.getHistoryEntries(userId)));
-    //result.setExportHistoryEntries( historyEntryService.getHistoryEntries(userId));
-
+    result.setExportHistoryEntries(historyEntryService.prepareExportHistory(historyEntryService.getHistoryEntries(userId)));
     // TODO export / import filters
 
     return result;

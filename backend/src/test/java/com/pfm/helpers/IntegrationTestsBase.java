@@ -19,6 +19,7 @@ import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
 import com.pfm.currency.CurrencyService;
+import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
@@ -141,6 +142,28 @@ public abstract class IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isOk());
+  }
+
+  protected ExportResult callRestToExportAllDataAndReturnExportResult(String token) throws Exception {
+    String response =
+        mockMvc
+            .perform(get(EXPORT_SERVICE_PATH)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(JSON_CONTENT_TYPE)
+            )
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return mapper.readValue(response, ExportResult.class);
+  }
+
+  protected void callRestToImportAllData(String token, ExportResult dataToImport) throws Exception {
+    mockMvc
+        .perform(post(IMPORT_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(dataToImport))
+            .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isCreated());
   }
 
   private List<Account> getAccountsFromResponse(String response) throws Exception {

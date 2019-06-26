@@ -62,7 +62,7 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction createdTransaction = transactionService.addTransaction(userId, transaction);
+    Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
 

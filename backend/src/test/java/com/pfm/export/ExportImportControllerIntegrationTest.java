@@ -11,6 +11,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
+import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;
@@ -18,6 +19,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasValue;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -423,6 +425,43 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("$[0]", is("Filter is missing name")))
         .andExpect(jsonPath("$[1]", is("Filter is missing name")))
         .andExpect(jsonPath("$[2]", is("Filter is missing name")));
+
+  }
+
+  @Test
+  public void shouldExportHistoryToUser2() throws Exception {
+    // given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    callRestToAddCategoryAndReturnId(Category.builder()
+        .name("Pizza")
+        .parentCategory(Category.builder()
+            .id(foodCategoryId)
+            .build()
+        ).build(), token);
+
+    Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
+    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, token);
+
+    Filter filter = filterFoodExpenses();
+    filter.getCategoryIds().add(foodCategoryId);
+    filter.getAccountIds().add(jacekAccountId);
+    callRestServiceToAddFilterAndReturnId(filter, token);
+    ExportResult exportedData = callRestToExportAllDataAndReturnExportResult(token);
+
+    callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    String importedUserToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+
+    //when
+    callRestToImportAllData(importedUserToken, exportedData);
+
+    ExportResult actual = callRestToExportAllDataAndReturnExportResult(importedUserToken);
+
+    //then
+    assertEquals(exportedData, actual);
 
   }
 

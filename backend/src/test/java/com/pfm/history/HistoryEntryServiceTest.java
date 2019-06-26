@@ -55,7 +55,7 @@ public class HistoryEntryServiceTest {
   @Test
   public void shouldFilterOutIdsFromHistoryEntries() {
     //given
-    ZonedDateTime date = ZonedDateTime.now();
+    final ZonedDateTime date = ZonedDateTime.now();
     Transaction transaction = getTransaction();
 
     List<HistoryInfo> historyInfos = new ArrayList<>();
