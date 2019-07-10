@@ -1,5 +1,6 @@
 package com.pfm.export;
 
+import com.pfm.account.Account.AccountType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -112,6 +113,8 @@ final class ExportResult {
     private BigDecimal balance;
 
     private String currency;
+
+    private AccountType accountType;
 
   }
 

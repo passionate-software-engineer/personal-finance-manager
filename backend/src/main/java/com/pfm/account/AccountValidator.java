@@ -5,6 +5,7 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.filter.FilterService;
@@ -32,6 +33,10 @@ public class AccountValidator {
 
     if (account.getBalance() == null) {
       validationResults.add(getMessage(EMPTY_ACCOUNT_BALANCE));
+    }
+
+    if (account.getAccountType() == null) {
+      validationResults.add(getMessage(EMPTY_ACCOUNT_TYPE));
     }
 
     return validationResults;

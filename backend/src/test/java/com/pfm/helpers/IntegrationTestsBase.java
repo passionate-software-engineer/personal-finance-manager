@@ -103,6 +103,7 @@ public abstract class IntegrationTestsBase {
         .name(account.getName())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
+        .accountType(account.getAccountType())
         .build();
   }
 

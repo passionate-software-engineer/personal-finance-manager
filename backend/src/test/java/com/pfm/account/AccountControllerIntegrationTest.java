@@ -4,9 +4,11 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
+import static com.pfm.helpers.TestAccountProvider.accountMilleniumBalance100;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.equalTo;
@@ -22,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.account.Account.AccountType;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -78,8 +81,8 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(account.getName())))
         .andExpect(jsonPath("$.balance", is(account.getBalance().toString())))
+        .andExpect(jsonPath("$.accountType", is(account.getAccountType().toString())))
         .andExpect(jsonPath("$.userId").doesNotExist());
-
   }
 
   @ParameterizedTest
@@ -91,6 +94,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .name(name)
         .balance(balance)
         .currencyId(currencyService.getCurrencies(userId).get(0).getId())
+        .accountType(AccountType.INVESTMENT)
         .build();
 
     //when
@@ -98,6 +102,8 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(accountRequest)))
+
+        //then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(2)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_NAME))))
@@ -216,6 +222,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(updatedAccount.getName())))
         .andExpect(jsonPath("$.balance", is(updatedAccount.getBalance().toString())))
+        .andExpect(jsonPath("$.accountType", is(updatedAccount.getAccountType().toString())))
         .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
@@ -327,6 +334,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .name(account.getName())
         .balance(convertDoubleToBigDecimal(666))
         .currencyId(account.getCurrency().getId())
+        .accountType(account.getAccountType())
         .build();
 
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
@@ -363,6 +371,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .name(account.getName())
         .balance(convertDoubleToBigDecimal(432))
         .currencyId(account.getCurrency().getId())
+        .accountType(account.getAccountType())
         .build();
 
     //when
@@ -476,6 +485,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .name(account.getName())
         .balance(convertDoubleToBigDecimal(100))
         .currencyId(account.getCurrency().getId())
+        .accountType(account.getAccountType())
         .build();
 
     //when
@@ -486,6 +496,25 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenAccountHasNoAccountType() throws Exception {
+    //given
+    Account account = accountMilleniumBalance100();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setAccountType(null);
+
+    //when
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(convertAccountToAccountRequest(account))))
+
+        //then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_TYPE))));
   }
 
 }

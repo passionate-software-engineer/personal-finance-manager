@@ -346,6 +346,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     Account account = accountMilleniumBalance100();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setAccountType(account.getAccountType()); //???????????
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Transaction transaction = carTransactionWithNoAccountAndNoCategory();

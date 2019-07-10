@@ -61,7 +61,7 @@ public final class Account {
     LOAN,
     CURRENT,
     INVESTMENT,
-    SAFETY_FUND;
+    SAFETY_FUND
 
   }
 }

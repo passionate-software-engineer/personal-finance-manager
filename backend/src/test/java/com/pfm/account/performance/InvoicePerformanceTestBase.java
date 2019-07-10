@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
+import com.pfm.account.Account.AccountType;
 import com.pfm.account.AccountRequest;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
@@ -118,6 +119,7 @@ public abstract class InvoicePerformanceTestBase {
         .name(UUID.randomUUID().toString())
         .balance(getRandomBalance())
         .currencyId(currencies[0].getId())
+        .accountType(AccountType.CURRENT)
         .build();
 
     String response = given()

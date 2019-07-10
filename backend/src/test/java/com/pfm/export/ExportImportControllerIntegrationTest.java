@@ -340,7 +340,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     ExportResult input = new ExportResult();
 
     ExportResult.ExportFilter filter = new ExportResult.ExportFilter();
-    input.setFilters(Collections.singletonList(filter)); // singletonList - lista 1-elementowa
+    input.setFilters(Collections.singletonList(filter));
     final String filterName = "Pawel";
     filter.setName(filterName);
     final String filterDescription = "some description";
@@ -365,6 +365,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
             .name(accountMbankBalance10().getName())
             .balance(accountMbankBalance10().getBalance())
             .currency(accountMbankBalance10().getCurrency().getName())
+            .accountType(accountMbankBalance10().getAccountType())
             .build()
         )
     );

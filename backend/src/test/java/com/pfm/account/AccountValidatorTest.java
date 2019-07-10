@@ -3,6 +3,7 @@ package com.pfm.account;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static org.hamcrest.CoreMatchers.is;
@@ -47,20 +48,21 @@ public class AccountValidatorTest {
   }
 
   @Test
-  public void shouldReturnValidationErrorIfAccountNameAndBalanceIsEmpty() {
+  public void shouldReturnValidationErrorIfAccountNameAndBalanceAndTypeIsEmpty() {
 
     //given
     long id = 10L;
     when(accountService.getAccountByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));
-    Account account = Account.builder().id(id).name("").balance(null).build();
+    Account account = Account.builder().id(id).name("").balance(null).accountType(null).build();
 
     //when
     List<String> result = accountValidator.validateAccountForUpdate(id, MOCK_USER_ID, account);
 
     //then
-    assertThat(result.size(), is(2));
+    assertThat(result.size(), is(3));
     assertThat(result.get(0), is(equalTo(getMessage(EMPTY_ACCOUNT_NAME))));
     assertThat(result.get(1), is(equalTo(getMessage(EMPTY_ACCOUNT_BALANCE))));
+    assertThat(result.get(2), is(equalTo(getMessage(EMPTY_ACCOUNT_TYPE))));
   }
 
   @Test
