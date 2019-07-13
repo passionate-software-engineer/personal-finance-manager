@@ -63,7 +63,7 @@ public class ImportService {
       }
     }
 
-    for (HistoryEntry historyEntry : inputData.getExportHistoryEntries()) {
+    for (HistoryEntry historyEntry : inputData.getHistoryEntries()) {
       historyEntry.setUserId(userProvider.getCurrentUserId());
       saveHistoryEntry(historyEntry);
     }

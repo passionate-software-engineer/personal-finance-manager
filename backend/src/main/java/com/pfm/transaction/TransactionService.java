@@ -35,10 +35,10 @@ public class TransactionService {
   }
 
   @Transactional
-  public Transaction addTransaction(long userId, Transaction transaction, boolean calledByImport) {
+  public Transaction addTransaction(long userId, Transaction transaction, boolean addToHistoryEntry) {
     transaction.setUserId(userId);
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), calledByImport);
+      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addToHistoryEntry);
     }
 
     return transactionRepository.save(transaction);
@@ -97,7 +97,7 @@ public class TransactionService {
   }
 
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation,
-      boolean calledByImport) {
+      boolean addToHistoryEntry) {
     Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
 
     BigDecimal newBalance = operation.apply(account.getBalance(), amount);
@@ -108,7 +108,7 @@ public class TransactionService {
         .currency(account.getCurrency())
         .build();
 
-    if (!calledByImport) {
+    if (!addToHistoryEntry) {
       historyEntryService.addHistoryEntryOnUpdate(account, accountWithNewBalance, userId);
     }
 

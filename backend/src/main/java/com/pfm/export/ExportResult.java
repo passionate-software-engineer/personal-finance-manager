@@ -27,7 +27,7 @@ public final class ExportResult {
 
   private List<ExportPeriod> periods = new ArrayList<>();
   private List<ExportFilter> filters = new ArrayList<>();
-  private List<HistoryEntry> exportHistoryEntries = new ArrayList<>();
+  private List<HistoryEntry> historyEntries = new ArrayList<>();
 
   @Data
   @Builder
