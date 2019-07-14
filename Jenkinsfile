@@ -3,9 +3,9 @@ pipeline {
         label "pfm-docker-java-11"
     }
     parameters {
-        string(name: 'APP_URL', defaultValue: 'http://personal-finance-manager.s3-website.us-east-2.amazonaws.com', description: 'Application (frontend) URL')
-        string(name: 'APP_S3_BUCKET', defaultValue: 's3://personal-finance-manager', description: 'S3 bucket for frontend upload')
-        string(name: 'EC2_INSTANCE', defaultValue: 'ec2-3-120-209-115.eu-central-1.compute.amazonaws.com', description: 'EC2 instance for backend service')
+        string(name: 'APP_URL', defaultValue: 'http://personal-finance-manager-2.s3-website.eu-central-1.amazonaws.com', description: 'Application (frontend) URL')
+        string(name: 'APP_S3_BUCKET', defaultValue: 's3://personal-finance-manager-2', description: 'S3 bucket for frontend upload')
+        string(name: 'EC2_INSTANCE', defaultValue: 'ec2-3-121-199-74.eu-central-1.compute.amazonaws.com', description: 'EC2 instance for backend service')
     }
     options {
         timeout(time: 40, unit: 'MINUTES')
@@ -78,7 +78,7 @@ pipeline {
           parallel {
             stage('BACKEND') {
                 steps {
-                    sshagent(credentials : ['AWS_PRIVATE_KEY']) {
+                    sshagent(credentials : ['AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER']) {
                         sh '''
                            cd backend/build/libs
                            ssh -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
@@ -91,8 +91,8 @@ pipeline {
             }
             stage('FRONTEND') {
                 environment {
-                    AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-                    AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+                    AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID_PASSIONATE_SOFTWARE_ENGINEER')
+                    AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY_PASSIONATE_SOFTWARE_ENGINEER')
                 }
                 steps {
                      sh '''
