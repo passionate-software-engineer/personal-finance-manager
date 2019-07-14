@@ -91,8 +91,8 @@ pipeline {
             }
             stage('FRONTEND') {
                 environment {
-                    AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-                    AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+                    AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID_PASSIONATE_SOFTWARE_ENGINEER')
+                    AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY_PASSIONATE_SOFTWARE_ENGINEER')
                 }
                 steps {
                      sh '''
