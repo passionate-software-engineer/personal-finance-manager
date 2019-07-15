@@ -2,20 +2,20 @@
   "sumOfAllFundsAtTheBeginningOfExport": {
     "currencyToFundsMap": {
       "EUR": "638.83",
-      "PLN": "26060.79",
+      "PLN": "-273939.21",
       "GBP": "0.00",
       "USD": "23999.99"
     },
-    "sumOfAllFundsInBaseCurrency": "114689.39"
+    "sumOfAllFundsInBaseCurrency": "-185310.61"
   },
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
-      "EUR": "153.97",
-      "PLN": "285463.94",
+      "EUR": "144.24",
+      "PLN": "-117783.92",
       "GBP": "0.00",
       "USD": "0.00"
     },
-    "sumOfAllFundsInBaseCurrency": "286116.77"
+    "sumOfAllFundsInBaseCurrency": "-117172.34"
   },
   "initialAccountsState": [
     {
@@ -107,6 +107,16 @@
       "name": "Revolut - EUR",
       "balance": "0.00",
       "currency": "EUR"
+    },
+    {
+      "name": "ING",
+      "balance": "0.00",
+      "currency": "PLN"
+    },
+    {
+      "name": "ING - Kredyt",
+      "balance": "-300000.00",
+      "currency": "PLN"
     }
   ],
   "finalAccountsState": [
@@ -122,7 +132,7 @@
     },
     {
       "name": "kantor Alior - EUR",
-      "balance": "70.49",
+      "balance": "1.84",
       "currency": "EUR"
     },
     {
@@ -132,7 +142,7 @@
     },
     {
       "name": "Idea Bank",
-      "balance": "6008.52",
+      "balance": "18821.11",
       "currency": "PLN"
     },
     {
@@ -147,17 +157,17 @@
     },
     {
       "name": "Gotówka",
-      "balance": "228.10",
+      "balance": "113.18",
       "currency": "PLN"
     },
     {
       "name": "Gotówka - EUR",
-      "balance": "4.17",
+      "balance": "3.07",
       "currency": "EUR"
     },
     {
       "name": "Ania - rozliczenie",
-      "balance": "49949.97",
+      "balance": "0.00",
       "currency": "PLN"
     },
     {
@@ -177,12 +187,12 @@
     },
     {
       "name": "mBank",
-      "balance": "7681.93",
+      "balance": "1073.54",
       "currency": "PLN"
     },
     {
       "name": "Idea Bank - lokaty",
-      "balance": "165000.00",
+      "balance": "100000.00",
       "currency": "PLN"
     },
     {
@@ -192,13 +202,23 @@
     },
     {
       "name": "Santander",
-      "balance": "30.22",
+      "balance": "0.00",
       "currency": "PLN"
     },
     {
       "name": "Revolut - EUR",
-      "balance": "79.31",
+      "balance": "139.33",
       "currency": "EUR"
+    },
+    {
+      "name": "ING",
+      "balance": "2143.05",
+      "currency": "PLN"
+    },
+    {
+      "name": "ING - Kredyt",
+      "balance": "-296500.00",
+      "currency": "PLN"
     }
   ],
   "categories": [
@@ -310,9 +330,4244 @@
     },
     {
       "name": "Koszty"
+    },
+    {
+      "name": "Przychody - Szkolenia prywatne",
+      "parentCategoryName": "Przychody"
+    },
+    {
+      "name": "Mieszkanie - Strzelców 21/69"
+    },
+    {
+      "name": "Przychody - lokaty"
     }
   ],
   "periods": [
+    {
+      "startDate": "2019-07-01",
+      "endDate": "2019-07-31",
+      "accountStateAtTheBeginningOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "5.17",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "4000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "635.13",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.07",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "32947.41",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "15669.21",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "100000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "139.33",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "1079.78",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "1.84",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "18821.11",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "113.18",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.07",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "1073.54",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "100000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "139.33",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "2143.05",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-296500.00",
+          "currency": "PLN"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "posrednik - 2 rata",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-07-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6150.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> ING",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-3000.00"
+            },
+            {
+              "account": "ING",
+              "price": "3000.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7520.80"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7520.80"
+            },
+            {
+              "account": "mBank",
+              "price": "7520.80"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-12000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "12000.00"
+            }
+          ]
+        },
+        {
+          "description": "Google - email",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-07-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-3.33"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2019-07-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "elektryka - naprawa lazienek",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-07-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-285.70"
+            },
+            {
+              "account": "mBank",
+              "price": "-400.00"
+            }
+          ]
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "date": "2019-07-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1957.30"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "-351.67"
+            }
+          ]
+        },
+        {
+          "description": "8a - plecak",
+          "category": "Zakupy",
+          "date": "2019-07-08",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-311.73"
+            }
+          ]
+        },
+        {
+          "description": "paliwo - powrot",
+          "category": "Edukacja",
+          "date": "2019-07-09",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-40.00"
+            }
+          ]
+        },
+        {
+          "description": "jedzenie - murowaniec - karczma",
+          "category": "Jedzenie",
+          "date": "2019-07-09",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-125.00"
+            }
+          ]
+        },
+        {
+          "description": "Murowaniec - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-07-09",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-277.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "sprzatanie mieszkania",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-900.00"
+            }
+          ]
+        },
+        {
+          "description": "pizza",
+          "category": "Jedzenie",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-25.50"
+            }
+          ]
+        },
+        {
+          "description": "parking i paliwo",
+          "category": "Paliwo",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-2.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "-284.45"
+            }
+          ]
+        },
+        {
+          "description": "betlejemka - noclegi",
+          "category": "Edukacja",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-270.00"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie ostateczne",
+          "category": "Dziecko",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-32947.41"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "Firma - ZUS",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1246.92"
+            }
+          ]
+        },
+        {
+          "description": "ksiegowy",
+          "category": "Firma - Księgowość",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
+        },
+        {
+          "description": "nadplata kredytu",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-3500.00"
+            },
+            {
+              "account": "ING - Kredyt",
+              "price": "3500.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2500.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2500.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "9518.62"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-9518.62"
+            },
+            {
+              "account": "mBank",
+              "price": "9518.62"
+            }
+          ]
+        },
+        {
+          "description": "Drozdzowka",
+          "category": "Jedzenie",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2.49"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6500.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "6500.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> ING",
+          "category": "Przelewy między kontami",
+          "date": "2019-07-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2000.00"
+            },
+            {
+              "account": "ING",
+              "price": "2000.00"
+            }
+          ]
+        }
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "147.57",
+          "PLN": "-89103.27",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-88477.57"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "144.24",
+          "PLN": "-117783.92",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-117172.34"
+      }
+    },
+    {
+      "startDate": "2019-06-01",
+      "endDate": "2019-06-30",
+      "accountStateAtTheBeginningOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "8.50",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "835.91",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "494.93",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.07",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "32947.41",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "7100.41",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "177000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "67.60",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "5.17",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "4000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "635.13",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.07",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "32947.41",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "15669.21",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "100000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "139.33",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "1079.78",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "Nurek",
+          "category": "Rozrywka",
+          "date": "2019-06-01",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-70.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - zakrzowek",
+          "category": "Jedzenie",
+          "date": "2019-06-01",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-18.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6100.41"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "6100.41"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "Firma - ZUS",
+          "date": "2019-06-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1246.92"
+            }
+          ]
+        },
+        {
+          "description": "Google - konto",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-06-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-3.33"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-06-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "Leasing",
+          "category": "Leasing samochodu",
+          "date": "2019-06-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1957.30"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "-351.67"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-06-05",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-06-05",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7595.10"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Firma - Księgowość",
+          "date": "2019-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "-6.15"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-7500.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "7500.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7595.10"
+            },
+            {
+              "account": "mBank",
+              "price": "7595.10"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo i plyn do spryskiwaczy",
+          "category": "Paliwo",
+          "date": "2019-06-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-322.02"
+            }
+          ]
+        },
+        {
+          "description": "zaswiadczenie US",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-06-07",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-21.00"
+            }
+          ]
+        },
+        {
+          "description": "Ubrania na rower",
+          "category": "Zakupy",
+          "date": "2019-06-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-269.96"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo - rowery",
+          "category": "Paliwo",
+          "date": "2019-06-08",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "60.00"
+            }
+          ]
+        },
+        {
+          "description": "Kofola, piwo - slowacja",
+          "category": "Jedzenie",
+          "date": "2019-06-08",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - EUR",
+              "price": "-3.26"
+            }
+          ]
+        },
+        {
+          "description": "Idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-730.28"
+            },
+            {
+              "account": "mBank",
+              "price": "730.28"
+            }
+          ]
+        },
+        {
+          "description": "Kolejka na Kasprowy",
+          "category": "Transport",
+          "date": "2019-06-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-54.00"
+            }
+          ]
+        },
+        {
+          "description": "gotowka - zakopane",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-800.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "800.00"
+            }
+          ]
+        },
+        {
+          "description": "Staszek - przewodnik",
+          "category": "Edukacja",
+          "date": "2019-06-11",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-800.00"
+            }
+          ]
+        },
+        {
+          "description": "crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-06-12",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-06-12",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7521.55"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-12",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7581.55"
+            },
+            {
+              "account": "mBank",
+              "price": "7581.55"
+            }
+          ]
+        },
+        {
+          "description": "faktura CT",
+          "category": "Przychody - CodersTrust - licencja",
+          "date": "2019-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "3857.28"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-7000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "7000.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - Tesco",
+          "category": "Jedzenie",
+          "date": "2019-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-12.92"
+            },
+            {
+              "account": "mBank",
+              "price": "-2.80"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-293.72"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2019-06-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "jedzenie sokoliki",
+          "category": "Jedzenie",
+          "date": "2019-06-14",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-87.61"
+            },
+            {
+              "account": "mBank",
+              "price": "-17.21"
+            }
+          ]
+        },
+        {
+          "description": "autostrady - viatoll",
+          "category": "Samochód",
+          "date": "2019-06-15",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Sokoliki - zwrot i paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-16",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-233.76"
+            },
+            {
+              "account": "Gotówka",
+              "price": "120.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "-32.74"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "120.00"
+            }
+          ]
+        },
+        {
+          "description": "idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-17000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "17000.00"
+            }
+          ]
+        },
+        {
+          "description": "box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "idea -> ING",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2100.00"
+            },
+            {
+              "account": "ING",
+              "price": "2100.00"
+            }
+          ]
+        },
+        {
+          "description": "Lokaty -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank - lokaty",
+              "price": "-70000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "70000.00"
+            }
+          ]
+        },
+        {
+          "description": "odestki z lokat",
+          "category": "Przychody - lokaty",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "18.57"
+            },
+            {
+              "account": "mBank",
+              "price": "74.28"
+            },
+            {
+              "account": "mBank",
+              "price": "37.16"
+            }
+          ]
+        },
+        {
+          "description": "idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1455.78"
+            },
+            {
+              "account": "mBank",
+              "price": "1455.78"
+            }
+          ]
+        },
+        {
+          "description": "Michal - zwrot za paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "120.00"
+            }
+          ]
+        },
+        {
+          "description": "ing -> mbank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-18",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-1500.00"
+            },
+            {
+              "account": "mBank",
+              "price": "1500.00"
+            }
+          ]
+        },
+        {
+          "description": "paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-295.47"
+            }
+          ]
+        },
+        {
+          "description": "jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-30.05"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "usd -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1969.25"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7500.00"
+            }
+          ]
+        },
+        {
+          "description": "usd -> eur",
+          "category": "Wymiana walut",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-30.75"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "27.47"
+            }
+          ]
+        },
+        {
+          "description": "pln -> eur",
+          "category": "Wymiana walut",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-620.00"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "145.39"
+            }
+          ]
+        },
+        {
+          "description": "revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "7000.00"
+            }
+          ]
+        },
+        {
+          "description": "winiety",
+          "category": "Samochód",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - EUR",
+              "price": "-22.26"
+            }
+          ]
+        },
+        {
+          "description": "zadatek - mieszkanie",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-06-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30000.00"
+            }
+          ]
+        },
+        {
+          "description": "paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-20",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - EUR",
+              "price": "-75.61"
+            }
+          ]
+        },
+        {
+          "description": "A4go - doladowanie",
+          "category": "Samochód",
+          "date": "2019-06-23",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-180.00"
+            }
+          ]
+        },
+        {
+          "description": "paliwo - autostrada",
+          "category": "Paliwo",
+          "date": "2019-06-23",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-30.05"
+            }
+          ]
+        },
+        {
+          "description": "Kurs pierwszej pomocy - Sylwia",
+          "category": "Edukacja",
+          "date": "2019-06-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-228.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea bank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-4000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "4000.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-221.31"
+            }
+          ]
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-06-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-14.99"
+            }
+          ]
+        },
+        {
+          "description": "ciastka",
+          "category": "Jedzenie",
+          "date": "2019-06-25",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-7.00"
+            }
+          ]
+        },
+        {
+          "description": "crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-06-25",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-06-25",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7494.60"
+            }
+          ]
+        },
+        {
+          "description": "revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-26",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7494.60"
+            },
+            {
+              "account": "mBank",
+              "price": "7494.60"
+            }
+          ]
+        },
+        {
+          "description": "lokata -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank - lokaty",
+              "price": "-7000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "7000.00"
+            }
+          ]
+        },
+        {
+          "description": "lokata - przychod",
+          "category": "Przychody - lokaty",
+          "date": "2019-06-27",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "12.52"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> ING",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-27",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1500.00"
+            },
+            {
+              "account": "ING",
+              "price": "1500.00"
+            }
+          ]
+        },
+        {
+          "description": "warta - polisa",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-377.00"
+            }
+          ]
+        },
+        {
+          "description": "apteka",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-133.94"
+            }
+          ]
+        },
+        {
+          "description": "mOkazje zwrot",
+          "category": "Przychody",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "2.40"
+            }
+          ]
+        },
+        {
+          "description": "wyplata gotowki",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-9600.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "9600.00"
+            }
+          ]
+        },
+        {
+          "description": "notariusz",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-9449.00"
+            }
+          ]
+        },
+        {
+          "description": "skycash parking",
+          "category": "Samochód",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-5.75"
+            }
+          ]
+        },
+        {
+          "description": "Wklad wlasny - kredyt",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-50000.00"
+            }
+          ]
+        },
+        {
+          "description": "Tesco - zakupy i jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-06-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-20.88"
+            },
+            {
+              "account": "mBank",
+              "price": "-26.40"
+            }
+          ]
+        },
+        {
+          "description": "taxi i shoty i drinki",
+          "category": "Rozrywka",
+          "date": "2019-06-29",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-40.00"
+            },
+            {
+              "account": "mBank",
+              "price": "-60.00"
+            }
+          ]
+        },
+        {
+          "description": "biedronka - zakupy na wyjazd",
+          "category": "Jedzenie",
+          "date": "2019-06-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-93.31"
+            }
+          ]
+        },
+        {
+          "description": "paliwo",
+          "category": "Paliwo",
+          "date": "2019-06-29",
+          "accountPriceEntries": [
+            {
+              "account": "ING",
+              "price": "-183.76"
+            }
+          ]
+        },
+        {
+          "description": "gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-06-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-500.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "500.00"
+            }
+          ]
+        }
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "79.17",
+          "PLN": "-25056.14",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-24720.46"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "147.57",
+          "PLN": "-89103.27",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-88477.57"
+      }
+    },
+    {
+      "startDate": "2019-05-01",
+      "endDate": "2019-05-31",
+      "accountStateAtTheBeginningOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "68.45",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "1768.75",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "531.50",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.57",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "36370.22",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "5434.45",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "165000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "430.46",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "10.31",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "8.50",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "835.91",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "494.93",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.07",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "32947.41",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "7100.41",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "177000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "67.60",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "Nurkowanie - Zakrzowek",
+          "category": "Sport",
+          "date": "2019-05-01",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-60.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-05-01",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-05-01",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2228.97"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "8500.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> EUR",
+          "category": "Wymiana walut",
+          "date": "2019-05-01",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-151.49"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "134.89"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-01",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-8500.00"
+            },
+            {
+              "account": "mBank",
+              "price": "8500.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - Zakrzowek",
+          "category": "Jedzenie",
+          "date": "2019-05-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-15.00"
+            }
+          ]
+        },
+        {
+          "description": "Google - email",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-05-02",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-3.33"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2019-05-02",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-02",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-8899.55"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "8899.55"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-05-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-55.62"
+            }
+          ]
+        },
+        {
+          "description": "Toaleta w czechach",
+          "category": "Wyjazdy",
+          "date": "2019-05-04",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - EUR",
+              "price": "-0.50"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo - wieden",
+          "category": "Paliwo",
+          "date": "2019-05-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-264.29"
+            }
+          ]
+        },
+        {
+          "description": "Wenecja - winiety, jedzenie, alkohol.. :)",
+          "category": "Wyjazdy",
+          "date": "2019-05-05",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-13.44"
+            },
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-35.00"
+            },
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-8.18"
+            }
+          ]
+        },
+        {
+          "description": "USD -> EUR",
+          "category": "Wymiana walut",
+          "date": "2019-05-05",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-50.00"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "44.36"
+            }
+          ]
+        },
+        {
+          "description": "Wenecja - wydatki",
+          "category": "Wyjazdy",
+          "date": "2019-05-05",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - EUR",
+              "price": "-22.19"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "-8.40"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "-2.15"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "-67.50"
+            }
+          ]
+        },
+        {
+          "description": "Wenecja - wydatki - cd",
+          "category": "Wyjazdy",
+          "date": "2019-05-05",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - EUR",
+              "price": "-7.80"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "-1.39"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "-67.17"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Firma - Księgowość",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "Firma - ZUS",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1246.92"
+            }
+          ]
+        },
+        {
+          "description": "Oplata serwisowa",
+          "category": "Leasing samochodu",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-351.67"
+            }
+          ]
+        },
+        {
+          "description": "Adam - lekcje programowania",
+          "category": "Przychody - Szkolenia prywatne",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "225.00"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - samochod",
+          "category": "Leasing samochodu",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1957.30"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - druga bledna wplata",
+          "category": "Leasing samochodu",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1957.30"
+            }
+          ]
+        },
+        {
+          "description": "Na lokate",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-06",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Lokata - 5000",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-5000.00"
+            },
+            {
+              "account": "Idea Bank - lokaty",
+              "price": "5000.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo ",
+          "category": "Paliwo",
+          "date": "2019-05-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-292.11"
+            }
+          ]
+        },
+        {
+          "description": "Ikea - szafa do garazu",
+          "category": "Remont domu",
+          "date": "2019-05-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-209.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "104.50"
+            }
+          ]
+        },
+        {
+          "description": "Ogrodnik - skrzynka - doplata",
+          "category": "Remont domu",
+          "date": "2019-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-98.98"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "49.50"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2150.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2088.79"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "8000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> EUR",
+          "category": "Wymiana walut",
+          "date": "2019-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-61.21"
+            },
+            {
+              "account": "Revolut - EUR",
+              "price": "54.64"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-08",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-8000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "8000.00"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - zwrot nadplaty",
+          "category": "Leasing samochodu",
+          "date": "2019-05-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1957.30"
+            }
+          ]
+        },
+        {
+          "description": "Kawa i bulki - Bonarka",
+          "category": "Jedzenie",
+          "date": "2019-05-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-12.99"
+            },
+            {
+              "account": "mBank",
+              "price": "-3.40"
+            }
+          ]
+        },
+        {
+          "description": "Parking - Zakopane",
+          "category": "Wyjazdy",
+          "date": "2019-05-11",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-15.00"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - izotoniki i hod-dog",
+          "category": "Jedzenie",
+          "date": "2019-05-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6.99"
+            },
+            {
+              "account": "mBank",
+              "price": "-7.96"
+            }
+          ]
+        },
+        {
+          "description": "Ania - pozyczka",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-60.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "60.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea Bank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-8000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "8000.00"
+            }
+          ]
+        },
+        {
+          "description": "Oplata dla posrednika - Strzelcow 21/69",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-6150.00"
+            }
+          ]
+        },
+        {
+          "description": "Koszulka KW",
+          "category": "Zakupy",
+          "date": "2019-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-64.00"
+            }
+          ]
+        },
+        {
+          "description": "Motopark - jazdy indywidualne",
+          "category": "Edukacja",
+          "date": "2019-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-400.00"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-05-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "Badania",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-05-14",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-39.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-05-15",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-16",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-3000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "3000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-05-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7706.17"
+            }
+          ]
+        },
+        {
+          "description": "revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7706.17"
+            },
+            {
+              "account": "mBank",
+              "price": "7706.17"
+            }
+          ]
+        },
+        {
+          "description": "Lokata - Idea - zysk",
+          "category": "Przychody - lokaty",
+          "date": "2019-05-16",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "3.87"
+            },
+            {
+              "account": "mBank",
+              "price": "91.83"
+            }
+          ]
+        },
+        {
+          "description": "Zadatek - mieszkanie",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-05-16",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-10000.00"
+            }
+          ]
+        },
+        {
+          "description": "Szkolenie - pierwsza pomoc",
+          "category": "Edukacja",
+          "date": "2019-05-16",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-243.00"
+            }
+          ]
+        },
+        {
+          "description": "10-lecie matury",
+          "category": "Jedzenie",
+          "date": "2019-05-17",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-100.00"
+            }
+          ]
+        },
+        {
+          "description": "bilety mpk krakow",
+          "category": "Transport",
+          "date": "2019-05-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-8.00"
+            }
+          ]
+        },
+        {
+          "description": "Tatry - park i hot-dog",
+          "category": "Wyjazdy",
+          "date": "2019-05-18",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-13.00"
+            }
+          ]
+        },
+        {
+          "description": "paliwo - zakopane",
+          "category": "Paliwo",
+          "date": "2019-05-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-60.08"
+            }
+          ]
+        },
+        {
+          "description": "polarsport - tiblock i karabinek",
+          "category": "Zakupy",
+          "date": "2019-05-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-150.68"
+            }
+          ]
+        },
+        {
+          "description": "Ania - gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-20",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-15.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "15.00"
+            }
+          ]
+        },
+        {
+          "description": "Lukasz - lekcje",
+          "category": "Przychody - Szkolenia prywatne",
+          "date": "2019-05-20",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "box4fit",
+          "category": "Jedzenie",
+          "date": "2019-05-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "czolowka",
+          "category": "Zakupy",
+          "date": "2019-05-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-286.99"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-05-22",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-05-23",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea Bank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-23",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-7000.00"
+            },
+            {
+              "account": "Idea Bank - lokaty",
+              "price": "7000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-05-23",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7718.25"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-24",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7718.25"
+            },
+            {
+              "account": "mBank",
+              "price": "7718.25"
+            }
+          ]
+        },
+        {
+          "description": "Bigos - Hala Kondratowa",
+          "category": "Jedzenie",
+          "date": "2019-05-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-14.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-05-25",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-294.40"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - restauracja",
+          "category": "Jedzenie",
+          "date": "2019-05-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-69.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "34.50"
+            }
+          ]
+        },
+        {
+          "description": "Polarsport - zamowienie grupowe",
+          "category": "Zakupy",
+          "date": "2019-05-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1478.00"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-05-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "Ania gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-29",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-40.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "40.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-394.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "394.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-05-29",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-05-29",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7693.80"
+            }
+          ]
+        },
+        {
+          "description": "Basen - karnet",
+          "category": "Sport",
+          "date": "2019-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-160.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "-1.59"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> Gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-600.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "600.00"
+            }
+          ]
+        },
+        {
+          "description": "Wycena mieszkania",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-420.00"
+            }
+          ]
+        },
+        {
+          "description": "Topo i panoramki",
+          "category": "Edukacja",
+          "date": "2019-05-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-88.00"
+            }
+          ]
+        },
+        {
+          "description": "Idea - opinia",
+          "category": "Mieszkanie - Strzelców 21/69",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
+        },
+        {
+          "description": "Kurs taternicki",
+          "category": "Edukacja",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2300.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7093.80"
+            },
+            {
+              "account": "mBank",
+              "price": "7093.80"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - dziecko",
+          "category": "Dziecko",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-982.79"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - rachunki",
+          "category": "Rachunki",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-368.46"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - remont",
+          "category": "Remont domu",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1616.58"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-666.50"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - dom",
+          "category": "Utrzymanie domu",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-59.22"
+            }
+          ]
+        },
+        {
+          "description": "Kosmetyki, chemia",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-05-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-32.76"
+            }
+          ]
+        }
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "82.33",
+          "PLN": "-34329.88",
+          "GBP": "0.00",
+          "USD": "430.46"
+        },
+        "sumOfAllFundsInBaseCurrency": "-32439.75"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "79.17",
+          "PLN": "-25056.14",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-24720.46"
+      }
+    },
+    {
+      "startDate": "2019-04-01",
+      "endDate": "2019-04-30",
+      "accountStateAtTheBeginningOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "70.49",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "9908.02",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "478.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.57",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "34842.63",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "70.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "6936.48",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "165000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "128.51",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "79.31",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "kantor Alior - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "kantor Alior - USD",
+          "balance": "0.00",
+          "currency": "USD"
+        },
+        {
+          "name": "kantor Alior - EUR",
+          "balance": "68.45",
+          "currency": "EUR"
+        },
+        {
+          "name": "kantor Alior - GBP",
+          "balance": "0.00",
+          "currency": "GBP"
+        },
+        {
+          "name": "Idea Bank",
+          "balance": "1768.75",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKE",
+          "balance": "26118.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "IKZE",
+          "balance": "10447.20",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka",
+          "balance": "531.50",
+          "currency": "PLN"
+        },
+        {
+          "name": "Gotówka - EUR",
+          "balance": "3.57",
+          "currency": "EUR"
+        },
+        {
+          "name": "Ania - rozliczenie",
+          "balance": "36370.22",
+          "currency": "PLN"
+        },
+        {
+          "name": "Monika - pożyczka",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Seba - pożyczka",
+          "balance": "20000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - PLN",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "mBank",
+          "balance": "5434.45",
+          "currency": "PLN"
+        },
+        {
+          "name": "Idea Bank - lokaty",
+          "balance": "165000.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - USD",
+          "balance": "430.46",
+          "currency": "USD"
+        },
+        {
+          "name": "Santander",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "Revolut - EUR",
+          "balance": "10.31",
+          "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
+        }
+      ],
+      "transactions": [
+        {
+          "description": "home.pl - nauka-programowania-na-godziny.pl",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-04-01",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-123.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "6000.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Santander",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-02",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-400.00"
+            },
+            {
+              "account": "Santander",
+              "price": "400.00"
+            }
+          ]
+        },
+        {
+          "description": "Pizza",
+          "category": "Jedzenie",
+          "date": "2019-04-02",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-41.50"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7667.04"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7737.04"
+            },
+            {
+              "account": "mBank",
+              "price": "7737.04"
+            }
+          ]
+        },
+        {
+          "description": "Allegro - koncowki do szczoteczki",
+          "category": "Zakupy",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-32.89"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-400.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "400.00"
+            }
+          ]
+        },
+        {
+          "description": "Kominiarz",
+          "category": "Utrzymanie domu",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-130.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "75.00"
+            }
+          ]
+        },
+        {
+          "description": "Murowaniec - noclegi",
+          "category": "Wyjazdy",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-261.00"
+            }
+          ]
+        },
+        {
+          "description": "Parking - Tatry",
+          "category": "Wyjazdy",
+          "date": "2019-04-03",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-30.00"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Firma - Księgowość",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-92.25"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "Firma - ZUS",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1246.92"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-7000.00"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "7000.00"
+            }
+          ]
+        },
+        {
+          "description": "Podatek dochodowy",
+          "category": "Firma - Podatek dochodowy",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-17260.00"
+            }
+          ]
+        },
+        {
+          "description": "VAT",
+          "category": "Firma - VAT",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-694.00"
+            }
+          ]
+        },
+        {
+          "description": "google account - passionate software engineer",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "kantor Alior - EUR",
+              "price": "-2.04"
+            }
+          ]
+        },
+        {
+          "description": "Audioteka",
+          "category": "Rozrywka",
+          "date": "2019-04-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-19.90"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - serwis",
+          "category": "Leasing samochodu",
+          "date": "2019-04-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-351.67"
+            }
+          ]
+        },
+        {
+          "description": "Leasing - rata",
+          "category": "Leasing samochodu",
+          "date": "2019-04-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1957.30"
+            }
+          ]
+        },
+        {
+          "description": "Idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-700.00"
+            },
+            {
+              "account": "mBank",
+              "price": "700.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-04-05",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-236.09"
+            }
+          ]
+        },
+        {
+          "description": "Murowaniec - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-04-07",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-200.00"
+            }
+          ]
+        },
+        {
+          "description": "Murowaniec - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-04-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-61.00"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Soki do herbaty",
+          "category": "Jedzenie",
+          "date": "2019-04-07",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-120.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "60.00"
+            }
+          ]
+        },
+        {
+          "description": "Santander -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-08",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-59.53"
+            },
+            {
+              "account": "mBank",
+              "price": "59.53"
+            }
+          ]
+        },
+        {
+          "description": "Jedzenie - Dolina Kobylanska",
+          "category": "Jedzenie",
+          "date": "2019-04-09",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-49.00"
+            }
+          ]
+        },
+        {
+          "description": "Idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-482.88"
+            },
+            {
+              "account": "mBank",
+              "price": "482.88"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-500.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "1901.85"
+            }
+          ]
+        },
+        {
+          "description": "Bali, Komodo - zaliczka",
+          "category": "Wyjazdy",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1500.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-1901.85"
+            },
+            {
+              "account": "mBank",
+              "price": "1901.85"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "Trawa - pan Rafal",
+          "category": "Remont domu",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-800.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "400.00"
+            }
+          ]
+        },
+        {
+          "description": "Ksiazka - TOPR",
+          "category": "Edukacja",
+          "date": "2019-04-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-44.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal - rozliczenie",
+          "category": "Remont domu",
+          "date": "2019-04-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1274.00"
+            }
+          ]
+        },
+        {
+          "description": "Alior Leasing - Tipo",
+          "category": "Samochód",
+          "date": "2019-04-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1144.55"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1144.55"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka - remont - Pan Wiktor - poddasze + ...",
+          "category": "Remont domu",
+          "date": "2019-04-12",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-400.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "200.00"
+            }
+          ]
+        },
+        {
+          "description": "Apteka",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-04-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-26.90"
+            },
+            {
+              "account": "mBank",
+              "price": "-24.70"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-04-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-04-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7573.20"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-16",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7573.20"
+            },
+            {
+              "account": "mBank",
+              "price": "7573.20"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-04-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-17",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-5000.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "5000.00"
+            }
+          ]
+        },
+        {
+          "description": "Silokony - remont",
+          "category": "Remont domu",
+          "date": "2019-04-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-146.47"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "73.23"
+            }
+          ]
+        },
+        {
+          "description": "Maszynki do golenia - roczny zapas",
+          "category": "Zakupy",
+          "date": "2019-04-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-100.00"
+            }
+          ]
+        },
+        {
+          "description": "Arwid - balkony, deski",
+          "category": "Remont domu",
+          "date": "2019-04-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1868.28"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "934.14"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal",
+          "category": "Remont domu",
+          "date": "2019-04-19",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-1500.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "750.00"
+            }
+          ]
+        },
+        {
+          "description": "Ogrod - dokonczenie",
+          "category": "Remont domu",
+          "date": "2019-04-19",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Wiktor - sztachety i poddasze",
+          "category": "Remont domu",
+          "date": "2019-04-19",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-1000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "500.00"
+            }
+          ]
+        },
+        {
+          "description": "gopass - zaliczka",
+          "category": "Rozrywka",
+          "date": "2019-04-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - EUR",
+              "price": "-69.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo Fiat",
+          "category": "Paliwo",
+          "date": "2019-04-21",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-189.49"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "94.75"
+            }
+          ]
+        },
+        {
+          "description": "Lukasz - konsultacje ",
+          "category": "Przychody - Szkolenia prywatne",
+          "date": "2019-04-24",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-04-24",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1569.54"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "6000.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-04-24",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-04-25",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-6000.00"
+            },
+            {
+              "account": "mBank",
+              "price": "6000.00"
+            }
+          ]
+        },
+        {
+          "description": "Lewiatan - izotoniki i batony w gory",
+          "category": "Jedzenie",
+          "date": "2019-04-25",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-9.24"
+            }
+          ]
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-04-25",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-04-26",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-40.10"
+            }
+          ]
+        },
+        {
+          "description": "Pawel - nauka programowania",
+          "category": "Przychody - Szkolenia prywatne",
+          "date": "2019-04-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "768.75"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-04-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-301.50"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-04-29",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-298.40"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - dzieci",
+          "category": "Dziecko",
+          "date": "2019-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1205.59"
+            }
+          ]
+        },
+        {
+          "description": "rozliczenie - rachunki",
+          "category": "Rachunki",
+          "date": "2019-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-133.40"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - Remont",
+          "category": "Remont domu",
+          "date": "2019-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-1780.32"
+            }
+          ]
+        },
+        {
+          "description": "rozliczenie - spozywcze",
+          "category": "Jedzenie",
+          "date": "2019-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-493.82"
+            }
+          ]
+        },
+        {
+          "description": "rozliczenie - leki, lekarze",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-58.21"
+            }
+          ]
+        },
+        {
+          "description": "rozliczenie - kosmetyki, chemia",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-04-30",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-32.74"
+            }
+          ]
+        }
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "153.37",
+          "PLN": "-26071.16",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-25420.87"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "82.33",
+          "PLN": "-34329.88",
+          "GBP": "0.00",
+          "USD": "430.46"
+        },
+        "sumOfAllFundsInBaseCurrency": "-32439.75"
+      }
+    },
     {
       "startDate": "2019-03-01",
       "endDate": "2019-03-31",
@@ -364,7 +4619,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "48954.99",
+          "balance": "44415.44",
           "currency": "PLN"
         },
         {
@@ -379,12 +4634,12 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "134.63",
+          "balance": "0.00",
           "currency": "PLN"
         },
         {
           "name": "mBank",
-          "balance": "1969.38",
+          "balance": "7701.83",
           "currency": "PLN"
         },
         {
@@ -394,7 +4649,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1999.73",
+          "balance": "0.00",
           "currency": "USD"
         },
         {
@@ -406,6 +4661,16 @@
           "name": "Revolut - EUR",
           "balance": "79.31",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -431,7 +4696,7 @@
         },
         {
           "name": "Idea Bank",
-          "balance": "6008.52",
+          "balance": "9908.02",
           "currency": "PLN"
         },
         {
@@ -446,17 +4711,17 @@
         },
         {
           "name": "Gotówka",
-          "balance": "228.10",
+          "balance": "478.00",
           "currency": "PLN"
         },
         {
           "name": "Gotówka - EUR",
-          "balance": "4.17",
+          "balance": "3.57",
           "currency": "EUR"
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "49949.97",
+          "balance": "34842.63",
           "currency": "PLN"
         },
         {
@@ -471,12 +4736,12 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "0.00",
+          "balance": "70.00",
           "currency": "PLN"
         },
         {
           "name": "mBank",
-          "balance": "7681.93",
+          "balance": "6936.48",
           "currency": "PLN"
         },
         {
@@ -491,13 +4756,23 @@
         },
         {
           "name": "Santander",
-          "balance": "30.22",
+          "balance": "128.51",
           "currency": "PLN"
         },
         {
           "name": "Revolut - EUR",
           "balance": "79.31",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -513,17 +4788,666 @@
           ]
         },
         {
-          "description": "USD -> PLN",
-          "category": "Wymiana walut",
-          "date": "2019-03-27",
+          "description": "Spozywcze",
+          "category": "Zakupy",
+          "date": "2019-03-01",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-22.31"
+            }
+          ]
+        },
+        {
+          "description": "Rysianka - jedzenie",
+          "category": "Jedzenie",
+          "date": "2019-03-03",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-118.10"
+            }
+          ]
+        },
+        {
+          "description": "Ksiegowy",
+          "category": "Firma - Księgowość",
+          "date": "2019-03-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-92.25"
+            }
+          ]
+        },
+        {
+          "description": "ZUS",
+          "category": "Firma - ZUS",
+          "date": "2019-03-04",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-1246.92"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-03-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-335.00"
+            }
+          ]
+        },
+        {
+          "description": "Lekcje plywania - marzec",
+          "category": "Edukacja",
+          "date": "2019-03-04",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-280.00"
+            }
+          ]
+        },
+        {
+          "description": "Leasing",
+          "category": "Samochód",
+          "date": "2019-03-05",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2308.97"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1154.50"
+            }
+          ]
+        },
+        {
+          "description": "Schody na poddasze",
+          "category": "Remont domu",
+          "date": "2019-03-06",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-4200.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "2100.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Santander",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-500.00"
+            },
+            {
+              "account": "Santander",
+              "price": "500.00"
+            }
+          ]
+        },
+        {
+          "description": "Wyplata gotowki",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-06",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-6500.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "6500.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal",
+          "category": "Remont domu",
+          "date": "2019-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-03-07",
           "accountPriceEntries": [
             {
               "account": "Revolut - USD",
-              "price": "-1999.73"
+              "price": "2000.27"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1300.00"
             },
             {
               "account": "Revolut - PLN",
-              "price": "7587.77"
+              "price": "4945.52"
+            }
+          ]
+        },
+        {
+          "description": "USD-> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-700.27"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "2661.06"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-4945.52"
+            },
+            {
+              "account": "mBank",
+              "price": "4945.52"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-2661.06"
+            },
+            {
+              "account": "mBank",
+              "price": "2661.06"
+            }
+          ]
+        },
+        {
+          "description": "Allegro - nrc, zapalki itp",
+          "category": "Zakupy",
+          "date": "2019-03-07",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-75.21"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-03-08",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-254.71"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "127.35"
+            }
+          ]
+        },
+        {
+          "description": "Szkolenie lawinowe - noclegi i jedzenie",
+          "category": "Edukacja",
+          "date": "2019-03-10",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-192.00"
+            }
+          ]
+        },
+        {
+          "description": "Idea -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-11",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-2360.38"
+            },
+            {
+              "account": "mBank",
+              "price": "2360.38"
+            }
+          ]
+        },
+        {
+          "description": "Fizjopunkt",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-03-11",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-70.00"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-03-12",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-360.00"
+            }
+          ]
+        },
+        {
+          "description": "Oboz KW - zwrot",
+          "category": "Wyjazdy",
+          "date": "2019-03-12",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "182.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-03-13",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-03-13",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7616.68"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-13",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7616.68"
+            },
+            {
+              "account": "mBank",
+              "price": "7616.68"
+            }
+          ]
+        },
+        {
+          "description": "Kilimanjaro - Kurs turystyki zimowej - zaliczka",
+          "category": "Edukacja",
+          "date": "2019-03-13",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-500.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal - rozliczenie",
+          "category": "Remont domu",
+          "date": "2019-03-14",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2500.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1250.00"
+            }
+          ]
+        },
+        {
+          "description": "Apteka",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-03-14",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-121.44"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "60.72"
+            }
+          ]
+        },
+        {
+          "description": "Alior - leasing - wplata wlasna",
+          "category": "Samochód",
+          "date": "2019-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-5580.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "5580.00"
+            }
+          ]
+        },
+        {
+          "description": "Rozszerzenie gwarancji - Fiat Tipo",
+          "category": "Samochód",
+          "date": "2019-03-15",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1890.01"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1890.01"
+            }
+          ]
+        },
+        {
+          "description": "Tipo - ubezpieczenie",
+          "category": "Samochód",
+          "date": "2019-03-18",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-3158.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "3158.00"
+            }
+          ]
+        },
+        {
+          "description": "mBank -> Idea",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2360.38"
+            },
+            {
+              "account": "Idea Bank",
+              "price": "2360.38"
+            }
+          ]
+        },
+        {
+          "description": "Pani Mariola - dokumenty wymagane RODO",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-615.00"
+            }
+          ]
+        },
+        {
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7551.97"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - PLN",
+              "price": "-7551.97"
+            },
+            {
+              "account": "mBank",
+              "price": "7551.97"
+            }
+          ]
+        },
+        {
+          "description": "Kawa - awiteks",
+          "category": "Jedzenie",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-14.80"
+            }
+          ]
+        },
+        {
+          "description": "Fryzjer",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-03-19",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Indonezja - loty",
+          "category": "Wyjazdy",
+          "date": "2019-03-20",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-4500.00"
+            }
+          ]
+        },
+        {
+          "description": "Paliwo",
+          "category": "Paliwo",
+          "date": "2019-03-22",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-246.31"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka z bankomatu",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-22",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-2500.00"
+            },
+            {
+              "account": "Gotówka",
+              "price": "2500.00"
+            }
+          ]
+        },
+        {
+          "description": "Pan Michal",
+          "category": "Remont domu",
+          "date": "2019-03-22",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-2100.00"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "1050.00"
+            }
+          ]
+        },
+        {
+          "description": "Kofola :)",
+          "category": "Jedzenie",
+          "date": "2019-03-23",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka - EUR",
+              "price": "-0.60"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-351.00"
+            }
+          ]
+        },
+        {
+          "description": "Gotowka zaginelo 20 zl",
+          "category": "Koszty",
+          "date": "2019-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-20.00"
+            }
+          ]
+        },
+        {
+          "description": "Ubezpieczenie Stelvio - rozliczenie",
+          "category": "Samochód",
+          "date": "2019-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-9000.00"
+            }
+          ]
+        },
+        {
+          "description": "Wplata wlasna Stelvio - rozliczenie",
+          "category": "Samochód",
+          "date": "2019-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-15000.00"
+            }
+          ]
+        },
+        {
+          "description": "Ksiazka - droga prawdziwego mezczyzny",
+          "category": "Edukacja",
+          "date": "2019-03-24",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-45.89"
+            }
+          ]
+        },
+        {
+          "description": "Kawa - mcDonalds",
+          "category": "Jedzenie",
+          "date": "2019-03-25",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-16.40"
+            }
+          ]
+        },
+        {
+          "description": "Ksiazka - twarde zycie mezczyzny",
+          "category": "Edukacja",
+          "date": "2019-03-26",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-69.00"
+            }
+          ]
+        },
+        {
+          "description": "CodersTrust licencje",
+          "category": "Przychody - CodersTrust - licencja",
+          "date": "2019-03-27",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "7217.64"
             }
           ]
         },
@@ -533,27 +5457,204 @@
           "date": "2019-03-27",
           "accountPriceEntries": [
             {
-              "account": "mBank",
-              "price": "7722.40"
+              "account": "Revolut - PLN",
+              "price": "-7610.44"
             },
             {
-              "account": "Revolut - PLN",
-              "price": "-7722.40"
+              "account": "mBank",
+              "price": "7610.44"
             }
           ]
         },
         {
-          "description": "Sklad budowlany",
-          "category": "Remont domu",
+          "description": "Crossover",
+          "category": "Przychody - Crossover",
           "date": "2019-03-27",
           "accountPriceEntries": [
             {
-              "account": "mBank",
-              "price": "-1989.95"
+              "account": "Revolut - USD",
+              "price": "2000.00"
+            }
+          ]
+        },
+        {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-03-27",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-2000.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7610.44"
+            }
+          ]
+        },
+        {
+          "description": "Santander -> Revolut",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-27",
+          "accountPriceEntries": [
+            {
+              "account": "Santander",
+              "price": "-70.00"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "70.00"
+            }
+          ]
+        },
+        {
+          "description": "Ania gotowka -100",
+          "category": "Przelewy między kontami",
+          "date": "2019-03-28",
+          "accountPriceEntries": [
+            {
+              "account": "Gotówka",
+              "price": "-100.00"
             },
             {
               "account": "Ania - rozliczenie",
-              "price": "994.98"
+              "price": "100.00"
+            }
+          ]
+        },
+        {
+          "description": "Kurs turystyki wysokogorskiej - doplata",
+          "category": "Edukacja",
+          "date": "2019-03-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-700.00"
+            }
+          ]
+        },
+        {
+          "description": "Sklad budowlany - faktura",
+          "category": "Remont domu",
+          "date": "2019-03-28",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-730.75"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "365.38"
+            }
+          ]
+        },
+        {
+          "description": "Pawel - szkolenia",
+          "category": "Przychody - Szkolenia prywatne",
+          "date": "2019-03-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "1095.00"
+            }
+          ]
+        },
+        {
+          "description": "Prawnik",
+          "category": "Koszty prowadzenia firmy",
+          "date": "2019-03-29",
+          "accountPriceEntries": [
+            {
+              "account": "Idea Bank",
+              "price": "-150.00"
+            }
+          ]
+        },
+        {
+          "description": "Box4Fit",
+          "category": "Jedzenie",
+          "date": "2019-03-30",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-324.00"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie - dziecko",
+          "category": "Dziecko",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-361.48"
+            }
+          ]
+        },
+        {
+          "description": "Ania rozliczenie - rachunki",
+          "category": "Rachunki",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-139.10"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie - auto",
+          "category": "Samochód",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-204.35"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie - remont domu",
+          "category": "Remont domu",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-2113.84"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie - spozywcze",
+          "category": "Jedzenie",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-519.84"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie - lekarstwa",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-61.02"
+            }
+          ]
+        },
+        {
+          "description": "Ania - rozliczenie - kosmetyki",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-03-31",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-9.14"
             }
           ]
         }
@@ -561,20 +5662,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "153.97",
-          "PLN": "278891.04",
-          "GBP": "0.00",
-          "USD": "1999.73"
-        },
-        "sumOfAllFundsInBaseCurrency": "286702.91"
-      },
-      "sumOfAllFundsAtTheEndOfPeriod": {
-        "currencyToFundsMap": {
-          "EUR": "153.97",
-          "PLN": "285463.94",
+          "PLN": "-20050.69",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "286116.77"
+        "sumOfAllFundsInBaseCurrency": "-19397.86"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "153.37",
+          "PLN": "-26071.16",
+          "GBP": "0.00",
+          "USD": "0.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "-25420.87"
       }
     },
     {
@@ -670,6 +5771,16 @@
           "name": "Revolut - EUR",
           "balance": "104.41",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -720,7 +5831,7 @@
         },
         {
           "name": "Ania - rozliczenie",
-          "balance": "48954.99",
+          "balance": "44415.44",
           "currency": "PLN"
         },
         {
@@ -735,12 +5846,12 @@
         },
         {
           "name": "Revolut - PLN",
-          "balance": "134.63",
+          "balance": "0.00",
           "currency": "PLN"
         },
         {
           "name": "mBank",
-          "balance": "1969.38",
+          "balance": "7701.83",
           "currency": "PLN"
         },
         {
@@ -750,7 +5861,7 @@
         },
         {
           "name": "Revolut - USD",
-          "balance": "1999.73",
+          "balance": "0.00",
           "currency": "USD"
         },
         {
@@ -762,6 +5873,16 @@
           "name": "Revolut - EUR",
           "balance": "79.31",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -1717,8 +6838,53 @@
           ]
         },
         {
+          "description": "USD -> PLN",
+          "category": "Wymiana walut",
+          "date": "2019-02-27",
+          "accountPriceEntries": [
+            {
+              "account": "Revolut - USD",
+              "price": "-1999.73"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "7587.77"
+            }
+          ]
+        },
+        {
+          "description": "Revolut -> mBank",
+          "category": "Przelewy między kontami",
+          "date": "2019-02-27",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "7722.40"
+            },
+            {
+              "account": "Revolut - PLN",
+              "price": "-7722.40"
+            }
+          ]
+        },
+        {
+          "description": "Sklad budowlany",
+          "category": "Remont domu",
+          "date": "2019-02-27",
+          "accountPriceEntries": [
+            {
+              "account": "mBank",
+              "price": "-1989.95"
+            },
+            {
+              "account": "Ania - rozliczenie",
+              "price": "994.98"
+            }
+          ]
+        },
+        {
           "description": "Pawel - nauka programowania",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2019-02-28",
           "accountPriceEntries": [
             {
@@ -1749,7 +6915,73 @@
             },
             {
               "account": "Ania - rozliczenie",
-              "price": "500.00"
+              "price": "1000.00"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - miesiaca - dziecko",
+          "category": "Dziecko",
+          "date": "2019-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-418.76"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - rachunki",
+          "category": "Rachunki",
+          "date": "2019-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-541.75"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - remont",
+          "category": "Remont domu",
+          "date": "2019-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-4483.10"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - remonty",
+          "category": "Zakupy",
+          "date": "2019-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-506.58"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - lekarze",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-39.99"
+            }
+          ]
+        },
+        {
+          "description": "Rozliczenie - kosmetyki, chemia",
+          "category": "Leki, lekarze, higiena",
+          "date": "2019-02-28",
+          "accountPriceEntries": [
+            {
+              "account": "Ania - rozliczenie",
+              "price": "-44.35"
             }
           ]
         }
@@ -1757,20 +6989,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "401.50",
-          "PLN": "273963.92",
+          "PLN": "-26036.08",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "275666.28"
+        "sumOfAllFundsInBaseCurrency": "-24333.72"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "153.97",
-          "PLN": "278891.04",
+          "PLN": "-20050.69",
           "GBP": "0.00",
-          "USD": "1999.73"
+          "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "286702.91"
+        "sumOfAllFundsInBaseCurrency": "-19397.86"
       }
     },
     {
@@ -1866,6 +7098,16 @@
           "name": "Revolut - EUR",
           "balance": "89.50",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -1958,6 +7200,16 @@
           "name": "Revolut - EUR",
           "balance": "104.41",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -2212,7 +7464,7 @@
         },
         {
           "description": "Pawel - nauka programowania",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2019-01-07",
           "accountPriceEntries": [
             {
@@ -2484,7 +7736,7 @@
         },
         {
           "description": "Zwrot - uslugi elektroniczne",
-          "category": "Przychody",
+          "category": "Rachunki",
           "date": "2019-01-15",
           "accountPriceEntries": [
             {
@@ -2821,7 +8073,7 @@
         },
         {
           "description": "Nauka programowania - Pawel",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2019-01-23",
           "accountPriceEntries": [
             {
@@ -3291,20 +8543,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "486.59",
-          "PLN": "270198.87",
+          "PLN": "-29801.13",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "272262.01"
+        "sumOfAllFundsInBaseCurrency": "-27737.99"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "401.50",
-          "PLN": "273963.92",
+          "PLN": "-26036.08",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "275666.28"
+        "sumOfAllFundsInBaseCurrency": "-24333.72"
       }
     },
     {
@@ -3400,6 +8652,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -3492,6 +8754,16 @@
           "name": "Revolut - EUR",
           "balance": "89.50",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -4651,20 +9923,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "249652.65",
+          "PLN": "-50347.35",
           "GBP": "0.00",
           "USD": "5500.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269666.33"
+        "sumOfAllFundsInBaseCurrency": "-30333.67"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "486.59",
-          "PLN": "270198.87",
+          "PLN": "-29801.13",
           "GBP": "0.00",
           "USD": "0.00"
         },
-        "sumOfAllFundsInBaseCurrency": "272262.01"
+        "sumOfAllFundsInBaseCurrency": "-27737.99"
       }
     },
     {
@@ -4760,6 +10032,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -4852,6 +10134,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -4995,7 +10287,7 @@
         },
         {
           "description": "Nauka programowania",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2018-11-05",
           "accountPriceEntries": [
             {
@@ -5570,20 +10862,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "257651.04",
+          "PLN": "-42348.96",
           "GBP": "0.00",
           "USD": "2000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "265134.72"
+        "sumOfAllFundsInBaseCurrency": "-34865.28"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "249652.65",
+          "PLN": "-50347.35",
           "GBP": "0.00",
           "USD": "5500.00"
         },
-        "sumOfAllFundsInBaseCurrency": "269666.33"
+        "sumOfAllFundsInBaseCurrency": "-30333.67"
       }
     },
     {
@@ -5679,6 +10971,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -5771,6 +11073,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -6585,7 +11897,7 @@
         },
         {
           "description": "Nauka programowania",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2018-10-26",
           "accountPriceEntries": [
             {
@@ -6888,20 +12200,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "214318.79",
+          "PLN": "-85681.21",
           "GBP": "0.00",
           "USD": "15000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "268342.47"
+        "sumOfAllFundsInBaseCurrency": "-31657.53"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "257651.04",
+          "PLN": "-42348.96",
           "GBP": "0.00",
           "USD": "2000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "265134.72"
+        "sumOfAllFundsInBaseCurrency": "-34865.28"
       }
     },
     {
@@ -6997,6 +12309,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -7089,6 +12411,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -7827,20 +13159,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "374.64",
-          "PLN": "232773.50",
+          "PLN": "-67226.50",
           "GBP": "0.00",
           "USD": "7747.60"
         },
-        "sumOfAllFundsInBaseCurrency": "262098.38"
+        "sumOfAllFundsInBaseCurrency": "-37901.62"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "76.34",
-          "PLN": "214318.79",
+          "PLN": "-85681.21",
           "GBP": "0.00",
           "USD": "15000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "268342.47"
+        "sumOfAllFundsInBaseCurrency": "-31657.53"
       }
     },
     {
@@ -7936,6 +13268,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -8028,6 +13370,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -8767,7 +14119,7 @@
         },
         {
           "description": "Konsultacje Prywatne",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2018-08-28",
           "accountPriceEntries": [
             {
@@ -8924,20 +14276,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "94230.38",
+          "PLN": "-205769.62",
           "GBP": "0.00",
           "USD": "38025.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232453.34"
+        "sumOfAllFundsInBaseCurrency": "-67546.66"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "374.64",
-          "PLN": "232773.50",
+          "PLN": "-67226.50",
           "GBP": "0.00",
           "USD": "7747.60"
         },
-        "sumOfAllFundsInBaseCurrency": "262098.38"
+        "sumOfAllFundsInBaseCurrency": "-37901.62"
       }
     },
     {
@@ -9033,6 +14385,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -9125,6 +14487,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -9619,7 +14991,7 @@
         },
         {
           "description": "Prywatne konsultacje",
-          "category": "Przychody",
+          "category": "Przychody - Szkolenia prywatne",
           "date": "2018-07-31",
           "accountPriceEntries": [
             {
@@ -9720,20 +15092,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "126122.37",
+          "PLN": "-173877.63",
           "GBP": "0.00",
           "USD": "32000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "242775.83"
+        "sumOfAllFundsInBaseCurrency": "-57224.17"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "94230.38",
+          "PLN": "-205769.62",
           "GBP": "0.00",
           "USD": "38025.00"
         },
-        "sumOfAllFundsInBaseCurrency": "232453.34"
+        "sumOfAllFundsInBaseCurrency": "-67546.66"
       }
     },
     {
@@ -9829,6 +15201,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -9921,6 +15303,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -10576,20 +15968,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "554.74",
-          "PLN": "45146.14",
+          "PLN": "-254853.86",
           "GBP": "0.00",
           "USD": "46000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "212178.24"
+        "sumOfAllFundsInBaseCurrency": "-87821.76"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "493.74",
-          "PLN": "126122.37",
+          "PLN": "-173877.63",
           "GBP": "0.00",
           "USD": "32000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "242775.83"
+        "sumOfAllFundsInBaseCurrency": "-57224.17"
       }
     },
     {
@@ -10685,6 +16077,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -10777,6 +16179,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -11187,20 +16599,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "34622.59",
+          "PLN": "-265377.41",
           "GBP": "0.00",
           "USD": "43000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "189066.39"
+        "sumOfAllFundsInBaseCurrency": "-110933.61"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "554.74",
-          "PLN": "45146.14",
+          "PLN": "-254853.86",
           "GBP": "0.00",
           "USD": "46000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "212178.24"
+        "sumOfAllFundsInBaseCurrency": "-87821.76"
       }
     },
     {
@@ -11296,6 +16708,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -11388,6 +16810,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -11779,20 +17211,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "33363.52",
+          "PLN": "-266636.48",
           "GBP": "0.00",
           "USD": "42999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "187807.28"
+        "sumOfAllFundsInBaseCurrency": "-112192.72"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "34622.59",
+          "PLN": "-265377.41",
           "GBP": "0.00",
           "USD": "43000.00"
         },
-        "sumOfAllFundsInBaseCurrency": "189066.39"
+        "sumOfAllFundsInBaseCurrency": "-110933.61"
       }
     },
     {
@@ -11888,6 +17320,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -11980,6 +17422,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -12726,20 +18178,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "559.73",
-          "PLN": "26782.68",
+          "PLN": "-273217.32",
           "GBP": "0.00",
           "USD": "33999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "150875.90"
+        "sumOfAllFundsInBaseCurrency": "-149124.10"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "118.82",
-          "PLN": "33363.52",
+          "PLN": "-266636.48",
           "GBP": "0.00",
           "USD": "42999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "187807.28"
+        "sumOfAllFundsInBaseCurrency": "-112192.72"
       }
     },
     {
@@ -12835,6 +18287,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -12927,6 +18389,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -13469,20 +18941,20 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "847.37",
-          "PLN": "11164.96",
+          "PLN": "-288835.04",
           "GBP": "0.00",
           "USD": "27999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "114997.77"
+        "sumOfAllFundsInBaseCurrency": "-185002.23"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "559.73",
-          "PLN": "26782.68",
+          "PLN": "-273217.32",
           "GBP": "0.00",
           "USD": "33999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "150875.90"
+        "sumOfAllFundsInBaseCurrency": "-149124.10"
       }
     },
     {
@@ -13578,6 +19050,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "accountStateAtTheEndOfPeriod": [
@@ -13670,6 +19152,16 @@
           "name": "Revolut - EUR",
           "balance": "0.00",
           "currency": "EUR"
+        },
+        {
+          "name": "ING",
+          "balance": "0.00",
+          "currency": "PLN"
+        },
+        {
+          "name": "ING - Kredyt",
+          "balance": "-300000.00",
+          "currency": "PLN"
         }
       ],
       "transactions": [
@@ -14434,21 +19926,51 @@
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "638.83",
-          "PLN": "26060.79",
+          "PLN": "-273939.21",
           "GBP": "0.00",
           "USD": "23999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "114689.39"
+        "sumOfAllFundsInBaseCurrency": "-185310.61"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
           "EUR": "847.37",
-          "PLN": "11164.96",
+          "PLN": "-288835.04",
           "GBP": "0.00",
           "USD": "27999.99"
         },
-        "sumOfAllFundsInBaseCurrency": "114997.77"
+        "sumOfAllFundsInBaseCurrency": "-185002.23"
       }
+    }
+  ],
+  "filters": [
+    {
+      "name": "Luty 2019",
+      "accounts": [],
+      "categories": [],
+      "dateFrom": "2019-02-21"
+    },
+    {
+      "name": "Ania - rozliczenie",
+      "accounts": [
+        "Ania - rozliczenie"
+      ],
+      "categories": [],
+      "dateFrom": "2019-01-01"
+    },
+    {
+      "name": "Rozliczenie miesiaca",
+      "accounts": [],
+      "categories": [
+        "Rozliczenie miesiąca"
+      ]
+    },
+    {
+      "name": "Nurkowanie",
+      "accounts": [],
+      "categories": [
+        "Nurkowanie"
+      ]
     }
   ]
 }
