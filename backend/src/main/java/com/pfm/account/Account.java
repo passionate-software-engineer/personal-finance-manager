@@ -46,6 +46,7 @@ public final class Account {
   @JsonIgnore
   private Long userId;
 
+  @HistoryField
   @ApiModelProperty(value = "Information if account is archived", example = "false")
   private boolean archived;
 
