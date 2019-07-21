@@ -198,6 +198,8 @@ public class ExportService {
             .name(account.getName())
             .balance(account.getBalance())
             .currency(account.getCurrency().getName())
+            .lastVerificationDate(account.getLastVerificationDate())
+            .archived(account.isArchived())
             .build()
         )
         .collect(Collectors.toList());
