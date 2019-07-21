@@ -138,6 +138,8 @@ public class ImportService {
           .name(account.getName())
           .balance(account.getBalance())
           .currency(currencyOptional.get())
+          .lastVerificationDate(account.getLastVerificationDate())
+          .archived(account.isArchived())
           .build();
 
       Account savedAccount = accountService.saveAccount(userId, accountToSave);
