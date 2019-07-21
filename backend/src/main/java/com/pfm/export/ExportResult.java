@@ -115,6 +115,11 @@ public final class ExportResult {
 
     private String currency;
 
+    private LocalDate lastVerificationDate;
+
+    private boolean archived;
+
+
   }
 
   @Data
