@@ -30,7 +30,6 @@ public class AccountController implements AccountApi {
   private AccountValidator accountValidator;
   private HistoryEntryService historyEntryService;
   private CurrencyService currencyService;
-
   private UserProvider userProvider;
 
   @Override
@@ -229,10 +228,6 @@ public class AccountController implements AccountApi {
   private ResponseEntity<?> performArchiveOperation(long accountId, long userId, boolean shouldArchive) {
     Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
 
-    if (!account.isPresent()) {
-      log.info("No account with id {} was found, not able to update", accountId);
-      return ResponseEntity.notFound().build();
-    }
     log.info("Attempting to set account status as {} with id {} ", shouldArchive ? "archived" : "active", accountId);
     account.get().setArchived(shouldArchive);
     accountService.saveAccount(userId, account.get());
