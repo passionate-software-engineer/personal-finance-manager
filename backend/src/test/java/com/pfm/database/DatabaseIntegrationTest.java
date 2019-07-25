@@ -1,7 +1,11 @@
 package com.pfm.database;
 
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_ACCOUNTS_WHERE_USER_ID;
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_HISTORY_WHERE_USER_ID;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_ACCOUNTS;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_CATEGORIES;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_FILTERS;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_HISTORY;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_TRANSACTIONS;
+import static com.pfm.database.TestSQLQueries.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -110,30 +114,71 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
     ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
 
-    List<AccountQueryResult> user1AccountQueryResults = getAllAccounts(user1Id);
-    List<AccountQueryResult> user2AccountQueryResults = getAllAccounts(user2Id);
+    List<AccountQueryResult> user1AccountQueryResults = getAccounts(user1Id);
+    List<AccountQueryResult> user2AccountQueryResults = getAccounts(user2Id);
 
     assertThat(user1AccountQueryResults, equalTo(user2AccountQueryResults));
 
     System.out.println("***************************************************************************************************************");
     System.out.println("***************************************************************************************************************");
     List<HistoryQueryResult> user1HistoryQueryResults = getHistory(user1Id);
-    List<HistoryQueryResult> user2HistoryQueryResults= getHistory(user2Id);
+    List<HistoryQueryResult> user2HistoryQueryResults = getHistory(user2Id);
 
     assertThat(user1HistoryQueryResults, equalTo(user2HistoryQueryResults));
+
+    List<TransactionQueryResult> user1TransactionQueryResults = getTransaction(user1Id);
+    List<TransactionQueryResult> user2TransactionQueryResults = getTransaction(user2Id);
+
+    assertThat(user1TransactionQueryResults, equalTo(user2TransactionQueryResults));
+
+    List<CategoryQueryResult> user1CategoryQueryResults = getCategory(user1Id);
+    List<CategoryQueryResult> user2CategoryQueryResults = getCategory(user2Id);
+
+    assertThat(user1CategoryQueryResults, equalTo(user2CategoryQueryResults));
+
+    List<CategoryFromMainParentCategoryQueryResult> user1MainParentCategoryCategoriesQueryResults = getCategoriesFromMainCategory(user1Id);
+    List<CategoryFromMainParentCategoryQueryResult> user2MainParentCategoryCategoriesQueryResults = getCategoriesFromMainCategory(user2Id);
+
+    assertThat(user1MainParentCategoryCategoriesQueryResults, equalTo(user2MainParentCategoryCategoriesQueryResults));
+
+    List<FilterQueryResult> user1FilterQueryResults = getFilters(user1Id);
+    List<FilterQueryResult> user2FilterQueryResults = getFilters(user2Id);
+
+    assertThat(user1FilterQueryResults, equalTo(user2FilterQueryResults));
 
     System.out.println();
   }
 
   @SuppressWarnings("unchecked")
-  private List<AccountQueryResult> getAllAccounts(long userId) {
-    return jdbcTemplate.query(SELECT_ALL_ACCOUNTS_WHERE_USER_ID + userId, new AccountQueryResultMapper());
-  }
-  @SuppressWarnings("unchecked")
-  private List<HistoryQueryResult> getHistory(long userId) {
-    return jdbcTemplate.query(SELECT_ALL_HISTORY_WHERE_USER_ID + userId, new HistoryQueryResultMapper());
+  private List<FilterQueryResult> getFilters(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_FILTERS + userId, new FilterQueryResultRowMapper());
+
   }
 
+  @SuppressWarnings("unchecked")
+  private List<AccountQueryResult> getAccounts(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_ACCOUNTS + userId, new AccountQueryResultMapper());
+  }
+
+  @SuppressWarnings("unchecked")
+  private List<HistoryQueryResult> getHistory(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_HISTORY + userId, new HistoryQueryResultMapper());
+  }
+
+  @SuppressWarnings("unchecked")
+  private List<TransactionQueryResult> getTransaction(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_TRANSACTIONS + userId, new TransactionQueryResultMapper());
+  }
+
+  @SuppressWarnings("unchecked")
+  private List<CategoryQueryResult> getCategory(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_CATEGORIES + userId, new CategoryQueryResultMapper());
+  }
+
+  @SuppressWarnings("unchecked")
+  private List<CategoryFromMainParentCategoryQueryResult> getCategoriesFromMainCategory(long userId) {
+    return jdbcTemplate.query(SELECT_MAIN_PARENT_CATEGORY_CATEGORIES + userId, new CategoryFromMainParentCategoryQueryResultMapper());
+  }
 }
 
 
