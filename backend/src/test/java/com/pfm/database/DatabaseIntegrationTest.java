@@ -1,7 +1,7 @@
 package com.pfm.database;
 
-import static com.pfm.helpers.TestSqlQueryProvider.SELECT_ACCOUNT_FOR_USER_NO_4;
-import static com.pfm.helpers.TestSqlQueryProvider.SELECT_ALL_ACCOUNTS;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_ACCOUNTS_WHERE_USER_ID;
+import static com.pfm.database.TestSQLQueries.SELECT_ALL_HISTORY_WHERE_USER_ID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.AccountService;
 import com.pfm.auth.User;
-import com.pfm.currency.Currency;
 import com.pfm.export.ExportResult;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestUsersProvider;
@@ -111,78 +110,31 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
     ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
 
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    List<AccountQueryResult> user1AccountQueryResults = getAllAccounts(user1Id);
+    List<AccountQueryResult> user2AccountQueryResults = getAllAccounts(user2Id);
 
-//    List<AccountQueryResult> accountsFromDb = getAccountForUserNo_4();
-//    printResults(accountsFromDb);
-
-    printCurrency(getCurrency());
-//    System.out.println("*****************currency **********************************************************************************************");
-
-    List<AccountQueryResult> diffrenceInAccounts = compareAccountTables();
-    printResults(diffrenceInAccounts);
+    assertThat(user1AccountQueryResults, equalTo(user2AccountQueryResults));
 
     System.out.println("***************************************************************************************************************");
     System.out.println("***************************************************************************************************************");
+    List<HistoryQueryResult> user1HistoryQueryResults = getHistory(user1Id);
+    List<HistoryQueryResult> user2HistoryQueryResults= getHistory(user2Id);
 
+    assertThat(user1HistoryQueryResults, equalTo(user2HistoryQueryResults));
+
+    System.out.println();
   }
 
-  private String getAccountById(long id) {
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    String sql = SELECT_ALL_ACCOUNTS;
-
-    String account = (String) jdbcTemplate.queryForObject(
-        sql, new Object[]{id}, String.class);
-    return account;
+  @SuppressWarnings("unchecked")
+  private List<AccountQueryResult> getAllAccounts(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_ACCOUNTS_WHERE_USER_ID + userId, new AccountQueryResultMapper());
+  }
+  @SuppressWarnings("unchecked")
+  private List<HistoryQueryResult> getHistory(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_HISTORY_WHERE_USER_ID + userId, new HistoryQueryResultMapper());
   }
 
-  private void printResults(List<AccountQueryResult> results) {
-//    results.forEach(System.out::println);
-    for (AccountQueryResult result : results) {
-      System.out.print(result.toString() + " ");
-    }
-
-  }
-
-  private void printCurrency(List<Currency> results) {
-//    results.forEach(System.out::println);
-    for (Currency result : results) {
-      System.out.print(result.toString() + " ");
-      System.out.println("*********************************Currency************************************************************************************");
-    }
-
-  }
-  private List<Currency> getCurrency() {
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    String sql = "select * from currency";
-    return  jdbcTemplate.query(sql, new CurrencyRowMapper());
-
-  }
-
-
-  private List<AccountQueryResult> compareAccountTables() {
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    String sql = "select * from account";
-
-    return jdbcTemplate.query(sql, new AccountQueryResultMapper());
-  }
-  private List<AccountQueryResult> getAccountForUserNo_4() {
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    String sql = SELECT_ACCOUNT_FOR_USER_NO_4;
-
-    List<AccountQueryResult> resultAsString = jdbcTemplate.query(sql, new AccountQueryResultMapper());
-    return resultAsString;
-  }
-
-//  private String getAccountByIdd(long userId, long accountId) {
-//    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//    String sql = "SELECT account.name from account where user_id=:userId and account.id=:accountId";
-////    String sql = "SELECT username from app_user where app_user.id=? ";
-//
-//    String account = (String) jdbcTemplate.queryForObject(
-//        sql, new Object[]{accountId}, String.class);
-//
-//    return account;
-//  }
 }
+
+
 

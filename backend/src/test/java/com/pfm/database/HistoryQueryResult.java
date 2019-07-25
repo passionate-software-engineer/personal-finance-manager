@@ -9,14 +9,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountQueryResult {
+public class HistoryQueryResult {
 
+  private String date;
+  private String type;
+  private String object;
   private String name;
-
-  private String balance;
-
-  private String lastVerificationDate;
-  
-  private boolean archived;
+  private String old_value;
+  private String new_value;
 
 }

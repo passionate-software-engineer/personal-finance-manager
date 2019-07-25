@@ -18,12 +18,11 @@ public class AccountQueryResultMapper implements RowMapper {
 
     return AccountQueryResult.builder()
         .name(resultSet.getString("name"))
-        .balance(resultSet.getBigDecimal("balance"))
-        .user_id(resultSet.getLong("user_id"))
-        .lastVerificationDate(resultSet.getString("last_Verification_Date") == null ? "null" : "not null")
+        .balance(resultSet.getString("balance"))
+//        .lastVerificationDate(resultSet.getString("last_Verification_Date") == null ? "null" : resultSet.getString("last_Verification_Date"))
+        .lastVerificationDate(resultSet.getString("last_Verification_Date"))
         .archived(resultSet.getBoolean("archived"))
         .build();
-
   }
 
 }

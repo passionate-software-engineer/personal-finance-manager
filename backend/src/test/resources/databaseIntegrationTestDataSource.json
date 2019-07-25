@@ -21,45 +21,54 @@
     {
       "name": "a1",
       "balance": "1.00",
-      "currency": "EUR"
+      "currency": "EUR",
+      "lastVerificationDate": "2019-07-25",
+      "archived": false
     },
     {
       "name": "a2",
       "balance": "2.00",
-      "currency": "EUR"
+      "currency": "EUR",
+      "archived": true
     },
     {
       "name": "a3",
       "balance": "3.00",
-      "currency": "EUR"
+      "currency": "EUR",
+      "archived": false
     }
   ],
   "finalAccountsState": [
     {
       "name": "a1",
       "balance": "2.00",
-      "currency": "EUR"
+      "currency": "EUR",
+      "lastVerificationDate": "2019-07-25",
+      "archived": false
     },
     {
       "name": "a2",
       "balance": "4.00",
-      "currency": "EUR"
+      "currency": "EUR",
+      "archived": true
     },
     {
       "name": "a3",
       "balance": "6.00",
-      "currency": "EUR"
+      "currency": "EUR",
+      "archived": false
     }
   ],
   "categories": [
+    {
+      "name": "cat3",
+      "parentCategoryName": "cat1"
+    },
     {
       "name": "cat1"
     },
     {
       "name": "cat2"
-    },
-    {
-      "name": "cat3"
     }
   ],
   "periods": [
@@ -70,34 +79,42 @@
         {
           "name": "a1",
           "balance": "1.00",
-          "currency": "EUR"
+          "currency": "EUR",
+          "lastVerificationDate": "2019-07-25",
+          "archived": false
         },
         {
           "name": "a2",
           "balance": "2.00",
-          "currency": "EUR"
+          "currency": "EUR",
+          "archived": true
         },
         {
           "name": "a3",
           "balance": "3.00",
-          "currency": "EUR"
+          "currency": "EUR",
+          "archived": false
         }
       ],
       "accountStateAtTheEndOfPeriod": [
         {
           "name": "a1",
           "balance": "2.00",
-          "currency": "EUR"
+          "currency": "EUR",
+          "lastVerificationDate": "2019-07-25",
+          "archived": false
         },
         {
           "name": "a2",
           "balance": "4.00",
-          "currency": "EUR"
+          "currency": "EUR",
+          "archived": true
         },
         {
           "name": "a3",
           "balance": "6.00",
-          "currency": "EUR"
+          "currency": "EUR",
+          "archived": false
         }
       ],
       "transactions": [
@@ -412,6 +429,45 @@
         {
           "name": "description",
           "newValue": "f1"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T12:50:00.69788+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a2",
+          "oldValue": "a2"
+        },
+        {
+          "name": "balance",
+          "newValue": "4.00",
+          "oldValue": "4.00"
+        },
+        {
+          "name": "archived",
+          "newValue": "true",
+          "oldValue": "false"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T12:50:32.509436+02:00",
+      "type": "UPDATE",
+      "object": "Category",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "cat3",
+          "oldValue": "cat3"
+        },
+        {
+          "name": "parentCategory",
+          "newValue": "cat1",
+          "oldValue": "Main Category"
         }
       ]
     }
