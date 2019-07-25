@@ -7,21 +7,20 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.jdbc.core.RowMapper;
 
+@Data
+@Builder
+@AllArgsConstructor
+public class TransactionQueryResultMapper implements RowMapper<TransactionQueryResult> {
 
-  @Data
-  @Builder
-  @AllArgsConstructor
-public class TransactionQueryResultMapper implements RowMapper{
+  @Override
+  public TransactionQueryResult mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
 
-    @Override
-    public TransactionQueryResult mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-
-      return TransactionQueryResult.builder()
-          .date(resultSet.getString("date"))
-          .description(resultSet.getString("description"))
-          .price(resultSet.getString("price"))
-          .account(resultSet.getString("account"))
-          .category(resultSet.getString("category"))
-          .build();
-    }
+    return TransactionQueryResult.builder()
+        .date(resultSet.getString("date"))
+        .description(resultSet.getString("description"))
+        .price(resultSet.getString("price"))
+        .account(resultSet.getString("account"))
+        .category(resultSet.getString("category"))
+        .build();
   }
+}

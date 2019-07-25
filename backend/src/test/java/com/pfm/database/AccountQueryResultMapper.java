@@ -10,8 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 @Data
 @Builder
 @AllArgsConstructor
-//@NoArgsConstructor
-public class AccountQueryResultMapper implements RowMapper {
+public class AccountQueryResultMapper implements RowMapper<AccountQueryResult> {
 
   @Override
   public AccountQueryResult mapRow(ResultSet resultSet, int rowNumber) throws SQLException {

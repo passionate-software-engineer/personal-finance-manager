@@ -5,10 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
-public class CurrencyRowMapper implements RowMapper {
-
-  CurrencyRowMapper() {
-  }
+public class CurrencyRowMapper implements RowMapper<Currency> {
 
   @Override
   public Currency mapRow(ResultSet resultSet, int rowNumber) throws SQLException {

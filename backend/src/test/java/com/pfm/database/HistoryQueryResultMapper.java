@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 @Data
 @Builder
 @AllArgsConstructor
-public class HistoryQueryResultMapper implements RowMapper {
+public class HistoryQueryResultMapper implements RowMapper<HistoryQueryResult> {
 
   @Override
   public HistoryQueryResult mapRow(ResultSet resultSet, int rowNum) throws SQLException {
@@ -19,8 +19,8 @@ public class HistoryQueryResultMapper implements RowMapper {
         .type(resultSet.getString("type"))
         .object(resultSet.getString("object"))
         .name(resultSet.getString("name"))
-        .old_value(resultSet.getString("old_value"))
-        .new_value(resultSet.getString("new_value"))
+        .oldValue(resultSet.getString("old_value"))
+        .newValue(resultSet.getString("new_value"))
         .build();
   }
 }

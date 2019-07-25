@@ -1,6 +1,6 @@
 package com.pfm.database;
 
-public class TestSQLQueries {
+public class TestSqlQueries {
 
   public static final String SELECT_ALL_ACCOUNTS = "SELECT * FROM account WHERE user_id =";
 
@@ -38,21 +38,19 @@ public class TestSQLQueries {
           + "WHERE c1.user_id =";
 
   public static final String SELECT_MAIN_PARENT_CATEGORY_CATEGORIES =
-     "SELECT name FROM category WHERE parent_category_id IS NULL  AND user_id =";
+      "SELECT name FROM category WHERE parent_category_id IS NULL  AND user_id =";
 
   public static final String SELECT_ALL_FILTERS =
 
       "SELECT filter.name,\n"
-      +"       filter.description,\n"
-      +"       filter.price_from,\n"
-      +"       filter.price_to,\n"
-      +"       filter.date_from,\n"
-      +"       filter.date_to\n"
-      +"FROM filter\n"
-      +"       JOIN app_user au ON filter.user_id = au.id\n"
-      +"WHERE user_id = ";
-
-
+          + "       filter.description,\n"
+          + "       filter.price_from,\n"
+          + "       filter.price_to,\n"
+          + "       filter.date_from,\n"
+          + "       filter.date_to\n"
+          + "FROM filter\n"
+          + "       JOIN app_user au ON filter.user_id = au.id\n"
+          + "WHERE user_id = ";
 
   public static final String ACCOUNTS_TO_MATCH_FRONTEND_TABLE_LAYOUT_FOR_GIVEN_USER_ID =
       "SELECT account.name,\n"

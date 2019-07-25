@@ -1,11 +1,11 @@
 package com.pfm.database;
 
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_ACCOUNTS;
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_CATEGORIES;
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_FILTERS;
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_HISTORY;
-import static com.pfm.database.TestSQLQueries.SELECT_ALL_TRANSACTIONS;
-import static com.pfm.database.TestSQLQueries.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
+import static com.pfm.database.TestSqlQueries.SELECT_ALL_ACCOUNTS;
+import static com.pfm.database.TestSqlQueries.SELECT_ALL_CATEGORIES;
+import static com.pfm.database.TestSqlQueries.SELECT_ALL_FILTERS;
+import static com.pfm.database.TestSqlQueries.SELECT_ALL_HISTORY;
+import static com.pfm.database.TestSqlQueries.SELECT_ALL_TRANSACTIONS;
+import static com.pfm.database.TestSqlQueries.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,10 +18,7 @@ import com.pfm.export.ExportResult;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestUsersProvider;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -37,7 +34,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class DatabaseIntegrationTest extends IntegrationTestsBase {
 
   private static final String JSON_TEST_DATA_SOURCE_FILE_PATH = "src/test/resources/databaseIntegrationTestDataSource.json";
-  //  private static final String JSON_TEST_DATA_SOURCE_FILE_PATH = "src/test/resources/dd.json";
 
   @Autowired
   AccountService accountService;
@@ -51,32 +47,23 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
   @Autowired
   ObjectMapper mapper;
 
-//  @BeforeEach
-//  public void before() {
-//    flyway.clean();
-//    flyway.migrate();
-//  }
-
   @Disabled
   @Test
   void importExportCrossTest() throws Exception {
     //given
     File jsonTestDataFile = new File(JSON_TEST_DATA_SOURCE_FILE_PATH);
 
-    List<String> exportResultJson = Files.lines(Paths.get(JSON_TEST_DATA_SOURCE_FILE_PATH))
-        .collect(Collectors.toList());
-
     ExportResult dataToImportByUser1 = mapper.readValue(jsonTestDataFile, ExportResult.class);
     assertNotNull(dataToImportByUser1);
 
     User user1 = TestUsersProvider.userMarian();
-    long user1Id = callRestToRegisterUserAndReturnUserId(user1);
+    callRestToRegisterUserAndReturnUserId(user1);
     String user1Token = callRestToAuthenticateUserAndReturnToken(user1);
     callRestToImportAllData(user1Token, dataToImportByUser1);
     ExportResult dataExportedBackByUser1 = callRestToExportAllDataAndReturnExportResult(user1Token);
 
     User user2 = TestUsersProvider.userZdzislaw();
-    long user2Id = callRestToRegisterUserAndReturnUserId(user2);
+    callRestToRegisterUserAndReturnUserId(user2);
     String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
     ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
@@ -96,87 +83,70 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     //given
     File jsonTestDataFile = new File(JSON_TEST_DATA_SOURCE_FILE_PATH);
 
-    List<String> exportResultJson = Files.lines(Paths.get(JSON_TEST_DATA_SOURCE_FILE_PATH))
-        .collect(Collectors.toList());
-
-    ExportResult dataToImportByUser1 = mapper.readValue(jsonTestDataFile, ExportResult.class);
-    assertNotNull(dataToImportByUser1);
+    ExportResult dataToImportFromFileByUser1 = mapper.readValue(jsonTestDataFile, ExportResult.class);
+    assertNotNull(dataToImportFromFileByUser1);
 
     User user1 = TestUsersProvider.userMarian();
     long user1Id = callRestToRegisterUserAndReturnUserId(user1);
     String user1Token = callRestToAuthenticateUserAndReturnToken(user1);
-    callRestToImportAllData(user1Token, dataToImportByUser1);
+    callRestToImportAllData(user1Token, dataToImportFromFileByUser1);
     ExportResult dataExportedBackByUser1 = callRestToExportAllDataAndReturnExportResult(user1Token);
 
     User user2 = TestUsersProvider.userZdzislaw();
     long user2Id = callRestToRegisterUserAndReturnUserId(user2);
     String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
-    ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
 
-    List<AccountQueryResult> user1AccountQueryResults = getAccounts(user1Id);
-    List<AccountQueryResult> user2AccountQueryResults = getAccounts(user2Id);
+    final List<AccountQueryResult> user1AccountQueryResults = getAccountsFromDb(user1Id);
+    final List<AccountQueryResult> user2AccountQueryResults = getAccountsFromDb(user2Id);
+
+    final List<HistoryQueryResult> user1HistoryQueryResults = getHistoryFromDb(user1Id);
+    final List<HistoryQueryResult> user2HistoryQueryResults = getHistoryFromDb(user2Id);
+
+    final List<TransactionQueryResult> user1TransactionQueryResults = getTransactionFromDb(user1Id);
+    final List<TransactionQueryResult> user2TransactionQueryResults = getTransactionFromDb(user2Id);
+
+    final List<CategoryQueryResult> user1CategoryQueryResults = getCategoryFromDb(user1Id);
+    final List<CategoryQueryResult> user2CategoryQueryResults = getCategoryFromDb(user2Id);
+
+    final List<CategoryFromMainParentCategoryQueryResult> user1MainParentCategoryCategoriesQueryResults = getCategoriesFromMainCategoryFromDb(
+        user1Id);
+    final List<CategoryFromMainParentCategoryQueryResult> user2MainParentCategoryCategoriesQueryResults = getCategoriesFromMainCategoryFromDb(
+        user2Id);
+
+    final List<FilterQueryResult> user1FilterQueryResults = getFiltersFromDb(user1Id);
+    final List<FilterQueryResult> user2FilterQueryResults = getFiltersFromDb(user2Id);
 
     assertThat(user1AccountQueryResults, equalTo(user2AccountQueryResults));
-
-    System.out.println("***************************************************************************************************************");
-    System.out.println("***************************************************************************************************************");
-    List<HistoryQueryResult> user1HistoryQueryResults = getHistory(user1Id);
-    List<HistoryQueryResult> user2HistoryQueryResults = getHistory(user2Id);
-
     assertThat(user1HistoryQueryResults, equalTo(user2HistoryQueryResults));
-
-    List<TransactionQueryResult> user1TransactionQueryResults = getTransaction(user1Id);
-    List<TransactionQueryResult> user2TransactionQueryResults = getTransaction(user2Id);
-
     assertThat(user1TransactionQueryResults, equalTo(user2TransactionQueryResults));
-
-    List<CategoryQueryResult> user1CategoryQueryResults = getCategory(user1Id);
-    List<CategoryQueryResult> user2CategoryQueryResults = getCategory(user2Id);
-
     assertThat(user1CategoryQueryResults, equalTo(user2CategoryQueryResults));
-
-    List<CategoryFromMainParentCategoryQueryResult> user1MainParentCategoryCategoriesQueryResults = getCategoriesFromMainCategory(user1Id);
-    List<CategoryFromMainParentCategoryQueryResult> user2MainParentCategoryCategoriesQueryResults = getCategoriesFromMainCategory(user2Id);
-
     assertThat(user1MainParentCategoryCategoriesQueryResults, equalTo(user2MainParentCategoryCategoriesQueryResults));
-
-    List<FilterQueryResult> user1FilterQueryResults = getFilters(user1Id);
-    List<FilterQueryResult> user2FilterQueryResults = getFilters(user2Id);
-
     assertThat(user1FilterQueryResults, equalTo(user2FilterQueryResults));
 
-    System.out.println();
   }
 
-  @SuppressWarnings("unchecked")
-  private List<FilterQueryResult> getFilters(long userId) {
+  private List<FilterQueryResult> getFiltersFromDb(long userId) {
     return jdbcTemplate.query(SELECT_ALL_FILTERS + userId, new FilterQueryResultRowMapper());
-
   }
 
-  @SuppressWarnings("unchecked")
-  private List<AccountQueryResult> getAccounts(long userId) {
+  private List<AccountQueryResult> getAccountsFromDb(long userId) {
     return jdbcTemplate.query(SELECT_ALL_ACCOUNTS + userId, new AccountQueryResultMapper());
   }
 
-  @SuppressWarnings("unchecked")
-  private List<HistoryQueryResult> getHistory(long userId) {
+  private List<HistoryQueryResult> getHistoryFromDb(long userId) {
     return jdbcTemplate.query(SELECT_ALL_HISTORY + userId, new HistoryQueryResultMapper());
   }
 
-  @SuppressWarnings("unchecked")
-  private List<TransactionQueryResult> getTransaction(long userId) {
+  private List<TransactionQueryResult> getTransactionFromDb(long userId) {
     return jdbcTemplate.query(SELECT_ALL_TRANSACTIONS + userId, new TransactionQueryResultMapper());
   }
 
-  @SuppressWarnings("unchecked")
-  private List<CategoryQueryResult> getCategory(long userId) {
+  private List<CategoryQueryResult> getCategoryFromDb(long userId) {
     return jdbcTemplate.query(SELECT_ALL_CATEGORIES + userId, new CategoryQueryResultMapper());
   }
 
-  @SuppressWarnings("unchecked")
-  private List<CategoryFromMainParentCategoryQueryResult> getCategoriesFromMainCategory(long userId) {
+  private List<CategoryFromMainParentCategoryQueryResult> getCategoriesFromMainCategoryFromDb(long userId) {
     return jdbcTemplate.query(SELECT_MAIN_PARENT_CATEGORY_CATEGORIES + userId, new CategoryFromMainParentCategoryQueryResultMapper());
   }
 }

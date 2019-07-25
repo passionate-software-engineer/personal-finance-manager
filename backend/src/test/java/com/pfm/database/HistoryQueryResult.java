@@ -15,7 +15,7 @@ public class HistoryQueryResult {
   private String type;
   private String object;
   private String name;
-  private String old_value;
-  private String new_value;
+  private String oldValue;
+  private String newValue;
 
 }

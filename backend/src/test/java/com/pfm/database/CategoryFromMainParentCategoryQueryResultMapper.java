@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 @Data
 @Builder
 @AllArgsConstructor
-public class CategoryFromMainParentCategoryQueryResultMapper implements RowMapper {
+public class CategoryFromMainParentCategoryQueryResultMapper implements RowMapper<CategoryFromMainParentCategoryQueryResult> {
 
   @Override
   public CategoryFromMainParentCategoryQueryResult mapRow(ResultSet resultSet, int rowNumber) throws SQLException {

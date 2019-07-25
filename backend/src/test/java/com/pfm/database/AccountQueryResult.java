@@ -16,7 +16,7 @@ public class AccountQueryResult {
   private String balance;
 
   private String lastVerificationDate;
-  
+
   private boolean archived;
 
 }
