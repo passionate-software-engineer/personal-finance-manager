@@ -8,19 +8,23 @@ import static com.pfm.database.TestSqlQueries.SELECT_ALL_TRANSACTIONS;
 import static com.pfm.database.TestSqlQueries.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.AccountService;
 import com.pfm.auth.User;
+import com.pfm.database.row_mappers.AccountQueryResultMapper;
+import com.pfm.database.row_mappers.CategoryFromMainParentCategoryQueryResultMapper;
+import com.pfm.database.row_mappers.CategoryQueryResultMapper;
+import com.pfm.database.row_mappers.FilterQueryResultRowMapper;
+import com.pfm.database.row_mappers.HistoryQueryResultMapper;
+import com.pfm.database.row_mappers.TransactionQueryResultMapper;
 import com.pfm.export.ExportResult;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestUsersProvider;
 import java.io.File;
 import java.util.List;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,37 +51,6 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
   @Autowired
   ObjectMapper mapper;
 
-  @Disabled
-  @Test
-  void importExportCrossTest() throws Exception {
-    //given
-    File jsonTestDataFile = new File(JSON_TEST_DATA_SOURCE_FILE_PATH);
-
-    ExportResult dataToImportByUser1 = mapper.readValue(jsonTestDataFile, ExportResult.class);
-    assertNotNull(dataToImportByUser1);
-
-    User user1 = TestUsersProvider.userMarian();
-    callRestToRegisterUserAndReturnUserId(user1);
-    String user1Token = callRestToAuthenticateUserAndReturnToken(user1);
-    callRestToImportAllData(user1Token, dataToImportByUser1);
-    ExportResult dataExportedBackByUser1 = callRestToExportAllDataAndReturnExportResult(user1Token);
-
-    User user2 = TestUsersProvider.userZdzislaw();
-    callRestToRegisterUserAndReturnUserId(user2);
-    String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
-    callRestToImportAllData(user2Token, dataExportedBackByUser1);
-    ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
-
-    assertEquals(json(dataToImportByUser1), json(dataExportedBackByUser1));
-    assertEquals(json(dataToImportByUser1), json(dataExportedBackByUser2));
-    assertThat(json(dataExportedBackByUser1), equalTo(json(dataExportedBackByUser2)));
-
-    assertEquals(dataToImportByUser1, dataExportedBackByUser1);
-    assertEquals(dataToImportByUser1, dataExportedBackByUser2);
-    assertThat(dataExportedBackByUser1, equalTo(dataExportedBackByUser2));
-
-  }
-
   @Test
   void shouldCompareTablesInDatabase() throws Exception {
     //given
@@ -97,6 +70,7 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
 
+    //when
     final List<AccountQueryResult> user1AccountQueryResults = getAccountsFromDb(user1Id);
     final List<AccountQueryResult> user2AccountQueryResults = getAccountsFromDb(user2Id);
 
@@ -117,6 +91,7 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     final List<FilterQueryResult> user1FilterQueryResults = getFiltersFromDb(user1Id);
     final List<FilterQueryResult> user2FilterQueryResults = getFiltersFromDb(user2Id);
 
+    //then
     assertThat(user1AccountQueryResults, equalTo(user2AccountQueryResults));
     assertThat(user1HistoryQueryResults, equalTo(user2HistoryQueryResults));
     assertThat(user1TransactionQueryResults, equalTo(user2TransactionQueryResults));

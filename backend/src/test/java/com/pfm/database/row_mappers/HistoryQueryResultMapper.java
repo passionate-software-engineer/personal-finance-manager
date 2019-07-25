@@ -1,15 +1,10 @@
-package com.pfm.database;
+package com.pfm.database.row_mappers;
 
+import com.pfm.database.HistoryQueryResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import org.springframework.jdbc.core.RowMapper;
 
-@Data
-@Builder
-@AllArgsConstructor
 public class HistoryQueryResultMapper implements RowMapper<HistoryQueryResult> {
 
   @Override

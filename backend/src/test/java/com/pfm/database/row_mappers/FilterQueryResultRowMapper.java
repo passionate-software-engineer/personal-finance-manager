@@ -1,5 +1,6 @@
-package com.pfm.database;
+package com.pfm.database.row_mappers;
 
+import com.pfm.database.FilterQueryResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
