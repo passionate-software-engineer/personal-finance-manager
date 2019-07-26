@@ -5,7 +5,7 @@ refreshTokenExpiryTimeInMinutes: 60
 
 spring:
   profiles:
-    active: local-postgres
+    active: local-h2
   jpa:
     show-sql: true
     hibernate:

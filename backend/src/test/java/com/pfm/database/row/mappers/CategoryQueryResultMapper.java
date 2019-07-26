@@ -1,4 +1,4 @@
-package com.pfm.database.row_mappers;
+package com.pfm.database.row.mappers;
 
 import com.pfm.database.CategoryQueryResult;
 import java.sql.ResultSet;

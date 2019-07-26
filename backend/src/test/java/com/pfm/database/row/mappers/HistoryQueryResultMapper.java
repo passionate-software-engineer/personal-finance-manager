@@ -1,4 +1,4 @@
-package com.pfm.database.row_mappers;
+package com.pfm.database.row.mappers;
 
 import com.pfm.database.HistoryQueryResult;
 import java.sql.ResultSet;

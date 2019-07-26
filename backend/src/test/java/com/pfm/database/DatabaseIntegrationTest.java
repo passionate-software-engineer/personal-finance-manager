@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.AccountService;
 import com.pfm.auth.User;
-import com.pfm.database.row_mappers.AccountQueryResultMapper;
-import com.pfm.database.row_mappers.CategoryFromMainParentCategoryQueryResultMapper;
-import com.pfm.database.row_mappers.CategoryQueryResultMapper;
-import com.pfm.database.row_mappers.CurrencyQueryResultMapper;
-import com.pfm.database.row_mappers.FilterQueryResultRowMapper;
-import com.pfm.database.row_mappers.HistoryQueryResultMapper;
-import com.pfm.database.row_mappers.TransactionQueryResultMapper;
+import com.pfm.database.row.mappers.AccountQueryResultMapper;
+import com.pfm.database.row.mappers.CategoryFromMainParentCategoryQueryResultMapper;
+import com.pfm.database.row.mappers.CategoryQueryResultMapper;
+import com.pfm.database.row.mappers.CurrencyQueryResultMapper;
+import com.pfm.database.row.mappers.FilterQueryResultRowMapper;
+import com.pfm.database.row.mappers.HistoryQueryResultMapper;
+import com.pfm.database.row.mappers.TransactionQueryResultMapper;
 import com.pfm.export.ExportResult;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.helpers.TestUsersProvider;
@@ -62,13 +62,13 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     ExportResult dataToImportFromFileByUser1 = mapper.readValue(testDataFile, ExportResult.class);
 
     User user1 = TestUsersProvider.userMarian();
-    long user1Id = callRestToRegisterUserAndReturnUserId(user1);
+    final long user1Id = callRestToRegisterUserAndReturnUserId(user1);
     String user1Token = callRestToAuthenticateUserAndReturnToken(user1);
     callRestToImportAllData(user1Token, dataToImportFromFileByUser1);
     ExportResult dataExportedBackByUser1 = callRestToExportAllDataAndReturnExportResult(user1Token);
 
     User user2 = TestUsersProvider.userZdzislaw();
-    long user2Id = callRestToRegisterUserAndReturnUserId(user2);
+    final long user2Id = callRestToRegisterUserAndReturnUserId(user2);
     String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
     ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
