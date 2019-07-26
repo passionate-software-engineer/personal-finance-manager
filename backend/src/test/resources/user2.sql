@@ -18,7 +18,6 @@ SELECT date,
        name,
        old_value,
        new_value
-
 FROM history_entry
        LEFT JOIN history_entry_entries ON history_entry.id = history_entry_id
        LEFT JOIN history_info hi ON history_entry_entries.entries_id = hi.id
