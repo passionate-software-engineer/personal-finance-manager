@@ -4,6 +4,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
   datasource:
-    url: jdbc:postgresql://pfm-2.crykxdrvy34n.eu-central-1.rds.amazonaws.com:5432/pfm
+    url: jdbc:postgresql://pfm.cp1tkmapxt7b.eu-central-1.rds.amazonaws.com:5432/pfm
     username: postgres
     driver-class-name: org.postgresql.Driver

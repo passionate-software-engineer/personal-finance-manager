@@ -7,10 +7,10 @@ Define accounts, categories and you are ready to track your transactions.
 System was created for education purposes. Founder & maintainer of the project is [Piotr Kołacz](https://github.com/pio-kol), special thanks to [Sebastian Pacuk](https://github.com/sebapacuk) for his strong engagement. Other contributors can be found [here](https://github.com/programming-in-practice/personal-finance-manager/graphs/contributors).
 
 ## Demo instance
-[Personal Finance Manager demo instance](http://personal-finance-manager.s3-website.us-east-2.amazonaws.com/accounts)
+[Personal Finance Manager demo instance](http://personal-finance-manager-2.s3-website.eu-central-1.amazonaws.com/accounts)
 
 ## API Reference
-[Swagger API](http://ec2-3-120-209-115.eu-central-1.compute.amazonaws.com:8088/swagger-ui.html)
+[Swagger API](http://ec2-3-121-199-74.eu-central-1.compute.amazonaws.com:8088/swagger-ui.html)
 
 ## Technologies & Frameworks
 
