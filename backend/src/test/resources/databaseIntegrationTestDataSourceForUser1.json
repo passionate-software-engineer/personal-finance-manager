@@ -1,0 +1,566 @@
+{
+  "sumOfAllFundsAtTheBeginningOfExport": {
+    "currencyToFundsMap": {
+      "EUR": "3.00",
+      "PLN": "0.00",
+      "GBP": "3.00",
+      "USD": "14.00"
+    },
+    "sumOfAllFundsInBaseCurrency": "77.81"
+  },
+  "sumOfAllFundsAtTheEndOfExport": {
+    "currencyToFundsMap": {
+      "EUR": "6.00",
+      "PLN": "0.00",
+      "GBP": "6.00",
+      "USD": "14.00"
+    },
+    "sumOfAllFundsInBaseCurrency": "105.50"
+  },
+  "initialAccountsState": [
+    {
+      "name": "a1",
+      "balance": "1.00",
+      "currency": "EUR",
+      "lastVerificationDate": "2019-07-25",
+      "archived": false
+    },
+    {
+      "name": "a2",
+      "balance": "2.00",
+      "currency": "EUR",
+      "archived": true
+    },
+    {
+      "name": "a3",
+      "balance": "3.00",
+      "currency": "GBP",
+      "archived": false
+    },
+    {
+      "name": "a4",
+      "balance": "14.00",
+      "currency": "USD",
+      "lastVerificationDate": "2019-07-25",
+      "archived": false
+    }
+  ],
+  "finalAccountsState": [
+    {
+      "name": "a1",
+      "balance": "2.00",
+      "currency": "EUR",
+      "lastVerificationDate": "2019-07-25",
+      "archived": false
+    },
+    {
+      "name": "a2",
+      "balance": "4.00",
+      "currency": "EUR",
+      "archived": true
+    },
+    {
+      "name": "a3",
+      "balance": "6.00",
+      "currency": "GBP",
+      "archived": false
+    },
+    {
+      "name": "a4",
+      "balance": "14.00",
+      "currency": "USD",
+      "lastVerificationDate": "2019-07-25",
+      "archived": false
+    }
+  ],
+  "categories": [
+    {
+      "name": "cat3",
+      "parentCategoryName": "cat1"
+    },
+    {
+      "name": "cat1"
+    },
+    {
+      "name": "cat2"
+    }
+  ],
+  "periods": [
+    {
+      "startDate": "2019-07-01",
+      "endDate": "2019-07-31",
+      "accountStateAtTheBeginningOfPeriod": [
+        {
+          "name": "a1",
+          "balance": "1.00",
+          "currency": "EUR",
+          "lastVerificationDate": "2019-07-25",
+          "archived": false
+        },
+        {
+          "name": "a2",
+          "balance": "2.00",
+          "currency": "EUR",
+          "archived": true
+        },
+        {
+          "name": "a3",
+          "balance": "3.00",
+          "currency": "GBP",
+          "archived": false
+        },
+        {
+          "name": "a4",
+          "balance": "14.00",
+          "currency": "USD",
+          "lastVerificationDate": "2019-07-25",
+          "archived": false
+        }
+      ],
+      "accountStateAtTheEndOfPeriod": [
+        {
+          "name": "a1",
+          "balance": "2.00",
+          "currency": "EUR",
+          "lastVerificationDate": "2019-07-25",
+          "archived": false
+        },
+        {
+          "name": "a2",
+          "balance": "4.00",
+          "currency": "EUR",
+          "archived": true
+        },
+        {
+          "name": "a3",
+          "balance": "6.00",
+          "currency": "GBP",
+          "archived": false
+        },
+        {
+          "name": "a4",
+          "balance": "14.00",
+          "currency": "USD",
+          "lastVerificationDate": "2019-07-25",
+          "archived": false
+        }
+      ],
+      "transactions": [
+        {
+          "description": "t1",
+          "category": "cat1",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "a1",
+              "price": "1.00"
+            }
+          ]
+        },
+        {
+          "description": "t2",
+          "category": "cat2",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "a2",
+              "price": "2.00"
+            }
+          ]
+        },
+        {
+          "description": "t3",
+          "category": "cat3",
+          "date": "2019-07-03",
+          "accountPriceEntries": [
+            {
+              "account": "a3",
+              "price": "3.00"
+            }
+          ]
+        }
+      ],
+      "sumOfAllFundsAtTheBeginningOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "3.00",
+          "PLN": "0.00",
+          "GBP": "3.00",
+          "USD": "14.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "77.81"
+      },
+      "sumOfAllFundsAtTheEndOfPeriod": {
+        "currencyToFundsMap": {
+          "EUR": "6.00",
+          "PLN": "0.00",
+          "GBP": "6.00",
+          "USD": "14.00"
+        },
+        "sumOfAllFundsInBaseCurrency": "105.50"
+      }
+    }
+  ],
+  "filters": [
+    {
+      "name": "f1",
+      "accounts": [
+        "a1"
+      ],
+      "categories": [
+        "cat1"
+      ],
+      "priceFrom": "1.00",
+      "description": "f1"
+    }
+  ],
+  "historyEntries": [
+    {
+      "date": "2019-07-03T21:44:23.093373+02:00",
+      "type": "ADD",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a1"
+        },
+        {
+          "name": "balance",
+          "newValue": "1"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:44:38.676619+02:00",
+      "type": "ADD",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a2"
+        },
+        {
+          "name": "balance",
+          "newValue": "2"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:44:49.068787+02:00",
+      "type": "ADD",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a3"
+        },
+        {
+          "name": "balance",
+          "newValue": "3"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:45:06.604129+02:00",
+      "type": "ADD",
+      "object": "Category",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "cat1"
+        },
+        {
+          "name": "parentCategory",
+          "newValue": "Main Category"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:45:16.447553+02:00",
+      "type": "ADD",
+      "object": "Category",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "cat2"
+        },
+        {
+          "name": "parentCategory",
+          "newValue": "Main Category"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:45:30.260451+02:00",
+      "type": "ADD",
+      "object": "Category",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "cat3"
+        },
+        {
+          "name": "parentCategory",
+          "newValue": "Main Category"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:46:04.654514+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a1",
+          "oldValue": "a1"
+        },
+        {
+          "name": "balance",
+          "newValue": "2.00",
+          "oldValue": "1.00"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:46:04.680316+02:00",
+      "type": "ADD",
+      "object": "Transaction",
+      "entries": [
+        {
+          "name": "description",
+          "newValue": "t1"
+        },
+        {
+          "name": "categoryId",
+          "newValue": "cat1"
+        },
+        {
+          "name": "date",
+          "newValue": "2019-07-03"
+        },
+        {
+          "name": "accountPriceEntries",
+          "newValue": "[a1 : 1]"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:46:18.056743+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a2",
+          "oldValue": "a2"
+        },
+        {
+          "name": "balance",
+          "newValue": "4.00",
+          "oldValue": "2.00"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:46:18.074134+02:00",
+      "type": "ADD",
+      "object": "Transaction",
+      "entries": [
+        {
+          "name": "description",
+          "newValue": "t2"
+        },
+        {
+          "name": "categoryId",
+          "newValue": "cat2"
+        },
+        {
+          "name": "date",
+          "newValue": "2019-07-03"
+        },
+        {
+          "name": "accountPriceEntries",
+          "newValue": "[a2 : 2]"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:46:36.197626+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a3",
+          "oldValue": "a3"
+        },
+        {
+          "name": "balance",
+          "newValue": "6.00",
+          "oldValue": "3.00"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:46:36.212617+02:00",
+      "type": "ADD",
+      "object": "Transaction",
+      "entries": [
+        {
+          "name": "description",
+          "newValue": "t3"
+        },
+        {
+          "name": "categoryId",
+          "newValue": "cat3"
+        },
+        {
+          "name": "date",
+          "newValue": "2019-07-03"
+        },
+        {
+          "name": "accountPriceEntries",
+          "newValue": "[a3 : 3]"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-03T21:47:16.646693+02:00",
+      "type": "ADD",
+      "object": "Filter",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "f1"
+        },
+        {
+          "name": "accountIds",
+          "newValue": "[a1]"
+        },
+        {
+          "name": "categoryIds",
+          "newValue": "[cat1]"
+        },
+        {
+          "name": "priceFrom",
+          "newValue": "8"
+        },
+        {
+          "name": "priceTo"
+        },
+        {
+          "name": "dateFrom"
+        },
+        {
+          "name": "dateTo"
+        },
+        {
+          "name": "description",
+          "newValue": "f1"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T12:50:00.69788+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a2",
+          "oldValue": "a2"
+        },
+        {
+          "name": "balance",
+          "newValue": "4.00",
+          "oldValue": "4.00"
+        },
+        {
+          "name": "archived",
+          "newValue": "true",
+          "oldValue": "false"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T12:50:32.509436+02:00",
+      "type": "UPDATE",
+      "object": "Category",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "cat3",
+          "oldValue": "cat3"
+        },
+        {
+          "name": "parentCategory",
+          "newValue": "cat1",
+          "oldValue": "Main Category"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T18:35:56.483228+02:00",
+      "type": "ADD",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a4"
+        },
+        {
+          "name": "balance",
+          "newValue": "14"
+        },
+        {
+          "name": "archived",
+          "newValue": "false"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T18:36:10.272587+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a3",
+          "oldValue": "a3"
+        },
+        {
+          "name": "balance",
+          "newValue": "6",
+          "oldValue": "6.00"
+        },
+        {
+          "name": "archived",
+          "newValue": "false",
+          "oldValue": "false"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T18:36:29.471191+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a4",
+          "oldValue": "a4"
+        },
+        {
+          "name": "balance",
+          "newValue": "14",
+          "oldValue": "14.00"
+        },
+        {
+          "name": "archived",
+          "newValue": "false",
+          "oldValue": "false"
+        }
+      ]
+    }
+  ]
+}

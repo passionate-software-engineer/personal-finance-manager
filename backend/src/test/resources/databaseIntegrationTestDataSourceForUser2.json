@@ -35,7 +35,7 @@
       "name": "a3",
       "balance": "3.00",
       "currency": "GBP",
-      "archived": false
+      "archived": true
     },
     {
       "name": "a4",
@@ -443,7 +443,7 @@
         },
         {
           "name": "priceFrom",
-          "newValue": "1"
+          "newValue": "8"
         },
         {
           "name": "priceTo"
