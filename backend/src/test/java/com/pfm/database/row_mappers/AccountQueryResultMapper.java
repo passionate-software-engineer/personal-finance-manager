@@ -12,6 +12,7 @@ public class AccountQueryResultMapper implements RowMapper<AccountQueryResult> {
     return AccountQueryResult.builder()
         .name(resultSet.getString("name"))
         .balance(resultSet.getString("balance"))
+        .currency(resultSet.getString("currency"))
         .lastVerificationDate(resultSet.getString("last_Verification_Date"))
         .archived(resultSet.getBoolean("archived"))
         .build();

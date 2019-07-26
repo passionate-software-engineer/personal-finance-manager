@@ -1,13 +1,15 @@
 package com.pfm.database;
 
-import static com.pfm.database.TestSqlQueries.SELECT_ALL_ACCOUNTS;
-import static com.pfm.database.TestSqlQueries.SELECT_ALL_CATEGORIES;
-import static com.pfm.database.TestSqlQueries.SELECT_ALL_FILTERS;
-import static com.pfm.database.TestSqlQueries.SELECT_ALL_HISTORY;
-import static com.pfm.database.TestSqlQueries.SELECT_ALL_TRANSACTIONS;
-import static com.pfm.database.TestSqlQueries.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_ACCOUNTS;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_CATEGORIES;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_CURRENCIES;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_FILTERS;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_HISTORY;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_TRANSACTIONS;
+import static com.pfm.database.SqlTestQueriesProvider.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import com.pfm.auth.User;
 import com.pfm.database.row_mappers.AccountQueryResultMapper;
 import com.pfm.database.row_mappers.CategoryFromMainParentCategoryQueryResultMapper;
 import com.pfm.database.row_mappers.CategoryQueryResultMapper;
+import com.pfm.database.row_mappers.CurrencyQueryResultMapper;
 import com.pfm.database.row_mappers.FilterQueryResultRowMapper;
 import com.pfm.database.row_mappers.HistoryQueryResultMapper;
 import com.pfm.database.row_mappers.TransactionQueryResultMapper;
@@ -37,7 +40,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class DatabaseIntegrationTest extends IntegrationTestsBase {
 
-  private static final String JSON_TEST_DATA_SOURCE_FILE_PATH = "src/test/resources/databaseIntegrationTestDataSource.json";
+  private static final String JSON_TEST_DATA_FILE_PATH = "src/test/resources/databaseIntegrationTestDataSource.json";
 
   @Autowired
   AccountService accountService;
@@ -54,10 +57,9 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
   @Test
   void shouldCompareTablesInDatabase() throws Exception {
     //given
-    File jsonTestDataFile = new File(JSON_TEST_DATA_SOURCE_FILE_PATH);
+    File testDataFile = new File(JSON_TEST_DATA_FILE_PATH);
 
-    ExportResult dataToImportFromFileByUser1 = mapper.readValue(jsonTestDataFile, ExportResult.class);
-    assertNotNull(dataToImportFromFileByUser1);
+    ExportResult dataToImportFromFileByUser1 = mapper.readValue(testDataFile, ExportResult.class);
 
     User user1 = TestUsersProvider.userMarian();
     long user1Id = callRestToRegisterUserAndReturnUserId(user1);
@@ -69,10 +71,18 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
     long user2Id = callRestToRegisterUserAndReturnUserId(user2);
     String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
     callRestToImportAllData(user2Token, dataExportedBackByUser1);
+    ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
+
+    assertNotNull(dataToImportFromFileByUser1);
+    assertNotNull(dataExportedBackByUser1);
+    assertEquals(dataExportedBackByUser1, dataExportedBackByUser2);
 
     //when
     final List<AccountQueryResult> user1AccountQueryResults = getAccountsFromDb(user1Id);
     final List<AccountQueryResult> user2AccountQueryResults = getAccountsFromDb(user2Id);
+
+    final List<CurrencyQueryResult> user1CurrenciesQueryResults = getCurrenciesFromDb(user1Id);
+    final List<CurrencyQueryResult> user2CurrenciesQueryResults = getCurrenciesFromDb(user2Id);
 
     final List<HistoryQueryResult> user1HistoryQueryResults = getHistoryFromDb(user1Id);
     final List<HistoryQueryResult> user2HistoryQueryResults = getHistoryFromDb(user2Id);
@@ -93,6 +103,7 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
 
     //then
     assertThat(user1AccountQueryResults, equalTo(user2AccountQueryResults));
+    assertThat(user1CurrenciesQueryResults, equalTo(user2CurrenciesQueryResults));
     assertThat(user1HistoryQueryResults, equalTo(user2HistoryQueryResults));
     assertThat(user1TransactionQueryResults, equalTo(user2TransactionQueryResults));
     assertThat(user1CategoryQueryResults, equalTo(user2CategoryQueryResults));
@@ -101,12 +112,12 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
 
   }
 
-  private List<FilterQueryResult> getFiltersFromDb(long userId) {
-    return jdbcTemplate.query(SELECT_ALL_FILTERS + userId, new FilterQueryResultRowMapper());
-  }
-
   private List<AccountQueryResult> getAccountsFromDb(long userId) {
     return jdbcTemplate.query(SELECT_ALL_ACCOUNTS + userId, new AccountQueryResultMapper());
+  }
+
+  private List<CurrencyQueryResult> getCurrenciesFromDb(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_CURRENCIES + userId, new CurrencyQueryResultMapper());
   }
 
   private List<HistoryQueryResult> getHistoryFromDb(long userId) {
@@ -123,6 +134,10 @@ public class DatabaseIntegrationTest extends IntegrationTestsBase {
 
   private List<CategoryFromMainParentCategoryQueryResult> getCategoriesFromMainCategoryFromDb(long userId) {
     return jdbcTemplate.query(SELECT_MAIN_PARENT_CATEGORY_CATEGORIES + userId, new CategoryFromMainParentCategoryQueryResultMapper());
+  }
+
+  private List<FilterQueryResult> getFiltersFromDb(long userId) {
+    return jdbcTemplate.query(SELECT_ALL_FILTERS + userId, new FilterQueryResultRowMapper());
   }
 }
 

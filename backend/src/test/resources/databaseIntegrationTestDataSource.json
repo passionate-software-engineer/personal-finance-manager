@@ -1,21 +1,21 @@
 {
   "sumOfAllFundsAtTheBeginningOfExport": {
     "currencyToFundsMap": {
-      "EUR": "6.00",
+      "EUR": "3.00",
       "PLN": "0.00",
-      "GBP": "0.00",
-      "USD": "0.00"
+      "GBP": "3.00",
+      "USD": "14.00"
     },
-    "sumOfAllFundsInBaseCurrency": "25.44"
+    "sumOfAllFundsInBaseCurrency": "77.81"
   },
   "sumOfAllFundsAtTheEndOfExport": {
     "currencyToFundsMap": {
-      "EUR": "12.00",
+      "EUR": "6.00",
       "PLN": "0.00",
-      "GBP": "0.00",
-      "USD": "0.00"
+      "GBP": "6.00",
+      "USD": "14.00"
     },
-    "sumOfAllFundsInBaseCurrency": "50.88"
+    "sumOfAllFundsInBaseCurrency": "105.50"
   },
   "initialAccountsState": [
     {
@@ -34,7 +34,14 @@
     {
       "name": "a3",
       "balance": "3.00",
-      "currency": "EUR",
+      "currency": "GBP",
+      "archived": false
+    },
+    {
+      "name": "a4",
+      "balance": "14.00",
+      "currency": "USD",
+      "lastVerificationDate": "2019-07-25",
       "archived": false
     }
   ],
@@ -55,7 +62,14 @@
     {
       "name": "a3",
       "balance": "6.00",
-      "currency": "EUR",
+      "currency": "GBP",
+      "archived": false
+    },
+    {
+      "name": "a4",
+      "balance": "14.00",
+      "currency": "USD",
+      "lastVerificationDate": "2019-07-25",
       "archived": false
     }
   ],
@@ -92,7 +106,14 @@
         {
           "name": "a3",
           "balance": "3.00",
-          "currency": "EUR",
+          "currency": "GBP",
+          "archived": false
+        },
+        {
+          "name": "a4",
+          "balance": "14.00",
+          "currency": "USD",
+          "lastVerificationDate": "2019-07-25",
           "archived": false
         }
       ],
@@ -113,7 +134,14 @@
         {
           "name": "a3",
           "balance": "6.00",
-          "currency": "EUR",
+          "currency": "GBP",
+          "archived": false
+        },
+        {
+          "name": "a4",
+          "balance": "14.00",
+          "currency": "USD",
+          "lastVerificationDate": "2019-07-25",
           "archived": false
         }
       ],
@@ -154,21 +182,21 @@
       ],
       "sumOfAllFundsAtTheBeginningOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "6.00",
+          "EUR": "3.00",
           "PLN": "0.00",
-          "GBP": "0.00",
-          "USD": "0.00"
+          "GBP": "3.00",
+          "USD": "14.00"
         },
-        "sumOfAllFundsInBaseCurrency": "25.44"
+        "sumOfAllFundsInBaseCurrency": "77.81"
       },
       "sumOfAllFundsAtTheEndOfPeriod": {
         "currencyToFundsMap": {
-          "EUR": "12.00",
+          "EUR": "6.00",
           "PLN": "0.00",
-          "GBP": "0.00",
-          "USD": "0.00"
+          "GBP": "6.00",
+          "USD": "14.00"
         },
-        "sumOfAllFundsInBaseCurrency": "50.88"
+        "sumOfAllFundsInBaseCurrency": "105.50"
       }
     }
   ],
@@ -468,6 +496,69 @@
           "name": "parentCategory",
           "newValue": "cat1",
           "oldValue": "Main Category"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T18:35:56.483228+02:00",
+      "type": "ADD",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a4"
+        },
+        {
+          "name": "balance",
+          "newValue": "14"
+        },
+        {
+          "name": "archived",
+          "newValue": "false"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T18:36:10.272587+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a3",
+          "oldValue": "a3"
+        },
+        {
+          "name": "balance",
+          "newValue": "6",
+          "oldValue": "6.00"
+        },
+        {
+          "name": "archived",
+          "newValue": "false",
+          "oldValue": "false"
+        }
+      ]
+    },
+    {
+      "date": "2019-07-25T18:36:29.471191+02:00",
+      "type": "UPDATE",
+      "object": "Account",
+      "entries": [
+        {
+          "name": "name",
+          "newValue": "a4",
+          "oldValue": "a4"
+        },
+        {
+          "name": "balance",
+          "newValue": "14",
+          "oldValue": "14.00"
+        },
+        {
+          "name": "archived",
+          "newValue": "false",
+          "oldValue": "false"
         }
       ]
     }

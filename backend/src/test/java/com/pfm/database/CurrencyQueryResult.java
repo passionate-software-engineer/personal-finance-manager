@@ -9,16 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountQueryResult {
+public class CurrencyQueryResult {
 
   private String name;
 
-  private String balance;
-
-  private String currency;
-
-  private String lastVerificationDate;
-
-  private boolean archived;
+  private String exchangeRate;
 
 }
