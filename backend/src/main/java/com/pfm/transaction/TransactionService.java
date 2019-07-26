@@ -35,10 +35,10 @@ public class TransactionService {
   }
 
   @Transactional
-  public Transaction addTransaction(long userId, Transaction transaction, boolean addToHistoryEntry) {
+  public Transaction addTransaction(long userId, Transaction transaction, boolean useDateProvidedInRequest) {
     transaction.setUserId(userId);
     for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addToHistoryEntry);
+      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), useDateProvidedInRequest);
     }
 
     return transactionRepository.save(transaction);
@@ -92,12 +92,12 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToAdd, BigDecimal::subtract, false);
   }
 
-  private void addAmountToAccount(long accountId, long userId, BigDecimal amountToSubtract, boolean calledByImport) {
-    updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add, calledByImport);
+  private void addAmountToAccount(long accountId, long userId, BigDecimal amountToSubtract, boolean useDateProvidedInRequest) {
+    updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add, useDateProvidedInRequest);
   }
 
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation,
-      boolean addToHistoryEntry) {
+      boolean useDateProvidedInRequest) {
     Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
 
     BigDecimal newBalance = operation.apply(account.getBalance(), amount);
@@ -108,7 +108,7 @@ public class TransactionService {
         .currency(account.getCurrency())
         .build();
 
-    if (!addToHistoryEntry) {
+    if (!useDateProvidedInRequest) {
       historyEntryService.addHistoryEntryOnUpdate(account, accountWithNewBalance, userId);
     }
 
