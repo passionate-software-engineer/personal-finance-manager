@@ -5,11 +5,11 @@ class SqlTestQueriesProvider {
   static final String SELECT_ALL_ACCOUNTS =
       "SELECT   account.name,\n"
           + "       account.balance,\n"
-          + "       currency.name                             AS currency,\n"
-          + "       account.last_verification_date            AS balance_verification_date,\n"
+          + "       currency.name as currency,\n"
+          + "       account.last_verification_date,\n"
           + "       account.archived\n"
           + "FROM account\n"
-          + "       LEFT JOIN currency ON account.currency_id = currency.id\n"
+          + "       LEFT JOIN currency ON account.currency_id = currency_id\n"
           + "WHERE account.user_id =";
 
   static final String SELECT_ALL_CURRENCIES =
