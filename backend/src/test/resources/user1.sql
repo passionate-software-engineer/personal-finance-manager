@@ -1,15 +1,14 @@
-
 -- account -----------------------------------------------------------------------------------------
 
 SELECT account.name,
        account.balance,
        currency.name                             AS currency,
-       round(account.balance * exchange_rate, 2) AS balance_PLN,
        account.last_verification_date            AS balance_verification_date,
        account.archived
 FROM account
        LEFT JOIN currency ON account.currency_id = currency.id
-WHERE account.user_id = :userA;
+WHERE account.user_id = :userA
+GROUP BY account.name, account.balance, currency.name, account.last_verification_date, account.archived;
 
 -- history -----------------------------------------------------------------------------------------
 
