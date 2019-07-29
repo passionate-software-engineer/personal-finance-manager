@@ -31,8 +31,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class CompareUsers {
-  // This test assumes that you have Postgre SQL database installed in your machine, and the DB server is on
-  // the test is disabled to make build pass
+  // This test assumes that you have PostgreSQL database installed on your machine, pfm database created, and the DB server is on.
+  // The test is disabled to make build pass when you do not have things above.
   @Disabled
   @Test
   void shouldCompareTablesForGivenUsersIDsInDatabase() {
