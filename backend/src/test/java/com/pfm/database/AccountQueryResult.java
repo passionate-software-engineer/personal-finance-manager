@@ -35,4 +35,14 @@ public class AccountQueryResult implements Diffable<AccountQueryResult> {
         .append("archived", this.archived, obj.archived)
         .build();
   }
+
+  static AccountQueryResult empty() {
+    return AccountQueryResult.builder()
+        .name("")
+        .balance("")
+        .currency("")
+        .lastVerificationDate("")
+        .archived(false)
+        .build();
+  }
 }

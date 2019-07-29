@@ -9,8 +9,11 @@ class SqlTestQueriesProvider {
           + "       account.last_verification_date,\n"
           + "       account.archived\n"
           + "FROM account\n"
-          + "       LEFT JOIN currency ON account.currency_id = currency_id\n"
+          + "       LEFT JOIN currency ON account.currency_id = currency.id\n"
           + "WHERE account.user_id =";
+
+  static final String GROUP_BY =
+      "GROUP BY account.name, account.balance, currency.name, account.last_verification_date, account.archived;";
 
   static final String SELECT_ALL_CURRENCIES =
       "SELECT     name, "
