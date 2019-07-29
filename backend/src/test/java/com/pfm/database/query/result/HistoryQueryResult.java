@@ -1,4 +1,4 @@
-package com.pfm.database;
+package com.pfm.database.query.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

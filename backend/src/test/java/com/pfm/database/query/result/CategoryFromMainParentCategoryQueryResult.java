@@ -1,4 +1,4 @@
-package com.pfm.database;
+package com.pfm.database.query.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryQueryResult {
+public class CategoryFromMainParentCategoryQueryResult {
 
   private String name;
-
-  private String parentCategory;
 
 }

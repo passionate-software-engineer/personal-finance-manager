@@ -1,8 +1,8 @@
-package com.pfm.database;
+package com.pfm.database.query.result;
 
-class SqlTestQueriesProvider {
+public class SqlTestQueriesProvider {
 
-  static final String SELECT_ALL_ACCOUNTS =
+  public static final String SELECT_ALL_ACCOUNTS =
       "SELECT       account.name,                                                                               \n"
           + "       account.balance,                                                                            \n"
           + "       currency.name as currency,                                                                  \n"
@@ -12,16 +12,16 @@ class SqlTestQueriesProvider {
           + "       LEFT JOIN currency ON account.currency_id = currency.id                                     \n"
           + "WHERE account.user_id =";
 
-  static final String GROUP_BY =
+  public static final String GROUP_BY =
       "GROUP BY account.name, account.balance, currency.name, account.last_verification_date, account.archived";
 
-  static final String SELECT_ALL_CURRENCIES =
+  public static final String SELECT_ALL_CURRENCIES =
       "SELECT     name, "
           + "     exchange_rate                                                                                 \n"
           + "FROM currency                                                                                      \n"
           + "WHERE user_id =";
 
-  static final String SELECT_ALL_HISTORY =
+  public static final String SELECT_ALL_HISTORY =
       "SELECT       date,                                                                                       \n"
           + "       type,                                                                                       \n"
           + "       object,                                                                                     \n"
@@ -33,7 +33,7 @@ class SqlTestQueriesProvider {
           + "       LEFT JOIN history_info hi ON history_entry_entries.entries_id = hi.id                       \n"
           + "WHERE user_id =";
 
-  static final String SELECT_ALL_TRANSACTIONS =
+  public static final String SELECT_ALL_TRANSACTIONS =
       "SELECT       date,                                                                                       \n"
           + "       description,                                                                                \n"
           + "       ape.price,                                                                                  \n"
@@ -46,17 +46,17 @@ class SqlTestQueriesProvider {
           + "       JOIN account a ON ape.account_id = a.id                                                     \n"
           + "WHERE a.user_id =";
 
-  static final String SELECT_ALL_CATEGORIES =
+  public static final String SELECT_ALL_CATEGORIES =
       "SELECT       c2.name,                                                                                    \n"
           + "       c1.name AS parent_category                                                                  \n"
           + "FROM category c1                                                                                   \n"
           + "       JOIN category c2 ON c2.parent_category_id = c1.id                                           \n"
           + "WHERE c1.user_id =";
 
-  static final String SELECT_MAIN_PARENT_CATEGORY_CATEGORIES =
+  public static final String SELECT_MAIN_PARENT_CATEGORY_CATEGORIES =
       "SELECT name FROM category WHERE parent_category_id IS NULL  AND user_id =";
 
-  static final String SELECT_ALL_FILTERS =
+  public static final String SELECT_ALL_FILTERS =
       "SELECT       filter.name,                                                                                \n"
           + "       filter.description,                                                                         \n"
           + "       filter.price_from,                                                                          \n"

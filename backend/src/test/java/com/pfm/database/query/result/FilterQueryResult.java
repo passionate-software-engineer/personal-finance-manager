@@ -1,4 +1,4 @@
-package com.pfm.database;
+package com.pfm.database.query.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,16 +9,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionQueryResult {
+public class FilterQueryResult {
 
-  private String date;
+  private String name;
 
   private String description;
 
-  private String price;
+  private String priceFrom;
 
-  private String account;
+  private String priceTo;
 
-  private String category;
+  private String dateFrom;
+
+  private String dateTo;
 
 }

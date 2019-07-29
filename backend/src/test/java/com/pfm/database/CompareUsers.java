@@ -1,15 +1,22 @@
 package com.pfm.database;
 
-import static com.pfm.database.SqlTestQueriesProvider.GROUP_BY;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_ACCOUNTS;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_CATEGORIES;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_CURRENCIES;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_FILTERS;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_HISTORY;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_ALL_TRANSACTIONS;
-import static com.pfm.database.SqlTestQueriesProvider.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.GROUP_BY;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_ACCOUNTS;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_CATEGORIES;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_CURRENCIES;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_FILTERS;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_HISTORY;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_TRANSACTIONS;
+import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.pfm.database.query.result.AccountQueryResult;
+import com.pfm.database.query.result.CategoryFromMainParentCategoryQueryResult;
+import com.pfm.database.query.result.CategoryQueryResult;
+import com.pfm.database.query.result.CurrencyQueryResult;
+import com.pfm.database.query.result.FilterQueryResult;
+import com.pfm.database.query.result.HistoryQueryResult;
+import com.pfm.database.query.result.TransactionQueryResult;
 import com.pfm.database.row.mappers.AccountQueryResultMapper;
 import com.pfm.database.row.mappers.CategoryFromMainParentCategoryQueryResultMapper;
 import com.pfm.database.row.mappers.CategoryQueryResultMapper;
@@ -24,8 +31,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class CompareUsers {
-  // This test assumes that you have Postgres database installed in your machine, and the DB server is on
-  // the test is disabled to make Jenkins build pass
+  // This test assumes that you have Postgre SQL database installed in your machine, and the DB server is on
+  // the test is disabled to make build pass
   @Disabled
   @Test
   void shouldCompareTablesForGivenUsersIDsInDatabase() {

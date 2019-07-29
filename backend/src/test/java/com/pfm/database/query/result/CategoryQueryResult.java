@@ -1,4 +1,4 @@
-package com.pfm.database;
+package com.pfm.database.query.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CurrencyQueryResult {
+public class CategoryQueryResult {
 
   private String name;
 
-  private String exchangeRate;
+  private String parentCategory;
 
 }

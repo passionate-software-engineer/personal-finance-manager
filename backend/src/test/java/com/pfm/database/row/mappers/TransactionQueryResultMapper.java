@@ -1,6 +1,6 @@
 package com.pfm.database.row.mappers;
 
-import com.pfm.database.TransactionQueryResult;
+import com.pfm.database.query.result.TransactionQueryResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
