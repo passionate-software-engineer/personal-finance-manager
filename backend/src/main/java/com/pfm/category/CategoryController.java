@@ -31,7 +31,6 @@ public class CategoryController implements CategoryApi {
     return Category.builder()
         .id(null)
         .name(categoryRequest.getName())
-        .parentCategory(Category.builder().id(parentCategoryId).build())
         .parentCategory(parentCategoryId == null ? null : Category.builder().id(parentCategoryId).build())
         .build();
   }

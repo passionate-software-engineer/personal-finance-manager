@@ -140,32 +140,37 @@ public class AccountController implements AccountApi {
 
   @Override
   public ResponseEntity<?> markAccountAsArchived(long accountId) {
-    long userId = userProvider.getCurrentUserId();
+    final boolean updateToBeApplied = SET_ACCOUNT_AS_ARCHIVED;
 
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+    long userId = userProvider.getCurrentUserId();
+    Optional<Account> optionalAccount = accountService.getAccountByIdAndUserId(accountId, userId);
+    if (optionalAccount.isEmpty()) {
       log.info("No account with id {} was found, not able to set as archived", accountId);
       return ResponseEntity.notFound().build();
     }
-
-    Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
-    Account account = convertAccountToUpdateToAccount(accountToUpdate, SET_ACCOUNT_AS_ARCHIVED);
+    Account accountToUpdate = optionalAccount.get();
+    Account account = getNewAccountInstanceWithUpdateApplied(accountToUpdate, updateToBeApplied);
 
     historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);
-    return performArchiveOperation(accountId, userId, SET_ACCOUNT_AS_ARCHIVED);
+    return performUpdate(accountId, userId, updateToBeApplied);
   }
 
   @Override
   public ResponseEntity<?> markAccountAsActive(long accountId) {
+    final boolean updateToBeApplied = SET_ACCOUNT_AS_ACTIVE;
+
     long userId = userProvider.getCurrentUserId();
-    if (accountService.getAccountByIdAndUserId(accountId, userId).isEmpty()) {
+    Optional<Account> optionalAccount = accountService.getAccountByIdAndUserId(accountId, userId);
+
+    if (optionalAccount.isEmpty()) {
       log.info("No account with id {} was found, not able to set as active", accountId);
       return ResponseEntity.notFound().build();
     }
-    Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
-    Account account = convertAccountToUpdateToAccount(accountToUpdate, SET_ACCOUNT_AS_ACTIVE);
+    Account accountToUpdate = optionalAccount.get();
+    Account account = getNewAccountInstanceWithUpdateApplied(accountToUpdate, updateToBeApplied);
 
     historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);
-    return performArchiveOperation(accountId, userId, SET_ACCOUNT_AS_ACTIVE);
+    return performUpdate(accountId, userId, updateToBeApplied);
   }
 
   @Override
@@ -194,7 +199,7 @@ public class AccountController implements AccountApi {
     return ResponseEntity.ok().build();
   }
 
-  private Account convertAccountToUpdateToAccount(Account accountToUpdate, boolean archive) {
+  private Account getNewAccountInstanceWithUpdateApplied(Account accountToUpdate, boolean archive) {
     return Account.builder()
         .name(accountToUpdate.getName())
         .balance(accountToUpdate.getBalance())
@@ -225,7 +230,7 @@ public class AccountController implements AccountApi {
         .body(Collections.singletonList(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), accountRequest.getCurrencyId())));
   }
 
-  private ResponseEntity<?> performArchiveOperation(long accountId, long userId, boolean shouldArchive) {
+  private ResponseEntity<?> performUpdate(long accountId, long userId, boolean shouldArchive) {
     Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
 
     log.info("Attempting to set account status as {} with id {} ", shouldArchive ? "archived" : "active", accountId);
