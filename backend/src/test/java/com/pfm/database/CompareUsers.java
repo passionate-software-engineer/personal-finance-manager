@@ -8,11 +8,17 @@ import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_FI
 import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_HISTORY;
 import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_ALL_TRANSACTIONS;
 import static com.pfm.database.query.result.SqlTestQueriesProvider.SELECT_MAIN_PARENT_CATEGORY_CATEGORIES;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestUsersProvider.userMarian;
+import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.auth.User;
+import com.pfm.account.Account;
+import com.pfm.category.Category;
 import com.pfm.database.query.result.AccountQueryResult;
 import com.pfm.database.query.result.CategoryFromMainParentCategoryQueryResult;
 import com.pfm.database.query.result.CategoryQueryResult;
@@ -28,11 +34,12 @@ import com.pfm.database.row.mappers.FilterQueryResultRowMapper;
 import com.pfm.database.row.mappers.HistoryQueryResultMapper;
 import com.pfm.database.row.mappers.TransactionQueryResultMapper;
 import com.pfm.export.ExportResult;
+import com.pfm.filter.Filter;
 import com.pfm.helpers.IntegrationTestsBase;
-import com.pfm.helpers.TestUsersProvider;
-import java.io.File;
+import com.pfm.transaction.Transaction;
 import java.util.List;
 import javax.sql.DataSource;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +52,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 public class CompareUsers extends IntegrationTestsBase {
 
-  private static final String JSON_TEST_DATA_FILE_PATH = "src/test/resources/compare_users_test_file.json";
-
   @Qualifier("pfmObjectMapper")
   @Autowired
   ObjectMapper mapper;
@@ -54,63 +59,81 @@ public class CompareUsers extends IntegrationTestsBase {
   @Autowired
   DataSource dataSource;
 
+  @BeforeEach
+  public void setup() throws Exception {
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
+  }
+
   @Test
-  void shouldCompareTablesForGivenUsersIDsInDatabase() throws Exception {
-
-    File testDataFile = new File(JSON_TEST_DATA_FILE_PATH);
-
-    final ExportResult testData = mapper.readValue(testDataFile, ExportResult.class);
-
+  public void shouldCompareDatabaseTablesOfUserMarianAndUserZdzislaw() throws Exception {
+    // given
     final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    final long userMarianId = userId;
 
-    User user1 = TestUsersProvider.userMarian();
-    final long user1Id = callRestToRegisterUserAndReturnUserId(user1);
-    String user1Token = callRestToAuthenticateUserAndReturnToken(user1);
-    callRestToImportAllData(user1Token, testData);
-    ExportResult dataExportedBackByUser1 = callRestToExportAllDataAndReturnExportResult(user1Token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+    String userMarianToken = token;
 
-    User user2 = TestUsersProvider.userZdzislaw();
-    final long user2Id = callRestToRegisterUserAndReturnUserId(user2);
-    String user2Token = callRestToAuthenticateUserAndReturnToken(user2);
-    callRestToImportAllData(user2Token, dataExportedBackByUser1);
-    ExportResult dataExportedBackByUser2 = callRestToExportAllDataAndReturnExportResult(user2Token);
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, userMarianToken);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), userMarianToken);
+    callRestToAddCategoryAndReturnId(Category.builder()
+        .name("Pizza")
+        .parentCategory(Category.builder()
+            .id(foodCategoryId)
+            .build()
+        ).build(), userMarianToken);
 
-    assertNotNull(testData);
-    assertNotNull(dataExportedBackByUser1);
-    assertEquals(dataExportedBackByUser1, dataExportedBackByUser2);
+    Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
+    callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, userMarianToken);
 
-    final List<AccountQueryResult> user1Accounts = getAccountsFromDb(user1Id, jdbcTemplate);
-    final List<AccountQueryResult> user2Accounts = getAccountsFromDb(user2Id, jdbcTemplate);
+    Filter filter = filterFoodExpenses();
+    filter.getCategoryIds().add(foodCategoryId);
+    filter.getAccountIds().add(jacekAccountId);
+    callRestServiceToAddFilterAndReturnId(filter, userMarianToken);
+    ExportResult exportedData = callRestToExportAllDataAndReturnExportResult(userMarianToken);
+
+    long userZdzislawId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
+    String userZdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+
+    //when
+    callRestToImportAllData(userZdzislawToken, exportedData);
+
+    //then
+    final List<AccountQueryResult> user1Accounts = getAccountsFromDb(userMarianId, jdbcTemplate);
+    final List<AccountQueryResult> user2Accounts = getAccountsFromDb(userZdzislawId, jdbcTemplate);
 
     assertEquals(user1Accounts, user2Accounts);
 
-    final List<CurrencyQueryResult> user1Currencies = getCurrenciesFromDb(user1Id, jdbcTemplate);
-    final List<CurrencyQueryResult> user2Currencies = getCurrenciesFromDb(user2Id, jdbcTemplate);
+    final List<CurrencyQueryResult> user1Currencies = getCurrenciesFromDb(userMarianId, jdbcTemplate);
+    final List<CurrencyQueryResult> user2Currencies = getCurrenciesFromDb(userZdzislawId, jdbcTemplate);
 
     assertEquals(user1Currencies, user2Currencies);
 
-    final List<HistoryQueryResult> user1History = getHistoryFromDb(user1Id, jdbcTemplate);
-    final List<HistoryQueryResult> user2History = getHistoryFromDb(user2Id, jdbcTemplate);
+    final List<HistoryQueryResult> user1History = getHistoryFromDb(userMarianId, jdbcTemplate);
+    final List<HistoryQueryResult> user2History = getHistoryFromDb(userZdzislawId, jdbcTemplate);
 
     assertEquals(user1History, user2History);
 
-    final List<TransactionQueryResult> user1Transactions = getTransactionFromDb(user1Id, jdbcTemplate);
-    final List<TransactionQueryResult> user2Transactions = getTransactionFromDb(user2Id, jdbcTemplate);
+    final List<TransactionQueryResult> user1Transactions = getTransactionFromDb(userMarianId, jdbcTemplate);
+    final List<TransactionQueryResult> user2Transactions = getTransactionFromDb(userZdzislawId, jdbcTemplate);
 
     assertEquals(user1Transactions, user2Transactions);
 
-    final List<CategoryQueryResult> user1Categories = getCategoryFromDb(user1Id, jdbcTemplate);
-    final List<CategoryQueryResult> user2Categories = getCategoryFromDb(user2Id, jdbcTemplate);
+    final List<CategoryQueryResult> user1Categories = getCategoryFromDb(userMarianId, jdbcTemplate);
+    final List<CategoryQueryResult> user2Categories = getCategoryFromDb(userZdzislawId, jdbcTemplate);
 
     assertEquals(user1Categories, user2Categories);
 
-    final List<CategoryFromMainParentCategoryQueryResult> user1MainCategoryCategories = getCategoriesFromMainCategoryFromDb(user1Id, jdbcTemplate);
-    final List<CategoryFromMainParentCategoryQueryResult> user2MainCategoryCategories = getCategoriesFromMainCategoryFromDb(user2Id, jdbcTemplate);
+    final List<CategoryFromMainParentCategoryQueryResult> user1MainCategoryCategories = getCategoriesFromMainCategoryFromDb(userMarianId,
+        jdbcTemplate);
+    final List<CategoryFromMainParentCategoryQueryResult> user2MainCategoryCategories = getCategoriesFromMainCategoryFromDb(userZdzislawId,
+        jdbcTemplate);
 
     assertEquals(user1MainCategoryCategories, user2MainCategoryCategories);
 
-    final List<FilterQueryResult> user1Filters = getFiltersFromDb(user1Id, jdbcTemplate);
-    final List<FilterQueryResult> user2Filters = getFiltersFromDb(user2Id, jdbcTemplate);
+    final List<FilterQueryResult> user1Filters = getFiltersFromDb(userMarianId, jdbcTemplate);
+    final List<FilterQueryResult> user2Filters = getFiltersFromDb(userZdzislawId, jdbcTemplate);
 
     assertEquals(user1Filters, user2Filters);
   }

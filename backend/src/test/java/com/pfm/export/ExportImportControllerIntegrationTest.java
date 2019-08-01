@@ -68,8 +68,11 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Autowired
   private FilterService filterService;
 
+  @Autowired
+  private ExportService exportService;
+
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }
