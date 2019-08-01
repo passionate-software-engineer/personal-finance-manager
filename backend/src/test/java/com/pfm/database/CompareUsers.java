@@ -72,7 +72,7 @@ public class CompareUsers extends IntegrationTestsBase {
     final long userMarianId = userId;
 
     Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+    account.setCurrency(currencyService.getCurrencies(userMarianId).get(2)); // PLN
     String userMarianToken = token;
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, userMarianToken);
@@ -100,42 +100,42 @@ public class CompareUsers extends IntegrationTestsBase {
     callRestToImportAllData(userZdzislawToken, exportedData);
 
     //then
-    final List<AccountQueryResult> user1Accounts = getAccountsFromDb(userMarianId, jdbcTemplate);
-    final List<AccountQueryResult> user2Accounts = getAccountsFromDb(userZdzislawId, jdbcTemplate);
+    final List<AccountQueryResult> userMarianAccounts = getAccountsFromDb(userMarianId, jdbcTemplate);
+    final List<AccountQueryResult> userZdzislawAccounts = getAccountsFromDb(userZdzislawId, jdbcTemplate);
 
-    assertEquals(user1Accounts, user2Accounts);
+    assertEquals(userMarianAccounts, userZdzislawAccounts);
 
-    final List<CurrencyQueryResult> user1Currencies = getCurrenciesFromDb(userMarianId, jdbcTemplate);
-    final List<CurrencyQueryResult> user2Currencies = getCurrenciesFromDb(userZdzislawId, jdbcTemplate);
+    final List<CurrencyQueryResult> userMarianCurrencies = getCurrenciesFromDb(userMarianId, jdbcTemplate);
+    final List<CurrencyQueryResult> userZdzislawCurrencies = getCurrenciesFromDb(userZdzislawId, jdbcTemplate);
 
-    assertEquals(user1Currencies, user2Currencies);
+    assertEquals(userMarianCurrencies, userZdzislawCurrencies);
 
-    final List<HistoryQueryResult> user1History = getHistoryFromDb(userMarianId, jdbcTemplate);
-    final List<HistoryQueryResult> user2History = getHistoryFromDb(userZdzislawId, jdbcTemplate);
+    final List<HistoryQueryResult> userMarianHistory = getHistoryFromDb(userMarianId, jdbcTemplate);
+    final List<HistoryQueryResult> userZdzislawHistory = getHistoryFromDb(userZdzislawId, jdbcTemplate);
 
-    assertEquals(user1History, user2History);
+    assertEquals(userMarianHistory, userZdzislawHistory);
 
-    final List<TransactionQueryResult> user1Transactions = getTransactionFromDb(userMarianId, jdbcTemplate);
-    final List<TransactionQueryResult> user2Transactions = getTransactionFromDb(userZdzislawId, jdbcTemplate);
+    final List<TransactionQueryResult> userMarianTransactions = getTransactionFromDb(userMarianId, jdbcTemplate);
+    final List<TransactionQueryResult> userZdzislawTransactions = getTransactionFromDb(userZdzislawId, jdbcTemplate);
 
-    assertEquals(user1Transactions, user2Transactions);
+    assertEquals(userMarianTransactions, userZdzislawTransactions);
 
-    final List<CategoryQueryResult> user1Categories = getCategoryFromDb(userMarianId, jdbcTemplate);
-    final List<CategoryQueryResult> user2Categories = getCategoryFromDb(userZdzislawId, jdbcTemplate);
+    final List<CategoryQueryResult> userMarianCategories = getCategoryFromDb(userMarianId, jdbcTemplate);
+    final List<CategoryQueryResult> userZdzislawCategories = getCategoryFromDb(userZdzislawId, jdbcTemplate);
 
-    assertEquals(user1Categories, user2Categories);
+    assertEquals(userMarianCategories, userZdzislawCategories);
 
-    final List<CategoryFromMainParentCategoryQueryResult> user1MainCategoryCategories = getCategoriesFromMainCategoryFromDb(userMarianId,
+    final List<CategoryFromMainParentCategoryQueryResult> userMarianMainCategoryCategories = getCategoriesFromMainCategoryFromDb(userMarianId,
         jdbcTemplate);
-    final List<CategoryFromMainParentCategoryQueryResult> user2MainCategoryCategories = getCategoriesFromMainCategoryFromDb(userZdzislawId,
+    final List<CategoryFromMainParentCategoryQueryResult> userZdzislawMainCategoryCategories = getCategoriesFromMainCategoryFromDb(userZdzislawId,
         jdbcTemplate);
 
-    assertEquals(user1MainCategoryCategories, user2MainCategoryCategories);
+    assertEquals(userMarianMainCategoryCategories, userZdzislawMainCategoryCategories);
 
-    final List<FilterQueryResult> user1Filters = getFiltersFromDb(userMarianId, jdbcTemplate);
-    final List<FilterQueryResult> user2Filters = getFiltersFromDb(userZdzislawId, jdbcTemplate);
+    final List<FilterQueryResult> userMarianFilters = getFiltersFromDb(userMarianId, jdbcTemplate);
+    final List<FilterQueryResult> userZdzislawFilters = getFiltersFromDb(userZdzislawId, jdbcTemplate);
 
-    assertEquals(user1Filters, user2Filters);
+    assertEquals(userMarianFilters, userZdzislawFilters);
   }
 
   private List<AccountQueryResult> getAccountsFromDb(long userId, JdbcTemplate jdbcTemplate) {
