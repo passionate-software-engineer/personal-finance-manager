@@ -5,6 +5,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.auth.UserProvider;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.currency.Currency;
@@ -20,6 +21,8 @@ import com.pfm.filter.FilterService;
 import com.pfm.helpers.topology.Graph;
 import com.pfm.helpers.topology.Graph.Node;
 import com.pfm.helpers.topology.TopologicalSortProvider;
+import com.pfm.history.HistoryEntry;
+import com.pfm.history.HistoryEntryRepository;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -31,10 +34,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
+@Getter
 @AllArgsConstructor
 public class ImportService {
 
@@ -43,6 +48,8 @@ public class ImportService {
   private CategoryService categoryService;
   private CurrencyService currencyService;
   private FilterService filterService;
+  private HistoryEntryRepository historyEntryRepository;
+  private UserProvider userProvider;
 
   @Transactional
   void importData(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
@@ -54,6 +61,11 @@ public class ImportService {
       for (ExportTransaction transaction : period.getTransactions()) {
         importTransaction(categoryNameToIdMap, accountNameToIdMap, transaction, userId);
       }
+    }
+
+    for (HistoryEntry historyEntry : inputData.getHistoryEntries()) {
+      historyEntry.setUserId(userProvider.getCurrentUserId());
+      saveHistoryEntry(historyEntry);
     }
 
   }
@@ -104,7 +116,7 @@ public class ImportService {
       );
     }
 
-    transactionService.addTransaction(userId, newTransaction);
+    transactionService.addTransaction(userId, newTransaction, true);
   }
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
@@ -126,6 +138,8 @@ public class ImportService {
           .name(account.getName())
           .balance(account.getBalance())
           .currency(currencyOptional.get())
+          .lastVerificationDate(account.getLastVerificationDate())
+          .archived(account.isArchived())
           .build();
 
       Account savedAccount = accountService.saveAccount(userId, accountToSave);
@@ -174,4 +188,7 @@ public class ImportService {
     return TopologicalSortProvider.sort(graph).stream().map(Node::getObject).collect(Collectors.toList());
   }
 
+  private void saveHistoryEntry(HistoryEntry historyEntry) {
+    historyEntryRepository.save(historyEntry);
+  }
 }

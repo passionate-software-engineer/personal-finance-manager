@@ -14,6 +14,7 @@ import com.pfm.export.ExportResult.ExportFundsSummary;
 import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.filter.FilterService;
+import com.pfm.history.HistoryEntryService;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionService;
@@ -40,15 +41,16 @@ public class ExportService {
   private CategoryService categoryService;
   private CurrencyService currencyService;
   private FilterService filterService;
+  private HistoryEntryService historyEntryService;
 
   ExportResult exportData(long userId) {
     ExportResult result = new ExportResult();
 
     result.setFilters(prepareExportFilters(userId));
     result.setCategories(prepareExportCategories(userId));
-    result.setFinalAccountsState(convertToExportAccounts(accountService.getAccounts(userId)));
+    List<ExportAccount> accounts = convertToExportAccounts(accountService.getAccounts(userId));
+    result.setFinalAccountsState(accounts);
     result.setSumOfAllFundsAtTheEndOfExport(calculateSumOfFunds(result.getFinalAccountsState(), userId));
-
     List<ExportTransaction> exportTransactions = convertTransactionsToExportTransactions(transactionService.getTransactions(userId), userId);
     Map<String, List<ExportTransaction>> monthToTransactionMap = groupTransactionsByMonth(exportTransactions);
 
@@ -57,10 +59,13 @@ public class ExportService {
     if (periods.size() > 0) {
       result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod());
     }
+    if (result.getInitialAccountsState().isEmpty()) {
+      result.setInitialAccountsState(accounts);
+    }
+
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState(), userId));
-
+    result.setHistoryEntries(historyEntryService.prepareExportHistory(historyEntryService.getHistoryEntries(userId)));
     // TODO export / import filters
-
     return result;
   }
 
@@ -193,6 +198,8 @@ public class ExportService {
             .name(account.getName())
             .balance(account.getBalance())
             .currency(account.getCurrency().getName())
+            .lastVerificationDate(account.getLastVerificationDate())
+            .archived(account.isArchived())
             .build()
         )
         .collect(Collectors.toList());
@@ -204,6 +211,8 @@ public class ExportService {
             .balance(account.getBalance())
             .name(account.getName())
             .currency(account.getCurrency())
+            .lastVerificationDate(account.getLastVerificationDate())
+            .archived(account.isArchived())
             .build()
         )
         .collect(Collectors.toList());
