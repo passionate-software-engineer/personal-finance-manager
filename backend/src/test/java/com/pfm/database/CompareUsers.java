@@ -16,7 +16,6 @@ import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.category.Category;
 import com.pfm.database.query.result.AccountQueryResult;
@@ -43,7 +42,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -52,12 +50,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 public class CompareUsers extends IntegrationTestsBase {
 
-  @Qualifier("pfmObjectMapper")
   @Autowired
-  ObjectMapper mapper;
-
-  @Autowired
-  DataSource dataSource;
+  private DataSource dataSource;
 
   @BeforeEach
   public void setup() throws Exception {
