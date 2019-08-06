@@ -28,18 +28,10 @@ public class CategoryController implements CategoryApi {
   private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
-    if (parentCategoryId == null) {
-      return Category.builder()
-          .id(null)
-          .name(categoryRequest.getName())
-          .parentCategory(null)
-          .build();
-    }
-
     return Category.builder()
         .id(null)
         .name(categoryRequest.getName())
-        .parentCategory(Category.builder().id(parentCategoryId).build())
+        .parentCategory(parentCategoryId == null ? null : Category.builder().id(parentCategoryId).build())
         .build();
   }
 

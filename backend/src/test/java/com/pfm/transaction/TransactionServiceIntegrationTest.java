@@ -71,7 +71,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
     // when
     try {
-      transactionService.addTransaction(userId, transaction);
+      transactionService.addTransaction(userId, transaction, false);
       fail();
     } catch (DataIntegrityViolationException ex) {
       assertNotNull(ex); // just not to leave empty
@@ -108,7 +108,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     transaction.setDate(LocalDate.now());
     transaction.setUserId(userId);
 
-    transactionService.addTransaction(userId, transaction);
+    transactionService.addTransaction(userId, transaction, false);
     Mockito.when(transactionService.getTransactionByIdAndUserId(42, userId)).thenReturn(Optional.of(transaction));
     // when
 
@@ -151,7 +151,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     transaction.setDate(LocalDate.now());
     transaction.setUserId(userId);
 
-    long transactionId = transactionService.addTransaction(userId, transaction).getId();
+    long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
 
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
         .accountId(savedAccount.getId())
@@ -194,7 +194,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     transaction.setAccountPriceEntries(Collections.singletonList(accountPriceEntry));
     transaction.setCategoryId(categoryId);
 
-    Long transactionId = transactionService.addTransaction(userId, transaction).getId();
+    Long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
 
     //when
     assertTrue(transactionService.transactionExistByAccountId(savedAccount.getId()));
@@ -225,7 +225,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     transaction.setAccountPriceEntries(Collections.singletonList(accountPriceEntry));
     transaction.setCategoryId(categoryId);
 
-    Long transactionId = transactionService.addTransaction(userId, transaction).getId();
+    Long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
 
     //when
     assertTrue(transactionService.transactionExistByCategoryId(categoryId));

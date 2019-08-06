@@ -1,5 +1,6 @@
 package com.pfm.export;
 
+import com.pfm.history.HistoryEntry;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-final class ExportResult {
+public final class ExportResult {
 
   private ExportFundsSummary sumOfAllFundsAtTheBeginningOfExport;
   private ExportFundsSummary sumOfAllFundsAtTheEndOfExport;
@@ -26,6 +27,7 @@ final class ExportResult {
 
   private List<ExportPeriod> periods = new ArrayList<>();
   private List<ExportFilter> filters = new ArrayList<>();
+  private List<HistoryEntry> historyEntries = new ArrayList<>();
 
   @Data
   @Builder
@@ -112,6 +114,10 @@ final class ExportResult {
     private BigDecimal balance;
 
     private String currency;
+
+    private LocalDate lastVerificationDate;
+
+    private boolean archived;
 
   }
 

@@ -54,7 +54,6 @@ dependencies {
         exclude group: 'junit' // excluding JUnit4
         exclude group: 'org.assertj' // to avoid confusion in imports (e.g. assertThat)
     }
-
     compile 'com.google.code.findbugs:annotations:3.0.1'
     compile 'com.h2database:h2:1.4.197'
     compile 'io.springfox:springfox-swagger-ui:2.9.2'
