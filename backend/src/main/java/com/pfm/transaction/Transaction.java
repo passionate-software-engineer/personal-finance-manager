@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +24,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Transaction {
+@Inheritance(strategy = InheritanceType.JOINED)
+
+public class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +49,9 @@ public final class Transaction {
   @JsonIgnore
   private Long userId;
 
+  public Transaction(String description, Long categoryId, List<AccountPriceEntry> accountPriceEntries) {
+    this.description = description;
+    this.categoryId = categoryId;
+    this.accountPriceEntries = accountPriceEntries;
+  }
 }
