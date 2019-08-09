@@ -319,7 +319,7 @@ public abstract class IntegrationTestsBase {
     return PlannedTransactionRequest.builder()
         .description(plannedTransaction.getDescription())
         .categoryId(plannedTransaction.getCategoryId())
-        .dueDate(plannedTransaction.getDueDate())
+        .dueDate(plannedTransaction.getDate())
         .accountPriceEntries(plannedTransaction.getAccountPriceEntries())
         .build();
   }

@@ -54,7 +54,7 @@ public class PlannedTransactionValidator {
       }
     }
 
-    if (plannedTransaction.getDueDate() == null) {
+    if (plannedTransaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
 

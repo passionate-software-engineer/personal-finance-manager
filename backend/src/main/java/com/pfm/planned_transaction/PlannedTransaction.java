@@ -14,10 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@NoArgsConstructor
 //@AllArgsConstructor
 public class PlannedTransaction extends Transaction {
 
@@ -29,7 +31,8 @@ public class PlannedTransaction extends Transaction {
 
   private Long categoryId;
 
-  LocalDate dueDate;
+  //  @JsonIgnore
+  LocalDate date;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
   private List<AccountPriceEntry> accountPriceEntries;
@@ -45,7 +48,7 @@ public class PlannedTransaction extends Transaction {
     this.accountPriceEntries = accountPriceEntries;
     this.categoryId = categoryId;
 
-    this.dueDate = date;
+    this.date = date;
   }
 
   public PlannedTransaction(String description, Long categoryId, LocalDate date,
@@ -55,12 +58,12 @@ public class PlannedTransaction extends Transaction {
     this.accountPriceEntries = accountPriceEntries;
     this.categoryId = categoryId;
 
-    this.dueDate = date;
+    this.date = date;
   }
 
   public PlannedTransaction(List<AccountPriceEntry> accountPriceEntries, String description, LocalDate date) {
     super(accountPriceEntries, description);
-    this.dueDate = date;
+    this.date = date;
   }
 
 }
