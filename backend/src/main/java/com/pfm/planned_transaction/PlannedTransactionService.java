@@ -40,9 +40,10 @@ public class PlannedTransactionService {
   @Transactional
   public PlannedTransaction addPlannedTransaction(long userId, PlannedTransaction plannedTransaction, boolean addHistoryEntryOnUpdate) {
     plannedTransaction.setUserId(userId);
-    for (AccountPriceEntry entry : plannedTransaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
-    }
+    // do not need to modyfy accounts , maybe projected accounts ?
+    //    for (AccountPriceEntry entry : plannedTransaction.getAccountPriceEntries()) {
+    //    addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
+    //    }
 
     return plannedTransactionRepository.save(plannedTransaction);
   }

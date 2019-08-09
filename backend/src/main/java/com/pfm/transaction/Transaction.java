@@ -49,9 +49,16 @@ public class Transaction {
   @JsonIgnore
   private Long userId;
 
+//  @Builder
   public Transaction(String description, Long categoryId, List<AccountPriceEntry> accountPriceEntries) {
     this.description = description;
     this.categoryId = categoryId;
+    this.accountPriceEntries = accountPriceEntries;
+  }
+
+//  @Builder
+  public Transaction(List<AccountPriceEntry> accountPriceEntries, String description) {
+    this.description = description;
     this.accountPriceEntries = accountPriceEntries;
   }
 }

@@ -22,6 +22,8 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
+import com.pfm.planned_transaction.PlannedTransaction;
+import com.pfm.planned_transaction.PlannedTransactionRequest;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
@@ -47,6 +49,7 @@ public abstract class IntegrationTestsBase {
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
+  protected static final String PLANNED_TRANSACTIONS_SERVICE_PATH = "/plannedTransactions";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";
@@ -276,9 +279,31 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
+  private long callRestToAddPlannedTransactionAndReturnId(PlannedTransactionRequest plannedTransactionRequest, long accountId, long categoryId,
+      String token)
+      throws Exception {
+    plannedTransactionRequest.setCategoryId(categoryId);
+    plannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
+    String response =
+        mockMvc
+            .perform(post(PLANNED_TRANSACTIONS_SERVICE_PATH)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .content(json(plannedTransactionRequest))
+                .contentType(JSON_CONTENT_TYPE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return Long.parseLong(response);
+  }
+
   protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token) throws Exception {
     TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
+  }
+
+  protected long callRestToAddPlannedTransactionAndReturnId(PlannedTransaction plannedTransaction, long accountId, long categoryId, String token)
+      throws Exception {
+    PlannedTransactionRequest plannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(plannedTransaction);
+    return callRestToAddPlannedTransactionAndReturnId(plannedTransactionRequest, accountId, categoryId, token);
   }
 
   protected TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
@@ -290,12 +315,36 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
+  protected PlannedTransactionRequest convertPlannedTransactionToPlannedTransactionRequest(PlannedTransaction plannedTransaction) {
+    return PlannedTransactionRequest.builder()
+        .description(plannedTransaction.getDescription())
+        .categoryId(plannedTransaction.getCategoryId())
+        .dueDate(plannedTransaction.getDueDate())
+        .accountPriceEntries(plannedTransaction.getAccountPriceEntries())
+        .build();
+  }
+
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId, long accountId, long categoryId) {
     transaction.setId(transactionId);
     transaction.setCategoryId(categoryId);
     transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
     return transaction;
   }
+
+  protected PlannedTransaction setPlannedTransactionIdAccountIdCategoryId(PlannedTransaction plannedTransaction, long plannedTransactionId,
+      long accountId, long categoryId) {
+    plannedTransaction.setId(plannedTransactionId);
+    plannedTransaction.setCategoryId(categoryId);
+    plannedTransaction.getAccountPriceEntries().get(0).setAccountId(accountId);
+    return plannedTransaction;
+  }
+
+//  protected <T extends Transaction> T setTransactionIdAccountIdCategoryId(T transaction, long transactionId, long accountId, long categoryId) {
+//    transaction.setId(transactionId);
+//    transaction.setCategoryId(categoryId);
+//    transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
+//    return (T) transaction;
+//  }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()

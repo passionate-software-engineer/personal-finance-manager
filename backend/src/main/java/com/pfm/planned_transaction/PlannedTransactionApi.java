@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("plannedTransaction")
+@RequestMapping("plannedTransactions")
 @CrossOrigin
 @Api(value = "plannedTransaction", description = "Controller used to list / add / update / delete planned transactions.")
 public interface PlannedTransactionApi {

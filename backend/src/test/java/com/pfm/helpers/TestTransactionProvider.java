@@ -2,12 +2,17 @@ package com.pfm.helpers;
 
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 
+import com.pfm.planned_transaction.PlannedTransaction;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
 import java.time.LocalDate;
 import java.util.Collections;
 
 public class TestTransactionProvider {
+
+  public static PlannedTransaction convertTransactionToPlannedTransaction(Transaction transaction) {
+    return new PlannedTransaction(transaction.getId(), transaction.getDescription(),transaction.getCategoryId() ,LocalDate.now().plusDays(1), transaction.getAccountPriceEntries(), transaction.getUserId());
+  }
 
   public static Transaction foodTransactionWithNoAccountAndNoCategory() {
     return Transaction.builder()
