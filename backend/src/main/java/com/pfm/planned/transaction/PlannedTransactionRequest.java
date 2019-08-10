@@ -1,4 +1,4 @@
-package com.pfm.planned_transaction;
+package com.pfm.planned.transaction;
 
 import com.pfm.transaction.AccountPriceEntry;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +25,7 @@ public class PlannedTransactionRequest {
   protected Long categoryId;
 
   @ApiModelProperty(value = "Date", required = true, example = "2018-12-31")
-  protected LocalDate dueDate;
+  protected LocalDate date;
 
   @Builder.Default
   @ApiModelProperty(value = "Price & Account entries")

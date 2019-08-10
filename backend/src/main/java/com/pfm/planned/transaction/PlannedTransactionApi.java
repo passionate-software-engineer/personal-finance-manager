@@ -1,4 +1,4 @@
-package com.pfm.planned_transaction;
+package com.pfm.planned.transaction;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

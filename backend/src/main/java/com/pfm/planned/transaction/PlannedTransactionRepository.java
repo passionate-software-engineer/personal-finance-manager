@@ -1,4 +1,4 @@
-package com.pfm.planned_transaction;
+package com.pfm.planned.transaction;
 
 import java.util.List;
 import java.util.Optional;

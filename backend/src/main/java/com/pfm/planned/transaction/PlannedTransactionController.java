@@ -1,8 +1,8 @@
-package com.pfm.planned_transaction;
+package com.pfm.planned.transaction;
 
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
-import com.pfm.transaction.Transaction;
+import com.pfm.transaction.GenericTransactionValidator;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
 
   private UserProvider userProvider;
   private PlannedTransactionService plannedTransactionService;
-  private PlannedTransactionValidator plannedTransactionValidator;
+  private GenericTransactionValidator genericTransactionValidator;
   private HistoryEntryService historyEntryService;
 
   @Override
@@ -58,7 +58,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
 
     PlannedTransaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
     //fixme lukasz
-    List<String> validationResult = plannedTransactionValidator.validate(plannedTransaction, userId);
+    List<String> validationResult = genericTransactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Planned transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -85,7 +85,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
 
     PlannedTransaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
 
-    List<String> validationResult = plannedTransactionValidator.validate(plannedTransaction, userId);
+    List<String> validationResult = genericTransactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
       log.error("Planned transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -94,7 +94,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
     PlannedTransaction plannedTransactionToUpdate = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
         .get(); // TODO add .isPresent
 
-//    historyEntryService.addHistoryEntryOnUpdate(plannedTransactionToUpdate, transaction, userId);
+    //    historyEntryService.addHistoryEntryOnUpdate(plannedTransactionToUpdate, transaction, userId);
     plannedTransactionService.updatePlannedTransaction(plannedTransactionId, userId, plannedTransaction);
     log.info("Planned transaction with id {} was successfully updated", plannedTransactionId);
 
@@ -111,11 +111,11 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       log.info("No planned transaction with id {} was found, not able to delete", plannedTransactionId);
       return ResponseEntity.notFound().build();
     }
-    Transaction transactionToDelete = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
+    PlannedTransaction plannedTransactionToDelete = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
         .get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", plannedTransactionId);
     plannedTransactionService.deletePlannedTransaction(plannedTransactionId, userId);
-//      historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
+    //      historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
 
     log.info("Planned transaction with id {} was deleted successfully", plannedTransactionId);
     return ResponseEntity.ok().build();
@@ -126,7 +126,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
     return new PlannedTransaction(
         plannedTransactionRequest.getDescription(),
         plannedTransactionRequest.getCategoryId(),
-        plannedTransactionRequest.getDueDate(),
+        plannedTransactionRequest.getDate(),
         plannedTransactionRequest.getAccountPriceEntries());
 
   }

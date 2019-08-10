@@ -22,8 +22,8 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
-import com.pfm.planned_transaction.PlannedTransaction;
-import com.pfm.planned_transaction.PlannedTransactionRequest;
+import com.pfm.planned.transaction.PlannedTransaction;
+import com.pfm.planned.transaction.PlannedTransactionRequest;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
@@ -319,7 +319,7 @@ public abstract class IntegrationTestsBase {
     return PlannedTransactionRequest.builder()
         .description(plannedTransaction.getDescription())
         .categoryId(plannedTransaction.getCategoryId())
-        .dueDate(plannedTransaction.getDate())
+        .date(plannedTransaction.getDate())
         .accountPriceEntries(plannedTransaction.getAccountPriceEntries())
         .build();
   }
@@ -365,6 +365,15 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
+  protected PlannedTransaction callRestToGetPlannedTransactionById(long id, String token) throws Exception {
+    String response = mockMvc.perform(get(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + id)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+    return jsonToPlannedTransaction(response);
+  }
+
   protected void callRestToUpdateTransacion(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
@@ -390,6 +399,10 @@ public abstract class IntegrationTestsBase {
 
   private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
     return mapper.readValue(jsonTransaction, Transaction.class);
+  }
+
+  private PlannedTransaction jsonToPlannedTransaction(String jsonTransaction) throws Exception {
+    return mapper.readValue(jsonTransaction, PlannedTransaction.class);
   }
 
   private List<Transaction> getTransactionsFromResponse(String response) throws Exception {
