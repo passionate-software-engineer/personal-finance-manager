@@ -279,6 +279,11 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
+  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token) throws Exception {
+    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
+  }
+
   private long callRestToAddPlannedTransactionAndReturnId(PlannedTransactionRequest plannedTransactionRequest, long accountId, long categoryId,
       String token)
       throws Exception {
@@ -293,11 +298,6 @@ public abstract class IntegrationTestsBase {
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
     return Long.parseLong(response);
-  }
-
-  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token) throws Exception {
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
-    return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
   protected long callRestToAddPlannedTransactionAndReturnId(PlannedTransaction plannedTransaction, long accountId, long categoryId, String token)
@@ -339,12 +339,12 @@ public abstract class IntegrationTestsBase {
     return plannedTransaction;
   }
 
-//  protected <T extends Transaction> T setTransactionIdAccountIdCategoryId(T transaction, long transactionId, long accountId, long categoryId) {
-//    transaction.setId(transactionId);
-//    transaction.setCategoryId(categoryId);
-//    transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
-//    return (T) transaction;
-//  }
+  //  protected <T extends Transaction> T setTransactionIdAccountIdCategoryId(T transaction, long transactionId, long accountId, long categoryId) {
+  //    transaction.setId(transactionId);
+  //    transaction.setCategoryId(categoryId);
+  //    transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
+  //    return (T) transaction;
+  //  }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()
@@ -354,6 +354,18 @@ public abstract class IntegrationTestsBase {
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
         .build();
+  }
+
+  protected PlannedTransaction convertPlannedTransactionRequestToPlannedTransactionAndSetId(long plannedTransactionId,
+      PlannedTransactionRequest plannedTransactionRequest) {
+    return new PlannedTransaction(
+        plannedTransactionId,
+        plannedTransactionRequest.getAccountPriceEntries(),
+        plannedTransactionRequest.getCategoryId(),
+        plannedTransactionRequest.getDescription(),
+        plannedTransactionRequest.getDate()
+
+    );
   }
 
   protected Transaction callRestToGetTransactionById(long id, String token) throws Exception {
@@ -374,7 +386,7 @@ public abstract class IntegrationTestsBase {
     return jsonToPlannedTransaction(response);
   }
 
-  protected void callRestToUpdateTransacion(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
+  protected void callRestToUpdateTransaction(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -382,8 +394,23 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
+  protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, PlannedTransactionRequest plannedTransactionRequest, String token)
+      throws Exception {
+    mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(plannedTransactionRequest)))
+        .andExpect(status().isOk());
+  }
+
   protected void callRestToDeleteTransactionById(long id, String token) throws Exception {
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToDeletePlannedTransactionById(long id, String token) throws Exception {
+    mockMvc.perform(delete(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + id)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
@@ -397,6 +424,15 @@ public abstract class IntegrationTestsBase {
     return getTransactionsFromResponse(response);
   }
 
+  protected List<PlannedTransaction> callRestToGetAllPlannedTransactionsFromDatabase(String token) throws Exception {
+    String response = mockMvc.perform(get(PLANNED_TRANSACTIONS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+    return getPlannedTransactionsFromResponse(response);
+  }
+
   private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
     return mapper.readValue(jsonTransaction, Transaction.class);
   }
@@ -407,6 +443,10 @@ public abstract class IntegrationTestsBase {
 
   private List<Transaction> getTransactionsFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
+  }
+
+  private List<PlannedTransaction> getPlannedTransactionsFromResponse(String response) throws Exception {
+    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, PlannedTransaction.class));
   }
 
   //filters

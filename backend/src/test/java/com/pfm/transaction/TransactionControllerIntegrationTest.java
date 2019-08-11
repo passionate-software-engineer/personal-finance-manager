@@ -155,7 +155,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodTransactionRequest.setDescription("Car parts");
 
     //when
-    callRestToUpdateTransacion(foodTransactionId, updatedFoodTransactionRequest, token);
+    callRestToUpdateTransaction(foodTransactionId, updatedFoodTransactionRequest, token);
 
     //then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);

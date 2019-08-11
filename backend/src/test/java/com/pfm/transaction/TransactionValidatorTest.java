@@ -38,7 +38,7 @@ public class TransactionValidatorTest {
   private AccountService accountService;
 
   @InjectMocks
-  private TransactionValidator transactionValidator;
+  private GenericTransactionValidator genericTransactionValidator;
 
   @Test
   public void shouldReturnErrorWhenNoTransactionAccountPriceEntriesWereProvidedNullValue() {
@@ -46,7 +46,7 @@ public class TransactionValidatorTest {
     transaction.setAccountPriceEntries(null);
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = genericTransactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(4));
@@ -61,7 +61,7 @@ public class TransactionValidatorTest {
     Transaction transaction = new Transaction();
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = genericTransactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(4));
@@ -78,7 +78,7 @@ public class TransactionValidatorTest {
     transaction.setCategoryId(NOT_EXISTING_ID);
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = genericTransactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(5));
@@ -97,7 +97,7 @@ public class TransactionValidatorTest {
     when(accountService.accountDoesNotExistByIdAndUserId(eq(NOT_EXISTING_ID), anyLong())).thenReturn(true);
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = genericTransactionValidator.validate(transaction, 1);
 
     // then
     assertThat(result, hasSize(5));

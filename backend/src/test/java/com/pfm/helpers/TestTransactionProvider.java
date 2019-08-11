@@ -10,8 +10,11 @@ import java.util.Collections;
 
 public class TestTransactionProvider {
 
+  private static final LocalDate FUTURE_DATE = LocalDate.now().plusDays(1);
+
   public static PlannedTransaction convertTransactionToPlannedTransaction(Transaction transaction) {
-    return new PlannedTransaction(transaction.getId(), transaction.getDescription(),transaction.getCategoryId() ,LocalDate.now().plusDays(1), transaction.getAccountPriceEntries(), transaction.getUserId());
+    return new PlannedTransaction(transaction.getId(), transaction.getDescription(), transaction.getCategoryId(), FUTURE_DATE,
+        transaction.getAccountPriceEntries(), transaction.getUserId());
   }
 
   public static Transaction foodTransactionWithNoAccountAndNoCategory() {

@@ -3,6 +3,7 @@ package com.pfm.planned.transaction;
 import com.pfm.account.AccountService;
 import com.pfm.history.HistoryEntryService;
 import com.pfm.transaction.AccountPriceEntriesRepository;
+import com.pfm.transaction.AccountPriceEntry;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class PlannedTransactionService {
   @Transactional
   public PlannedTransaction addPlannedTransaction(long userId, PlannedTransaction plannedTransaction, boolean addHistoryEntryOnUpdate) {
     plannedTransaction.setUserId(userId);
-    // do not need to modyfy accounts , maybe projected accounts ?
+    // do not need to modify accounts , maybe projected accounts ?
     //    for (AccountPriceEntry entry : plannedTransaction.getAccountPriceEntries()) {
     //    addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
     //    }
@@ -70,9 +71,9 @@ public class PlannedTransactionService {
   public void deletePlannedTransaction(long id, long userId) {
     PlannedTransaction plannedTransactionToDelete = getPlannedTransactionFromDatabase(id, userId);
 
-    //    for (AccountPriceEntry entry : plannedTransactionToDelete.getAccountPriceEntries()) {
-    //      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
-    //    }
+    for (AccountPriceEntry entry : plannedTransactionToDelete.getAccountPriceEntries()) {
+    //          subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+    }
 
     plannedTransactionRepository.deleteById(id);
   }

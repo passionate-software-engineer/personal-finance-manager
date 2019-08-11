@@ -447,7 +447,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .accountPriceEntries(accountPriceEntriesUpdated)
         .build();
 
-    callRestToUpdateTransacion(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
+    callRestToUpdateTransaction(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
 
     //when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);

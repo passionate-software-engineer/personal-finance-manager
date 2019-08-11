@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 
-public class Transaction {
+public class Transaction implements WithTransactionProperties {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,14 +49,14 @@ public class Transaction {
   @JsonIgnore
   private Long userId;
 
-//  @Builder
+  //  @Builder
   public Transaction(String description, Long categoryId, List<AccountPriceEntry> accountPriceEntries) {
     this.description = description;
     this.categoryId = categoryId;
     this.accountPriceEntries = accountPriceEntries;
   }
 
-//  @Builder
+  //  @Builder
   public Transaction(List<AccountPriceEntry> accountPriceEntries, String description) {
     this.description = description;
     this.accountPriceEntries = accountPriceEntries;

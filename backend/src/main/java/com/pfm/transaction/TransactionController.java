@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController implements TransactionApi {
 
   private TransactionService transactionService;
-  private TransactionValidator transactionValidator;
+  private GenericTransactionValidator genericTransactionValidator;
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
 
@@ -56,7 +56,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
 
-    List<String> validationResult = transactionValidator.validate(transaction, userId);
+    List<String> validationResult = genericTransactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -82,7 +82,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
 
-    List<String> validationResult = transactionValidator.validate(transaction, userId);
+    List<String> validationResult = genericTransactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);

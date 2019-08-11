@@ -73,7 +73,9 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   }
 
   @Override
-  public ResponseEntity<?> updatePlannedTransaction(long plannedTransactionId, PlannedTransactionRequest plannedTransactionRequest) {
+  @Transactional
+  public ResponseEntity<?> updatePlannedTransaction(@PathVariable long plannedTransactionId,
+      @RequestBody PlannedTransactionRequest plannedTransactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
     Optional<PlannedTransaction> plannedTransactionByIdAndUserId = plannedTransactionService
@@ -91,8 +93,8 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    PlannedTransaction plannedTransactionToUpdate = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
-        .get(); // TODO add .isPresent
+    //    PlannedTransaction plannedTransactionToUpdate = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
+    //        .get(); // TODO add .isPresent
 
     //    historyEntryService.addHistoryEntryOnUpdate(plannedTransactionToUpdate, transaction, userId);
     plannedTransactionService.updatePlannedTransaction(plannedTransactionId, userId, plannedTransaction);
@@ -111,8 +113,8 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       log.info("No planned transaction with id {} was found, not able to delete", plannedTransactionId);
       return ResponseEntity.notFound().build();
     }
-    PlannedTransaction plannedTransactionToDelete = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
-        .get(); // TODO add .isPresent
+    //    PlannedTransaction plannedTransactionToDelete = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
+    //        .get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", plannedTransactionId);
     plannedTransactionService.deletePlannedTransaction(plannedTransactionId, userId);
     //      historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
