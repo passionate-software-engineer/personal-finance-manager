@@ -225,21 +225,21 @@ public class ExportService {
   private ExportFundsSummary calculateSumOfFunds(List<ExportAccount> accounts, long userId) {
     List<Currency> currencies = currencyService.getCurrencies(userId);
 
+    // ENHANCEMENT change to stream
     Map<String, BigDecimal> currencyToExchangeRate = new HashMap<>();
     Map<String, BigDecimal> currencyToBalanceMap = new HashMap<>();
-
-    currencies.forEach(currency -> {
+    for (Currency currency : currencies) {
       currencyToExchangeRate.put(currency.getName(), currency.getExchangeRate());
       currencyToBalanceMap.put(currency.getName(), BigDecimal.ZERO);
-
-    });
+    }
 
     BigDecimal sumOfAllFunds = accounts.stream()
         .map(account -> account.getBalance().multiply(currencyToExchangeRate.get(account.getCurrency())))
         .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    accounts.forEach(
-        account -> currencyToBalanceMap.put(account.getCurrency(), currencyToBalanceMap.get(account.getCurrency()).add(account.getBalance())));
+    for (ExportAccount account : accounts) {
+      currencyToBalanceMap.put(account.getCurrency(), currencyToBalanceMap.get(account.getCurrency()).add(account.getBalance()));
+    }
 
     return ExportFundsSummary.builder()
         .sumOfAllFundsInBaseCurrency(sumOfAllFunds)

@@ -18,7 +18,6 @@ import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -129,15 +128,16 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
         token);
 
-    PlannedTransaction updatedFoodPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
-    updatedFoodPlannedTransaction.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
-    updatedFoodPlannedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
-    updatedFoodPlannedTransaction.setCategoryId(carCategoryId);
-    updatedFoodPlannedTransaction.setDate(updatedFoodPlannedTransaction.getDate().plusDays(1));
-    updatedFoodPlannedTransaction.setDescription("Car parts");
+    PlannedTransactionRequest updatedFoodPlannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(
+        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
+    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
+    updatedFoodPlannedTransactionRequest.setDate(updatedFoodPlannedTransactionRequest.getDate().plusDays(1));
+    updatedFoodPlannedTransactionRequest.setDescription("Car parts");
 
     //when
-    callRestToUpdatePlannedTransaction(foodPlannedTransactionId, updatedFoodPlannedTransaction, token);
+    callRestToUpdatePlannedTransaction(foodPlannedTransactionId, updatedFoodPlannedTransactionRequest, token);
     //fixme lukasz  below instead accounts balance update  -  projected accounts balance should be taken care of !!!
     //then
     List<PlannedTransaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
@@ -155,83 +155,4 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     //    assertThat(piotrAccountBalanceAfterPlannedTransactionUpdate,
     //        is(accountMbankBalance10().getBalance().add(updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).getPrice())));
   }
-
-  @Test
-  public void shouldUpdateProjectedAccountBalanceDuringAddingPlannedTransaction() throws Exception {
-    //fixme lukasz may be simplified
-    //given
-    Account jacekAccount = accountJacekBalance1000();
-    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-
-    //when
-    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
-
-    //then
-    setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()),
-        plannedTransactionId, jacekAccountId, foodCategoryId);
-    List<Account> userJacekAccounts = callRestToGetAllAccounts(token);
-    Optional<Account> updatedProjectedAccountBalance = userJacekAccounts.stream()
-        .filter(acc -> acc.getId() == jacekAccountId)
-        .findFirst();
-
-    final BigDecimal projectedBalance = updatedProjectedAccountBalance.get().getProjectedBalance();
-    final BigDecimal balance = updatedProjectedAccountBalance.get().getBalance();
-
-    assertThat(projectedBalance, is(convertDoubleToBigDecimal(990d)));
-  }
-
-  @Test
-  public void shouldUpdateProjectedAccountBalanceDuringUpdatingPlannedTransaction() throws Exception {
-    //fixme lukasz may be simplified  - maybe Jsonpath asserts after update ?
-    //given
-    Account jacekAccount = accountJacekBalance1000();
-    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-
-    PlannedTransaction plannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
-    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
-
-    setPlannedTransactionIdAccountIdCategoryId(plannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
-    List<Account> accounts = callRestToGetAllAccounts(token);
-    Optional<Account> updatedProjectedBalance = accounts.stream()
-        .filter(account -> account.getId() == jacekAccountId)
-        .findFirst();
-
-    final BigDecimal projectedBalance = updatedProjectedBalance.get().getProjectedBalance();
-    final BigDecimal balance = updatedProjectedBalance.get().getBalance();
-
-    assertThat(projectedBalance, is(convertDoubleToBigDecimal(990d)));
-
-    //when
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    PlannedTransaction updatedPlannedTransaction = convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory());
-    setPlannedTransactionIdAccountIdCategoryId(updatedPlannedTransaction, plannedTransactionId, jacekAccountId, carCategoryId);
-
-    callRestToUpdatePlannedTransaction(plannedTransactionId, updatedPlannedTransaction, token);
-
-    //then
-    var accountsAfterUpdate = callRestToGetAllAccounts(token);
-    Optional<Account> updatedProjectedBalance2 = accountsAfterUpdate.stream()
-        .filter(account -> account.getId() == jacekAccountId)
-        .findFirst();
-//    BigDecimal babab = updatedProjectedBalance2.ifPresent(account -> {
-//      return account.getProjectedBalance();
-//
-//
-//
-//      );
-
-    final BigDecimal projectedBalance2 = updatedProjectedBalance2.get().getProjectedBalance();
-    final BigDecimal balance2 = updatedProjectedBalance2.get().getBalance();
-
-    assertThat(projectedBalance2, is(convertDoubleToBigDecimal(970d)));
-
-  }
-
 }

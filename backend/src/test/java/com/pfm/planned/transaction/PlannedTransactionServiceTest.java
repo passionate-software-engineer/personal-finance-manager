@@ -65,7 +65,7 @@ public class PlannedTransactionServiceTest {
                 .price(BigDecimal.valueOf(11.27)).build()), 1L);
 
     //when
-    PlannedTransaction actual = convertTransactionToPlannedTransaction(transaction);
+    com.pfm.planned.transaction.PlannedTransaction actual = convertTransactionToPlannedTransaction(transaction);
 
     //then
     assertEquals(expected, actual);

@@ -394,9 +394,8 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, PlannedTransaction plannedTransaction, String token)
+  protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, PlannedTransactionRequest plannedTransactionRequest, String token)
       throws Exception {
-    PlannedTransactionRequest plannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(plannedTransaction);
     mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
