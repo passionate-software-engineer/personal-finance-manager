@@ -59,4 +59,8 @@ public class PlannedTransaction implements WithTransactionProperties {
   public PlannedTransaction(long plannedTransactionId, List<AccountPriceEntry> accountPriceEntries, Long categoryId, String description,
       LocalDate date) {
   }
+
+  public List<AccountPriceEntry> getAccountPriceEntries() {
+    return accountPriceEntries;
+  }
 }

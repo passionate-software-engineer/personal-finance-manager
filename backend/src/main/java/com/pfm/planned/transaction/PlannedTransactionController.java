@@ -1,5 +1,6 @@
 package com.pfm.planned.transaction;
 
+import com.pfm.account.AccountService;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import com.pfm.transaction.GenericTransactionValidator;
@@ -22,6 +23,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   private PlannedTransactionService plannedTransactionService;
   private GenericTransactionValidator genericTransactionValidator;
   private HistoryEntryService historyEntryService;
+  private AccountService accountService;
 
   @Override
   public ResponseEntity<PlannedTransaction> getPlannedTransactionById(long plannedTransactionId) {
@@ -54,9 +56,10 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   public ResponseEntity<?> addPlannedTransaction(@RequestBody PlannedTransactionRequest plannedTransactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
+    PlannedTransaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
+
     log.info("Adding  planned transaction to the database");
 
-    PlannedTransaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
     //fixme lukasz
     List<String> validationResult = genericTransactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
@@ -64,9 +67,8 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    PlannedTransaction createdPlannedTransaction = plannedTransactionService.addPlannedTransaction(userId, plannedTransaction, false);
+    PlannedTransaction createdPlannedTransaction = plannedTransactionService.addPlannedTransaction(userId, plannedTransaction);
     log.info("Saving planned transaction to the database was successful. Planned transaction id is {}", createdPlannedTransaction.getId());
-    historyEntryService.addHistoryEntryOnAdd(createdPlannedTransaction, userId);
 
     return ResponseEntity.ok(createdPlannedTransaction.getId());
 
@@ -93,10 +95,6 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    //    PlannedTransaction plannedTransactionToUpdate = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
-    //        .get(); // TODO add .isPresent
-
-    //    historyEntryService.addHistoryEntryOnUpdate(plannedTransactionToUpdate, transaction, userId);
     plannedTransactionService.updatePlannedTransaction(plannedTransactionId, userId, plannedTransaction);
     log.info("Planned transaction with id {} was successfully updated", plannedTransactionId);
 
@@ -113,11 +111,9 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       log.info("No planned transaction with id {} was found, not able to delete", plannedTransactionId);
       return ResponseEntity.notFound().build();
     }
-    //    PlannedTransaction plannedTransactionToDelete = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId)
-    //        .get(); // TODO add .isPresent
+
     log.info("Attempting to delete transaction with id {}", plannedTransactionId);
     plannedTransactionService.deletePlannedTransaction(plannedTransactionId, userId);
-    //      historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
 
     log.info("Planned transaction with id {} was deleted successfully", plannedTransactionId);
     return ResponseEntity.ok().build();

@@ -13,3 +13,6 @@ CREATE TABLE planned_transaction_account_price_entries
   planned_transaction_id   BIGINT REFERENCES planned_transaction (id),
   account_price_entries_id BIGINT REFERENCES account_price_entry (id)
 );
+
+ALTER TABLE account
+  ADD projected_balance NUMERIC(19, 2);
