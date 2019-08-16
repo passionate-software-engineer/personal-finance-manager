@@ -110,13 +110,13 @@ public class PlannedTransactionService {
 
     return plannedTransactionFromDb.get();
   }
-    //fixme remove below
-    //  public boolean transactionExistByAccountId(long accountId) {
-    //    return accountPriceEntriesRepository.existsByAccountId(accountId);
-    //  }
-    //
-    //  public boolean transactionExistByCategoryId(long categoryId) {
-    //    return plannedTransactionRepository.existsByCategoryId(categoryId);
-    //  }
+  //fixme remove below
+  //  public boolean transactionExistByAccountId(long accountId) {
+  //    return accountPriceEntriesRepository.existsByAccountId(accountId);
+  //  }
+  //
+  //  public boolean transactionExistByCategoryId(long categoryId) {
+  //    return plannedTransactionRepository.existsByCategoryId(categoryId);
+  //  }
 
 }

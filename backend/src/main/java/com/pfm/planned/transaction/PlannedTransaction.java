@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @NoArgsConstructor
-//@AllArgsConstructor
 public class PlannedTransaction implements WithTransactionProperties {
 
   @Id
@@ -48,20 +47,6 @@ public class PlannedTransaction implements WithTransactionProperties {
     this.categoryId = categoryId;
 
     this.date = date;
-  }
-
-  @Builder
-  public PlannedTransaction(String description, Long categoryId, LocalDate date,
-      List<AccountPriceEntry> accountPriceEntries) {
-    this.description = description;
-    this.accountPriceEntries = accountPriceEntries;
-    this.categoryId = categoryId;
-
-    this.date = date;
-  }
-
-  public List<AccountPriceEntry> getAccountPriceEntries() {
-    return accountPriceEntries;
   }
 
 }

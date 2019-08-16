@@ -16,8 +16,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +38,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
 public class PlannedTransactionControllerIntegrationTest extends IntegrationTestsBase {
+
+  private static final long NOT_EXISTING_PLANNED_TRANSACTION_ID = 7389387L;
+  private static final String EMPTY_DESCRIPTION = "";
 
   @BeforeEach
   public void setup() throws Exception {
@@ -175,9 +180,9 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
-    long foodPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
+    callRestToAddPlannedTransactionAndReturnId(
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
-    long carPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
+    callRestToAddPlannedTransactionAndReturnId(
         convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()), jacekAccountId, carCategoryId, token);
 
     mockMvc
@@ -213,7 +218,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
   }
 
   @Test
-  public void shouldReturnValidationErrorForArchivedAccount() throws Exception {
+  public void shouldReturnBadRequestDuringAddingTransactionWithAccountIdOfArchivedAccount() throws Exception {
     //given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
@@ -250,5 +255,96 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED, Language.ENGLISH))));
 
+  }
+
+  @Test
+  public void shouldReturnNotFoundDuringUpdatingNotExistingPlannedTransaction() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    final long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    callRestToAddPlannedTransactionAndReturnId(
+        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
+        token);
+
+    PlannedTransactionRequest updatedFoodPlannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(
+        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
+    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
+    updatedFoodPlannedTransactionRequest.setDate(updatedFoodPlannedTransactionRequest.getDate().plusDays(1));
+    updatedFoodPlannedTransactionRequest.setDescription("Car parts");
+
+    //when
+    mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_PLANNED_TRANSACTION_ID)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedFoodPlannedTransactionRequest)))
+
+        //then
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldReturnBadRequestDuringUpdatingPlannedTransactionWithOneThatDoesNotPassValidation() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long transactionId = callRestToAddPlannedTransactionAndReturnId(
+        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
+        token);
+
+    PlannedTransactionRequest updatedFoodPlannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(
+        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
+    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
+    updatedFoodPlannedTransactionRequest.setDate(updatedFoodPlannedTransactionRequest.getDate().plusDays(1));
+    updatedFoodPlannedTransactionRequest.setDescription(EMPTY_DESCRIPTION);
+
+    //when
+    mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedFoodPlannedTransactionRequest)))
+
+        //then
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void shouldReturnNotFoundDuringDeletingNotExistingPlannedTransaction() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    PlannedTransaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
+
+    PlannedTransaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    setPlannedTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
+
+    //when
+    mockMvc.perform(delete(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_PLANNED_TRANSACTION_ID)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isNotFound());
   }
 }

@@ -279,7 +279,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED,Language.ENGLISH))));
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED, Language.ENGLISH))));
 
   }
 
