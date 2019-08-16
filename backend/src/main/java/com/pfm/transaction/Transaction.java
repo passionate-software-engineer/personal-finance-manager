@@ -61,4 +61,10 @@ public class Transaction implements WithTransactionProperties {
     this.description = description;
     this.accountPriceEntries = accountPriceEntries;
   }
+
+  @JsonIgnore
+  @Override
+  public String getClassName() {
+    return this.getClass().getSimpleName();
+  }
 }

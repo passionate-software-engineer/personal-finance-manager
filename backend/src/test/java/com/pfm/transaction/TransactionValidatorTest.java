@@ -20,6 +20,7 @@ import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -94,7 +95,7 @@ public class TransactionValidatorTest {
     Transaction transaction = new Transaction();
     transaction.setAccountPriceEntries(Collections.singletonList(new AccountPriceEntry(NOT_EXISTING_ID, null, 1L)));
 
-    when(accountService.accountDoesNotExistByIdAndUserId(eq(NOT_EXISTING_ID), anyLong())).thenReturn(true);
+    when(accountService.getAccountByIdAndUserId(eq(NOT_EXISTING_ID), anyLong())).thenReturn(Optional.empty());
 
     // when
     List<String> result = genericTransactionValidator.validate(transaction, 1);

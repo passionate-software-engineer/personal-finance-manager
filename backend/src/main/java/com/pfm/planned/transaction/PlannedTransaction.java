@@ -65,4 +65,11 @@ public class PlannedTransaction implements WithTransactionProperties {
   public List<AccountPriceEntry> getAccountPriceEntries() {
     return accountPriceEntries;
   }
+
+  @JsonIgnore
+  @Override
+  public String getClassName() {
+    return this.getClass().getSimpleName();
+
+  }
 }

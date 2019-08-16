@@ -16,4 +16,6 @@ public interface WithTransactionProperties {
   List<AccountPriceEntry> getAccountPriceEntries();
 
   Long getUserId();
+
+  String getClassName();
 }
