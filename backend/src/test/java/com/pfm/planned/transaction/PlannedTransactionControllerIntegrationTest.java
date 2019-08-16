@@ -13,6 +13,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -20,6 +23,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 
 public class PlannedTransactionControllerIntegrationTest extends IntegrationTestsBase {
 
@@ -80,6 +84,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         is(accountJacekBalance1000().getBalance()));
   }
 
+  //fixme add testing projected balance updates after deleting planned transaction
   @Test
   public void shouldGetPlannedTransactions() throws Exception {
     //given
@@ -138,21 +143,63 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     //when
     callRestToUpdatePlannedTransaction(foodPlannedTransactionId, updatedFoodPlannedTransactionRequest, token);
-    //fixme lukasz  below instead accounts balance update  -  projected accounts balance should be taken care of !!!
-    //then
     List<PlannedTransaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    PlannedTransaction expected = convertPlannedTransactionRequestToPlannedTransactionAndSetId(foodPlannedTransactionId,
+        updatedFoodPlannedTransactionRequest);
+
+    //then
     assertThat(allPlannedTransactionsInDb.size(), is(1));
+    assertThat(allPlannedTransactionsInDb.get(0), equalTo(expected));
 
-    //    PlannedTransaction expected = convertPlannedTransactionRequestToPlannedTransactionAndSetId(foodPlannedTransactionId,
-    //        updatedFoodPlannedTransactionRequest);
-
-    //    assertThat(allPlannedTransactionsInDb, contains(expected));
-
-    BigDecimal jacekAccountBalanceAfterPlannedTransactionUpdate = callRestServiceAndReturnAccountBalance(jacekAccountId, token);
-    assertThat(jacekAccountBalanceAfterPlannedTransactionUpdate, is(accountJacekBalance1000().getBalance()));
-
-    //    BigDecimal piotrAccountBalanceAfterPlannedTransactionUpdate = callRestServiceAndReturnAccountBalance(mbankAccountId, token);
-    //    assertThat(piotrAccountBalanceAfterPlannedTransactionUpdate,
-    //        is(accountMbankBalance10().getBalance().add(updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).getPrice())));
   }
+
+  @Test
+  public void shouldReturnNotFoundDuringGettingNotExistingPlannedTransaction() throws Exception {
+    //given
+    final long notExistingPlannedTransactionId = 790;
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+
+    long foodPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
+        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
+    long carPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
+        convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()), jacekAccountId, carCategoryId, token);
+
+    mockMvc
+        .perform(get(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + notExistingPlannedTransactionId)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        //then
+        .andExpect(status().isNotFound());
+
+  }
+
+  @Test
+  public void shouldReturnBadRequestDuringAddingPlannedTransactionCausedByCategoryNotPassingTransactionValidation() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    //    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    //    callRestServiceToAddAccountAndReturnId(account, token);
+    PlannedTransaction invalidPlannedTransaction = PlannedTransaction.builder()
+        .description("Fuel")
+        .build();
+
+    mockMvc
+        .perform(
+            post(PLANNED_TRANSACTIONS_SERVICE_PATH)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .content(json(invalidPlannedTransaction))
+                .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest());
+
+  }
+
 }

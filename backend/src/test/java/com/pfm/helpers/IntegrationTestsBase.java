@@ -358,14 +358,13 @@ public abstract class IntegrationTestsBase {
 
   protected PlannedTransaction convertPlannedTransactionRequestToPlannedTransactionAndSetId(long plannedTransactionId,
       PlannedTransactionRequest plannedTransactionRequest) {
-    return new PlannedTransaction(
-        plannedTransactionId,
-        plannedTransactionRequest.getAccountPriceEntries(),
-        plannedTransactionRequest.getCategoryId(),
-        plannedTransactionRequest.getDescription(),
-        plannedTransactionRequest.getDate()
-
-    );
+    return PlannedTransaction.builder()
+        .id(plannedTransactionId)
+        .accountPriceEntries(plannedTransactionRequest.getAccountPriceEntries())
+        .categoryId(plannedTransactionRequest.getCategoryId())
+        .description(plannedTransactionRequest.getDescription())
+        .date(plannedTransactionRequest.getDate())
+        .build();
   }
 
   protected Transaction callRestToGetTransactionById(long id, String token) throws Exception {

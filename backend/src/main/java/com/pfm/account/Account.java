@@ -36,7 +36,8 @@ public final class Account {
   @HistoryField
   private BigDecimal balance;
 
-  @ApiModelProperty(value = "Projected account's balance on dueDate - including planned transactions being made till dueDate", required = true, example = "1134.89")
+  @ApiModelProperty(value = "Projected account's balance on dueDate - including planned transactions being made till dueDate", required = true,
+      example = "1134.89")
   private BigDecimal projectedBalance;
 
   @ManyToOne // TODO should not return all currency information, only id
