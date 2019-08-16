@@ -1,5 +1,7 @@
 package com.pfm.planned.transaction;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
@@ -13,14 +15,22 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
+import com.pfm.config.MessagesProvider.Language;
+import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
+import com.pfm.transaction.AccountPriceEntry;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -202,4 +212,43 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
   }
 
+  @Test
+  public void shouldReturnValidationErrorForArchivedAccount() throws Exception {
+    //given
+    Account account = Account.builder()
+        .name("Jacek Millenium Bank savings")
+        .balance(convertDoubleToBigDecimal(1000))
+        .currency(Currency.builder()
+            .id(currencyService.getCurrencies(userId).get(0).getId())
+            .name("USD")
+            .exchangeRate(BigDecimal.valueOf(3.99))
+            .build())
+        .build();
+
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    callRestToMarkAccountAsArchived(accountId);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    PlannedTransaction plannedTransaction = PlannedTransaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .accountId(accountId)
+                .price(convertDoubleToBigDecimal(10))
+                .build())
+        )
+        .description("Food for birthday")
+        .categoryId(foodCategoryId)
+        .date(LocalDate.of(2018, 8, 8))
+        .build();
+    PlannedTransactionRequest plannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(plannedTransaction);
+    mockMvc
+        .perform(post(PLANNED_TRANSACTIONS_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(plannedTransactionRequest))
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED, Language.ENGLISH))));
+
+  }
 }

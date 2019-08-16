@@ -51,20 +51,18 @@ public class GenericTransactionValidator {
           if (!optionalAccount.isPresent()) {
             validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
           } else if (optionalAccount.get().isArchived()) {
-            validationErrors.add(String.format(getMessage(ACCOUNT_IS_ARCHIVED), entry.getAccountId()));
+            validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
           }
         }
-
         if (entry.getPrice() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_PRICE));
         }
       }
     }
-
     if (transaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
     return validationErrors;
-  }
 
+  }
 }

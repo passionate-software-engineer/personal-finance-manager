@@ -1,7 +1,9 @@
 package com.pfm.helpers;
 
+import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -144,6 +146,14 @@ public abstract class IntegrationTestsBase {
             .content(json(accountRequest))
             .contentType(JSON_CONTENT_TYPE)
         )
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToMarkAccountAsArchived(long accountId) throws Exception {
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk());
   }
 

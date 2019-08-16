@@ -17,5 +17,4 @@ public interface WithTransactionProperties {
 
   Long getUserId();
 
-  String getClassName();
 }

@@ -39,6 +39,7 @@ public class PlannedTransaction implements WithTransactionProperties {
   @JsonIgnore
   private Long userId;
 
+  @Builder
   public PlannedTransaction(Long id, String description, Long categoryId, LocalDate date,
       List<AccountPriceEntry> accountPriceEntries, Long userId) {
     this.id = id;
@@ -49,6 +50,7 @@ public class PlannedTransaction implements WithTransactionProperties {
     this.date = date;
   }
 
+  @Builder
   public PlannedTransaction(String description, Long categoryId, LocalDate date,
       List<AccountPriceEntry> accountPriceEntries) {
     this.description = description;
@@ -58,18 +60,8 @@ public class PlannedTransaction implements WithTransactionProperties {
     this.date = date;
   }
 
-  public PlannedTransaction(long plannedTransactionId, List<AccountPriceEntry> accountPriceEntries, Long categoryId, String description,
-      LocalDate date) {
-  }
-
   public List<AccountPriceEntry> getAccountPriceEntries() {
     return accountPriceEntries;
   }
 
-  @JsonIgnore
-  @Override
-  public String getClassName() {
-    return this.getClass().getSimpleName();
-
-  }
 }

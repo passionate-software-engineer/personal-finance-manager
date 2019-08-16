@@ -13,8 +13,14 @@ public class TestTransactionProvider {
   private static final LocalDate FUTURE_DATE = LocalDate.now().plusDays(1);
 
   public static PlannedTransaction convertTransactionToPlannedTransaction(Transaction transaction) {
-    return new PlannedTransaction(transaction.getId(), transaction.getDescription(), transaction.getCategoryId(), FUTURE_DATE,
-        transaction.getAccountPriceEntries(), transaction.getUserId());
+    return PlannedTransaction.builder()
+        .id(transaction.getId())
+        .description(transaction.getDescription())
+        .categoryId(transaction.getCategoryId())
+        .date(FUTURE_DATE)
+        .accountPriceEntries(transaction.getAccountPriceEntries())
+        .userId(transaction.getUserId())
+        .build();
   }
 
   public static Transaction foodTransactionWithNoAccountAndNoCategory() {

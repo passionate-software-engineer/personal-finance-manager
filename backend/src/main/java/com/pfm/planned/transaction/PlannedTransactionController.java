@@ -121,11 +121,12 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   }
 
   private PlannedTransaction convertPlannedTransactionRequestToPlannedTransaction(PlannedTransactionRequest plannedTransactionRequest) {
-    return new PlannedTransaction(
-        plannedTransactionRequest.getDescription(),
-        plannedTransactionRequest.getCategoryId(),
-        plannedTransactionRequest.getDate(),
-        plannedTransactionRequest.getAccountPriceEntries());
+    return PlannedTransaction.builder()
+        .description(plannedTransactionRequest.getDescription())
+        .categoryId(plannedTransactionRequest.getCategoryId())
+        .date(plannedTransactionRequest.getDate())
+        .accountPriceEntries(plannedTransactionRequest.getAccountPriceEntries())
+        .build();
 
   }
 

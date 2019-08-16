@@ -1,6 +1,7 @@
 package com.pfm.transaction;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
@@ -32,7 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
+import com.pfm.account.AccountService;
 import com.pfm.config.MessagesProvider.Language;
+import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,9 +44,13 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
 public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
+
+  @Autowired
+  private AccountService accountService;
 
   @BeforeEach
   public void setup() throws Exception {
@@ -234,6 +241,46 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_DATE))));
+  }
+
+  @Test
+  public void shouldReturnValidationErrorForArchivedAccount() throws Exception {
+    //given
+    Account account = Account.builder()
+        .name("Jacek Millenium Bank savings")
+        .balance(convertDoubleToBigDecimal(1000))
+        .currency(Currency.builder()
+            .id(currencyService.getCurrencies(userId).get(0).getId())
+            .name("USD")
+            .exchangeRate(BigDecimal.valueOf(3.99))
+            .build())
+        .build();
+
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    callRestToMarkAccountAsArchived(accountId);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    Transaction transaction = Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .accountId(accountId)
+                .price(convertDoubleToBigDecimal(10))
+                .build())
+        )
+        .description("Food for birthday")
+        .categoryId(foodCategoryId)
+        .date(LocalDate.of(2018, 8, 8))
+        .build();
+    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    mockMvc
+        .perform(post(TRANSACTIONS_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(transactionRequest))
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED,Language.ENGLISH))));
+
   }
 
   @Test
