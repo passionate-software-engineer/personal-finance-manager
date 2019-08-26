@@ -109,7 +109,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             this.allTransactions.push(transaction);
           }
 
-          super.filterTransactions();
+          super.filterPlannedTransactions();
         });
   }
 

@@ -95,7 +95,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
             this.allPlannedTransactions.push(plannedTransaction);
           }
 
-          super.filterTransactions();
+          super.filterPlannedTransactions();
         });
   }
 

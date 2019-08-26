@@ -112,13 +112,13 @@
                min="2015-01-01"
                max="2025-12-31"
                [(ngModel)]="selectedFilter.dateFrom"
-               (ngModelChange)="filterTransactions()">
+               (ngModelChange)="filterPlannedTransactions()">
         <input class="form-control"
                type="date"
                min="2015-01-01"
                max="2025-12-31"
                [(ngModel)]="selectedFilter.dateTo"
-               (ngModelChange)="filterTransactions()">
+               (ngModelChange)="filterPlannedTransactions()">
       </td>
 
       <!--Description-->
@@ -126,7 +126,7 @@
         <input class="form-control"
                type="text"
                [(ngModel)]="selectedFilter.description"
-               (ngModelChange)="filterTransactions()">
+               (ngModelChange)="filterPlannedTransactions()">
       </td>
 
       <!--Price-->
@@ -134,11 +134,11 @@
         <input class="form-control"
                type="number"
                [(ngModel)]="selectedFilter.priceFrom"
-               (ngModelChange)="filterTransactions()">
+               (ngModelChange)="filterPlannedTransactions()">
         <input class="form-control"
                type="number"
                [(ngModel)]="selectedFilter.priceTo"
-               (ngModelChange)="filterTransactions()">
+               (ngModelChange)="filterPlannedTransactions()">
       </td>
 
       <!--Account-->
@@ -146,7 +146,7 @@
         <select multiple
                 class="form-control"
                 [(ngModel)]="selectedFilter.accounts"
-                (ngModelChange)="filterTransactions()">
+                (ngModelChange)="filterPlannedTransactions()">
           <option *ngFor="let account of accounts"
                   [ngValue]="account">
             {{account.name}}
@@ -159,7 +159,7 @@
         <select multiple
                 class="form-control"
                 [(ngModel)]="selectedFilter.categories"
-                (ngModelChange)="filterTransactions()">
+                (ngModelChange)="filterPlannedTransactions()">
           <option *ngFor="let category of categories"
                   [ngValue]="category">
             {{category.name}}
