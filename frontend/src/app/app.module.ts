@@ -22,6 +22,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {ImportExportComponent} from './components/import-export/import-export/import-export.component';
+import { PlannedTransactionsComponent } from './planned-transaction/planned-transactions.component';
 
 export const createTranslateLoader = (http: HttpClient) => {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,7 +39,8 @@ export const createTranslateLoader = (http: HttpClient) => {
     LoginComponent,
     RegisterComponent,
     HistoryComponent,
-    ImportExportComponent
+    ImportExportComponent,
+    PlannedTransactionsComponent
   ],
   imports: [
     BrowserModule,

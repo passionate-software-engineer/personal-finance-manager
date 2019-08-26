@@ -32,6 +32,15 @@
       <li [routerLinkActive]="['active']"
           class="nav-item">
         <a
+          id="PlannedTransactionLink"
+          class="nav-link"
+          routerLink="/plannedTransactions"
+          routerLinkActive="active">{{'Planned transactions' | translate}}
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']"
+          class="nav-item">
+        <a
           id="CategoriesLink"
           class="nav-link"
           routerLink="/categories"

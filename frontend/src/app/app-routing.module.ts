@@ -7,6 +7,7 @@ import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HistoryComponent} from './components/history/history/history.component';
 import {ImportExportComponent} from './components/import-export/import-export/import-export.component';
+import {PlannedTransactionsComponent} from './planned-transaction/planned-transactions.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]},
   {path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard]},
   {path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]},
+  {path: 'plannedTransactions', component: PlannedTransactionsComponent, canActivate: [AuthGuard]},
   {path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
   {path: 'export', component: ImportExportComponent, canActivate: [AuthGuard]},
   // otherwise redirect to home
