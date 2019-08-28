@@ -13,7 +13,7 @@ export class FiltersComponentBase extends Sortable {
   transactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
-  selectedFilter = new TransactionFilter();
+  selectedPlannedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
 
@@ -22,16 +22,16 @@ export class FiltersComponentBase extends Sortable {
   }
 
   onFilterChange() {
-    this.selectedFilter = JSON.parse(JSON.stringify(this.originalFilter));
+    this.selectedPlannedFilter = JSON.parse(JSON.stringify(this.originalFilter));
 
-    this.selectedFilter.accounts = [];
+    this.selectedPlannedFilter.accounts = [];
     for (const account of this.originalFilter.accounts) {
-      this.selectedFilter.accounts.push(account);
+      this.selectedPlannedFilter.accounts.push(account);
     }
 
-    this.selectedFilter.categories = [];
+    this.selectedPlannedFilter.categories = [];
     for (const category of this.originalFilter.categories) {
-      this.selectedFilter.categories.push(category);
+      this.selectedPlannedFilter.categories.push(category);
     }
 
     this.filterPlannedTransactions();
@@ -49,11 +49,11 @@ export class FiltersComponentBase extends Sortable {
   }
 
   addFilter() {
-    if (!this.validateFilter(this.selectedFilter)) {
+    if (!this.validateFilter(this.selectedPlannedFilter)) {
       return;
     }
 
-    this.filterService.addFilter(this.selectedFilter)
+    this.filterService.addFilter(this.selectedPlannedFilter)
         .subscribe(id => {
           this.alertService.success(this.translate.instant('message.filterAdded'));
           this.filterService.getFilter(id)
@@ -78,14 +78,14 @@ export class FiltersComponentBase extends Sortable {
       return;
     }
 
-    if (!this.validateFilter(this.selectedFilter, true)) {
+    if (!this.validateFilter(this.selectedPlannedFilter, true)) {
       return;
     }
 
-    this.filterService.updateFilter(this.selectedFilter)
+    this.filterService.updateFilter(this.selectedPlannedFilter)
         .subscribe(() => {
           this.alertService.success(this.translate.instant('message.filterUpdated'));
-          this.filterService.getFilter(this.selectedFilter.id)
+          this.filterService.getFilter(this.selectedPlannedFilter.id)
               .subscribe(createdFilter => {
                 const processedFilter = this.processFilter(createdFilter);
                 this.filters = this.filters.filter(filter => filter !== this.originalFilter);
@@ -187,10 +187,10 @@ export class FiltersComponentBase extends Sortable {
       this.transactions.push(transaction);
     }
 
-    if (this.selectedFilter.priceFrom !== undefined && this.selectedFilter.priceFrom !== null) {
+    if (this.selectedPlannedFilter.priceFrom !== undefined && this.selectedPlannedFilter.priceFrom !== null) {
       this.transactions = this.transactions.filter(transaction => {
         for (const accountPriceEntry of transaction.accountPriceEntries) {
-          if (accountPriceEntry.price >= this.selectedFilter.priceFrom) {
+          if (accountPriceEntry.price >= this.selectedPlannedFilter.priceFrom) {
             return true;
           }
         }
@@ -198,10 +198,10 @@ export class FiltersComponentBase extends Sortable {
       });
     }
 
-    if (this.selectedFilter.priceTo !== undefined && this.selectedFilter.priceTo !== null) {
+    if (this.selectedPlannedFilter.priceTo !== undefined && this.selectedPlannedFilter.priceTo !== null) {
       this.transactions = this.transactions.filter(transaction => {
         for (const accountPriceEntry of transaction.accountPriceEntries) {
-          if (accountPriceEntry.price <= this.selectedFilter.priceTo) {
+          if (accountPriceEntry.price <= this.selectedPlannedFilter.priceTo) {
             return true;
           }
         }
@@ -209,27 +209,27 @@ export class FiltersComponentBase extends Sortable {
       });
     }
 
-    if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !== '') {
+    if (this.selectedPlannedFilter.dateFrom !== undefined && this.selectedPlannedFilter.dateFrom !== null && this.selectedPlannedFilter.dateFrom !== '') {
       this.transactions = this.transactions
-                              .filter(transaction => new Date(transaction.date).getTime() >= new Date(this.selectedFilter.dateFrom).getTime());
+                              .filter(transaction => new Date(transaction.date).getTime() >= new Date(this.selectedPlannedFilter.dateFrom).getTime());
     }
 
-    if (this.selectedFilter.dateTo !== undefined && this.selectedFilter.dateTo !== null && this.selectedFilter.dateTo !== '') {
+    if (this.selectedPlannedFilter.dateTo !== undefined && this.selectedPlannedFilter.dateTo !== null && this.selectedPlannedFilter.dateTo !== '') {
       this.transactions = this.transactions
-                              .filter(transaction => new Date(transaction.date).getTime() <= new Date(this.selectedFilter.dateTo).getTime());
+                              .filter(transaction => new Date(transaction.date).getTime() <= new Date(this.selectedPlannedFilter.dateTo).getTime());
     }
 
-    if (this.selectedFilter.description !== undefined && this.selectedFilter.description !== null) {
+    if (this.selectedPlannedFilter.description !== undefined && this.selectedPlannedFilter.description !== null) {
       this.transactions = this.transactions
                               .filter(transaction => transaction.description.toLowerCase()
-                                                                .indexOf(this.selectedFilter.description.toLowerCase()) !== -1);
+                                                                .indexOf(this.selectedPlannedFilter.description.toLowerCase()) !== -1);
     }
 
-    if (this.selectedFilter.accounts !== undefined && this.selectedFilter.accounts.length > 0) {
+    if (this.selectedPlannedFilter.accounts !== undefined && this.selectedPlannedFilter.accounts.length > 0) {
       this.transactions = this.transactions
                               .filter(transaction => {
                                   for (const accountPriceEntry of transaction.accountPriceEntries) {
-                                    if (this.selectedFilter.accounts.indexOf(accountPriceEntry.account) !== -1) {
+                                    if (this.selectedPlannedFilter.accounts.indexOf(accountPriceEntry.account) !== -1) {
                                       return true;
                                     }
                                   }
@@ -239,8 +239,8 @@ export class FiltersComponentBase extends Sortable {
       ;
     }
 
-    if (this.selectedFilter.categories !== undefined && this.selectedFilter.categories.length > 0) {
-      const allCategories = this.getAllChildCategoriesIncludingParent(this.selectedFilter.categories);
+    if (this.selectedPlannedFilter.categories !== undefined && this.selectedPlannedFilter.categories.length > 0) {
+      const allCategories = this.getAllChildCategoriesIncludingParent(this.selectedPlannedFilter.categories);
       this.transactions = this.transactions
                               .filter(transaction => allCategories.indexOf(transaction.category) !== -1);
     }

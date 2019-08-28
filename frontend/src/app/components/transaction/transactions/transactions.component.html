@@ -24,7 +24,7 @@
     </select>
     <input class="form-control"
            type="text"
-           [(ngModel)]="selectedFilter.name"/>
+           [(ngModel)]="selectedPlannedFilter.name"/>
     <button id="AddFilterBtn"
             class="btn btn-success"
             (click)="addFilter()">{{'transaction.save' | translate}}</button>
@@ -111,13 +111,13 @@
                type="date"
                min="2015-01-01"
                max="2025-12-31"
-               [(ngModel)]="selectedFilter.dateFrom"
+               [(ngModel)]="selectedPlannedFilter.dateFrom"
                (ngModelChange)="filterPlannedTransactions()">
         <input class="form-control"
                type="date"
                min="2015-01-01"
                max="2025-12-31"
-               [(ngModel)]="selectedFilter.dateTo"
+               [(ngModel)]="selectedPlannedFilter.dateTo"
                (ngModelChange)="filterPlannedTransactions()">
       </td>
 
@@ -125,7 +125,7 @@
       <td>
         <input class="form-control"
                type="text"
-               [(ngModel)]="selectedFilter.description"
+               [(ngModel)]="selectedPlannedFilter.description"
                (ngModelChange)="filterPlannedTransactions()">
       </td>
 
@@ -133,11 +133,11 @@
       <td>
         <input class="form-control"
                type="number"
-               [(ngModel)]="selectedFilter.priceFrom"
+               [(ngModel)]="selectedPlannedFilter.priceFrom"
                (ngModelChange)="filterPlannedTransactions()">
         <input class="form-control"
                type="number"
-               [(ngModel)]="selectedFilter.priceTo"
+               [(ngModel)]="selectedPlannedFilter.priceTo"
                (ngModelChange)="filterPlannedTransactions()">
       </td>
 
@@ -145,7 +145,7 @@
       <td>
         <select multiple
                 class="form-control"
-                [(ngModel)]="selectedFilter.accounts"
+                [(ngModel)]="selectedPlannedFilter.accounts"
                 (ngModelChange)="filterPlannedTransactions()">
           <option *ngFor="let account of accounts"
                   [ngValue]="account">
@@ -158,7 +158,7 @@
       <td>
         <select multiple
                 class="form-control"
-                [(ngModel)]="selectedFilter.categories"
+                [(ngModel)]="selectedPlannedFilter.categories"
                 (ngModelChange)="filterPlannedTransactions()">
           <option *ngFor="let category of categories"
                   [ngValue]="category">
