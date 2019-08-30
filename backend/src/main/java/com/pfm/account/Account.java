@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+//@Access(AccessType.PROPERTY)
 public final class Account {
 
   @Id
@@ -35,10 +36,6 @@ public final class Account {
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   @HistoryField
   private BigDecimal balance;
-
-  @ApiModelProperty(value = "Projected account's balance on dueDate - including planned transactions being made till dueDate", required = true,
-      example = "1134.89")
-  private BigDecimal projectedBalance;
 
   @ManyToOne // TODO should not return all currency information, only id
   @ApiModelProperty(value = "Account's currency", required = true, example = "USD")

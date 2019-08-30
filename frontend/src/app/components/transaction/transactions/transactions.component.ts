@@ -38,16 +38,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   ngOnInit() {
-    // forkJoin(
-    //   this.categoryService.getCategories(),
-    //   this.accountService.getAccounts(),
-    //   (categories, accounts) => {
-    //     this.categories = categories;
-    //     this.accounts = accounts;
-    //     return this.getTransactions();
-    //   }
-    // );
-
     this.filters = [];
     this.addShowAllFilter();
 

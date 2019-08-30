@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class PlannedTransactionServiceTest {
 
-  private static final long NOT_EXISTING_ID = 0;
+  private static final long NOT_EXISTING_ID = -3;
   private static final long MOCK_USER_ID = 1;
 
   @Mock

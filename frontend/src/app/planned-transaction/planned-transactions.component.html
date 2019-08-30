@@ -85,17 +85,6 @@
         <span [hidden]="reverse">▲</span>
       </th>
 
-      <!--Projected account balance by due date-->
-      <th (click)="setOrder('accountPriceEntries[0].account.name')"
-          [class.active]="order === 'accountPriceEntries[0].account.balance'"
-          class="width15"
-          id="ProjectedBalance">
-        {{'plannedTransaction.projectedBalance' | translate}}
-        <span [hidden]="!reverse">▼</span>
-        <span [hidden]="reverse">▲</span>
-      </th>
-
-
       <!--Category-->
       <th (click)="setOrder('category.name')"
           [class.active]="order === 'category.name'"
@@ -164,21 +153,6 @@
           </option>
         </select>
       </td>
-
-      <td></td>
-
-      <td>
-        <select (ngModelChange)="filterPlannedTransactions()"
-                [(ngModel)]="selectedPlannedFilter.accounts"
-                class="form-control"
-                multiple>
-          <option *ngFor="let account of accounts"
-                  [ngValue]="account">
-            {{account.name}}
-          </option>
-        </select>
-      </td>
-
 
       <!--Category-->
       <td>
@@ -325,11 +299,6 @@
             {{account.name}}
           </option>
         </select>
-      </td>
-
-      <td>
-        <!--        here enter value-->
-        {{plannedTransaction.accountPriceEntries[0].account.projectedBalance}}
       </td>
 
       <!--Category-->

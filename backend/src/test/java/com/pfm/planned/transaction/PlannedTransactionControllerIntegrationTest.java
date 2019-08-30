@@ -99,7 +99,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         is(accountJacekBalance1000().getBalance()));
   }
 
-  //fixme add testing projected balance updates after deleting planned transaction
+  // fixme Lukasz add testing projected balance updates after deleting planned transaction
   @Test
   public void shouldGetPlannedTransactions() throws Exception {
     //given
@@ -218,7 +218,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
   }
 
   @Test
-  public void shouldReturnBadRequestDuringAddingTransactionWithAccountIdOfArchivedAccount() throws Exception {
+  public void shouldReturnBadRequestDuringAddingTransactionToArchivedAccount() throws Exception {
     //given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
