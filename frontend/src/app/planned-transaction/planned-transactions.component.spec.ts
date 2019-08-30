@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlannedTransactionsComponent } from './planned-transactions.component';
+import {PlannedTransactionsComponent} from './planned-transactions.component';
 
 describe('PlannedTransactionsComponent', () => {
   let component: PlannedTransactionsComponent;
@@ -8,9 +8,9 @@ describe('PlannedTransactionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlannedTransactionsComponent ]
+      declarations: [PlannedTransactionsComponent]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,6 +20,7 @@ describe('PlannedTransactionsComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy();
   });
 });

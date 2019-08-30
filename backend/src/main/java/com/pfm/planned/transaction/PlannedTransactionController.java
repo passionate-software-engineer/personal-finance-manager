@@ -60,7 +60,6 @@ public class PlannedTransactionController implements PlannedTransactionApi {
 
     log.info("Adding  planned transaction to the database");
 
-    //fixme lukasz
     List<String> validationResult = genericTransactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Planned transaction is not valid {}", validationResult);

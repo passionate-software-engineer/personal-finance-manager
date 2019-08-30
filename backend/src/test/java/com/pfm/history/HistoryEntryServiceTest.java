@@ -3,7 +3,6 @@ package com.pfm.history;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
-import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -14,7 +13,6 @@ import com.pfm.category.Category;
 import com.pfm.history.HistoryEntry.Type;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -137,18 +135,4 @@ public class HistoryEntryServiceTest {
     return transaction;
   }
 
-  //fixme - extract to class like transactionProvider - same method is in HistoryInfoProviderTest
-  private Transaction getTransactionWithNewValues() {
-    Transaction transaction = carTransactionWithNoAccountAndNoCategory();
-    transaction.setDescription("Food for party");
-    transaction.setDate(LocalDate.of(2018, 10, 10));
-
-    transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
-        .price(convertDoubleToBigDecimal(321.00))
-        .accountId(2L)
-        .build()
-    ));
-    transaction.setCategoryId(2L);
-    return transaction;
-  }
 }

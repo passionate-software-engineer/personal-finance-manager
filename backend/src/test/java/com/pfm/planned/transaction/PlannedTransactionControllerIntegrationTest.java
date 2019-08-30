@@ -99,7 +99,6 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         is(accountJacekBalance1000().getBalance()));
   }
 
-  // fixme Lukasz add testing projected balance updates after deleting planned transaction
   @Test
   public void shouldGetPlannedTransactions() throws Exception {
     //given
@@ -199,10 +198,6 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    //    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-
-    //    callRestServiceToAddAccountAndReturnId(account, token);
     PlannedTransaction invalidPlannedTransaction = PlannedTransaction.builder()
         .description("Fuel")
         .build();
