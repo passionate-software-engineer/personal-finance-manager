@@ -118,7 +118,6 @@
   "plannedTransaction.price": "Price",
   "plannedTransaction.account": "Account",
   "plannedTransaction.category": "Category",
-  "plannedTransaction.projectedBalance": "Projected balance",
   "filters.showAllFilterName": "All transactions",
   "history.date": "Date",
   "history.entry": "Entry",

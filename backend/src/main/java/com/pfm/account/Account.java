@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-//@Access(AccessType.PROPERTY)
 public final class Account {
 
   @Id

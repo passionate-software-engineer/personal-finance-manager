@@ -4,7 +4,6 @@ export class Account {
   id: number;
   name: string;
   balance = 0;
-  projectedBalance: number;
   currency: Currency;
   editMode = false;
   lastVerificationDate: Date;
