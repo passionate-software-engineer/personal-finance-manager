@@ -28,6 +28,7 @@ import com.pfm.config.MessagesProvider.Language;
 import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.AccountPriceEntry;
+import com.pfm.transaction.Transaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -62,7 +63,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
 
     //then
-    PlannedTransaction expectedPlannedTransaction =
+    Transaction expectedPlannedTransaction =
         setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()),
             plannedTransactionId, jacekAccountId, foodCategoryId);
 
@@ -79,17 +80,17 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    PlannedTransaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    Transaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
     long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
 
-    PlannedTransaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    Transaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
     setPlannedTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
     //when
     callRestToDeletePlannedTransactionById(plannedTransactionId, token);
 
     //then
-    List<PlannedTransaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     assertThat(allPlannedTransactionsInDb.size(), is(0));
     assertThat(allPlannedTransactionsInDb.contains(addedPlannedTransaction), is(false));
@@ -114,14 +115,14 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()), jacekAccountId, carCategoryId, token);
 
     //when
-    List<PlannedTransaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     //then
-    PlannedTransaction foodPlannedTransactionExpected =
+    Transaction foodPlannedTransactionExpected =
         setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()),
             foodPlannedTransactionId, jacekAccountId, foodCategoryId);
 
-    PlannedTransaction carPlannedTransactionExpected =
+    Transaction carPlannedTransactionExpected =
         setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()),
             carPlannedTransactionId, jacekAccountId, carCategoryId);
 
@@ -157,9 +158,9 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     //when
     callRestToUpdatePlannedTransaction(foodPlannedTransactionId, updatedFoodPlannedTransactionRequest, token);
-    List<PlannedTransaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
-    PlannedTransaction expected = convertPlannedTransactionRequestToPlannedTransactionAndSetId(foodPlannedTransactionId,
+    Transaction expected = convertPlannedTransactionRequestToPlannedTransactionAndSetId(foodPlannedTransactionId,
         updatedFoodPlannedTransactionRequest);
 
     //then
@@ -198,7 +199,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
-    PlannedTransaction invalidPlannedTransaction = PlannedTransaction.builder()
+    Transaction invalidPlannedTransaction = Transaction.builder()
         .description("Fuel")
         .build();
 
@@ -229,7 +230,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     callRestToMarkAccountAsArchived(accountId);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    PlannedTransaction plannedTransaction = PlannedTransaction.builder()
+    Transaction plannedTransaction = Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
             AccountPriceEntry.builder()
                 .accountId(accountId)
@@ -331,10 +332,10 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    PlannedTransaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    Transaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
     long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
 
-    PlannedTransaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    Transaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
     setPlannedTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
     //when

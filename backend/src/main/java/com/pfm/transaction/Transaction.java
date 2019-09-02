@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Transaction implements WithTransactionProperties {
+public class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

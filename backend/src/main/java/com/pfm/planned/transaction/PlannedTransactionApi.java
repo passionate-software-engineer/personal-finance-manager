@@ -1,5 +1,6 @@
 package com.pfm.planned.transaction;
 
+import com.pfm.transaction.Transaction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -18,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "plannedTransaction", description = "Controller used to list / add / update / delete planned transactions.")
 public interface PlannedTransactionApi {
 
-  @ApiOperation(value = "Find planned transactions by id", response = PlannedTransaction.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Find planned transactions by id", response = Transaction.class, authorizations = {@Authorization(value = "Bearer")})
   @GetMapping(value = "/{plannedTransactionId}")
-  ResponseEntity<PlannedTransaction> getPlannedTransactionById(@PathVariable long plannedTransactionId);
+  ResponseEntity<Transaction> getPlannedTransactionById(@PathVariable long plannedTransactionId);
 
-  @ApiOperation(value = "Get list of all planned transactions", response = PlannedTransaction.class, responseContainer = "List",
+  @ApiOperation(value = "Get list of all planned transactions", response = Transaction.class, responseContainer = "List",
       authorizations = {@Authorization(value = "Bearer")})
   @GetMapping
-  ResponseEntity<List<PlannedTransaction>> getPlannedTransactions();
+  ResponseEntity<List<Transaction>> getPlannedTransactions();
 
   @ApiOperation(value = "Create a new planned transaction", response = long.class, authorizations = {@Authorization(value = "Bearer")})
   @PostMapping

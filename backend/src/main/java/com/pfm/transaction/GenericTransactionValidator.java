@@ -27,7 +27,7 @@ public class GenericTransactionValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public <T extends WithTransactionProperties> List<String> validate(T transaction, long userId) {
+  public  List<String> validate( Transaction transaction, long userId) {
     List<String> validationErrors = new ArrayList<>();
 
     if (transaction.getDescription() == null || transaction.getDescription().trim().equals("")) {

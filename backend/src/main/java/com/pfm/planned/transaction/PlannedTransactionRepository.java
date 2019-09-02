@@ -1,16 +1,17 @@
 package com.pfm.planned.transaction;
 
+import com.pfm.transaction.Transaction;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PlannedTransactionRepository extends CrudRepository<PlannedTransaction, Long> {
+public interface PlannedTransactionRepository extends CrudRepository<Transaction, Long> {
 
-  List<PlannedTransaction> findByUserId(long userId);
+  List<Transaction> findByUserId(long userId);
 
-  Optional<PlannedTransaction> findByIdAndUserId(long plannedTransactionId, long userId);
+  Optional<Transaction> findByIdAndUserId(long plannedTransactionId, long userId);
 
   boolean existsByCategoryId(long categoryId);
 

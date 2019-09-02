@@ -4,6 +4,8 @@ import com.pfm.account.AccountService;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import com.pfm.transaction.GenericTransactionValidator;
+import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionService;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -20,17 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlannedTransactionController implements PlannedTransactionApi {
 
   private UserProvider userProvider;
-  private PlannedTransactionService plannedTransactionService;
+  private TransactionService transactionService;
   private GenericTransactionValidator genericTransactionValidator;
   private HistoryEntryService historyEntryService;
   private AccountService accountService;
 
   @Override
-  public ResponseEntity<PlannedTransaction> getPlannedTransactionById(long plannedTransactionId) {
+  public ResponseEntity<Transaction> getPlannedTransactionById(long plannedTransactionId) {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Retrieving planned transaction with id: {}", plannedTransactionId);
-    Optional<PlannedTransaction> plannedTransaction = plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId);
+    Optional<Transaction> plannedTransaction = transactionService.getTransactionByIdAndUserId(plannedTransactionId, userId);
 
     if (!plannedTransaction.isPresent()) {
       log.info("Planned transaction with id {} was not found", plannedTransactionId);
@@ -42,12 +44,12 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   }
 
   @Override
-  public ResponseEntity<List<PlannedTransaction>> getPlannedTransactions() {
+  public ResponseEntity<List<Transaction>> getPlannedTransactions() {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Retrieving all planned transactions");
 
-    return ResponseEntity.ok(plannedTransactionService.getPlannedTransactions(userId));
+    return ResponseEntity.ok(transactionService.getTransactions(userId));
 
   }
 
@@ -56,7 +58,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   public ResponseEntity<?> addPlannedTransaction(@RequestBody PlannedTransactionRequest plannedTransactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    PlannedTransaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
+    com.pfm.transaction.Transaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
 
     log.info("Adding  planned transaction to the database");
 
@@ -66,7 +68,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    PlannedTransaction createdPlannedTransaction = plannedTransactionService.addPlannedTransaction(userId, plannedTransaction);
+    Transaction createdPlannedTransaction = transactionService.addTransaction(userId, plannedTransaction,true);
     log.info("Saving planned transaction to the database was successful. Planned transaction id is {}", createdPlannedTransaction.getId());
 
     return ResponseEntity.ok(createdPlannedTransaction.getId());
@@ -79,14 +81,13 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       @RequestBody PlannedTransactionRequest plannedTransactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    Optional<PlannedTransaction> plannedTransactionByIdAndUserId = plannedTransactionService
-        .getPlannedTransactionByIdAndUserId(plannedTransactionId, userId);
+    Optional<Transaction> plannedTransactionByIdAndUserId = transactionService.getTransactionByIdAndUserId(plannedTransactionId, userId);
     if (!plannedTransactionByIdAndUserId.isPresent()) {
       log.info("No planned transaction with id {} was found, not able to update", plannedTransactionId);
       return ResponseEntity.notFound().build();
     }
 
-    PlannedTransaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
+    Transaction plannedTransaction = convertPlannedTransactionRequestToPlannedTransaction(plannedTransactionRequest);
 
     List<String> validationResult = genericTransactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
@@ -94,7 +95,7 @@ public class PlannedTransactionController implements PlannedTransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    plannedTransactionService.updatePlannedTransaction(plannedTransactionId, userId, plannedTransaction);
+    transactionService.updateTransaction(plannedTransactionId, userId, plannedTransaction);
     log.info("Planned transaction with id {} was successfully updated", plannedTransactionId);
 
     return ResponseEntity.ok().build();
@@ -106,21 +107,22 @@ public class PlannedTransactionController implements PlannedTransactionApi {
   public ResponseEntity<?> deletePlannedTransaction(@PathVariable long plannedTransactionId) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!plannedTransactionService.getPlannedTransactionByIdAndUserId(plannedTransactionId, userId).isPresent()) {
+    if (!transactionService.getTransactionByIdAndUserId(plannedTransactionId, userId).isPresent()) {
       log.info("No planned transaction with id {} was found, not able to delete", plannedTransactionId);
       return ResponseEntity.notFound().build();
     }
 
     log.info("Attempting to delete transaction with id {}", plannedTransactionId);
-    plannedTransactionService.deletePlannedTransaction(plannedTransactionId, userId);
+    transactionService.deleteTransaction(plannedTransactionId, userId);
 
     log.info("Planned transaction with id {} was deleted successfully", plannedTransactionId);
     return ResponseEntity.ok().build();
 
   }
 
-  private PlannedTransaction convertPlannedTransactionRequestToPlannedTransaction(PlannedTransactionRequest plannedTransactionRequest) {
-    return PlannedTransaction.builder()
+  //fixme lukasz is that OK?
+  private com.pfm.transaction.Transaction convertPlannedTransactionRequestToPlannedTransaction(PlannedTransactionRequest plannedTransactionRequest) {
+    return com.pfm.transaction.Transaction.builder()
         .description(plannedTransactionRequest.getDescription())
         .categoryId(plannedTransactionRequest.getCategoryId())
         .date(plannedTransactionRequest.getDate())
