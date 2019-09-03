@@ -241,7 +241,10 @@
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         id="TransactionRow">
 
-      <ng-container *ngIf="!transaction.isPlanned">
+      <!--      <ng-container *ngIf="!transaction.isPlanned">-->
+
+      <div *ngIf="!transaction.isPlanned; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
 
         <!--Date-->
         <td *ngIf="!transaction.editMode"
@@ -358,7 +361,10 @@
             </ul>
           </div>
         </td>
-      </ng-container>
+      </ng-template>
+      <ng-template #elseBlock>{{transaction.isPlanned }}</ng-template>
+
+
     </tr>
     <tr>
       <!--Date-->

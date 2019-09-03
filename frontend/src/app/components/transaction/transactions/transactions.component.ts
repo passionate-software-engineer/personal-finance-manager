@@ -72,7 +72,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             transaction.date = transactionResponse.date;
             transaction.id = transactionResponse.id;
             transaction.description = transactionResponse.description;
-            transaction.isPlanned = transactionResponse.isPlanned;
+            transaction.isPlanned = transactionResponse.planned;
+            // fixme here nie przepisuje wartosci logicznej z transaction response
+            // transaction.isPlanned = false;
 
             for (const entry of transactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
