@@ -1,7 +1,6 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pfm.history.HistoryField;
 import com.pfm.history.HistoryField.SpecialFieldType;
 import java.time.LocalDate;
@@ -46,7 +45,6 @@ public class Transaction {
   @JsonIgnore
   private Long userId;
 
-  @JsonProperty("isPlanned")
   private boolean isPlanned;
 
 }

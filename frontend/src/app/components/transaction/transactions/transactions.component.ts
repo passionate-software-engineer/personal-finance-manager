@@ -72,6 +72,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             transaction.date = transactionResponse.date;
             transaction.id = transactionResponse.id;
             transaction.description = transactionResponse.description;
+            transaction.isPlanned = transactionResponse.isPlanned;
 
             for (const entry of transactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
