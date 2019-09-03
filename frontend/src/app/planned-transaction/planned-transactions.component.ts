@@ -46,7 +46,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
               .subscribe(accounts => {
                 this.accounts = accounts;
                 this.accounts.sort((accounts1, accounts2) => (accounts1.name.toLowerCase() > accounts2.name.toLowerCase() ? 1 : -1));
-                this.getPlannedTransactions();
+                this.getTransactions();
                 this.getFilters();
               });
         });
@@ -57,17 +57,17 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     this.newTransaction.date = new Date();
   }
 
-  getPlannedTransactions(): void {
+  getTransactions(): void {
     this.plannedTransactionService.getPlannedTransactions()
         .subscribe(plannedTransactions => {
           this.transactions = [];
           this.allPlannedTransactions = [];
           for (const plannedTransactionResponse of plannedTransactions) {
-            const plannedTransaction = new Transaction(true);
+            const plannedTransaction = new Transaction();
             plannedTransaction.date = plannedTransactionResponse.date;
             plannedTransaction.id = plannedTransactionResponse.id;
             plannedTransaction.description = plannedTransactionResponse.description;
-            plannedTransaction.isPlanned = plannedTransactionResponse.isPlanned;
+            plannedTransaction.isPlanned = plannedTransactionResponse.planned;
 
             for (const entry of plannedTransactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();

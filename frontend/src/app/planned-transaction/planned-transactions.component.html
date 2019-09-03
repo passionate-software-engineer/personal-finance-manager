@@ -7,7 +7,7 @@
             type="button">
       {{'plannedTransaction.addTransaction' | translate}}
     </button>
-    <button (click)="getPlannedTransactions()"
+    <button (click)="getTransactions()"
             class="btn btn-primary"
             id="RefreshTransactionsBtn"
             type="button">{{'button.refresh' | translate}}</button>
@@ -241,7 +241,7 @@
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         id="TransactionRow">
 
-      <ng-container *ngIf="!transaction.isPlanned">
+      <ng-container *ngIf="transaction.isPlanned">
         <!--Date-->
         <td *ngIf="!transaction.editMode"
             id="DateReadOnly">{{transaction.date | date:'dd/MM/yyyy'}}</td>
