@@ -27,6 +27,11 @@ public interface TransactionApi {
   @GetMapping
   ResponseEntity<List<Transaction>> getTransactions();
 
+  @ApiOperation(value = "Get list of all planned transactions", response = Transaction.class, responseContainer = "List",
+      authorizations = {@Authorization(value = "Bearer")})
+  @GetMapping(value = "/planned")
+  ResponseEntity<List<Transaction>> getPlannedTransactions();
+
   @ApiOperation(value = "Create a new transaction", response = long.class, authorizations = {@Authorization(value = "Bearer")})
   @PostMapping
   ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);

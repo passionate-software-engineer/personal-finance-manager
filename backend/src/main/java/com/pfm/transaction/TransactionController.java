@@ -48,6 +48,15 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
+  public ResponseEntity<List<Transaction>> getPlannedTransactions() {
+    long userId = userProvider.getCurrentUserId();
+
+    log.info("Retrieving all planned transactions");
+
+    return ResponseEntity.ok(transactionService.getPlannedTransactions(userId));
+  }
+
+  @Override
   @Transactional
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
@@ -61,7 +70,7 @@ public class TransactionController implements TransactionApi {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-
+    //fixme lukasz   isPlanned
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
@@ -121,6 +130,7 @@ public class TransactionController implements TransactionApi {
         .categoryId(transactionRequest.getCategoryId())
         .date(transactionRequest.getDate())
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
+        .isPlanned(transactionRequest.isPlanned())
         .build();
   }
 }

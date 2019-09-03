@@ -1,6 +1,7 @@
 package com.pfm.planned.transaction;
 
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -30,11 +31,11 @@ public interface PlannedTransactionApi {
 
   @ApiOperation(value = "Create a new planned transaction", response = long.class, authorizations = {@Authorization(value = "Bearer")})
   @PostMapping
-  ResponseEntity<?> addPlannedTransaction(PlannedTransactionRequest plannedTransactionRequest);
+  ResponseEntity<?> addPlannedTransaction(TransactionRequest plannedTransactionRequest);
 
   @ApiOperation(value = "Update an existing planned transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @PutMapping(value = "/{plannedTransactionId}")
-  ResponseEntity<?> updatePlannedTransaction(@PathVariable long plannedTransactionId, PlannedTransactionRequest plannedTransactionRequest);
+  ResponseEntity<?> updatePlannedTransaction(@PathVariable long plannedTransactionId, TransactionRequest plannedTransactionRequest);
 
   @ApiOperation(value = "Delete an existing planned transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @DeleteMapping(value = "/{plannedTransactionId}")

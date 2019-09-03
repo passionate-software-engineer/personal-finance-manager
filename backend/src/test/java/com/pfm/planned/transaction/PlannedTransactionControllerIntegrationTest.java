@@ -29,6 +29,7 @@ import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.transaction.AccountPriceEntry;
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -57,15 +58,14 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    Transaction plannedTransaction = foodTransactionWithNoAccountAndNoCategory();
 
     //when
-    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
+    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
 
     //then
     Transaction expectedPlannedTransaction =
-        setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()),
-            plannedTransactionId, jacekAccountId, foodCategoryId);
+    setPlannedTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId, foodCategoryId);
 
     assertThat(callRestToGetPlannedTransactionById(plannedTransactionId, token), is(equalTo(expectedPlannedTransaction)));
 
@@ -148,8 +148,8 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
         token);
 
-    PlannedTransactionRequest updatedFoodPlannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
+    TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
+        foodTransactionWithNoAccountAndNoCategory());
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
     updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
@@ -241,7 +241,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         .categoryId(foodCategoryId)
         .date(LocalDate.of(2018, 8, 8))
         .build();
-    PlannedTransactionRequest plannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(plannedTransaction);
+    TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
     mockMvc
         .perform(post(PLANNED_TRANSACTIONS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -270,7 +270,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
         token);
 
-    PlannedTransactionRequest updatedFoodPlannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(
+    TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
@@ -305,7 +305,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
         token);
 
-    PlannedTransactionRequest updatedFoodPlannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(
+    TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
         convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));

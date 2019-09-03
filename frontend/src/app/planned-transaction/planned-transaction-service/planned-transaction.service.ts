@@ -3,9 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PlannedTransactionResponse} from './planned-transaction-response';
 import {ServiceBase} from '../../helpers/service-base';
-import {PlannedTransaction} from '../plannedTransaction';
+import {Transaction} from '../../components/transaction/transaction';
 
-const PATH = 'plannedTransactions';
+const PATH = 'transactions';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,13 @@ export class PlannedTransactionService extends ServiceBase {
     super(http);
   }
 
-  private static plannedTransactionToPlannedTransactionRequest(plannedTransaction: PlannedTransaction) {
+  private static plannedTransactionToPlannedTransactionRequest(plannedTransaction: Transaction) {
     const result = {
       description: plannedTransaction.description,
       categoryId: plannedTransaction.category.id,
       accountPriceEntries: [],
-      date: plannedTransaction.date
+      date: plannedTransaction.date,
+      isPlanned: plannedTransaction.isPlanned,
     };
 
     for (const entry of plannedTransaction.accountPriceEntries) {
@@ -48,7 +49,7 @@ export class PlannedTransactionService extends ServiceBase {
     return this.http.get<PlannedTransactionResponse>(ServiceBase.apiUrl(PATH, id));
   }
 
-  addPlannedTransaction(plannedTransaction: PlannedTransaction): Observable<any> {
+  addPlannedTransaction(plannedTransaction: Transaction): Observable<any> {
     const categoryRequest = PlannedTransactionService.plannedTransactionToPlannedTransactionRequest(plannedTransaction);
     return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
   }
@@ -57,8 +58,8 @@ export class PlannedTransactionService extends ServiceBase {
     return this.http.delete<any>(ServiceBase.apiUrl(PATH, id));
   }
 
-  editTransaction(category: PlannedTransaction): Observable<any> {
+  editTransaction(category: Transaction): Observable<any> {
     const categoryRequest = PlannedTransactionService.plannedTransactionToPlannedTransactionRequest(category);
-    return this.http.put<PlannedTransaction>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.contentType);
+    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.contentType);
   }
 }

@@ -5,11 +5,10 @@ import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {CategoryService} from '../components/category/category-service/category.service';
 import {AccountService} from '../components/account/account-service/account.service';
 import {TranslateService} from '@ngx-translate/core';
-import {PlannedTransaction} from './plannedTransaction';
 import {PlannedTransactionService} from './planned-transaction-service/planned-transaction.service';
 import {TransactionFilterService} from '../components/transaction/transaction-filter-service/transaction-filter.service';
 import {FiltersComponentBase} from '../components/transaction/transactions/transactions-filter.component';
-import {AccountPriceEntry} from '../components/transaction/transaction';
+import {AccountPriceEntry, Transaction} from '../components/transaction/transaction';
 
 @Component({
   selector: 'app-planned-transactions',
@@ -17,12 +16,12 @@ import {AccountPriceEntry} from '../components/transaction/transaction';
   styleUrls: ['./planned-transactions.component.css']
 })
 export class PlannedTransactionsComponent extends FiltersComponentBase implements OnInit {
-  allPlannedTransactions: PlannedTransaction[] = [];
-  plannedTransactions: PlannedTransaction[] = [];
+  allPlannedTransactions: Transaction[] = [];
+  transactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
-  newPlannedTransaction = new PlannedTransaction();
+  newTransaction = new Transaction(true);
 
   constructor(private plannedTransactionService: PlannedTransactionService,
               alertService: AlertsService,
@@ -52,22 +51,23 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
               });
         });
 
-    // 2 entries is usually enough, if user needs more he can edit created plannedTransaction and then new entry will appear automatically.
-    this.newPlannedTransaction.accountPriceEntries.push(new AccountPriceEntry());
-    this.newPlannedTransaction.accountPriceEntries.push(new AccountPriceEntry());
-    this.newPlannedTransaction.date = new Date();
+    // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
+    this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+    this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+    this.newTransaction.date = new Date();
   }
 
   getPlannedTransactions(): void {
     this.plannedTransactionService.getPlannedTransactions()
         .subscribe(plannedTransactions => {
-          this.plannedTransactions = [];
+          this.transactions = [];
           this.allPlannedTransactions = [];
           for (const plannedTransactionResponse of plannedTransactions) {
-            const plannedTransaction = new PlannedTransaction();
+            const plannedTransaction = new Transaction(true);
             plannedTransaction.date = plannedTransactionResponse.date;
             plannedTransaction.id = plannedTransactionResponse.id;
             plannedTransaction.description = plannedTransactionResponse.description;
+            plannedTransaction.isPlanned = plannedTransactionResponse.isPlanned;
 
             for (const entry of plannedTransactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
@@ -91,7 +91,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
               }
             }
 
-            this.plannedTransactions.push(plannedTransaction);
+            this.transactions.push(plannedTransaction);
             this.allPlannedTransactions.push(plannedTransaction);
           }
 
@@ -104,23 +104,23 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
       this.plannedTransactionService.deleteTransaction(plannedTransactionToDelete.id)
           .subscribe(() => {
             this.alertService.success(this.translate.instant('message.plannedTransactionDeleted'));
-            this.plannedTransactions = this.plannedTransactions.filter(plannedTransaction => plannedTransaction !== plannedTransactionToDelete);
+            this.transactions = this.transactions.filter(plannedTransaction => plannedTransaction !== plannedTransactionToDelete);
             this.allPlannedTransactions = this.allPlannedTransactions.filter(plannedTransaction => plannedTransaction !== plannedTransactionToDelete);
           });
     }
   }
 
-  updateTransaction(plannedTransaction: PlannedTransaction) {
-    if (!this.validatePlannedTransaction(plannedTransaction.editedPlannedTransaction)) {
+  updateTransaction(plannedTransaction: Transaction) {
+    if (!this.validatePlannedTransaction(plannedTransaction.editedTransaction)) {
       return;
     }
 
-    this.plannedTransactionService.editTransaction(plannedTransaction.editedPlannedTransaction)
+    this.plannedTransactionService.editTransaction(plannedTransaction.editedTransaction)
         .subscribe(() => {
           this.alertService.success(this.translate.instant('message.plannedTransactionEdited'));
           this.plannedTransactionService.getPlannedTransaction(plannedTransaction.id)
               .subscribe(updatedTransaction => {
-                const returnedTransaction = new PlannedTransaction(); // TODO dupliated code
+                const returnedTransaction = new Transaction(true); // TODO dupliated code
                 returnedTransaction.date = updatedTransaction.date;
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
@@ -154,18 +154,18 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   }
 
   addPlannedTransaction() {
-    if (!this.validatePlannedTransaction(this.newPlannedTransaction)) {
+    if (!this.validatePlannedTransaction(this.newTransaction)) {
       return;
     }
 
-    this.plannedTransactionService.addPlannedTransaction(this.newPlannedTransaction)
+    this.plannedTransactionService.addPlannedTransaction(this.newTransaction)
         .subscribe(id => {
           this.alertService.success(this.translate.instant('message.plannedTransactionAdded'));
           this.plannedTransactionService.getPlannedTransaction(id)
               .subscribe(createdTransaction => {
 
                 // TODO duplicate with above method
-                const returnedTransaction = new PlannedTransaction();
+                const returnedTransaction = new Transaction(true);
                 returnedTransaction.date = createdTransaction.date;
                 returnedTransaction.id = createdTransaction.id;
                 returnedTransaction.description = createdTransaction.description;
@@ -192,20 +192,20 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
                   }
                 }
 
-                this.plannedTransactions.push(returnedTransaction);
+                this.transactions.push(returnedTransaction);
                 this.allPlannedTransactions.push(returnedTransaction);
                 this.addingMode = false;
-                this.newPlannedTransaction = new PlannedTransaction();
-                // 2 entries is usually enough, if user needs more he can edit created plannedTransaction and then new entry will appear
+                this.newTransaction = new Transaction(true);
+                // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear
                 // automatically.
-                this.newPlannedTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newPlannedTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newPlannedTransaction.date = new Date();
+                this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+                this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+                this.newTransaction.date = new Date();
               });
         });
   }
 
-  private validatePlannedTransaction(plannedTransaction: PlannedTransaction): boolean {
+  private validatePlannedTransaction(plannedTransaction: Transaction): boolean {
     let status = true;
 
     if (plannedTransaction.date == null || plannedTransaction.date.toString() === '') {
@@ -247,11 +247,11 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     return status;
   }
 
-  onShowEditMode(plannedTransaction: PlannedTransaction) {
-    plannedTransaction.editedPlannedTransaction = JSON.parse(JSON.stringify(plannedTransaction));
+  onShowEditMode(plannedTransaction: Transaction) {
+    plannedTransaction.editedTransaction = JSON.parse(JSON.stringify(plannedTransaction));
     plannedTransaction.editMode = true;
 
-    for (const entry of plannedTransaction.editedPlannedTransaction.accountPriceEntries) {
+    for (const entry of plannedTransaction.editedTransaction.accountPriceEntries) {
       entry.price = +entry.price; // + added to convert to number
 
       // need to have same object to allow dropdown to work correctly
@@ -264,11 +264,11 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
 
     // Adds empty entry, thanks to that new value can be added on the UI
-    plannedTransaction.editedPlannedTransaction.accountPriceEntries.push(new AccountPriceEntry());
+    plannedTransaction.editedTransaction.accountPriceEntries.push(new AccountPriceEntry());
 
     for (const category of this.categories) {
-      if (category.id === plannedTransaction.editedPlannedTransaction.category.id) {
-        plannedTransaction.editedPlannedTransaction.category = category;
+      if (category.id === plannedTransaction.editedTransaction.category.id) {
+        plannedTransaction.editedTransaction.category = category;
       }
     }
 
@@ -277,10 +277,10 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   allFiltredPlannedTransactionsBalance() {
     let sum = 0;
 
-    for (let i = 0; i < this.plannedTransactions.length; ++i) {
-      for (let j = 0; j < this.plannedTransactions[i].accountPriceEntries.length; ++j) {
-        sum += +this.plannedTransactions[i].accountPriceEntries[j].price
-          * +this.plannedTransactions[i].accountPriceEntries[j].account.currency.exchangeRate;
+    for (let i = 0; i < this.transactions.length; ++i) {
+      for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
+        sum += +this.transactions[i].accountPriceEntries[j].price
+          * +this.transactions[i].accountPriceEntries[j].account.currency.exchangeRate;
       }
     }
 

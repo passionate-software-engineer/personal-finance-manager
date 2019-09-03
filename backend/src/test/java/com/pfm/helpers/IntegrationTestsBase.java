@@ -24,7 +24,6 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
-import com.pfm.planned.transaction.PlannedTransactionRequest;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
@@ -50,7 +49,7 @@ public abstract class IntegrationTestsBase {
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
-  protected static final String PLANNED_TRANSACTIONS_SERVICE_PATH = "/plannedTransactions";
+  protected static final String PLANNED_TRANSACTIONS_SERVICE_PATH = "transactions/planned";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";
@@ -273,7 +272,8 @@ public abstract class IntegrationTestsBase {
   }
 
   //transaction
-  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId, String token)
+  private long callRestToAddTransactionAndReturnId(com.pfm.transaction.TransactionRequest transactionRequest, long accountId, long categoryId,
+      String token)
       throws Exception {
     transactionRequest.setCategoryId(categoryId);
     transactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
@@ -288,14 +288,14 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected long callRestToAddTransactionAndReturnId(com.pfm.transaction.Transaction transaction, long accountId, long categoryId, String token) throws Exception {
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+  protected long callRestToAddTransactionAndReturnId(com.pfm.transaction.Transaction transaction, long accountId, long categoryId, String token)
+      throws Exception {
+    com.pfm.transaction.TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
-  private long callRestToAddPlannedTransactionAndReturnId(PlannedTransactionRequest plannedTransactionRequest, long accountId, long categoryId,
-      String token)
-      throws Exception {
+  private long callRestToAddPlannedTransactionAndReturnId(com.pfm.transaction.TransactionRequest plannedTransactionRequest, long accountId,
+      long categoryId, String token) throws Exception {
     plannedTransactionRequest.setCategoryId(categoryId);
     plannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
     String response =
@@ -311,12 +311,12 @@ public abstract class IntegrationTestsBase {
 
   protected long callRestToAddPlannedTransactionAndReturnId(Transaction plannedTransaction, long accountId, long categoryId, String token)
       throws Exception {
-    PlannedTransactionRequest plannedTransactionRequest = convertPlannedTransactionToPlannedTransactionRequest(plannedTransaction);
+    com.pfm.transaction.TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
     return callRestToAddPlannedTransactionAndReturnId(plannedTransactionRequest, accountId, categoryId, token);
   }
 
-  protected TransactionRequest convertTransactionToTransactionRequest(com.pfm.transaction.Transaction transaction) {
-    return TransactionRequest.builder()
+  protected com.pfm.transaction.TransactionRequest convertTransactionToTransactionRequest(com.pfm.transaction.Transaction transaction) {
+    return com.pfm.transaction.TransactionRequest.builder()
         .description(transaction.getDescription())
         .accountPriceEntries(transaction.getAccountPriceEntries())
         .date(transaction.getDate())
@@ -324,16 +324,17 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  protected PlannedTransactionRequest convertPlannedTransactionToPlannedTransactionRequest(Transaction plannedTransaction) {
-    return PlannedTransactionRequest.builder()
-        .description(plannedTransaction.getDescription())
-        .categoryId(plannedTransaction.getCategoryId())
-        .date(plannedTransaction.getDate())
-        .accountPriceEntries(plannedTransaction.getAccountPriceEntries())
-        .build();
-  }
+//  protected PlannedTransactionRequest convertPlannedTransactionToPlannedTransactionRequest(Transaction plannedTransaction) {
+//    return PlannedTransactionRequest.builder()
+//        .description(plannedTransaction.getDescription())
+//        .categoryId(plannedTransaction.getCategoryId())
+//        .date(plannedTransaction.getDate())
+//        .accountPriceEntries(plannedTransaction.getAccountPriceEntries())
+//        .build();
+//  }
 
-  protected com.pfm.transaction.Transaction setTransactionIdAccountIdCategoryId(com.pfm.transaction.Transaction transaction, long transactionId, long accountId, long categoryId) {
+  protected com.pfm.transaction.Transaction setTransactionIdAccountIdCategoryId(com.pfm.transaction.Transaction transaction, long transactionId,
+      long accountId, long categoryId) {
     transaction.setId(transactionId);
     transaction.setCategoryId(categoryId);
     transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
@@ -342,13 +343,15 @@ public abstract class IntegrationTestsBase {
 
   protected Transaction setPlannedTransactionIdAccountIdCategoryId(Transaction plannedTransaction, long plannedTransactionId,
       long accountId, long categoryId) {
+    plannedTransaction.setPlanned(true);
     plannedTransaction.setId(plannedTransactionId);
     plannedTransaction.setCategoryId(categoryId);
     plannedTransaction.getAccountPriceEntries().get(0).setAccountId(accountId);
     return plannedTransaction;
   }
 
-  protected com.pfm.transaction.Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
+  protected com.pfm.transaction.Transaction convertTransactionRequestToTransactionAndSetId(long transactionId,
+      com.pfm.transaction.TransactionRequest transactionRequest) {
     return com.pfm.transaction.Transaction.builder()
         .id(transactionId)
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
@@ -359,7 +362,7 @@ public abstract class IntegrationTestsBase {
   }
 
   protected Transaction convertPlannedTransactionRequestToPlannedTransactionAndSetId(long plannedTransactionId,
-      PlannedTransactionRequest plannedTransactionRequest) {
+      TransactionRequest plannedTransactionRequest) {
     return Transaction.builder()
         .id(plannedTransactionId)
         .accountPriceEntries(plannedTransactionRequest.getAccountPriceEntries())
@@ -387,7 +390,8 @@ public abstract class IntegrationTestsBase {
     return jsonToPlannedTransaction(response);
   }
 
-  protected void callRestToUpdateTransaction(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
+  protected void callRestToUpdateTransaction(long transactionId, com.pfm.transaction.TransactionRequest transactionRequest, String token)
+      throws Exception {
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -395,7 +399,7 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, PlannedTransactionRequest plannedTransactionRequest, String token)
+  protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, TransactionRequest plannedTransactionRequest, String token)
       throws Exception {
     mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
