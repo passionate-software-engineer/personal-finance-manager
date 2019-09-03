@@ -30,7 +30,6 @@ public class TransactionService {
 
   public List<Transaction> getTransactions(long userId) {
     return transactionRepository.findByUserId(userId).stream()
-        .filter(transaction -> !transaction.isPlanned())
         .sorted(Comparator.comparing(Transaction::getId))
         .collect(Collectors.toList());
   }

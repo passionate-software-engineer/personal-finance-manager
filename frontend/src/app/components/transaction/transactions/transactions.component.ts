@@ -68,7 +68,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           this.transactions = [];
           this.allTransactions = [];
           for (const transactionResponse of transactions) {
-            const transaction = new Transaction(false);
+            const transaction = new Transaction();
             transaction.date = transactionResponse.date;
             transaction.id = transactionResponse.id;
             transaction.description = transactionResponse.description;
