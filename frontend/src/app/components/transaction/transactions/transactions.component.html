@@ -241,7 +241,7 @@
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         id="TransactionRow">
 
-      <!--      <ng-container *ngIf="!transaction.isPlanned">-->
+      <!--      <ng-container *ngIf="!transaction.planned">-->
 
       <div *ngIf="!transaction.isPlanned; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>

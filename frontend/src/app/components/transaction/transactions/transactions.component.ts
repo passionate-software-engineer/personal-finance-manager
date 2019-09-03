@@ -74,7 +74,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             transaction.description = transactionResponse.description;
             transaction.isPlanned = transactionResponse.planned;
             // fixme here nie przepisuje wartosci logicznej z transaction response
-            // transaction.isPlanned = false;
+            // transaction.planned = false;
 
             for (const entry of transactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
@@ -176,7 +176,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 returnedTransaction.date = createdTransaction.date;
                 returnedTransaction.id = createdTransaction.id;
                 returnedTransaction.description = createdTransaction.description;
-                returnedTransaction.isPlanned = createdTransaction.isPlanned;
+                returnedTransaction.isPlanned = createdTransaction.planned;
 
 
                 for (const entry of createdTransaction.accountPriceEntries) {
