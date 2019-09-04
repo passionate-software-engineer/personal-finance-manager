@@ -33,6 +33,6 @@ public class TransactionRequest {
 
   @ApiModelProperty(value = "Is transaction planned")
   @JsonProperty("isPlanned")
-  private boolean planned;
+  private boolean isPlanned;
 
 }
