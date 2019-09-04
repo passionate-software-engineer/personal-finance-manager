@@ -69,12 +69,10 @@ public class TransactionService {
   @Transactional
   public void deleteTransaction(long id, long userId) {
     Transaction transactionToDelete = getTransactionFromDatabase(id, userId);
-    if (transactionToDelete.isPlanned()) {
-      return;
-    }
-
-    for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
-      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+    if (!transactionToDelete.isPlanned()) {
+      for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
+        subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+      }
     }
 
     transactionRepository.deleteById(id);
