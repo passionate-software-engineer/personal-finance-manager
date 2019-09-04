@@ -300,13 +300,19 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
   }
 
+    // fixme lukasz date reassigned?
+  // fixme lukasz what if add fails - still want do delete  (transactional, rollback)
   commitPlannedTransaction(transaction: Transaction) {
+    transaction.isPlanned = false;
     this.transactionService.addTransaction(transaction)
         .subscribe(() => {
             return;
           }
-        )
-    ;
+        );
+    this.transactionService.deleteTransaction(transaction.id)
+        .subscribe(() =>
+          this.alertService.success(this.translate.instant('message.transactionDeleted'))
+        );
 
   }
 }
