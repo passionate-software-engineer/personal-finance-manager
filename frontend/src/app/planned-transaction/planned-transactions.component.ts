@@ -5,7 +5,7 @@ import {AlertsService} from '../components/alert/alerts-service/alerts.service';
 import {AccountPriceEntry, Transaction} from '../components/transaction/transaction';
 import {CategoryService} from '../components/category/category-service/category.service';
 import {TransactionFilter} from '../components/transaction/transaction-filter';
-import { FiltersComponentBase } from '../components/transaction/transactions/transactions-filter.component';
+import {FiltersComponentBase} from '../components/transaction/transactions/transactions-filter.component';
 import {Category} from '../components/category/category';
 import {Account} from '../components/account/account';
 import {AccountService} from '../components/account/account-service/account.service';
@@ -72,8 +72,6 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
             transaction.id = transactionResponse.id;
             transaction.description = transactionResponse.description;
             transaction.isPlanned = transactionResponse.planned;
-            // fixme here nie przepisuje wartosci logicznej z transaction response
-            // transaction.planned = false;
 
             for (const entry of transactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
@@ -302,4 +300,13 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
   }
 
+  commitPlannedTransaction(transaction: Transaction) {
+    this.transactionService.addTransaction(transaction)
+        .subscribe(() => {
+            return;
+          }
+        )
+    ;
+
+  }
 }

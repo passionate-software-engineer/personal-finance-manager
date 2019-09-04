@@ -97,6 +97,7 @@
   "button.export": "Export",
   "button.import": "Import",
   "button.updateLastVerificationDate": "Confirm balance",
+  "button.commitPlannedTransaction": "Commit now",
   "checkbox.showArchived": "Show archived accounts",
   "transaction.save": "Save as new filter",
   "transaction.update": "Update selected filter",
