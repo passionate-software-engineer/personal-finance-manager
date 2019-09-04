@@ -21,7 +21,8 @@ export class TransactionService extends ServiceBase {
       description: transaction.description,
       categoryId: transaction.category.id,
       accountPriceEntries: [],
-      date: transaction.date
+      date: transaction.date,
+      isPlanned: transaction.isPlanned,
     };
 
     for (const entry of transaction.accountPriceEntries) {
@@ -49,6 +50,12 @@ export class TransactionService extends ServiceBase {
   }
 
   addTransaction(transaction: Transaction): Observable<any> {
+    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
+  }
+
+  addPlannedTransaction(transaction: Transaction): Observable<any> {
+    transaction.isPlanned = true;
     const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
     return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
   }

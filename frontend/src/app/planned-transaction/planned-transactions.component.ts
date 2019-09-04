@@ -41,7 +41,6 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     this.filters = [];
     this.addShowAllFilter();
 
-    // TODO do in parallel with forkJoin (not working for some reason)
     this.categoryService.getCategories()
         .subscribe(categories => {
           this.categories = categories;
@@ -160,19 +159,19 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
         });
   }
 
-  addTransaction() {
+  addPlannedTransaction() {
     if (!this.validateTransaction(this.newTransaction)) {
       return;
     }
 
-    this.transactionService.addTransaction(this.newTransaction)
+    this.transactionService.addPlannedTransaction(this.newTransaction)
         .subscribe(id => {
           this.alertService.success(this.translate.instant('message.transactionAdded'));
           this.transactionService.getTransaction(id)
               .subscribe(createdTransaction => {
 
                 // TODO duplicate with above method
-                const returnedTransaction = new Transaction(false);
+                const returnedTransaction = new Transaction(true);
                 returnedTransaction.date = createdTransaction.date;
                 returnedTransaction.id = createdTransaction.id;
                 returnedTransaction.description = createdTransaction.description;
@@ -204,7 +203,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
                 this.transactions.push(returnedTransaction);
                 this.allTransactions.push(returnedTransaction);
                 this.addingMode = false;
-                this.newTransaction = new Transaction(false);
+                this.newTransaction = new Transaction(true);
                 // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());

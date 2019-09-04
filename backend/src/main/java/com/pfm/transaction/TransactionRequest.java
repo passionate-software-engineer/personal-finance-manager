@@ -32,6 +32,7 @@ public class TransactionRequest {
   private List<AccountPriceEntry> accountPriceEntries = new ArrayList<>();
 
   @ApiModelProperty(value = "Is transaction planned")
-  private boolean isPlanned;
+  @JsonProperty("isPlanned")
+  private boolean planned;
 
 }

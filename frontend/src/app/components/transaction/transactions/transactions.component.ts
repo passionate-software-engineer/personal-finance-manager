@@ -22,7 +22,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
-  newTransaction = new Transaction(false);
+  newTransaction = new Transaction(true);
   selectedPlannedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
@@ -127,7 +127,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           this.alertService.success(this.translate.instant('message.transactionEdited'));
           this.transactionService.getTransaction(transaction.id)
               .subscribe(updatedTransaction => {
-                const returnedTransaction = new Transaction(false); // TODO dupliated code
+                const returnedTransaction = new Transaction(true); // TODO dupliated code
                 returnedTransaction.date = updatedTransaction.date;
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
@@ -172,7 +172,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
               .subscribe(createdTransaction => {
 
                 // TODO duplicate with above method
-                const returnedTransaction = new Transaction(false);
+                const returnedTransaction = new Transaction(true);
                 returnedTransaction.date = createdTransaction.date;
                 returnedTransaction.id = createdTransaction.id;
                 returnedTransaction.description = createdTransaction.description;
@@ -204,7 +204,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 this.transactions.push(returnedTransaction);
                 this.allTransactions.push(returnedTransaction);
                 this.addingMode = false;
-                this.newTransaction = new Transaction(false);
+                this.newTransaction = new Transaction(true);
                 // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
