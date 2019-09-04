@@ -70,10 +70,12 @@ public class TransactionController implements TransactionApi {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-    //fixme lukasz   isPlanned
-    Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
+    //fixme lukasz   isPlanned - not sure if below is correct
+    Transaction createdTransaction = transactionService.addTransaction(userId, transaction, transaction.isPlanned());
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
-    historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
+    if (!createdTransaction.isPlanned()) {
+      historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
+    }
 
     return ResponseEntity.ok(createdTransaction.getId());
   }
@@ -98,8 +100,10 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
+    if (!transactionToUpdate.isPlanned()) {
+      historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, transaction, userId);
+    }
 
-    historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, transaction, userId);
     transactionService.updateTransaction(transactionId, userId, transaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
@@ -118,7 +122,9 @@ public class TransactionController implements TransactionApi {
     Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
-    historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
+    if (!transactionToDelete.isPlanned()) {
+      historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
+    }
 
     log.info("Transaction with id {} was deleted successfully", transactionId);
     return ResponseEntity.ok().build();
