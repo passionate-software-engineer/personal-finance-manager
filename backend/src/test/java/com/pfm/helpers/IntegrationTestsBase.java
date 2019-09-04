@@ -49,7 +49,7 @@ public abstract class IntegrationTestsBase {
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
-  protected static final String PLANNED_TRANSACTIONS_SERVICE_PATH = "transactions/planned";
+  protected static final String PLANNED_TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";

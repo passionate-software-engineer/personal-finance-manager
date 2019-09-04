@@ -53,20 +53,9 @@ public class TransactionService {
 
   @Transactional
   public void updateTransaction(long id, long userId, Transaction transaction) {
-    if (transaction.isPlanned()){
-      return;
-    }
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
 
-    // subtract old value
-    for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
-      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
-    }
-
-    // add new value
-    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
-    }
+    updateAccountBalance(userId, transaction, transactionToUpdate);
 
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategoryId(transaction.getCategoryId());
@@ -80,7 +69,7 @@ public class TransactionService {
   @Transactional
   public void deleteTransaction(long id, long userId) {
     Transaction transactionToDelete = getTransactionFromDatabase(id, userId);
-    if (transactionToDelete.isPlanned()){
+    if (transactionToDelete.isPlanned()) {
       return;
     }
 
@@ -134,6 +123,20 @@ public class TransactionService {
 
   public boolean transactionExistByCategoryId(long categoryId) {
     return transactionRepository.existsByCategoryId(categoryId);
+  }
+
+  private void updateAccountBalance(long userId, Transaction transaction, Transaction transactionToUpdate) {
+    if (transaction.isPlanned() != transactionToUpdate.isPlanned()) {
+      throw new IllegalStateException("Property isPlanned of transaction and transactionToUpdate cannot differ");
+    }
+    if (!transaction.isPlanned()) {// subtract old value
+      for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
+        subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+      }// add new value
+      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+        addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
+      }
+    }
   }
 
 }

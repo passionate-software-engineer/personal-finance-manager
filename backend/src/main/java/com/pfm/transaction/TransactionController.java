@@ -70,7 +70,6 @@ public class TransactionController implements TransactionApi {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-    //fixme lukasz   isPlanned - not sure if below is correct
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction, transaction.isPlanned());
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     if (!createdTransaction.isPlanned()) {
