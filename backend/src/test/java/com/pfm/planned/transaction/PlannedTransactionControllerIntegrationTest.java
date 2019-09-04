@@ -59,6 +59,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     Transaction plannedTransaction = foodTransactionWithNoAccountAndNoCategory();
+    plannedTransaction.setPlanned(true);
 
     //when
     long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
