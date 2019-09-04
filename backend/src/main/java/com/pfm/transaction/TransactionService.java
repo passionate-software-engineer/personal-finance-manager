@@ -53,6 +53,9 @@ public class TransactionService {
 
   @Transactional
   public void updateTransaction(long id, long userId, Transaction transaction) {
+    if (transaction.isPlanned()){
+      return;
+    }
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
 
     // subtract old value
@@ -77,6 +80,9 @@ public class TransactionService {
   @Transactional
   public void deleteTransaction(long id, long userId) {
     Transaction transactionToDelete = getTransactionFromDatabase(id, userId);
+    if (transactionToDelete.isPlanned()){
+      return;
+    }
 
     for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
       subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
