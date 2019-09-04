@@ -44,10 +44,11 @@ public class TransactionService {
   @Transactional
   public Transaction addTransaction(long userId, Transaction transaction, boolean addHistoryEntryOnUpdate) {
     transaction.setUserId(userId);
-    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
+    if (!addHistoryEntryOnUpdate) {
+      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+        addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
+      }
     }
-
     return transactionRepository.save(transaction);
   }
 
