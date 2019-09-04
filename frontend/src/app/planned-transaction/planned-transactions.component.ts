@@ -1,42 +1,47 @@
 import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {TransactionService} from '../components/transaction/transaction-service/transaction.service';
+import {AlertsService} from '../components/alert/alerts-service/alerts.service';
+import {AccountPriceEntry, Transaction} from '../components/transaction/transaction';
+import {CategoryService} from '../components/category/category-service/category.service';
+import {TransactionFilter} from '../components/transaction/transaction-filter';
+import { FiltersComponentBase } from '../components/transaction/transactions/transactions-filter.component';
 import {Category} from '../components/category/category';
 import {Account} from '../components/account/account';
-import {AlertsService} from '../components/alert/alerts-service/alerts.service';
-import {CategoryService} from '../components/category/category-service/category.service';
 import {AccountService} from '../components/account/account-service/account.service';
-import {TranslateService} from '@ngx-translate/core';
-import {PlannedTransactionService} from './planned-transaction-service/planned-transaction.service';
 import {TransactionFilterService} from '../components/transaction/transaction-filter-service/transaction-filter.service';
-import {FiltersComponentBase} from '../components/transaction/transactions/transactions-filter.component';
-import {AccountPriceEntry, Transaction} from '../components/transaction/transaction';
 
 @Component({
   selector: 'app-planned-transactions',
-  templateUrl: './planned-transactions.component.html',
-  styleUrls: ['./planned-transactions.component.css']
+  templateUrl: '../planned-transaction/planned-transactions.component.html',
+  styleUrls: ['../components/transaction/transactions/transactions.component.css']
 })
 export class PlannedTransactionsComponent extends FiltersComponentBase implements OnInit {
-  allPlannedTransactions: Transaction[] = [];
+  allTransactions: Transaction[] = [];
   transactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
-  newTransaction = new Transaction(true);
+  newTransaction = new Transaction(false);
+  selectedPlannedFilter = new TransactionFilter();
+  originalFilter = new TransactionFilter();
+  filters: TransactionFilter[] = [];
 
-  constructor(private plannedTransactionService: PlannedTransactionService,
-              alertService: AlertsService,
-              private categoryService: CategoryService,
-              private accountService: AccountService,
-              filterService: TransactionFilterService,
-              translate: TranslateService) {
+  constructor(
+    private transactionService: TransactionService,
+    alertService: AlertsService,
+    private categoryService: CategoryService,
+    private accountService: AccountService,
+    filterService: TransactionFilterService,
+    translate: TranslateService) {
     super(alertService, filterService, translate);
-
   }
 
   ngOnInit() {
     this.filters = [];
     this.addShowAllFilter();
 
+    // TODO do in parallel with forkJoin (not working for some reason)
     this.categoryService.getCategories()
         .subscribe(categories => {
           this.categories = categories;
@@ -58,18 +63,20 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   }
 
   getTransactions(): void {
-    this.plannedTransactionService.getPlannedTransactions()
-        .subscribe(plannedTransactions => {
+    this.transactionService.getTransactions()
+        .subscribe(transactions => {
           this.transactions = [];
-          this.allPlannedTransactions = [];
-          for (const plannedTransactionResponse of plannedTransactions) {
-            const plannedTransaction = new Transaction();
-            plannedTransaction.date = plannedTransactionResponse.date;
-            plannedTransaction.id = plannedTransactionResponse.id;
-            plannedTransaction.description = plannedTransactionResponse.description;
-            plannedTransaction.isPlanned = plannedTransactionResponse.planned;
+          this.allTransactions = [];
+          for (const transactionResponse of transactions) {
+            const transaction = new Transaction();
+            transaction.date = transactionResponse.date;
+            transaction.id = transactionResponse.id;
+            transaction.description = transactionResponse.description;
+            transaction.isPlanned = transactionResponse.planned;
+            // fixme here nie przepisuje wartosci logicznej z transaction response
+            // transaction.planned = false;
 
-            for (const entry of plannedTransactionResponse.accountPriceEntries) {
+            for (const entry of transactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
               accountPriceEntry.price = +entry.price; // + added to convert to number
 
@@ -82,45 +89,45 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
 
               accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
 
-              plannedTransaction.accountPriceEntries.push(accountPriceEntry);
+              transaction.accountPriceEntries.push(accountPriceEntry);
             }
 
             for (const category of this.categories) {
-              if (category.id === plannedTransactionResponse.categoryId) {
-                plannedTransaction.category = category;
+              if (category.id === transactionResponse.categoryId) {
+                transaction.category = category;
               }
             }
 
-            this.transactions.push(plannedTransaction);
-            this.allPlannedTransactions.push(plannedTransaction);
+            this.transactions.push(transaction);
+            this.allTransactions.push(transaction);
           }
 
           super.filterPlannedTransactions();
         });
   }
 
-  deleteTransaction(plannedTransactionToDelete) {
+  deleteTransaction(transactionToDelete) {
     if (confirm(this.translate.instant('message.wantDeleteTransaction'))) {
-      this.plannedTransactionService.deleteTransaction(plannedTransactionToDelete.id)
+      this.transactionService.deleteTransaction(transactionToDelete.id)
           .subscribe(() => {
-            this.alertService.success(this.translate.instant('message.plannedTransactionDeleted'));
-            this.transactions = this.transactions.filter(plannedTransaction => plannedTransaction !== plannedTransactionToDelete);
-            this.allPlannedTransactions = this.allPlannedTransactions.filter(plannedTransaction => plannedTransaction !== plannedTransactionToDelete);
+            this.alertService.success(this.translate.instant('message.transactionDeleted'));
+            this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
+            this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
           });
     }
   }
 
-  updateTransaction(plannedTransaction: Transaction) {
-    if (!this.validatePlannedTransaction(plannedTransaction.editedTransaction)) {
+  updateTransaction(transaction: Transaction) {
+    if (!this.validateTransaction(transaction.editedTransaction)) {
       return;
     }
 
-    this.plannedTransactionService.editTransaction(plannedTransaction.editedTransaction)
+    this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe(() => {
-          this.alertService.success(this.translate.instant('message.plannedTransactionEdited'));
-          this.plannedTransactionService.getPlannedTransaction(plannedTransaction.id)
+          this.alertService.success(this.translate.instant('message.transactionEdited'));
+          this.transactionService.getTransaction(transaction.id)
               .subscribe(updatedTransaction => {
-                const returnedTransaction = new Transaction(true); // TODO dupliated code
+                const returnedTransaction = new Transaction(false); // TODO dupliated code
                 returnedTransaction.date = updatedTransaction.date;
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
@@ -148,27 +155,29 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
                 }
 
 
-                Object.assign(plannedTransaction, returnedTransaction);
+                Object.assign(transaction, returnedTransaction);
               });
         });
   }
 
-  addPlannedTransaction() {
-    if (!this.validatePlannedTransaction(this.newTransaction)) {
+  addTransaction() {
+    if (!this.validateTransaction(this.newTransaction)) {
       return;
     }
 
-    this.plannedTransactionService.addPlannedTransaction(this.newTransaction)
+    this.transactionService.addTransaction(this.newTransaction)
         .subscribe(id => {
-          this.alertService.success(this.translate.instant('message.plannedTransactionAdded'));
-          this.plannedTransactionService.getPlannedTransaction(id)
+          this.alertService.success(this.translate.instant('message.transactionAdded'));
+          this.transactionService.getTransaction(id)
               .subscribe(createdTransaction => {
 
                 // TODO duplicate with above method
-                const returnedTransaction = new Transaction(true);
+                const returnedTransaction = new Transaction(false);
                 returnedTransaction.date = createdTransaction.date;
                 returnedTransaction.id = createdTransaction.id;
                 returnedTransaction.description = createdTransaction.description;
+                returnedTransaction.isPlanned = createdTransaction.planned;
+
 
                 for (const entry of createdTransaction.accountPriceEntries) {
                   const accountPriceEntry = new AccountPriceEntry();
@@ -193,11 +202,10 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
                 }
 
                 this.transactions.push(returnedTransaction);
-                this.allPlannedTransactions.push(returnedTransaction);
+                this.allTransactions.push(returnedTransaction);
                 this.addingMode = false;
-                this.newTransaction = new Transaction(true);
-                // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear
-                // automatically.
+                this.newTransaction = new Transaction(false);
+                // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.date = new Date();
@@ -205,26 +213,26 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
         });
   }
 
-  private validatePlannedTransaction(plannedTransaction: Transaction): boolean {
+  private validateTransaction(transaction: Transaction): boolean {
     let status = true;
 
-    if (plannedTransaction.date == null || plannedTransaction.date.toString() === '') {
+    if (transaction.date == null || transaction.date.toString() === '') {
       this.alertService.error(this.translate.instant('message.dateEmpty'));
       status = false;
     }
 
-    if (plannedTransaction.description == null || plannedTransaction.description.trim() === '') {
+    if (transaction.description == null || transaction.description.trim() === '') {
       this.alertService.error(this.translate.instant('message.descriptionEmpty'));
       status = false;
     }
 
-    if (plannedTransaction.description != null && plannedTransaction.description.length > 100) {
+    if (transaction.description != null && transaction.description.length > 100) {
       this.alertService.error(this.translate.instant('message.categoryNameTooLong'));
       status = false;
     }
 
-    for (const entry of plannedTransaction.accountPriceEntries) {
-      if (entry.price == null && entry.account == null && plannedTransaction.accountPriceEntries.length > 1) {
+    for (const entry of transaction.accountPriceEntries) {
+      if (entry.price == null && entry.account == null && transaction.accountPriceEntries.length > 1) {
         continue;
       }
 
@@ -239,7 +247,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
       }
     }
 
-    if (plannedTransaction.category == null) {
+    if (transaction.category == null) {
       this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
       status = false;
     }
@@ -247,11 +255,11 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     return status;
   }
 
-  onShowEditMode(plannedTransaction: Transaction) {
-    plannedTransaction.editedTransaction = JSON.parse(JSON.stringify(plannedTransaction));
-    plannedTransaction.editMode = true;
+  onShowEditMode(transaction: Transaction) {
+    transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
+    transaction.editMode = true;
 
-    for (const entry of plannedTransaction.editedTransaction.accountPriceEntries) {
+    for (const entry of transaction.editedTransaction.accountPriceEntries) {
       entry.price = +entry.price; // + added to convert to number
 
       // need to have same object to allow dropdown to work correctly
@@ -264,17 +272,17 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
 
     // Adds empty entry, thanks to that new value can be added on the UI
-    plannedTransaction.editedTransaction.accountPriceEntries.push(new AccountPriceEntry());
+    transaction.editedTransaction.accountPriceEntries.push(new AccountPriceEntry());
 
     for (const category of this.categories) {
-      if (category.id === plannedTransaction.editedTransaction.category.id) {
-        plannedTransaction.editedTransaction.category = category;
+      if (category.id === transaction.editedTransaction.category.id) {
+        transaction.editedTransaction.category = category;
       }
     }
 
   }
 
-  allFiltredPlannedTransactionsBalance() {
+  allFiltredTransactionsBalance() {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {

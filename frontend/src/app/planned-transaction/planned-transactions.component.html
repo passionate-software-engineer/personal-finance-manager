@@ -5,7 +5,7 @@
             class="btn btn-success"
             id="AddTransactionBtn"
             type="button">
-      {{'plannedTransaction.addTransaction' | translate}}
+      {{'transaction.addTransaction' | translate}}
     </button>
     <button (click)="getTransactions()"
             class="btn btn-primary"
@@ -27,16 +27,16 @@
            type="text"/>
     <button (click)="addFilter()"
             class="btn btn-success"
-            id="AddFilterBtn">{{'plannedTransaction.save' | translate}}</button>
+            id="AddFilterBtn">{{'transaction.save' | translate}}</button>
     <button (click)="updateFilter()"
             class="btn btn-warning"
-            id="UpdateFilterBtn">{{'plannedTransaction.update' | translate}}</button>
+            id="UpdateFilterBtn">{{'transaction.update' | translate}}</button>
     <button (click)="resetFilter()"
             class="btn btn-primary"
-            id="ResetFilterBtn">{{'plannedTransaction.reset' | translate}}</button>
+            id="ResetFilterBtn">{{'transaction.reset' | translate}}</button>
     <button (click)="deleteFilter()"
             class="btn btn-danger"
-            id="DeleteFilterBtn">{{'plannedTransaction.delete' | translate}}</button>
+            id="DeleteFilterBtn">{{'transaction.delete' | translate}}</button>
   </div>
 
 </div>
@@ -50,7 +50,7 @@
           [class.active]="order === 'date'"
           class="width15"
           id="DateHeader">
-        {{'plannedTransaction.date' | translate}}
+        {{'transaction.date' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
@@ -60,7 +60,7 @@
           [class.active]="order === 'description'"
           class="width20"
           id="NameHeader">
-        {{'plannedTransaction.description' | translate}}
+        {{'transaction.description' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
@@ -70,7 +70,7 @@
           [class.active]="order === 'accountPriceEntries[0].pricePLN'"
           class="width15"
           id="PriceHeader">
-        {{ 'plannedTransaction.price' | translate}}
+        {{ 'transaction.price' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
@@ -80,7 +80,7 @@
           [class.active]="order === 'accountPriceEntries[0].account.name'"
           class="width15"
           id="AccountHeader">
-        {{'plannedTransaction.account' | translate}}
+        {{'transaction.account' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
@@ -90,7 +90,7 @@
           [class.active]="order === 'category.name'"
           class="width20"
           id="CategoryHeader">
-        {{'plannedTransaction.category' | translate}}
+        {{'transaction.category' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
@@ -196,7 +196,7 @@
         <input *ngFor="let entry of newTransaction.accountPriceEntries"
                [(ngModel)]="entry.price"
                class="form-control"
-               id="NewPlannedTransactionPriceInput"
+               id="NewTransactionPriceInput"
                type="number">
         <!--<input type="number" min="0.00" max="10000.00" step="0.01" />-->
       </td>
@@ -206,7 +206,7 @@
         <select *ngFor="let entry of newTransaction.accountPriceEntries"
                 [(ngModel)]="entry.account"
                 class="form-control"
-                id="newPlannedTransactionAccountSelects">
+                id="newTransactionAccountSelects">
           <ng-container *ngFor="let account of accounts">
             <option *ngIf="!account.archived"
                     [ngValue]="account">
@@ -220,7 +220,7 @@
       <td>
         <select [(ngModel)]="newTransaction.category"
                 class="form-control"
-                id="newPlannedTransactionCategorySelect">
+                id="newTransactionCategorySelect">
           <option *ngFor="let category of categories"
                   [ngValue]="category">
             {{category.name}}
@@ -229,7 +229,7 @@
       </td>
 
       <td id="EditAccountSaveExitBtn">
-        <button (click)="addPlannedTransaction()"
+        <button (click)="addTransaction()"
                 class="btn btn-success"
                 id="newTransactionSaveButton">{{'button.save' | translate}}</button>
         <button (click)="addingMode=false"
@@ -241,14 +241,18 @@
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         id="TransactionRow">
 
-      <ng-container *ngIf="transaction.isPlanned">
+      <!--      <ng-container *ngIf="!transaction.planned">-->
+
+      <div *ngIf="transaction.isPlanned; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+
         <!--Date-->
         <td *ngIf="!transaction.editMode"
             id="DateReadOnly">{{transaction.date | date:'dd/MM/yyyy'}}</td>
         <td *ngIf="transaction.editMode">
-          <input [(ngModel)]="transaction.editedPlannedTransaction.date"
+          <input [(ngModel)]="transaction.editedTransaction.date"
                  class="form-control"
-                 id="EditPlannedTransactionDateInput"
+                 id="EditTransactionDateInput"
                  max="2025-12-31"
                  min="2015-01-01"
                  type="date">
@@ -258,7 +262,7 @@
         <td *ngIf="!transaction.editMode"
             id="DescriptionReadOnly">{{transaction.description}}</td>
         <td *ngIf="transaction.editMode">
-          <input [(ngModel)]="transaction.editedPlannedTransaction.description"
+          <input [(ngModel)]="transaction.editedTransaction.description"
                  class="form-control"
                  id="EditTransactionDescriptionInput"
                  type="text">
@@ -275,7 +279,7 @@
           </p>
         </td>
         <td *ngIf="transaction.editMode">
-          <input *ngFor="let entry of transaction.editedPlannedTransaction.accountPriceEntries"
+          <input *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
                  [(ngModel)]="entry.price"
                  class="form-control"
                  id="EditTransactionPriceInput"
@@ -290,7 +294,7 @@
           </p>
         </td>
         <td *ngIf="transaction.editMode">
-          <select *ngFor="let entry of transaction.editedPlannedTransaction.accountPriceEntries"
+          <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
                   [(ngModel)]="entry.account"
                   class="form-control"
                   id="EditTransactionAccountSelects">
@@ -308,7 +312,7 @@
         </td>
         <td *ngIf="transaction.editMode"
             id="EditTransactionCategorySelect">
-          <select [(ngModel)]="transaction.editedPlannedTransaction.category"
+          <select [(ngModel)]="transaction.editedTransaction.category"
                   class="form-control">
             <option *ngFor="let category of categories"
                     [ngValue]="category">
@@ -357,9 +361,11 @@
             </ul>
           </div>
         </td>
-      </ng-container>
-    </tr>
+      </ng-template>
+      <ng-template #elseBlock>{{transaction.isPlanned }}</ng-template>
 
+
+    </tr>
     <tr>
       <!--Date-->
       <td>
@@ -373,7 +379,7 @@
       <!--Price-->
       <td class="right aligned bold">
         <p id="PriceSummary">
-          {{ allFiltredPlannedTransactionsBalance() | number:'0.2' }}</p>
+          {{ allFiltredTransactionsBalance() | number:'0.2' }}</p>
       </td>
 
       <!--Account-->

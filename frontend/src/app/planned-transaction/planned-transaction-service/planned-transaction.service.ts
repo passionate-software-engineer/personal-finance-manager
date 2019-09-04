@@ -22,7 +22,7 @@ export class PlannedTransactionService extends ServiceBase {
       categoryId: plannedTransaction.category.id,
       accountPriceEntries: [],
       date: plannedTransaction.date,
-      isPlanned: plannedTransaction.isPlanned,
+      // isPlanned: plannedTransaction.isPlanned,
     };
 
     for (const entry of plannedTransaction.accountPriceEntries) {
