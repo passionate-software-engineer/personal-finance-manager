@@ -243,8 +243,8 @@
 
       <!--      <ng-container *ngIf="!transaction.planned">-->
 
-      <div *ngIf="!transaction.isPlanned; then thenBlock else elseBlock"></div>
-      <ng-template #thenBlock>
+<!--      <div *ngIf="!transaction.isPlanned">-->
+      <ng-container *ngIf="!transaction.isPlanned">
 
         <!--Date-->
         <td *ngIf="!transaction.editMode"
@@ -361,10 +361,7 @@
             </ul>
           </div>
         </td>
-      </ng-template>
-      <ng-template #elseBlock>{{transaction.isPlanned }}</ng-template>
-
-
+    </ng-container>
     </tr>
     <tr>
       <!--Date-->
