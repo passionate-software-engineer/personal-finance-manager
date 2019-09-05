@@ -69,7 +69,7 @@ export class TransactionService extends ServiceBase {
     return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.contentType);
   }
 
-  commitPlannedTransactionInBackend(transaction: Transaction) {
+  commitPlannedTransaction(transaction: Transaction) {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
 
 

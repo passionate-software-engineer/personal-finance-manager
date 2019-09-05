@@ -279,7 +279,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
 
   }
 
-  allFiltredTransactionsBalance() {
+  allFilteredTransactionsBalance() {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {
@@ -301,12 +301,20 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   }
 
   commitPlannedTransaction(transaction: Transaction) {
-    this.transactionService.commitPlannedTransactionInBackend(transaction)
+    this.transactionService.commitPlannedTransaction(transaction)
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.plannedTransactionCommitted')
             );
           },
-        );
+          () => {
+          },
+          () => this.refreshTransactions()
+        )
+    ;
+  }
+
+  private refreshTransactions() {
+    this.getTransactions();
   }
 }
