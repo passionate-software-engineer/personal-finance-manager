@@ -55,6 +55,7 @@
   "message.plannedTransactionDeleted": "Planned transaction deleted",
   "message.plannedTransactionEdited": "Planned transaction edited",
   "message.plannedTransactionAdded": "Planned transaction added",
+  "message.plannedTransactionCommitted": "Planned transaction committed",
   "message.dateEmpty": "Date is empty or incomplete",
   "message.descriptionEmpty": "Description cannot be empty",
   "message.priceEmpty": "Price is empty or price format is incorrect",
