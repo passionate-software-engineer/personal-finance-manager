@@ -47,5 +47,5 @@ public interface TransactionApi {
 
   @ApiOperation(value = "Commits, converts planned transaction into transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @PatchMapping(value = "/{transactionId}")
-  ResponseEntity<?> commitTransaction(@PathVariable long transactionId) throws Exception;
+  ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId) throws Exception;
 }

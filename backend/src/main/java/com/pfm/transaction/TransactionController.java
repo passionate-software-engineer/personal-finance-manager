@@ -162,15 +162,15 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> commitTransaction(long transactionId) throws Exception {
+  public ResponseEntity<?> commitPlannedTransaction(long transactionId) throws Exception {
     long userId = userProvider.getCurrentUserId();
-    Optional<Transaction> transactionByIdAndUserId = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    Optional<Transaction> optionalPlannedTransaction= transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
-    if (!transactionByIdAndUserId.isPresent()) {
+    if (!optionalPlannedTransaction.isPresent()) {
       log.info("No transaction with id {} was found, not able to commit", transactionId);
       return ResponseEntity.notFound().build();
     }
-    Transaction plannedTransaction = transactionByIdAndUserId.get();
+    Transaction plannedTransaction = optionalPlannedTransaction.get();
     Transaction transactionToAdd = applyCurrentDateAndClearPlannedStatus(plannedTransaction);
     deletePlannedTransaction(transactionId, userId);
 

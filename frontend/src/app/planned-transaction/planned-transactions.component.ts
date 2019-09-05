@@ -22,7 +22,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
-  newTransaction = new Transaction(false);
+  newTransaction = new Transaction();
   selectedPlannedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
@@ -124,7 +124,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
           this.alertService.success(this.translate.instant('message.transactionEdited'));
           this.transactionService.getTransaction(transaction.id)
               .subscribe(updatedTransaction => {
-                const returnedTransaction = new Transaction(false); // TODO dupliated code
+                const returnedTransaction = new Transaction(); // TODO dupliated code
                 returnedTransaction.date = updatedTransaction.date;
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
@@ -169,7 +169,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
               .subscribe(createdTransaction => {
 
                 // TODO duplicate with above method
-                const returnedTransaction = new Transaction(true);
+                const returnedTransaction = new Transaction();
                 returnedTransaction.date = createdTransaction.date;
                 returnedTransaction.id = createdTransaction.id;
                 returnedTransaction.description = createdTransaction.description;
@@ -201,7 +201,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
                 this.transactions.push(returnedTransaction);
                 this.allTransactions.push(returnedTransaction);
                 this.addingMode = false;
-                this.newTransaction = new Transaction(true);
+                this.newTransaction = new Transaction();
                 // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());

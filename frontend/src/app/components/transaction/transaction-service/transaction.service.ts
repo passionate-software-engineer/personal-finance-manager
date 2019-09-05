@@ -72,6 +72,5 @@ export class TransactionService extends ServiceBase {
   commitPlannedTransaction(transaction: Transaction) {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
 
-
   }
 }

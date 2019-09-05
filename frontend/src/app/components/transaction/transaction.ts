@@ -2,9 +2,6 @@ import {Category} from '../category/category';
 import {Account} from '../account/account';
 
 export class Transaction {
-  constructor(isPlanned?: boolean) {
-    this.isPlanned = isPlanned;
-  }
   id: number;
   date: Date;
   description: string;
