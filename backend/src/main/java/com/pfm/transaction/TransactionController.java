@@ -158,7 +158,7 @@ public class TransactionController implements TransactionApi {
         .build();
   }
 
-//  @Transactional
+  @Transactional
   @Override
   public ResponseEntity<?> commitTransaction(long transactionId) throws Exception {
     long userId = userProvider.getCurrentUserId();
@@ -185,11 +185,12 @@ public class TransactionController implements TransactionApi {
 
     client.execute(postRequest);
 
+    transactionService.deleteTransaction(transactionId, userId);
 
-    HttpUriRequest deleteRequest = RequestBuilder.delete(SERVER_URI + TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
-        .setHeader(HttpHeaders.AUTHORIZATION, currentUserAccessToken)
-        .build();
-    client.execute(deleteRequest);
+//    HttpUriRequest deleteRequest = RequestBuilder.delete(SERVER_URI + TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+//        .setHeader(HttpHeaders.AUTHORIZATION, currentUserAccessToken)
+//        .build();
+//    client.execute(deleteRequest);
 
     return ResponseEntity.ok().build();
   }
