@@ -300,21 +300,16 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
   }
 
-    // fixme lukasz date reassigned?
-    // fixme lukasz date is one day late after midnight  - timezone??
-  // fixme lukasz what if add fails - still want do delete  (transactional, rollback)
-  commitPlannedTransaction(transaction: Transaction) {
-    transaction.isPlanned = false;
-    transaction.date = new Date();
-    this.transactionService.addTransaction(transaction)
+  commitPlannedTransactionInBackend(transaction: Transaction) {
+    this.transactionService.commitPlannedTransactionInBackend(transaction)
         .subscribe(() => {
-            return;
+            this.alertService.success(
+              this.translate.instant('message.accountVerificationDateSetToToday')
+            );
+          },
+          error => {
+            console.log(error)
           }
         );
-    this.transactionService.deleteTransaction(transaction.id)
-        .subscribe(() =>
-          this.alertService.success(this.translate.instant('message.plannedTransactionCommitted'))
-        );
-
   }
 }

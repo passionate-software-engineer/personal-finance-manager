@@ -1,11 +1,23 @@
 package com.pfm.transaction;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
+  private static final String SERVER_URI = "http://localhost:8088";
+  private static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
+
+  @Qualifier("pfmObjectMapper")
+  @Autowired
+  protected ObjectMapper mapper;
+  private TokenService tokenService;
   private TransactionService transactionService;
   private GenericTransactionValidator genericTransactionValidator;
   private HistoryEntryService historyEntryService;
@@ -137,5 +156,57 @@ public class TransactionController implements TransactionApi {
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .isPlanned(transactionRequest.isPlanned())
         .build();
+  }
+
+//  @Transactional
+  @Override
+  public ResponseEntity<?> commitTransaction(long transactionId) throws Exception {
+    long userId = userProvider.getCurrentUserId();
+    Optional<Transaction> transactionByIdAndUserId = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+
+    if (!transactionByIdAndUserId.isPresent()) {
+      log.info("No transaction with id {} was found, not able to commit", transactionId);
+      return ResponseEntity.notFound().build();
+    }
+    Transaction transactionToCommit = transactionByIdAndUserId.get();
+    transactionToCommit.setDate(LocalDate.from(LocalDate.now()));
+    transactionToCommit.setPlanned(false);
+
+    String currentUserAccessToken = tokenService.getTokensByUserId().get(userId).getAccessToken().getValue();
+    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transactionToCommit);
+
+    HttpEntity requestBody = new StringEntity(json(transactionRequest));
+    HttpClient client = HttpClients.custom().build();
+    HttpUriRequest postRequest = RequestBuilder.post(SERVER_URI + TRANSACTIONS_SERVICE_PATH)
+        .setHeader(HttpHeaders.AUTHORIZATION, currentUserAccessToken)
+        .setHeader(HttpHeaders.CONTENT_TYPE, "application/json")
+        .setEntity(requestBody)
+        .build();
+
+    client.execute(postRequest);
+
+
+    HttpUriRequest deleteRequest = RequestBuilder.delete(SERVER_URI + TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+        .setHeader(HttpHeaders.AUTHORIZATION, currentUserAccessToken)
+        .build();
+    client.execute(deleteRequest);
+
+    return ResponseEntity.ok().build();
+  }
+
+  // fixme lukasz
+  private TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
+    return com.pfm.transaction.TransactionRequest.builder()
+        .description(transaction.getDescription())
+        .accountPriceEntries(transaction.getAccountPriceEntries())
+        .date(transaction.getDate())
+        .categoryId(transaction.getCategoryId())
+        .isPlanned(transaction.isPlanned())
+        .build();
+  }
+
+  // fixme lukasz
+  protected String json(Object object) throws Exception {
+    return mapper.writeValueAsString(object);
   }
 }
