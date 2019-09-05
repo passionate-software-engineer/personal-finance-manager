@@ -1,6 +1,7 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
+import static com.pfm.helpers.TransactionHelper.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -273,7 +274,7 @@ public abstract class IntegrationTestsBase {
   }
 
   //transaction
-  private long callRestToAddTransactionAndReturnId(com.pfm.transaction.TransactionRequest transactionRequest, long accountId, long categoryId,
+  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId,
       String token)
       throws Exception {
     transactionRequest.setCategoryId(categoryId);
@@ -291,11 +292,11 @@ public abstract class IntegrationTestsBase {
 
   protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token)
       throws Exception {
-    com.pfm.transaction.TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
-  private long callRestToAddPlannedTransactionAndReturnId(com.pfm.transaction.TransactionRequest plannedTransactionRequest, long accountId,
+  private long callRestToAddPlannedTransactionAndReturnId(TransactionRequest plannedTransactionRequest, long accountId,
       long categoryId, String token) throws Exception {
     plannedTransactionRequest.setCategoryId(categoryId);
     plannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
@@ -312,28 +313,9 @@ public abstract class IntegrationTestsBase {
 
   protected long callRestToAddPlannedTransactionAndReturnId(Transaction plannedTransaction, long accountId, long categoryId, String token)
       throws Exception {
-    com.pfm.transaction.TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
+    TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
     return callRestToAddPlannedTransactionAndReturnId(plannedTransactionRequest, accountId, categoryId, token);
   }
-
-  protected com.pfm.transaction.TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
-    return com.pfm.transaction.TransactionRequest.builder()
-        .description(transaction.getDescription())
-        .accountPriceEntries(transaction.getAccountPriceEntries())
-        .date(transaction.getDate())
-        .categoryId(transaction.getCategoryId())
-        .isPlanned(transaction.isPlanned())
-        .build();
-  }
-
-//  protected PlannedTransactionRequest convertPlannedTransactionToPlannedTransactionRequest(Transaction plannedTransaction) {
-//    return PlannedTransactionRequest.builder()
-//        .description(plannedTransaction.getDescription())
-//        .categoryId(plannedTransaction.getCategoryId())
-//        .date(plannedTransaction.getDate())
-//        .accountPriceEntries(plannedTransaction.getAccountPriceEntries())
-//        .build();
-//  }
 
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,
       long accountId, long categoryId) {
@@ -353,7 +335,7 @@ public abstract class IntegrationTestsBase {
   }
 
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId,
-      com.pfm.transaction.TransactionRequest transactionRequest) {
+      TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
@@ -392,7 +374,7 @@ public abstract class IntegrationTestsBase {
     return jsonToPlannedTransaction(response);
   }
 
-  protected void callRestToUpdateTransaction(long transactionId, com.pfm.transaction.TransactionRequest transactionRequest, String token)
+  protected void callRestToUpdateTransaction(long transactionId, TransactionRequest transactionRequest, String token)
       throws Exception {
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)

@@ -24,6 +24,7 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static com.pfm.helpers.TestTransactionProvider.homeTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
+import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;

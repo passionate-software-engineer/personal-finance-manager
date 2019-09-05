@@ -164,7 +164,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
 
     this.transactionService.addPlannedTransaction(this.newTransaction)
         .subscribe(id => {
-          this.alertService.success(this.translate.instant('message.transactionAdded'));
+          this.alertService.success(this.translate.instant('message.plannedTransactionAdded'));
           this.transactionService.getTransaction(id)
               .subscribe(createdTransaction => {
 

@@ -11,6 +11,7 @@ import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccoun
 import static com.pfm.helpers.TestTransactionProvider.convertTransactionToPlannedTransaction;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
+import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

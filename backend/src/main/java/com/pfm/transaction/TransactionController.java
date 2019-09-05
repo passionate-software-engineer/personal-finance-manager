@@ -1,5 +1,7 @@
 package com.pfm.transaction;
 
+import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
@@ -168,10 +170,16 @@ public class TransactionController implements TransactionApi {
       log.info("No transaction with id {} was found, not able to commit", transactionId);
       return ResponseEntity.notFound().build();
     }
-    Transaction transactionToCommit = transactionByIdAndUserId.get();
-    transactionToCommit.setDate(LocalDate.from(LocalDate.now()));
-    transactionToCommit.setPlanned(false);
+    Transaction plannedTransaction = transactionByIdAndUserId.get();
+    Transaction transactionToAdd = applyCurrentDateAndClearPlannedStatus(plannedTransaction);
+    deletePlannedTransaction(transactionId, userId);
 
+    addAsNewTransaction(userId, transactionToAdd);
+
+    return ResponseEntity.ok().build();
+  }
+
+  private void addAsNewTransaction(long userId, Transaction transactionToCommit) throws Exception {
     String currentUserAccessToken = tokenService.getTokensByUserId().get(userId).getAccessToken().getValue();
     TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transactionToCommit);
 
@@ -184,26 +192,16 @@ public class TransactionController implements TransactionApi {
         .build();
 
     client.execute(postRequest);
-
-    transactionService.deleteTransaction(transactionId, userId);
-
-//    HttpUriRequest deleteRequest = RequestBuilder.delete(SERVER_URI + TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
-//        .setHeader(HttpHeaders.AUTHORIZATION, currentUserAccessToken)
-//        .build();
-//    client.execute(deleteRequest);
-
-    return ResponseEntity.ok().build();
   }
 
-  // fixme lukasz
-  private TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
-    return com.pfm.transaction.TransactionRequest.builder()
-        .description(transaction.getDescription())
-        .accountPriceEntries(transaction.getAccountPriceEntries())
-        .date(transaction.getDate())
-        .categoryId(transaction.getCategoryId())
-        .isPlanned(transaction.isPlanned())
-        .build();
+  private Transaction applyCurrentDateAndClearPlannedStatus(Transaction transactionToCommit) {
+    transactionToCommit.setDate(LocalDate.from(LocalDate.now()));
+    transactionToCommit.setPlanned(false);
+    return transactionToCommit;
+  }
+
+  private void deletePlannedTransaction(long transactionId, long userId) {
+    transactionService.deleteTransaction(transactionId, userId);
   }
 
   // fixme lukasz
