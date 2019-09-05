@@ -279,13 +279,15 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
 
   }
 
-  allFilteredTransactionsBalance() {
+  allFilteredPlannedTransactionsBalance() {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {
       for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
-        sum += +this.transactions[i].accountPriceEntries[j].price
-          * +this.transactions[i].accountPriceEntries[j].account.currency.exchangeRate;
+        if (this.transactions[i].isPlanned === true) {
+          sum += +this.transactions[i].accountPriceEntries[j].price
+            * +this.transactions[i].accountPriceEntries[j].account.currency.exchangeRate;
+        }
       }
     }
 
@@ -317,4 +319,5 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   private refreshTransactions() {
     this.getTransactions();
   }
+
 }

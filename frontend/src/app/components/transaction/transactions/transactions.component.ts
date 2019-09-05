@@ -280,13 +280,15 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   }
 
-  allFiltredTransactionsBalance() {
+  allFilteredTransactionsBalance() {
     let sum = 0;
 
     for (let i = 0; i < this.transactions.length; ++i) {
       for (let j = 0; j < this.transactions[i].accountPriceEntries.length; ++j) {
-        sum += +this.transactions[i].accountPriceEntries[j].price
-          * +this.transactions[i].accountPriceEntries[j].account.currency.exchangeRate;
+        if (this.transactions[i].isPlanned === false) {
+          sum += +this.transactions[i].accountPriceEntries[j].price
+            * +this.transactions[i].accountPriceEntries[j].account.currency.exchangeRate;
+        }
       }
     }
 
