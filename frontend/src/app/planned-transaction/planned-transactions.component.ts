@@ -300,16 +300,13 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
   }
 
-  commitPlannedTransactionInBackend(transaction: Transaction) {
+  commitPlannedTransaction(transaction: Transaction) {
     this.transactionService.commitPlannedTransactionInBackend(transaction)
         .subscribe(() => {
             this.alertService.success(
-              this.translate.instant('message.accountVerificationDateSetToToday')
+              this.translate.instant('message.plannedTransactionCommitted')
             );
           },
-          error => {
-            console.log(error)
-          }
         );
   }
 }

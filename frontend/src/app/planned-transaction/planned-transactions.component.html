@@ -243,7 +243,7 @@
 
       <!--      <ng-container *ngIf="!transaction.planned">-->
 
-<!--      <div *ngIf="!transaction.isPlanned">-->
+      <!--      <div *ngIf="!transaction.isPlanned">-->
       <ng-container *ngIf="transaction.isPlanned">
 
         <!--Date-->
@@ -359,7 +359,7 @@
                 </button>
               </li>
               <li>
-                <button (click)="commitPlannedTransactionInBackend(transaction)"
+                <button (click)="commitPlannedTransaction(transaction)"
                         class="btn btn-success btn-block"
                         id="CommitBtn">
                   {{'button.commitPlannedTransaction' | translate}}
@@ -368,7 +368,7 @@
             </ul>
           </div>
         </td>
-    </ng-container>
+      </ng-container>
     </tr>
     <tr>
       <!--Date-->
