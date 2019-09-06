@@ -67,7 +67,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     //then
     Transaction expectedPlannedTransaction =
-    setPlannedTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId, foodCategoryId);
+        setPlannedTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId, foodCategoryId);
 
     assertThat(callRestToGetPlannedTransactionById(plannedTransactionId, token), is(equalTo(expectedPlannedTransaction)));
 
@@ -188,7 +188,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()), jacekAccountId, carCategoryId, token);
 
     mockMvc
-        .perform(get(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + notExistingPlannedTransactionId)
+        .perform(get(TRANSACTIONS_SERVICE_PATH + "/" + notExistingPlannedTransactionId)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         //then
@@ -207,7 +207,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     mockMvc
         .perform(
-            post(PLANNED_TRANSACTIONS_SERVICE_PATH)
+            post(TRANSACTIONS_SERVICE_PATH)
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .content(json(invalidPlannedTransaction))
                 .contentType(JSON_CONTENT_TYPE))
@@ -245,7 +245,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
         .build();
     TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
     mockMvc
-        .perform(post(PLANNED_TRANSACTIONS_SERVICE_PATH)
+        .perform(post(TRANSACTIONS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token)
             .content(json(plannedTransactionRequest))
             .contentType(JSON_CONTENT_TYPE))
@@ -281,7 +281,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     updatedFoodPlannedTransactionRequest.setDescription("Car parts");
 
     //when
-    mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_PLANNED_TRANSACTION_ID)
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_PLANNED_TRANSACTION_ID)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedFoodPlannedTransactionRequest)))
@@ -316,7 +316,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     updatedFoodPlannedTransactionRequest.setDescription(EMPTY_DESCRIPTION);
 
     //when
-    mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedFoodPlannedTransactionRequest)))
@@ -341,7 +341,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     setPlannedTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
     //when
-    mockMvc.perform(delete(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_PLANNED_TRANSACTION_ID)
+    mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_PLANNED_TRANSACTION_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }

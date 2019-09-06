@@ -97,6 +97,14 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add, addHistoryEntryOnUpdate);
   }
 
+  public boolean transactionExistByAccountId(long accountId) {
+    return accountPriceEntriesRepository.existsByAccountId(accountId);
+  }
+
+  public boolean transactionExistByCategoryId(long categoryId) {
+    return transactionRepository.existsByCategoryId(categoryId);
+  }
+
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation,
       boolean addHistoryEntryOnUpdate) {
     Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
@@ -116,22 +124,16 @@ public class TransactionService {
     accountService.updateAccount(accountId, userId, accountWithNewBalance);
   }
 
-  public boolean transactionExistByAccountId(long accountId) {
-    return accountPriceEntriesRepository.existsByAccountId(accountId);
-  }
-
-  public boolean transactionExistByCategoryId(long categoryId) {
-    return transactionRepository.existsByCategoryId(categoryId);
-  }
-
   private void updateAccountBalance(long userId, Transaction transaction, Transaction transactionToUpdate) {
     if (transaction.isPlanned() != transactionToUpdate.isPlanned()) {
       throw new IllegalStateException("Property isPlanned of transaction and transactionToUpdate cannot differ");
     }
-    if (!transaction.isPlanned()) {// subtract old value
+    // subtract old value
+    if (!transaction.isPlanned()) {
       for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
         subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
-      }// add new value
+      }
+      // add new value
       for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
         addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
       }

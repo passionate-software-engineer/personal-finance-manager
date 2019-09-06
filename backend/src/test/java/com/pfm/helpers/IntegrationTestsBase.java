@@ -1,7 +1,7 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
-import static com.pfm.helpers.TransactionHelper.*;
+import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -50,8 +50,6 @@ public abstract class IntegrationTestsBase {
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
-  //FIXME LUKASZ REMOVE
-  protected static final String PLANNED_TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";
@@ -302,7 +300,7 @@ public abstract class IntegrationTestsBase {
     plannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
     String response =
         mockMvc
-            .perform(post(PLANNED_TRANSACTIONS_SERVICE_PATH)
+            .perform(post(TRANSACTIONS_SERVICE_PATH)
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .content(json(plannedTransactionRequest))
                 .contentType(JSON_CONTENT_TYPE))
@@ -385,7 +383,7 @@ public abstract class IntegrationTestsBase {
 
   protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, TransactionRequest plannedTransactionRequest, String token)
       throws Exception {
-    mockMvc.perform(put(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(plannedTransactionRequest)))
@@ -399,7 +397,7 @@ public abstract class IntegrationTestsBase {
   }
 
   protected void callRestToDeletePlannedTransactionById(long id, String token) throws Exception {
-    mockMvc.perform(delete(PLANNED_TRANSACTIONS_SERVICE_PATH + "/" + id)
+    mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
@@ -414,7 +412,7 @@ public abstract class IntegrationTestsBase {
   }
 
   protected List<Transaction> callRestToGetAllPlannedTransactionsFromDatabase(String token) throws Exception {
-    String response = mockMvc.perform(get(PLANNED_TRANSACTIONS_SERVICE_PATH)
+    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())

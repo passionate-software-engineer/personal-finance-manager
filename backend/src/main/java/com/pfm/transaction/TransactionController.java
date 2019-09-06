@@ -203,7 +203,6 @@ public class TransactionController implements TransactionApi {
     transactionService.deleteTransaction(transactionId, userId);
   }
 
-  // fixme lukasz
   protected String json(Object object) throws Exception {
     return mapper.writeValueAsString(object);
   }
