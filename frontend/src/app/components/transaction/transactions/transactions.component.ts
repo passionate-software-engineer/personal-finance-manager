@@ -206,7 +206,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.date = this.getCorrectDate( new Date());
+                this.newTransaction.date = this.getCorrectDate(new Date());
               });
         });
   }
@@ -262,7 +262,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   private isFutureDate(date: Date): boolean {
     date = this.getCorrectDate(date);
-    return date.getTime() > Date.now();
+    const oneDayInMiliseconds = 86400000;
+    return date.getTime() - oneDayInMiliseconds > Date.now();
   }
 
   onShowEditMode(transaction: Transaction) {
