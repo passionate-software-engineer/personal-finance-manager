@@ -39,7 +39,7 @@ public class TransactionController implements TransactionApi {
   protected ObjectMapper mapper;
   private TokenService tokenService;
   private TransactionService transactionService;
-  private GenericTransactionValidator genericTransactionValidator;
+  private TransactionValidator transactionValidator;
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
 
@@ -86,7 +86,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
 
-    List<String> validationResult = genericTransactionValidator.validate(transaction, userId);
+    List<String> validationResult = transactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -113,7 +113,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
 
-    List<String> validationResult = genericTransactionValidator.validate(transaction, userId);
+    List<String> validationResult = transactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);

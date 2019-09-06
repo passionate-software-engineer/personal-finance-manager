@@ -9,11 +9,14 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
+import static com.pfm.config.MessagesProvider.FUTURE_DATE;
+import static com.pfm.config.MessagesProvider.PAST_DATE;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +25,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class GenericTransactionValidator {
+public class TransactionValidator {
 
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public  List<String> validate( Transaction transaction, long userId) {
+  public List<String> validate(Transaction transaction, long userId) {
     List<String> validationErrors = new ArrayList<>();
 
     if (transaction.getDescription() == null || transaction.getDescription().trim().equals("")) {
@@ -62,7 +65,25 @@ public class GenericTransactionValidator {
     if (transaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     }
+    final boolean plannedTransaction = transaction.isPlanned();
+    final boolean notPlannedTransaction = !plannedTransaction;
+
+    if (notPlannedTransaction && isFutureDate(transaction.getDate())) {
+      validationErrors.add(getMessage(FUTURE_DATE));
+    }
+    if (plannedTransaction && isPastDate(transaction.getDate())) {
+      validationErrors.add(getMessage(PAST_DATE));
+    }
+
     return validationErrors;
 
+  }
+
+  private boolean isPastDate(LocalDate date) {
+    return date.isBefore(LocalDate.now());
+  }
+
+  private boolean isFutureDate(LocalDate date) {
+    return date.isAfter(LocalDate.now());
   }
 }

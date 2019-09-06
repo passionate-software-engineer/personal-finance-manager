@@ -126,7 +126,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           this.transactionService.getTransaction(transaction.id)
               .subscribe(updatedTransaction => {
                 const returnedTransaction = new Transaction(); // TODO dupliated code
-                returnedTransaction.date = updatedTransaction.date;
+                returnedTransaction.date = this.getCorrectDate(updatedTransaction.date);
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
 
@@ -206,7 +206,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.date = new Date();
+                this.newTransaction.date = this.getCorrectDate( new Date());
               });
         });
   }
@@ -216,6 +216,13 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     if (transaction.date == null || transaction.date.toString() === '') {
       this.alertService.error(this.translate.instant('message.dateEmpty'));
+      status = false;
+    }
+    console.log('now ' + Date.now());
+    console.log('date ' + new Date(transaction.date).getTime());
+
+    if (transaction.isPlanned === false && this.isFutureDate(transaction.date)) {
+      this.alertService.error(this.translate.instant('message.futureDate'));
       status = false;
     }
 
@@ -251,6 +258,11 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
 
     return status;
+  }
+
+  private isFutureDate(date: Date): boolean {
+    date = this.getCorrectDate(date);
+    return date.getTime() > Date.now();
   }
 
   onShowEditMode(transaction: Transaction) {
@@ -301,6 +313,11 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     } else {
       return null;
     }
+  }
+
+  private getCorrectDate(date: Date): Date {
+    date.setMinutes(date.getMinutes() + 120);
+    return date;
   }
 
 }

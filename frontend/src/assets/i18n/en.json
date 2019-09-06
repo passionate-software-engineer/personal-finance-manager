@@ -57,6 +57,8 @@
   "message.plannedTransactionAdded": "Planned transaction added",
   "message.plannedTransactionCommitted": "Planned transaction committed",
   "message.dateEmpty": "Date is empty or incomplete",
+  "message.futureDate": "Date cannot be future date",
+  "message.pastDate": "Date cannot be past date",
   "message.descriptionEmpty": "Description cannot be empty",
   "message.priceEmpty": "Price is empty or price format is incorrect",
   "message.loggedOut": "You have been logged out. Your session has expired.",

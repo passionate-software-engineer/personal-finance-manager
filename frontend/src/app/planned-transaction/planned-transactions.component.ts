@@ -115,7 +115,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   }
 
   updateTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction.editedTransaction)) {
+    if (!this.validatePlannedTransaction(transaction.editedTransaction)) {
       return;
     }
 
@@ -158,7 +158,7 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
   }
 
   addPlannedTransaction() {
-    if (!this.validateTransaction(this.newTransaction)) {
+    if (!this.validatePlannedTransaction(this.newTransaction)) {
       return;
     }
 
@@ -210,11 +210,15 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
         });
   }
 
-  private validateTransaction(transaction: Transaction): boolean {
+  private validatePlannedTransaction(transaction: Transaction): boolean {
     let status = true;
 
     if (transaction.date == null || transaction.date.toString() === '') {
       this.alertService.error(this.translate.instant('message.dateEmpty'));
+      status = false;
+    }
+    if (transaction.isPlanned === true && this.isPastDate(transaction.date)) {
+      this.alertService.error(this.translate.instant('message.pastDate'));
       status = false;
     }
 
@@ -250,6 +254,10 @@ export class PlannedTransactionsComponent extends FiltersComponentBase implement
     }
 
     return status;
+  }
+
+  private isPastDate(date: Date): boolean {
+    return new Date(date).getTime() < Date.now();
   }
 
   onShowEditMode(transaction: Transaction) {

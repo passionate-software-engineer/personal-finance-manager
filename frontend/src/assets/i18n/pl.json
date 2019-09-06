@@ -57,6 +57,8 @@
   "message.plannedTransactionAdded": "Planowana transakcja została dodana",
   "message.plannedTransactionCommitted": "Planowana transakcja została wykonana",
   "message.dateEmpty": "Data jest pusta lub niepoprawna",
+  "message.futureDate": "Data nie może być datą przyszłą",
+  "message.pastDate": "Data nie może być datą przeszłą",
   "message.descriptionEmpty": "Opis nie może być pusty",
   "message.priceEmpty": "Cena jest pusta lub ma niepoprawny format",
   "message.loggedOut": "Zostałeś wylogowany. Twoja sesja wygasła.",
