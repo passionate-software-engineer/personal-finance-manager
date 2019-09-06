@@ -294,27 +294,6 @@ public abstract class IntegrationTestsBase {
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
-  private long callRestToAddPlannedTransactionAndReturnId(TransactionRequest plannedTransactionRequest, long accountId,
-      long categoryId, String token) throws Exception {
-    plannedTransactionRequest.setCategoryId(categoryId);
-    plannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
-    String response =
-        mockMvc
-            .perform(post(TRANSACTIONS_SERVICE_PATH)
-                .header(HttpHeaders.AUTHORIZATION, token)
-                .content(json(plannedTransactionRequest))
-                .contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
-    return Long.parseLong(response);
-  }
-
-  protected long callRestToAddPlannedTransactionAndReturnId(Transaction plannedTransaction, long accountId, long categoryId, String token)
-      throws Exception {
-    TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
-    return callRestToAddPlannedTransactionAndReturnId(plannedTransactionRequest, accountId, categoryId, token);
-  }
-
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,
       long accountId, long categoryId) {
     transaction.setId(transactionId);

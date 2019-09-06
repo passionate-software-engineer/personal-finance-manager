@@ -11,19 +11,8 @@ public class TestTransactionProvider {
 
   private static final LocalDate FUTURE_DATE = LocalDate.now().plusDays(1);
 
-  public static Transaction convertTransactionToPlannedTransaction(com.pfm.transaction.Transaction transaction) {
+  public static Transaction foodTransactionWithNoAccountAndNoCategory() {
     return Transaction.builder()
-        .id(transaction.getId())
-        .description(transaction.getDescription())
-        .categoryId(transaction.getCategoryId())
-        .date(FUTURE_DATE)
-        .accountPriceEntries(transaction.getAccountPriceEntries())
-        .userId(transaction.getUserId())
-        .build();
-  }
-
-  public static com.pfm.transaction.Transaction foodTransactionWithNoAccountAndNoCategory() {
-    return com.pfm.transaction.Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
             AccountPriceEntry.builder()
                 .price(convertDoubleToBigDecimal(10))
@@ -34,8 +23,32 @@ public class TestTransactionProvider {
         .build();
   }
 
-  public static com.pfm.transaction.Transaction carTransactionWithNoAccountAndNoCategory() {
-    return com.pfm.transaction.Transaction.builder()
+  public static Transaction foodTransactionWithNoAccountAndNoCategoryAndPastFutureDate() {
+    return Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .price(convertDoubleToBigDecimal(10))
+                .build())
+        )
+        .description("Food for birthday")
+        .date(LocalDate.now().plusDays(2))
+        .build();
+  }
+  public static Transaction foodPlannedTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .price(convertDoubleToBigDecimal(10))
+                .build())
+        )
+        .description("Food for birthday")
+        .date(LocalDate.now().plusDays(2))
+        .isPlanned(true)
+        .build();
+  }
+
+  public static Transaction carTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
             AccountPriceEntry.builder()
                 .price(convertDoubleToBigDecimal(30))
@@ -46,8 +59,8 @@ public class TestTransactionProvider {
         .build();
   }
 
-  public static com.pfm.transaction.Transaction animalsTransactionWithNoAccountAndNoCategory() {
-    return com.pfm.transaction.Transaction.builder()
+  public static Transaction animalsTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
             AccountPriceEntry.builder()
                 .price(convertDoubleToBigDecimal(8))
@@ -58,8 +71,8 @@ public class TestTransactionProvider {
         .build();
   }
 
-  public static com.pfm.transaction.Transaction homeTransactionWithNoAccountAndNoCategory() {
-    return com.pfm.transaction.Transaction.builder()
+  public static Transaction homeTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
             AccountPriceEntry.builder()
                 .price(convertDoubleToBigDecimal(77))

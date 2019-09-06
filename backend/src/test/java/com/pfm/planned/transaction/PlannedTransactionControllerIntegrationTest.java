@@ -8,8 +8,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
-import static com.pfm.helpers.TestTransactionProvider.convertTransactionToPlannedTransaction;
-import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -59,15 +58,15 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    Transaction plannedTransaction = foodTransactionWithNoAccountAndNoCategory();
+    Transaction plannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     plannedTransaction.setPlanned(true);
 
     //when
-    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
+    long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
 
     //then
     Transaction expectedPlannedTransaction =
-        setPlannedTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId, foodCategoryId);
+        setPlannedTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId, foodCategoryId);
 
     assertThat(callRestToGetPlannedTransactionById(plannedTransactionId, token), is(equalTo(expectedPlannedTransaction)));
 
@@ -82,10 +81,10 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    Transaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
-    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
+    Transaction plannedTransactionToAdd = foodPlannedTransactionWithNoAccountAndNoCategory();
+    long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
 
-    Transaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    Transaction addedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     setPlannedTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
     //when
@@ -111,21 +110,21 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long foodPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
-    long carPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()), jacekAccountId, carCategoryId, token);
+    long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(
+        foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+    long carPlannedTransactionId = callRestToAddTransactionAndReturnId(
+        carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
     //when
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     //then
     Transaction foodPlannedTransactionExpected =
-        setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()),
+        setPlannedTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(),
             foodPlannedTransactionId, jacekAccountId, foodCategoryId);
 
     Transaction carPlannedTransactionExpected =
-        setPlannedTransactionIdAccountIdCategoryId(convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()),
+        setPlannedTransactionIdAccountIdCategoryId(carTransactionWithNoAccountAndNoCategory(),
             carPlannedTransactionId, jacekAccountId, carCategoryId);
 
     assertThat(allPlannedTransactionsInDb.size(), is(2));
@@ -146,12 +145,12 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    final long foodPlannedTransactionId = callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
+    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(
+        foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
     TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
-        foodTransactionWithNoAccountAndNoCategory());
+        foodPlannedTransactionWithNoAccountAndNoCategory());
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
     updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
@@ -182,10 +181,10 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
-    callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId, token);
-    callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(carTransactionWithNoAccountAndNoCategory()), jacekAccountId, carCategoryId, token);
+    callRestToAddTransactionAndReturnId(
+        foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+    callRestToAddTransactionAndReturnId(
+        carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
     mockMvc
         .perform(get(TRANSACTIONS_SERVICE_PATH + "/" + notExistingPlannedTransactionId)
@@ -268,12 +267,12 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     final long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
+    callRestToAddTransactionAndReturnId(
+        foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
     TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
+        foodPlannedTransactionWithNoAccountAndNoCategory());
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
     updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
@@ -303,12 +302,12 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    final long transactionId = callRestToAddPlannedTransactionAndReturnId(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()), jacekAccountId, foodCategoryId,
+    final long transactionId = callRestToAddTransactionAndReturnId(
+        foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
     TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
-        convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory()));
+        foodPlannedTransactionWithNoAccountAndNoCategory());
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
     updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
@@ -334,10 +333,10 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    Transaction plannedTransactionToAdd = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
-    long plannedTransactionId = callRestToAddPlannedTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
+    Transaction plannedTransactionToAdd = foodPlannedTransactionWithNoAccountAndNoCategory();
+    long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransactionToAdd, jacekAccountId, foodCategoryId, token);
 
-    Transaction addedPlannedTransaction = convertTransactionToPlannedTransaction(foodTransactionWithNoAccountAndNoCategory());
+    Transaction addedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     setPlannedTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
     //when
