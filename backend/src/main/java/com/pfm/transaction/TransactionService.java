@@ -44,7 +44,7 @@ public class TransactionService {
   @Transactional
   public Transaction addTransaction(long userId, Transaction transaction, boolean addHistoryEntryOnUpdate) {
     transaction.setUserId(userId);
-    if (!addHistoryEntryOnUpdate) {
+    if (!transaction.isPlanned()) {
       for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
         addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
       }
