@@ -6,18 +6,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -164,15 +162,15 @@ public class TransactionController implements TransactionApi {
   @Override
   public ResponseEntity<?> commitPlannedTransaction(long transactionId) throws Exception {
     long userId = userProvider.getCurrentUserId();
-    Optional<Transaction> optionalPlannedTransaction= transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    Optional<Transaction> optionalPlannedTransaction = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
     if (!optionalPlannedTransaction.isPresent()) {
       log.info("No transaction with id {} was found, not able to commit", transactionId);
       return ResponseEntity.notFound().build();
     }
     Transaction plannedTransaction = optionalPlannedTransaction.get();
-    Transaction transactionToAdd = applyCurrentDateAndClearPlannedStatus(plannedTransaction);
     deletePlannedTransaction(transactionId, userId);
+    Transaction transactionToAdd = applyCurrentDateAndClearPlannedStatus(plannedTransaction);
 
     addAsNewTransaction(userId, transactionToAdd);
 
@@ -183,15 +181,16 @@ public class TransactionController implements TransactionApi {
     String currentUserAccessToken = tokenService.getTokensByUserId().get(userId).getAccessToken().getValue();
     TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transactionToCommit);
 
-    HttpEntity requestBody = new StringEntity(json(transactionRequest));
-    HttpClient client = HttpClients.custom().build();
-    HttpUriRequest postRequest = RequestBuilder.post(SERVER_URI + TRANSACTIONS_SERVICE_PATH)
-        .setHeader(HttpHeaders.AUTHORIZATION, currentUserAccessToken)
-        .setHeader(HttpHeaders.CONTENT_TYPE, "application/json")
-        .setEntity(requestBody)
+    HttpRequest postRequest = HttpRequest.newBuilder()
+        .uri(URI.create(SERVER_URI + TRANSACTIONS_SERVICE_PATH))
+        .header("Content-Type", "application/json")
+        .header("Authorization", currentUserAccessToken)
+        .POST(BodyPublishers.ofString(json(transactionRequest)))
         .build();
 
-    client.execute(postRequest);
+    HttpResponse<Void> response = HttpClient.newHttpClient()
+        .send(postRequest, HttpResponse.BodyHandlers.discarding());
+
   }
 
   private Transaction applyCurrentDateAndClearPlannedStatus(Transaction transactionToCommit) {
