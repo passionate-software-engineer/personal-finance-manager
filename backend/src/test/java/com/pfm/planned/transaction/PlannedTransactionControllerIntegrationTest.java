@@ -7,6 +7,7 @@ import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
+import static com.pfm.helpers.TestTransactionProvider.carPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
@@ -66,9 +67,10 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     //then
     Transaction expectedPlannedTransaction =
-        setPlannedTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId, foodCategoryId);
+        setPlannedTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId,
+            foodCategoryId);
 
-    assertThat(callRestToGetPlannedTransactionById(plannedTransactionId, token), is(equalTo(expectedPlannedTransaction)));
+    assertThat(callRestToGetTransactionById(plannedTransactionId, token), is(equalTo(expectedPlannedTransaction)));
 
   }
 
@@ -113,7 +115,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
     long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(
         foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
     long carPlannedTransactionId = callRestToAddTransactionAndReturnId(
-        carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
+        carPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
     //when
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
@@ -124,7 +126,7 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
             foodPlannedTransactionId, jacekAccountId, foodCategoryId);
 
     Transaction carPlannedTransactionExpected =
-        setPlannedTransactionIdAccountIdCategoryId(carTransactionWithNoAccountAndNoCategory(),
+        setPlannedTransactionIdAccountIdCategoryId(carPlannedTransactionWithNoAccountAndNoCategory(),
             carPlannedTransactionId, jacekAccountId, carCategoryId);
 
     assertThat(allPlannedTransactionsInDb.size(), is(2));
@@ -145,28 +147,26 @@ public class PlannedTransactionControllerIntegrationTest extends IntegrationTest
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(
-        foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
-        token);
+    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
 
-    TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
-        foodPlannedTransactionWithNoAccountAndNoCategory());
-    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
-    updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
-    updatedFoodPlannedTransactionRequest.setCategoryId(carCategoryId);
-    updatedFoodPlannedTransactionRequest.setDate(updatedFoodPlannedTransactionRequest.getDate().plusDays(1));
-    updatedFoodPlannedTransactionRequest.setDescription("Car parts");
+    Transaction updatedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedPlannedTransaction.setCategoryId(carCategoryId);
+    updatedPlannedTransaction.setDate(updatedPlannedTransaction.getDate().plusDays(1));
+    updatedPlannedTransaction.setDescription("Car parts");
+
+    TransactionRequest updatedPlannedTransactionRequest = convertTransactionToTransactionRequest(updatedPlannedTransaction);
+    updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdatePlannedTransaction(foodPlannedTransactionId, updatedFoodPlannedTransactionRequest, token);
+    callRestToUpdateTransaction(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
-
-    Transaction expected = convertPlannedTransactionRequestToPlannedTransactionAndSetId(foodPlannedTransactionId,
-        updatedFoodPlannedTransactionRequest);
 
     //then
     assertThat(allPlannedTransactionsInDb.size(), is(1));
-    assertThat(allPlannedTransactionsInDb.get(0), equalTo(expected));
+    assertThat(allPlannedTransactionsInDb.get(0), equalTo(updatedPlannedTransaction));
 
   }
 

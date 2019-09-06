@@ -30,6 +30,8 @@ import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -311,25 +313,14 @@ public abstract class IntegrationTestsBase {
     return plannedTransaction;
   }
 
-  protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId,
-      TransactionRequest transactionRequest) {
+  protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .categoryId(transactionRequest.getCategoryId())
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
-        .build();
-  }
-
-  protected Transaction convertPlannedTransactionRequestToPlannedTransactionAndSetId(long plannedTransactionId,
-      TransactionRequest plannedTransactionRequest) {
-    return Transaction.builder()
-        .id(plannedTransactionId)
-        .accountPriceEntries(plannedTransactionRequest.getAccountPriceEntries())
-        .categoryId(plannedTransactionRequest.getCategoryId())
-        .description(plannedTransactionRequest.getDescription())
-        .date(plannedTransactionRequest.getDate())
+        .isPlanned(transactionRequest.isPlanned())
         .build();
   }
 
@@ -342,30 +333,12 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
-  protected Transaction callRestToGetPlannedTransactionById(long id, String token) throws Exception {
-    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return jsonToPlannedTransaction(response);
-  }
-
   protected void callRestToUpdateTransaction(long transactionId, TransactionRequest transactionRequest, String token)
       throws Exception {
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionRequest)))
-        .andExpect(status().isOk());
-  }
-
-  protected void callRestToUpdatePlannedTransaction(long plannedTransactionId, TransactionRequest plannedTransactionRequest, String token)
-      throws Exception {
-    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(plannedTransactionRequest)))
         .andExpect(status().isOk());
   }
 
@@ -381,29 +354,28 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected List<Transaction> callRestToGetAllTransactionsFromDatabase(String token) throws Exception {
+  private Stream<Transaction> callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(String token) throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
-    return getTransactionsFromResponse(response);
+    return getTransactionsFromResponse(response).stream();
+  }
+
+  protected List<Transaction> callRestToGetAllTransactionsFromDatabase(String token) throws Exception {
+    return callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(token)
+        .filter(transaction -> !transaction.isPlanned())
+        .collect(Collectors.toList());
   }
 
   protected List<Transaction> callRestToGetAllPlannedTransactionsFromDatabase(String token) throws Exception {
-    String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token))
-        .andExpect(content().contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk())
-        .andReturn().getResponse().getContentAsString();
-    return getPlannedTransactionsFromResponse(response);
+    return callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(token)
+        .filter(Transaction::isPlanned)
+        .collect(Collectors.toList());
   }
 
   private Transaction jsonToTransaction(String jsonTransaction) throws Exception {
-    return mapper.readValue(jsonTransaction, Transaction.class);
-  }
-
-  private Transaction jsonToPlannedTransaction(String jsonTransaction) throws Exception {
     return mapper.readValue(jsonTransaction, Transaction.class);
   }
 
