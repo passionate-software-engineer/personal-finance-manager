@@ -160,12 +160,12 @@ public class TransactionController implements TransactionApi {
 
   private Transaction applyCurrentDateAndClearPlannedStatus(Transaction transactionToCommit) {
     Transaction newTransaction = Transaction.builder()
+        .date(LocalDate.now())
         .isPlanned(false)
+        .id(null)
         .userId(transactionToCommit.getUserId())
         .categoryId(transactionToCommit.getCategoryId())
-        .date(LocalDate.now())
         .description(transactionToCommit.getDescription())
-        .id(null)
         .accountPriceEntries(new ArrayList<>())
         .build();
 
