@@ -34,13 +34,6 @@ public class TransactionService {
         .collect(Collectors.toList());
   }
 
-  List<Transaction> getPlannedTransactions(long userId) {
-    return transactionRepository.findByUserId(userId).stream()
-        .filter(Transaction::isPlanned)
-        .sorted(Comparator.comparing(Transaction::getId))
-        .collect(Collectors.toList());
-  }
-
   @Transactional
   public Transaction addTransaction(long userId, Transaction transaction, boolean addHistoryEntryOnUpdate) {
     transaction.setUserId(userId);
@@ -125,9 +118,6 @@ public class TransactionService {
   }
 
   private void updateAccountBalance(long userId, Transaction transaction, Transaction transactionToUpdate) {
-    if (transaction.isPlanned() != transactionToUpdate.isPlanned()) {
-      throw new IllegalStateException("Property isPlanned of transaction and transactionToUpdate cannot differ");
-    }
     // subtract old value
     if (!transaction.isPlanned()) {
       for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {

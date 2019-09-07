@@ -30,7 +30,7 @@ public class MessagesProvider {
   public static final String EMPTY_TRANSACTION_PRICE = "transactionValidator.emptyTransactionPrice";
   public static final String EMPTY_TRANSACTION_ACCOUNT = "transactionValidator.emptyTransactionAccountName";
   public static final String FUTURE_TRANSACTION_DATE = "transactionValidator.futureTransactionDate";
-  public static final String PAST_PLANNED_TRASCATION_DATE = "transactionValidator.pastPlannedTransactionDate";
+  public static final String PAST_PLANNED_TRANSACTION_DATE = "transactionValidator.pastPlannedTransactionDate";
 
   public static final String ACCOUNT_IS_ARCHIVED = "transactionValidator.accountIsArchived";
   public static final String CATEGORY_ID_DOES_NOT_EXIST = "validator.categoryIdDoesNotExist";

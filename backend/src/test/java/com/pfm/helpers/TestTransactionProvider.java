@@ -9,8 +9,6 @@ import java.util.Collections;
 
 public class TestTransactionProvider {
 
-  private static final LocalDate FUTURE_DATE = LocalDate.now().plusDays(1);
-
   public static Transaction foodTransactionWithNoAccountAndNoCategory() {
     return Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
@@ -20,18 +18,6 @@ public class TestTransactionProvider {
         )
         .description("Food for birthday")
         .date(LocalDate.of(2018, 8, 8))
-        .build();
-  }
-
-  public static Transaction foodTransactionWithNoAccountAndNoCategoryAndPastFutureDate() {
-    return Transaction.builder()
-        .accountPriceEntries(Collections.singletonList(
-            AccountPriceEntry.builder()
-                .price(convertDoubleToBigDecimal(10))
-                .build())
-        )
-        .description("Food for birthday")
-        .date(LocalDate.now().plusDays(2))
         .build();
   }
 

@@ -6,12 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -29,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  private static final String SERVER_URI = "http://localhost:8088";
+  public static final String SERVER_URI = "http://localhost:8088";
   private static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
 
   @Qualifier("pfmObjectMapper")
@@ -67,15 +63,6 @@ public class TransactionController implements TransactionApi {
   }
 
   @Override
-  public ResponseEntity<List<Transaction>> getPlannedTransactions() {
-    long userId = userProvider.getCurrentUserId();
-
-    log.info("Retrieving all planned transactions");
-
-    return ResponseEntity.ok(transactionService.getPlannedTransactions(userId));
-  }
-
-  @Override
   @Transactional
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
@@ -89,7 +76,6 @@ public class TransactionController implements TransactionApi {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-//    Transaction createdTransaction = transactionService.addTransaction(userId, transaction, transaction.isPlanned());
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     if (!createdTransaction.isPlanned()) {
@@ -149,19 +135,9 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok().build();
   }
 
-  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
-    return Transaction.builder()
-        .description(transactionRequest.getDescription())
-        .categoryId(transactionRequest.getCategoryId())
-        .date(transactionRequest.getDate())
-        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
-        .isPlanned(transactionRequest.isPlanned())
-        .build();
-  }
-
   @Transactional
   @Override
-  public ResponseEntity<?> commitPlannedTransaction(long transactionId) throws Exception {
+  public ResponseEntity<?> commitPlannedTransaction(long transactionId) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> optionalPlannedTransaction = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -172,39 +148,52 @@ public class TransactionController implements TransactionApi {
     Transaction plannedTransaction = optionalPlannedTransaction.get();
     deletePlannedTransaction(transactionId, userId);
     Transaction transactionToAdd = applyCurrentDateAndClearPlannedStatus(plannedTransaction);
+    addAsNewTransaction(transactionToAdd);
 
-    addAsNewTransaction(userId, transactionToAdd);
+    return ResponseEntity.ok(plannedTransaction.getId());
 
-    return ResponseEntity.ok().build();
   }
 
-  private void addAsNewTransaction(long userId, Transaction transactionToCommit) throws Exception {
-    String currentUserAccessToken = tokenService.getTokensByUserId().get(userId).getAccessToken().getValue();
+  private void addAsNewTransaction(Transaction transactionToCommit) {
     TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transactionToCommit);
-
-    HttpRequest postRequest = HttpRequest.newBuilder()
-        .uri(URI.create(SERVER_URI + TRANSACTIONS_SERVICE_PATH))
-        .header("Content-Type", "application/json")
-        .header("Authorization", currentUserAccessToken)
-        .POST(BodyPublishers.ofString(json(transactionRequest)))
-        .build();
-
-    HttpResponse<Void> response = HttpClient.newHttpClient()
-        .send(postRequest, HttpResponse.BodyHandlers.discarding());
+    addTransaction(transactionRequest);
 
   }
 
   private Transaction applyCurrentDateAndClearPlannedStatus(Transaction transactionToCommit) {
-    transactionToCommit.setDate(LocalDate.from(LocalDate.now()));
-    transactionToCommit.setPlanned(false);
-    return transactionToCommit;
+    Transaction newTransaction = Transaction.builder()
+        .isPlanned(false)
+        .userId(transactionToCommit.getUserId())
+        .categoryId(transactionToCommit.getCategoryId())
+        .date(LocalDate.now())
+        .description(transactionToCommit.getDescription())
+        .id(null)
+        .accountPriceEntries(new ArrayList<>())
+        .build();
+
+    for (AccountPriceEntry accountPriceEntry : transactionToCommit.getAccountPriceEntries()) {
+      AccountPriceEntry newAccountPriceEntry = AccountPriceEntry.builder()
+          .accountId(accountPriceEntry.getAccountId())
+          .price(accountPriceEntry.getPrice())
+          .build();
+      newTransaction.getAccountPriceEntries().add(newAccountPriceEntry);
+    }
+
+    return newTransaction;
   }
 
   private void deletePlannedTransaction(long transactionId, long userId) {
     transactionService.deleteTransaction(transactionId, userId);
   }
 
-  protected String json(Object object) throws Exception {
-    return mapper.writeValueAsString(object);
+  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
+    return Transaction.builder()
+        .description(transactionRequest.getDescription())
+        .categoryId(transactionRequest.getCategoryId())
+        .date(transactionRequest.getDate())
+        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
+        .isPlanned(transactionRequest.isPlanned())
+        .build();
   }
+
 }

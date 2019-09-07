@@ -304,15 +304,6 @@ public abstract class IntegrationTestsBase {
     return transaction;
   }
 
-  protected Transaction setPlannedTransactionIdAccountIdCategoryId(Transaction plannedTransaction, long plannedTransactionId,
-      long accountId, long categoryId) {
-    plannedTransaction.setPlanned(true);
-    plannedTransaction.setId(plannedTransactionId);
-    plannedTransaction.setCategoryId(categoryId);
-    plannedTransaction.getAccountPriceEntries().get(0).setAccountId(accountId);
-    return plannedTransaction;
-  }
-
   protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
