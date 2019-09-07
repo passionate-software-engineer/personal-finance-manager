@@ -23,7 +23,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   accounts: Account[] = [];
   addingMode = false;
   newTransaction = new Transaction();
-  selectedPlannedFilter = new TransactionFilter();
+  selectedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
 
