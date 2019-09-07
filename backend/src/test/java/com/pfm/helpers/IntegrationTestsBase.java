@@ -1,7 +1,7 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
-import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
+import static com.pfm.helpers.TestHelper.convertTransactionToTransactionRequest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;

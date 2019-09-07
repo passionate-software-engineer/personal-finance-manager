@@ -1,7 +1,5 @@
 package com.pfm.transaction;
 
-import static com.pfm.helpers.TransactionHelper.convertTransactionToTransactionRequest;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
@@ -196,4 +194,13 @@ public class TransactionController implements TransactionApi {
         .build();
   }
 
+  private static TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
+    return TransactionRequest.builder()
+        .description(transaction.getDescription())
+        .accountPriceEntries(transaction.getAccountPriceEntries())
+        .date(transaction.getDate())
+        .categoryId(transaction.getCategoryId())
+        .isPlanned(transaction.isPlanned())
+        .build();
+  }
 }
