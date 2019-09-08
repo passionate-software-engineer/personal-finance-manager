@@ -124,7 +124,7 @@
     </tr>
     <ng-container
       *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
-      <tr id="AccountRow"
+      <tr  [ngClass]="{'font-italic':account.archived}" id="AccountRow"
           *ngIf="showArchivedCheckboxState ||!account.archived">
         <!-- Name -->
         <td *ngIf="account.editMode">
@@ -133,8 +133,7 @@
                  type="text"
                  [(ngModel)]="account.editedAccount.name"/>
         </td>
-        <td [ngClass]="{'font-italic':account.archived}"
-            id="NameReadOnly"
+        <td id="NameReadOnly"
             *ngIf="!account.editMode">
           {{ account.name}}
         </td>
@@ -146,8 +145,7 @@
                  type="number"
                  [(ngModel)]="account.editedAccount.balance"/>
         </td>
-        <td [ngClass]="{'font-italic':account.archived}"
-            id="BalanceReadOnly"
+        <td id="BalanceReadOnly"
             *ngIf="!account.editMode">
           {{ account.balance | number: "0.2-2" }}
         </td>
@@ -164,8 +162,7 @@
           </select>
         </td>
 
-        <td [ngClass]="{'font-italic':account.archived}"
-            *ngIf="!account.editMode">
+        <td *ngIf="!account.editMode">
           {{ account.currency.name }}
         </td>
 
@@ -175,14 +172,12 @@
         * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
         </td>
 
-        <td [ngClass]="{'font-italic':account.archived}"
-            *ngIf="!account.editMode">
+        <td *ngIf="!account.editMode">
           {{ account.balancePLN | number: "0.2-2" }}
         </td>
 
         <!-- Last verification date -->
-        <td [ngClass]="{'font-italic':account.archived}">
-          {{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
+        <td >{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
         </td>
 
         <!-- Options -->

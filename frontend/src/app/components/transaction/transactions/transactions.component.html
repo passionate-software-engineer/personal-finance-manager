@@ -249,7 +249,7 @@
       </td>
     </tr>
 
-    <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
+    <tr [ngClass]="{'font-italic':transaction.isPlanned}" *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         id="TransactionRow">
 
       <ng-container *ngIf="!transaction.isPlanned || showPlannedTransactionsCheckboxState">
