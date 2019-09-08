@@ -1,7 +1,8 @@
 package com.pfm.transaction;
 
+import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.time.LocalDate;
@@ -23,13 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  public static final String SERVER_URI = "http://localhost:8088";
-  private static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
-
   @Qualifier("pfmObjectMapper")
   @Autowired
   protected ObjectMapper mapper;
-  private TokenService tokenService;
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
   private HistoryEntryService historyEntryService;
@@ -76,9 +73,7 @@ public class TransactionController implements TransactionApi {
     }
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
-    if (!createdTransaction.isPlanned()) {
       historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
-    }
 
     return ResponseEntity.ok(createdTransaction.getId());
   }
@@ -103,9 +98,7 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
-    if (!transactionToUpdate.isPlanned()) {
       historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, transaction, userId);
-    }
 
     transactionService.updateTransaction(transactionId, userId, transaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
@@ -143,13 +136,13 @@ public class TransactionController implements TransactionApi {
       log.info("No transaction with id {} was found, not able to commit", transactionId);
       return ResponseEntity.notFound().build();
     }
+
     Transaction plannedTransaction = optionalPlannedTransaction.get();
-    deletePlannedTransaction(transactionId, userId);
+    transactionService.deleteTransaction(transactionId, userId);
     Transaction transactionToAdd = applyCurrentDateAndClearPlannedStatus(plannedTransaction);
     addAsNewTransaction(transactionToAdd);
 
     return ResponseEntity.ok(plannedTransaction.getId());
-
   }
 
   private void addAsNewTransaction(Transaction transactionToCommit) {
@@ -180,10 +173,6 @@ public class TransactionController implements TransactionApi {
     return newTransaction;
   }
 
-  private void deletePlannedTransaction(long transactionId, long userId) {
-    transactionService.deleteTransaction(transactionId, userId);
-  }
-
   private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
     return Transaction.builder()
         .description(transactionRequest.getDescription())
@@ -194,13 +183,4 @@ public class TransactionController implements TransactionApi {
         .build();
   }
 
-  private static TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
-    return TransactionRequest.builder()
-        .description(transaction.getDescription())
-        .accountPriceEntries(transaction.getAccountPriceEntries())
-        .date(transaction.getDate())
-        .categoryId(transaction.getCategoryId())
-        .isPlanned(transaction.isPlanned())
-        .build();
-  }
 }

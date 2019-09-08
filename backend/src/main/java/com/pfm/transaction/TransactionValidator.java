@@ -50,10 +50,10 @@ public class TransactionValidator {
         if (entry.getAccountId() == null) {
           validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
         } else {
-          Optional<Account> optionalAccount = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
-          if (!optionalAccount.isPresent()) {
+          Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
+          if (!accountOptional.isPresent()) {
             validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
-          } else if (optionalAccount.get().isArchived()) {
+          } else if (accountOptional.get().isArchived()) {
             validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
           }
         }

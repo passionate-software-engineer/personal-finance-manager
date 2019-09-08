@@ -12,9 +12,10 @@ import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
-import static com.pfm.helpers.TestHelper.convertTransactionToTransactionRequest;
+import static com.pfm.helpers.TestTransactionProvider.carPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
+import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -412,6 +413,58 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(historyEntries.get(3).getUserId(), equalTo(userId));
     assertTrue(historyEntries.get(3).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(3).getEntries(), equalTo(historyInfosOfAddingTransactionExpected));
+  }
+
+  @Test
+  public void shouldReturnHistoryOfAddingPlannedTransaction() throws Exception {
+    //given
+    Category category = categoryCar();
+    final long categoryId = callRestToAddCategoryAndReturnId(category, token);
+
+    Account account = accountMilleniumBalance100();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Transaction plannedTransaction = carPlannedTransactionWithNoAccountAndNoCategory();
+    callRestToAddTransactionAndReturnId(plannedTransaction, accountId, categoryId, token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("description")
+        .newValue(plannedTransaction.getDescription())
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(7L)
+        .name("categoryId")
+        .newValue(category.getName())
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(8L)
+        .name("date")
+        .newValue(plannedTransaction.getDate().toString())
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(9L)
+        .name("accountPriceEntries")
+        .newValue(String.format("[%s : %s]", account.getName(), plannedTransaction.getAccountPriceEntries().get(0).getPrice()))
+        .build());
+
+    assertThat(historyEntries, hasSize(3));
+
+    assertThat(historyEntries.get(2).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(2).getType(), equalTo(Type.ADD));
+    assertThat(historyEntries.get(2).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(2).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(2).getEntries(), equalTo(historyInfosOfAddingTransactionExpected));
   }
 
   @Test

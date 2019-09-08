@@ -1,7 +1,7 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
-import static com.pfm.helpers.TestHelper.convertTransactionToTransactionRequest;
+import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -371,10 +371,6 @@ public abstract class IntegrationTestsBase {
   }
 
   private List<Transaction> getTransactionsFromResponse(String response) throws Exception {
-    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
-  }
-
-  private List<Transaction> getPlannedTransactionsFromResponse(String response) throws Exception {
     return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
