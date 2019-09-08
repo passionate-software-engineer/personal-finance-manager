@@ -118,9 +118,7 @@ public class TransactionController implements TransactionApi {
     Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
-    if (!transactionToDelete.isPlanned()) {
       historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
-    }
 
     log.info("Transaction with id {} was deleted successfully", transactionId);
     return ResponseEntity.ok().build();

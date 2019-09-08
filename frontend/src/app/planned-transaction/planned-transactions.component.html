@@ -147,10 +147,13 @@
                 [(ngModel)]="selectedFilter.accounts"
                 class="form-control"
                 multiple>
-          <option *ngFor="let account of accounts"
-                  [ngValue]="account">
-            {{account.name}}
-          </option>
+          <ng-container *ngFor="let account of accounts">
+
+            <option *ngIf="!account.archived"
+                    [ngValue]="account">
+              {{account.name}}
+            </option>
+          </ng-container>
         </select>
       </td>
 
