@@ -468,6 +468,90 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldReturnHistoryOfDeletingPlannedTransaction() throws Exception {
+    //given
+    Category category = categoryCar();
+    final long categoryId = callRestToAddCategoryAndReturnId(category, token);
+
+    Account account = accountMilleniumBalance100();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Transaction plannedTransaction = carPlannedTransactionWithNoAccountAndNoCategory();
+    long transactionId = callRestToAddTransactionAndReturnId(plannedTransaction, accountId, categoryId, token);
+    callRestToDeleteTransactionById(transactionId, token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
+    List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("description")
+        .newValue(plannedTransaction.getDescription())
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(7L)
+        .name("categoryId")
+        .newValue(category.getName())
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(8L)
+        .name("date")
+        .newValue(plannedTransaction.getDate().toString())
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(9L)
+        .name("accountPriceEntries")
+        .newValue(String.format("[%s : %s]", account.getName(), plannedTransaction.getAccountPriceEntries().get(0).getPrice()))
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(10L)
+        .name("description")
+        .oldValue(plannedTransaction.getDescription())
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(11L)
+        .name("categoryId")
+        .oldValue(category.getName())
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(12L)
+        .name("date")
+        .oldValue(plannedTransaction.getDate().toString())
+        .build());
+
+    historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
+        .id(13L)
+        .name("accountPriceEntries")
+        .oldValue(String.format("[%s : %s]", account.getName(), plannedTransaction.getAccountPriceEntries().get(0).getPrice()))
+        .build());
+
+    assertThat(historyEntries, hasSize(4));
+
+    assertThat(historyEntries.get(2).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(2).getType(), equalTo(Type.ADD));
+    assertThat(historyEntries.get(2).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(2).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(2).getEntries(), equalTo(historyInfosOfAddingTransactionExpected));
+
+    assertThat(historyEntries.get(3).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(3).getType(), equalTo(Type.DELETE));
+    assertThat(historyEntries.get(3).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(3).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(3).getEntries(), equalTo(historyInfosOfDeletingTransactionExpected));
+  }
+
+  @Test
   public void shouldReturnHistoryOfUpdatingTransaction() throws Exception {
     //given
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
