@@ -102,6 +102,7 @@
   "button.updateLastVerificationDate": "Potwierdź balans",
   "button.commitPlannedTransaction": "Wykonaj teraz",
   "checkbox.showArchived": "Pokaż zarchiwizowane konta",
+  "checkbox.showPlannedTransactions": "Pokaż planowane transakcje",
   "transaction.save": "Zapisz jako nowy filtr",
   "transaction.update": "Zmodyfikuj wybrany filtr",
   "transaction.reset": "Zresetuj wybrany filtr",

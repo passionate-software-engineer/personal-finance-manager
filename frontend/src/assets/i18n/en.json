@@ -102,6 +102,7 @@
   "button.updateLastVerificationDate": "Confirm balance",
   "button.commitPlannedTransaction": "Commit now",
   "checkbox.showArchived": "Show archived accounts",
+  "checkbox.showPlannedTransactions": "Show planned transactions",
   "transaction.save": "Save as new filter",
   "transaction.update": "Update selected filter",
   "transaction.reset": "Reset selected filter",

@@ -11,7 +11,15 @@
             class="btn btn-primary"
             id="RefreshTransactionsBtn"
             type="button">{{'button.refresh' | translate}}</button>
+
+    <span class="showPlannedTransactionsCheckbox">
+      <input (change)="showPlannedTransactionsCheckboxState = !showPlannedTransactionsCheckboxState"
+             id="showPlannedTransactionsCheckbox"
+             type="checkbox">
+      {{"checkbox.showPlannedTransactions" | translate}}
+    </span>
   </div>
+
 
   <div class="form-inline float-right">
     <select (ngModelChange)="onFilterChange($event)"
@@ -244,10 +252,7 @@
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         id="TransactionRow">
 
-      <!--      <ng-container *ngIf="!transaction.planned">-->
-
-      <!--      <div *ngIf="!transaction.isPlanned">-->
-      <ng-container *ngIf="!transaction.isPlanned">
+      <ng-container *ngIf="!transaction.isPlanned || showPlannedTransactionsCheckboxState">
 
         <!--Date-->
         <td *ngIf="!transaction.editMode"
@@ -361,6 +366,15 @@
                   {{'button.delete' | translate}}
                 </button>
               </li>
+              <ng-container *ngIf="transaction.isPlanned">
+                <li>
+                  <button (click)="commitPlannedTransaction(transaction)"
+                          class="btn btn-success btn-block"
+                          id="CommitBtn">
+                    {{'button.commitPlannedTransaction' | translate}}
+                  </button>
+                </li>
+              </ng-container>
             </ul>
           </div>
         </td>

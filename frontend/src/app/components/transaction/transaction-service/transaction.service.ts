@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
 import {TransactionResponse} from './transaction-response';
 import {ServiceBase} from '../../../helpers/service-base';
+import {DateHelper} from '../../../helpers/date-helper';
 
 const PATH = 'transactions';
 
@@ -15,6 +16,8 @@ export class TransactionService extends ServiceBase {
   constructor(http: HttpClient) {
     super(http);
   }
+
+  dateHelper = new DateHelper();
 
   private static transactionToTransactionRequest(transaction: Transaction) {
     const result = {
@@ -50,12 +53,10 @@ export class TransactionService extends ServiceBase {
   }
 
   addTransaction(transaction: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
-  }
+    if (this.dateHelper.isFutureDate(transaction.date)) {
+      transaction.isPlanned = true;
+    }
 
-  addPlannedTransaction(transaction: Transaction): Observable<any> {
-    transaction.isPlanned = true;
     const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
     return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
   }
