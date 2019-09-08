@@ -48,8 +48,9 @@ public class TransactionService {
   @Transactional
   public void updateTransaction(long id, long userId, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
-
-    updateAccountBalance(userId, transaction, transactionToUpdate);
+    if (!transaction.isPlanned()) {
+      updateAccountBalance(userId, transaction, transactionToUpdate);
+    }
 
     transactionToUpdate.setDescription(transaction.getDescription());
     transactionToUpdate.setCategoryId(transaction.getCategoryId());
