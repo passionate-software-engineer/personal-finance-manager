@@ -115,13 +115,13 @@
 
       <!--Date-->
       <td>
-        <input (ngModelChange)="filterPlannedTransactions()"
+        <input (ngModelChange)="filterTransactions()"
                [(ngModel)]="selectedFilter.dateFrom"
                class="form-control"
                max="2025-12-31"
                min="2015-01-01"
                type="date">
-        <input (ngModelChange)="filterPlannedTransactions()"
+        <input (ngModelChange)="filterTransactions()"
                [(ngModel)]="selectedFilter.dateTo"
                class="form-control"
                max="2025-12-31"
@@ -131,7 +131,7 @@
 
       <!--Description-->
       <td>
-        <input (ngModelChange)="filterPlannedTransactions()"
+        <input (ngModelChange)="filterTransactions()"
                [(ngModel)]="selectedFilter.description"
                class="form-control"
                type="text">
@@ -139,11 +139,11 @@
 
       <!--Price-->
       <td>
-        <input (ngModelChange)="filterPlannedTransactions()"
+        <input (ngModelChange)="filterTransactions()"
                [(ngModel)]="selectedFilter.priceFrom"
                class="form-control"
                type="number">
-        <input (ngModelChange)="filterPlannedTransactions()"
+        <input (ngModelChange)="filterTransactions()"
                [(ngModel)]="selectedFilter.priceTo"
                class="form-control"
                type="number">
@@ -151,7 +151,7 @@
 
       <!--Account-->
       <td>
-        <select (ngModelChange)="filterPlannedTransactions()"
+        <select (ngModelChange)="filterTransactions()"
                 [(ngModel)]="selectedFilter.accounts"
                 class="form-control"
                 multiple>
@@ -167,7 +167,7 @@
 
       <!--Category-->
       <td>
-        <select (ngModelChange)="filterPlannedTransactions()"
+        <select (ngModelChange)="filterTransactions()"
                 [(ngModel)]="selectedFilter.categories"
                 class="form-control"
                 multiple>

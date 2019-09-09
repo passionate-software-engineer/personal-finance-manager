@@ -34,7 +34,7 @@ export class FiltersComponentBase extends Sortable {
       this.selectedFilter.categories.push(category);
     }
 
-    this.filterPlannedTransactions();
+    this.filterTransactions();
   }
 
   getFilters(): void {
@@ -181,7 +181,7 @@ export class FiltersComponentBase extends Sortable {
     });
   }
 
-  protected filterPlannedTransactions() {
+  protected filterTransactions() {
     this.transactions = [];
     for (const transaction of this.allTransactions) {
       this.transactions.push(transaction);
