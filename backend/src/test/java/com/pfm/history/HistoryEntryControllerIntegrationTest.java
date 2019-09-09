@@ -485,7 +485,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
-    List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
+    final List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
@@ -719,174 +719,113 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(historyEntries.get(9).getEntries(), equalTo(historyInfosOfUpdatingAccountIngAddAmountExpected));
   }
 
-//  @Test
-//  public void shouldReturnHistoryOfUpdatingPlannedTransaction() throws Exception {
-//    //given
-//    final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-//    final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-//
-//    Account accountIdea = accountIdeaBalance100000();
-//    accountIdea.setCurrency(currencyService.getCurrencies(userId).get(0));
-//    final long accountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdea, token);
-//
-//    Account accountIng = accountIngBalance9999();
-//    accountIng.setCurrency(currencyService.getCurrencies(userId).get(1));
-//    final long accountIngId = callRestServiceToAddAccountAndReturnId(accountIng, token);
-//
-//    Transaction transaction = carPlannedTransactionWithNoAccountAndNoCategory();
-//    final long transactionId = callRestToAddTransactionAndReturnId(transaction, accountIdeaId, categoryCarId, token);
-//
-//    List<AccountPriceEntry> accountPriceEntriesUpdated = new ArrayList<>();
-//    accountPriceEntriesUpdated.add(AccountPriceEntry.builder()
-//        .accountId(accountIdeaId)
-//        .price(convertDoubleToBigDecimal(65))
-//        .build());
-//    accountPriceEntriesUpdated.add(AccountPriceEntry.builder()
-//        .accountId(accountIngId)
-//        .price(convertDoubleToBigDecimal(55))
-//        .build());
-//
-//    Transaction updatedTransaction = Transaction.builder()
-//        .description("updatedName")
-//        .categoryId(categoryFoodId)
-//        .date(LocalDate.now().plusDays(12))
-//        .accountPriceEntries(accountPriceEntriesUpdated)
-//        .isPlanned(true)
-//        .build();
-//
-//    callRestToUpdateTransaction(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
-//
-//    //when
-//    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
-//
-//    //then
-//    List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
-//
-//    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-//        .id(15L)
-//        .name("description")
-//        .oldValue(transaction.getDescription())
-//        .newValue(updatedTransaction.getDescription())
-//        .build());
-//
-//    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-//        .id(16L)
-//        .name("categoryId")
-//        .oldValue(categoryCar().getName())
-//        .newValue(categoryFood().getName())
-//        .build());
-//
-//    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-//        .id(17L)
-//        .name("date")
-//        .oldValue(transaction.getDate().toString())
-//        .newValue(updatedTransaction.getDate().toString())
-//        .build());
-//
-//    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-//        .id(18L)
-//        .name("accountPriceEntries")
-//        .oldValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
-//        .newValue(String
-//            .format("[%s : %s, %s : %s]", accountIdeaBalance100000().getName(), updatedTransaction.getAccountPriceEntries().get(0).getPrice(),
-//                accountIngBalance9999().getName(), updatedTransaction.getAccountPriceEntries().get(1).getPrice()))
-//        .build());
-//
-//    List<HistoryInfo> historyInfosOfUpdatingAccountIdeaSubstractAmountExpected = new ArrayList<>();
-//
-//    historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
-//        .id(22L)
-//        .name("name")
-//        .newValue(accountIdeaBalance100000().getName())
-//        .oldValue(accountIdeaBalance100000().getName())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
-//        .id(23L)
-//        .name("balance")
-//        .newValue(accountIdeaBalance100000().getBalance().toString())
-//        .oldValue(accountIdeaBalance100000().getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
-//        .id(24L)
-//        .name("archived")
-//        .newValue(String.valueOf(accountIdeaBalance100000().isArchived()))
-//        .oldValue(String.valueOf(accountIdeaBalance100000().isArchived()))
-//        .build());
-//
-//    List<HistoryInfo> historyInfosOfUpdatingAccountIdeaAddAmountExpected = new ArrayList<>();
-//
-//    historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
-//        .id(25L)
-//        .name("name")
-//        .newValue(accountIdeaBalance100000().getName())
-//        .oldValue(accountIdeaBalance100000().getName())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
-//        .id(26L)
-//        .name("balance")
-//        .oldValue(accountIdeaBalance100000().getBalance().toString())
-//        .newValue(accountIdeaBalance100000().getBalance().add(updatedTransaction.getAccountPriceEntries().get(0).getPrice()).toString())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
-//        .id(27L)
-//        .name("archived")
-//        .newValue(String.valueOf(accountIdeaBalance100000().isArchived()))
-//        .oldValue(String.valueOf(accountIdeaBalance100000().isArchived()))
-//        .build());
-//
-//    List<HistoryInfo> historyInfosOfUpdatingAccountIngAddAmountExpected = new ArrayList<>();
-//
-//    historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
-//        .id(28L)
-//        .name("name")
-//        .newValue(accountIngBalance9999().getName())
-//        .oldValue(accountIngBalance9999().getName())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
-//        .id(29L)
-//        .name("balance")
-//        .oldValue(accountIngBalance9999().getBalance().toString())
-//        .newValue(accountIngBalance9999().getBalance().add(updatedTransaction.getAccountPriceEntries().get(1).getPrice()).toString())
-//        .build());
-//
-//    historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
-//        .id(30L)
-//        .name("archived")
-//        .newValue(String.valueOf(accountIngBalance9999().isArchived()))
-//        .oldValue(String.valueOf(accountIngBalance9999().isArchived()))
-//        .build());
-//
-//    assertThat(historyEntries, hasSize(6));
-//
-//    assertThat(historyEntries.get(2).getObject(), equalTo(Account.class.getSimpleName()));
-//    assertThat(historyEntries.get(2).getType(), equalTo(Type.ADD));
-//    assertThat(historyEntries.get(2).getUserId(), equalTo(userId));
-//    assertTrue(historyEntries.get(2).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
-//    assertThat(historyEntries.get(2).getEntries(), equalTo(historyInfosOfUpdatingTransactionExpected));
-//
-//    assertThat(historyEntries.get(3).getObject(), equalTo(Account.class.getSimpleName()));
-//    assertThat(historyEntries.get(3).getType(), equalTo(Type.UPDATE));
-//    assertThat(historyEntries.get(3).getUserId(), equalTo(userId));
-//    assertTrue(historyEntries.get(3).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
-////    assertThat(historyEntries.get(6).getEntries(), equalTo(historyInfosOfUpdatingAccountIdeaSubstractAmountExpected));
-//
-//    assertThat(historyEntries.get(4).getObject(), equalTo(Account.class.getSimpleName()));
-//    assertThat(historyEntries.get(4).getType(), equalTo(Type.UPDATE));
-//    assertThat(historyEntries.get(4).getUserId(), equalTo(userId));
-//    assertTrue(historyEntries.get(4).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
-//    assertThat(historyEntries.get(4).getEntries(), equalTo(historyInfosOfUpdatingAccountIdeaAddAmountExpected));
-//
-//    assertThat(historyEntries.get(5).getObject(), equalTo(Account.class.getSimpleName()));
-//    assertThat(historyEntries.get(5).getType(), equalTo(Type.UPDATE));
-//    assertThat(historyEntries.get(5).getUserId(), equalTo(userId));
-//    assertTrue(historyEntries.get(5).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
-//    assertThat(historyEntries.get(5).getEntries(), equalTo(historyInfosOfUpdatingAccountIngAddAmountExpected));
-//  }
+  @Test
+  public void shouldReturnHistoryOfUpdatingPlannedTransaction() throws Exception {
+    //given
+    final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    Account accountIdea = accountIdeaBalance100000();
+    accountIdea.setCurrency(currencyService.getCurrencies(userId).get(0));
+    final long accountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdea, token);
+
+    Account accountIng = accountIngBalance9999();
+    accountIng.setCurrency(currencyService.getCurrencies(userId).get(1));
+    final long accountIngId = callRestServiceToAddAccountAndReturnId(accountIng, token);
+
+    Transaction transaction = carPlannedTransactionWithNoAccountAndNoCategory();
+    final long transactionId = callRestToAddTransactionAndReturnId(transaction, accountIdeaId, categoryCarId, token);
+
+    List<AccountPriceEntry> accountPriceEntriesUpdated = new ArrayList<>();
+    accountPriceEntriesUpdated.add(AccountPriceEntry.builder()
+        .accountId(accountIngId)
+        .price(convertDoubleToBigDecimal(65))
+        .build());
+
+    Transaction updatedTransaction = Transaction.builder()
+        .description("updatedName")
+        .categoryId(categoryFoodId)
+        .date(LocalDate.now().plusDays(12))
+        .accountPriceEntries(accountPriceEntriesUpdated)
+        .isPlanned(true)
+        .build();
+
+    callRestToUpdateTransaction(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
+
+    //when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    //then
+    List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
+    List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(11L)
+        .name("description")
+        .newValue("Oil")
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(12L)
+        .name("categoryId")
+        .newValue("Car")
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(13L)
+        .name("date")
+        .newValue(String.valueOf(LocalDate.now().plusDays(2)))
+        .build());
+
+    historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
+        .id(14L)
+        .name("accountPriceEntries")
+        .newValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
+        .build());
+
+    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
+        .id(15L)
+        .name("description")
+        .newValue("updatedName")
+        .oldValue("Oil")
+        .build());
+
+    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
+        .id(16L)
+        .name("categoryId")
+        .newValue("Food")
+        .oldValue("Car")
+        .build());
+
+    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
+        .id(17L)
+        .name("date")
+        .newValue(String.valueOf(updatedTransaction.getDate()))
+        .oldValue(String.valueOf(transaction.getDate()))
+        .build());
+
+    historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
+        .id(18L)
+        .name("accountPriceEntries")
+        .newValue(String.format("[%s : %s]", accountIngBalance9999().getName(), updatedTransaction.getAccountPriceEntries().get(0).getPrice()))
+        .oldValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
+        .build());
+
+    assertThat(historyEntries, hasSize(6));
+
+    assertThat(historyEntries.get(4).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(4).getType(), equalTo(Type.ADD));
+    assertThat(historyEntries.get(4).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(4).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(4).getEntries(), equalTo(historyInfosOfAddingTransactionExpected));
+
+    assertThat(historyEntries.get(5).getObject(), equalTo(Transaction.class.getSimpleName()));
+    assertThat(historyEntries.get(5).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(5).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(5).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(5).getEntries(), equalTo(historyInfosOfUpdatingTransactionExpected));
+  }
+
   @Test
   public void shouldReturnHistoryOfDeletingTransaction() throws Exception {
     //given

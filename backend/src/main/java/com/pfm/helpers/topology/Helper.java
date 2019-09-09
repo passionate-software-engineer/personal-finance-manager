@@ -2,8 +2,11 @@ package com.pfm.helpers.topology;
 
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Helper {
+
   public static TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
     return TransactionRequest.builder()
         .description(transaction.getDescription())

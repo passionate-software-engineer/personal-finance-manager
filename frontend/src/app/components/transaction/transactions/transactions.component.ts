@@ -19,6 +19,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class TransactionsComponent extends FiltersComponentBase implements OnInit {
   allTransactions: Transaction[] = [];
   transactions: Transaction[] = [];
+  plannedTransactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
@@ -97,9 +98,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 transaction.category = category;
               }
             }
-
-            this.transactions.push(transaction);
-            this.allTransactions.push(transaction);
+            if (transaction.isPlanned) {
+              this.plannedTransactions.push(transaction);
+            } else {
+              this.transactions.push(transaction);
+            }
+             this.allTransactions.push(transaction);
           }
 
           super.filterTransactions();
@@ -236,18 +240,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       this.alertService.error(this.translate.instant('message.dateEmpty'));
       status = false;
     }
-    // fix
-    console.log('now ' + Date.now());
-    console.log('date ' + new Date(transaction.date).getTime());
-
-    // if (transaction.isPlanned === false && this.transactionService.dateHelper.isFutureDate(transaction.date)) {
-    //   this.alertService.error(this.translate.instant('message.futureDate'));
-    //   status = false;
-    // }
-    // if (!transaction.isPlanned === false && this.transactionService.dateHelper.isPastDate(transaction.date)) {
-    //   this.alertService.error(this.translate.instant('message.pastDate'));
-    //   status = false;
-    // }
 
     if (transaction.description == null || transaction.description.trim() === '') {
       this.alertService.error(this.translate.instant('message.descriptionEmpty'));

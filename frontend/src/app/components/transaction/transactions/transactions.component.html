@@ -249,7 +249,8 @@
       </td>
     </tr>
 
-    <tr [ngClass]="{'font-italic':transaction.isPlanned}" *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
+    <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'; let i = index "
+        [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
 
       <ng-container *ngIf="!transaction.isPlanned || showPlannedTransactionsCheckboxState">
@@ -380,7 +381,7 @@
         </td>
       </ng-container>
     </tr>
-    <tr>
+    <tr >
       <!--Date-->
       <td>
       </td>
