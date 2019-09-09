@@ -756,8 +756,8 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
-    List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
-    List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
+    final List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
+    final List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
         .id(11L)

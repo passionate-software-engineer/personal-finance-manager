@@ -120,14 +120,12 @@ public class TransactionService {
 
   private void updateAccountBalance(long userId, Transaction transaction, Transaction transactionToUpdate) {
     // subtract old value
-    if (!transaction.isPlanned()) {
-      for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
-        subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
-      }
-      // add new value
-      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-        addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
-      }
+    for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
+      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+    }
+    // add new value
+    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
     }
   }
 

@@ -11,7 +11,8 @@ export class DateHelper {
   }
 
   getCorrectDate(date: Date): Date {
-    date.setMinutes(date.getMinutes() + 120);
+    const TWO_HOURS = 120;
+    date.setMinutes(date.getMinutes() + TWO_HOURS);
     return date;
   }
 }
