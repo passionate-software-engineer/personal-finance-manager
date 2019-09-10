@@ -11,7 +11,6 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.PAST_PLANNED_TRANSACTION_DATE;
-import static com.pfm.config.MessagesProvider.TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
@@ -76,9 +75,9 @@ public class TransactionValidator {
         if (isPastDate(transaction.getDate())) {
           validationErrors.add(getMessage(PAST_PLANNED_TRANSACTION_DATE));
         }
-        if (containsArchivedAccount(transaction,userId)) {
-          validationErrors.add(getMessage(TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT));
-        }
+//        if (containsArchivedAccount(transaction,userId)) {
+//          validationErrors.add(getMessage(TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT));
+//        }
       }
     }
 

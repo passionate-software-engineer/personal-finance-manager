@@ -11,7 +11,6 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.PAST_PLANNED_TRANSACTION_DATE;
-import static com.pfm.config.MessagesProvider.TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.filters.LanguageFilter.LANGUAGE_HEADER;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -788,7 +787,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT))));
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED))));
 
   }
 
