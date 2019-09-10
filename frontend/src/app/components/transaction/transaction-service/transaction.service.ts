@@ -53,7 +53,7 @@ export class TransactionService extends ServiceBase {
   }
 
   addTransaction(transaction: Transaction): Observable<any> {
-    if (this.dateHelper.isFutureDate(transaction.date)) {
+    if (DateHelper.isFutureDate(transaction.date)) {
       transaction.isPlanned = true;
     }
 

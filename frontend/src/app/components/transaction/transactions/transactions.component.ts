@@ -132,7 +132,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           this.transactionService.getTransaction(transaction.id)
               .subscribe(updatedTransaction => {
                 const returnedTransaction = new Transaction(); // TODO dupliated code
-                returnedTransaction.date = this.transactionService.dateHelper.getCorrectDate(updatedTransaction.date);
+                returnedTransaction.date = updatedTransaction.date;
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
 
@@ -211,7 +211,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
                 this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.date = this.transactionService.dateHelper.getCorrectDate(new Date);
+                this.newTransaction.date = new Date;
               });
         });
   }
