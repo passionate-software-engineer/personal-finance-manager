@@ -71,8 +71,13 @@ public class TransactionValidator {
       if (notPlannedTransaction && isFutureDate(transaction.getDate())) {
         validationErrors.add(getMessage(FUTURE_TRANSACTION_DATE));
       }
-      if (plannedTransaction && isPastDate(transaction.getDate())) {
-        validationErrors.add(getMessage(PAST_PLANNED_TRANSACTION_DATE));
+      if (plannedTransaction) {
+        if (isPastDate(transaction.getDate())) {
+          validationErrors.add(getMessage(PAST_PLANNED_TRANSACTION_DATE));
+        }
+        if (containsArchivedAccount(transaction,userId)) {
+          validationErrors.add(getMessage("Transaction to commit contains archived account"));
+        }
       }
     }
 
@@ -80,11 +85,17 @@ public class TransactionValidator {
 
   }
 
-  private boolean isPastDate(LocalDate date) {
-    return date.isBefore(LocalDate.now());
+  private boolean containsArchivedAccount(Transaction transaction, long userId) {
+    return transaction.getAccountPriceEntries().stream()
+        .map(accountPriceEntry -> accountService.getAccountByIdAndUserId(accountPriceEntry.getAccountId(), userId).get())
+        .anyMatch(Account::isArchived);
   }
 
-  private boolean isFutureDate(LocalDate date) {
-    return date.isAfter(LocalDate.now());
+    private boolean isPastDate (LocalDate date){
+      return date.isBefore(LocalDate.now());
+    }
+
+    private boolean isFutureDate (LocalDate date){
+      return date.isAfter(LocalDate.now());
+    }
   }
-}

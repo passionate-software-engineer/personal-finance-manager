@@ -307,10 +307,12 @@
                   [(ngModel)]="entry.account"
                   class="form-control"
                   id="EditTransactionAccountSelects">
-            <option *ngFor="let account of accounts"
-                    [ngValue]="account">
-              {{account.name}}
-            </option>
+            <ng-container *ngFor="let account of accounts">
+              <option *ngIf="!account.archived"
+                      [ngValue]="account">
+                {{account.name}}
+              </option>
+            </ng-container>
           </select>
         </td>
 
@@ -381,7 +383,7 @@
         </td>
       </ng-container>
     </tr>
-    <tr >
+    <tr>
       <!--Date-->
       <td>
       </td>

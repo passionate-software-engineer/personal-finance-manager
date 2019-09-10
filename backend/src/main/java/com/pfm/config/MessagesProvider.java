@@ -37,6 +37,7 @@ public class MessagesProvider {
   public static final String ACCOUNT_ID_DOES_NOT_EXIST = "validator.accountIdDoesNotExist";
   public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
   public static final String AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED = "transactionValidator.atLeastOneAccountAndPriceIsRequired";
+  public static final String TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT = "transactionValidator.plannedTransactionToCommitArchivedAccount";
 
   public static final String FILTER_ACCOUNT_ID_DOES_NOT_EXIST = "validator.accountIdDoesNotExist";
   public static final String FILTER_CATEGORY_ID_DOES_NOT_EXIST = "validator.categoryIdDoesNotExist";

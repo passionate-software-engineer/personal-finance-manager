@@ -11,6 +11,7 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.PAST_PLANNED_TRANSACTION_DATE;
+import static com.pfm.config.MessagesProvider.TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.filters.LanguageFilter.LANGUAGE_HEADER;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -748,7 +749,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
             .content(json(transactionRequest))
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
-        .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(PAST_PLANNED_TRANSACTION_DATE))));
 
@@ -762,6 +762,33 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
+
+  }
+
+  @Test
+  public void shouldReturnBadRequestDuringCommittingPlannedTransactionWithArchivedAccount() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    Transaction plannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
+    plannedTransaction.setPlanned(true);
+
+    long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
+
+    //when
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    //then
+    mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(TRANSACTION_TO_COMMIT_CONTAINS_ARCHIVED_ACCOUNT))));
 
   }
 
