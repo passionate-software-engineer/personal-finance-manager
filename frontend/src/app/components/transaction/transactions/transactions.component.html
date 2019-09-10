@@ -12,11 +12,11 @@
             id="RefreshTransactionsBtn"
             type="button">{{'button.refresh' | translate}}</button>
 
-    <span class="showPlannedTransactionsCheckbox">
-      <input (change)="showPlannedTransactionsCheckboxState = !showPlannedTransactionsCheckboxState"
-             id="showPlannedTransactionsCheckbox"
+    <span class="hidePlannedTransactionsCheckbox">
+      <input (change)="hidePlannedTransactionsCheckboxState = !hidePlannedTransactionsCheckboxState"
+             id="hidePlannedTransactionsCheckbox"
              type="checkbox">
-      {{"checkbox.showPlannedTransactions" | translate}}
+      {{"checkbox.hidePlannedTransactions" | translate}}
     </span>
   </div>
 
@@ -253,7 +253,7 @@
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
 
-      <ng-container *ngIf="!transaction.isPlanned || showPlannedTransactionsCheckboxState">
+      <ng-container *ngIf="!transaction.isPlanned || !hidePlannedTransactionsCheckboxState">
 
         <!--Date-->
         <td *ngIf="!transaction.editMode"

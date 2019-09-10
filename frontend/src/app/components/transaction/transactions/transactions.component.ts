@@ -27,7 +27,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   selectedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
-  showPlannedTransactionsCheckboxState = false;
+  hidePlannedTransactionsCheckboxState = false;
 
 
   constructor(
@@ -103,7 +103,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             } else {
               this.transactions.push(transaction);
             }
-             this.allTransactions.push(transaction);
+            this.allTransactions.push(transaction);
           }
 
           super.filterTransactions();
@@ -111,10 +111,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   deleteTransaction(transactionToDelete) {
-    if (confirm(this.translate.instant('message.wantDeleteTransaction'))) {
+    const deleteMessageKey = transactionToDelete.isPlanned ? 'message.plannedTransactionDeleted' : 'message.transactionDeleted';
+    const deleteDialogMessageKey = transactionToDelete.isPlanned ? 'message.wantDeletePlannedTransaction' : 'message.wantDeleteTransaction';
+    if (confirm(this.translate.instant(deleteDialogMessageKey))) {
       this.transactionService.deleteTransaction(transactionToDelete.id)
           .subscribe(() => {
-            this.alertService.success(this.translate.instant('message.transactionDeleted'));
+            this.alertService.success(this.translate.instant(deleteMessageKey));
             this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
             this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
           });
@@ -128,13 +130,15 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe(() => {
-          this.alertService.success(this.translate.instant('message.transactionEdited'));
           this.transactionService.getTransaction(transaction.id)
               .subscribe(updatedTransaction => {
+                const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
+                this.alertService.success(this.translate.instant(messageKey));
                 const returnedTransaction = new Transaction(); // TODO dupliated code
                 returnedTransaction.date = updatedTransaction.date;
                 returnedTransaction.id = updatedTransaction.id;
                 returnedTransaction.description = updatedTransaction.description;
+                returnedTransaction.isPlanned = updatedTransaction.planned;
 
                 for (const entry of updatedTransaction.accountPriceEntries) {
                   const accountPriceEntry = new AccountPriceEntry();
@@ -171,9 +175,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.addTransaction(this.newTransaction)
         .subscribe(id => {
-          this.alertService.success(this.translate.instant('message.transactionAdded'));
           this.transactionService.getTransaction(id)
               .subscribe(createdTransaction => {
+                const messageKey = createdTransaction.planned ? 'message.plannedTransactionAdded' : 'message.transactionAdded';
+                this.alertService.success(this.translate.instant(messageKey));
 
                 // TODO duplicate with above method
                 const returnedTransaction = new Transaction();

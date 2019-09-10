@@ -1,8 +1,7 @@
 export class DateHelper {
 
   public static isFutureDate(date: Date): boolean {
-    const oneDayInMiliseconds = 86400000;
-    return date.getTime() - oneDayInMiliseconds > Date.now();
+    return date.getTime()  > Date.now();
   }
 
   public static isPastDate(date: Date): boolean {
