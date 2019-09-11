@@ -50,6 +50,7 @@
   "message.filterWrongDateRange": "Filter 'from date' cannot be later then 'to date'",
   "message.wantDeleteTransaction": " Are you sure You want to delete this transaction?",
   "message.wantDeletePlannedTransaction": " Are you sure You want to delete this planned transaction?",
+  "message.wantCommitPlannedTransactionBeforeDate": "Are you sure You want to commit this transaction now?",
   "message.transactionDeleted": "Transaction deleted",
   "message.transactionEdited": "Transaction edited",
   "message.transactionAdded": "Transaction added",

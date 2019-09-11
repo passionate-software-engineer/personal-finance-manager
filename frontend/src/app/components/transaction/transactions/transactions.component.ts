@@ -10,6 +10,7 @@ import {TransactionFilter} from '../transaction-filter';
 import {TransactionFilterService} from '../transaction-filter-service/transaction-filter.service';
 import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-transactions',
@@ -28,7 +29,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
   hidePlannedTransactionsCheckboxState = false;
-
+  pipe = new DatePipe('en-US');
 
   constructor(
     private transactionService: TransactionService,
@@ -222,16 +223,35 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   commitPlannedTransaction(transaction: Transaction) {
-    this.transactionService.commitPlannedTransaction(transaction)
-        .subscribe(() => {
-            this.alertService.success(
-              this.translate.instant('message.plannedTransactionCommitted')
-            );
-          },
-          () => {
-          },
-          () => this.refreshTransactions()
-        );
+    const deleteDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
+    if (this.isTransactionDateCurrentDate(transaction)) {
+      this.commit(transaction);
+      return;
+    }
+    if (confirm(this.translate.instant(deleteDialogMessageKey))) {
+      this.commit(transaction);
+    }
+  }
+
+  private commit(transaction: Transaction) {
+    {
+      this.transactionService.commitPlannedTransaction(transaction)
+          .subscribe(() => {
+              this.alertService.success(
+                this.translate.instant('message.plannedTransactionCommitted')
+              );
+            },
+            () => {
+            },
+            () => this.refreshTransactions()
+          );
+    }
+  }
+
+  private isTransactionDateCurrentDate(transaction) {
+    const now = this.pipe.transform(Date.now(), 'longDate');
+    const transactionDate = this.pipe.transform(transaction.date, 'longDate');
+    return transactionDate === now;
   }
 
   private refreshTransactions() {
