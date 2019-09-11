@@ -241,7 +241,13 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 this.translate.instant('message.plannedTransactionCommitted')
               );
             },
-            () => {
+            (error) => {
+              console.log(error.error[0]);
+              // lukasz todo extract to keys
+              if (error.error[0] === 'Cannot schedule planned transaction of archived account.') {
+                if (confirm(' Archived account detected - the transaction cannot be committed. Choose another account or delete the transaction')) {
+                }
+              }
             },
             () => this.refreshTransactions()
           );
