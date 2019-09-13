@@ -58,6 +58,8 @@
   "message.plannedTransactionAdded": "Planowana transakcja została dodana",
   "message.plannedTransactionCommitted": "Planowana transakcja została wykonana",
   "message.wantCommitPlannedTransactionBeforeDate": "Czy chcesz wykonać transakcje przed planowaną datą?",
+  "message.archivedAccountDetectedDuringCommit": "Transakcja na zarchiwizowanym koncie nie moze być wykonana",
+  "message.selectActiveAccount": "Proszę zaznaczyć aktywne konto dla transakcji",
   "message.dateEmpty": "Data jest pusta lub niepoprawna",
   "message.futureDate": "Data nie może być datą przyszłą",
   "message.pastDate": "Data nie może być datą przeszłą",

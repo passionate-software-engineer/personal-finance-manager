@@ -58,6 +58,8 @@
   "message.plannedTransactionEdited": "Planned transaction edited",
   "message.plannedTransactionAdded": "Planned transaction added",
   "message.plannedTransactionCommitted": "Planned transaction committed",
+  "message.archivedAccountDetectedDuringCommit": "Transaction using archived account cannot be committed",
+  "message.selectActiveAccount": "Please select active account for the transaction",
   "message.dateEmpty": "Date is empty or incomplete",
   "message.futureDate": "Date cannot be future date",
   "message.pastDate": "Date cannot be past date",

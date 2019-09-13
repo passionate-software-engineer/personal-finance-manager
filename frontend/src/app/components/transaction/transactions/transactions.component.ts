@@ -131,42 +131,42 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe(() => {
-          this.transactionService.getTransaction(transaction.id)
-              .subscribe(updatedTransaction => {
-                const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
-                this.alertService.success(this.translate.instant(messageKey));
-                const returnedTransaction = new Transaction(); // TODO dupliated code
-                returnedTransaction.date = updatedTransaction.date;
-                returnedTransaction.id = updatedTransaction.id;
-                returnedTransaction.description = updatedTransaction.description;
-                returnedTransaction.isPlanned = updatedTransaction.planned;
+            this.transactionService.getTransaction(transaction.id)
+                .subscribe(updatedTransaction => {
+                  const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
+                  this.alertService.success(this.translate.instant(messageKey));
+                  const returnedTransaction = new Transaction(); // TODO dupliated code
+                  returnedTransaction.date = updatedTransaction.date;
+                  returnedTransaction.id = updatedTransaction.id;
+                  returnedTransaction.description = updatedTransaction.description;
+                  returnedTransaction.isPlanned = updatedTransaction.planned;
 
-                for (const entry of updatedTransaction.accountPriceEntries) {
-                  const accountPriceEntry = new AccountPriceEntry();
-                  accountPriceEntry.price = +entry.price; // + added to convert to number
+                  for (const entry of updatedTransaction.accountPriceEntries) {
+                    const accountPriceEntry = new AccountPriceEntry();
+                    accountPriceEntry.price = +entry.price; // + added to convert to number
 
-                  // need to have same object to allow dropdown to work correctly
-                  for (const account of this.accounts) { // TODO use hashmap
-                    if (account.id === entry.accountId) {
-                      accountPriceEntry.account = account;
+                    // need to have same object to allow dropdown to work correctly
+                    for (const account of this.accounts) { // TODO use hashmap
+                      if (account.id === entry.accountId) {
+                        accountPriceEntry.account = account;
+                      }
+                    }
+
+                    accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+
+                    returnedTransaction.accountPriceEntries.push(accountPriceEntry);
+                  }
+
+                  for (const category of this.categories) {
+                    if (category.id === updatedTransaction.categoryId) {
+                      returnedTransaction.category = category;
                     }
                   }
 
-                  accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
-                  returnedTransaction.accountPriceEntries.push(accountPriceEntry);
-                }
-
-                for (const category of this.categories) {
-                  if (category.id === updatedTransaction.categoryId) {
-                    returnedTransaction.category = category;
-                  }
-                }
-
-
-                Object.assign(transaction, returnedTransaction);
-              });
-        });
+                  Object.assign(transaction, returnedTransaction);
+                });
+          },
+        );
   }
 
   addTransaction() {
@@ -176,50 +176,54 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     this.transactionService.addTransaction(this.newTransaction)
         .subscribe(id => {
-          this.transactionService.getTransaction(id)
-              .subscribe(createdTransaction => {
-                const messageKey = createdTransaction.planned ? 'message.plannedTransactionAdded' : 'message.transactionAdded';
-                this.alertService.success(this.translate.instant(messageKey));
+            this.transactionService.getTransaction(id)
+                .subscribe(createdTransaction => {
+                  const messageKey = createdTransaction.planned ? 'message.plannedTransactionAdded' : 'message.transactionAdded';
+                  this.alertService.success(this.translate.instant(messageKey));
 
-                // TODO duplicate with above method
-                const returnedTransaction = new Transaction();
-                returnedTransaction.date = createdTransaction.date;
-                returnedTransaction.id = createdTransaction.id;
-                returnedTransaction.description = createdTransaction.description;
-                returnedTransaction.isPlanned = createdTransaction.planned;
+                  // TODO duplicate with above method
+                  const returnedTransaction = new Transaction();
+                  returnedTransaction.date = createdTransaction.date;
+                  returnedTransaction.id = createdTransaction.id;
+                  returnedTransaction.description = createdTransaction.description;
+                  returnedTransaction.isPlanned = createdTransaction.planned;
 
-                for (const entry of createdTransaction.accountPriceEntries) {
-                  const accountPriceEntry = new AccountPriceEntry();
-                  accountPriceEntry.price = +entry.price; // + added to convert to number
+                  for (const entry of createdTransaction.accountPriceEntries) {
+                    const accountPriceEntry = new AccountPriceEntry();
+                    accountPriceEntry.price = +entry.price; // + added to convert to number
 
-                  // need to have same object to allow dropdown to work correctly
-                  for (const account of this.accounts) { // TODO use hashmap
-                    if (account.id === entry.accountId) {
-                      accountPriceEntry.account = account;
+                    // need to have same object to allow dropdown to work correctly
+                    for (const account of this.accounts) { // TODO use hashmap
+                      if (account.id === entry.accountId) {
+                        accountPriceEntry.account = account;
+                      }
+                    }
+
+                    accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+
+                    returnedTransaction.accountPriceEntries.push(accountPriceEntry);
+                  }
+
+                  for (const category of this.categories) {
+                    if (category.id === createdTransaction.categoryId) {
+                      returnedTransaction.category = category;
                     }
                   }
 
-                  accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
-                  returnedTransaction.accountPriceEntries.push(accountPriceEntry);
-                }
-
-                for (const category of this.categories) {
-                  if (category.id === createdTransaction.categoryId) {
-                    returnedTransaction.category = category;
-                  }
-                }
-
-                this.transactions.push(returnedTransaction);
-                this.allTransactions.push(returnedTransaction);
-                this.addingMode = false;
-                this.newTransaction = new Transaction();
-                // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
-                this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
-                this.newTransaction.date = new Date;
-              });
-        });
+                  this.transactions.push(returnedTransaction);
+                  this.allTransactions.push(returnedTransaction);
+                  this.addingMode = false;
+                  this.newTransaction = new Transaction();
+                  // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
+                  this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+                  this.newTransaction.accountPriceEntries.push(new AccountPriceEntry());
+                  this.newTransaction.date = new Date;
+                });
+          },
+          () => {
+            alert(this.translate.instant('message.futureDate'));
+          }
+        );
   }
 
   commitPlannedTransaction(transaction: Transaction) {
@@ -241,13 +245,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 this.translate.instant('message.plannedTransactionCommitted')
               );
             },
-            (error) => {
-              console.log(error.error[0]);
-              // lukasz todo extract to keys
-              if (error.error[0] === 'Cannot schedule planned transaction of archived account.') {
-                if (confirm(' Archived account detected - the transaction cannot be committed. Choose another account or delete the transaction')) {
-                }
-              }
+            () => {
+              this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
             },
             () => this.refreshTransactions()
           );
