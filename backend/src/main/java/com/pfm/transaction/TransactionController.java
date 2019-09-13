@@ -135,6 +135,7 @@ public class TransactionController implements TransactionApi {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
+
     transactionService.deleteTransaction(transactionId, userId);
     Transaction transactionToAdd = getNewInstanceWithCurrentDateAndPlannedStatus(plannedTransaction);
     addAsNewTransaction(transactionToAdd);
