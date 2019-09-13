@@ -255,9 +255,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   private isTransactionDateCurrentDate(transaction) {
-    const now = this.pipe.transform(Date.now(), 'longDate');
+    const currentDate = this.pipe.transform(Date.now(), 'longDate');
     const transactionDate = this.pipe.transform(transaction.date, 'longDate');
-    return transactionDate === now;
+    return transactionDate === currentDate;
   }
 
   private refreshTransactions() {
