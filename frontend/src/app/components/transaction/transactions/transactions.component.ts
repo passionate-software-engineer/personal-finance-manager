@@ -11,6 +11,7 @@ import {TransactionFilterService} from '../transaction-filter-service/transactio
 import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
+import {DateHelper} from '../../../helpers/date-helper';
 
 @Component({
   selector: 'app-transactions',
@@ -125,7 +126,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   updateTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction.editedTransaction)) {
+    if (!this.validateTransaction(transaction.editedTransaction, true)) {
       return;
     }
 
@@ -170,7 +171,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   addTransaction() {
-    if (!this.validateTransaction(this.newTransaction)) {
+    if (!this.validateTransaction(this.newTransaction, false)) {
       return;
     }
 
@@ -263,8 +264,21 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     this.getTransactions();
   }
 
-  private validateTransaction(transaction: Transaction): boolean {
+  private validateTransaction(transaction: Transaction, isUpdate: boolean): boolean {
     let status = true;
+    if (isUpdate) {
+      if (transaction.isPlanned && DateHelper.isPastDate(transaction.date)) {
+        this.alertService.error(this.translate.instant('message.plannedTransactionPastDate'));
+        status = false;
+      }
+
+      if (!transaction.isPlanned && DateHelper.isFutureDate(transaction.date)) {
+        this.alertService.error(this.translate.instant('message.transactionFutureDate'));
+        status = false;
+      }
+
+    }
+
 
     if (transaction.date == null || transaction.date.toString() === '') {
       this.alertService.error(this.translate.instant('message.dateEmpty'));

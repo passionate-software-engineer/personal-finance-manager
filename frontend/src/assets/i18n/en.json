@@ -62,6 +62,8 @@
   "message.selectActiveAccount": "Please select active account for the transaction",
   "message.dateEmpty": "Date is empty or incomplete",
   "message.futureDate": "Date cannot be future date",
+  "message.transactionFutureDate": "Date cannot be future date for transaction",
+  "message.plannedTransactionPastDate": "Date cannot be past for planned transaction",
   "message.pastDate": "Date cannot be past date",
   "message.descriptionEmpty": "Description cannot be empty",
   "message.priceEmpty": "Price is empty or price format is incorrect",
