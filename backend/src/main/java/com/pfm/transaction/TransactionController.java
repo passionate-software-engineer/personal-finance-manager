@@ -77,24 +77,24 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    Optional<Transaction> transactionByIdAndUserId = transactionService.getTransactionByIdAndUserId(transactionId, userId);
-    if (!transactionByIdAndUserId.isPresent()) {
+    Optional<Transaction> originalTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    if (!originalTransactionOptional.isPresent()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
+    Transaction updatingTransaction = helper.convertTransactionRequestToTransaction(transactionRequest);
 
-    List<String> validationResult = transactionValidator.validate(transaction, userId);
+    List<String> validationResult = transactionValidator.validate(updatingTransaction, userId);
     if (!validationResult.isEmpty()) {
       log.error("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    Transaction transactionToUpdate = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
-    historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, transaction, userId);
+    Transaction transactionToUpdate = originalTransactionOptional.get();
+    historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, updatingTransaction, userId);
 
-    transactionService.updateTransaction(transactionId, userId, transaction);
+    transactionService.updateTransaction(transactionId, userId, updatingTransaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
     return ResponseEntity.ok().build();
@@ -105,11 +105,13 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> deleteTransaction(@PathVariable long transactionId) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!transactionService.getTransactionByIdAndUserId(transactionId, userId).isPresent()) {
+    final Optional<Transaction> transactionToDeleteOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    if (!transactionToDeleteOptional.isPresent()) {
       log.info("No transaction with id {} was found, not able to delete", transactionId);
       return ResponseEntity.notFound().build();
     }
-    Transaction transactionToDelete = transactionService.getTransactionByIdAndUserId(transactionId, userId).get(); // TODO add .isPresent
+
+    Transaction transactionToDelete = transactionToDeleteOptional.get();
     log.info("Attempting to delete transaction with id {}", transactionId);
     transactionService.deleteTransaction(transactionId, userId);
     historyEntryService.addHistoryEntryOnDelete(transactionToDelete, userId);
