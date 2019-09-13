@@ -1,15 +1,11 @@
 package com.pfm.transaction;
 
-import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  @Resource
-  protected ObjectMapper mapper;
+  private TransactionHelper helper;
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
   private HistoryEntryService historyEntryService;
@@ -62,13 +57,14 @@ public class TransactionController implements TransactionApi {
 
     log.info("Adding transaction to the database");
 
-    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
 
     List<String> validationResult = transactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
+
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
@@ -87,7 +83,7 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.notFound().build();
     }
 
-    Transaction transaction = convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
 
     List<String> validationResult = transactionValidator.validate(transaction, userId);
     if (!validationResult.isEmpty()) {
@@ -147,7 +143,7 @@ public class TransactionController implements TransactionApi {
   }
 
   private void addAsNewTransaction(Transaction transactionToCommit) {
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transactionToCommit);
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
     addTransaction(transactionRequest);
 
   }
@@ -156,7 +152,6 @@ public class TransactionController implements TransactionApi {
     Transaction newTransaction = Transaction.builder()
         .date(LocalDate.now())
         .isPlanned(false)
-        .id(null)
         .userId(transactionToCommit.getUserId())
         .categoryId(transactionToCommit.getCategoryId())
         .description(transactionToCommit.getDescription())
@@ -172,16 +167,6 @@ public class TransactionController implements TransactionApi {
     }
 
     return newTransaction;
-  }
-
-  private Transaction convertTransactionRequestToTransaction(TransactionRequest transactionRequest) {
-    return Transaction.builder()
-        .description(transactionRequest.getDescription())
-        .categoryId(transactionRequest.getCategoryId())
-        .date(transactionRequest.getDate())
-        .accountPriceEntries(transactionRequest.getAccountPriceEntries())
-        .isPlanned(transactionRequest.isPlanned())
-        .build();
   }
 
 }

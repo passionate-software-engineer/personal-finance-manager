@@ -15,7 +15,6 @@ import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestTransactionProvider.carPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
-import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -585,7 +584,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .accountPriceEntries(accountPriceEntriesUpdated)
         .build();
 
-    callRestToUpdateTransaction(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
+    callRestToUpdateTransaction(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
 
     //when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
@@ -750,7 +749,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .isPlanned(true)
         .build();
 
-    callRestToUpdateTransaction(transactionId, convertTransactionToTransactionRequest(updatedTransaction), token);
+    callRestToUpdateTransaction(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
 
     //when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);

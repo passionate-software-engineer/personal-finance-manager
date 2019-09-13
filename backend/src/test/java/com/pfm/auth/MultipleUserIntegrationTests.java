@@ -24,7 +24,6 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static com.pfm.helpers.TestTransactionProvider.homeTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
-import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -175,7 +174,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         marianCategoryFoodId, marianToken);
 
     //when
-    TransactionRequest updatedTransaction = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    TransactionRequest updatedTransaction = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
     updatedTransaction.setCategoryId(marianCategoryFoodId);
     updatedTransaction.setDescription("updated descrition");
@@ -320,7 +319,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
 
     //when
-    TransactionRequest transactionToAdd = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    TransactionRequest transactionToAdd = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     transactionToAdd.setCategoryId(marianCategoryCarId);
     transactionToAdd.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
 
@@ -359,7 +358,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
 
     //when
-    TransactionRequest updatedTransaction = convertTransactionToTransactionRequest(carTransactionWithNoAccountAndNoCategory());
+    TransactionRequest updatedTransaction = helper.convertTransactionToTransactionRequest(carTransactionWithNoAccountAndNoCategory());
     updatedTransaction.setCategoryId(zdzislawCategoryHomeId);
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIdeaId);
 

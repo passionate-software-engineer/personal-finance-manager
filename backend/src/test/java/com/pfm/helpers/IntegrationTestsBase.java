@@ -1,7 +1,6 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
-import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -26,6 +25,7 @@ import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionHelper;
 import com.pfm.transaction.TransactionRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -69,6 +69,9 @@ public abstract class IntegrationTestsBase {
   @Qualifier("pfmObjectMapper")
   @Autowired
   protected ObjectMapper mapper;
+
+  @Autowired
+  protected TransactionHelper helper;
 
   @Autowired
   protected CategoryService categoryService;
@@ -292,7 +295,7 @@ public abstract class IntegrationTestsBase {
 
   protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token)
       throws Exception {
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 

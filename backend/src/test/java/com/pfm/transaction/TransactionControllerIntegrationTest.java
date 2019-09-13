@@ -23,7 +23,6 @@ import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccoun
 import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
-import static com.pfm.helpers.topology.Helper.convertTransactionToTransactionRequest;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -163,7 +162,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     final long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
-    TransactionRequest updatedFoodTransactionRequest = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    TransactionRequest updatedFoodTransactionRequest = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     updatedFoodTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
     updatedFoodTransactionRequest.setCategoryId(carCategoryId);
@@ -238,7 +237,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     final long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
-    TransactionRequest updateFoodTransaction = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    TransactionRequest updateFoodTransaction = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     updateFoodTransaction.setCategoryId(foodCategoryId);
     updateFoodTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
     updateFoodTransaction.setDate(null);
@@ -280,7 +279,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .categoryId(foodCategoryId)
         .date(LocalDate.of(2018, 8, 8))
         .build();
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
     mockMvc
         .perform(post(TRANSACTIONS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -471,7 +470,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setDate(updatedPlannedTransaction.getDate().plusDays(1));
     updatedPlannedTransaction.setDescription("Car parts");
 
-    TransactionRequest updatedPlannedTransactionRequest = convertTransactionToTransactionRequest(updatedPlannedTransaction);
+    TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
     updatedPlannedTransaction.setId(1L);
 
     //when
@@ -556,7 +555,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .categoryId(foodCategoryId)
         .date(LocalDate.of(2018, 8, 8))
         .build();
-    TransactionRequest plannedTransactionRequest = convertTransactionToTransactionRequest(plannedTransaction);
+    TransactionRequest plannedTransactionRequest = helper.convertTransactionToTransactionRequest(plannedTransaction);
     mockMvc
         .perform(post(TRANSACTIONS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -585,7 +584,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
-    TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
+    TransactionRequest updatedFoodPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(
         foodPlannedTransactionWithNoAccountAndNoCategory());
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
@@ -620,7 +619,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId,
         token);
 
-    TransactionRequest updatedFoodPlannedTransactionRequest = convertTransactionToTransactionRequest(
+    TransactionRequest updatedFoodPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(
         foodPlannedTransactionWithNoAccountAndNoCategory());
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
     updatedFoodPlannedTransactionRequest.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
@@ -711,7 +710,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction transaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     transaction.setPlanned(false);
 
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
 
     transactionRequest.setCategoryId(foodCategoryId);
     transactionRequest.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
@@ -738,7 +737,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
     transaction.setPlanned(true);
 
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
 
     transactionRequest.setCategoryId(foodCategoryId);
     transactionRequest.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);

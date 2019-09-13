@@ -40,7 +40,7 @@ public interface TransactionApi {
   @DeleteMapping(value = "/{transactionId}")
   ResponseEntity<?> deleteTransaction(@PathVariable long transactionId);
 
-  @ApiOperation(value = "Commits, converts planned transaction into transaction", response = Void.class,
+  @ApiOperation(value = "Commits (converts) planned transaction into transaction", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})
   @PatchMapping(value = "/{transactionId}")
   ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId) throws Exception;
