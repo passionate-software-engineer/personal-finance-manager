@@ -12,6 +12,7 @@ import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
+import {Operation} from './transaction';
 
 @Component({
   selector: 'app-transactions',
@@ -113,6 +114,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   deleteTransaction(transactionToDelete) {
+    if (!this.validateTransaction(transactionToDelete, Operation.Delete)) {
+      return;
+    }
+
     const deleteMessageKey = transactionToDelete.isPlanned ? 'message.plannedTransactionDeleted' : 'message.transactionDeleted';
     const deleteDialogMessageKey = transactionToDelete.isPlanned ? 'message.wantDeletePlannedTransaction' : 'message.wantDeleteTransaction';
     if (confirm(this.translate.instant(deleteDialogMessageKey))) {
@@ -126,7 +131,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   updateTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction.editedTransaction, true)) {
+    if (!this.validateTransaction(transaction.editedTransaction, Operation.Update)) {
       return;
     }
 
@@ -171,7 +176,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   addTransaction() {
-    if (!this.validateTransaction(this.newTransaction, false)) {
+    if (!this.validateTransaction(this.newTransaction, Operation.Add)) {
       return;
     }
 
@@ -228,6 +233,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   commitPlannedTransaction(transaction: Transaction) {
+    if (!this.validateTransaction(transaction, Operation.Commit)) {
+      return;
+    }
     const deleteDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
     if (this.isTransactionDateCurrentDate(transaction)) {
       this.commit(transaction);
@@ -264,14 +272,17 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     this.getTransactions();
   }
 
-  private validateTransaction(transaction: Transaction, isUpdate: boolean): boolean {
+  private validateTransaction(transaction: Transaction, operation: Operation): boolean {
     let status = true;
-    if (isUpdate) {
-      if (transaction.isPlanned && DateHelper.isPastDate(transaction.date)) {
-        this.alertService.error(this.translate.instant('message.plannedTransactionPastDate'));
-        status = false;
-      }
 
+
+    if (operation === Operation.Update) {
+      if (transaction.isPlanned) {
+        if (DateHelper.isPastDate(transaction.date)) {
+          this.alertService.error(this.translate.instant('message.plannedTransactionPastDate'));
+          status = false;
+        }
+      }
       if (!transaction.isPlanned && DateHelper.isFutureDate(transaction.date)) {
         this.alertService.error(this.translate.instant('message.transactionFutureDate'));
         status = false;
@@ -279,45 +290,62 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     }
 
+    if (operation === Operation.Add || operation === Operation.Update) {
 
-    if (transaction.date == null || transaction.date.toString() === '') {
-      this.alertService.error(this.translate.instant('message.dateEmpty'));
-      status = false;
-    }
-
-    if (transaction.description == null || transaction.description.trim() === '') {
-      this.alertService.error(this.translate.instant('message.descriptionEmpty'));
-      status = false;
-    }
-
-    if (transaction.description != null && transaction.description.length > 100) {
-      this.alertService.error(this.translate.instant('message.categoryNameTooLong'));
-      status = false;
-    }
-
-    for (const entry of transaction.accountPriceEntries) {
-      if (entry.price == null && entry.account == null && transaction.accountPriceEntries.length > 1) {
-        continue;
-      }
-
-      if (entry.price == null) {
-        this.alertService.error(this.translate.instant('message.priceEmpty'));
+      if (transaction.date == null || transaction.date.toString() === '') {
+        this.alertService.error(this.translate.instant('message.dateEmpty'));
         status = false;
       }
 
-      if (entry.account == null) {
-        this.alertService.error(this.translate.instant('message.accountNameEmpty'));
+      if (transaction.description == null || transaction.description.trim() === '') {
+        this.alertService.error(this.translate.instant('message.descriptionEmpty'));
+        status = false;
+      }
+
+      if (transaction.description != null && transaction.description.length > 100) {
+        this.alertService.error(this.translate.instant('message.categoryNameTooLong'));
+        status = false;
+      }
+
+      for (const entry of transaction.accountPriceEntries) {
+        if (entry.price == null && entry.account == null && transaction.accountPriceEntries.length > 1) {
+          continue;
+        }
+
+        if (entry.price == null) {
+          this.alertService.error(this.translate.instant('message.priceEmpty'));
+          status = false;
+        }
+
+        if (entry.account == null) {
+          this.alertService.error(this.translate.instant('message.accountNameEmpty'));
+          status = false;
+        }
+      }
+
+      if (transaction.category == null) {
+        this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
         status = false;
       }
     }
 
-    if (transaction.category == null) {
-      this.alertService.error(this.translate.instant('message.categoryNameEmpty'));
-      status = false;
+    if (operation === Operation.Delete) {
+      if (!transaction.isPlanned && this.containsArchivedAccount(transaction)) {
+        this.alertService.error(this.translate.instant('message.transactionUsingArchivedAccountCannotBeDeleted'));
+        status = false;
+      }
+    }
+
+    if (operation === Operation.Commit) {
+      if (transaction.isPlanned && this.containsArchivedAccount(transaction)) {
+        this.alertService.error(this.translate.instant('message.plannedTransactionUsingArchivedAccountCannotBeCommitted'));
+        status = false;
+      }
     }
 
     return status;
   }
+
 
   onShowEditMode(transaction: Transaction) {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
@@ -367,6 +395,16 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     } else {
       return null;
     }
+  }
+
+  private containsArchivedAccount(transaction: Transaction) {
+    let isArchived = false;
+    for (const entry of transaction.accountPriceEntries) {
+      if (entry.account.archived) {
+        isArchived = true;
+      }
+    }
+    return isArchived;
   }
 
 

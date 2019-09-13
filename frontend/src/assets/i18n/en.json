@@ -52,6 +52,8 @@
   "message.wantDeletePlannedTransaction": " Are you sure You want to delete this planned transaction?",
   "message.wantCommitPlannedTransactionBeforeDate": "Are you sure You want to commit this transaction now?",
   "message.transactionDeleted": "Transaction deleted",
+  "message.transactionUsingArchivedAccountCannotBeDeleted": "Transaction using archived account cannot be deleted",
+  "message.plannedTransactionUsingArchivedAccountCannotBeCommitted": "Planned transaction using archived account cannot be committed",
   "message.transactionEdited": "Transaction edited",
   "message.transactionAdded": "Transaction added",
   "message.plannedTransactionDeleted": "Planned transaction deleted",
