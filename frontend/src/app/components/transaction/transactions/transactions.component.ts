@@ -275,7 +275,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   private validateTransaction(transaction: Transaction, operation: Operation): boolean {
     let status = true;
 
-
     if (operation === Operation.Update) {
       if (transaction.isPlanned) {
         if (DateHelper.isPastDate(transaction.date)) {
@@ -346,7 +345,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return status;
   }
 
-
   onShowEditMode(transaction: Transaction) {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
@@ -398,14 +396,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   private containsArchivedAccount(transaction: Transaction) {
-    let isArchived = false;
     for (const entry of transaction.accountPriceEntries) {
       if (entry.account.archived) {
-        isArchived = true;
+        return true;
       }
     }
-    return isArchived;
+    return false;
   }
-
 
 }
