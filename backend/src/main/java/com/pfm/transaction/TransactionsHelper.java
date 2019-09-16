@@ -3,7 +3,7 @@ package com.pfm.transaction;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TransactionHelper {
+public class TransactionsHelper {
 
   public TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
     return TransactionRequest.builder()

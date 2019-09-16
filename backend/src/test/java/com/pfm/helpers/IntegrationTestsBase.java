@@ -25,8 +25,8 @@ import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
-import com.pfm.transaction.TransactionHelper;
 import com.pfm.transaction.TransactionRequest;
+import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public abstract class IntegrationTestsBase {
   protected ObjectMapper mapper;
 
   @Autowired
-  protected TransactionHelper helper;
+  protected TransactionsHelper helper;
 
   @Autowired
   protected CategoryService categoryService;

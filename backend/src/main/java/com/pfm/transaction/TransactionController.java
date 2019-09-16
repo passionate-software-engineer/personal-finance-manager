@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  private TransactionHelper helper;
+  private TransactionsHelper helper;
   private TransactionService transactionService;
   private TransactionValidator transactionValidator;
   private HistoryEntryService historyEntryService;
