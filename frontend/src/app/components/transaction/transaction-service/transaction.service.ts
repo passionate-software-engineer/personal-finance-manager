@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
 import {TransactionResponse} from './transaction-response';
 import {ServiceBase} from '../../../helpers/service-base';
+import {DateHelper} from '../../../helpers/date-helper';
 
 const PATH = 'transactions';
 
@@ -16,12 +17,15 @@ export class TransactionService extends ServiceBase {
     super(http);
   }
 
+  dateHelper = new DateHelper();
+
   private static transactionToTransactionRequest(transaction: Transaction) {
     const result = {
       description: transaction.description,
       categoryId: transaction.category.id,
       accountPriceEntries: [],
-      date: transaction.date
+      date: transaction.date,
+      isPlanned: transaction.isPlanned,
     };
 
     for (const entry of transaction.accountPriceEntries) {
@@ -49,6 +53,10 @@ export class TransactionService extends ServiceBase {
   }
 
   addTransaction(transaction: Transaction): Observable<any> {
+    if (DateHelper.isFutureDate(transaction.date)) {
+      transaction.isPlanned = true;
+    }
+
     const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
     return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
   }
@@ -60,5 +68,10 @@ export class TransactionService extends ServiceBase {
   editTransaction(category: Transaction): Observable<any> {
     const categoryRequest = TransactionService.transactionToTransactionRequest(category);
     return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.contentType);
+  }
+
+  commitPlannedTransaction(transaction: Transaction) {
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
+
   }
 }

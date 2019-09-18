@@ -38,7 +38,7 @@ export const createTranslateLoader = (http: HttpClient) => {
     LoginComponent,
     RegisterComponent,
     HistoryComponent,
-    ImportExportComponent
+    ImportExportComponent,
   ],
   imports: [
     BrowserModule,

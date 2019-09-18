@@ -174,7 +174,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         marianCategoryFoodId, marianToken);
 
     //when
-    TransactionRequest updatedTransaction = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    TransactionRequest updatedTransaction = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
     updatedTransaction.setCategoryId(marianCategoryFoodId);
     updatedTransaction.setDescription("updated descrition");
@@ -319,7 +319,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
 
     //when
-    TransactionRequest transactionToAdd = convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
+    TransactionRequest transactionToAdd = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     transactionToAdd.setCategoryId(marianCategoryCarId);
     transactionToAdd.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
 
@@ -358,7 +358,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
 
     //when
-    TransactionRequest updatedTransaction = convertTransactionToTransactionRequest(carTransactionWithNoAccountAndNoCategory());
+    TransactionRequest updatedTransaction = helper.convertTransactionToTransactionRequest(carTransactionWithNoAccountAndNoCategory());
     updatedTransaction.setCategoryId(zdzislawCategoryHomeId);
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIdeaId);
 

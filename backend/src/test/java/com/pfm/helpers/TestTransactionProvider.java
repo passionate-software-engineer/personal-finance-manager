@@ -21,6 +21,19 @@ public class TestTransactionProvider {
         .build();
   }
 
+  public static Transaction foodPlannedTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .price(convertDoubleToBigDecimal(10))
+                .build())
+        )
+        .description("Food for birthday")
+        .date(LocalDate.now().plusDays(2))
+        .isPlanned(true)
+        .build();
+  }
+
   public static Transaction carTransactionWithNoAccountAndNoCategory() {
     return Transaction.builder()
         .accountPriceEntries(Collections.singletonList(
@@ -30,6 +43,19 @@ public class TestTransactionProvider {
         )
         .description("Oil")
         .date(LocalDate.of(2018, 8, 10))
+        .build();
+  }
+
+  public static Transaction carPlannedTransactionWithNoAccountAndNoCategory() {
+    return Transaction.builder()
+        .accountPriceEntries(Collections.singletonList(
+            AccountPriceEntry.builder()
+                .price(convertDoubleToBigDecimal(30))
+                .build())
+        )
+        .description("Oil")
+        .date(LocalDate.now().plusDays(2))
+        .isPlanned(true)
         .build();
   }
 

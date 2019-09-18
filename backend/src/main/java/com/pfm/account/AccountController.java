@@ -143,12 +143,12 @@ public class AccountController implements AccountApi {
     final boolean updateToBeApplied = SET_ACCOUNT_AS_ARCHIVED;
 
     long userId = userProvider.getCurrentUserId();
-    Optional<Account> optionalAccount = accountService.getAccountByIdAndUserId(accountId, userId);
-    if (optionalAccount.isEmpty()) {
+    Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(accountId, userId);
+    if (accountOptional.isEmpty()) {
       log.info("No account with id {} was found, not able to set as archived", accountId);
       return ResponseEntity.notFound().build();
     }
-    Account accountToUpdate = optionalAccount.get();
+    Account accountToUpdate = accountOptional.get();
     Account account = getNewAccountInstanceWithUpdateApplied(accountToUpdate, updateToBeApplied);
 
     historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);

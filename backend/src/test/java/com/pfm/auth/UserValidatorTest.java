@@ -7,6 +7,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 import com.pfm.config.MessagesProvider;
 import java.util.List;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -113,7 +114,7 @@ class UserValidatorTest {
 
     // then
     assertThat(result, hasSize(1));
-    assertThat(result.get(0), is(String.format(getMessage(MessagesProvider.TOO_LONG_LAST_NAME), UserValidator.LAST_NAME_MAX_LENGTH)));
+    assertThat(result.get(0), Is.is(String.format(getMessage(MessagesProvider.TOO_LONG_LAST_NAME), UserValidator.LAST_NAME_MAX_LENGTH)));
   }
 
   @ParameterizedTest

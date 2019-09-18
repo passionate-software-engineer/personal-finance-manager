@@ -37,25 +37,19 @@ public class TransactionService {
   @Transactional
   public Transaction addTransaction(long userId, Transaction transaction, boolean addHistoryEntryOnUpdate) {
     transaction.setUserId(userId);
-    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
+    if (!transaction.isPlanned()) {
+      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+        addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), addHistoryEntryOnUpdate);
+      }
     }
-
     return transactionRepository.save(transaction);
   }
 
   @Transactional
   public void updateTransaction(long id, long userId, Transaction transaction) {
     Transaction transactionToUpdate = getTransactionFromDatabase(id, userId);
-
-    // subtract old value
-    for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
-      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
-    }
-
-    // add new value
-    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
+    if (!transaction.isPlanned()) {
+      updateAccountBalance(userId, transaction, transactionToUpdate);
     }
 
     transactionToUpdate.setDescription(transaction.getDescription());
@@ -70,9 +64,10 @@ public class TransactionService {
   @Transactional
   public void deleteTransaction(long id, long userId) {
     Transaction transactionToDelete = getTransactionFromDatabase(id, userId);
-
-    for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
-      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+    if (!transactionToDelete.isPlanned()) {
+      for (AccountPriceEntry entry : transactionToDelete.getAccountPriceEntries()) {
+        subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+      }
     }
 
     transactionRepository.deleteById(id);
@@ -96,6 +91,14 @@ public class TransactionService {
     updateAccountBalance(accountId, userId, amountToSubtract, BigDecimal::add, addHistoryEntryOnUpdate);
   }
 
+  public boolean transactionExistByAccountId(long accountId) {
+    return accountPriceEntriesRepository.existsByAccountId(accountId);
+  }
+
+  public boolean transactionExistByCategoryId(long categoryId) {
+    return transactionRepository.existsByCategoryId(categoryId);
+  }
+
   private void updateAccountBalance(long accountId, long userId, BigDecimal amount, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation,
       boolean addHistoryEntryOnUpdate) {
     Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
@@ -115,12 +118,15 @@ public class TransactionService {
     accountService.updateAccount(accountId, userId, accountWithNewBalance);
   }
 
-  public boolean transactionExistByAccountId(long accountId) {
-    return accountPriceEntriesRepository.existsByAccountId(accountId);
-  }
-
-  public boolean transactionExistByCategoryId(long categoryId) {
-    return transactionRepository.existsByCategoryId(categoryId);
+  private void updateAccountBalance(long userId, Transaction transaction, Transaction transactionToUpdate) {
+    // subtract old value
+    for (AccountPriceEntry entry : transactionToUpdate.getAccountPriceEntries()) {
+      subtractAmountFromAccount(entry.getAccountId(), userId, entry.getPrice());
+    }
+    // add new value
+    for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+      addAmountToAccount(entry.getAccountId(), userId, entry.getPrice(), false);
+    }
   }
 
 }

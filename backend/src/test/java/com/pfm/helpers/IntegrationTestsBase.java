@@ -1,7 +1,9 @@
 package com.pfm.helpers;
 
+import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -24,9 +26,12 @@ import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionRequest;
+import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,6 +69,9 @@ public abstract class IntegrationTestsBase {
   @Qualifier("pfmObjectMapper")
   @Autowired
   protected ObjectMapper mapper;
+
+  @Autowired
+  protected TransactionsHelper helper;
 
   @Autowired
   protected CategoryService categoryService;
@@ -141,6 +149,14 @@ public abstract class IntegrationTestsBase {
             .content(json(accountRequest))
             .contentType(JSON_CONTENT_TYPE)
         )
+        .andExpect(status().isOk());
+  }
+
+  protected void callRestToMarkAccountAsArchived(long accountId) throws Exception {
+    mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk());
   }
 
@@ -261,7 +277,8 @@ public abstract class IntegrationTestsBase {
   }
 
   //transaction
-  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId, String token)
+  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId,
+      String token)
       throws Exception {
     transactionRequest.setCategoryId(categoryId);
     transactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
@@ -276,21 +293,14 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token) throws Exception {
-    TransactionRequest transactionRequest = convertTransactionToTransactionRequest(transaction);
+  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token)
+      throws Exception {
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
-  protected TransactionRequest convertTransactionToTransactionRequest(Transaction transaction) {
-    return TransactionRequest.builder()
-        .description(transaction.getDescription())
-        .accountPriceEntries(transaction.getAccountPriceEntries())
-        .date(transaction.getDate())
-        .categoryId(transaction.getCategoryId())
-        .build();
-  }
-
-  protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId, long accountId, long categoryId) {
+  protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,
+      long accountId, long categoryId) {
     transaction.setId(transactionId);
     transaction.setCategoryId(categoryId);
     transaction.getAccountPriceEntries().get(0).setAccountId(accountId);
@@ -304,6 +314,7 @@ public abstract class IntegrationTestsBase {
         .categoryId(transactionRequest.getCategoryId())
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
+        .isPlanned(transactionRequest.isPlanned())
         .build();
   }
 
@@ -316,7 +327,8 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
-  protected void callRestToUpdateTransacion(long transactionId, TransactionRequest transactionRequest, String token) throws Exception {
+  protected void callRestToUpdateTransaction(long transactionId, TransactionRequest transactionRequest, String token)
+      throws Exception {
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -330,13 +342,31 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected List<Transaction> callRestToGetAllTransactionsFromDatabase(String token) throws Exception {
+  protected void callRestToDeletePlannedTransactionById(long id, String token) throws Exception {
+    mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk());
+  }
+
+  private Stream<Transaction> callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(String token) throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
-    return getTransactionsFromResponse(response);
+    return getTransactionsFromResponse(response).stream();
+  }
+
+  protected List<Transaction> callRestToGetAllTransactionsFromDatabase(String token) throws Exception {
+    return callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(token)
+        .filter(transaction -> !transaction.isPlanned())
+        .collect(Collectors.toList());
+  }
+
+  protected List<Transaction> callRestToGetAllPlannedTransactionsFromDatabase(String token) throws Exception {
+    return callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(token)
+        .filter(Transaction::isPlanned)
+        .collect(Collectors.toList());
   }
 
   private Transaction jsonToTransaction(String jsonTransaction) throws Exception {

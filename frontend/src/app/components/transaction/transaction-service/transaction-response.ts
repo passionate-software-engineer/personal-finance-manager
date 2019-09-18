@@ -4,6 +4,7 @@ export class TransactionResponse {
   description: string;
   categoryId: number;
   accountPriceEntries: AccountPriceEntry[];
+  planned: boolean;
 }
 
 export class AccountPriceEntry {

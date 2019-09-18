@@ -209,7 +209,8 @@ export class FiltersComponentBase extends Sortable {
       });
     }
 
-    if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !== '') {
+    if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !==
+      '') {
       this.transactions = this.transactions
                               .filter(transaction => new Date(transaction.date).getTime() >= new Date(this.selectedFilter.dateFrom).getTime());
     }

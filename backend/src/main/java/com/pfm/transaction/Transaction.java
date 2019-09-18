@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Transaction {
+public class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +44,7 @@ public final class Transaction {
 
   @JsonIgnore
   private Long userId;
+
+  private boolean isPlanned;
 
 }

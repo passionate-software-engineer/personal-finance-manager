@@ -8,8 +8,10 @@ export class Transaction {
   category: Category;
   accountPriceEntries: AccountPriceEntry[] = [];
   editMode = false;
+  isPlanned = false;
   editedTransaction: Transaction;
 }
+
 
 export class AccountPriceEntry {
   account: Account;
