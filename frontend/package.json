@@ -22,6 +22,7 @@
     "@angular/router": "^7.2.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "angular-google-charts": "^0.1.6",
     "bootstrap": "^4.2.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
