@@ -24,6 +24,21 @@ export class CategoriesComponent implements OnInit {
   sortableCategoriesTable: Sortable = new Sortable('name');
   sortableSummaryTable: Sortable = new Sortable('name');
 
+  title = 'Browser market shares at a specific website, 2014';
+  type = 'BarChart';
+  data = [];
+  data_categories = [];
+  columnNames = ['Browser', 'Percentage'];
+  options = {
+    bars: 'horizontal'
+  };
+  width = 1550;
+  height = 1000;
+
+  selectedMonth: Date;
+  selectedCategory: number;
+  costs = true;
+
   constructor(
     private categoryService: CategoryService,
     private alertService: AlertsService,
@@ -32,6 +47,7 @@ export class CategoriesComponent implements OnInit {
     private accountService: AccountService
   ) {
     this.calculateLast12Months();
+    this.selectedMonth = this.last12Months[0];
   }
 
   ngOnInit() {
@@ -55,6 +71,11 @@ export class CategoriesComponent implements OnInit {
                             this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
                         }
                       }
+
+                      this.updateMonthSpendingsChart(this.selectedMonth);
+
+                      this.selectedCategory = categories[0].id;
+                      this.updateCategorySpendingsChart(this.selectedCategory);
                     });
               });
         });
@@ -62,7 +83,7 @@ export class CategoriesComponent implements OnInit {
 
   calculateLast12Months() {
     const today = new Date();
-    for (let i = 0; i <= today.getMonth() + 12; ++i) {
+    for (let i = 0; i <= 12; ++i) {
 
       let year = today.getFullYear();
       let month = today.getMonth() - i;
@@ -335,4 +356,52 @@ export class CategoriesComponent implements OnInit {
 
     return accountsBalance;
   }
+
+  Comparator(a, b) {
+    if (a[1] < b[1]) {
+      return -1;
+    }
+    if (a[1] > b[1]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  updateMonthSpendingsChart(selectedMonth, costs = true) {
+    this.data = [];
+    for (let i = 0; i < this.categories.length; i++) {
+      const sumOfTransactions = this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, selectedMonth);
+      if (costs && sumOfTransactions < 0) {
+        this.data.push([this.categories[i].name, -sumOfTransactions]);
+      } else if (!costs && sumOfTransactions > 0) { // income
+        this.data.push([this.categories[i].name, sumOfTransactions]);
+      }
+    }
+    this.data.sort(this.Comparator);
+
+    this.data = Object.assign([], this.data);
+  }
+
+  updateCategorySpendingsChart(selectedCategoryId) {
+    this.data_categories = [];
+    for (let i = 0; i < this.last12Months.length; i++) {
+      const sumOfTransactions = this.getBalanceOfTransactionsInGivenCategoryAndMonth(selectedCategoryId, this.last12Months[i]);
+      this.data_categories.push([this.last12Months[i], -sumOfTransactions]);
+    }
+
+    this.data_categories = Object.assign([], this.data_categories);
+  }
+
+  monthChanged(selectedMonth) {
+    this.updateMonthSpendingsChart(selectedMonth, this.costs);
+  }
+
+  costsChanged(selectedCostsValue) {
+    this.updateMonthSpendingsChart(this.selectedMonth, selectedCostsValue);
+  }
+
+  categoryChanged(selectedCategoryId) {
+    this.updateCategorySpendingsChart(selectedCategoryId);
+  }
+
 }
