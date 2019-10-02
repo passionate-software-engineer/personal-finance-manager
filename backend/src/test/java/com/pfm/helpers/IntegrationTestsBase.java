@@ -1,6 +1,11 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestAccountProvider.accountMilleniumBalance100;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -297,6 +302,26 @@ public abstract class IntegrationTestsBase {
       throws Exception {
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
+  }
+
+  protected long callRestToAddFirstTestTransactionAndReturnId() throws Exception {
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+  }
+
+  protected long callRestToAddSecondTestTransactionAndReturnId() throws Exception {
+    Account account = accountMilleniumBalance100();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryOil(), token);
+
+    return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
   }
 
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,

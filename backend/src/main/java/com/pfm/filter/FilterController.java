@@ -96,7 +96,7 @@ public class FilterController implements FilterApi {
 
     List<String> validationResult = filterValidator.validateFilterRequest(filter, userId);
     if (!validationResult.isEmpty()) {
-      log.error("Filter is not valid {}", validationResult);
+      log.info("Filter is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
     historyEntryService.addHistoryEntryOnUpdate(filterByIdAndUserId.get(), filter, userId);

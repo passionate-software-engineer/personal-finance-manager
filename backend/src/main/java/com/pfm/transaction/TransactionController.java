@@ -87,7 +87,7 @@ public class TransactionController implements TransactionApi {
 
     List<String> validationResult = transactionValidator.validate(updatingTransaction, userId);
     if (!validationResult.isEmpty()) {
-      log.error("Transaction is not valid {}", validationResult);
+      log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
@@ -134,7 +134,7 @@ public class TransactionController implements TransactionApi {
     Transaction plannedTransaction = plannedTransactionOptional.get();
     List<String> validationResult = transactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
-      log.error("Transaction is not valid {}", validationResult);
+      log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
