@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
+  private static final boolean SET_AS_RECURRENT = true;
+  private static final boolean SET_AS_NOT_RECURRENT = false;
+  private static final String RECURRENT = "recurrent";
+  private static final String NOT_RECURRENT = "not recurrent";
+
   private TransactionsHelper helper;
   private TransactionService transactionService;
 
@@ -26,6 +32,7 @@ public class TransactionController implements TransactionApi {
 
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
+
   @Override
   public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId) {
     long userId = userProvider.getCurrentUserId();
@@ -146,15 +153,69 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok(plannedTransaction.getId());
   }
 
+  @Transactional
   @Override
-  public ResponseEntity<?> makeRecurrent(long transactionId) throws Exception {
-    throw new UnsupportedOperationException("Not implemented");
+  public ResponseEntity<?> setAsRecurrent(long transactionId) {
+
+    return getResponseEntity(transactionId, SET_AS_RECURRENT, RECURRENT);
+
+  }
+
+  @Transactional
+  @Override
+  public ResponseEntity<?> setAsNotRecurrent(long transactionId) {
+
+    return getResponseEntity(transactionId, SET_AS_NOT_RECURRENT, NOT_RECURRENT);
+
+  }
+
+  private ResponseEntity<?> getResponseEntity(long transactionId, boolean setAsRecurrent, String loggerMessageOption) {
+    long userId = userProvider.getCurrentUserId();
+    Optional<Transaction> transactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
+    if (!transactionOptional.isPresent()) {
+      log.info("No transaction with id {} was found, not able to make make it {}", transactionId, loggerMessageOption);
+
+      return ResponseEntity.notFound().build();
+    }
+    Transaction transaction = transactionOptional.get();
+    Transaction updatedTransaction = getNewInstanceWithUpdateApplied(transaction, setAsRecurrent);
+
+    return performUpdate(updatedTransaction, userId, setAsRecurrent);
   }
 
   private void addAsNewTransaction(Transaction transactionToCommit) {
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
     addTransaction(transactionRequest);
 
+  }
+
+  private ResponseEntity<?> performUpdate(Transaction transaction, long userId, boolean updateToBeApplied) {
+    long transactionId = transaction.getId();
+    log.info("Attempting to set account status as {} with id {} ", updateToBeApplied ? RECURRENT : NOT_RECURRENT, transactionId);
+    transactionService.updateTransaction(transactionId, userId, transaction);
+
+    return ResponseEntity.ok().build();
+
+  }
+
+  private Transaction getNewInstanceWithUpdateApplied(Transaction transactionToUpdate, boolean updateToBeApplied) {
+    return Transaction.builder()
+        .id(transactionToUpdate.getId())
+        .description(transactionToUpdate.getDescription())
+        .categoryId(transactionToUpdate.getCategoryId())
+        .date(transactionToUpdate.getDate())
+        .accountPriceEntries(transactionToUpdate.getAccountPriceEntries().stream()
+            .map(accountPriceEntry -> AccountPriceEntry.builder()
+                .id(accountPriceEntry.getId())
+                .accountId(accountPriceEntry.getAccountId())
+                .price(accountPriceEntry.getPrice())
+                .build())
+            .collect(Collectors.toList())
+        )
+        .userId(transactionToUpdate.getUserId())
+        .isPlanned(transactionToUpdate.isPlanned())
+        .isRecurrent(updateToBeApplied ? SET_AS_RECURRENT : SET_AS_NOT_RECURRENT)
+        .build();
   }
 
   private Transaction getNewInstanceWithCurrentDateAndPlannedStatus(Transaction transactionToCommit) {
