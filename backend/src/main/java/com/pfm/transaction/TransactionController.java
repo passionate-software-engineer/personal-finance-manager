@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  private static final boolean SET_AS_RECURRENT = true;
-  private static final boolean SET_AS_NOT_RECURRENT = false;
+  static final LocalDate RECURRENCE_PERIOD = LocalDate.now().plusMonths(1L);
+  private static final boolean SET_RECURRENT = true;
+  private static final boolean SET_NOT_RECURRENT = false;
   private static final String RECURRENT = "recurrent";
   private static final String NOT_RECURRENT = "not recurrent";
 
@@ -157,7 +158,7 @@ public class TransactionController implements TransactionApi {
   @Override
   public ResponseEntity<?> setAsRecurrent(long transactionId) {
 
-    return getResponseEntity(transactionId, SET_AS_RECURRENT, RECURRENT);
+    return getResponseEntity(transactionId, SET_RECURRENT, RECURRENT);
 
   }
 
@@ -165,7 +166,7 @@ public class TransactionController implements TransactionApi {
   @Override
   public ResponseEntity<?> setAsNotRecurrent(long transactionId) {
 
-    return getResponseEntity(transactionId, SET_AS_NOT_RECURRENT, NOT_RECURRENT);
+    return getResponseEntity(transactionId, SET_NOT_RECURRENT, NOT_RECURRENT);
 
   }
 
@@ -173,7 +174,7 @@ public class TransactionController implements TransactionApi {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> transactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
     if (!transactionOptional.isPresent()) {
-      log.info("No transaction with id {} was found, not able to make make it {}", transactionId, loggerMessageOption);
+      log.info("No transaction with id {} was found, not able to make it {}", transactionId, loggerMessageOption);
 
       return ResponseEntity.notFound().build();
     }
@@ -186,6 +187,10 @@ public class TransactionController implements TransactionApi {
   private void addAsNewTransaction(Transaction transactionToCommit) {
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
     addTransaction(transactionRequest);
+
+    if (transactionRequest.isRecurrent()) {
+      addAsNextMonthPlannedTransaction(transactionRequest);
+    }
 
   }
 
@@ -214,8 +219,14 @@ public class TransactionController implements TransactionApi {
         )
         .userId(transactionToUpdate.getUserId())
         .isPlanned(transactionToUpdate.isPlanned())
-        .isRecurrent(updateToBeApplied ? SET_AS_RECURRENT : SET_AS_NOT_RECURRENT)
+        .isRecurrent(updateToBeApplied ? SET_RECURRENT : SET_NOT_RECURRENT)
         .build();
+  }
+
+  private void addAsNextMonthPlannedTransaction(TransactionRequest transactionRequest) {
+    transactionRequest.setDate(RECURRENCE_PERIOD);
+    transactionRequest.setPlanned(true);
+    addTransaction(transactionRequest);
   }
 
   private Transaction getNewInstanceWithCurrentDateAndPlannedStatus(Transaction transactionToCommit) {
@@ -226,6 +237,7 @@ public class TransactionController implements TransactionApi {
         .categoryId(transactionToCommit.getCategoryId())
         .description(transactionToCommit.getDescription())
         .accountPriceEntries(new ArrayList<>())
+        .isRecurrent(transactionToCommit.isRecurrent())
         .build();
 
     for (AccountPriceEntry accountPriceEntry : transactionToCommit.getAccountPriceEntries()) {
