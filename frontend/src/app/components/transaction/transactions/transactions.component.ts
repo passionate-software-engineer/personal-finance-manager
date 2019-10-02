@@ -11,9 +11,10 @@ import {TransactionFilterService} from '../transaction-filter-service/transactio
 import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
-import {DateHelper} from '../../../helpers/date-helper';
+import {DateHelper} from '../../../helpers/date.helper';
 import {Operation} from './transaction';
 import {RecurrencePeriod} from '../recurrence-period';
+import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
 
 @Component({
   selector: 'app-transactions',
@@ -23,6 +24,7 @@ import {RecurrencePeriod} from '../recurrence-period';
 export class TransactionsComponent extends FiltersComponentBase implements OnInit {
 
   constructor(
+    private postTransactionAccountBalanceHelper: PostTransactionAccountBalanceHelper,
     private transactionService: TransactionService,
     alertService: AlertsService,
     private categoryService: CategoryService,
@@ -89,6 +91,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             }
             this.allTransactions.push(transaction);
           }
+          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForTransactions(this.transactions);
+          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPlannedTransactions(this.plannedTransactions);
           super.filterTransactions();
         });
   }
@@ -228,7 +232,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
     transaction.isRecurrent = transactionResponse.recurrent;
-    transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
 
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();

@@ -59,15 +59,13 @@ public abstract class IntegrationTestsBase {
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
   protected static final String SET_AS_RECURRENT = "/setAsRecurrent";
-  protected static final String SET_AS_NOT_RECURRENT = "/setAsNotRecurrent";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
-  protected static final String COMMIT_OVERDUE = "/commitOverdue";
-
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
+  private static final String COMMIT_OVERDUE = "/commitOverdue";
 
   @Autowired
   protected UserService userService;

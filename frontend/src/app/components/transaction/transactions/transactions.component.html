@@ -56,7 +56,7 @@
       <!--Date-->
       <th [class.active]="order === 'date'"
           (click)="setOrder('date')"
-          class="width15"
+          class="width12"
           id="DateHeader">
         {{'transaction.date' | translate}}
         <span [hidden]="!reverse">▼</span>
@@ -76,7 +76,7 @@
       <!--Price-->
       <th [class.active]="order === 'accountPriceEntries[0].pricePLN'"
           (click)="setOrder('accountPriceEntries[0].pricePLN')"
-          class="width15"
+          class="width12"
           id="PriceHeader">
         {{ 'transaction.price' | translate}}
         <span [hidden]="!reverse">▼</span>
@@ -86,12 +86,23 @@
       <!--Account-->
       <th [class.active]="order === 'accountPriceEntries[0].account.name'"
           (click)="setOrder('accountPriceEntries[0].account.name')"
-          class="width15"
+          class="width12"
           id="AccountHeader">
         {{'transaction.account' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
+
+      <!--Account balance-->
+      <th [class.active]="order === 'accountPriceEntries[0].account.name'"
+          (click)="setOrder('accountPriceEntries[0].account.name')"
+          class="width12"
+          id="PostTransactionAccountBalanceHeader">
+        {{'Balance after transaction'}}
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
+      </th>
+
 
       <!--Category-->
       <th [class.active]="order === 'category.name'"
@@ -103,7 +114,7 @@
         <span [hidden]="reverse">▲</span>
       </th>
 
-      <th class="width15">
+      <th class="width12">
       </th>
     </tr>
 
@@ -164,6 +175,11 @@
           </ng-container>
         </select>
       </td>
+
+      <!--Account balance-->
+      <td>
+      </td>
+
 
       <!--Category-->
       <td>
@@ -227,6 +243,11 @@
         </select>
       </td>
 
+
+      <!--Account balance-->
+      <td>
+      </td>
+
       <!--Category-->
       <td>
         <select [(ngModel)]="newTransaction.category"
@@ -249,7 +270,7 @@
       </td>
     </tr>
 
-    <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
+    <tr *ngFor=" let i = index ; let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         [ngStyle]="{backgroundColor: getWarnBgColorForUncommittedPlannedTransaction(transaction)}"
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
@@ -341,6 +362,13 @@
             </select>
           </td>
         </ng-template>
+
+        <!--Account balance-->
+        <td >
+          <ng-container *ngFor="let entry of transaction.accountPriceEntries">
+            <p>{{ entry.postTransactionAccountBalance | number:'0.2'}}</p>
+          </ng-container>
+        </td>
 
         <!--Category-->
         <td *ngIf="!transaction.editMode"
