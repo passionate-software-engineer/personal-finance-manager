@@ -45,6 +45,9 @@ public interface TransactionApi {
   @PatchMapping(value = "/{transactionId}")
   ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId) throws Exception;
 
-  @PatchMapping(value = "/recurrent{transactionId}")
-  ResponseEntity<?> makeRecurrent(@PathVariable long transactionId) throws Exception;
+  @PatchMapping(value = "/{transactionId}/setAsRecurrent")
+  ResponseEntity<?> setAsRecurrent(@PathVariable long transactionId) throws Exception;
+
+  @PatchMapping(value = "/{transactionId}/setAsNotRecurrent")
+  ResponseEntity<?> setAsNotRecurrent(@PathVariable long transactionId) throws Exception;
 }

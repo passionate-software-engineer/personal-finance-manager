@@ -25,10 +25,12 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -787,6 +789,67 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_ARCHIVED))));
+
+  }
+
+  @Test
+  public void shouldSetTransactionAsRecurrent() throws Exception {
+    //given
+    long transactionId = callRestToAddFirstTestTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrent = addedTransaction.isRecurrent();
+    assertThat(addedTransaction, is(not(recurrent)));
+
+    //when
+    mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + SET_AS_RECURRENT)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
+
+    Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrentAfterUpdate = updatedTransaction.isRecurrent();
+    //then
+    assertThat(recurrentAfterUpdate, is(true));
+
+  }
+
+  @Test
+  public void shouldSetTransactionAsNotRecurrent() throws Exception {
+    //given
+    long transactionId = callRestToAddFirstTestTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrent = addedTransaction.isRecurrent();
+    assertThat(addedTransaction, is(not(recurrent)));
+    mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + SET_AS_RECURRENT)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
+
+    Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrentAfterUpdate = updatedTransaction.isRecurrent();
+
+    assertThat(recurrentAfterUpdate, is(true));
+
+    //when
+    mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + SET_AS_NOT_RECURRENT)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
+  //fixme lukasz  assertions
+
+    Transaction transaction = callRestToGetTransactionById(transactionId, token);
+
+    //then
+    assertThat(transaction.isRecurrent(), is(false));
+    assertFalse(transaction.isRecurrent());
+    assertThat(transaction, is(equalTo(addedTransaction)));
 
   }
 
