@@ -21,10 +21,11 @@ public class TransactionController implements TransactionApi {
 
   private TransactionsHelper helper;
   private TransactionService transactionService;
+
   private TransactionValidator transactionValidator;
+
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
-
   @Override
   public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId) {
     long userId = userProvider.getCurrentUserId();
@@ -143,6 +144,11 @@ public class TransactionController implements TransactionApi {
     addAsNewTransaction(transactionToAdd);
 
     return ResponseEntity.ok(plannedTransaction.getId());
+  }
+
+  @Override
+  public ResponseEntity<?> makeRecurrent(long transactionId) throws Exception {
+    throw new UnsupportedOperationException("Not implemented");
   }
 
   private void addAsNewTransaction(Transaction transactionToCommit) {

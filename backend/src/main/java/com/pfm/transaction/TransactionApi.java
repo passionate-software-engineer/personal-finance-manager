@@ -44,4 +44,7 @@ public interface TransactionApi {
       authorizations = {@Authorization(value = "Bearer")})
   @PatchMapping(value = "/{transactionId}")
   ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId) throws Exception;
+
+  @PatchMapping(value = "/recurrent{transactionId}")
+  ResponseEntity<?> makeRecurrent(@PathVariable long transactionId) throws Exception;
 }

@@ -46,5 +46,6 @@ public final class Transaction {
   private Long userId;
 
   private boolean isPlanned;
+  private boolean isRecurrent;
 
 }
