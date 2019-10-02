@@ -48,6 +48,4 @@ public final class Transaction {
   private boolean isPlanned;
   private boolean isRecurrent;
 
-  private RecurrencePeriod recurrencePeriod;
-
 }
