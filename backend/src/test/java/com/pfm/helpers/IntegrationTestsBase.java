@@ -5,6 +5,7 @@ import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMilleniumBalance100;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
+import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -316,6 +317,16 @@ public abstract class IntegrationTestsBase {
     return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
   }
 
+  protected long callRestToAddFirstTestPlannedTransactionAndReturnId() throws Exception {
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    return callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+  }
+
   protected long callRestToAddSecondTestTransactionAndReturnId() throws Exception {
     Account account = accountMilleniumBalance100();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -556,6 +567,33 @@ public abstract class IntegrationTestsBase {
             .build()
     );
 
+  }
+
+  protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId) throws Exception {
+    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT);
+
+  }
+
+  protected int callRestToSetPlannedTransactionAsNotRecurrentAndReturnStatus(long transactionId) throws Exception {
+    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_NOT_RECURRENT);
+
+  }
+
+  private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd)
+      throws Exception {
+    return mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + uriEnd)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
+  }
+
+  protected int callRestToCommitPlannedTransaction(long plannedTransactionId) throws Exception {
+    return mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
   }
 
   public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {
