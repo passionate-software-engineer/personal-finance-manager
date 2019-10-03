@@ -9,6 +9,7 @@ export class Transaction {
   accountPriceEntries: AccountPriceEntry[] = [];
   editMode = false;
   isPlanned = false;
+  isRecurrent = false;
   editedTransaction: Transaction;
 }
 

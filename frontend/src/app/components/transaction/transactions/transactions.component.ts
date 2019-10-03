@@ -79,6 +79,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             transaction.id = transactionResponse.id;
             transaction.description = transactionResponse.description;
             transaction.isPlanned = transactionResponse.planned;
+            transaction.isRecurrent = transactionResponse.recurrent;
 
             for (const entry of transactionResponse.accountPriceEntries) {
               const accountPriceEntry = new AccountPriceEntry();
@@ -146,6 +147,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                   returnedTransaction.id = updatedTransaction.id;
                   returnedTransaction.description = updatedTransaction.description;
                   returnedTransaction.isPlanned = updatedTransaction.planned;
+                  returnedTransaction.isRecurrent = updatedTransaction.recurrent;
 
                   for (const entry of updatedTransaction.accountPriceEntries) {
                     const accountPriceEntry = new AccountPriceEntry();
@@ -193,6 +195,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                   returnedTransaction.id = createdTransaction.id;
                   returnedTransaction.description = createdTransaction.description;
                   returnedTransaction.isPlanned = createdTransaction.planned;
+                  returnedTransaction.isRecurrent = createdTransaction.recurrent;
 
                   for (const entry of createdTransaction.accountPriceEntries) {
                     const accountPriceEntry = new AccountPriceEntry();
@@ -247,19 +250,26 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   private commit(transaction: Transaction) {
-    {
-      this.transactionService.commitPlannedTransaction(transaction)
-          .subscribe(() => {
-              this.alertService.success(
-                this.translate.instant('message.plannedTransactionCommitted')
-              );
-            },
-            () => {
-              this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
-            },
-            () => this.refreshTransactions()
-          );
-    }
+    this.transactionService.commitPlannedTransaction(transaction)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.plannedTransactionCommitted')
+            );
+          },
+          () => {
+            this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
+          },
+          () => this.refreshTransactions()
+        );
+  }
+
+  setAsRecurrent(transaction: Transaction) {
+    this.transactionService.setAsRecurrent(transaction)
+        .subscribe(() => {
+
+          }
+        );
+
   }
 
   private isTransactionDateCurrentDate(transaction) {

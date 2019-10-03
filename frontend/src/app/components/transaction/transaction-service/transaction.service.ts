@@ -7,6 +7,7 @@ import {ServiceBase} from '../../../helpers/service-base';
 import {DateHelper} from '../../../helpers/date-helper';
 
 const PATH = 'transactions';
+const SET_AS_RECURRENT = 'setAsRecurrent';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class TransactionService extends ServiceBase {
       accountPriceEntries: [],
       date: transaction.date,
       isPlanned: transaction.isPlanned,
+      isRecurrent: transaction.isRecurrent,
     };
 
     for (const entry of transaction.accountPriceEntries) {
@@ -72,6 +74,9 @@ export class TransactionService extends ServiceBase {
 
   commitPlannedTransaction(transaction: Transaction) {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
+  }
 
+  setAsRecurrent(transaction: Transaction) {
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + SET_AS_RECURRENT), '', this.contentType);
   }
 }
