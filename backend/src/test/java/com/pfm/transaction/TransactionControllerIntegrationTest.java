@@ -677,7 +677,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
 
-    Transaction expectedPlannedTransaction = setTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(),
+    Transaction expectedPlannedTransactionAfterCommit = setTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(),
         plannedTransactionId, jacekAccountId, foodCategoryId);
 
     List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
@@ -685,20 +685,21 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     assertThat(allTransactions.size(), is(0));
     assertThat(allPlannedTransactions.size(), is(1));
-    assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransaction)));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransactionAfterCommit)));
 
     callRestToCommitPlannedTransaction(plannedTransactionId);
 
     final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
     final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
-    expectedPlannedTransaction.setDate(LocalDate.now());
+    expectedPlannedTransactionAfterCommit.setDate(LocalDate.now());
+    expectedPlannedTransactionAfterCommit.setPlanned(false);
 
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
-    assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransaction))));
+    assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
 
-    expectedPlannedTransaction.setPlanned(false);
+    expectedPlannedTransactionAfterCommit.setPlanned(false);
   }
 
   @Test

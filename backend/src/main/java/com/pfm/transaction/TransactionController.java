@@ -185,7 +185,7 @@ public class TransactionController implements TransactionApi {
   }
 
   private void addAsNewTransaction(Transaction transactionToCommit) {
-    Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, true);
+    Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
     addTransaction(transactionRequest);
 
