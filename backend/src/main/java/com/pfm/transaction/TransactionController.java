@@ -3,7 +3,6 @@ package com.pfm.transaction;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -131,7 +130,7 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> commitPlannedTransaction(long transactionId) {
+  public ResponseEntity<?> commitPlannedTransaction(long transactionId, boolean isOverdue) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -141,6 +140,9 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction plannedTransaction = plannedTransactionOptional.get();
+    if (isOverdue) {
+      plannedTransaction.setDate(LocalDate.now());
+    }
     List<String> validationResult = transactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
@@ -152,6 +154,13 @@ public class TransactionController implements TransactionApi {
     addAsNewTransaction(transactionToAdd);
 
     return ResponseEntity.ok(plannedTransaction.getId());
+  }
+
+  @Transactional
+  @Override
+  public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
+
+    return commitPlannedTransaction(transactionId, true);
   }
 
   @Transactional

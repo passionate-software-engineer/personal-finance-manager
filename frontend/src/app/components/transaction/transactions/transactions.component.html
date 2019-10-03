@@ -250,6 +250,7 @@
     </tr>
 
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
+        [ngStyle]="{backgroundColor: getWarnBgColorForUncommittedPlannedTransaction(transaction)}"
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
 
@@ -370,18 +371,33 @@
                 </button>
               </li>
               <ng-container *ngIf="transaction.isPlanned">
-                <li>
+                <li
+                  *ngIf="isNotOverduePlannedTransaction(transaction)">
                   <button (click)="commitPlannedTransaction(transaction)"
-                          class="btn btn-success btn-block"
+                          class="btn btn-info btn-block"
                           id="CommitBtn">
                     {{'button.commitPlannedTransaction' | translate}}
                   </button>
                 </li>
-                <li>
+                <li *ngIf="isOverduePlannedTransaction(transaction)">
+                  <button (click)="commitOverduePlannedTransaction(transaction)"
+                          class="btn btn-info btn-block"
+                          id="CommitOverdueBtn">
+                    {{'button.commitOverduePlannedTransaction' | translate}}
+                  </button>
+                </li>
+                <li *ngIf="!transaction.isRecurrent">
                   <button (click)="setAsRecurrent(transaction)"
                           class="btn btn-success btn-block"
                           id="SetAsRecurrentBtn">
                     {{'button.setAsRecurrent' | translate}}
+                  </button>
+                </li>
+                <li *ngIf="transaction.isRecurrent">
+                  <button (click)="setAsNotRecurrent(transaction)"
+                          class="btn btn-success btn-block"
+                          id="SetAsNotRecurrentBtn">
+                    {{'button.setAsNotRecurrent' | translate}}
                   </button>
                 </li>
               </ng-container>

@@ -8,6 +8,7 @@ import {DateHelper} from '../../../helpers/date-helper';
 
 const PATH = 'transactions';
 const SET_AS_RECURRENT = 'setAsRecurrent';
+const SET_AS_NOT_RECURRENT = 'setAsNotRecurrent';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +77,21 @@ export class TransactionService extends ServiceBase {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
   }
 
-  setAsRecurrent(transaction: Transaction) {
-    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + SET_AS_RECURRENT), '', this.contentType);
+  commitOverduePlannedTransaction(transaction: Transaction) {
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + 'commitOverdue'), '', this.contentType);
   }
+
+  setAsRecurrent(transaction: Transaction) {
+    return this.setRecurrenceStatus(transaction, true);
+  }
+
+  setAsNotRecurrent(transaction: Transaction) {
+    return this.setRecurrenceStatus(transaction, false);
+  }
+
+  private setRecurrenceStatus(transaction: Transaction, toBeRecurrent: boolean): Observable<any> {
+    const pathEnd = toBeRecurrent ? SET_AS_RECURRENT : SET_AS_NOT_RECURRENT;
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + pathEnd), '', this.contentType);
+  }
+
 }
