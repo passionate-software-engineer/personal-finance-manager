@@ -185,10 +185,12 @@ public class TransactionController implements TransactionApi {
   }
 
   private void addAsNewTransaction(Transaction transactionToCommit) {
+    Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, true);
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
     addTransaction(transactionRequest);
 
-    if (transactionRequest.isRecurrent()) {
+    if (newInstance.isRecurrent()) {
+      transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
       addAsNextMonthPlannedTransaction(transactionRequest);
     }
 
