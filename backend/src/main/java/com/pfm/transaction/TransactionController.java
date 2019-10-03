@@ -211,18 +211,20 @@ public class TransactionController implements TransactionApi {
         .description(transactionToUpdate.getDescription())
         .categoryId(transactionToUpdate.getCategoryId())
         .date(transactionToUpdate.getDate())
-        .accountPriceEntries(transactionToUpdate.getAccountPriceEntries().stream()
-            .map(accountPriceEntry -> AccountPriceEntry.builder()
-                .id(accountPriceEntry.getId())
-                .accountId(accountPriceEntry.getAccountId())
-                .price(accountPriceEntry.getPrice())
-                .build())
-            .collect(Collectors.toList())
-        )
+        .accountPriceEntries(getAccountPriceEntriesNewInstance(transactionToUpdate))
         .userId(transactionToUpdate.getUserId())
         .isPlanned(transactionToUpdate.isPlanned())
         .isRecurrent(updateToBeApplied ? SET_RECURRENT : SET_NOT_RECURRENT)
         .build();
+  }
+
+  private List<AccountPriceEntry> getAccountPriceEntriesNewInstance(Transaction transactionToUpdate) {
+    return transactionToUpdate.getAccountPriceEntries().stream()
+        .map(accountPriceEntry -> AccountPriceEntry.builder()
+            .accountId(accountPriceEntry.getAccountId())
+            .price(accountPriceEntry.getPrice())
+            .build())
+        .collect(Collectors.toList());
   }
 
   private void addAsNextMonthPlannedTransaction(TransactionRequest transactionRequest) {
@@ -238,17 +240,9 @@ public class TransactionController implements TransactionApi {
         .userId(transactionToCommit.getUserId())
         .categoryId(transactionToCommit.getCategoryId())
         .description(transactionToCommit.getDescription())
-        .accountPriceEntries(new ArrayList<>())
+        .accountPriceEntries(getAccountPriceEntriesNewInstance(transactionToCommit))
         .isRecurrent(transactionToCommit.isRecurrent())
         .build();
-
-    for (AccountPriceEntry accountPriceEntry : transactionToCommit.getAccountPriceEntries()) {
-      AccountPriceEntry newAccountPriceEntry = AccountPriceEntry.builder()
-          .accountId(accountPriceEntry.getAccountId())
-          .price(accountPriceEntry.getPrice())
-          .build();
-      newTransaction.getAccountPriceEntries().add(newAccountPriceEntry);
-    }
 
     return newTransaction;
   }
