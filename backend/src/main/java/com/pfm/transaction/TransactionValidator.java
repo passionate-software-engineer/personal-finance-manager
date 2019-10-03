@@ -71,7 +71,7 @@ public class TransactionValidator {
       if (notPlannedTransaction && isFutureDate(transaction.getDate())) {
         validationErrors.add(getMessage(FUTURE_TRANSACTION_DATE));
       }
-      if (plannedTransaction && isPastDate(transaction.getDate())) {
+      if (plannedTransaction && !transaction.isRecurrent() && isPastDate(transaction.getDate())) {
         validationErrors.add(getMessage(PAST_PLANNED_TRANSACTION_DATE));
       }
     }

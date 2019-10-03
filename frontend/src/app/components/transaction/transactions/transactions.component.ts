@@ -405,7 +405,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
   }
 
-  private containsArchivedAccount(transaction: Transaction) {
+  private containsArchivedAccount(transaction: Transaction): boolean {
     for (const entry of transaction.accountPriceEntries) {
       if (entry.account.archived) {
         return true;
