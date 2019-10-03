@@ -693,12 +693,12 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     expectedPlannedTransaction.setDate(LocalDate.now());
-    expectedPlannedTransaction.setPlanned(false);
 
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
     assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransaction))));
 
+    expectedPlannedTransaction.setPlanned(false);
   }
 
   @Test
