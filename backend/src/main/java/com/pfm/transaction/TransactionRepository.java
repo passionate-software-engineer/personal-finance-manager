@@ -16,3 +16,4 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 
   boolean existsByIdAndUserId(long transactionId, long userId);
 }
+
