@@ -15,7 +15,6 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +25,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class TransactionValidator {
 
+  private final DateHelper dateHelper = new DateHelper();
   private CategoryService categoryService;
   private AccountService accountService;
 
@@ -66,7 +66,7 @@ public class TransactionValidator {
     } else {
       final boolean notPlannedTransaction = !transaction.isPlanned();
 
-      if (notPlannedTransaction && isFutureDate(transaction.getDate())) {
+      if (notPlannedTransaction && dateHelper.isFutureDate(transaction.getDate())) {
         validationErrors.add(getMessage(FUTURE_TRANSACTION_DATE));
       }
     }
@@ -75,11 +75,4 @@ public class TransactionValidator {
 
   }
 
-  private boolean isPastDate(LocalDate date) {
-    return date.isBefore(LocalDate.now());
-  }
-
-  private boolean isFutureDate(LocalDate date) {
-    return date.isAfter(LocalDate.now());
-  }
 }

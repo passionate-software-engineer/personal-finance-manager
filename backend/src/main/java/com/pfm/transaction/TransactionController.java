@@ -26,6 +26,7 @@ public class TransactionController implements TransactionApi {
   private static final String NOT_RECURRENT = "not recurrent";
 
   private TransactionsHelper helper;
+  private DateHelper dateHelper;
   private TransactionService transactionService;
 
   private TransactionValidator transactionValidator;
@@ -100,13 +101,19 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionToUpdate = originalTransactionOptional.get();
+    final boolean isEligibleToCommit = dateHelper.isFutureDate(transactionToUpdate.getDate()) && dateHelper.isPastDate(updatingTransaction.getDate());
+    if (isEligibleToCommit) {
+      return commitPlannedTransaction(transactionId);
+    }
+
     historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, updatingTransaction, userId);
 
-    transactionService.updateTransaction(transactionId, userId, updatingTransaction);
-    log.info("Transaction with id {} was successfully updated", transactionId);
+    transactionService.updateTransaction(transactionId,userId,updatingTransaction);
+    log.info("Transaction with id {} was successfully updated",transactionId);
 
     return ResponseEntity.ok().build();
-  }
+
+}
 
   @Override
   @Transactional
@@ -130,7 +137,7 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> commitPlannedTransaction(long transactionId, boolean isOverdue) {
+  public ResponseEntity<?> commitPlannedTransaction(long transactionId) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -140,9 +147,7 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction plannedTransaction = plannedTransactionOptional.get();
-    if (isOverdue) {
-      applyCurrentDateHereToPassValidation(plannedTransaction);
-    }
+
     List<String> validationResult = transactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
@@ -160,7 +165,7 @@ public class TransactionController implements TransactionApi {
   @Override
   public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
 
-    return commitPlannedTransaction(transactionId, true);
+    return commitPlannedTransaction(transactionId);
   }
 
   @Transactional
