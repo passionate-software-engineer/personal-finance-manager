@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -667,18 +668,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldCommitPlannedTransaction() throws Exception {
     //given
-    Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    Transaction plannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
-    plannedTransaction.setPlanned(true);
-
-    long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
-
-    Transaction expectedPlannedTransactionAfterCommit = setTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(),
-        plannedTransactionId, jacekAccountId, foodCategoryId);
+    final long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction expectedPlannedTransactionAfterCommit = callRestToGetTransactionById(plannedTransactionId, token);
 
     List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
     List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
@@ -687,14 +678,15 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactions.size(), is(1));
     assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransactionAfterCommit)));
 
+    //when
     callRestToCommitPlannedTransaction(plannedTransactionId);
-
     final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
     final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     expectedPlannedTransactionAfterCommit.setDate(LocalDate.now());
     expectedPlannedTransactionAfterCommit.setPlanned(false);
 
+    //then
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
     assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
@@ -827,22 +819,20 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(addedTransaction, is(not(recurrent)));
 
     int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(transactionId);
-    assertEquals(OK.value(), status);
+
+    assertThat(status, is(OK.value()));
 
     Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
 
-    final boolean recurrentAfterUpdate = updatedTransaction.isRecurrent();
-
-    assertThat(recurrentAfterUpdate, is(true));
+    assertTrue(updatedTransaction.isRecurrent());
 
     //when
     status = callRestToSetPlannedTransactionAsNotRecurrentAndReturnStatus(transactionId);
-    assertEquals(OK.value(), status);
+    assertThat(status, is(OK.value()));
 
     Transaction transaction = callRestToGetTransactionById(transactionId, token);
 
     //then
-    assertThat(transaction.isRecurrent(), is(false));
     assertFalse(transaction.isRecurrent());
     assertThat(transaction, is(equalTo(addedTransaction)));
 
@@ -853,7 +843,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(NOT_EXISTING_TRANSACTION_ID);
 
-    assertEquals(NOT_FOUND.value(), status);
+    assertThat(status, is(NOT_FOUND.value()));
   }
 
   @Test
@@ -893,6 +883,31 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(RECURRENCE_PERIOD)));
     assertThat(removeTransactionId(allPlannedTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedNextRecurrentTransaction))));
+
+  }
+
+  @Test
+  public void shouldCommitPlannedTransactionUsingOverdueEndpoint() throws Exception {
+    //given
+    final long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction expectedPlannedTransactionAfterCommit = callRestToGetTransactionById(plannedTransactionId, token);
+
+    List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    assertThat(allTransactions.size(), is(0));
+    assertThat(allPlannedTransactions.size(), is(1));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransactionAfterCommit)));
+    expectedPlannedTransactionAfterCommit.setDate(LocalDate.now());
+    expectedPlannedTransactionAfterCommit.setPlanned(false);
+
+    callRestToCommitOverduePlannedTransaction(plannedTransactionId);
+    final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
+    final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    //then
+    assertThat(allTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
+    assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
 
   }
 

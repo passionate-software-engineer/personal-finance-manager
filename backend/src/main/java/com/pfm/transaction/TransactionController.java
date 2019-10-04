@@ -141,7 +141,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction plannedTransaction = plannedTransactionOptional.get();
     if (isOverdue) {
-      plannedTransaction.setDate(LocalDate.now());
+      applyCurrentDateHereToPassValidation(plannedTransaction);
     }
     List<String> validationResult = transactionValidator.validate(plannedTransaction, userId);
     if (!validationResult.isEmpty()) {
@@ -212,6 +212,10 @@ public class TransactionController implements TransactionApi {
 
     return ResponseEntity.ok().build();
 
+  }
+
+  private void applyCurrentDateHereToPassValidation(Transaction plannedTransaction) {
+    plannedTransaction.setDate(LocalDate.now());
   }
 
   private Transaction getNewInstanceWithUpdateApplied(Transaction transactionToUpdate, boolean updateToBeApplied) {

@@ -351,13 +351,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       }
     }
 
-    // if (operation === Operation.CommitOverduePlannedTransaction) {
-    //   if (transaction.isPlanned && this.containsArchivedAccount(transaction)) {
-    //     this.alertService.error(this.translate.instant('message.plannedTransactionUsingArchivedAccountCannotBeCommitted'));
-    //     status = false;
-    //   }
-    // }
-
     return status;
   }
 

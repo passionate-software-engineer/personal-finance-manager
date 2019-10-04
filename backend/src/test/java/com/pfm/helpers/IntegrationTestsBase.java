@@ -2,9 +2,7 @@ package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.helpers.TestAccountProvider.accountMilleniumBalance100;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -64,6 +62,7 @@ public abstract class IntegrationTestsBase {
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
+  protected static final String COMMIT_OVERDUE = "/commitOverdue";
 
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
@@ -327,16 +326,6 @@ public abstract class IntegrationTestsBase {
     return callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
   }
 
-  protected long callRestToAddSecondTestTransactionAndReturnId() throws Exception {
-    Account account = accountMilleniumBalance100();
-    account.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryOil(), token);
-
-    return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
-  }
-
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,
       long accountId, long categoryId) {
     transaction.setId(transactionId);
@@ -591,6 +580,14 @@ public abstract class IntegrationTestsBase {
   protected int callRestToCommitPlannedTransaction(long plannedTransactionId) throws Exception {
     return mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
+  }
+
+  protected int callRestToCommitOverduePlannedTransaction(long plannedTransactionId) throws Exception {
+    return mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId + COMMIT_OVERDUE)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andReturn().getResponse().getStatus();
