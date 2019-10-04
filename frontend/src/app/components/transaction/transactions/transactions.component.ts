@@ -169,9 +169,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   commitOverduePlannedTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction, Operation.CommitOverduePlannedTransaction)) {
-      return;
-    }
     const deleteDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
 
     if (confirm(this.translate.instant(deleteDialogMessageKey))) {
@@ -242,16 +239,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   setAsRecurrent(transaction: Transaction) {
     this.transactionService.setAsRecurrent(transaction)
         .subscribe((id) => {
-            this.transactionService.getTransaction(id)
-                .subscribe((updatedTransaction) => {
-                  const returned = this.getTransactionFromResponse(updatedTransaction);
-                  const i = this.allTransactions.indexOf(transaction);
-                  if (i === -1) {
-                    console.log('transaction not found');
-                  }
-                  this.allTransactions[i] = returned;
-                });
-            this.refreshTransactions();
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
           }
@@ -285,12 +272,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     let status = true;
 
     if (operation === Operation.Update) {
-      if (transaction.isPlanned) {
-        if (DateHelper.isPastDate(transaction.date)) {
-          this.alertService.error(this.translate.instant('message.plannedTransactionPastDate'));
-          status = false;
-        }
-      }
       if (!transaction.isPlanned && DateHelper.isFutureDate(transaction.date)) {
         this.alertService.error(this.translate.instant('message.transactionFutureDate'));
         status = false;

@@ -10,7 +10,6 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
-import static com.pfm.config.MessagesProvider.PAST_PLANNED_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.filters.LanguageFilter.LANGUAGE_HEADER;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -718,32 +717,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(FUTURE_TRANSACTION_DATE))));
-
-  }
-
-  @Test
-  public void shouldReturnValidationErrorForPlannedTransactionWithPastDate() throws Exception {
-    //given
-    Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
-    transaction.setPlanned(true);
-
-    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
-
-    transactionRequest.setCategoryId(foodCategoryId);
-    transactionRequest.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
-    mockMvc
-        .perform(post(TRANSACTIONS_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .content(json(transactionRequest))
-            .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(PAST_PLANNED_TRANSACTION_DATE))));
 
   }
 
