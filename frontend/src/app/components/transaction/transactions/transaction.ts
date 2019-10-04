@@ -3,5 +3,4 @@ export enum Operation {
   Commit,
   Update,
   Delete,
-  CommitOverduePlannedTransaction
 }

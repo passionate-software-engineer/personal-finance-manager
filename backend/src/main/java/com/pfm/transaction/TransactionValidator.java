@@ -10,7 +10,6 @@ import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
-import static com.pfm.config.MessagesProvider.PAST_PLANNED_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
@@ -65,14 +64,10 @@ public class TransactionValidator {
     if (transaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     } else {
-      final boolean plannedTransaction = transaction.isPlanned();
-      final boolean notPlannedTransaction = !plannedTransaction;
+      final boolean notPlannedTransaction = !transaction.isPlanned();
 
       if (notPlannedTransaction && isFutureDate(transaction.getDate())) {
         validationErrors.add(getMessage(FUTURE_TRANSACTION_DATE));
-      }
-      if (plannedTransaction && isPastDate(transaction.getDate())) {
-        validationErrors.add(getMessage(PAST_PLANNED_TRANSACTION_DATE));
       }
     }
 
