@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DateHelper {
 
-  boolean isPastDate(LocalDate date) {
+ boolean isPastDate(LocalDate date) {
     return date.isBefore(LocalDate.now());
   }
 
