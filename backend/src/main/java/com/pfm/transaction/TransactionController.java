@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -103,17 +104,18 @@ public class TransactionController implements TransactionApi {
     Transaction transactionToUpdate = originalTransactionOptional.get();
     final boolean isEligibleToCommit = dateHelper.isFutureDate(transactionToUpdate.getDate()) && dateHelper.isPastDate(updatingTransaction.getDate());
     if (isEligibleToCommit) {
-      return commitPlannedTransaction(transactionId);
+      LocalDate pastDate = updatingTransaction.getDate();
+      return commitPlannedTransaction(transactionId, pastDate);
     }
 
     historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, updatingTransaction, userId);
 
-    transactionService.updateTransaction(transactionId,userId,updatingTransaction);
-    log.info("Transaction with id {} was successfully updated",transactionId);
+    transactionService.updateTransaction(transactionId, userId, updatingTransaction);
+    log.info("Transaction with id {} was successfully updated", transactionId);
 
     return ResponseEntity.ok().build();
 
-}
+  }
 
   @Override
   @Transactional
@@ -137,7 +139,7 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> commitPlannedTransaction(long transactionId) {
+  public ResponseEntity<?> commitPlannedTransaction(long transactionId, @RequestParam(value = "date", required = false) LocalDate date) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -155,18 +157,17 @@ public class TransactionController implements TransactionApi {
     }
 
     transactionService.deleteTransaction(transactionId, userId);
-    Transaction transactionToAdd = getNewInstanceWithCurrentDateAndPlannedStatus(plannedTransaction);
-    addAsNewTransaction(transactionToAdd);
+    Transaction transactionToAdd = getNewInstanceWithAppropriateDateAndPlannedStatus(plannedTransaction, date);
 
-    return ResponseEntity.ok(plannedTransaction.getId());
+    return ResponseEntity.ok(addAsNewTransaction(transactionToAdd));
   }
 
-  @Transactional
-  @Override
-  public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
-
-    return commitPlannedTransaction(transactionId);
-  }
+//  @Transactional
+//  @Override
+//  public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
+//
+//    return commitPlannedTransaction(transactionId, date);
+//  }
 
   @Transactional
   @Override
@@ -198,16 +199,16 @@ public class TransactionController implements TransactionApi {
     return performUpdate(updatedTransaction, userId, setAsRecurrent);
   }
 
-  private void addAsNewTransaction(Transaction transactionToCommit) {
+  private ResponseEntity<?> addAsNewTransaction(Transaction transactionToCommit) {
     Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    addTransaction(transactionRequest);
+    ResponseEntity<?> responseEntity = addTransaction(transactionRequest);
 
     if (newInstance.isRecurrent()) {
       transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
       addAsNextMonthPlannedTransaction(transactionRequest);
     }
-
+    return responseEntity;
   }
 
   private ResponseEntity<?> performUpdate(Transaction transaction, long userId, boolean updateToBeApplied) {
@@ -251,9 +252,9 @@ public class TransactionController implements TransactionApi {
     addTransaction(transactionRequest);
   }
 
-  private Transaction getNewInstanceWithCurrentDateAndPlannedStatus(Transaction transactionToCommit) {
+  private Transaction getNewInstanceWithAppropriateDateAndPlannedStatus(Transaction transactionToCommit, LocalDate pastDate) {
     Transaction newTransaction = Transaction.builder()
-        .date(LocalDate.now())
+        .date(pastDate != null && pastDate.isBefore(LocalDate.now()) ? pastDate : LocalDate.now())
         .isPlanned(false)
         .userId(transactionToCommit.getUserId())
         .categoryId(transactionToCommit.getCategoryId())

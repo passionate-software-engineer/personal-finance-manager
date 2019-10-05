@@ -108,7 +108,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     if (!this.validateTransaction(transaction.editedTransaction, Operation.Update)) {
       return;
     }
-
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe(() => {
             this.transactionService.getTransaction(transaction.id)
