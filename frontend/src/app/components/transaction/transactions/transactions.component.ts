@@ -110,14 +110,14 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe(() => {
-            this.transactionService.getTransaction(transaction.id)
-                .subscribe(updatedTransaction => {
-                  const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
-                  this.alertService.success(this.translate.instant(messageKey));
-                  const returnedTransaction = this.getTransactionFromResponse(updatedTransaction);
-
-                  Object.assign(transaction, returnedTransaction);
-                });
+            // this.transactionService.getTransaction(transaction.id)
+            //     .subscribe(updatedTransaction => {
+            //       const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
+            //       this.alertService.success(this.translate.instant(messageKey));
+            //       const returnedTransaction = this.getTransactionFromResponse(updatedTransaction);
+            //
+            //       Object.assign(transaction, returnedTransaction);
+            //     });
           },
         );
   }

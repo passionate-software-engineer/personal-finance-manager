@@ -162,12 +162,12 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok(addAsNewTransaction(transactionToAdd));
   }
 
-//  @Transactional
-//  @Override
-//  public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
-//
-//    return commitPlannedTransaction(transactionId, date);
-//  }
+  @Transactional
+  @Override
+  public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
+
+    return commitPlannedTransaction(transactionId,null);
+  }
 
   @Transactional
   @Override

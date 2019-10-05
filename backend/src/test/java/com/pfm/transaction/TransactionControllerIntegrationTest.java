@@ -888,7 +888,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldUpdatePlannedTransactionWithPastDate() throws Exception {
+  public void shouldUpdatePlannedCOMMITTransactionWithPastDate() throws Exception {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -922,7 +922,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactionsInDb.size(), is(0));
     assertThat(allTransactionsInDb.size(), is(1));
     assertThat(allTransactionsInDb.get(0).getDate(), equalTo(PAST_DATE));
-
+//FIXME LUKASZ ADD deileed addertion
   }
 
   private Transaction removeTransactionId(Transaction transaction) {
