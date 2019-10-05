@@ -54,6 +54,7 @@ import java.util.Collections;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -62,6 +63,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   private static final long NOT_EXISTING_TRANSACTION_ID = -7389387L;
   private static final String EMPTY_DESCRIPTION = "";
+  private static final LocalDate PAST_DATE = LocalDate.now().minusDays(2);
 
   @Autowired
   private AccountService accountService;
@@ -859,6 +861,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   }
 
+  @Disabled
   @Test
   public void shouldCommitPlannedTransactionUsingOverdueEndpoint() throws Exception {
     //given
@@ -881,6 +884,44 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
     assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
+
+  }
+
+  @Test
+  public void shouldUpdatePlannedTransactionWithPastDate() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    Transaction updatedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedPlannedTransaction.setCategoryId(carCategoryId);
+    updatedPlannedTransaction.setDate(PAST_DATE);
+    updatedPlannedTransaction.setDescription("Car parts");
+
+    TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
+    updatedPlannedTransaction.setId(1L);
+
+    //when
+    callRestToUpdateTransaction(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+
+    //then
+    assertThat(allPlannedTransactionsInDb.size(), is(0));
+    assertThat(allTransactionsInDb.size(), is(1));
+    assertThat(allTransactionsInDb.get(0).getDate(), equalTo(PAST_DATE));
 
   }
 

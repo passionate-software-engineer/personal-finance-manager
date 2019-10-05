@@ -3,6 +3,7 @@ package com.pfm.transaction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,7 +44,7 @@ public interface TransactionApi {
   @ApiOperation(value = "Commits (converts) planned transaction into transaction", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})
   @PatchMapping(value = "/{transactionId}")
-  ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId) throws Exception;
+  ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId, LocalDate date) throws Exception;
 
   @ApiOperation(value = "Sets planned transaction status to recurrent", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})
@@ -55,9 +56,9 @@ public interface TransactionApi {
   @PatchMapping(value = "/{transactionId}/setAsNotRecurrent")
   ResponseEntity<?> setAsNotRecurrent(@PathVariable long transactionId) throws Exception;
 
-  @ApiOperation(value = "It is used to commit overdue planned transaction, we cannot use commitPlannedTransaction here as it would return validation"
-      + " error saying: cannot commit planned transaction with past date", response = Void.class,
-      authorizations = {@Authorization(value = "Bearer")})
-  @PatchMapping(value = "/{transactionId}/commitOverdue")
-  ResponseEntity<?> commitOverduePlannedTransaction(@PathVariable long transactionId) throws Exception;
+//  @ApiOperation(value = "It is used to commit overdue planned transaction, we cannot use commitPlannedTransaction here as it would return validation"
+//      + " error saying: cannot commit planned transaction with past date", response = Void.class,
+//      authorizations = {@Authorization(value = "Bearer")})
+//  @PatchMapping(value = "/{transactionId}/commitOverdue")
+//  ResponseEntity<?> commitOverduePlannedTransaction(@PathVariable long transactionId) throws Exception;
 }
