@@ -102,8 +102,9 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionToUpdate = originalTransactionOptional.get();
-    final boolean isEligibleToCommit = dateHelper.isFutureDate(transactionToUpdate.getDate()) && dateHelper.isPastDate(updatingTransaction.getDate());
-    if (isEligibleToCommit) {
+    final boolean isPlannedTransactionUpdatedWithPastDate =
+        dateHelper.isFutureDate(transactionToUpdate.getDate()) && dateHelper.isPastDate(updatingTransaction.getDate());
+    if (isPlannedTransactionUpdatedWithPastDate) {
       LocalDate pastDate = updatingTransaction.getDate();
       return commitPlannedTransaction(transactionId, pastDate);
     }
@@ -113,7 +114,7 @@ public class TransactionController implements TransactionApi {
     transactionService.updateTransaction(transactionId, userId, updatingTransaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(transactionId);
 
   }
 
@@ -159,14 +160,14 @@ public class TransactionController implements TransactionApi {
     transactionService.deleteTransaction(transactionId, userId);
     Transaction transactionToAdd = getNewInstanceWithAppropriateDateAndPlannedStatus(plannedTransaction, date);
 
-    return ResponseEntity.ok(addAsNewTransaction(transactionToAdd));
+    return addAsNewTransaction(transactionToAdd);
   }
 
   @Transactional
   @Override
   public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
 
-    return commitPlannedTransaction(transactionId,null);
+    return commitPlannedTransaction(transactionId, null);
   }
 
   @Transactional
@@ -202,13 +203,13 @@ public class TransactionController implements TransactionApi {
   private ResponseEntity<?> addAsNewTransaction(Transaction transactionToCommit) {
     Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    ResponseEntity<?> responseEntity = addTransaction(transactionRequest);
+    ResponseEntity<?> createdId = addTransaction(transactionRequest);
 
     if (newInstance.isRecurrent()) {
       transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
       addAsNextMonthPlannedTransaction(transactionRequest);
     }
-    return responseEntity;
+    return createdId;
   }
 
   private ResponseEntity<?> performUpdate(Transaction transaction, long userId, boolean updateToBeApplied) {
@@ -218,10 +219,6 @@ public class TransactionController implements TransactionApi {
 
     return ResponseEntity.ok().build();
 
-  }
-
-  private void applyCurrentDateHereToPassValidation(Transaction plannedTransaction) {
-    plannedTransaction.setDate(LocalDate.now());
   }
 
   private Transaction getNewInstanceWithUpdateApplied(Transaction transactionToUpdate, boolean updateToBeApplied) {

@@ -54,7 +54,6 @@ import java.util.Collections;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -861,34 +860,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   }
 
-  @Disabled
   @Test
-  public void shouldCommitPlannedTransactionUsingOverdueEndpoint() throws Exception {
-    //given
-    final long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
-    Transaction expectedPlannedTransactionAfterCommit = callRestToGetTransactionById(plannedTransactionId, token);
-
-    List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
-    List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
-    assertThat(allTransactions.size(), is(0));
-    assertThat(allPlannedTransactions.size(), is(1));
-    assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransactionAfterCommit)));
-    expectedPlannedTransactionAfterCommit.setDate(LocalDate.now());
-    expectedPlannedTransactionAfterCommit.setPlanned(false);
-
-    callRestToCommitOverduePlannedTransaction(plannedTransactionId);
-    final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
-    final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
-
-    //then
-    assertThat(allTransactionsAfterCommit.size(), is(1));
-    assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
-    assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
-
-  }
-
-  @Test
-  public void shouldUpdatePlannedCOMMITTransactionWithPastDate() throws Exception {
+  public void shouldUpdatePlannedTransactionWithPastDateUsingCommit() throws Exception {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -922,7 +895,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactionsInDb.size(), is(0));
     assertThat(allTransactionsInDb.size(), is(1));
     assertThat(allTransactionsInDb.get(0).getDate(), equalTo(PAST_DATE));
-//FIXME LUKASZ ADD deileed addertion
+    //FIXME LUKASZ ADD deileed addertion
   }
 
   private Transaction removeTransactionId(Transaction transaction) {
