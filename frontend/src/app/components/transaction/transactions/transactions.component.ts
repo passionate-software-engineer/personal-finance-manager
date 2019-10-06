@@ -185,7 +185,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           () => {
             this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
           },
-          () => this.refreshTransactions()
         );
   }
 
@@ -199,7 +198,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           () => {
             this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
           },
-          () => this.refreshTransactions()
         );
   }
 
@@ -237,9 +235,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   setAsRecurrent(transaction: Transaction) {
     this.transactionService.setAsRecurrent(transaction)
-        .subscribe((id) => {
+        .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
+            transaction.isRecurrent = true;
           }
         );
 
@@ -252,6 +251,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));
+            transaction.isRecurrent = false;
+
           }
         );
 

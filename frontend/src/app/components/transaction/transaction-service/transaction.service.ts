@@ -19,8 +19,6 @@ export class TransactionService extends ServiceBase {
     super(http);
   }
 
-  dateHelper = new DateHelper();
-
   private static transactionToTransactionRequest(transaction: Transaction) {
     const result = {
       description: transaction.description,
