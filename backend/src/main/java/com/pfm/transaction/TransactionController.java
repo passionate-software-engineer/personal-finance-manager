@@ -158,16 +158,9 @@ public class TransactionController implements TransactionApi {
     }
 
     transactionService.deleteTransaction(transactionId, userId);
-    Transaction transactionToAdd = getNewInstanceWithAppropriateDateAndPlannedStatus(plannedTransaction, date);
+    Transaction transactionToAdd = getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(plannedTransaction, date);
 
     return addAsNewTransaction(transactionToAdd);
-  }
-
-  @Transactional
-  @Override
-  public ResponseEntity<?> commitOverduePlannedTransaction(long transactionId) {
-
-    return commitPlannedTransaction(transactionId, null);
   }
 
   @Transactional
@@ -249,9 +242,10 @@ public class TransactionController implements TransactionApi {
     addTransaction(transactionRequest);
   }
 
-  private Transaction getNewInstanceWithAppropriateDateAndPlannedStatus(Transaction transactionToCommit, LocalDate pastDate) {
-    Transaction newTransaction = Transaction.builder()
-        .date(pastDate != null && pastDate.isBefore(LocalDate.now()) ? pastDate : LocalDate.now())
+  private Transaction getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(Transaction transactionToCommit, LocalDate pastDate) {
+
+    return Transaction.builder()
+        .date(pastDate != null ? pastDate : LocalDate.now())
         .isPlanned(false)
         .userId(transactionToCommit.getUserId())
         .categoryId(transactionToCommit.getCategoryId())
@@ -259,8 +253,5 @@ public class TransactionController implements TransactionApi {
         .accountPriceEntries(getAccountPriceEntriesNewInstance(transactionToCommit))
         .isRecurrent(transactionToCommit.isRecurrent())
         .build();
-
-    return newTransaction;
   }
-
 }

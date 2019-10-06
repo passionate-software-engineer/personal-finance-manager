@@ -68,9 +68,9 @@ export class TransactionService extends ServiceBase {
     return this.http.delete<any>(ServiceBase.apiUrl(PATH, id));
   }
 
-  editTransaction(category: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.transactionToTransactionRequest(category);
-    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, category.id), categoryRequest, this.contentType);
+  editTransaction(transaction: Transaction): Observable<any> {
+    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
+    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, transaction.id), categoryRequest, this.contentType);
   }
 
   commitPlannedTransaction(transaction: Transaction) {

@@ -56,9 +56,4 @@ public interface TransactionApi {
   @PatchMapping(value = "/{transactionId}/setAsNotRecurrent")
   ResponseEntity<?> setAsNotRecurrent(@PathVariable long transactionId) throws Exception;
 
-  @ApiOperation(value = "It is used to commit overdue planned transaction, we cannot use commitPlannedTransaction here as it would return validation"
-      + " error saying: cannot commit planned transaction with past date", response = Void.class,
-      authorizations = {@Authorization(value = "Bearer")})
-  @PatchMapping(value = "/{transactionId}/commitOverdue")
-  ResponseEntity<?> commitOverduePlannedTransaction(@PathVariable long transactionId) throws Exception;
 }

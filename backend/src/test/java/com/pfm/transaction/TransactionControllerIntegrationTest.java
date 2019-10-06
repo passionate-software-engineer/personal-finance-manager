@@ -62,6 +62,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   private static final long NOT_EXISTING_TRANSACTION_ID = -7389387L;
   private static final String EMPTY_DESCRIPTION = "";
+
+  private static final LocalDate CURRENT_DATE = LocalDate.now();
   private static final LocalDate PAST_DATE = LocalDate.now().minusDays(2);
 
   @Autowired
@@ -177,7 +179,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodTransactionRequest.setDescription("Car parts");
 
     //when
-    callRestToUpdateTransaction(foodTransactionId, updatedFoodTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnId(foodTransactionId, updatedFoodTransactionRequest, token);
 
     //then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
@@ -481,7 +483,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransaction(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnId(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     //then
@@ -887,14 +889,63 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransaction(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    final long updatedId = callRestToUpdateTransactionAndReturnId(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+
+    Transaction afterUpdate = callRestToGetTransactionById(updatedId, token);
+    List<Transaction> allPlannedTransactionsAfterUpdateInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsAfterUpdateInDb = callRestToGetAllTransactionsFromDatabase(token);
+
+    //then
+    assertThat(allPlannedTransactionsAfterUpdateInDb.size(), is(0));
+    assertThat(allTransactionsAfterUpdateInDb.size(), is(1));
+
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(not(equalTo(updatedPlannedTransaction.getId()))));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getDescription(), equalTo("Food for birthday"));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getCategoryId(), equalTo(1L));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getDate(), equalTo(PAST_DATE));
+
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getAccountPriceEntries(), equalTo(afterUpdate.getAccountPriceEntries()));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).isPlanned(), equalTo(false));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).isRecurrent(), equalTo(false));
+    //FIXME LUKASZ ADD deileed addertion  maybe json path ?
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(equalTo(updatedId)));
+  }
+
+  @Test
+  public void shouldUpdatePlannedTransactionWithCurrentDate() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    Transaction updatedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedPlannedTransaction.setCategoryId(carCategoryId);
+    updatedPlannedTransaction.setDate(CURRENT_DATE);
+    updatedPlannedTransaction.setDescription("Car parts");
+
+    TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
+    updatedPlannedTransaction.setId(1L);
+
+    //when
+    callRestToUpdateTransactionAndReturnId(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
 
     //then
-    assertThat(allPlannedTransactionsInDb.size(), is(0));
-    assertThat(allTransactionsInDb.size(), is(1));
-    assertThat(allTransactionsInDb.get(0).getDate(), equalTo(PAST_DATE));
+    assertThat(allPlannedTransactionsInDb.size(), is(1));
+    assertThat(allTransactionsInDb.size(), is(0));
+    assertThat(allPlannedTransactionsInDb.get(0).getDate(), equalTo(CURRENT_DATE));
     //FIXME LUKASZ ADD deileed addertion
   }
 
