@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,7 +63,8 @@ public class TransactionController implements TransactionApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
+  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest,
+      @RequestParam(value = "shouldReturnTransaction", required = false) boolean shouldReturnTransaction) {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Adding transaction to the database");
@@ -79,7 +81,7 @@ public class TransactionController implements TransactionApi {
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
 
-    return ResponseEntity.ok(createdTransaction.getId());
+    return shouldReturnTransaction ? ResponseEntity.ok(createdTransaction) : ResponseEntity.ok(createdTransaction.getId());
   }
 
   @Override
@@ -138,6 +140,14 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok().build();
   }
 
+  @Builder
+  private static class CommitBodyResponse {
+
+    private Transaction committed;
+    private Transaction scheduledForNextMonth;
+
+  }
+
   @Transactional
   @Override
   public ResponseEntity<?> commitPlannedTransaction(long transactionId, @RequestParam(value = "date", required = false) LocalDate date) {
@@ -160,7 +170,7 @@ public class TransactionController implements TransactionApi {
     transactionService.deleteTransaction(transactionId, userId);
     Transaction transactionToAdd = getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(plannedTransaction, date);
 
-    return addAsNewTransaction(transactionToAdd);
+    return ResponseEntity.ok(addAsNewTransaction(transactionToAdd));
   }
 
   @Transactional
@@ -193,16 +203,21 @@ public class TransactionController implements TransactionApi {
     return performUpdate(updatedTransaction, userId, setAsRecurrent);
   }
 
-  private ResponseEntity<?> addAsNewTransaction(Transaction transactionToCommit) {
+  private CommitBodyResponse addAsNewTransaction(Transaction transactionToCommit) {
     Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    ResponseEntity<?> createdId = addTransaction(transactionRequest);
+    ResponseEntity<?> createdTransaction = addTransaction(transactionRequest, true);
 
+    Transaction scheduledForNextMonth = new Transaction();
     if (newInstance.isRecurrent()) {
       transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
-      addAsNextMonthPlannedTransaction(transactionRequest);
+      scheduledForNextMonth = addAsNextMonthPlannedTransaction(transactionRequest);
     }
-    return createdId;
+    return CommitBodyResponse.builder()
+        .committed((Transaction) createdTransaction.getBody())
+        .scheduledForNextMonth(scheduledForNextMonth)
+        .build();
+
   }
 
   private ResponseEntity<?> performUpdate(Transaction transaction, long userId, boolean updateToBeApplied) {
@@ -236,10 +251,12 @@ public class TransactionController implements TransactionApi {
         .collect(Collectors.toList());
   }
 
-  private void addAsNextMonthPlannedTransaction(TransactionRequest transactionRequest) {
+  private Transaction addAsNextMonthPlannedTransaction(TransactionRequest transactionRequest) {
     transactionRequest.setDate(RECURRENCE_PERIOD);
     transactionRequest.setPlanned(true);
-    addTransaction(transactionRequest);
+    final ResponseEntity<?> response = addTransaction(transactionRequest, true);
+
+    return (Transaction) response.getBody();
   }
 
   private Transaction getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(Transaction transactionToCommit, LocalDate pastDate) {
