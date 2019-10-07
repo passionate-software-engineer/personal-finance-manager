@@ -58,8 +58,8 @@ export class TransactionService extends ServiceBase {
       transaction.isPlanned = true;
     }
 
-    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
-    return this.http.post<any>(ServiceBase.apiUrl(PATH), categoryRequest, this.contentType);
+    const transactionRequest = TransactionService.transactionToTransactionRequest(transaction);
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), transactionRequest, this.contentType);
   }
 
   deleteTransaction(id: number): Observable<any> {
@@ -67,16 +67,12 @@ export class TransactionService extends ServiceBase {
   }
 
   editTransaction(transaction: Transaction): Observable<any> {
-    const categoryRequest = TransactionService.transactionToTransactionRequest(transaction);
-    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, transaction.id), categoryRequest, this.contentType);
+    const transactionRequest = TransactionService.transactionToTransactionRequest(transaction);
+    return this.http.put<Transaction>(ServiceBase.apiUrl(PATH, transaction.id), transactionRequest, this.contentType);
   }
 
   commitPlannedTransaction(transaction: Transaction) {
     return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
-  }
-
-  commitOverduePlannedTransaction(transaction: Transaction) {
-    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + 'commitOverdue'), '', this.contentType);
   }
 
   setAsRecurrent(transaction: Transaction) {

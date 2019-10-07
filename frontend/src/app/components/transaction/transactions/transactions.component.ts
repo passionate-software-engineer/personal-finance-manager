@@ -98,10 +98,14 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       this.transactionService.deleteTransaction(transactionToDelete.id)
           .subscribe(() => {
             this.alertService.success(this.translate.instant(deleteMessageKey));
-            this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
-            this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
+            this.removeDeletedFromDOM(transactionToDelete);
           });
     }
+  }
+
+  private removeDeletedFromDOM(transactionToDelete) {
+    this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
+    this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
   }
 
   updateTransaction(transaction: Transaction) {
@@ -109,17 +113,14 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       return;
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
-        .subscribe((id) => {
-            this.transactionService.getTransaction(id)
-                .subscribe(updatedTransaction => {
-                  const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
-                  this.alertService.success(this.translate.instant(messageKey));
-                  const returnedTransaction = this.getTransactionFromResponse(updatedTransaction);
+        .subscribe((commitBodyResponse) => {
 
-                  Object.assign(transaction, returnedTransaction);
-                });
-          },
-        );
+          const updatedTransaction = this.getTransactionFromResponse(commitBodyResponse.committed);
+          const messageKey = updatedTransaction.isPlanned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
+          this.alertService.success(this.translate.instant(messageKey));
+
+          Object.assign(transaction, updatedTransaction);
+        });
   }
 
   addTransaction() {
@@ -168,35 +169,28 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   commitOverduePlannedTransaction(transaction: Transaction) {
-    const deleteDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
+    const commitDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
 
-    if (confirm(this.translate.instant(deleteDialogMessageKey))) {
-      this.commitOverdue(transaction);
+    if (confirm(this.translate.instant(commitDialogMessageKey))) {
+      this.commit(transaction, 'message.OverduePlannedTransactionCommitted');
     }
   }
 
-  private commit(transaction: Transaction) {
+  private commit(transaction: Transaction, messageKey?: string) {
     this.transactionService.commitPlannedTransaction(transaction)
-        .subscribe(() => {
+        .subscribe((commitBodyResponse) => {
             this.alertService.success(
-              this.translate.instant('message.plannedTransactionCommitted')
+              this.translate.instant(messageKey == null ? 'message.plannedTransactionCommitted' : messageKey)
             );
-          },
-          () => {
-            this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
-          },
-        );
-  }
+            const committedToRemove = this.getTransactionFromResponse(commitBodyResponse.committed);
+            Object.assign(transaction, committedToRemove);
 
-  private commitOverdue(transaction: Transaction) {
-    this.transactionService.commitOverduePlannedTransaction(transaction)
-        .subscribe(() => {
-            this.alertService.success(
-              this.translate.instant('message.OverduePlannedTransactionCommitted')
-            );
-          },
-          () => {
-            this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
+            if (commitBodyResponse.scheduledForNextMonth.accountPriceEntries !== undefined) {
+              const returnedTransaction = this.getTransactionFromResponse(commitBodyResponse.scheduledForNextMonth);
+
+              this.transactions.push(returnedTransaction);
+              this.allTransactions.push(returnedTransaction);
+            }
           },
         );
   }
