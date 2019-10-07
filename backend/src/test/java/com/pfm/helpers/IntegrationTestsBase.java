@@ -29,6 +29,7 @@ import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionController.CommitBodyResponse;
 import com.pfm.transaction.TransactionRequest;
 import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
@@ -198,6 +199,10 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(jsonAccount, Account.class);
   }
 
+  private CommitBodyResponse jsonToCommitBodyResponse(String response) throws Exception {
+    return mapper.readValue(response, CommitBodyResponse.class);
+  }
+
   //category
   protected long callRestToAddCategoryAndReturnId(Category category, String token) throws Exception {
     CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
@@ -357,6 +362,18 @@ public abstract class IntegrationTestsBase {
   protected long callRestToUpdateTransactionAndReturnId(long transactionId, TransactionRequest transactionRequest, String token)
       throws Exception {
     return Long.parseLong(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(transactionRequest)))
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse().getContentAsString());
+  }
+
+  protected CommitBodyResponse callRestToUpdateTransactionAndReturnCommitBodyResponse(long transactionId, TransactionRequest transactionRequest,
+      String token)
+      throws Exception {
+    return jsonToCommitBodyResponse(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionRequest)))
