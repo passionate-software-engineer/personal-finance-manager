@@ -22,7 +22,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {ImportExportComponent} from './components/import-export/import-export/import-export.component';
-import { GoogleChartsModule } from 'angular-google-charts';
+import {GoogleChartsModule} from 'angular-google-charts';
 
 export const createTranslateLoader = (http: HttpClient) => {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

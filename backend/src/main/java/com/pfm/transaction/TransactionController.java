@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +66,7 @@ public class TransactionController implements TransactionApi {
   @Override
   @Transactional
   public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest,
-      @RequestParam(value = "shouldReturnTransaction", required = false) boolean shouldReturnTransaction) {
+      @RequestParam(value = "shouldReturnCreatedTransaction", required = false) boolean shouldReturnCreatedTransaction) {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Adding transaction to the database");
@@ -81,7 +83,7 @@ public class TransactionController implements TransactionApi {
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
 
-    return shouldReturnTransaction ? ResponseEntity.ok(createdTransaction) : ResponseEntity.ok(createdTransaction.getId());
+    return shouldReturnCreatedTransaction ? ResponseEntity.ok(createdTransaction) : ResponseEntity.ok(createdTransaction.getId());
   }
 
   @Override
@@ -116,7 +118,8 @@ public class TransactionController implements TransactionApi {
     transactionService.updateTransaction(transactionId, userId, updatingTransaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
-    return ResponseEntity.ok(transactionId);
+    return ResponseEntity.ok(CommitBodyResponse.builder()
+        .created(updatingTransaction).build());
 
   }
 
@@ -140,10 +143,13 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok().build();
   }
 
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
   @Builder
-  private static class CommitBodyResponse {
+  public static class CommitBodyResponse {
 
-    private Transaction committed;
+    private Transaction created;
     private Transaction scheduledForNextMonth;
 
   }
@@ -214,7 +220,7 @@ public class TransactionController implements TransactionApi {
       scheduledForNextMonth = addAsNextMonthPlannedTransaction(transactionRequest);
     }
     return CommitBodyResponse.builder()
-        .committed((Transaction) createdTransaction.getBody())
+        .created((Transaction) createdTransaction.getBody())
         .scheduledForNextMonth(scheduledForNextMonth)
         .build();
 

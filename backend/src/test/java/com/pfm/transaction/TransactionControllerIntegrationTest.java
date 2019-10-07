@@ -48,6 +48,7 @@ import com.pfm.account.AccountService;
 import com.pfm.config.MessagesProvider.Language;
 import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
+import com.pfm.transaction.TransactionController.CommitBodyResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -179,7 +180,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodTransactionRequest.setDescription("Car parts");
 
     //when
-    callRestToUpdateTransactionAndReturnId(foodTransactionId, updatedFoodTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitBodyResponse(foodTransactionId, updatedFoodTransactionRequest, token);
 
     //then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
@@ -483,7 +484,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransactionAndReturnId(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitBodyResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     //then
@@ -889,9 +890,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    final long updatedId = callRestToUpdateTransactionAndReturnId(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    final CommitBodyResponse commitBodyResponse =
+        callRestToUpdateTransactionAndReturnCommitBodyResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
 
-    Transaction afterUpdate = callRestToGetTransactionById(updatedId, token);
+    final Long updatedId = commitBodyResponse.getCreated().getId();
+    final Transaction afterUpdate = callRestToGetTransactionById(updatedId, token);
     List<Transaction> allPlannedTransactionsAfterUpdateInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsAfterUpdateInDb = callRestToGetAllTransactionsFromDatabase(token);
 
@@ -938,7 +941,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransactionAndReturnId(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitBodyResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
 

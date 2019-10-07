@@ -124,7 +124,8 @@
     </tr>
     <ng-container
       *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
-      <tr  [ngClass]="{'font-italic':account.archived}" id="AccountRow"
+      <tr [ngClass]="{'font-italic':account.archived}"
+          id="AccountRow"
           *ngIf="showArchivedCheckboxState ||!account.archived">
         <!-- Name -->
         <td *ngIf="account.editMode">
@@ -177,7 +178,7 @@
         </td>
 
         <!-- Last verification date -->
-        <td >{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
+        <td>{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
         </td>
 
         <!-- Options -->
