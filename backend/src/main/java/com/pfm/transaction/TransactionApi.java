@@ -31,7 +31,7 @@ public interface TransactionApi {
 
   @ApiOperation(value = "Create a new transaction", response = long.class, authorizations = {@Authorization(value = "Bearer")})
   @PostMapping
-  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
+  ResponseEntity<?> addTransaction(TransactionRequest transactionRequest, boolean shouldReturnTransaction);
 
   @ApiOperation(value = "Update an existing transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   @PutMapping(value = "/{transactionId}")
