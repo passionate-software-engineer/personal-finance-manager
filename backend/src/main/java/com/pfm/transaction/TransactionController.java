@@ -106,8 +106,10 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionToUpdate = originalTransactionOptional.get();
+
     final boolean isPlannedTransactionUpdatedWithPastDate =
-        dateHelper.isFutureDate(transactionToUpdate.getDate()) && dateHelper.isPastDate(updatingTransaction.getDate());
+        !dateHelper.isPastDate(transactionToUpdate.getDate()) && (dateHelper.isPastDate(updatingTransaction.getDate()));
+
     if (isPlannedTransactionUpdatedWithPastDate) {
       LocalDate pastDate = updatingTransaction.getDate();
       return commitPlannedTransaction(transactionId, pastDate);

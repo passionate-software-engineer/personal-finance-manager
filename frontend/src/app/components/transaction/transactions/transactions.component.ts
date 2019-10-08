@@ -114,8 +114,11 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe((commitBodyResponse) => {
+          console.log('created id ' + commitBodyResponse.created.id);
 
-          const updatedTransaction = this.getTransactionFromResponse(commitBodyResponse.committed);
+
+
+          const updatedTransaction = this.getTransactionFromResponse(commitBodyResponse.created);
           const messageKey = updatedTransaction.isPlanned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
           this.alertService.success(this.translate.instant(messageKey));
 
@@ -178,15 +181,15 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   private commit(transaction: Transaction, messageKey?: string) {
     this.transactionService.commitPlannedTransaction(transaction)
-        .subscribe((commitBodyResponse) => {
+        .subscribe((transactionsFromResponse) => {
             this.alertService.success(
               this.translate.instant(messageKey == null ? 'message.plannedTransactionCommitted' : messageKey)
             );
-            const committedToRemove = this.getTransactionFromResponse(commitBodyResponse.committed);
-            Object.assign(transaction, committedToRemove);
+            const committedAsNewTransaction = this.getTransactionFromResponse(transactionsFromResponse.created);
+            Object.assign(transaction, committedAsNewTransaction);
 
-            if (commitBodyResponse.scheduledForNextMonth.accountPriceEntries !== undefined) {
-              const returnedTransaction = this.getTransactionFromResponse(commitBodyResponse.scheduledForNextMonth);
+            if (transactionsFromResponse.scheduledForNextMonth.accountPriceEntries !== undefined) {
+              const returnedTransaction = this.getTransactionFromResponse(transactionsFromResponse.scheduledForNextMonth);
 
               this.transactions.push(returnedTransaction);
               this.allTransactions.push(returnedTransaction);

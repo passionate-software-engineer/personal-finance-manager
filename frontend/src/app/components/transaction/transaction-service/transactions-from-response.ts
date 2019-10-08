@@ -1,7 +1,7 @@
 import {Transaction} from '../transaction';
 
-export class CommitBodyResponse {
+export class TransactionsFromResponse {
 
-  committed: Transaction;
+  created: Transaction;
   scheduledForNextMonth: Transaction;
 }
