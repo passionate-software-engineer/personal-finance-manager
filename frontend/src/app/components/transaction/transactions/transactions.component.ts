@@ -82,7 +82,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             }
             this.allTransactions.push(transaction);
           }
-
           super.filterTransactions();
         });
   }
@@ -114,15 +113,15 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe((commitBodyResponse) => {
-          console.log('created id ' + commitBodyResponse.created.id);
-
-
-
-          const updatedTransaction = this.getTransactionFromResponse(commitBodyResponse.created);
-          const messageKey = updatedTransaction.isPlanned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
-          this.alertService.success(this.translate.instant(messageKey));
-
-          Object.assign(transaction, updatedTransaction);
+          this.transactionService.getTransaction(commitBodyResponse.createdId)
+              .subscribe(
+                (transactionResponse) => {
+                  const created = this.getTransactionFromResponse(transactionResponse);
+                  Object.assign(transaction, created);
+                  const messageKey = created.isPlanned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
+                  this.alertService.success(this.translate.instant(messageKey));
+                }
+              );
         });
   }
 
@@ -181,18 +180,28 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   private commit(transaction: Transaction, messageKey?: string) {
     this.transactionService.commitPlannedTransaction(transaction)
-        .subscribe((transactionsFromResponse) => {
+        .subscribe((transactionsIdsFromResponse) => {
             this.alertService.success(
               this.translate.instant(messageKey == null ? 'message.plannedTransactionCommitted' : messageKey)
             );
-            const committedAsNewTransaction = this.getTransactionFromResponse(transactionsFromResponse.created);
-            Object.assign(transaction, committedAsNewTransaction);
-
-            if (transactionsFromResponse.scheduledForNextMonth.accountPriceEntries !== undefined) {
-              const returnedTransaction = this.getTransactionFromResponse(transactionsFromResponse.scheduledForNextMonth);
-
-              this.transactions.push(returnedTransaction);
-              this.allTransactions.push(returnedTransaction);
+            if (transactionsIdsFromResponse.createdId) {
+              this.transactionService.getTransaction(transactionsIdsFromResponse.createdId)
+                  .subscribe(
+                    (created) => {
+                      const createdTransaction = this.getTransactionFromResponse(created);
+                      Object.assign(transaction, createdTransaction);
+                    }
+                  );
+            }
+            if (transactionsIdsFromResponse.scheduledForNextMonthId) {
+              this.transactionService.getTransaction(transactionsIdsFromResponse.scheduledForNextMonthId)
+                  .subscribe(
+                    (scheduled) => {
+                      const scheduledTransaction = this.getTransactionFromResponse(scheduled);
+                      this.transactions.push(scheduledTransaction);
+                      this.allTransactions.push(scheduledTransaction);
+                    }
+                  );
             }
           },
         );
@@ -238,31 +247,22 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             transaction.isRecurrent = true;
           }
         );
-
   }
 
   setAsNotRecurrent(transaction: Transaction) {
     this.transactionService.setAsNotRecurrent(transaction)
         .subscribe(() => {
-            this.refreshTransactions();
-
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));
             transaction.isRecurrent = false;
-
           }
         );
-
   }
 
   private isTransactionDateCurrentDate(transaction) {
     const currentDate = this.pipe.transform(Date.now(), 'longDate');
     const transactionDate = this.pipe.transform(transaction.date, 'longDate');
     return transactionDate === currentDate;
-  }
-
-  private refreshTransactions() {
-    this.getTransactions();
   }
 
   private validateTransaction(transaction: Transaction, operation: Operation): boolean {
@@ -273,7 +273,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         this.alertService.error(this.translate.instant('message.transactionFutureDate'));
         status = false;
       }
-
     }
 
     if (operation === Operation.Add || operation === Operation.Update) {
@@ -345,7 +344,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           entry.account = account;
         }
       }
-
     }
 
     // Adds empty entry, thanks to that new value can be added on the UI
@@ -356,7 +354,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         transaction.editedTransaction.category = category;
       }
     }
-
   }
 
   allFilteredTransactionsBalance() {
@@ -370,7 +367,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         }
       }
     }
-
     return sum;
   }
 
@@ -391,7 +387,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return false;
   }
 
-  getWarnBgColorForUncommittedPlannedTransaction(transaction: any) {
+  private getWarnBgColorForUncommittedPlannedTransaction(transaction: any) {
     if (this.isOverduePlannedTransaction(transaction)) {
       return '#F1AD8D';
     }
