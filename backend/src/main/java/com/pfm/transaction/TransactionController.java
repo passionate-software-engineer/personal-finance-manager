@@ -2,6 +2,7 @@ package com.pfm.transaction;
 
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
+import com.pfm.transaction.TransactionController.CommitBodyResponse.CommitBodyResponseBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -65,8 +66,7 @@ public class TransactionController implements TransactionApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest,
-      @RequestParam(value = "shouldReturnCreatedTransaction", required = false) boolean shouldReturnCreatedTransaction) {
+  public ResponseEntity<?> addTransaction(@RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Adding transaction to the database");
@@ -83,7 +83,7 @@ public class TransactionController implements TransactionApi {
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
 
-    return shouldReturnCreatedTransaction ? ResponseEntity.ok(createdTransaction) : ResponseEntity.ok(createdTransaction.getId());
+    return ResponseEntity.ok(createdTransaction.getId());
   }
 
   @Override
@@ -121,7 +121,7 @@ public class TransactionController implements TransactionApi {
     log.info("Transaction with id {} was successfully updated", transactionId);
 
     return ResponseEntity.ok(CommitBodyResponse.builder()
-        .created(updatingTransaction).build());
+        .createdId(transactionId).build());
 
   }
 
@@ -151,8 +151,8 @@ public class TransactionController implements TransactionApi {
   @Builder
   public static class CommitBodyResponse {
 
-    private Transaction created;
-    private Transaction scheduledForNextMonth;
+    private Long createdId;
+    private Long scheduledForNextMonthId;
 
   }
 
@@ -214,17 +214,18 @@ public class TransactionController implements TransactionApi {
   private CommitBodyResponse addAsNewTransaction(Transaction transactionToCommit) {
     Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    ResponseEntity<?> createdTransaction = addTransaction(transactionRequest, true);
+    CommitBodyResponseBuilder response = CommitBodyResponse.builder();
 
-    Transaction scheduledForNextMonth = new Transaction();
+    ResponseEntity<?> createdTransaction = addTransaction(transactionRequest);
+    response.createdId((Long) (createdTransaction.getBody()));
+
     if (newInstance.isRecurrent()) {
       transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
-      scheduledForNextMonth = addAsNextMonthPlannedTransaction(transactionRequest);
+      long scheduledForNextMonthId = addAsNextMonthPlannedTransaction(transactionRequest);
+      response.scheduledForNextMonthId(scheduledForNextMonthId);
     }
-    return CommitBodyResponse.builder()
-        .created((Transaction) createdTransaction.getBody())
-        .scheduledForNextMonth(scheduledForNextMonth)
-        .build();
+
+    return response.build();
 
   }
 
@@ -259,12 +260,12 @@ public class TransactionController implements TransactionApi {
         .collect(Collectors.toList());
   }
 
-  private Transaction addAsNextMonthPlannedTransaction(TransactionRequest transactionRequest) {
+  private Long addAsNextMonthPlannedTransaction(TransactionRequest transactionRequest) {
     transactionRequest.setDate(RECURRENCE_PERIOD);
     transactionRequest.setPlanned(true);
-    final ResponseEntity<?> response = addTransaction(transactionRequest, true);
+    final ResponseEntity<?> response = addTransaction(transactionRequest);
 
-    return (Transaction) response.getBody();
+    return (Long) response.getBody();
   }
 
   private Transaction getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(Transaction transactionToCommit, LocalDate pastDate) {

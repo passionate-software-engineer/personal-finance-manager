@@ -13,8 +13,4 @@ public class DateHelper {
   boolean isFutureDate(LocalDate date) {
     return date.isAfter(LocalDate.now());
   }
-
-  boolean isCurrentDate(LocalDate date) {
-    return date.equals(LocalDate.now());
-  }
 }
