@@ -88,16 +88,16 @@ public class TransactionController implements TransactionApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest) {
+  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest withApplyingUpdate) {
     long userId = userProvider.getCurrentUserId();
-
+//todo lukasz if req not noull - validate it
     Optional<Transaction> originalTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
     if (!originalTransactionOptional.isPresent()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    Transaction updatingTransaction = helper.convertTransactionRequestToTransaction(transactionRequest);
+    Transaction updatingTransaction = helper.convertTransactionRequestToTransaction(withApplyingUpdate);
 
     List<String> validationResult = transactionValidator.validate(updatingTransaction, userId);
     if (!validationResult.isEmpty()) {
@@ -112,7 +112,7 @@ public class TransactionController implements TransactionApi {
 
     if (isPlannedTransactionUpdatedWithPastDate) {
       LocalDate pastDate = updatingTransaction.getDate();
-      return commitPlannedTransaction(transactionId, pastDate);
+      return commitPlannedTransaction(transactionId, withApplyingUpdate);
     }
 
     historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, updatingTransaction, userId);
@@ -158,7 +158,8 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> commitPlannedTransaction(long transactionId, @RequestParam(value = "date", required = false) LocalDate date) {
+  public ResponseEntity<?> commitPlannedTransaction(long transactionId,
+      @RequestParam(value = "updatingEntry", required = false) TransactionRequest withApplyingUpdate) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -176,7 +177,7 @@ public class TransactionController implements TransactionApi {
     }
 
     transactionService.deleteTransaction(transactionId, userId);
-    Transaction transactionToAdd = getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(plannedTransaction, date);
+    Transaction transactionToAdd = getNewInstanceWithUpdatedEntriesAndPlannedStatusBeforeCommitting(plannedTransaction, withApplyingUpdate);
 
     return ResponseEntity.ok(addAsNewTransaction(transactionToAdd));
   }
@@ -268,16 +269,27 @@ public class TransactionController implements TransactionApi {
     return (Long) response.getBody();
   }
 
-  private Transaction getNewInstanceWithAppropriateDateAndPlannedStatusBeforeCommitting(Transaction transactionToCommit, LocalDate pastDate) {
+  private Transaction getNewInstanceWithUpdatedEntriesAndPlannedStatusBeforeCommitting(Transaction transactionToCommit,
+      TransactionRequest withApplyingUpdate) {
+    Transaction toCommit;
 
+    if (withApplyingUpdate != null) {
+      toCommit = helper.convertTransactionRequestToTransaction(withApplyingUpdate);
+    } else {
+      transactionToCommit.setPlanned(false);
+      toCommit = transactionToCommit;
+    }
+    LocalDate pastDate = toCommit.getDate();
     return Transaction.builder()
-        .date(pastDate != null ? pastDate : LocalDate.now())
-        .isPlanned(false)
-        .userId(transactionToCommit.getUserId())
-        .categoryId(transactionToCommit.getCategoryId())
-        .description(transactionToCommit.getDescription())
-        .accountPriceEntries(getAccountPriceEntriesNewInstance(transactionToCommit))
-        .isRecurrent(transactionToCommit.isRecurrent())
+//        .date(pastDate != null ? pastDate : LocalDate.now())
+        .date(LocalDate.now())
+        // this not wplywa na testys
+        .isPlanned(toCommit.isPlanned())
+        .userId(toCommit.getUserId())
+        .categoryId(toCommit.getCategoryId())
+        .description(toCommit.getDescription())
+        .accountPriceEntries(getAccountPriceEntriesNewInstance(toCommit))
+        .isRecurrent(toCommit.isRecurrent())
         .build();
   }
 }
