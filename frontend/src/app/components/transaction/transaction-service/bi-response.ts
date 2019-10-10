@@ -1,4 +1,4 @@
-export class TransactionsIdsFromResponse {
+export class BiResponse {
 
   createdId: number;
   scheduledForNextMonthId: number;

@@ -2,7 +2,7 @@ package com.pfm.transaction;
 
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
-import com.pfm.transaction.TransactionController.CommitBodyResponse.CommitBodyResponseBuilder;
+import com.pfm.transaction.TransactionController.BiResponse.BiResponseBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -118,7 +118,7 @@ public class TransactionController implements TransactionApi {
     transactionService.updateTransaction(transactionId, userId, updatingTransaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
-    return ResponseEntity.ok(CommitBodyResponse.builder()
+    return ResponseEntity.ok(BiResponse.builder()
         .createdId(transactionId).build());
 
   }
@@ -147,7 +147,7 @@ public class TransactionController implements TransactionApi {
   @NoArgsConstructor
   @AllArgsConstructor
   @Builder
-  public static class CommitBodyResponse {
+  public static class BiResponse {
 
     private Long createdId;
     private Long scheduledForNextMonthId;
@@ -210,10 +210,10 @@ public class TransactionController implements TransactionApi {
     return performUpdate(updatedTransaction, userId, setAsRecurrent);
   }
 
-  private CommitBodyResponse addAsNewTransaction(Transaction transactionToCommit) {
+  private BiResponse addAsNewTransaction(Transaction transactionToCommit) {
     Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    CommitBodyResponseBuilder response = CommitBodyResponse.builder();
+    BiResponseBuilder response = BiResponse.builder();
 
     ResponseEntity<?> createdTransaction = addTransaction(transactionRequest);
     response.createdId((Long) (createdTransaction.getBody()));
