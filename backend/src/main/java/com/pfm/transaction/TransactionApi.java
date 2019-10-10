@@ -3,7 +3,6 @@ package com.pfm.transaction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,7 +43,7 @@ public interface TransactionApi {
   @ApiOperation(value = "Commits (converts) planned transaction into transaction", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})
   @PatchMapping(value = "/{transactionId}")
-  ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId, LocalDate date) throws Exception;
+  ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId, TransactionRequest transactionRequest) throws Exception;
 
   @ApiOperation(value = "Sets planned transaction status to recurrent", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})
