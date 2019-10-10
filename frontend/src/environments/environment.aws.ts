@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://ec2-3-121-199-74.eu-central-1.compute.amazonaws.com:8088',
+  apiUrl: 'https://backend.passionatesoftwareengineer.com',
   healthCheckTaskIntervalInSeconds: 30 * 1000,
   accessTokenExpirationTimeWarningLevelInSeconds: 60,
   refreshTokenExpirationTimeWarningLevelInSeconds: 60
