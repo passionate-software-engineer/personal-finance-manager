@@ -168,7 +168,7 @@
       <td></td>
       <td></td>
       <td>
-        {{ getBalanceOfAllTransactions() | number:'0.2' }}
+        {{ balanceOfAllTransactions | number:'0.2' }}
       </td>
       <td></td>
     </tr>
@@ -220,46 +220,46 @@
     </tr>
     <tr>
       <td>{{'category.income' | translate}}</td>
-      <td *ngFor="let month of last12Months">
-        {{getIncomeOfAllTransactionsInGivenMonth(month) | number:'0.2'}}
+      <td *ngFor="let income of incomeOfAllTransactionsInGivenMonth">
+        {{income | number:'0.2'}}
       </td>
       <td>
-        {{ getIncomeBalanceOfAllTransactions() | number:'0.2' }}</td>
+        {{ incomeBalanceOfAllTransactions | number:'0.2' }}</td>
       <td>
-        {{ getIncomeBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
+        {{ incomeBalanceOfAllTransactions / last12Months.length | number:'0.2' }}
       </td>
     </tr>
 
     <tr>
       <td>{{'category.costs' | translate}}</td>
-      <td *ngFor="let month of last12Months">
-        {{getCostOfAllTransactionsInGivenMonth(month) | number:'0.2'}}
+      <td *ngFor="let cost of costOfAllTransactionsInGivenMonth">
+        {{cost | number:'0.2'}}
       </td>
       <td>
-        {{ getCostBalanceOfAllTransactions() | number:'0.2' }}
+        {{ costBalanceOfAllTransactions | number:'0.2' }}
       </td>
       <td>
-        {{ getCostBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
+        {{ costBalanceOfAllTransactions / last12Months.length | number:'0.2' }}
       </td>
     </tr>
 
     <tr>
       <td>{{'category.sum' | translate}}</td>
-      <td *ngFor="let month of last12Months">
-        {{getBalanceOfTransactionsInGivenMonth(month) | number:'0.2'}}
+      <td *ngFor="let balance of balanceOfTransactionsInGivenMonth">
+        {{balance | number:'0.2'}}
       </td>
       <td>
-        {{ getBalanceOfAllTransactions() | number:'0.2' }}
+        {{ balanceOfAllTransactions | number:'0.2' }}
       </td>
       <td>
-        {{ getBalanceOfAllTransactions() / last12Months.length | number:'0.2' }}
+        {{ balanceOfAllTransactions / last12Months.length | number:'0.2' }}
       </td>
     </tr>
 
     <tr>
       <td>{{'category.monthBalance' | translate}}</td>
-      <td *ngFor="let month of last12Months">
-        {{getBalanceOfAllAccountsAtTheEndOfMonth(month) | number:'0.2'}}
+      <td *ngFor="let balance of balanceOfAllAccountsAtTheEndOfMonth">
+        {{balance | number:'0.2'}}
       </td>
       <td>
 
