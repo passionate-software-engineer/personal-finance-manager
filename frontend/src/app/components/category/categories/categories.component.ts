@@ -39,6 +39,14 @@ export class CategoriesComponent implements OnInit {
   selectedCategory: number;
   costs = true;
 
+  balanceOfAllTransactions = 0;
+  incomeBalanceOfAllTransactions = 0;
+  costBalanceOfAllTransactions = 0;
+  incomeOfAllTransactionsInGivenMonth = [];
+  costOfAllTransactionsInGivenMonth = [];
+  balanceOfTransactionsInGivenMonth = [];
+  balanceOfAllAccountsAtTheEndOfMonth = [];
+
   constructor(
     private categoryService: CategoryService,
     private alertService: AlertsService,
@@ -70,6 +78,18 @@ export class CategoriesComponent implements OnInit {
                           this.categories[i].sumOfAllTransactionsInMonth.push(
                             this.getBalanceOfTransactionsInGivenCategoryAndMonth(this.categories[i].id, this.last12Months[j]));
                         }
+                      }
+
+                      this.balanceOfAllTransactions = this.getBalanceOfAllTransactions();
+                      this.incomeBalanceOfAllTransactions = this.getIncomeBalanceOfAllTransactions();
+                      this.costBalanceOfAllTransactions = this.getCostBalanceOfAllTransactions();
+
+                      for (let i = 0; i < this.last12Months.length; i++) {
+                        const month = this.last12Months[i];
+                        this.incomeOfAllTransactionsInGivenMonth.push(this.getIncomeOfAllTransactionsInGivenMonth(month));
+                        this.costOfAllTransactionsInGivenMonth.push(this.getCostOfAllTransactionsInGivenMonth(month));
+                        this.balanceOfTransactionsInGivenMonth.push(this.getBalanceOfTransactionsInGivenMonth(month));
+                        this.balanceOfAllAccountsAtTheEndOfMonth.push(this.getBalanceOfAllAccountsAtTheEndOfMonth(month));
                       }
 
                       this.updateMonthSpendingsChart(this.selectedMonth);
