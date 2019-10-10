@@ -3,7 +3,7 @@ pipeline {
         label "pfm-docker-java-11"
     }
     parameters {
-        string(name: 'APP_URL', defaultValue: 'http://pfm.passionatesoftwareengineer.com', description: 'Application (frontend) URL')
+        string(name: 'APP_URL', defaultValue: 'https://pfm.passionatesoftwareengineer.com', description: 'Application (frontend) URL')
         string(name: 'APP_S3_BUCKET', defaultValue: 's3://pfm.passionatesoftwareengineer.com', description: 'S3 bucket for frontend upload')
         string(name: 'EC2_INSTANCE', defaultValue: 'ec2-3-121-199-74.eu-central-1.compute.amazonaws.com', description: 'EC2 instance for backend service')
     }
