@@ -88,16 +88,15 @@ public class TransactionController implements TransactionApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest withApplyingUpdate) {
+  public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
-//todo lukasz if req not noull - validate it
     Optional<Transaction> originalTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
     if (!originalTransactionOptional.isPresent()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    Transaction updatingTransaction = helper.convertTransactionRequestToTransaction(withApplyingUpdate);
+    Transaction updatingTransaction = helper.convertTransactionRequestToTransaction(transactionRequest);
 
     List<String> validationResult = transactionValidator.validate(updatingTransaction, userId);
     if (!validationResult.isEmpty()) {
@@ -111,8 +110,7 @@ public class TransactionController implements TransactionApi {
         !dateHelper.isPastDate(transactionToUpdate.getDate()) && (dateHelper.isPastDate(updatingTransaction.getDate()));
 
     if (isPlannedTransactionUpdatedWithPastDate) {
-      LocalDate pastDate = updatingTransaction.getDate();
-      return commitPlannedTransaction(transactionId, withApplyingUpdate);
+      return commitPlannedTransaction(transactionId, transactionRequest);
     }
 
     historyEntryService.addHistoryEntryOnUpdate(transactionToUpdate, updatingTransaction, userId);
@@ -159,7 +157,7 @@ public class TransactionController implements TransactionApi {
   @Transactional
   @Override
   public ResponseEntity<?> commitPlannedTransaction(long transactionId,
-      @RequestParam(value = "updatingEntry", required = false) TransactionRequest withApplyingUpdate) {
+      @RequestParam(value = "updatingEntry", required = false) TransactionRequest preCommitUpdate) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -177,7 +175,7 @@ public class TransactionController implements TransactionApi {
     }
 
     transactionService.deleteTransaction(transactionId, userId);
-    Transaction transactionToAdd = getNewInstanceWithUpdatedEntriesAndPlannedStatusBeforeCommitting(plannedTransaction, withApplyingUpdate);
+    Transaction transactionToAdd = getNewInstanceWithUpdatedEntriesAndPlannedStatusBeforeCommitting(plannedTransaction, preCommitUpdate);
 
     return ResponseEntity.ok(addAsNewTransaction(transactionToAdd));
   }
@@ -270,21 +268,17 @@ public class TransactionController implements TransactionApi {
   }
 
   private Transaction getNewInstanceWithUpdatedEntriesAndPlannedStatusBeforeCommitting(Transaction transactionToCommit,
-      TransactionRequest withApplyingUpdate) {
+      TransactionRequest preCommitUpdate) {
     Transaction toCommit;
 
-    if (withApplyingUpdate != null) {
-      toCommit = helper.convertTransactionRequestToTransaction(withApplyingUpdate);
+    if (preCommitUpdate != null) {
+      toCommit = helper.convertTransactionRequestToTransaction(preCommitUpdate);
     } else {
-      transactionToCommit.setPlanned(false);
       toCommit = transactionToCommit;
     }
-    LocalDate pastDate = toCommit.getDate();
     return Transaction.builder()
-//        .date(pastDate != null ? pastDate : LocalDate.now())
-        .date(LocalDate.now())
-        // this not wplywa na testys
-        .isPlanned(toCommit.isPlanned())
+        .date(preCommitUpdate != null ? preCommitUpdate.getDate() : LocalDate.now())
+        .isPlanned(false)
         .userId(toCommit.getUserId())
         .categoryId(toCommit.getCategoryId())
         .description(toCommit.getDescription())

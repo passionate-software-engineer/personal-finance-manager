@@ -903,14 +903,12 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsAfterUpdateInDb.size(), is(1));
 
     assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(not(equalTo(updatedPlannedTransaction.getId()))));
-    assertThat(allTransactionsAfterUpdateInDb.get(0).getDescription(), equalTo("Food for birthday"));
-    assertThat(allTransactionsAfterUpdateInDb.get(0).getCategoryId(), equalTo(1L));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getCategoryId(), equalTo(2L));
     assertThat(allTransactionsAfterUpdateInDb.get(0).getDate(), equalTo(PAST_DATE));
 
     assertThat(allTransactionsAfterUpdateInDb.get(0).getAccountPriceEntries(), equalTo(afterUpdate.getAccountPriceEntries()));
     assertThat(allTransactionsAfterUpdateInDb.get(0).isPlanned(), equalTo(false));
     assertThat(allTransactionsAfterUpdateInDb.get(0).isRecurrent(), equalTo(false));
-    //FIXME LUKASZ ADD deileed addertion  maybe json path ?
     assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(equalTo(updatedId)));
   }
 
@@ -949,7 +947,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactionsInDb.size(), is(1));
     assertThat(allTransactionsInDb.size(), is(0));
     assertThat(allPlannedTransactionsInDb.get(0).getDate(), equalTo(CURRENT_DATE));
-    //FIXME LUKASZ ADD deileed addertion
   }
 
   private Transaction removeTransactionId(Transaction transaction) {
