@@ -112,8 +112,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       return;
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
-        .subscribe((commitBodyResponse) => {
-          this.transactionService.getTransaction(commitBodyResponse.createdId)
+        .subscribe((biResponse) => {
+          this.transactionService.getTransaction(biResponse.createdId)
               .subscribe(
                 (transactionResponse) => {
                   const created = this.getTransactionFromResponse(transactionResponse);

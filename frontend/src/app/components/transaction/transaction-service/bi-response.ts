@@ -1,5 +1,5 @@
 export class BiResponse {
 
-  savedTransactionId: number;
-  recurrentTransactionId: number;
+  createdId: number;
+  scheduledForNextMonthId: number;
 }
