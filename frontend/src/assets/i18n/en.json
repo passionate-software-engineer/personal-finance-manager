@@ -16,6 +16,7 @@
   "category.income": "Income",
   "category.costs": "Costs",
   "category.monthBalance": "Accounts balance",
+  "prompt.info.edit.containsArchivedAccount": "Edited transaction contains archived account, though some entries cannot be edited. If you still want to modify them - consider  de-archiving these accounts for the duration of editing.",
   "message.noConnectivity": "No connectivity with server, please try again later",
   "message.somethingWentWrong": "Something went wrong, please try again later",
   "message.internalSystemError": "Internal system error, please try again later",

@@ -16,6 +16,7 @@
   "category.income": "Przychody",
   "category.costs": "Koszty",
   "category.monthBalance": "Balans kont",
+  "prompt.info.edit.containsArchivedAccount": "Edytowana transakcja zawiera konto które jest zarchiwizowane, dlatego niektóre pola są wyłączone z edycji. Jeśli jendak chciałbyś je zmodyfilkować - rozważ dearchiwizaję konta na czas trwania edycji.",
   "message.noConnectivity": "Brak połączenia z serwerem, proszę spróbować później",
   "message.somethingWentWrong": "Coś poszło nie tak, proszę spróbować później",
   "message.internalSystemError": "Wewnętrzny błąd systemu, proszę spróbować później",

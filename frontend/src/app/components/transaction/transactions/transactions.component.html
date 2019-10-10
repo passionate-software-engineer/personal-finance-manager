@@ -257,16 +257,24 @@
       <ng-container *ngIf="!transaction.isPlanned || !hidePlannedTransactionsCheckboxState">
 
         <!--Date-->
-        <td *ngIf="!transaction.editMode"
-            id="DateReadOnly">{{transaction.date | date:'dd/MM/yyyy'}}</td>
-        <td *ngIf="transaction.editMode">
-          <input [(ngModel)]="transaction.editedTransaction.date"
-                 class="form-control"
-                 id="EditTransactionDateInput"
-                 max="2025-12-31"
-                 min="2015-01-01"
-                 type="date">
-        </td>
+        <ng-container
+          *ngIf="isEditModeContainsArchivedAccount(transaction); then dateEditDisabled; else dateEditEnabled">
+        </ng-container>
+
+        <ng-template #dateEditDisabled>
+          <td id="DateReadOnly">{{transaction.date | date:'dd/MM/yyyy'}}</td>
+        </ng-template>
+
+        <ng-template #dateEditEnabled>
+          <td>
+            <input [(ngModel)]="transaction.editedTransaction.date"
+                   class="form-control"
+                   id="EditTransactionDateInput"
+                   max="2025-12-31"
+                   min="2015-01-01"
+                   type="date">
+          </td>
+        </ng-template>
 
         <!--Description-->
         <td *ngIf="!transaction.editMode"
@@ -279,43 +287,60 @@
         </td>
 
         <!--Price-->
-        <td *ngIf="!transaction.editMode"
-            class="right aligned">
-          <p *ngFor="let entry of transaction.accountPriceEntries"
-             id="PricesReadOnly">
-            {{entry.price | number:'0.2'}} {{entry.account.currency.name}}
-            <span *ngIf="entry.account.currency.name != 'PLN'">({{entry.pricePLN | number:'0.2'}}
-              PLN)</span>
-          </p>
-        </td>
-        <td *ngIf="transaction.editMode">
-          <input *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
-                 [(ngModel)]="entry.price"
-                 class="form-control"
-                 id="EditTransactionPriceInput"
-                 type="number">
-        </td>
+
+        <ng-container
+          *ngIf="isEditModeContainsArchivedAccount(transaction); then priceEditDisabled; else priceEditEnabled">
+        </ng-container>
+
+        <ng-template #priceEditDisabled>
+          <td class="right aligned">
+            <p *ngFor="let entry of transaction.accountPriceEntries"
+               id="PricesReadOnly">
+              {{entry.price | number:'0.2'}} {{entry.account.currency.name}}
+              <span *ngIf="entry.account.currency.name != 'PLN'">({{entry.pricePLN | number:'0.2'}}
+                PLN)</span>
+            </p>
+          </td>
+        </ng-template>
+        <ng-template #priceEditEnabled>
+          <td *ngIf="transaction.editMode">
+            <input *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
+                   [(ngModel)]="entry.price"
+                   class="form-control"
+                   id="EditTransactionPriceInput"
+                   type="number">
+          </td>
+        </ng-template>
 
         <!--Account-->
-        <td *ngIf="!transaction.editMode">
-          <p *ngFor="let entry of transaction.accountPriceEntries"
-             id="AccountsReadOnly">
-            {{entry.account.name}}
-          </p>
-        </td>
-        <td *ngIf="transaction.editMode">
-          <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
-                  [(ngModel)]="entry.account"
-                  class="form-control"
-                  id="EditTransactionAccountSelects">
-            <ng-container *ngFor="let account of accounts">
-              <option *ngIf="!account.archived"
-                      [ngValue]="account">
-                {{account.name}}
-              </option>
-            </ng-container>
-          </select>
-        </td>
+        <ng-container
+          *ngIf="isEditModeContainsArchivedAccount(transaction); then accountEditDisabled; else accountEditEnabled">
+        </ng-container>
+
+        <ng-template #accountEditDisabled>
+          <td>
+            <p *ngFor="let entry of transaction.accountPriceEntries"
+               id="AccountsReadOnly">
+              {{entry.account.name}}
+            </p>
+          </td>
+        </ng-template>
+
+        <ng-template #accountEditEnabled>
+          <td>
+            <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
+                    [(ngModel)]="entry.account"
+                    class="form-control"
+                    id="EditTransactionAccountSelects">
+              <ng-container *ngFor="let account of accounts">
+                <option *ngIf="!account.archived"
+                        [ngValue]="account">
+                  {{account.name}}
+                </option>
+              </ng-container>
+            </select>
+          </td>
+        </ng-template>
 
         <!--Category-->
         <td *ngIf="!transaction.editMode"

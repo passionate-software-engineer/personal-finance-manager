@@ -323,7 +323,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     if (operation === Operation.Commit) {
       if (transaction.isPlanned && this.containsArchivedAccount(transaction)) {
-        this.alertService.error(this.translate.instant('message.plannedTransactionUsingArchivedAccountCannotBeCommitted'));
+        this.alertService.error(this.translate.instant('\'prompt.info.edit.containsArchivedAccount\''));
         status = false;
       }
     }
@@ -334,6 +334,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   onShowEditMode(transaction: Transaction) {
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
+
+    if (this.containsArchivedAccount(transaction)) {
+      alert(this.translate.instant('prompt.info.edit.containsArchivedAccount'));
+    }
 
     for (const entry of transaction.editedTransaction.accountPriceEntries) {
       entry.price = +entry.price; // + added to convert to number
@@ -401,4 +405,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return transaction.isPlanned && !DateHelper.isPastDate(transaction.date);
   }
 
+  isEditModeContainsArchivedAccount(transaction: any) {
+    return !transaction.editMode || transaction.editMode && this.containsArchivedAccount(transaction);
+  }
 }
