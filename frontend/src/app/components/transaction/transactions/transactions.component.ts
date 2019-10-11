@@ -230,7 +230,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
       transaction.accountPriceEntries.push(accountPriceEntry);
     }
-
+    pl
     for (const category of this.categories) {
       if (category.id === transactionResponse.categoryId) {
         transaction.category = category;

@@ -893,7 +893,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     final BiResponse biResponse =
         callRestToUpdateTransactionAndReturnBiResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
 
-    final Long updatedId = biResponse.getCreatedId();
+    final Long updatedId = biResponse.getSavedTransactionId();
     final Transaction afterUpdate = callRestToGetTransactionById(updatedId, token);
     List<Transaction> allPlannedTransactionsAfterUpdateInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsAfterUpdateInDb = callRestToGetAllTransactionsFromDatabase(token);
