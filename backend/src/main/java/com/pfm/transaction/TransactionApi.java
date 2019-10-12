@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("transactions")
 @CrossOrigin
@@ -48,7 +49,7 @@ public interface TransactionApi {
   @ApiOperation(value = "Sets planned transaction status to recurrent", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})
   @PatchMapping(value = "/{transactionId}/setAsRecurrent")
-  ResponseEntity<?> setAsRecurrent(@PathVariable long transactionId) throws Exception;
+  ResponseEntity<?> setAsRecurrent(@PathVariable long transactionId, @RequestParam RecurrencePeriod recurrencePeriod) throws Exception;
 
   @ApiOperation(value = "Sets planned transaction status to normal (not recurrent)", response = Void.class,
       authorizations = {@Authorization(value = "Bearer")})

@@ -2,6 +2,8 @@ package com.pfm.transaction;
 
 import java.time.LocalDate;
 
+//@Embeddable
+
 public enum RecurrencePeriod {
   EVERY_DAY(Constants.NOW.plusDays(1L)),
   EVERY_WEEK(Constants.NOW.plusWeeks(1L)),

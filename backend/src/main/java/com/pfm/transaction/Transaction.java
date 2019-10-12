@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,5 +48,8 @@ public final class Transaction {
 
   private boolean isPlanned;
   private boolean isRecurrent;
+
+  @Enumerated
+  private RecurrencePeriod recurrencePeriod;
 
 }
