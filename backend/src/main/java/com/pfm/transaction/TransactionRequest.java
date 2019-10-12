@@ -39,4 +39,6 @@ public class TransactionRequest {
   @JsonProperty("isRecurrent")
   private boolean isRecurrent;
 
+  private RecurrencePeriod recurrencePeriod;
+
 }

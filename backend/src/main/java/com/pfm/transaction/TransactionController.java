@@ -1,7 +1,5 @@
 package com.pfm.transaction;
 
-import static com.pfm.transaction.RecurrencePeriod.EVERY_MONTH;
-
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import com.pfm.transaction.TransactionController.CommitResult.CommitResultBuilder;
@@ -9,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -180,19 +179,21 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> setAsRecurrent(long transactionId) {
-    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_RECURRENT, RECURRENT);
+  public ResponseEntity<?> setAsRecurrent(long transactionId, @RequestParam @Nullable RecurrencePeriod recurrencePeriod) {
+    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_RECURRENT, RECURRENT, recurrencePeriod);
 
   }
 
   @Transactional
   @Override
   public ResponseEntity<?> setAsNotRecurrent(long transactionId) {
-    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_NOT_RECURRENT, NOT_RECURRENT);
+    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_NOT_RECURRENT, NOT_RECURRENT, null);
 
   }
 
-  private ResponseEntity<?> setRecurrentStatusAndLogWithMessageOption(long transactionId, boolean setAsRecurrent, String loggerMessageOption) {
+  private ResponseEntity<?> setRecurrentStatusAndLogWithMessageOption(long transactionId, boolean setAsRecurrent, String loggerMessageOption,
+      @Nullable RecurrencePeriod recurrencePeriod) {
+
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> transactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
     if (!transactionOptional.isPresent()) {
@@ -201,6 +202,11 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.notFound().build();
     }
     Transaction transaction = transactionOptional.get();
+
+    if (recurrencePeriod != null) {
+      transaction.setRecurrencePeriod(recurrencePeriod);
+    }
+
     Transaction updatedTransaction = getNewInstanceWithUpdateApplied(transaction, setAsRecurrent);
 
     return performUpdate(updatedTransaction, userId, setAsRecurrent);
@@ -217,8 +223,8 @@ public class TransactionController implements TransactionApi {
 
     if (newInstance.isRecurrent()) {
       transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
-      long scheduledForNextMonthId = addAsNextMonthPlannedTransaction(userId, transactionRequest);
-      response.recurrentTransactionId(scheduledForNextMonthId);
+      long scheduledForNextRecurrentPeriodId = addAsNextRecurrencePeriodPlannedTransaction(userId, transactionRequest);
+      response.recurrentTransactionId(scheduledForNextRecurrentPeriodId);
     }
 
     return response.build();
@@ -244,6 +250,7 @@ public class TransactionController implements TransactionApi {
         .userId(transactionToUpdate.getUserId())
         .isPlanned(transactionToUpdate.isPlanned())
         .isRecurrent(updateToBeApplied ? SET_RECURRENT : SET_NOT_RECURRENT)
+        .recurrencePeriod(transactionToUpdate.getRecurrencePeriod())
         .build();
   }
 
@@ -264,8 +271,8 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok(createdTransaction.getId());
   }
 
-  private Long addAsNextMonthPlannedTransaction(long userId, TransactionRequest transactionRequest) {
-    transactionRequest.setDate(EVERY_MONTH.getValue());
+  private Long addAsNextRecurrencePeriodPlannedTransaction(long userId, TransactionRequest transactionRequest) {
+    transactionRequest.setDate(transactionRequest.getRecurrencePeriod().getValue());
     transactionRequest.setPlanned(true);
     final Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
     final ResponseEntity<?> response = addTransactionThenLogThenAddHistoryEntry(userId, transaction);
@@ -285,6 +292,7 @@ public class TransactionController implements TransactionApi {
         .description(toCommit.getDescription())
         .accountPriceEntries(getAccountPriceEntriesNewInstance(toCommit))
         .isRecurrent(toCommit.isRecurrent())
+        .recurrencePeriod(toCommit.getRecurrencePeriod())
         .build();
   }
 }

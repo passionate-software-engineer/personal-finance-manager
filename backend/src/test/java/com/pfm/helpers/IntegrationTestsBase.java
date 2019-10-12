@@ -28,6 +28,7 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
+import com.pfm.transaction.RecurrencePeriod;
 import com.pfm.transaction.Transaction;
 import com.pfm.transaction.TransactionController.CommitResult;
 import com.pfm.transaction.TransactionRequest;
@@ -347,6 +348,8 @@ public abstract class IntegrationTestsBase {
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
         .isPlanned(transactionRequest.isPlanned())
+        .isRecurrent(transactionRequest.isRecurrent())
+        .recurrencePeriod(transactionRequest.getRecurrencePeriod())
         .build();
   }
 
@@ -577,21 +580,22 @@ public abstract class IntegrationTestsBase {
 
   }
 
-  protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId) throws Exception {
-    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT);
+  protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId, RecurrencePeriod recurrencePeriod) throws Exception {
+    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT, recurrencePeriod);
 
   }
 
   protected int callRestToSetPlannedTransactionAsNotRecurrentAndReturnStatus(long transactionId) throws Exception {
-    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_NOT_RECURRENT);
+    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_NOT_RECURRENT, null);
 
   }
 
-  private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd)
+  private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd, RecurrencePeriod recurrencePeriod)
       throws Exception {
     return mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + uriEnd)
             .header(HttpHeaders.AUTHORIZATION, token)
+            .param("recurrencePeriod", String.valueOf(recurrencePeriod))
             .contentType(JSON_CONTENT_TYPE))
         .andReturn().getResponse().getStatus();
   }
