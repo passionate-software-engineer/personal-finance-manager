@@ -29,7 +29,7 @@ import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
 import com.pfm.transaction.Transaction;
-import com.pfm.transaction.TransactionController.BiResponse;
+import com.pfm.transaction.TransactionController.CommitResult;
 import com.pfm.transaction.TransactionRequest;
 import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
@@ -199,8 +199,8 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(jsonAccount, Account.class);
   }
 
-  private BiResponse jsonToBiResponse(String response) throws Exception {
-    return mapper.readValue(response, BiResponse.class);
+  private CommitResult jsonToCommitResult(String response) throws Exception {
+    return mapper.readValue(response, CommitResult.class);
   }
 
   //category
@@ -370,10 +370,10 @@ public abstract class IntegrationTestsBase {
         .getResponse().getContentAsString());
   }
 
-  protected BiResponse callRestToUpdateTransactionAndReturnBiResponse(long transactionId, TransactionRequest transactionRequest,
+  protected CommitResult callRestToUpdateTransactionAndReturnCommitResult(long transactionId, TransactionRequest transactionRequest,
       String token)
       throws Exception {
-    return jsonToBiResponse(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+    return jsonToCommitResult(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionRequest)))

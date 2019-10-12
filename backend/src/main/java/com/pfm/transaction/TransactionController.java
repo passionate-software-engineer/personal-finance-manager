@@ -1,8 +1,10 @@
 package com.pfm.transaction;
 
+import static com.pfm.transaction.RecurrencePeriod.EVERY_MONTH;
+
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
-import com.pfm.transaction.TransactionController.BiResponse.BiResponseBuilder;
+import com.pfm.transaction.TransactionController.CommitResult.CommitResultBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  static final LocalDate RECURRENCE_PERIOD = LocalDate.now().plusMonths(1L);
   private static final boolean SET_RECURRENT = true;
   private static final boolean SET_NOT_RECURRENT = false;
   private static final String RECURRENT = "recurrent";
@@ -115,7 +116,7 @@ public class TransactionController implements TransactionApi {
     transactionService.updateTransaction(transactionId, userId, transactionUpdate);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
-    return ResponseEntity.ok(BiResponse.builder()
+    return ResponseEntity.ok(CommitResult.builder()
         .savedTransactionId(transactionId).build());
 
   }
@@ -144,7 +145,7 @@ public class TransactionController implements TransactionApi {
   @NoArgsConstructor
   @AllArgsConstructor
   @Builder
-  public static class BiResponse {
+  public static class CommitResult {
 
     private Long savedTransactionId;
     private Long recurrentTransactionId;
@@ -180,18 +181,18 @@ public class TransactionController implements TransactionApi {
   @Transactional
   @Override
   public ResponseEntity<?> setAsRecurrent(long transactionId) {
-    return setRecurrentStatusAndLogMessageOption(transactionId, SET_RECURRENT, RECURRENT);
+    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_RECURRENT, RECURRENT);
 
   }
 
   @Transactional
   @Override
   public ResponseEntity<?> setAsNotRecurrent(long transactionId) {
-    return setRecurrentStatusAndLogMessageOption(transactionId, SET_NOT_RECURRENT, NOT_RECURRENT);
+    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_NOT_RECURRENT, NOT_RECURRENT);
 
   }
 
-  private ResponseEntity<?> setRecurrentStatusAndLogMessageOption(long transactionId, boolean setAsRecurrent, String loggerMessageOption) {
+  private ResponseEntity<?> setRecurrentStatusAndLogWithMessageOption(long transactionId, boolean setAsRecurrent, String loggerMessageOption) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> transactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
     if (!transactionOptional.isPresent()) {
@@ -205,10 +206,10 @@ public class TransactionController implements TransactionApi {
     return performUpdate(updatedTransaction, userId, setAsRecurrent);
   }
 
-  private BiResponse addAsNewTransaction(long userId, Transaction transactionToCommit) {
+  private CommitResult addAsNewTransaction(long userId, Transaction transactionToCommit) {
     Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
     TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    BiResponseBuilder response = BiResponse.builder();
+    CommitResultBuilder response = CommitResult.builder();
 
     final Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
     ResponseEntity<?> createdTransaction = addTransactionThenLogThenAddHistoryEntry(userId, transaction);
@@ -264,7 +265,7 @@ public class TransactionController implements TransactionApi {
   }
 
   private Long addAsNextMonthPlannedTransaction(long userId, TransactionRequest transactionRequest) {
-    transactionRequest.setDate(RECURRENCE_PERIOD);
+    transactionRequest.setDate(EVERY_MONTH.getValue());
     transactionRequest.setPlanned(true);
     final Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
     final ResponseEntity<?> response = addTransactionThenLogThenAddHistoryEntry(userId, transaction);
@@ -274,13 +275,8 @@ public class TransactionController implements TransactionApi {
 
   private Transaction getNewInstanceWithUpdatedEntriesAndPlannedStatus(Transaction transactionToCommit,
       TransactionRequest preCommitUpdate) {
-    Transaction toCommit;
+    Transaction toCommit = preCommitUpdate != null ? helper.convertTransactionRequestToTransaction(preCommitUpdate) : transactionToCommit;
 
-    if (preCommitUpdate != null) {
-      toCommit = helper.convertTransactionRequestToTransaction(preCommitUpdate);
-    } else {
-      toCommit = transactionToCommit;
-    }
     return Transaction.builder()
         .date(preCommitUpdate != null ? preCommitUpdate.getDate() : LocalDate.now())
         .isPlanned(false)

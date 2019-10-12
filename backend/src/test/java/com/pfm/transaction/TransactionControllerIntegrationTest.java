@@ -22,7 +22,7 @@ import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccoun
 import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
-import static com.pfm.transaction.TransactionController.RECURRENCE_PERIOD;
+import static com.pfm.transaction.RecurrencePeriod.EVERY_MONTH;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -48,7 +48,7 @@ import com.pfm.account.AccountService;
 import com.pfm.config.MessagesProvider.Language;
 import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
-import com.pfm.transaction.TransactionController.BiResponse;
+import com.pfm.transaction.TransactionController.CommitResult;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -180,7 +180,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodTransactionRequest.setDescription("Car parts");
 
     //when
-    callRestToUpdateTransactionAndReturnBiResponse(foodTransactionId, updatedFoodTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitResult(foodTransactionId, updatedFoodTransactionRequest, token);
 
     //then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
@@ -484,7 +484,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransactionAndReturnBiResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     //then
@@ -686,7 +686,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
     final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
-    expectedPlannedTransactionAfterCommit.setDate(LocalDate.now());
+    expectedPlannedTransactionAfterCommit.setDate(CURRENT_DATE);
     expectedPlannedTransactionAfterCommit.setPlanned(false);
 
     //then
@@ -849,7 +849,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(RECURRENCE_PERIOD)
+        .date(EVERY_MONTH.getValue())
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
@@ -858,7 +858,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
-    assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(RECURRENCE_PERIOD)));
+    assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(EVERY_MONTH.getValue())));
     assertThat(removeTransactionId(allPlannedTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedNextRecurrentTransaction))));
 
   }
@@ -890,10 +890,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    final BiResponse biResponse =
-        callRestToUpdateTransactionAndReturnBiResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    final CommitResult commitResult =
+        callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
 
-    final Long updatedId = biResponse.getSavedTransactionId();
+    final Long updatedId = commitResult.getSavedTransactionId();
     final Transaction afterUpdate = callRestToGetTransactionById(updatedId, token);
     List<Transaction> allPlannedTransactionsAfterUpdateInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsAfterUpdateInDb = callRestToGetAllTransactionsFromDatabase(token);
@@ -939,7 +939,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransactionAndReturnBiResponse(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
 
