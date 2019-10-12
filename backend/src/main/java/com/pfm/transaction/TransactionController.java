@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -106,7 +105,6 @@ public class TransactionController implements TransactionApi {
         !dateHelper.isPastDate(originalTransaction.getDate()) && (dateHelper.isPastDate(transactionUpdate.getDate()));
 
     if (isEligibleForCommit) {
-
       return commitPlannedTransaction(transactionId, transactionRequest);
     }
 
@@ -179,7 +177,7 @@ public class TransactionController implements TransactionApi {
 
   @Transactional
   @Override
-  public ResponseEntity<?> setAsRecurrent(long transactionId, @RequestParam @Nullable RecurrencePeriod recurrencePeriod) {
+  public ResponseEntity<?> setAsRecurrent(long transactionId, @RequestParam RecurrencePeriod recurrencePeriod) {
     return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_RECURRENT, RECURRENT, recurrencePeriod);
 
   }
@@ -192,7 +190,7 @@ public class TransactionController implements TransactionApi {
   }
 
   private ResponseEntity<?> setRecurrentStatusAndLogWithMessageOption(long transactionId, boolean setAsRecurrent, String loggerMessageOption,
-      @Nullable RecurrencePeriod recurrencePeriod) {
+      RecurrencePeriod recurrencePeriod) {
 
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> transactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
