@@ -11,6 +11,6 @@ class LandingPageControllerTest {
   void shouldRedirectRootUrlToSwagger() {
     LandingPageController landingPageController = new LandingPageController();
 
-    assertThat(landingPageController.redirectRootToSwagger(), is(("redirect:/swagger-ui.html")));
+    assertThat(landingPageController.redirectRootToSwagger(), is("redirect:/swagger-ui.html"));
   }
 }
