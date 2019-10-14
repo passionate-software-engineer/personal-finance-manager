@@ -1,15 +1,18 @@
 package com.pfm.transaction;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_ACCOUNT;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_PRICE;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
+import static com.pfm.config.MessagesProvider.PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
@@ -53,11 +56,19 @@ public class TransactionValidator {
           Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
           if (!accountOptional.isPresent()) {
             validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
-          } else if (accountOptional.get().isArchived() && originalTransaction != null && wasPriceOrAccountOrDateEdited(originalTransaction,
-              transaction)) {
-            validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
-          } else if (accountOptional.get().isArchived() && originalTransaction == null) {
-            validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
+          } else if (transactionContainsArchivedAccount(transaction, userId)) {
+            if (originalTransaction != null && wasPriceChanged(originalTransaction, transaction)) {
+              validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+            }
+            if (originalTransaction != null && wasAccountChanged(originalTransaction, transaction)) {
+              validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+            }
+            if (originalTransaction != null && wasDateChanged(originalTransaction, transaction)) {
+              validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+            }
+            if (accountOptional.get().isArchived() && originalTransaction == null) {
+              validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
+            }
           }
         }
         if (entry.getPrice() == null) {
@@ -65,6 +76,7 @@ public class TransactionValidator {
         }
       }
     }
+
     if (transaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     } else {
@@ -79,20 +91,38 @@ public class TransactionValidator {
 
   }
 
-  private boolean wasPriceOrAccountOrDateEdited(Transaction original, Transaction update) {
-    if (wasPriceOrAccountNameEdited(original, update)) {
-      return true;
-    } else {
-      return wasDateEdited(original, update);
+  private boolean wasDateChanged(Transaction originalTransaction, Transaction transaction) {
+    return !(transaction.getDate().equals(originalTransaction.getDate()));
+
+  }
+
+  private boolean transactionContainsArchivedAccount(Transaction transaction, long userId) {
+    for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
+      Optional<Account> account = accountService.getAccountByIdAndUserId(transaction.getAccountPriceEntries().get(i).getAccountId(), userId);
+      if (account.isPresent() && account.get().isArchived()) {
+        return true;
+      }
     }
+    return false;
   }
 
-  private boolean wasDateEdited(Transaction original, Transaction update) {
-    return !(original.getDate().equals(update.getDate()));
+  private boolean wasAccountChanged(Transaction originalTransaction, Transaction transaction) {
+    for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
+      if (!(transaction.getAccountPriceEntries().get(i).accountId.equals(originalTransaction.getAccountPriceEntries().get(i).accountId))) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  private boolean wasPriceOrAccountNameEdited(Transaction original, Transaction update) {
-    return !(original.getAccountPriceEntries().equals(update.getAccountPriceEntries()));
+  private boolean wasPriceChanged(Transaction originalTransaction, Transaction transaction) {
+
+    for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
+      if (!(transaction.getAccountPriceEntries().get(i).price.equals(originalTransaction.getAccountPriceEntries().get(i).price))) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

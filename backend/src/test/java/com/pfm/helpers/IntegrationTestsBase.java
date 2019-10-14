@@ -160,12 +160,12 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected void callRestToMarkAccountAsArchived(long accountId) throws Exception {
-    mockMvc.perform(
+  protected int callRestToMarkAccountAsArchived(long accountId) throws Exception {
+    return mockMvc.perform(
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk());
+        .andReturn().getResponse().getStatus();
   }
 
   protected ExportResult callRestToExportAllDataAndReturnExportResult(String token) throws Exception {
