@@ -13,6 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
 import {Operation} from './transaction';
+import {RecurrencePeriod} from "../recurrence-period";
 
 @Component({
   selector: 'app-transactions',
@@ -230,7 +231,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
       transaction.accountPriceEntries.push(accountPriceEntry);
     }
-    pl
     for (const category of this.categories) {
       if (category.id === transactionResponse.categoryId) {
         transaction.category = category;
@@ -240,7 +240,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   setAsRecurrent(transaction: Transaction) {
-    this.transactionService.setAsRecurrent(transaction)
+    this.transactionService.setAsRecurrent(transaction, RecurrencePeriod.EVERY_MONTH)
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
