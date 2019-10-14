@@ -1,4 +1,7 @@
-server.port: 8088
+server:
+  port: 8088
+  tomcat:
+    use-relative-redirects: true
 
 accessTokenExpiryTimeInMinutes: 15
 refreshTokenExpiryTimeInMinutes: 60
