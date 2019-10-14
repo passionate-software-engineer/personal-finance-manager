@@ -1,15 +1,18 @@
 package com.pfm.transaction;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
+import static com.pfm.config.MessagesProvider.DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
+import static com.pfm.config.MessagesProvider.PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.filters.LanguageFilter.LANGUAGE_HEADER;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -1125,7 +1128,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnValidationResultForTransactionContainingArchivedAccountWhenChangingDate() throws Exception {
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingDate() throws Exception {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -1137,7 +1140,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestToMarkAccountAsArchived(jacekAccountId);
 
-    final Transaction originalTransaction = callRestToGetTransactionById(originalTransactionId, token);
     Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
 
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
@@ -1147,21 +1149,75 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedTransaction.setDescription("Food for birthday");
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
-    callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
+  }
 
-    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
-    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
-    Transaction afterUpdate = allTransactionsInDb.get(0);
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingPrice() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    //then
-    assertThat(allTransactionsInDb.size(), is(1));
-    assertThat(allPlannedTransactionsInDb.size(), is(0));
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
 
-    assertThat(afterUpdate.getDate(), equalTo(originalTransaction.getDate()));
-    assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
-    assertThat(afterUpdate.getDescription(), equalTo(originalTransaction.getDescription()));
-    assertThat(afterUpdate.getCategoryId(), equalTo(originalTransaction.getCategoryId()));
+    callRestToMarkAccountAsArchived(jacekAccountId);
 
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(111));
+    updatedTransaction.setCategoryId(foodCategoryId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
+    updatedTransaction.setDescription("Food for birthday");
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
+  }
+
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccount() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    Account updatedAccount = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    int status = callRestToMarkAccountAsArchived(updatedAccountId);
+    assertThat(status, is(OK.value()));
+    Transaction updatedTransaction = callRestToGetTransactionById(originalTransactionId, token);
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(updatedAccountId);
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
   }
 
   private Transaction removeTransactionId(Transaction transaction) {
