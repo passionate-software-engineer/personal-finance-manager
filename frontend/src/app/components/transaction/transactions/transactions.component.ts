@@ -109,8 +109,11 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   updateTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction.editedTransaction, Operation.Update)) {
+    if (!this.validateTransaction(transaction, Operation.Update)) {
       return;
+    }
+    if (this.isEditingTransactionWithArchivedAccount(transaction)) {
+      this.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe((biResponse) => {
@@ -124,6 +127,15 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 }
               );
         });
+  }
+
+  private setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction: Transaction) {
+    transaction.editedTransaction.date = transaction.date;
+    transaction.editedTransaction.accountPriceEntries = transaction.accountPriceEntries;
+  }
+
+  private isEditingTransactionWithArchivedAccount(transaction: Transaction) {
+    return this.containsArchivedAccount(transaction);
   }
 
   addTransaction() {

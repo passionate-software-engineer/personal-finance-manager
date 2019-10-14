@@ -1039,6 +1039,131 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactionsInDb.get(0).getDate(), equalTo(CURRENT_DATE));
   }
 
+  @Test
+  public void shouldUpdateTransactionContainingArchivedAccountWithDifferentCategory() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    final long categoryUpdateId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    final Transaction originalTransaction = callRestToGetTransactionById(originalTransactionId, token);
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(10));
+    updatedTransaction.setCategoryId(categoryUpdateId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
+    updatedTransaction.setDescription("Food for birthday");
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
+
+    //    Transaction update
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+    Transaction afterUpdate = allTransactionsInDb.get(0);
+
+    //then
+    assertThat(allTransactionsInDb.size(), is(1));
+    assertThat(allPlannedTransactionsInDb.size(), is(0));
+
+    assertThat(afterUpdate.getDate(), equalTo(originalTransaction.getDate()));
+    assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
+    assertThat(afterUpdate.getDescription(), equalTo(originalTransaction.getDescription()));
+    assertThat(afterUpdate.getDescription(), equalTo(originalTransaction.getDescription()));
+    assertThat(afterUpdate.getCategoryId(), equalTo(categoryUpdateId));
+
+  }
+
+  @Test
+  public void shouldUpdateTransactionContainingArchivedAccountWithDifferentDescription() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    final String descriptionUpdate = "Fuel";
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    final Transaction originalTransaction = callRestToGetTransactionById(originalTransactionId, token);
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(10));
+    updatedTransaction.setCategoryId(foodCategoryId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
+    updatedTransaction.setDescription(descriptionUpdate);
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
+
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+    Transaction afterUpdate = allTransactionsInDb.get(0);
+
+    //then
+    assertThat(allTransactionsInDb.size(), is(1));
+    assertThat(allPlannedTransactionsInDb.size(), is(0));
+
+    assertThat(afterUpdate.getDate(), equalTo(originalTransaction.getDate()));
+    assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
+    assertThat(afterUpdate.getDescription(), equalTo(descriptionUpdate));
+    assertThat(afterUpdate.getCategoryId(), equalTo(originalTransaction.getCategoryId()));
+
+  }
+
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountWhenChangingDate() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    final Transaction originalTransaction = callRestToGetTransactionById(originalTransactionId, token);
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(10));
+    updatedTransaction.setCategoryId(foodCategoryId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8).plusDays(2));
+    updatedTransaction.setDescription("Food for birthday");
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
+
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+    Transaction afterUpdate = allTransactionsInDb.get(0);
+
+    //then
+    assertThat(allTransactionsInDb.size(), is(1));
+    assertThat(allPlannedTransactionsInDb.size(), is(0));
+
+    assertThat(afterUpdate.getDate(), equalTo(originalTransaction.getDate()));
+    assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
+    assertThat(afterUpdate.getDescription(), equalTo(originalTransaction.getDescription()));
+    assertThat(afterUpdate.getCategoryId(), equalTo(originalTransaction.getCategoryId()));
+
+  }
+
   private Transaction removeTransactionId(Transaction transaction) {
     return Transaction.builder()
         .accountPriceEntries(transaction.getAccountPriceEntries())

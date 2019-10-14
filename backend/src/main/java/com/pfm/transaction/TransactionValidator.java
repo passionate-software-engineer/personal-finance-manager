@@ -18,6 +18,7 @@ import com.pfm.category.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class TransactionValidator {
   private CategoryService categoryService;
   private AccountService accountService;
 
-  public List<String> validate(Transaction transaction, long userId) {
+  public List<String> validate(Transaction transaction, long userId, @Nullable Transaction originalTransaction) {
     List<String> validationErrors = new ArrayList<>();
 
     if (transaction.getDescription() == null || transaction.getDescription().trim().equals("")) {
@@ -52,7 +53,10 @@ public class TransactionValidator {
           Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
           if (!accountOptional.isPresent()) {
             validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
-          } else if (accountOptional.get().isArchived()) {
+          } else if (accountOptional.get().isArchived() && originalTransaction != null && wasPriceOrAccountOrDateEdited(originalTransaction,
+              transaction)) {
+            validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
+          } else if (accountOptional.get().isArchived() && originalTransaction == null) {
             validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
           }
         }
@@ -73,6 +77,22 @@ public class TransactionValidator {
 
     return validationErrors;
 
+  }
+
+  private boolean wasPriceOrAccountOrDateEdited(Transaction original, Transaction update) {
+    if (wasPriceOrAccountNameEdited(original, update)) {
+      return true;
+    } else {
+      return wasDateEdited(original, update);
+    }
+  }
+
+  private boolean wasDateEdited(Transaction original, Transaction update) {
+    return !(original.getDate().equals(update.getDate()));
+  }
+
+  private boolean wasPriceOrAccountNameEdited(Transaction original, Transaction update) {
+    return !(original.getAccountPriceEntries().equals(update.getAccountPriceEntries()));
   }
 
 }

@@ -72,7 +72,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
 
-    List<String> validationResult = transactionValidator.validate(transaction, userId);
+    List<String> validationResult = transactionValidator.validate(transaction, userId, null);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
@@ -92,14 +92,13 @@ public class TransactionController implements TransactionApi {
     }
 
     Transaction transactionUpdate = helper.convertTransactionRequestToTransaction(transactionRequest);
+    Transaction originalTransaction = originalTransactionOptional.get();
 
-    List<String> validationResult = transactionValidator.validate(transactionUpdate, userId);
+    List<String> validationResult = transactionValidator.validate(transactionUpdate, userId, originalTransaction);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
-
-    Transaction originalTransaction = originalTransactionOptional.get();
 
     final boolean isEligibleForCommit =
         !dateHelper.isPastDate(originalTransaction.getDate()) && (dateHelper.isPastDate(transactionUpdate.getDate()));
@@ -163,7 +162,7 @@ public class TransactionController implements TransactionApi {
 
     Transaction plannedTransaction = plannedTransactionOptional.get();
 
-    List<String> validationResult = transactionValidator.validate(plannedTransaction, userId);
+    List<String> validationResult = transactionValidator.validate(plannedTransaction, userId, null);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
