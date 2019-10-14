@@ -57,16 +57,17 @@ public class TransactionValidator {
           if (!accountOptional.isPresent()) {
             validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
           } else if (transactionContainsArchivedAccount(transaction, userId)) {
-            if (originalTransaction != null && wasPriceChanged(originalTransaction, transaction)) {
-              validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-            }
-            if (originalTransaction != null && wasAccountChanged(originalTransaction, transaction)) {
-              validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-            }
-            if (originalTransaction != null && wasDateChanged(originalTransaction, transaction)) {
-              validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-            }
-            if (accountOptional.get().isArchived() && originalTransaction == null) {
+            if (originalTransaction != null) {
+              if (wasPriceChanged(originalTransaction, transaction)) {
+                validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+              }
+              if (wasAccountChanged(originalTransaction, transaction)) {
+                validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+              }
+              if (wasDateChanged(originalTransaction, transaction)) {
+                validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+              }
+            } else {
               validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
             }
           }
@@ -76,7 +77,6 @@ public class TransactionValidator {
         }
       }
     }
-
     if (transaction.getDate() == null) {
       validationErrors.add(getMessage(EMPTY_TRANSACTION_DATE));
     } else {
@@ -86,7 +86,6 @@ public class TransactionValidator {
         validationErrors.add(getMessage(FUTURE_TRANSACTION_DATE));
       }
     }
-
     return validationErrors;
 
   }
@@ -99,7 +98,7 @@ public class TransactionValidator {
   private boolean transactionContainsArchivedAccount(Transaction transaction, long userId) {
     for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
       Optional<Account> account = accountService.getAccountByIdAndUserId(transaction.getAccountPriceEntries().get(i).getAccountId(), userId);
-      if (account.isPresent() && account.get().isArchived()) {
+      if (account.get().isArchived()) {
         return true;
       }
     }
