@@ -18,6 +18,8 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
 import com.pfm.category.CategoryService;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -117,7 +119,9 @@ public class TransactionValidator {
   private boolean wasPriceChanged(Transaction originalTransaction, Transaction transaction) {
 
     for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
-      if (!(transaction.getAccountPriceEntries().get(i).price.equals(originalTransaction.getAccountPriceEntries().get(i).price))) {
+      BigDecimal formattedTransactionPrice = transaction.getAccountPriceEntries().get(i).price;
+      formattedTransactionPrice = formattedTransactionPrice.setScale(2, RoundingMode.HALF_EVEN);
+      if (!(formattedTransactionPrice.equals(originalTransaction.getAccountPriceEntries().get(i).price))) {
         return true;
       }
     }

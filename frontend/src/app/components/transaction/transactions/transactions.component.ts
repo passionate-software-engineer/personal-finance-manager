@@ -13,7 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
 import {Operation} from './transaction';
-import {RecurrencePeriod} from "../recurrence-period";
+import {RecurrencePeriod} from '../recurrence-period';
 
 @Component({
   selector: 'app-transactions',
@@ -21,6 +21,17 @@ import {RecurrencePeriod} from "../recurrence-period";
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent extends FiltersComponentBase implements OnInit {
+
+  constructor(
+    private transactionService: TransactionService,
+    alertService: AlertsService,
+    private categoryService: CategoryService,
+    private accountService: AccountService,
+    filterService: TransactionFilterService,
+    translate: TranslateService) {
+    super(alertService, filterService, translate);
+  }
+
   allTransactions: Transaction[] = [];
   transactions: Transaction[] = [];
   plannedTransactions: Transaction[] = [];
@@ -34,14 +45,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   hidePlannedTransactionsCheckboxState = false;
   pipe = new DatePipe('en-US');
 
-  constructor(
-    private transactionService: TransactionService,
-    alertService: AlertsService,
-    private categoryService: CategoryService,
-    private accountService: AccountService,
-    filterService: TransactionFilterService,
-    translate: TranslateService) {
-    super(alertService, filterService, translate);
+  private static setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction: Transaction) {
+    transaction.editedTransaction.date = transaction.date;
+    transaction.editedTransaction.accountPriceEntries = transaction.accountPriceEntries;
   }
 
   ngOnInit() {
@@ -113,7 +119,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       return;
     }
     if (this.isEditingTransactionWithArchivedAccount(transaction)) {
-      this.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
+      TransactionsComponent.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe((biResponse) => {
@@ -127,15 +133,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                 }
               );
         });
-  }
-
-  private setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction: Transaction) {
-    transaction.editedTransaction.date = transaction.date;
-    transaction.editedTransaction.accountPriceEntries = transaction.accountPriceEntries;
-  }
-
-  private isEditingTransactionWithArchivedAccount(transaction: Transaction) {
-    return this.containsArchivedAccount(transaction);
   }
 
   addTransaction() {
@@ -218,6 +215,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             }
           },
         );
+  }
+
+  private isEditingTransactionWithArchivedAccount(transaction: Transaction) {
+    return this.containsArchivedAccount(transaction);
   }
 
   private getTransactionFromResponse(transactionResponse) {
