@@ -35,10 +35,6 @@ public class TransactionRequest {
   @JsonProperty("isPlanned")
   private boolean isPlanned;
 
-//  @ApiModelProperty(value = "Is transaction recurrent")
-//  @JsonProperty("isRecurrent")
-//  private boolean isRecurrent;
-
   private RecurrencePeriod recurrencePeriod;
 
 }

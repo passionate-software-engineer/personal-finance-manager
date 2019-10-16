@@ -51,7 +51,7 @@ public final class Transaction {
 
   @JsonIgnore
   public boolean isRecurrent() {
-    return recurrencePeriod != null;
+    return recurrencePeriod != null && recurrencePeriod != RecurrencePeriod.NONE;
   }
 
 }

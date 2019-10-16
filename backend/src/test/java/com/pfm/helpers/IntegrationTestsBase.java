@@ -581,12 +581,6 @@ public abstract class IntegrationTestsBase {
 
   protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId, RecurrencePeriod recurrencePeriod) throws Exception {
     return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT, recurrencePeriod);
-
-  }
-
-  protected int callRestToSetPlannedTransactionAsNotRecurrentAndReturnStatus(long transactionId) throws Exception {
-    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_NOT_RECURRENT, null);
-
   }
 
   private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd, RecurrencePeriod recurrencePeriod)

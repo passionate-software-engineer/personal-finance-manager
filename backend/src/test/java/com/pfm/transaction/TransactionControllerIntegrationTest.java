@@ -28,6 +28,7 @@ import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.transaction.RecurrencePeriod.EVERY_DAY;
 import static com.pfm.transaction.RecurrencePeriod.EVERY_MONTH;
 import static com.pfm.transaction.RecurrencePeriod.EVERY_WEEK;
+import static com.pfm.transaction.RecurrencePeriod.NONE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -796,6 +797,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldSetPlannedTransactionAsNotRecurrent() throws Exception {
     //given
     final RecurrencePeriod recurrencePeriod = EVERY_MONTH;
+
     long transactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
     Transaction addedTransaction = callRestToGetTransactionById(transactionId, token);
 
@@ -809,9 +811,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
 
     assertTrue(updatedTransaction.isRecurrent());
+    addedTransaction.setRecurrencePeriod(NONE);
 
     //when
-    status = callRestToSetPlannedTransactionAsNotRecurrentAndReturnStatus(transactionId);
+    status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(transactionId, NONE);
     assertThat(status, is(OK.value()));
 
     Transaction transaction = callRestToGetTransactionById(transactionId, token);
