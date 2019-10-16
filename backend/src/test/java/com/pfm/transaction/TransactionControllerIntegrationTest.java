@@ -856,11 +856,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(EVERY_MONTH.getValue())
+        .date(EVERY_MONTH.getNextOccurrenceDate())
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
-        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
+//        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
         .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
         .build();
 
@@ -898,11 +898,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(everyWeek.getValue())
+        .date(everyWeek.getNextOccurrenceDate())
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
-        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
+//        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
         .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
         .build();
 
@@ -941,11 +941,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(everyDay.getValue())
+        .date(everyDay.getNextOccurrenceDate())
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
-        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
+//        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
         .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
         .build();
 
@@ -1228,7 +1228,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .categoryId(transaction.getCategoryId())
         .userId(transaction.getUserId())
         .isPlanned(transaction.isPlanned())
-        .isRecurrent(transaction.isRecurrent())
+//        .isRecurrent(transaction.isRecurrent())
         .recurrencePeriod(transaction.getRecurrencePeriod())
         .build();
   }

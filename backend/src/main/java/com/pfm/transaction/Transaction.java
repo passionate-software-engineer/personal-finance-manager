@@ -46,8 +46,12 @@ public final class Transaction {
   private Long userId;
 
   private boolean isPlanned;
-  private boolean isRecurrent;
 
   private RecurrencePeriod recurrencePeriod;
+
+  @JsonIgnore
+  public boolean isRecurrent() {
+    return recurrencePeriod != null;
+  }
 
 }

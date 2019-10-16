@@ -246,7 +246,7 @@ public class TransactionController implements TransactionApi {
         .accountPriceEntries(getAccountPriceEntriesNewInstance(transactionToUpdate))
         .userId(transactionToUpdate.getUserId())
         .isPlanned(transactionToUpdate.isPlanned())
-        .isRecurrent(updateToBeApplied ? SET_RECURRENT : SET_NOT_RECURRENT)
+//        .isRecurrent(updateToBeApplied ? SET_RECURRENT : SET_NOT_RECURRENT)
         .recurrencePeriod(transactionToUpdate.getRecurrencePeriod())
         .build();
   }
@@ -269,7 +269,7 @@ public class TransactionController implements TransactionApi {
   }
 
   private Long addAsNextRecurrencePeriodPlannedTransaction(long userId, TransactionRequest transactionRequest) {
-    transactionRequest.setDate(transactionRequest.getRecurrencePeriod().getValue());
+    transactionRequest.setDate(transactionRequest.getRecurrencePeriod().getNextOccurrenceDate());
     transactionRequest.setPlanned(true);
     final Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
     final ResponseEntity<?> response = addTransactionThenLogThenAddHistoryEntry(userId, transaction);
@@ -288,7 +288,7 @@ public class TransactionController implements TransactionApi {
         .categoryId(toCommit.getCategoryId())
         .description(toCommit.getDescription())
         .accountPriceEntries(getAccountPriceEntriesNewInstance(toCommit))
-        .isRecurrent(toCommit.isRecurrent())
+//        .isRecurrent(toCommit.isRecurrent())
         .recurrencePeriod(toCommit.getRecurrencePeriod())
         .build();
   }
