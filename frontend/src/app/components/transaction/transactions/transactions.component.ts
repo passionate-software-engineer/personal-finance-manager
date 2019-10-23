@@ -263,7 +263,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   setAsNotRecurrent(transaction: Transaction) {
-    this.transactionService.setAsNotRecurrent(transaction)
+    this.transactionService.setAsNotRecurrent(transaction, RecurrencePeriod.NONE)
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));

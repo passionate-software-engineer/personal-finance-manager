@@ -2,7 +2,7 @@ ALTER TABLE transaction
   ADD is_planned BOOLEAN DEFAULT FALSE;
 
 ALTER TABLE transaction
-  ADD recurrence_period varchar(255);
+  ADD recurrence_period varchar(32);
 
 -- CREATE TABLE reccurence_period
 -- (
