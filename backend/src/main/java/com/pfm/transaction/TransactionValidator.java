@@ -65,9 +65,9 @@ public class TransactionValidator {
               validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
             } else if (transactionContainsArchivedAccount(transaction, userId)) {
               if (originalTransaction != null) {
-                if (accountPriceEntrySizeChanged(transaction, originalTransaction)) {
-                  validationErrors.add(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED));
-                } else {
+
+
+
                   if (wasPriceChanged(originalTransaction, transaction)) {
                     validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
                   }
@@ -77,7 +77,8 @@ public class TransactionValidator {
                   if (wasDateChanged(originalTransaction, transaction)) {
                     validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
                   }
-                }
+
+
               } else {
                 validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
               }
