@@ -65,20 +65,15 @@ public class TransactionValidator {
               validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
             } else if (transactionContainsArchivedAccount(transaction, userId)) {
               if (originalTransaction != null) {
-
-
-
-                  if (wasPriceChanged(originalTransaction, transaction)) {
-                    validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-                  }
-                  if (wasAccountChanged(originalTransaction, transaction)) {
-                    validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-                  }
-                  if (wasDateChanged(originalTransaction, transaction)) {
-                    validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-                  }
-
-
+                if (wasPriceChanged(originalTransaction, transaction)) {
+                  validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+                }
+                if (wasAccountChanged(originalTransaction, transaction)) {
+                  validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+                }
+                if (wasDateChanged(originalTransaction, transaction)) {
+                  validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+                }
               } else {
                 validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
               }
