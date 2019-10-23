@@ -123,12 +123,6 @@ public class TransactionValidator {
 
   private boolean wasAccountChanged(Transaction transaction, Transaction updatedTransaction) {
     for (int i = 0; i < updatedTransaction.getAccountPriceEntries().size(); i++) {
-      int transactionAccountPriceEntrySize = transaction.getAccountPriceEntries().size();
-      int updatedTransactionAccountPriceEntrySize = updatedTransaction.getAccountPriceEntries().size();
-
-      if (isAPE_Changed(updatedTransactionAccountPriceEntrySize, transactionAccountPriceEntrySize)) {
-        return true;
-      }
       if (!(updatedTransaction.getAccountPriceEntries().get(i).accountId.equals(transaction.getAccountPriceEntries().get(i).accountId))) {
         return true;
       }
@@ -139,9 +133,6 @@ public class TransactionValidator {
   private boolean wasPriceChanged(Transaction originalTransaction, Transaction updatedTransaction) {
 
     for (int i = 0; i < updatedTransaction.getAccountPriceEntries().size(); i++) {
-      if (isAPE_Changed(updatedTransaction.getAccountPriceEntries().size(), originalTransaction.getAccountPriceEntries().size())) {
-        return true;
-      }
       BigDecimal formattedTransactionPrice = updatedTransaction.getAccountPriceEntries().get(i).price;
       formattedTransactionPrice = formattedTransactionPrice.setScale(2, RoundingMode.HALF_EVEN);
       if (!(formattedTransactionPrice.equals(originalTransaction.getAccountPriceEntries().get(i).price))) {
