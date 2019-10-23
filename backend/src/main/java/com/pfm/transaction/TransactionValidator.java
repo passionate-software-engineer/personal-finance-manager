@@ -93,21 +93,25 @@ public class TransactionValidator {
       }
     }
     return validationErrors;
-
   }
 
   private boolean accountPriceEntrySizeChanged(Transaction transaction, Transaction originalTransaction) {
-    return transaction.getAccountPriceEntries().size() != originalTransaction.getAccountPriceEntries().size();
+    return !isAccountPriceEntrySizeEqual(transaction, originalTransaction);
+  }
+
+  private boolean isAccountPriceEntrySizeEqual(Transaction transaction, Transaction originalTransaction) {
+    return transaction.getAccountPriceEntries().size() == originalTransaction.getAccountPriceEntries().size();
+
   }
 
   private boolean wasDateChanged(Transaction originalTransaction, Transaction transaction) {
     return !(transaction.getDate().equals(originalTransaction.getDate()));
-
   }
 
   private boolean transactionContainsArchivedAccount(Transaction transaction, long userId) {
     for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
-      Optional<Account> account = accountService.getAccountByIdAndUserId(transaction.getAccountPriceEntries().get(i).getAccountId(), userId);
+      final Long accountId = transaction.getAccountPriceEntries().get(i).getAccountId();
+      Optional<Account> account = accountService.getAccountByIdAndUserId(accountId, userId);
       if (account.get().isArchived()) {
         return true;
       }

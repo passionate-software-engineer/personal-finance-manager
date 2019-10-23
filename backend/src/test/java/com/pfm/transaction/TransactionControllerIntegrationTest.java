@@ -1258,7 +1258,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   }
 
-    private Transaction removeTransactionId(Transaction transaction) {
+  private Transaction removeTransactionId(Transaction transaction) {
     return Transaction.builder()
         .accountPriceEntries(transaction.getAccountPriceEntries())
         .description(transaction.getDescription())
