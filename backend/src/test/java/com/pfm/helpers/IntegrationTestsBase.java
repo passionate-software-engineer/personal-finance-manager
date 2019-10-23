@@ -347,7 +347,6 @@ public abstract class IntegrationTestsBase {
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
         .isPlanned(transactionRequest.isPlanned())
-//        .isRecurrent(transactionRequest.isRecurrent())
         .recurrencePeriod(transactionRequest.getRecurrencePeriod())
         .build();
   }

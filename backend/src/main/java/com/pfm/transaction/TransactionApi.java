@@ -51,9 +51,4 @@ public interface TransactionApi {
   @PatchMapping(value = "/{transactionId}/setAsRecurrent")
   ResponseEntity<?> setAsRecurrent(@PathVariable long transactionId, @RequestParam RecurrencePeriod recurrencePeriod);
 
-//  @ApiOperation(value = "Sets planned transaction status to normal (not recurrent)", response = Void.class,
-//      authorizations = {@Authorization(value = "Bearer")})
-//  @PatchMapping(value = "/{transactionId}/setAsNotRecurrent")
-//  ResponseEntity<?> setAsNotRecurrent(@PathVariable long transactionId) throws Exception;
-
 }

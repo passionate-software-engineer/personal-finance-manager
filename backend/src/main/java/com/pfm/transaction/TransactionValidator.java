@@ -3,6 +3,7 @@ package com.pfm.transaction;
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
+import static com.pfm.config.MessagesProvider.ACCOUNT_PRICE_ENTRY_SIZE_CHANGED;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
@@ -51,31 +52,40 @@ public class TransactionValidator {
     if (transaction.getAccountPriceEntries() == null || transaction.getAccountPriceEntries().size() == 0) {
       validationErrors.add(getMessage(AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED));
     } else {
-      for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
-        if (entry.getAccountId() == null) {
-          validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
-        } else {
-          Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
-          if (!accountOptional.isPresent()) {
-            validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
-          } else if (transactionContainsArchivedAccount(transaction, userId)) {
-            if (originalTransaction != null) {
-              if (wasPriceChanged(originalTransaction, transaction)) {
-                validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+      if (originalTransaction != null && accountPriceEntrySizeChanged(transaction, originalTransaction) && transactionContainsArchivedAccount(
+          transaction, userId)) {
+        validationErrors.add(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED));
+      } else {
+        for (AccountPriceEntry entry : transaction.getAccountPriceEntries()) {
+          if (entry.getAccountId() == null) {
+            validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
+          } else {
+            Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
+            if (!accountOptional.isPresent()) {
+              validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
+            } else if (transactionContainsArchivedAccount(transaction, userId)) {
+              if (originalTransaction != null) {
+                if (accountPriceEntrySizeChanged(transaction, originalTransaction)) {
+                  validationErrors.add(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED));
+                } else {
+                  if (wasPriceChanged(originalTransaction, transaction)) {
+                    validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+                  }
+                  if (wasAccountChanged(originalTransaction, transaction)) {
+                    validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+                  }
+                  if (wasDateChanged(originalTransaction, transaction)) {
+                    validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
+                  }
+                }
+              } else {
+                validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
               }
-              if (wasAccountChanged(originalTransaction, transaction)) {
-                validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-              }
-              if (wasDateChanged(originalTransaction, transaction)) {
-                validationErrors.add(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
-              }
-            } else {
-              validationErrors.add(getMessage(ACCOUNT_IS_ARCHIVED));
             }
           }
-        }
-        if (entry.getPrice() == null) {
-          validationErrors.add(getMessage(EMPTY_TRANSACTION_PRICE));
+          if (entry.getPrice() == null) {
+            validationErrors.add(getMessage(EMPTY_TRANSACTION_PRICE));
+          }
         }
       }
     }
@@ -90,6 +100,10 @@ public class TransactionValidator {
     }
     return validationErrors;
 
+  }
+
+  private boolean accountPriceEntrySizeChanged(Transaction transaction, Transaction originalTransaction) {
+    return transaction.getAccountPriceEntries().size() != originalTransaction.getAccountPriceEntries().size();
   }
 
   private boolean wasDateChanged(Transaction originalTransaction, Transaction transaction) {
@@ -107,25 +121,38 @@ public class TransactionValidator {
     return false;
   }
 
-  private boolean wasAccountChanged(Transaction originalTransaction, Transaction transaction) {
-    for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
-      if (!(transaction.getAccountPriceEntries().get(i).accountId.equals(originalTransaction.getAccountPriceEntries().get(i).accountId))) {
+  private boolean wasAccountChanged(Transaction transaction, Transaction updatedTransaction) {
+    for (int i = 0; i < updatedTransaction.getAccountPriceEntries().size(); i++) {
+      int transactionAccountPriceEntrySize = transaction.getAccountPriceEntries().size();
+      int updatedTransactionAccountPriceEntrySize = updatedTransaction.getAccountPriceEntries().size();
+
+      if (isAPE_Changed(updatedTransactionAccountPriceEntrySize, transactionAccountPriceEntrySize)) {
+        return true;
+      }
+      if (!(updatedTransaction.getAccountPriceEntries().get(i).accountId.equals(transaction.getAccountPriceEntries().get(i).accountId))) {
         return true;
       }
     }
     return false;
   }
 
-  private boolean wasPriceChanged(Transaction originalTransaction, Transaction transaction) {
+  private boolean wasPriceChanged(Transaction originalTransaction, Transaction updatedTransaction) {
 
-    for (int i = 0; i < transaction.getAccountPriceEntries().size(); i++) {
-      BigDecimal formattedTransactionPrice = transaction.getAccountPriceEntries().get(i).price;
+    for (int i = 0; i < updatedTransaction.getAccountPriceEntries().size(); i++) {
+      if (isAPE_Changed(updatedTransaction.getAccountPriceEntries().size(), originalTransaction.getAccountPriceEntries().size())) {
+        return true;
+      }
+      BigDecimal formattedTransactionPrice = updatedTransaction.getAccountPriceEntries().get(i).price;
       formattedTransactionPrice = formattedTransactionPrice.setScale(2, RoundingMode.HALF_EVEN);
       if (!(formattedTransactionPrice.equals(originalTransaction.getAccountPriceEntries().get(i).price))) {
         return true;
       }
     }
     return false;
+  }
+
+  private boolean isAPE_Changed(int size, int size2) {
+    return size != size2;
   }
 
 }

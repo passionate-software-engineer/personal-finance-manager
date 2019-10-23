@@ -4,6 +4,7 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
+import static com.pfm.config.MessagesProvider.ACCOUNT_PRICE_ENTRY_SIZE_CHANGED;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
@@ -863,7 +864,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
-//        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
         .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
         .build();
 
@@ -905,7 +905,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
-//        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
         .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
         .build();
 
@@ -948,7 +947,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
-//        .isRecurrent(addedTransactionWithRecurrentStatus.isRecurrent())
         .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
         .build();
 
@@ -1223,7 +1221,44 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
   }
 
-  private Transaction removeTransactionId(Transaction transaction) {
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccountss() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    Account updatedAccount = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    int status = callRestToMarkAccountAsArchived(updatedAccountId);
+    assertThat(status, is(OK.value()));
+    Transaction updatedTransaction = callRestToGetTransactionById(originalTransactionId, token);
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(updatedAccountId);
+    updatedTransaction.getAccountPriceEntries().add(AccountPriceEntry.builder()
+        .price(BigDecimal.TEN)
+        .accountId(jacekAccountId)
+        .build());
+
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED))));
+
+  }
+
+    private Transaction removeTransactionId(Transaction transaction) {
     return Transaction.builder()
         .accountPriceEntries(transaction.getAccountPriceEntries())
         .description(transaction.getDescription())
@@ -1231,7 +1266,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .categoryId(transaction.getCategoryId())
         .userId(transaction.getUserId())
         .isPlanned(transaction.isPlanned())
-//        .isRecurrent(transaction.isRecurrent())
         .recurrencePeriod(transaction.getRecurrencePeriod())
         .build();
   }
