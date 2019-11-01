@@ -1,16 +1,16 @@
 # Personal Finance Manager
 
-System allowing users to manage their personal finances.
+Application which allows users to manage their personal finances.
 
 Define accounts, categories and you are ready to track your transactions.
 
-System was created for education purposes. Founder & maintainer of the project is [Piotr Kołacz](https://github.com/pio-kol), special thanks to [Sebastian Pacuk](https://github.com/sebapacuk) for his strong engagement. Other contributors can be found [here](https://github.com/programming-in-practice/personal-finance-manager/graphs/contributors).
+Application was created as a result of passion to managing personal finances by team of passionate engineers. Founder & maintainer of the project is [Piotr Kołacz](https://github.com/pio-kol), special thanks to [Sebastian Pacuk](https://github.com/sebapacuk) for his strong engagement. Other contributors can be found [here](https://github.com/programming-in-practice/personal-finance-manager/graphs/contributors).
 
 ## Demo instance
-[Personal Finance Manager demo instance](http://personal-finance-manager-2.s3-website.eu-central-1.amazonaws.com/accounts)
+[Personal Finance Manager demo instance](https://pfm.passionatesoftwareengineer.com)
 
 ## API Reference
-[Swagger API](http://ec2-3-121-199-74.eu-central-1.compute.amazonaws.com:8088/swagger-ui.html)
+[Swagger API](https://backend.passionatesoftwareengineer.com)
 
 ## Technologies & Frameworks
 
@@ -74,16 +74,6 @@ System was created for education purposes. Founder & maintainer of the project i
 ![Git commit](readme/git-commit-directory.png)
 - You should see "No changes" dialog \
 ![No changes dialog](readme/git-no-changes.png)
-
-## Checklist before merging to branch master
-- Check if application passes gradle build task
-- Check if application starts with PostgreSQL database
-- Check if swagger is working
-- Run application and test it manually:
-  - Register user
-  - Login with registered user
-  - Add account, category, transaction and filter
-  - Delete everything added
 
 ## Building and pushing docker image (remember to increase the number)
 - docker build . -t piokol/pfm:9
