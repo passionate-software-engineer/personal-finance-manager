@@ -6,6 +6,9 @@ Define accounts, categories and you are ready to track your transactions.
 
 Application was created as a result of passion to managing personal finances by team of passionate engineers. Founder & maintainer of the project is [Piotr Kołacz](https://github.com/pio-kol), special thanks to [Sebastian Pacuk](https://github.com/sebapacuk) for his strong engagement. Other contributors can be found [here](https://github.com/programming-in-practice/personal-finance-manager/graphs/contributors).
 
+If you want to contribute please contact [Piotr](mailto:piotr@passionatesoftwareengineer.com).
+If you want to master your programming skills please visit [our website](https://passionatesoftwareengineer.com).
+
 ## Demo instance
 [Personal Finance Manager demo instance](https://pfm.passionatesoftwareengineer.com)
 
