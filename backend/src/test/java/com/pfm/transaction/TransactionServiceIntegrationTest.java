@@ -151,7 +151,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     transaction.setDate(LocalDate.now());
     transaction.setUserId(userId);
 
-    long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
+    Long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
 
     transaction.setAccountPriceEntries(Collections.singletonList(AccountPriceEntry.builder()
         .accountId(savedAccount.getId())

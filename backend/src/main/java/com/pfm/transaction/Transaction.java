@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction {
+public final class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +46,8 @@ public class Transaction {
   private Long userId;
 
   private boolean isPlanned;
+  private boolean isRecurrent;
+
+  private RecurrencePeriod recurrencePeriod;
 
 }

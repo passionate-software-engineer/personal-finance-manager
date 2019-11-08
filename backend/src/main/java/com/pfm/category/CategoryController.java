@@ -101,7 +101,7 @@ public class CategoryController implements CategoryApi {
 
     List<String> validationResult = categoryValidator.validateCategoryForUpdate(categoryId, userId, category);
     if (!validationResult.isEmpty()) {
-      log.error("Category is not valid {}", validationResult);
+      log.info("Category is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 

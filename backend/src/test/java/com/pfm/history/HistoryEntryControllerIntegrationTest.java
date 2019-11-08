@@ -584,7 +584,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .accountPriceEntries(accountPriceEntriesUpdated)
         .build();
 
-    callRestToUpdateTransaction(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
+    callRestToUpdateTransactionAndReturnCommitResult(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
 
     //when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
@@ -749,7 +749,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .isPlanned(true)
         .build();
 
-    callRestToUpdateTransaction(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
+    callRestToUpdateTransactionAndReturnCommitResult(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
 
     //when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);

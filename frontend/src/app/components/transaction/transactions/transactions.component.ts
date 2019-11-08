@@ -13,6 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
 import {Operation} from './transaction';
+import {RecurrencePeriod} from '../recurrence-period';
 
 @Component({
   selector: 'app-transactions',
@@ -20,6 +21,17 @@ import {Operation} from './transaction';
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent extends FiltersComponentBase implements OnInit {
+
+  constructor(
+    private transactionService: TransactionService,
+    alertService: AlertsService,
+    private categoryService: CategoryService,
+    private accountService: AccountService,
+    filterService: TransactionFilterService,
+    translate: TranslateService) {
+    super(alertService, filterService, translate);
+  }
+
   allTransactions: Transaction[] = [];
   transactions: Transaction[] = [];
   plannedTransactions: Transaction[] = [];
@@ -33,14 +45,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   hidePlannedTransactionsCheckboxState = false;
   pipe = new DatePipe('en-US');
 
-  constructor(
-    private transactionService: TransactionService,
-    alertService: AlertsService,
-    private categoryService: CategoryService,
-    private accountService: AccountService,
-    filterService: TransactionFilterService,
-    translate: TranslateService) {
-    super(alertService, filterService, translate);
+  private static setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction: Transaction) {
+    transaction.editedTransaction.date = transaction.date;
+    transaction.editedTransaction.accountPriceEntries = transaction.accountPriceEntries;
   }
 
   ngOnInit() {
@@ -74,33 +81,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           this.transactions = [];
           this.allTransactions = [];
           for (const transactionResponse of transactions) {
-            const transaction = new Transaction();
-            transaction.date = transactionResponse.date;
-            transaction.id = transactionResponse.id;
-            transaction.description = transactionResponse.description;
-            transaction.isPlanned = transactionResponse.planned;
-
-            for (const entry of transactionResponse.accountPriceEntries) {
-              const accountPriceEntry = new AccountPriceEntry();
-              accountPriceEntry.price = +entry.price; // + added to convert to number
-
-              // need to have same object to allow dropdown to work correctly
-              for (const account of this.accounts) { // TODO use hashmap
-                if (account.id === entry.accountId) {
-                  accountPriceEntry.account = account;
-                }
-              }
-
-              accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
-              transaction.accountPriceEntries.push(accountPriceEntry);
-            }
-
-            for (const category of this.categories) {
-              if (category.id === transactionResponse.categoryId) {
-                transaction.category = category;
-              }
-            }
+            const transaction = this.getTransactionFromResponse(transactionResponse);
             if (transaction.isPlanned) {
               this.plannedTransactions.push(transaction);
             } else {
@@ -108,7 +89,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             }
             this.allTransactions.push(transaction);
           }
-
           super.filterTransactions();
         });
   }
@@ -124,55 +104,35 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       this.transactionService.deleteTransaction(transactionToDelete.id)
           .subscribe(() => {
             this.alertService.success(this.translate.instant(deleteMessageKey));
-            this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
-            this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
+            this.removeDeletedFromDOM(transactionToDelete);
           });
     }
   }
 
+  private removeDeletedFromDOM(transactionToDelete) {
+    this.transactions = this.transactions.filter(transaction => transaction !== transactionToDelete);
+    this.allTransactions = this.allTransactions.filter(transaction => transaction !== transactionToDelete);
+  }
+
   updateTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction.editedTransaction, Operation.Update)) {
+    if (!this.validateTransaction(transaction, Operation.Update)) {
       return;
     }
-
+    if (this.isEditingTransactionWithArchivedAccount(transaction)) {
+      TransactionsComponent.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
+    }
     this.transactionService.editTransaction(transaction.editedTransaction)
-        .subscribe(() => {
-            this.transactionService.getTransaction(transaction.id)
-                .subscribe(updatedTransaction => {
-                  const messageKey = updatedTransaction.planned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
+        .subscribe((biResponse) => {
+          this.transactionService.getTransaction(biResponse.savedTransactionId)
+              .subscribe(
+                (transactionResponse) => {
+                  const saved = this.getTransactionFromResponse(transactionResponse);
+                  Object.assign(transaction, saved);
+                  const messageKey = saved.isPlanned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
                   this.alertService.success(this.translate.instant(messageKey));
-                  const returnedTransaction = new Transaction(); // TODO dupliated code
-                  returnedTransaction.date = updatedTransaction.date;
-                  returnedTransaction.id = updatedTransaction.id;
-                  returnedTransaction.description = updatedTransaction.description;
-                  returnedTransaction.isPlanned = updatedTransaction.planned;
-
-                  for (const entry of updatedTransaction.accountPriceEntries) {
-                    const accountPriceEntry = new AccountPriceEntry();
-                    accountPriceEntry.price = +entry.price; // + added to convert to number
-
-                    // need to have same object to allow dropdown to work correctly
-                    for (const account of this.accounts) { // TODO use hashmap
-                      if (account.id === entry.accountId) {
-                        accountPriceEntry.account = account;
-                      }
-                    }
-
-                    accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
-                    returnedTransaction.accountPriceEntries.push(accountPriceEntry);
-                  }
-
-                  for (const category of this.categories) {
-                    if (category.id === updatedTransaction.categoryId) {
-                      returnedTransaction.category = category;
-                    }
-                  }
-
-                  Object.assign(transaction, returnedTransaction);
-                });
-          },
-        );
+                }
+              );
+        });
   }
 
   addTransaction() {
@@ -183,38 +143,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     this.transactionService.addTransaction(this.newTransaction)
         .subscribe(id => {
             this.transactionService.getTransaction(id)
-                .subscribe(createdTransaction => {
-                  const messageKey = createdTransaction.planned ? 'message.plannedTransactionAdded' : 'message.transactionAdded';
+                .subscribe(savedTransaction => {
+                  const messageKey = savedTransaction.planned ? 'message.plannedTransactionAdded' : 'message.transactionAdded';
                   this.alertService.success(this.translate.instant(messageKey));
 
                   // TODO duplicate with above method
-                  const returnedTransaction = new Transaction();
-                  returnedTransaction.date = createdTransaction.date;
-                  returnedTransaction.id = createdTransaction.id;
-                  returnedTransaction.description = createdTransaction.description;
-                  returnedTransaction.isPlanned = createdTransaction.planned;
-
-                  for (const entry of createdTransaction.accountPriceEntries) {
-                    const accountPriceEntry = new AccountPriceEntry();
-                    accountPriceEntry.price = +entry.price; // + added to convert to number
-
-                    // need to have same object to allow dropdown to work correctly
-                    for (const account of this.accounts) { // TODO use hashmap
-                      if (account.id === entry.accountId) {
-                        accountPriceEntry.account = account;
-                      }
-                    }
-
-                    accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
-                    returnedTransaction.accountPriceEntries.push(accountPriceEntry);
-                  }
-
-                  for (const category of this.categories) {
-                    if (category.id === createdTransaction.categoryId) {
-                      returnedTransaction.category = category;
-                    }
-                  }
+                  const returnedTransaction = this.getTransactionFromResponse(savedTransaction);
 
                   this.transactions.push(returnedTransaction);
                   this.allTransactions.push(returnedTransaction);
@@ -246,20 +180,96 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
   }
 
-  private commit(transaction: Transaction) {
-    {
-      this.transactionService.commitPlannedTransaction(transaction)
-          .subscribe(() => {
-              this.alertService.success(
-                this.translate.instant('message.plannedTransactionCommitted')
-              );
-            },
-            () => {
-              this.alertService.error(this.translate.instant('message.archivedAccountDetectedDuringCommit'));
-            },
-            () => this.refreshTransactions()
-          );
+  commitOverduePlannedTransaction(transaction: Transaction) {
+    const commitDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
+
+    if (confirm(this.translate.instant(commitDialogMessageKey))) {
+      this.commit(transaction, 'message.OverduePlannedTransactionCommitted');
     }
+  }
+
+  private commit(transaction: Transaction, messageKey?: string) {
+    this.transactionService.commitPlannedTransaction(transaction)
+        .subscribe((transactionsIdsFromResponse) => {
+            this.alertService.success(
+              this.translate.instant(messageKey == null ? 'message.plannedTransactionCommitted' : messageKey)
+            );
+            if (transactionsIdsFromResponse.savedTransactionId) {
+              this.transactionService.getTransaction(transactionsIdsFromResponse.savedTransactionId)
+                  .subscribe(
+                    (saved) => {
+                      const savedTransaction = this.getTransactionFromResponse(saved);
+                      Object.assign(transaction, savedTransaction);
+                    }
+                  );
+            }
+            if (transactionsIdsFromResponse.recurrentTransactionId) {
+              this.transactionService.getTransaction(transactionsIdsFromResponse.recurrentTransactionId)
+                  .subscribe(
+                    (recurrentTransaction) => {
+                      const scheduledTransaction = this.getTransactionFromResponse(recurrentTransaction);
+                      this.transactions.push(scheduledTransaction);
+                      this.allTransactions.push(scheduledTransaction);
+                    }
+                  );
+            }
+          },
+        );
+  }
+
+  private isEditingTransactionWithArchivedAccount(transaction: Transaction) {
+    return this.containsArchivedAccount(transaction);
+  }
+
+  private getTransactionFromResponse(transactionResponse) {
+    const transaction = new Transaction();
+    transaction.date = transactionResponse.date;
+    transaction.id = transactionResponse.id;
+    transaction.description = transactionResponse.description;
+    transaction.isPlanned = transactionResponse.planned;
+    transaction.isRecurrent = transactionResponse.recurrent;
+
+    for (const entry of transactionResponse.accountPriceEntries) {
+      const accountPriceEntry = new AccountPriceEntry();
+      accountPriceEntry.price = +entry.price; // + added to convert to number
+
+      // need to have same object to allow dropdown to work correctly
+      for (const account of this.accounts) { // TODO use hashmap
+        if (account.id === entry.accountId) {
+          accountPriceEntry.account = account;
+        }
+      }
+
+      accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
+
+      transaction.accountPriceEntries.push(accountPriceEntry);
+    }
+    for (const category of this.categories) {
+      if (category.id === transactionResponse.categoryId) {
+        transaction.category = category;
+      }
+    }
+    return transaction;
+  }
+
+  setAsRecurrent(transaction: Transaction) {
+    this.transactionService.setAsRecurrent(transaction, RecurrencePeriod.EVERY_MONTH)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.transactionSetRecurrent'));
+            transaction.isRecurrent = true;
+          }
+        );
+  }
+
+  setAsNotRecurrent(transaction: Transaction) {
+    this.transactionService.setAsNotRecurrent(transaction)
+        .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.transactionSetNotRecurrent'));
+            transaction.isRecurrent = false;
+          }
+        );
   }
 
   private isTransactionDateCurrentDate(transaction) {
@@ -268,25 +278,14 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return transactionDate === currentDate;
   }
 
-  private refreshTransactions() {
-    this.getTransactions();
-  }
-
   private validateTransaction(transaction: Transaction, operation: Operation): boolean {
     let status = true;
 
     if (operation === Operation.Update) {
-      if (transaction.isPlanned) {
-        if (DateHelper.isPastDate(transaction.date)) {
-          this.alertService.error(this.translate.instant('message.plannedTransactionPastDate'));
-          status = false;
-        }
-      }
       if (!transaction.isPlanned && DateHelper.isFutureDate(transaction.date)) {
         this.alertService.error(this.translate.instant('message.transactionFutureDate'));
         status = false;
       }
-
     }
 
     if (operation === Operation.Add || operation === Operation.Update) {
@@ -337,7 +336,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     if (operation === Operation.Commit) {
       if (transaction.isPlanned && this.containsArchivedAccount(transaction)) {
-        this.alertService.error(this.translate.instant('message.plannedTransactionUsingArchivedAccountCannotBeCommitted'));
+        this.alertService.error(this.translate.instant('\'prompt.info.edit.containsArchivedAccount\''));
         status = false;
       }
     }
@@ -349,6 +348,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.editedTransaction = JSON.parse(JSON.stringify(transaction));
     transaction.editMode = true;
 
+    if (this.containsArchivedAccount(transaction)) {
+      alert(this.translate.instant('prompt.info.edit.containsArchivedAccount'));
+    }
+
     for (const entry of transaction.editedTransaction.accountPriceEntries) {
       entry.price = +entry.price; // + added to convert to number
 
@@ -358,7 +361,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           entry.account = account;
         }
       }
-
     }
 
     // Adds empty entry, thanks to that new value can be added on the UI
@@ -369,7 +371,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         transaction.editedTransaction.category = category;
       }
     }
-
   }
 
   allFilteredTransactionsBalance() {
@@ -383,7 +384,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         }
       }
     }
-
     return sum;
   }
 
@@ -395,7 +395,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
   }
 
-  private containsArchivedAccount(transaction: Transaction) {
+  private containsArchivedAccount(transaction: Transaction): boolean {
     for (const entry of transaction.accountPriceEntries) {
       if (entry.account.archived) {
         return true;
@@ -404,4 +404,21 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return false;
   }
 
+  private getWarnBgColorForUncommittedPlannedTransaction(transaction: any) {
+    if (this.isOverduePlannedTransaction(transaction)) {
+      return '#F1AD8D';
+    }
+  }
+
+  private isOverduePlannedTransaction(transaction: any) {
+    return transaction.isPlanned && DateHelper.isPastDate(transaction.date);
+  }
+
+  private isNotOverduePlannedTransaction(transaction: any) {
+    return transaction.isPlanned && !DateHelper.isPastDate(transaction.date);
+  }
+
+  isEditModeContainsArchivedAccount(transaction: any) {
+    return !transaction.editMode || transaction.editMode && this.containsArchivedAccount(transaction);
+  }
 }
