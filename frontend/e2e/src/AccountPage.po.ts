@@ -62,6 +62,17 @@ export class AccountsPage {
     return row.element(by.id('EditBtn'));
   }
 
+  balanceOfAllAccounts() {
+    return element(by.id('BalanceOfAllAccounts'));
+}
+  balanceOfAllAccountCurrenciesSummery() {
+    return element(by.id('BalanceOfAllAccountsCurrenciesSummary'));
+   }
+
+  assertBalanceOfAccounts() {
+  expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountCurrenciesSummery().getText());
+  }
+
   alert() {
     return element.all(by.id('Alert'));
   }
@@ -133,5 +144,6 @@ export class AccountsPage {
 
     this.assertSuccessMessage('Account deleted');
   }
+
 
 }

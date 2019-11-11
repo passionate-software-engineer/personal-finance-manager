@@ -68,4 +68,15 @@ describe('Accounts page tests', () => {
     // then
     page.assertNumberOfAccounts(0);
   });
+
+  it('should check balance PLN' ,() => {
+    //when
+    const accountName = 'First Balance PLN Check';
+    //given
+    page.addAccount(accountName, '250.20');
+    //then
+    page.assertBalanceOfAccounts();
+    });
+
+
 });
