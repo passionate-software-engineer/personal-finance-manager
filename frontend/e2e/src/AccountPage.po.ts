@@ -64,7 +64,7 @@ export class AccountsPage {
 
   balanceOfAllAccounts() {
     return element(by.id('BalanceOfAllAccounts'));
-}
+  }
   balanceOfAllAccountCurrenciesSummery() {
     return element(by.id('BalanceOfAllAccountsCurrenciesSummary'));
    }
@@ -106,7 +106,6 @@ export class AccountsPage {
 
       numberOfAccounts = await this.accountRows().count();
     }
-
     expect(this.accountRows().count()).toEqual(0);
   }
 

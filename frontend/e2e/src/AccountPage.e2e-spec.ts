@@ -21,7 +21,7 @@ describe('Accounts page tests', () => {
     await page.navigateTo();
     await page.removeAllAccounts();
   });
- // my firs comment
+
   it('should display correct English descriptions', () => {
 
     // then
@@ -37,6 +37,7 @@ describe('Accounts page tests', () => {
 
     // when
     page.addAccount(accountName, '141231.53');
+    page.refreshAccountsButton().click();
 
     // then
     page.assertNumberOfAccounts(1);
@@ -48,9 +49,11 @@ describe('Accounts page tests', () => {
     // when
     const accountName = 'First Updated Test Account';
     page.addAccount('First Test Account', '141231.53');
+    page.refreshAccountsButton().click();
 
     // given
     page.updateAccount(accountName, '231.5');
+    page.refreshAccountsButton().click();
 
     // then
     page.assertNumberOfAccounts(1);
@@ -64,6 +67,7 @@ describe('Accounts page tests', () => {
 
     // given
     page.deleteAccount(page.accountRows().first());
+    page.refreshAccountsButton().click();
 
     // then
     page.assertNumberOfAccounts(0);
@@ -74,6 +78,7 @@ describe('Accounts page tests', () => {
     const accountName = 'First Balance PLN Check';
     //given
     page.addAccount(accountName, '250.20');
+    page.refreshAccountsButton().click();
     //then
     page.assertBalanceOfAccounts();
     });
