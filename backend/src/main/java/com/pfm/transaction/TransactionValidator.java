@@ -63,10 +63,10 @@ public class TransactionValidator {
               validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
             } else if (transactionContainsArchivedAccount(transaction, userId)) {
               if (originalTransaction != null) {
-                if (wasPriceChanged(originalTransaction, transaction)) {
+                if (hasAnyAccountPriceEntriesPriceChanged(originalTransaction, transaction)) {
                   validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
                 }
-                if (wasAccountChanged(originalTransaction, transaction)) {
+                if (hasAnyAccountPriceEntriesAccountChanged(originalTransaction, transaction)) {
                   validationErrors.add(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
                 }
                 if (wasDateChanged(originalTransaction, transaction)) {
@@ -101,7 +101,6 @@ public class TransactionValidator {
 
   private boolean isAccountPriceEntrySizeEqual(Transaction transaction, Transaction originalTransaction) {
     return transaction.getAccountPriceEntries().size() == originalTransaction.getAccountPriceEntries().size();
-
   }
 
   private boolean wasDateChanged(Transaction originalTransaction, Transaction transaction) {
@@ -119,22 +118,30 @@ public class TransactionValidator {
     return false;
   }
 
-  private boolean wasAccountChanged(Transaction transaction, Transaction updatedTransaction) {
+  private boolean hasAnyAccountPriceEntriesAccountChanged(Transaction transaction, Transaction updatedTransaction) {
     for (int i = 0; i < updatedTransaction.getAccountPriceEntries().size(); i++) {
-      if (!(updatedTransaction.getAccountPriceEntries().get(i).accountId.equals(transaction.getAccountPriceEntries().get(i).accountId))) {
+      if (hasAccountPriceEntryAccountChanged(transaction, updatedTransaction, i)) {
         return true;
       }
     }
     return false;
   }
 
-  private boolean wasPriceChanged(Transaction originalTransaction, Transaction updatedTransaction) {
+  private boolean hasAccountPriceEntryAccountChanged(Transaction transaction, Transaction updatedTransaction, int i) {
+    return !(updatedTransaction.getAccountPriceEntries().get(i).accountId.equals(transaction.getAccountPriceEntries().get(i).accountId));
+  }
+
+  private boolean hasAnyAccountPriceEntriesPriceChanged(Transaction originalTransaction, Transaction updatedTransaction) {
     for (int i = 0; i < updatedTransaction.getAccountPriceEntries().size(); i++) {
-      if (updatedTransaction.getAccountPriceEntries().get(i).price.compareTo(originalTransaction.getAccountPriceEntries().get(i).price) != 0) {
+      if (hasAccountPriceEntryPriceChanged(originalTransaction, updatedTransaction, i)) {
         return true;
       }
     }
     return false;
+  }
+
+  private boolean hasAccountPriceEntryPriceChanged(Transaction originalTransaction, Transaction updatedTransaction, int i) {
+    return updatedTransaction.getAccountPriceEntries().get(i).price.compareTo(originalTransaction.getAccountPriceEntries().get(i).price) != 0;
   }
 
 }
