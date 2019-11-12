@@ -93,10 +93,10 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    final boolean didDateChangedFromFutureToPast =
+    final boolean hasDateChangedFromFutureToPast =
         dateHelper.isFutureDate(originalTransaction.getDate()) && (dateHelper.isPastDate(updatedTransaction.getDate()));
 
-    if (didDateChangedFromFutureToPast) {
+    if (hasDateChangedFromFutureToPast) {
       return commitPlannedTransaction(transactionId, transactionRequest);
     }
 

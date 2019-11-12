@@ -1088,7 +1088,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldUpdateTransactionContainingArchivedAccountWithDifferentDescription() throws Exception {
+  public void shouldUpdateTransactionContainingArchivedAccountWithNewDescription() throws Exception {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -1125,7 +1125,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
     assertThat(afterUpdate.getDescription(), equalTo(descriptionUpdate));
     assertThat(afterUpdate.getCategoryId(), equalTo(originalTransaction.getCategoryId()));
-
   }
 
   @Test
@@ -1148,8 +1147,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedTransaction.setCategoryId(foodCategoryId);
     updatedTransaction.setDate(LocalDate.of(2018, 8, 8).plusDays(2));
     updatedTransaction.setDescription("Food for birthday");
+
+    //when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
+    //then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1179,8 +1181,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedTransaction.setCategoryId(foodCategoryId);
     updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
     updatedTransaction.setDescription("Food for birthday");
+
+    //when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
+    //then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1210,8 +1215,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction updatedTransaction = callRestToGetTransactionById(originalTransactionId, token);
 
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(updatedAccountId);
+
+    //when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
+    //then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1222,7 +1230,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccountss() throws Exception {
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccounts() throws Exception {
     //given
     Account account = accountJacekBalance1000();
     Account updatedAccount = accountMbankBalance10();
@@ -1246,8 +1254,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .accountId(jacekAccountId)
         .build());
 
+    //when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
+    //then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1255,7 +1265,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED))));
-
   }
 
   private Transaction removeTransactionId(Transaction transaction) {

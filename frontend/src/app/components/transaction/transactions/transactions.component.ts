@@ -122,8 +122,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       TransactionsComponent.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
-        .subscribe((biResponse) => {
-          this.transactionService.getTransaction(biResponse.savedTransactionId)
+        .subscribe((commitResult) => {
+          this.transactionService.getTransaction(commitResult.savedTransactionId)
               .subscribe(
                 (transactionResponse) => {
                   const saved = this.getTransactionFromResponse(transactionResponse);
