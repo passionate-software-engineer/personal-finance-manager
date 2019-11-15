@@ -228,6 +228,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
     transaction.isRecurrent = transactionResponse.recurrent;
+    transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
 
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();

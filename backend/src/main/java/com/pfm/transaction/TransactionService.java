@@ -58,6 +58,7 @@ public class TransactionService {
     transactionToUpdate.getAccountPriceEntries().addAll(transaction.getAccountPriceEntries());
     transactionToUpdate.setDate(transaction.getDate());
     transactionToUpdate.setPlanned(transaction.isPlanned());
+    transactionToUpdate.setRecurrencePeriod(transaction.getRecurrencePeriod());
 
     transactionRepository.save(transactionToUpdate);
   }

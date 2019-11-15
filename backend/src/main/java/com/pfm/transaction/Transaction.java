@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,7 +53,6 @@ public final class Transaction {
   @Enumerated(EnumType.STRING)
   private RecurrencePeriod recurrencePeriod;
 
-  @JsonIgnore
   public boolean isRecurrent() {
     return recurrencePeriod != null && recurrencePeriod != RecurrencePeriod.NONE;
   }
