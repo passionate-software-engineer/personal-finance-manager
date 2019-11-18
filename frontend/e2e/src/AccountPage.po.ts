@@ -26,6 +26,10 @@ export class AccountsPage {
     return element(by.id('NewAccountNameInput'));
   }
 
+  newAccountCurrency() {
+    return element(by.id('NewAccountCurrencySelect'));
+  }
+
   newAccountBalance() {
     return element(by.id('NewAccountBalanceInput'));
   }
@@ -62,6 +66,53 @@ export class AccountsPage {
     return row.element(by.id('EditBtn'));
   }
 
+  balanceOfEURAccount() {
+    return element(by.id('CurrencyBalanceEUR'));
+  }
+
+  balanceOfGBPAccount() {
+    return element(by.id('CurrencyBalanceGBP'));
+  }
+
+  balanceOfPLNAccount() {
+    return element(by.id('CurrencyBalancePLN'));
+  }
+
+  balanceOfUSDAccount() {
+    return element(by.id('CurrencyBalanceUSD'));
+  }
+
+  exchengeRateOfEUR() {
+   return element(by.id('CurrencyExchangeRateEUR'));
+  }
+
+  exchengeRateOfGBP() {
+   return element(by.id('CurrencyExchangeRateGBP'));
+  }
+
+  exchengeRateOfPLN() {
+   return element(by.id('CurrencyExchangeRatePLN'));
+  }
+
+  exchengeRateOfUSD() {
+    return element(by.id('CurrencyExchangeRateUSD'));
+  }
+
+  balancePLNOfEUR() {
+    return element(by.id('CurrencyBalancePLN_EUR'));
+  }
+
+  balancePLNOfGBP() {
+    return element(by.id('CurrencyBalancePLN_GBP'));
+  }
+
+  balancePLNOfPLN() {
+    return element(by.id('CurrencyBalancePLN_PLN'));
+  }
+  balancePLNOfUSD() {
+    return element(by.id('CurrencyBalancePLN_USD'));
+  }
+
   balanceOfAllAccounts() {
     return element(by.id('BalanceOfAllAccounts'));
   }
@@ -69,8 +120,12 @@ export class AccountsPage {
     return element(by.id('BalanceOfAllAccountsCurrenciesSummary'));
    }
 
-  assertBalanceOfAccounts() {
+  assertBalanceOfAllAccounts() {
   expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountCurrenciesSummery().getText());
+  }
+
+  assertBalanceOfSingleAccounts() {
+  expect(this.newAccountBalance().getText()).toEqual(this.balanceOfEURAccount().getText());
   }
 
   alert() {
@@ -88,6 +143,11 @@ export class AccountsPage {
   assertAccountBalance(row, expectedBalance) {
     expect(row.element(by.id('BalanceReadOnly')).getText()).toEqual(expectedBalance);
   }
+
+  assertAccountBalancePLN(expectedBalance_PLN) {
+    expect(this.balancePLNOfEUR().getText()).toEqual(expectedBalance_PLN);
+  }
+
 
   assertSuccessMessage(message) {
     return; // TODO assert not working in stable way
@@ -120,6 +180,18 @@ export class AccountsPage {
     this.assertSuccessMessage('Account added');
   }
 
+   addAccountWithCurrency(name, balance, currency) {
+   this.addAccountButton().click();
+
+   this.newAccountName().sendKeys(name);
+   this.newAccountBalance().sendKeys(balance);
+   this.newAccountCurrency().sendKeys(currency);
+
+   this.newAccountSaveButton().click();
+
+   this.assertSuccessMessage('Account added');
+   }
+
   updateAccount(name, balance) {
     this.optionsButton(this.accountRows().first()).click();
     this.editButton(this.accountRows().first()).click();
@@ -143,6 +215,5 @@ export class AccountsPage {
 
     this.assertSuccessMessage('Account deleted');
   }
-
 
 }

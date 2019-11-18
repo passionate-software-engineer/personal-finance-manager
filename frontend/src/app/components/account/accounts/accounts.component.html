@@ -319,19 +319,19 @@
   <tbody>
     <tr
       *ngFor="let currency of (supportedCurrencies | orderBy: sortableCurrencyTable.order:sortableCurrencyTable.reverse:'case-insensitive')">
-      <td  id="currency_name_{{currency.name}}" class="tdBoxCurrencies">
+      <td  id="CurrencyName{{currency.name}}" class="tdBoxCurrencies">
         {{ currency.name }}
       </td>
 
-      <td id="currency_balance_{{currency.name}}"class="tdBoxCurrencies">
+      <td id="CurrencyBalance{{currency.name}}"class="tdBoxCurrencies">
         {{ currency.allAccountsBalance | number: "0.2-2" }}
       </td>
 
-      <td id="currency_exchange_rate_{{currency.name}}"class="tdBoxCurrencies">
+      <td id="CurrencyExchangeRate{{currency.name}}"class="tdBoxCurrencies">
         {{ currency.exchangeRate }}
       </td>
 
-      <td id="currency_balance_PLN_{{currency.name}}"class="tdBoxCurrencies">
+      <td id="CurrencyBalancePLN_{{currency.name}}"class="tdBoxCurrencies">
         {{ currency.allAccountsBalancePLN | number: "0.2-2" }}
       </td>
     </tr>

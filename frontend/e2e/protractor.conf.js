@@ -6,17 +6,18 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 exports.config = {
   allScriptsTimeout: 20000,
   specs: [
-    './src/**/*.e2e-spec.ts'
+   './src/**/*.e2e-spec.ts'
+
   ],
   capabilities: {
     'browserName': 'chrome',
 
     chromeOptions: {
-      args: ['--headless', '--disable-gpu', '--start-maximized', '--no-sandbox']
+      args: ['--start-maximized', '--no-sandbox']
     }
   },
   directConnect: true,
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://pfm.passionatesoftwareengineer.com/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,

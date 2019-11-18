@@ -80,7 +80,28 @@ describe('Accounts page tests', () => {
     page.addAccount(accountName, '250.20');
     page.refreshAccountsButton().click();
     // then
-    page.assertBalanceOfAccounts();
+    page.assertBalanceOfAllAccounts();
     });
+
+  it('should check account balance currency with  box currencies balance currency', () => {
+    // when
+    const accountName = 'First Balance  Single Currency Check';
+    // given
+    page.addAccountWithCurrency(accountName, '300.25', 'EUR');
+    page.refreshAccountsButton().click();
+    // then
+    page.assertBalanceOfSingleAccounts();
+    });
+
+   it('should check box currencies balance PLN', () => {
+   // when
+       const accountName = 'First Balance  Single Currency Check';
+       // given
+       page.addAccountWithCurrency(accountName, '300.25', 'EUR');
+       page.refreshAccountsButton().click();
+       // then
+       assertAccountBalancePLN('1,273.06')
+       });
+   });
 
 });
