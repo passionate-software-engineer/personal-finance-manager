@@ -124,10 +124,6 @@ export class AccountsPage {
   expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountCurrenciesSummery().getText());
   }
 
-  assertBalanceOfSingleAccounts() {
-  expect(this.newAccountBalance().getText()).toEqual(this.balanceOfEURAccount().getText());
-  }
-
   alert() {
     return element.all(by.id('Alert'));
   }
@@ -144,8 +140,24 @@ export class AccountsPage {
     expect(row.element(by.id('BalanceReadOnly')).getText()).toEqual(expectedBalance);
   }
 
-  assertAccountBalancePLN(expectedBalance_PLN) {
+  assertAccountBalancePLNOfEUR(expectedBalance_PLN) {
     expect(this.balancePLNOfEUR().getText()).toEqual(expectedBalance_PLN);
+  }
+
+  assertAccountBalancePLNOfGBP(expectedBalance_PLN) {
+    expect(this.balancePLNOfGBP().getText()).toEqual(expectedBalance_PLN);
+  }
+
+  assertAccountBalancePLNOfPLN(expectedBalance_PLN) {
+   expect(this.balancePLNOfPLN().getText()).toEqual(expectedBalance_PLN);
+  }
+
+  assertAccountBalancePLNOfUSD(expectedBalance_PLN) {
+    expect(this.balancePLNOfUSD().getText()).toEqual(expectedBalance_PLN);
+  }
+
+  assertAccountBalancePLNSummary(expectedBalanceOfAllAccountCurrenciesSummery) {
+  expect(this.balanceOfAllAccounts().getText()).toEqual(expectedBalanceOfAllAccountCurrenciesSummery);
   }
 
 
