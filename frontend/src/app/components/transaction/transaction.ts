@@ -11,7 +11,7 @@ export class Transaction {
   editMode = false;
   isPlanned = false;
   isRecurrent = false;
-  recurrencePeriod = RecurrencePeriod.NONE
+  recurrencePeriod = RecurrencePeriod.NONE;
   editedTransaction: Transaction;
 }
 

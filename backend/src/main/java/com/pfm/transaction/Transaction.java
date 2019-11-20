@@ -1,6 +1,7 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfm.history.HistoryField;
 import com.pfm.history.HistoryField.SpecialFieldType;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Transaction {
 
   @Id

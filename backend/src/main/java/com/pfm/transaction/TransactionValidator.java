@@ -47,10 +47,12 @@ public class TransactionValidator {
       validationErrors.add(String.format(getMessage(CATEGORY_ID_DOES_NOT_EXIST), transaction.getCategoryId()));
     }
 
-    if (transaction.getAccountPriceEntries() == null || transaction.getAccountPriceEntries().size() == 0) {
+    final boolean isA_P_E_NullOrEmpty = transaction.getAccountPriceEntries() == null || transaction.getAccountPriceEntries().size() == 0;
+    if (isA_P_E_NullOrEmpty) {
       validationErrors.add(getMessage(AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED));
     } else {
-      if (originalTransaction != null && accountPriceEntrySizeChanged(transaction, originalTransaction) && transactionContainsArchivedAccount(
+      final boolean hasTransactionUpdateApplied = originalTransaction != null;
+      if (hasTransactionUpdateApplied && accountPriceEntrySizeChanged(transaction, originalTransaction) && transactionContainsArchivedAccount(
           transaction, userId)) {
         validationErrors.add(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED));
       } else {
@@ -59,10 +61,10 @@ public class TransactionValidator {
             validationErrors.add(getMessage(EMPTY_TRANSACTION_ACCOUNT));
           } else {
             Optional<Account> accountOptional = accountService.getAccountByIdAndUserId(entry.getAccountId(), userId);
-            if (!accountOptional.isPresent()) {
+            if (accountOptional.isEmpty()) {
               validationErrors.add(String.format(getMessage(ACCOUNT_ID_DOES_NOT_EXIST), entry.getAccountId()));
             } else if (transactionContainsArchivedAccount(transaction, userId)) {
-              if (originalTransaction != null) {
+              if (hasTransactionUpdateApplied) {
                 if (hasAnyAccountPriceEntriesPriceChanged(originalTransaction, transaction)) {
                   validationErrors.add(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED));
                 }
