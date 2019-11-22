@@ -860,7 +860,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(EVERY_MONTH.getNextOccurrenceDate())
+        .date(EVERY_MONTH.getNextOccurrenceDate(EVERY_MONTH))
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
@@ -901,7 +901,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(everyWeek.getNextOccurrenceDate())
+        .date(everyWeek.getNextOccurrenceDate(everyWeek))
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
@@ -943,7 +943,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .id(addedTransactionWithRecurrentStatus.getId())
         .description(addedTransactionWithRecurrentStatus.getDescription())
         .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
-        .date(everyDay.getNextOccurrenceDate())
+        .date(everyDay.getNextOccurrenceDate(everyDay))
         .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
         .userId(addedTransactionWithRecurrentStatus.getUserId())
         .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
@@ -954,6 +954,33 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(LocalDate.now().plusDays(1))));
     assertThat(removeTransactionId(allPlannedTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedNextRecurrentTransaction))));
+
+  }
+
+  @Test
+  public void shouldReturnNullForAttemptOfCommittingPlannedTransactionWithUnsupportedRecurrencePeriod() throws Exception {
+    //given
+
+    long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(plannedTransactionId, token);
+
+    List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    assertThat(allTransactions.size(), is(0));
+    assertThat(allPlannedTransactions.size(), is(1));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(addedTransaction)));
+
+    int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(plannedTransactionId, NONE);
+    assertEquals(OK.value(), status);
+
+    callRestToCommitPlannedTransaction(plannedTransactionId);
+
+    final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
+
+    assertThat(allTransactionsAfterCommit.size(), is(1));
+    //        assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
+    //        assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(LocalDate.now().plusDays(1))));
 
   }
 

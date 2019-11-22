@@ -1,22 +1,22 @@
-ALTER TABLE TRANSACTION
-    ALTER COLUMN recurrence_period
+alter table TRANSACTION
+    alter COLUMN recurrence_period
         SET DATA TYPE VARCHAR(32);
 
-UPDATE TRANSACTION
-SET RECURRENCE_PERIOD = 'EVERY_MONTH'
-WHERE TRANSACTION.recurrence_period_copy = 3;
+update TRANSACTION
+set RECURRENCE_PERIOD = 'EVERY_MONTH'
+where TRANSACTION.recurrence_period_copy = 3;
 
-UPDATE TRANSACTION
-SET RECURRENCE_PERIOD = 'EVERY_WEEK'
-WHERE TRANSACTION.recurrence_period_copy = 2;
+update TRANSACTION
+set RECURRENCE_PERIOD = 'EVERY_WEEK'
+where TRANSACTION.recurrence_period_copy = 2;
 
-UPDATE TRANSACTION
-SET RECURRENCE_PERIOD = 'EVERY_DAY'
-WHERE TRANSACTION.recurrence_period_copy = 1;
+update TRANSACTION
+set RECURRENCE_PERIOD = 'EVERY_DAY'
+where TRANSACTION.recurrence_period_copy = 1;
 
-UPDATE TRANSACTION
-SET RECURRENCE_PERIOD = 'NONE'
-WHERE TRANSACTION.recurrence_period_copy = 0;
+update TRANSACTION
+set RECURRENCE_PERIOD = 'NONE'
+where TRANSACTION.recurrence_period_copy = 0;
 
-ALTER TABLE transaction
-DROP COLUMN recurrence_period_copy;
+alter table transaction
+drop COLUMN recurrence_period_copy;

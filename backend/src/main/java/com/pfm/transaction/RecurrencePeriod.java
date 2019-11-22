@@ -3,19 +3,25 @@ package com.pfm.transaction;
 import java.time.LocalDate;
 
 public enum RecurrencePeriod {
-  NONE(null),
-  EVERY_DAY(LocalDate.now().plusDays(1L)),
-  EVERY_WEEK(LocalDate.now().plusWeeks(1L)),
-  EVERY_MONTH(LocalDate.now().plusMonths(1L));
+  NONE,
+  EVERY_DAY,
+  EVERY_WEEK,
+  EVERY_MONTH;
 
-  private final LocalDate nextOccurrence;
-
-  RecurrencePeriod(LocalDate nextOccurrence) {
-    this.nextOccurrence = nextOccurrence;
+  LocalDate getNextOccurrenceDate(RecurrencePeriod recurrencePeriod) {
+    final LocalDate now = LocalDate.now();
+    switch (recurrencePeriod) {
+      case EVERY_DAY:
+        return now.plusDays(1L);
+      case EVERY_WEEK:
+        return now.plusWeeks(1L);
+      case EVERY_MONTH:
+        return now.plusMonths(1L);
+      default:
+    }
+    return null;
   }
-
-  public LocalDate getNextOccurrenceDate() {
-    return nextOccurrence;
-  }
-
 }
+
+
+
