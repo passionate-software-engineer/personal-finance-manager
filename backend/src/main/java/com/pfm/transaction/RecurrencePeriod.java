@@ -10,22 +10,15 @@ public enum RecurrencePeriod {
 
   LocalDate getNextOccurrenceDate() {
     final LocalDate now = LocalDate.now();
-    LocalDate date = null;
     switch (this) {
       case EVERY_DAY:
-        date = now.plusDays(1L);
-        break;
+        return now.plusDays(1L);
       case EVERY_WEEK:
-        date = now.plusWeeks(1L);
-        break;
+        return now.plusWeeks(1L);
       case EVERY_MONTH:
-        date = now.plusMonths(1L);
-        break;
+        return now.plusMonths(1L);
       default:
     }
-    return date;
+    return null;
   }
 }
-
-
-

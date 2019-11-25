@@ -1,6 +1,8 @@
 ALTER TABLE transaction
   ADD recurrence_period_copy integer;
-  UPDATE transaction SET recurrence_period_copy = recurrence_period ;
+
+UPDATE transaction
+  SET recurrence_period_copy = recurrence_period ;
 
 ALTER TABLE transaction
   ALTER COLUMN recurrence_period
