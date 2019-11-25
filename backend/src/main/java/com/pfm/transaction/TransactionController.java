@@ -239,8 +239,7 @@ public class TransactionController implements TransactionApi {
   }
 
   private Long addAsNextRecurrencePeriodPlannedTransaction(long userId, TransactionRequest transactionRequest) {
-    RecurrencePeriod recurrencePeriod = transactionRequest.getRecurrencePeriod();
-    transactionRequest.setDate(recurrencePeriod.getNextOccurrenceDate(recurrencePeriod));
+    transactionRequest.setDate(transactionRequest.getRecurrencePeriod().getNextOccurrenceDate());
     transactionRequest.setPlanned(true);
     final Transaction transaction = transactionsHelper.convertTransactionRequestToTransaction(transactionRequest);
     final ResponseEntity<?> response = addTransactionAndHistoryEntryRelatedToIt(userId, transaction);

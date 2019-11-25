@@ -8,18 +8,22 @@ public enum RecurrencePeriod {
   EVERY_WEEK,
   EVERY_MONTH;
 
-  LocalDate getNextOccurrenceDate(RecurrencePeriod recurrencePeriod) {
+  LocalDate getNextOccurrenceDate() {
     final LocalDate now = LocalDate.now();
-    switch (recurrencePeriod) {
+    LocalDate date = null;
+    switch (this) {
       case EVERY_DAY:
-        return now.plusDays(1L);
+        date = now.plusDays(1L);
+        break;
       case EVERY_WEEK:
-        return now.plusWeeks(1L);
+        date = now.plusWeeks(1L);
+        break;
       case EVERY_MONTH:
-        return now.plusMonths(1L);
+        date = now.plusMonths(1L);
+        break;
       default:
     }
-    return null;
+    return date;
   }
 }
 
