@@ -172,12 +172,13 @@
         * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
         </td>
 
-        <td *ngIf="!account.editMode">
+        <td id="Balance_PLN"
+            *ngIf="!account.editMode">
           {{ account.balancePLN | number: "0.2-2" }}
         </td>
 
         <!-- Last verification date -->
-        <td >{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
+        <td id="BalanceVerificationDate">{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
         </td>
 
         <!-- Options -->

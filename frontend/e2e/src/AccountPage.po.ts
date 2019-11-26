@@ -14,6 +14,10 @@ export class AccountsPage {
     return element(by.id('RefreshAccountsBtn'));
   }
 
+  showArchivedAccountsCheckBox() {
+    return element(by.id('showArchivedCheckbox'));
+  }
+
   nameHeader() {
     return element(by.id('NameHeader'));
   }
@@ -58,8 +62,20 @@ export class AccountsPage {
     return row.element(by.id('OptionsBtn'));
   }
 
+  confirmButton(row) {
+    return row.element(by.id('UpdateLastVerificationDateBtn'));
+  }
+
+  archiveButton(row) {
+    return row.element(by.id('ArchiveBtn'));
+  }
+
   deleteButton(row) {
     return row.element(by.id('DeleteBtn'));
+  }
+
+  makeActiveButton(row) {
+    return row.element(by.id('Make active'));
   }
 
   editButton(row) {
@@ -138,6 +154,10 @@ export class AccountsPage {
 
   assertAccountBalance(row, expectedBalance) {
     expect(row.element(by.id('BalanceReadOnly')).getText()).toEqual(expectedBalance);
+  }
+
+  assertBalanceVerificationDate(row, expectedVerificationDate) {
+    expect(row.element(by.id('BalanceVerificationDate')).getText()).toEqual(expectedVerificationDate);
   }
 
   assertAccountBalancePLNOfEUR(expectedBalance_PLN) {
@@ -226,6 +246,26 @@ export class AccountsPage {
     browser.switchTo().alert().accept();
 
     this.assertSuccessMessage('Account deleted');
+  }
+
+  confirmBalance(row) {
+    this.optionsButton(row).click();
+    this.confirmButton(this.accountRows().first()).click();
+
+    this.assertSuccessMessage('Account balance verification date was updated successfully');
+  }
+
+  archiveBalance(row) {
+    this.optionsButton(row).click();
+    this.archiveButton(this.accountRows().first()).click();
+
+   // browser.switchTo().alert().accept();
+
+    this.assertSuccessMessage('Account was archived successfully');
+  }
+
+  archiveAccountsShow() {
+    this.showArchivedAccountsCheckBox().click();
   }
 
 }
