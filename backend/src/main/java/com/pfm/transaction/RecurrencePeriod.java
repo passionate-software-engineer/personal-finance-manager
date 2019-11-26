@@ -3,22 +3,22 @@ package com.pfm.transaction;
 import java.time.LocalDate;
 
 public enum RecurrencePeriod {
-  EVERY_DAY(Constants.NOW.plusDays(1L)),
-  EVERY_WEEK(Constants.NOW.plusWeeks(1L)),
-  EVERY_MONTH(Constants.NOW.plusMonths(1L));
+  NONE,
+  EVERY_DAY,
+  EVERY_WEEK,
+  EVERY_MONTH;
 
-  private final LocalDate plusPeriod;
-
-  RecurrencePeriod(LocalDate plusPeriod) {
-    this.plusPeriod = plusPeriod;
-  }
-
-  public LocalDate getValue() {
-    return plusPeriod;
-  }
-
-  private static class Constants {
-
-    static final LocalDate NOW = LocalDate.now();
+  LocalDate getNextOccurrenceDate() {
+    final LocalDate now = LocalDate.now();
+    switch (this) {
+      case EVERY_DAY:
+        return now.plusDays(1L);
+      case EVERY_WEEK:
+        return now.plusWeeks(1L);
+      case EVERY_MONTH:
+        return now.plusMonths(1L);
+      default:
+    }
+    return null;
   }
 }

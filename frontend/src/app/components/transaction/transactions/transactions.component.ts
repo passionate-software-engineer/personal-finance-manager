@@ -122,8 +122,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       TransactionsComponent.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
     }
     this.transactionService.editTransaction(transaction.editedTransaction)
-        .subscribe((biResponse) => {
-          this.transactionService.getTransaction(biResponse.savedTransactionId)
+        .subscribe((commitResult) => {
+          this.transactionService.getTransaction(commitResult.savedTransactionId)
               .subscribe(
                 (transactionResponse) => {
                   const saved = this.getTransactionFromResponse(transactionResponse);
@@ -228,6 +228,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
     transaction.isRecurrent = transactionResponse.recurrent;
+    transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
 
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();
@@ -263,7 +264,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   setAsNotRecurrent(transaction: Transaction) {
-    this.transactionService.setAsNotRecurrent(transaction)
+    this.transactionService.setAsNotRecurrent(transaction, RecurrencePeriod.NONE)
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));

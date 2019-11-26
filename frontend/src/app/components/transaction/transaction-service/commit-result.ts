@@ -1,4 +1,4 @@
-export class BiResponse {
+export class CommitResult {
 
   savedTransactionId: number;
   recurrentTransactionId: number;

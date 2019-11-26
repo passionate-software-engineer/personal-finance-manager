@@ -1,12 +1,15 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfm.history.HistoryField;
 import com.pfm.history.HistoryField.SpecialFieldType;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Transaction {
 
   @Id
@@ -46,8 +50,12 @@ public final class Transaction {
   private Long userId;
 
   private boolean isPlanned;
-  private boolean isRecurrent;
 
+  @Enumerated(EnumType.STRING)
   private RecurrencePeriod recurrencePeriod;
+
+  public boolean isRecurrent() {
+    return recurrencePeriod != null && recurrencePeriod != RecurrencePeriod.NONE;
+  }
 
 }

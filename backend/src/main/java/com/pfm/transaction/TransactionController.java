@@ -24,17 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  private static final boolean SET_RECURRENT = true;
-  private static final boolean SET_NOT_RECURRENT = false;
-  private static final String RECURRENT = "recurrent";
-  private static final String NOT_RECURRENT = "not recurrent";
-
-  private TransactionsHelper helper;
+  private TransactionsHelper transactionsHelper;
   private DateHelper dateHelper;
-  private TransactionService transactionService;
-
   private TransactionValidator transactionValidator;
-
+  private TransactionService transactionService;
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
 
@@ -70,7 +63,7 @@ public class TransactionController implements TransactionApi {
 
     log.info("Adding transaction to the database");
 
-    Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
+    Transaction transaction = transactionsHelper.convertTransactionRequestToTransaction(transactionRequest);
 
     List<String> validationResult = transactionValidator.validate(transaction, userId, null);
     if (!validationResult.isEmpty()) {
@@ -78,7 +71,7 @@ public class TransactionController implements TransactionApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    return addTransactionThenLogThenAddHistoryEntry(userId, transaction);
+    return addTransactionAndHistoryEntryRelatedToIt(userId, transaction);
   }
 
   @Override
@@ -86,34 +79,35 @@ public class TransactionController implements TransactionApi {
   public ResponseEntity<?> updateTransaction(@PathVariable long transactionId, @RequestBody TransactionRequest transactionRequest) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> originalTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
-    if (!originalTransactionOptional.isPresent()) {
+    if (originalTransactionOptional.isEmpty()) {
       log.info("No transaction with id {} was found, not able to update", transactionId);
       return ResponseEntity.notFound().build();
     }
 
-    Transaction transactionUpdate = helper.convertTransactionRequestToTransaction(transactionRequest);
+    Transaction updatedTransaction = transactionsHelper.convertTransactionRequestToTransaction(transactionRequest);
     Transaction originalTransaction = originalTransactionOptional.get();
 
-    List<String> validationResult = transactionValidator.validate(transactionUpdate, userId, originalTransaction);
+    List<String> validationResult = transactionValidator.validate(updatedTransaction, userId, originalTransaction);
     if (!validationResult.isEmpty()) {
       log.info("Transaction is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    final boolean isEligibleForCommit =
-        !dateHelper.isPastDate(originalTransaction.getDate()) && (dateHelper.isPastDate(transactionUpdate.getDate()));
+    final boolean hasDateChangedFromFutureToPast =
+        dateHelper.isFutureDate(originalTransaction.getDate()) && (dateHelper.isPastDate(updatedTransaction.getDate()));
 
-    if (isEligibleForCommit) {
+    if (hasDateChangedFromFutureToPast) {
       return commitPlannedTransaction(transactionId, transactionRequest);
     }
 
-    historyEntryService.addHistoryEntryOnUpdate(originalTransaction, transactionUpdate, userId);
+    historyEntryService.addHistoryEntryOnUpdate(originalTransaction, updatedTransaction, userId);
 
-    transactionService.updateTransaction(transactionId, userId, transactionUpdate);
+    transactionService.updateTransaction(transactionId, userId, updatedTransaction);
     log.info("Transaction with id {} was successfully updated", transactionId);
 
     return ResponseEntity.ok(CommitResult.builder()
-        .savedTransactionId(transactionId).build());
+        .savedTransactionId(transactionId)
+        .build());
 
   }
 
@@ -145,13 +139,12 @@ public class TransactionController implements TransactionApi {
 
     private Long savedTransactionId;
     private Long recurrentTransactionId;
-
   }
 
   @Transactional
   @Override
   public ResponseEntity<?> commitPlannedTransaction(long transactionId,
-      @RequestParam(value = "updatingEntry", required = false) TransactionRequest preCommitUpdate) {
+      @RequestParam(value = "updatedTransaction", required = false) TransactionRequest preCommitUpdate) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
@@ -177,49 +170,36 @@ public class TransactionController implements TransactionApi {
   @Transactional
   @Override
   public ResponseEntity<?> setAsRecurrent(long transactionId, @RequestParam RecurrencePeriod recurrencePeriod) {
-    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_RECURRENT, RECURRENT, recurrencePeriod);
-
-  }
-
-  @Transactional
-  @Override
-  public ResponseEntity<?> setAsNotRecurrent(long transactionId) {
-    return setRecurrentStatusAndLogWithMessageOption(transactionId, SET_NOT_RECURRENT, NOT_RECURRENT, null);
-
-  }
-
-  private ResponseEntity<?> setRecurrentStatusAndLogWithMessageOption(long transactionId, boolean setAsRecurrent, String loggerMessageOption,
-      RecurrencePeriod recurrencePeriod) {
 
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> transactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
     if (!transactionOptional.isPresent()) {
-      log.info("No transaction with id {} was found, not able to set it {}", transactionId, loggerMessageOption);
+      log.info("No transaction with id {} was found, not able to set it recurrent", transactionId);
 
       return ResponseEntity.notFound().build();
     }
     Transaction transaction = transactionOptional.get();
 
-    if (recurrencePeriod != null) {
-      transaction.setRecurrencePeriod(recurrencePeriod);
-    }
+    transaction.setRecurrencePeriod(recurrencePeriod);
 
-    Transaction updatedTransaction = getNewInstanceWithUpdateApplied(transaction, setAsRecurrent);
+    Transaction updatedTransaction = getNewInstance(transaction);
+    log.info("Setting recurrent property of transaction id {} to {}", transactionId, recurrencePeriod);
+    transactionService.updateTransaction(transactionId, userId, updatedTransaction);
 
-    return performUpdate(updatedTransaction, userId, setAsRecurrent);
+    return ResponseEntity.ok().build();
   }
 
   private CommitResult addAsNewTransaction(long userId, Transaction transactionToCommit) {
-    Transaction newInstance = getNewInstanceWithUpdateApplied(transactionToCommit, transactionToCommit.isRecurrent());
-    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transactionToCommit);
-    CommitResultBuilder response = CommitResult.builder();
+    Transaction newInstance = getNewInstance(transactionToCommit);
+    TransactionRequest transactionRequest = transactionsHelper.convertTransactionToTransactionRequest(transactionToCommit);
 
-    final Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
-    ResponseEntity<?> createdTransaction = addTransactionThenLogThenAddHistoryEntry(userId, transaction);
+    final Transaction transaction = transactionsHelper.convertTransactionRequestToTransaction(transactionRequest);
+    ResponseEntity<?> createdTransaction = addTransactionAndHistoryEntryRelatedToIt(userId, transaction);
+    CommitResultBuilder response = CommitResult.builder();
     response.savedTransactionId((Long) (createdTransaction.getBody()));
 
     if (newInstance.isRecurrent()) {
-      transactionRequest = helper.convertTransactionToTransactionRequest(newInstance);
+      transactionRequest = transactionsHelper.convertTransactionToTransactionRequest(newInstance);
       long scheduledForNextRecurrentPeriodId = addAsNextRecurrencePeriodPlannedTransaction(userId, transactionRequest);
       response.recurrentTransactionId(scheduledForNextRecurrentPeriodId);
     }
@@ -228,16 +208,7 @@ public class TransactionController implements TransactionApi {
 
   }
 
-  private ResponseEntity<?> performUpdate(Transaction transaction, long userId, boolean updateToBeApplied) {
-    long transactionId = transaction.getId();
-    log.info("Attempting to set account status as {} with id {} ", updateToBeApplied ? RECURRENT : NOT_RECURRENT, transactionId);
-    transactionService.updateTransaction(transactionId, userId, transaction);
-
-    return ResponseEntity.ok().build();
-
-  }
-
-  private Transaction getNewInstanceWithUpdateApplied(Transaction transactionToUpdate, boolean updateToBeApplied) {
+  private Transaction getNewInstance(Transaction transactionToUpdate) {
     return Transaction.builder()
         .id(transactionToUpdate.getId())
         .description(transactionToUpdate.getDescription())
@@ -246,7 +217,6 @@ public class TransactionController implements TransactionApi {
         .accountPriceEntries(getAccountPriceEntriesNewInstance(transactionToUpdate))
         .userId(transactionToUpdate.getUserId())
         .isPlanned(transactionToUpdate.isPlanned())
-        .isRecurrent(updateToBeApplied ? SET_RECURRENT : SET_NOT_RECURRENT)
         .recurrencePeriod(transactionToUpdate.getRecurrencePeriod())
         .build();
   }
@@ -260,7 +230,7 @@ public class TransactionController implements TransactionApi {
         .collect(Collectors.toList());
   }
 
-  private ResponseEntity<?> addTransactionThenLogThenAddHistoryEntry(long userId, Transaction transaction) {
+  private ResponseEntity<?> addTransactionAndHistoryEntryRelatedToIt(long userId, Transaction transaction) {
     Transaction createdTransaction = transactionService.addTransaction(userId, transaction, false);
     log.info("Saving transaction to the database was successful. Transaction id is {}", createdTransaction.getId());
     historyEntryService.addHistoryEntryOnAdd(createdTransaction, userId);
@@ -269,17 +239,17 @@ public class TransactionController implements TransactionApi {
   }
 
   private Long addAsNextRecurrencePeriodPlannedTransaction(long userId, TransactionRequest transactionRequest) {
-    transactionRequest.setDate(transactionRequest.getRecurrencePeriod().getValue());
+    transactionRequest.setDate(transactionRequest.getRecurrencePeriod().getNextOccurrenceDate());
     transactionRequest.setPlanned(true);
-    final Transaction transaction = helper.convertTransactionRequestToTransaction(transactionRequest);
-    final ResponseEntity<?> response = addTransactionThenLogThenAddHistoryEntry(userId, transaction);
+    final Transaction transaction = transactionsHelper.convertTransactionRequestToTransaction(transactionRequest);
+    final ResponseEntity<?> response = addTransactionAndHistoryEntryRelatedToIt(userId, transaction);
 
     return (Long) response.getBody();
   }
 
   private Transaction getNewInstanceWithUpdatedEntriesAndPlannedStatus(Transaction transactionToCommit,
       TransactionRequest preCommitUpdate) {
-    Transaction toCommit = preCommitUpdate != null ? helper.convertTransactionRequestToTransaction(preCommitUpdate) : transactionToCommit;
+    Transaction toCommit = preCommitUpdate != null ? transactionsHelper.convertTransactionRequestToTransaction(preCommitUpdate) : transactionToCommit;
 
     return Transaction.builder()
         .date(preCommitUpdate != null ? preCommitUpdate.getDate() : LocalDate.now())
@@ -288,7 +258,6 @@ public class TransactionController implements TransactionApi {
         .categoryId(toCommit.getCategoryId())
         .description(toCommit.getDescription())
         .accountPriceEntries(getAccountPriceEntriesNewInstance(toCommit))
-        .isRecurrent(toCommit.isRecurrent())
         .recurrencePeriod(toCommit.getRecurrencePeriod())
         .build();
   }

@@ -33,9 +33,11 @@ public class MessagesProvider {
   public static final String ACCOUNT_IS_ARCHIVED = "transactionValidator.accountIsArchived";
   public static final String CATEGORY_ID_DOES_NOT_EXIST = "validator.categoryIdDoesNotExist";
   public static final String ACCOUNT_ID_DOES_NOT_EXIST = "validator.accountIdDoesNotExist";
+  public static final String ACCOUNT_PRICE_ENTRY_SIZE_CHANGED = "validator.accountPriceEntrySizeChangedInArchivedAccountTransaction";
   public static final String EMPTY_TRANSACTION_DATE = "transactionValidator.emptyDate";
   public static final String AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED = "transactionValidator.atLeastOneAccountAndPriceIsRequired";
-  public static final String PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED = "transactionValidator.archivedAccountTransactionPriceChanged";
+  public static final String PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED =
+      "transactionValidator.archivedAccountTransactionPriceChanged";
   public static final String ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED =
       "transactionValidator.archivedAccountTransactionAccountChanged";
   public static final String DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED = "transactionValidator.archivedAccountTransactionDateChanged";

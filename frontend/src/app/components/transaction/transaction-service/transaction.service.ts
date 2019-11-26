@@ -9,7 +9,6 @@ import {RecurrencePeriod} from '../recurrence-period';
 
 const PATH = 'transactions';
 const SET_AS_RECURRENT = 'setAsRecurrent';
-const SET_AS_NOT_RECURRENT = 'setAsNotRecurrent';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,6 @@ export class TransactionService extends ServiceBase {
       accountPriceEntries: [],
       date: transaction.date,
       isPlanned: transaction.isPlanned,
-      isRecurrent: transaction.isRecurrent,
     };
 
     for (const entry of transaction.accountPriceEntries) {
@@ -78,19 +76,18 @@ export class TransactionService extends ServiceBase {
 
   setAsRecurrent(transaction: Transaction, recurrencePeriod: RecurrencePeriod) {
     const param = new HttpParams().set('recurrencePeriod', recurrencePeriod);
-    return this.setRecurrenceStatus(transaction, true, param);
+    return this.setRecurrenceStatus(transaction, param);
   }
 
-  setAsNotRecurrent(transaction: Transaction) {
-    return this.setRecurrenceStatus(transaction, false);
+  setAsNotRecurrent(transaction: Transaction, recurrencePeriod: RecurrencePeriod) {
+    const param = new HttpParams().set('recurrencePeriod', recurrencePeriod);
+
+    return this.setRecurrenceStatus(transaction, param);
   }
 
-  private setRecurrenceStatus(transaction: Transaction, toBeRecurrent: boolean, param?: HttpParams): Observable<any> {
-    const pathEnd = toBeRecurrent ? SET_AS_RECURRENT : SET_AS_NOT_RECURRENT;
+  private setRecurrenceStatus(transaction: Transaction, param?: HttpParams): Observable<any> {
     if (param) {
-      return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + pathEnd + '?' + param), '', this.contentType);
-    } else {
-      return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + pathEnd), '', this.contentType);
+      return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id + '/' + SET_AS_RECURRENT + '?' + param), '', this.contentType);
     }
   }
 
