@@ -11,7 +11,7 @@ import {TransactionFilterService} from '../transaction-filter-service/transactio
 import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
-import {DateHelper} from '../../../helpers/date.helper';
+import {DateHelper} from '../../../helpers/date-helper';
 import {Operation} from './transaction';
 import {RecurrencePeriod} from '../recurrence-period';
 import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
@@ -91,7 +91,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             }
             this.allTransactions.push(transaction);
           }
-          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForTransactions(this.transactions);
+          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPastTransactions(this.transactions);
           this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPlannedTransactions(this.plannedTransactions);
           super.filterTransactions();
         });
@@ -408,9 +408,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return false;
   }
 
-  private getWarnBgColorForUncommittedPlannedTransaction(transaction: any) {
+  private getStatusBasedBgColorForPlannedTransaction(transaction: any) {
     if (this.isOverduePlannedTransaction(transaction)) {
       return '#F1AD8D';
+    }
+    if (transaction.isPlanned) {
+      return '#c7ffc0';
     }
   }
 

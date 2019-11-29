@@ -94,15 +94,14 @@
       </th>
 
       <!--Account balance-->
-      <th [class.active]="order === 'accountPriceEntries[0].account.name'"
-          (click)="setOrder('accountPriceEntries[0].account.name')"
+      <th [class.active]="order === 'accountPriceEntries[0].account.balance'"
+          (click)="setOrder('accountPriceEntries[0].account.balance')"
           class="width12"
           id="PostTransactionAccountBalanceHeader">
-        {{'Balance after transaction'}}
+        {{'transaction.postTransactionAccountBalance' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
-
 
       <!--Category-->
       <th [class.active]="order === 'category.name'"
@@ -271,7 +270,7 @@
     </tr>
 
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
-        [ngStyle]="{backgroundColor: getWarnBgColorForUncommittedPlannedTransaction(transaction)}"
+        [ngStyle]="{backgroundColor: getStatusBasedBgColorForPlannedTransaction(transaction)}"
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
 

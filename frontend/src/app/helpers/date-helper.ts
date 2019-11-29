@@ -1,13 +1,13 @@
 export class DateHelper {
 
-   static DayInMs = 86_400_000;
+  static dayDurationInMs = 86_400_000;
 
   public static isFutureDate(date: Date): boolean {
     return new Date(date).getTime() > Date.now();
   }
 
   public static isPastDate(date: Date): boolean {
-    return new Date(date).getTime() + this.DayInMs < Date.now();
+    return new Date(date).getTime() + this.dayDurationInMs < Date.now();
   }
 
   public static compareDates(date1: Date, date2: Date) {
@@ -20,6 +20,9 @@ export class DateHelper {
     return 0;
   }
 
- public static getDate = currentDatePlusDays => new Date((new Date()).getTime() + (currentDatePlusDays * DateHelper.DayInMs));
+  public static getDate(currentDatePlusDays) {
+    const currentTimeInMs = new Date().getTime();
+    return new Date(currentTimeInMs + (currentDatePlusDays * DateHelper.dayDurationInMs));
+  }
 
 }

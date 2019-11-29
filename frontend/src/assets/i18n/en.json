@@ -128,6 +128,7 @@
   "transaction.description": "Description",
   "transaction.price": "Price",
   "transaction.account": "Account",
+  "transaction.postTransactionAccountBalance": "Account balance after transaction",
   "transaction.category": "Category",
   "filters.showAllFilterName": "All transactions",
   "history.date": "Date",

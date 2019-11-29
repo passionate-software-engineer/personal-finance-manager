@@ -126,6 +126,7 @@
   "transaction.description": "Opis",
   "transaction.price": "Cena",
   "transaction.account": "Konto",
+  "transaction.postTransactionAccountBalance": "Stan konta po transakcji",
   "transaction.category": "Kategoria",
   "filters.showAllFilterName": "Wszystkie transakcje",
   "history.date": "Data",

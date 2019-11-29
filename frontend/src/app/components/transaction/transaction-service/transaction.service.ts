@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Transaction} from '../transaction';
 import {TransactionResponse} from './transaction-response';
 import {ServiceBase} from '../../../helpers/service-base';
-import {DateHelper} from '../../../helpers/date.helper';
+import {DateHelper} from '../../../helpers/date-helper';
 import {RecurrencePeriod} from '../recurrence-period';
 
 const PATH = 'transactions';

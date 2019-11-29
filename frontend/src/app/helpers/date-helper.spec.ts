@@ -1,4 +1,4 @@
-import {DateHelper} from './date.helper';
+import {DateHelper} from './date-helper';
 
 describe('Should compare 2 dates', function () {
 
