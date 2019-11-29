@@ -270,7 +270,7 @@
       </td>
     </tr>
 
-    <tr *ngFor=" let i = index ; let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
+    <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
         [ngStyle]="{backgroundColor: getWarnBgColorForUncommittedPlannedTransaction(transaction)}"
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
