@@ -13,13 +13,12 @@
             type="button">{{'button.refresh' | translate}}</button>
 
     <span class="hidePlannedTransactionsCheckbox">
-      <input (change)="hidePlannedTransactionsCheckboxState = !hidePlannedTransactionsCheckboxState"
+      <input (change)="negateHidePlannedTransactionsCheckboxAndSaveState()"
              id="hidePlannedTransactionsCheckbox"
-             type="checkbox">
+             type="checkbox" [checked]= "getHidePlannedTransactionsCheckboxState()" >
       {{"checkbox.hidePlannedTransactions" | translate}}
     </span>
   </div>
-
 
   <div class="form-inline float-right">
     <select class="form-control"
@@ -93,9 +92,9 @@
         <span [hidden]="reverse">▲</span>
       </th>
 
-      <!--Account balance-->
-      <th [class.active]="order === 'accountPriceEntries[0].account.balance'"
-          (click)="setOrder('accountPriceEntries[0].account.balance')"
+      <!--Account balance after transaction-->
+      <th [class.active]="order === 'accountPriceEntries[0].account.postTransactionAccountBalance'"
+          (click)="setOrder('accountPriceEntries[0].account.postTransactionAccountBalance')"
           class="width12"
           id="PostTransactionAccountBalanceHeader">
         {{'transaction.postTransactionAccountBalance' | translate}}
@@ -175,8 +174,16 @@
         </select>
       </td>
 
-      <!--Account balance-->
+      <!--Account balance after transaction-->
       <td>
+        <input [(ngModel)]="selectedFilter.postTransactionAccountBalanceFrom"
+               (ngModelChange)="filterTransactions()"
+               class="form-control"
+               type="number">
+        <input [(ngModel)]="selectedFilter.postTransactionAccountBalanceTo"
+               (ngModelChange)="filterTransactions()"
+               class="form-control"
+               type="number">
       </td>
 
 
@@ -243,7 +250,7 @@
       </td>
 
 
-      <!--Account balance-->
+      <!--Account balance after transaction-->
       <td>
       </td>
 
@@ -274,7 +281,7 @@
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
 
-      <ng-container *ngIf="!transaction.isPlanned || !hidePlannedTransactionsCheckboxState">
+      <ng-container *ngIf="!transaction.isPlanned || !getHidePlannedTransactionsCheckboxState()">
 
         <!--Date-->
         <ng-container
@@ -362,7 +369,7 @@
           </td>
         </ng-template>
 
-        <!--Account balance-->
+        <!--Account balance after transaction-->
         <td >
           <ng-container *ngFor="let entry of transaction.accountPriceEntries">
             <p>{{ entry.postTransactionAccountBalance | number:'0.2'}}</p>

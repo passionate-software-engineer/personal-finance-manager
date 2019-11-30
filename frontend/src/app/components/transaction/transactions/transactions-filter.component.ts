@@ -1,5 +1,5 @@
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
-import {Transaction} from '../transaction';
+import {AccountPriceEntry, Transaction} from '../transaction';
 import {Category} from '../../category/category';
 import {Account} from '../../account/account';
 import {TransactionFilter} from '../transaction-filter';
@@ -186,28 +186,10 @@ export class FiltersComponentBase extends Sortable {
     for (const transaction of this.allTransactions) {
       this.transactions.push(transaction);
     }
-
-    if (this.selectedFilter.priceFrom !== undefined && this.selectedFilter.priceFrom !== null) {
-      this.transactions = this.transactions.filter(transaction => {
-        for (const accountPriceEntry of transaction.accountPriceEntries) {
-          if (accountPriceEntry.price >= this.selectedFilter.priceFrom) {
-            return true;
-          }
-        }
-        return false;
-      });
-    }
-
-    if (this.selectedFilter.priceTo !== undefined && this.selectedFilter.priceTo !== null) {
-      this.transactions = this.transactions.filter(transaction => {
-        for (const accountPriceEntry of transaction.accountPriceEntries) {
-          if (accountPriceEntry.price <= this.selectedFilter.priceTo) {
-            return true;
-          }
-        }
-        return false;
-      });
-    }
+    this.filterByPriceFrom(this.selectedFilter.priceFrom);
+    this.filterByPriceTo(this.selectedFilter.priceTo);
+    this.filterByPostTransactionBalanceFrom(this.selectedFilter.postTransactionAccountBalanceFrom);
+    this.filterByPostTransactionBalanceTo(this.selectedFilter.postTransactionAccountBalanceTo);
 
     if (this.selectedFilter.dateFrom !== undefined && this.selectedFilter.dateFrom !== null && this.selectedFilter.dateFrom !==
       '') {
@@ -247,13 +229,71 @@ export class FiltersComponentBase extends Sortable {
     }
   }
 
+  private filterByPriceTo(priceTo: number) {
+    this.filterByPrice(priceTo, this.isLowerOrEqual);
+  }
+
+  private filterByPriceFrom(priceFrom: number) {
+    this.filterByPrice(priceFrom, this.isGreaterOrEqual);
+  }
+
+  private filterByPrice(price: number, filterFunction: Function) {
+    return this.filterSpecifiedValuesByFunction(price, this.getPrice, filterFunction);
+  }
+
+  private filterByPostTransactionBalanceTo(balanceTo: number) {
+    return this.filterByPostTransactionBalance(balanceTo, this.isLowerOrEqual);
+  }
+
+  private filterByPostTransactionBalanceFrom(balanceFrom: number) {
+    return this.filterByPostTransactionBalance(balanceFrom, this.isGreaterOrEqual);
+  }
+
+  private filterByPostTransactionBalance(balance: number, filterFunction: Function) {
+    return this.filterSpecifiedValuesByFunction(balance, this.getPostTransactionAccountBalance, filterFunction);
+  }
+
+  private filterSpecifiedValuesByFunction(valueFilteringBy: number, valueToBeFiltered: Function, filterFunction: Function) {
+    if (this.isArgumentNotNullAndDefined(valueFilteringBy)) {
+      this.transactions = this.transactions.filter(transaction => {
+        for (const accountPriceEntry of transaction.accountPriceEntries) {
+          const accountPriceEntryValueToFilterBy = valueToBeFiltered(accountPriceEntry);
+          if (filterFunction(accountPriceEntryValueToFilterBy, valueFilteringBy)) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+  }
+
+  private isLowerOrEqual: Function = (x: number, y: number) => {
+    return x <= y;
+  }
+
+  private isGreaterOrEqual: Function = (x: number, y: number) => {
+    return x >= y;
+  }
+
+  private getPrice: Function = (accountPriceEntry: AccountPriceEntry) => {
+    return accountPriceEntry.price;
+  }
+
+  private getPostTransactionAccountBalance: Function = (accountPriceEntry: AccountPriceEntry) => {
+    return accountPriceEntry.postTransactionAccountBalance;
+  }
+
+  private isArgumentNotNullAndDefined(argument: any) {
+    return argument !== undefined && argument !== null;
+  }
+
   private getAllChildCategoriesIncludingParent(filterCategories: Category[]) {
     const allCategories = [];
 
     for (const filterCategory of filterCategories) {
       for (const category of this.categories) {
         let temporaryCategory = category;
-        while (temporaryCategory !== undefined && temporaryCategory !== null) {
+        while (this.isArgumentNotNullAndDefined(temporaryCategory)) {
           if (temporaryCategory.id === filterCategory.id) {
             allCategories.push(category);
           }
@@ -284,7 +324,12 @@ export class FiltersComponentBase extends Sortable {
     }
 
     if (filter.priceFrom != null && filter.priceTo != null && filter.priceFrom > filter.priceTo) {
-      this.alertService.error(this.translate.instant('message.filterWrongPriceRange'));
+      this.alertService.error(this.translate.instant('message.priceFilterWrongPriceRange'));
+      status = false;
+    }
+    if (filter.postTransactionAccountBalanceFrom != null && filter.postTransactionAccountBalanceTo != null &&
+      filter.postTransactionAccountBalanceFrom > filter.postTransactionAccountBalanceTo) {
+      this.alertService.error(this.translate.instant('message.postTransactionBalanceFilterWrongPriceRange'));
       status = false;
     }
 

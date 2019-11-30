@@ -12,4 +12,6 @@ export class TransactionFilter {
   accounts: Account[];
   priceFrom: number;
   priceTo: number;
+  postTransactionAccountBalanceFrom: number;
+  postTransactionAccountBalanceTo: number;
 }

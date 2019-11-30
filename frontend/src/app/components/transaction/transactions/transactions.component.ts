@@ -15,6 +15,7 @@ import {DateHelper} from '../../../helpers/date-helper';
 import {Operation} from './transaction';
 import {RecurrencePeriod} from '../recurrence-period';
 import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-transactions',
@@ -44,7 +45,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   selectedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
-  hidePlannedTransactionsCheckboxState = false;
   pipe = new DatePipe('en-US');
 
   private static setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction: Transaction) {
@@ -428,4 +428,16 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   isEditModeContainsArchivedAccount(transaction: any) {
     return !transaction.editMode || transaction.editMode && this.containsArchivedAccount(transaction);
   }
+
+  negateHidePlannedTransactionsCheckboxAndSaveState() {
+    const negatedState = !this.getHidePlannedTransactionsCheckboxState();
+    sessionStorage.setItem('hidePlannedTransactionsCheckboxState', JSON.stringify(negatedState));
+    return negatedState;
+  }
+
+  getHidePlannedTransactionsCheckboxState() {
+    const checkBoxState = JSON.parse(sessionStorage.getItem('hidePlannedTransactionsCheckboxState'));
+    return checkBoxState === null ? environment.hidePlannedTransactionsCheckboxStateOnApplicationStart : checkBoxState;
+  }
+
 }
