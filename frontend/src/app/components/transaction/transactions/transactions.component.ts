@@ -14,6 +14,8 @@ import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
 import {Operation} from './transaction';
 import {RecurrencePeriod} from '../recurrence-period';
+import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-transactions',
@@ -23,6 +25,7 @@ import {RecurrencePeriod} from '../recurrence-period';
 export class TransactionsComponent extends FiltersComponentBase implements OnInit {
 
   constructor(
+    private postTransactionAccountBalanceHelper: PostTransactionAccountBalanceHelper,
     private transactionService: TransactionService,
     alertService: AlertsService,
     private categoryService: CategoryService,
@@ -42,7 +45,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   selectedFilter = new TransactionFilter();
   originalFilter = new TransactionFilter();
   filters: TransactionFilter[] = [];
-  hidePlannedTransactionsCheckboxState = false;
   pipe = new DatePipe('en-US');
 
   private static setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction: Transaction) {
@@ -89,6 +91,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             }
             this.allTransactions.push(transaction);
           }
+          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPastTransactions(this.transactions);
+          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPlannedTransactions(this.plannedTransactions);
           super.filterTransactions();
         });
   }
@@ -228,7 +232,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
     transaction.isRecurrent = transactionResponse.recurrent;
-    transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
 
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();
@@ -405,9 +408,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return false;
   }
 
-  private getWarnBgColorForUncommittedPlannedTransaction(transaction: any) {
+  private getStatusBasedBgColorForPlannedTransaction(transaction: any) {
     if (this.isOverduePlannedTransaction(transaction)) {
       return '#F1AD8D';
+    }
+    if (transaction.isPlanned) {
+      return '#c7ffc0';
     }
   }
 
@@ -422,4 +428,16 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   isEditModeContainsArchivedAccount(transaction: any) {
     return !transaction.editMode || transaction.editMode && this.containsArchivedAccount(transaction);
   }
+
+  negateHidePlannedTransactionsCheckboxAndSaveState() {
+    const negatedState = !this.getHidePlannedTransactionsCheckboxState();
+    sessionStorage.setItem('hidePlannedTransactionsCheckboxState', JSON.stringify(negatedState));
+    return negatedState;
+  }
+
+  getHidePlannedTransactionsCheckboxState() {
+    const checkBoxState = JSON.parse(sessionStorage.getItem('hidePlannedTransactionsCheckboxState'));
+    return checkBoxState === null ? environment.hidePlannedTransactionsCheckboxStateOnApplicationStart : checkBoxState;
+  }
+
 }

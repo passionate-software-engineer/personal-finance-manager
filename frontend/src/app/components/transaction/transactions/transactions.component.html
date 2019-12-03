@@ -13,13 +13,12 @@
             type="button">{{'button.refresh' | translate}}</button>
 
     <span class="hidePlannedTransactionsCheckbox">
-      <input (change)="hidePlannedTransactionsCheckboxState = !hidePlannedTransactionsCheckboxState"
+      <input (change)="negateHidePlannedTransactionsCheckboxAndSaveState()"
              id="hidePlannedTransactionsCheckbox"
-             type="checkbox">
+             type="checkbox" [checked]= "getHidePlannedTransactionsCheckboxState()" >
       {{"checkbox.hidePlannedTransactions" | translate}}
     </span>
   </div>
-
 
   <div class="form-inline float-right">
     <select class="form-control"
@@ -56,7 +55,7 @@
       <!--Date-->
       <th [class.active]="order === 'date'"
           (click)="setOrder('date')"
-          class="width15"
+          class="width12"
           id="DateHeader">
         {{'transaction.date' | translate}}
         <span [hidden]="!reverse">▼</span>
@@ -76,7 +75,7 @@
       <!--Price-->
       <th [class.active]="order === 'accountPriceEntries[0].pricePLN'"
           (click)="setOrder('accountPriceEntries[0].pricePLN')"
-          class="width15"
+          class="width12"
           id="PriceHeader">
         {{ 'transaction.price' | translate}}
         <span [hidden]="!reverse">▼</span>
@@ -86,9 +85,19 @@
       <!--Account-->
       <th [class.active]="order === 'accountPriceEntries[0].account.name'"
           (click)="setOrder('accountPriceEntries[0].account.name')"
-          class="width15"
+          class="width12"
           id="AccountHeader">
         {{'transaction.account' | translate}}
+        <span [hidden]="!reverse">▼</span>
+        <span [hidden]="reverse">▲</span>
+      </th>
+
+      <!--Account balance after transaction-->
+      <th [class.active]="order === 'accountPriceEntries[0].account.postTransactionAccountBalance'"
+          (click)="setOrder('accountPriceEntries[0].account.postTransactionAccountBalance')"
+          class="width12"
+          id="PostTransactionAccountBalanceHeader">
+        {{'transaction.postTransactionAccountBalance' | translate}}
         <span [hidden]="!reverse">▼</span>
         <span [hidden]="reverse">▲</span>
       </th>
@@ -103,7 +112,7 @@
         <span [hidden]="reverse">▲</span>
       </th>
 
-      <th class="width15">
+      <th class="width12">
       </th>
     </tr>
 
@@ -164,6 +173,19 @@
           </ng-container>
         </select>
       </td>
+
+      <!--Account balance after transaction-->
+      <td>
+        <input [(ngModel)]="selectedFilter.postTransactionAccountBalanceFrom"
+               (ngModelChange)="filterTransactions()"
+               class="form-control"
+               type="number">
+        <input [(ngModel)]="selectedFilter.postTransactionAccountBalanceTo"
+               (ngModelChange)="filterTransactions()"
+               class="form-control"
+               type="number">
+      </td>
+
 
       <!--Category-->
       <td>
@@ -227,6 +249,11 @@
         </select>
       </td>
 
+
+      <!--Account balance after transaction-->
+      <td>
+      </td>
+
       <!--Category-->
       <td>
         <select [(ngModel)]="newTransaction.category"
@@ -250,11 +277,11 @@
     </tr>
 
     <tr *ngFor="let transaction of transactions | orderBy: order:reverse:'case-insensitive'"
-        [ngStyle]="{backgroundColor: getWarnBgColorForUncommittedPlannedTransaction(transaction)}"
+        [ngStyle]="{backgroundColor: getStatusBasedBgColorForPlannedTransaction(transaction)}"
         [ngClass]="{'font-italic':transaction.isPlanned}"
         id="TransactionRow">
 
-      <ng-container *ngIf="!transaction.isPlanned || !hidePlannedTransactionsCheckboxState">
+      <ng-container *ngIf="!transaction.isPlanned || !getHidePlannedTransactionsCheckboxState()">
 
         <!--Date-->
         <ng-container
@@ -341,6 +368,13 @@
             </select>
           </td>
         </ng-template>
+
+        <!--Account balance after transaction-->
+        <td >
+          <ng-container *ngFor="let entry of transaction.accountPriceEntries">
+            <p>{{ entry.postTransactionAccountBalance | number:'0.2'}}</p>
+          </ng-container>
+        </td>
 
         <!--Category-->
         <td *ngIf="!transaction.editMode"
