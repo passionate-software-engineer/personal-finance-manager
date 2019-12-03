@@ -90,41 +90,53 @@ export class PostTransactionAccountBalanceHelper {
 
     accountIdToTransactionsMap.forEach((transactionsByAccountId) => {
       isCalculatingForPlannedTransactions ? this.sortTransactionsByDate(transactionsByAccountId) :
-          this.sortTransactionsByDateReverseOrder(transactionsByAccountId);
+        this.sortTransactionsByDateReverseOrder(transactionsByAccountId);
     });
 
     accountIdToTransactionsMap.forEach((transaction) => {
-          for (let i = 0; i < transaction.length; i++) {
-            const accountPriceEntries = transaction[i].accountPriceEntries;
-            const accountIdToPreviousPostTransactionBalanceMap = new Map<number, number>();
-            for (let j = 0; j < accountPriceEntries.length; j++) {
-              const currentAccountId = accountPriceEntries[j].account.id;
-              const isFirstAccountPriceEntryForCurrentAccount = !accountIdToPreviousPostTransactionBalanceMap.has(currentAccountId);
-              if (isFirstAccountPriceEntryForCurrentAccount) {
-                const transactionsByAccount = accountIdToTransactionsMap.get(currentAccountId);
-                const currentTransactionIndexInTransactionsByAccount = accountIdToTransactionsMap.get(currentAccountId).indexOf(transaction[i]);
-                const isTheMostRecentTransactionOnAccount = currentTransactionIndexInTransactionsByAccount === 0;
-                if (isTheMostRecentTransactionOnAccount) {
-                  const accountBalanceFactor = isCalculatingForPlannedTransactions ? accountPriceEntries[j].price : 0;
-                  accountPriceEntries[j].postTransactionAccountBalance = +accountIdToCurrentBalanceMap.get(currentAccountId) + accountBalanceFactor;
-                } else {
-                  const previousTransactionOnAccount = transactionsByAccount[currentTransactionIndexInTransactionsByAccount - 1];
-                  const previousPostTransactionAccountBalance = this.getPostTransactionBalance(currentAccountId, previousTransactionOnAccount);
-                  const indexOffset = isCalculatingForPlannedTransactions ? 0 : 1;
-                  const previousTransactionPrice = this.getPriceFromAccountPriceEntry(currentAccountId,
-                      transactionsByAccount[currentTransactionIndexInTransactionsByAccount - indexOffset]);
-                  const operationType = isCalculatingForPlannedTransactions ? previousTransactionPrice : -previousTransactionPrice;
-                  accountPriceEntries[j].postTransactionAccountBalance = +previousPostTransactionAccountBalance + operationType;
-                  accountIdToPreviousPostTransactionBalanceMap.set(currentAccountId, accountPriceEntries[j].postTransactionAccountBalance);
-                }
+        for (let i = 0; i < transaction.length; i++) {
+          const accountPriceEntries = transaction[i].accountPriceEntries;
+          const accountIdToPreviousPostTransactionBalanceMap = new Map<number, number>();
+          for (let j = accountPriceEntries.length - 1; j >= 0; j--) {
+
+            const currentAccountId = accountPriceEntries[j].account.id;
+            const isFirstAccountPriceEntryForCurrentAccount = !accountIdToPreviousPostTransactionBalanceMap.has(currentAccountId);
+            if (isFirstAccountPriceEntryForCurrentAccount) {
+              const transactionsByAccount = accountIdToTransactionsMap.get(currentAccountId);
+              const currentTransactionIndexInTransactionsByAccount = accountIdToTransactionsMap.get(currentAccountId)
+                                                                                               .indexOf(transaction[i]);
+              const isTheMostRecentTransactionOnAccount = currentTransactionIndexInTransactionsByAccount === 0;
+
+              if (isTheMostRecentTransactionOnAccount) {
+                const accountBalanceFactor = isCalculatingForPlannedTransactions ? accountPriceEntries[j].price : 0;
+                accountPriceEntries[j].postTransactionAccountBalance = +accountIdToCurrentBalanceMap.get(currentAccountId) + accountBalanceFactor;
+                accountIdToPreviousPostTransactionBalanceMap.set(currentAccountId, accountPriceEntries[j].postTransactionAccountBalance);
+
               } else {
-                const previousPostTransactionAccountBalance = accountIdToPreviousPostTransactionBalanceMap.get(currentAccountId);
-                accountPriceEntries[j].postTransactionAccountBalance = previousPostTransactionAccountBalance + accountPriceEntries[j].price;
+                const previousTransactionOnAccount = transactionsByAccount[currentTransactionIndexInTransactionsByAccount - 1];
+                const previousPostTransactionAccountBalance = this.getPostTransactionBalance(currentAccountId, previousTransactionOnAccount);
+                const notMostRecentTransactionOnAccountFactor = isCalculatingForPlannedTransactions ? 0 : 1;
+                const previousAccountPriceEntryPrice = this.getPriceFromAccountPriceEntry(currentAccountId, transactionsByAccount
+                  [currentTransactionIndexInTransactionsByAccount - notMostRecentTransactionOnAccountFactor]);
+                const transactionTypeDependentFactor = isCalculatingForPlannedTransactions ? accountPriceEntries[j].price
+                  : -previousAccountPriceEntryPrice;
+
+                accountPriceEntries[j].postTransactionAccountBalance = previousPostTransactionAccountBalance + transactionTypeDependentFactor;
+
                 accountIdToPreviousPostTransactionBalanceMap.set(currentAccountId, accountPriceEntries[j].postTransactionAccountBalance);
               }
+            } else {
+              const previousPostTransactionAccountBalance = accountIdToPreviousPostTransactionBalanceMap.get(currentAccountId);
+              const notFirstAccountPriceEntryFactor = isCalculatingForPlannedTransactions ? accountPriceEntries[j].price
+                : -accountPriceEntries[j + 1].price;
+
+              accountPriceEntries[j].postTransactionAccountBalance = previousPostTransactionAccountBalance + notFirstAccountPriceEntryFactor;
+
+              accountIdToPreviousPostTransactionBalanceMap.set(currentAccountId, accountPriceEntries[j].postTransactionAccountBalance);
             }
           }
         }
+      }
     );
   }
 }
