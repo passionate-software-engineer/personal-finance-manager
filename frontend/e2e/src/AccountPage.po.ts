@@ -75,7 +75,7 @@ export class AccountsPage {
   }
 
   makeActiveButton(row) {
-    return row.element(by.id('Make active'));
+    return row.element(by.id('MakeActiveBtn'));
   }
 
   editButton(row) {
@@ -115,18 +115,18 @@ export class AccountsPage {
   }
 
   balancePLNOfEUR() {
-    return element(by.id('CurrencyBalancePLN_EUR'));
+    return element(by.id('CurrencyBalanceOfEUR'));
   }
 
   balancePLNOfGBP() {
-    return element(by.id('CurrencyBalancePLN_GBP'));
+    return element(by.id('CurrencyBalanceOfGBP'));
   }
 
   balancePLNOfPLN() {
-    return element(by.id('CurrencyBalancePLN_PLN'));
+    return element(by.id('CurrencyBalanceOfPLN'));
   }
   balancePLNOfUSD() {
-    return element(by.id('CurrencyBalancePLN_USD'));
+    return element(by.id('CurrencyBalanceOfUSD'));
   }
 
   balanceOfAllAccounts() {
@@ -134,10 +134,10 @@ export class AccountsPage {
   }
   balanceOfAllAccountCurrenciesSummery() {
     return element(by.id('BalanceOfAllAccountsCurrenciesSummary'));
-   }
+  }
 
   assertBalanceOfAllAccounts() {
-  expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountCurrenciesSummery().getText());
+    expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountCurrenciesSummery().getText());
   }
 
   alert() {
@@ -210,9 +210,10 @@ export class AccountsPage {
     this.newAccountSaveButton().click();
 
     this.assertSuccessMessage('Account added');
+    this.refreshAccountsButton().click();
   }
 
-   addAccountWithCurrency(name, balance, currency) {
+  addAccountWithCurrency(name, balance, currency) {
    this.addAccountButton().click();
 
    this.newAccountName().sendKeys(name);
@@ -222,7 +223,8 @@ export class AccountsPage {
    this.newAccountSaveButton().click();
 
    this.assertSuccessMessage('Account added');
-   }
+   this.refreshAccountsButton().click();
+  }
 
   updateAccount(name, balance) {
     this.optionsButton(this.accountRows().first()).click();
@@ -237,6 +239,7 @@ export class AccountsPage {
     this.editAccountSaveButton().click();
 
     this.assertSuccessMessage('Account updated');
+    this.refreshAccountsButton().click();
   }
 
   deleteAccount(row) {
@@ -246,6 +249,7 @@ export class AccountsPage {
     browser.switchTo().alert().accept();
 
     this.assertSuccessMessage('Account deleted');
+    this.refreshAccountsButton().click();
   }
 
   confirmBalance(row) {
@@ -259,13 +263,18 @@ export class AccountsPage {
     this.optionsButton(row).click();
     this.archiveButton(this.accountRows().first()).click();
 
-   // browser.switchTo().alert().accept();
-
     this.assertSuccessMessage('Account was archived successfully');
   }
 
   archiveAccountsShow() {
     this.showArchivedAccountsCheckBox().click();
+  }
+
+  makeActiveAccounts(row) {
+    this.optionsButton(row).click();
+    this.makeActiveButton(this.accountRows().first()).click();
+
+    this.assertSuccessMessage('Account was marked as active');
   }
 
 }

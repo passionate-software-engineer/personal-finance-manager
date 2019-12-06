@@ -22,7 +22,7 @@ describe('Accounts page tests', () => {
     await page.removeAllAccounts();
   });
 
-  xit('should display correct English descriptions', () => {
+  it('should display correct English descriptions', () => {
 
     // then
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
@@ -37,7 +37,6 @@ describe('Accounts page tests', () => {
 
     // when
     page.addAccount(accountName, '141231.53');
-    page.refreshAccountsButton().click();
 
     // then
     page.assertNumberOfAccounts(1);
@@ -49,11 +48,9 @@ describe('Accounts page tests', () => {
     // when
     const accountName = 'First Updated Test Account';
     page.addAccount('First Test Account', '141231.53');
-    page.refreshAccountsButton().click();
 
     // given
     page.updateAccount(accountName, '231.5');
-    page.refreshAccountsButton().click();
 
     // then
     page.assertNumberOfAccounts(1);
@@ -67,7 +64,6 @@ describe('Accounts page tests', () => {
 
     // given
     page.deleteAccount(page.accountRows().first());
-    page.refreshAccountsButton().click();
 
     // then
     page.assertNumberOfAccounts(0);
@@ -78,23 +74,17 @@ describe('Accounts page tests', () => {
     const accountName = 'First Balance PLN Check';
     // given
     page.addAccount(accountName, '250.20');
-    page.refreshAccountsButton().click();
     // then
     page.assertBalanceOfAllAccounts();
-    });
+  });
 
   xit('should check account balance currency with  box currencies balance currency', () => {
-    // when
-    // const accountName = 'Balance Single Currency Check';
     // given
     page.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
-    page.refreshAccountsButton().click();
     page.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
-    page.refreshAccountsButton().click();
     page.addAccountWithCurrency('Balance currency PLN', '1,250.25', 'PLN');
-    page.refreshAccountsButton().click();
     page.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
-    page.refreshAccountsButton().click();
+
     // then
     const balanceEUR = page.balanceOfEURAccount().getText();
     const balanceGBP = page.balanceOfGBPAccount().getText();
@@ -104,70 +94,67 @@ describe('Accounts page tests', () => {
     page.assertAccountBalance(page.accountRows().get(1), balanceGBP);
     page.assertAccountBalance(page.accountRows().get(2), balancePLN);
     page.assertAccountBalance(page.accountRows().get(3), balanceUSD);
-    // page.assertAccountBalance(page.accountRows().first(), balance);
-    });
+  });
 
   xit('should check box currencies balance PLN', () => {
-    // when
-    // const accountName = 'First Balance  Single Currency Check';
     // given
     page.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
-    page.refreshAccountsButton().click();
     page.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
-    page.refreshAccountsButton().click();
     page.addAccountWithCurrency('Balance currency PLN', '1,250.25', 'PLN');
-    page.refreshAccountsButton().click();
     page.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
-    page.refreshAccountsButton().click();
+
     // then
     page.assertAccountBalancePLNOfEUR('1,273.06');
     page.assertAccountBalancePLNOfGBP('616.27');
     page.assertAccountBalancePLNOfPLN('1,250.25');
     page.assertAccountBalancePLNOfUSD('1,882.19');
-    page.assertAccountBalancePLNSummary('5,021.76');
-    });
+    page.assertAccountBalancePLNSummary('5,021.77');
+  });
 
   xit('should check balance verification date', () => {
    // when
-   const accountName = 'First confirm balance';
-   page.addAccountWithCurrency(accountName, '125.75', 'USD');
-   page.refreshAccountsButton().click();
-   // given
-   page.confirmBalance(page.accountRows().first());
-   // then
-   page.assertAccountBalancePLNOfUSD('450.19');
-   // var timestamp = Date.now();
-   page.assertBalanceVerificationDate(page.accountRows().first(), '2019-11-26');
+    const accountName = 'First confirm balance';
+    page.addAccountWithCurrency(accountName, '125.75', 'USD');
+
+    // given
+    page.confirmBalance(page.accountRows().first());
+     // then
+    page.assertAccountBalancePLNOfUSD('450.19');
+    // var todayDate = Date.now();
+    // const date = (this.todayDate.getFullYer() + '-' + this.todayDate.getMonth() + '-' + this.todayDate.getDate());
+    page.assertBalanceVerificationDate(page.accountRows().first(), '2019-12-06');
   });
 
   xit('should archive account', () => {
     // when
     const accountName = 'First archive account';
     page.addAccountWithCurrency(accountName, '125.75', 'USD');
-    page.refreshAccountsButton().click();
     page.assertNumberOfAccounts(1);
     page.assertAccountName(page.accountRows().first(), accountName);
     page.assertAccountBalance(page.accountRows().first(), '125.75');
     page.assertAccountBalancePLNOfUSD('450.19');
+
     // given
     page.archiveBalance(page.accountRows().first());
+
     // then
     page.assertNumberOfAccounts(0);
    });
 
-   it('should show archived accounts', () => {
+   xit('should show archived accounts', () => {
      // when
      const accountName = 'First archive account show';
      page.addAccountWithCurrency(accountName, '125.75', 'USD');
-     page.refreshAccountsButton().click();
      page.assertNumberOfAccounts(1);
      page.assertAccountName(page.accountRows().first(), accountName);
      page.assertAccountBalance(page.accountRows().first(), '125.75');
      page.assertAccountBalancePLNOfUSD('450.19');
      page.archiveBalance(page.accountRows().first());
      page.assertNumberOfAccounts(0);
+
      // given
      page.archiveAccountsShow();
+
      // then
      page.assertNumberOfAccounts(1);
      page.assertAccountName(page.accountRows().first(), accountName);

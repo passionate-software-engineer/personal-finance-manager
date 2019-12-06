@@ -40,3 +40,4 @@ frontend/.scannerwork
 .DS_Store
 
 .angulardoc.json
+/frontend/e2e/protractorlocal.conf.js
