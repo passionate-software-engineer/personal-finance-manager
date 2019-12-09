@@ -161,4 +161,27 @@ describe('Accounts page tests', () => {
      page.assertAccountBalancePLNOfUSD('450.19');
     });
 
+    it('should make active accounts', () => {
+     // when
+     const accountName = 'First archive account make active';
+     page.addAccountWithCurrency(accountName, '125.75', 'USD');
+     page.assertNumberOfAccounts(1);
+     page.assertAccountName(page.accountRows().first(), accountName);
+     page.assertAccountBalance(page.accountRows().first(), '125.75');
+     page.assertAccountBalancePLNOfUSD('450.19');
+     page.archiveBalance(page.accountRows().first());
+     page.assertNumberOfAccounts(0);
+     page.archiveAccountsShow();
+     page.assertNumberOfAccounts(1);
+
+     // given
+     page.makeActiveAccounts(page.accountRows().first());
+
+     // then
+     page.assertNumberOfAccounts(1);
+     page.assertAccountName(page.accountRows().first(), accountName);
+     page.assertAccountBalance(page.accountRows().first(), '125.75');
+     page.assertAccountBalancePLNOfUSD('450.19');
+    });
+
 });
