@@ -1,6 +1,7 @@
 import {Transaction} from '../components/transaction/transaction';
 import {Injectable} from '@angular/core';
 import {DateHelper} from './date-helper';
+import {error} from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -76,39 +77,7 @@ export class PostTransactionAccountBalanceHelper {
     return transactions;
   }
 
-  calculateAndAssignPostTransactionBalancesForPastTransactions(transactions: Transaction[]) {
-    function getPastTransactions(transactionsToFilter: Transaction[]) {
-      const filtered = [];
-      for (let i = 0; i < transactions.length; i++) {
-        if (!transactionsToFilter[i].isPlanned) {
-          filtered.push(transactionsToFilter[i]);
-        }
-      }
-      return filtered;
-    }
-
-    const pastTransactions = getPastTransactions(transactions);
-
-    this.calculateAndAssignBalances(pastTransactions, false);
-  }
-
-  calculateAndAssignPostTransactionBalancesForPlannedTransactions(transactions: Transaction[]) {
-
-    function getPlannedTransactions(transactionsToFilter: Transaction[]) {
-      const filtered = [];
-      for (let i = 0; i < transactions.length; i++) {
-        if (transactionsToFilter[i].isPlanned) {
-          filtered.push(transactionsToFilter[i]);
-        }
-      }
-      return filtered;
-    }
-
-    const plannedTransactions = getPlannedTransactions(transactions);
-    this.calculateAndAssignBalances(plannedTransactions, true);
-  }
-
-  private calculateAndAssignBalances(transactions: Transaction[], isCalculatingForPlannedTransactions: boolean) {
+   calculateAndAssignPostTransactionsBalances(transactions: Transaction[], isCalculatingForPlannedTransactions: boolean) {
     const accountIdToCurrentBalanceMap = this.getAccountIdToCurrentAccountBalanceMap(transactions);
     const accountIdToTransactionsMap = this.getAccountIdToAccountTransactionsMap(transactions);
 
@@ -120,10 +89,10 @@ export class PostTransactionAccountBalanceHelper {
     accountIdToTransactionsMap.forEach((transactionsByAccountId) => {
         for (let i = 0; i < transactionsByAccountId.length; i++) {
           if (isCalculatingForPlannedTransactions && !transactionsByAccountId[i].isPlanned) {
-            // throw error('Calculating postTransactions balances for planned transacitons - unexpected PAST TRANSACTION !!! ');
+            throw error('Unexpected past transaction found while calculating postTransactions balances for planned transactions');
           }
           if (!isCalculatingForPlannedTransactions && transactionsByAccountId[i].isPlanned) {
-            // throw error('Calculating postTransactions balances for past transactions - unexpected PLANNED TRANSACTION !!! ');
+            throw error('Unexpected planned transaction found while calculating postTransactions balances for past transactions');
           }
 
           const accountPriceEntries = transactionsByAccountId[i].accountPriceEntries;
