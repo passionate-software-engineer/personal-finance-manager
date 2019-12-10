@@ -1,6 +1,7 @@
 import {Transaction} from '../components/transaction/transaction';
 import {Injectable} from '@angular/core';
 import {DateHelper} from './date-helper';
+import {error} from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -76,15 +77,7 @@ export class PostTransactionAccountBalanceHelper {
     return transactions;
   }
 
-  calculateAndAssignPostTransactionBalancesForPastTransactions(transactions: Transaction[]) {
-    this.calculateAndAssignBalances(transactions, false);
-  }
-
-  calculateAndAssignPostTransactionBalancesForPlannedTransactions(transactions: Transaction[]) {
-    this.calculateAndAssignBalances(transactions, true);
-  }
-
-  private calculateAndAssignBalances(transactions: Transaction[], isCalculatingForPlannedTransactions: boolean) {
+   calculateAndAssignPostTransactionsBalances(transactions: Transaction[], isCalculatingForPlannedTransactions: boolean) {
     const accountIdToCurrentBalanceMap = this.getAccountIdToCurrentAccountBalanceMap(transactions);
     const accountIdToTransactionsMap = this.getAccountIdToAccountTransactionsMap(transactions);
 
@@ -93,9 +86,16 @@ export class PostTransactionAccountBalanceHelper {
         this.sortTransactionsByDateReverseOrder(transactionsByAccountId);
     });
 
-    accountIdToTransactionsMap.forEach((transaction) => {
-        for (let i = 0; i < transaction.length; i++) {
-          const accountPriceEntries = transaction[i].accountPriceEntries;
+    accountIdToTransactionsMap.forEach((transactionsByAccountId) => {
+        for (let i = 0; i < transactionsByAccountId.length; i++) {
+          if (isCalculatingForPlannedTransactions && !transactionsByAccountId[i].isPlanned) {
+            throw error('Unexpected past transaction found while calculating postTransactions balances for planned transactions');
+          }
+          if (!isCalculatingForPlannedTransactions && transactionsByAccountId[i].isPlanned) {
+            throw error('Unexpected planned transaction found while calculating postTransactions balances for past transactions');
+          }
+
+          const accountPriceEntries = transactionsByAccountId[i].accountPriceEntries;
           const accountIdToPreviousPostTransactionBalanceMap = new Map<number, number>();
           for (let j = accountPriceEntries.length - 1; j >= 0; j--) {
 
@@ -104,7 +104,7 @@ export class PostTransactionAccountBalanceHelper {
             if (isFirstAccountPriceEntryForCurrentAccount) {
               const transactionsByAccount = accountIdToTransactionsMap.get(currentAccountId);
               const currentTransactionIndexInTransactionsByAccount = accountIdToTransactionsMap.get(currentAccountId)
-                                                                                               .indexOf(transaction[i]);
+                                                                                               .indexOf(transactionsByAccountId[i]);
               const isTheMostRecentTransactionOnAccount = currentTransactionIndexInTransactionsByAccount === 0;
 
               if (isTheMostRecentTransactionOnAccount) {

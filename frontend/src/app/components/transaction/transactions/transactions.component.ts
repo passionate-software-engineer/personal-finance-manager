@@ -17,6 +17,11 @@ import {RecurrencePeriod} from '../recurrence-period';
 import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
 import {environment} from '../../../../environments/environment';
 
+interface TransactionsByType {
+  past: Transaction[];
+  planned: Transaction[];
+}
+
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -37,7 +42,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   allTransactions: Transaction[] = [];
   transactions: Transaction[] = [];
-  plannedTransactions: Transaction[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
   addingMode = false;
@@ -84,15 +88,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           this.allTransactions = [];
           for (const transactionResponse of transactions) {
             const transaction = this.getTransactionFromResponse(transactionResponse);
-            if (transaction.isPlanned) {
-              this.plannedTransactions.push(transaction);
-            } else {
-              this.transactions.push(transaction);
-            }
+            this.transactions.push(transaction);
             this.allTransactions.push(transaction);
           }
-          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPastTransactions(this.transactions);
-          this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionBalancesForPlannedTransactions(this.plannedTransactions);
+          this.calculateAndAssignPostTransactionBalances();
           super.filterTransactions();
         });
   }
@@ -109,6 +108,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
           .subscribe(() => {
             this.alertService.success(this.translate.instant(deleteMessageKey));
             this.removeDeletedFromDOM(transactionToDelete);
+            this.updateCachedAccountBalanceAfterTransactionDeleted(transactionToDelete);
+            this.calculateAndAssignPostTransactionBalances();
           });
     }
   }
@@ -131,7 +132,9 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
               .subscribe(
                 (transactionResponse) => {
                   const saved = this.getTransactionFromResponse(transactionResponse);
+                  this.updateCachedAccountBalanceAfterTransactionUpdated(transaction, saved);
                   Object.assign(transaction, saved);
+                  this.calculateAndAssignPostTransactionBalances();
                   const messageKey = saved.isPlanned ? 'message.plannedTransactionEdited' : 'message.transactionEdited';
                   this.alertService.success(this.translate.instant(messageKey));
                 }
@@ -156,6 +159,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
                   this.transactions.push(returnedTransaction);
                   this.allTransactions.push(returnedTransaction);
+                  this.updateCachedAccountBalanceAfterTransactionAdded(returnedTransaction);
+                  this.calculateAndAssignPostTransactionBalances();
                   this.addingMode = false;
                   this.newTransaction = new Transaction();
                   // 2 entries is usually enough, if user needs more he can edit created transaction and then new entry will appear automatically.
@@ -168,6 +173,65 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             alert(this.translate.instant('message.futureDate'));
           }
         );
+  }
+
+  private calculateAndAssignPostTransactionBalances() {
+    const transactionsByType = this.getTransactionsByType(this.transactions);
+    this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionsBalances(transactionsByType.past, false);
+    this.postTransactionAccountBalanceHelper.calculateAndAssignPostTransactionsBalances(transactionsByType.planned, true);
+  }
+
+  private getTransactionsByType: Function = (transactions: Transaction[]) => {
+    const pastTransactions = [];
+    const plannedTransactions = [];
+    const transactionsByType: TransactionsByType = {
+      past: pastTransactions,
+      planned: plannedTransactions
+    };
+    transactions.forEach(transaction => {
+      if (transaction.isPlanned) {
+        transactionsByType.planned.push(transaction);
+      } else {
+        transactionsByType.past.push(transaction);
+      }
+    });
+    return transactionsByType;
+  }
+
+  private updateCachedAccountBalanceAfterTransactionAdded(addedTransaction: Transaction) {
+    this.updateCachedAccountBalanceAfterCrudOperation(this.add, addedTransaction);
+  }
+
+  private updateCachedAccountBalanceAfterTransactionUpdated(newTransaction: Transaction, oldTransaction: Transaction) {
+    this.updateCachedAccountBalanceAfterCrudOperation(this.add, oldTransaction);
+    this.updateCachedAccountBalanceAfterCrudOperation(this.subtract, newTransaction);
+  }
+
+  private updateCachedAccountBalanceAfterTransactionDeleted(transactionToDelete: Transaction) {
+    this.updateCachedAccountBalanceAfterCrudOperation(this.subtract, transactionToDelete);
+  }
+
+  private updateCachedAccountBalanceAfterCrudOperation(updateFunction: Function, newTransaction: Transaction) {
+    if (!newTransaction.isPlanned) {
+      const accounts = [];
+      const prices = [];
+      for (let i = 0; i < newTransaction.accountPriceEntries.length; i++) {
+        accounts[i] = newTransaction.accountPriceEntries[i].account;
+        prices[i] = newTransaction.accountPriceEntries[i].price;
+
+        const accountToUpdate = this.accounts.find((value) => accounts[i].id === value.id
+        );
+        accountToUpdate.balance = updateFunction(+accountToUpdate.balance, prices[i]);
+      }
+    }
+  }
+
+  private add: Function = (x: number, y: number) => {
+    return x + y;
+  }
+
+  private subtract: Function = (x: number, y: number) => {
+    return x - y;
   }
 
   commitPlannedTransaction(transaction: Transaction) {
@@ -202,8 +266,13 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
               this.transactionService.getTransaction(transactionsIdsFromResponse.savedTransactionId)
                   .subscribe(
                     (saved) => {
+                      this.updateCachedAccountBalanceAfterTransactionDeleted(transaction);
                       const savedTransaction = this.getTransactionFromResponse(saved);
-                      Object.assign(transaction, savedTransaction);
+                      this.removeDeletedFromDOM(transaction);
+                      this.transactions.push(savedTransaction);
+                      this.allTransactions.push(savedTransaction);
+                      this.updateCachedAccountBalanceAfterTransactionAdded(savedTransaction);
+                      this.calculateAndAssignPostTransactionBalances();
                     }
                   );
             }
@@ -214,6 +283,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
                       const scheduledTransaction = this.getTransactionFromResponse(recurrentTransaction);
                       this.transactions.push(scheduledTransaction);
                       this.allTransactions.push(scheduledTransaction);
+                      this.updateCachedAccountBalanceAfterTransactionAdded(scheduledTransaction);
+                      this.calculateAndAssignPostTransactionBalances();
                     }
                   );
             }
@@ -245,7 +316,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       }
 
       accountPriceEntry.pricePLN = +entry.price * accountPriceEntry.account.currency.exchangeRate;
-
       transaction.accountPriceEntries.push(accountPriceEntry);
     }
     for (const category of this.categories) {
@@ -439,5 +509,4 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     const checkBoxState = JSON.parse(sessionStorage.getItem('hidePlannedTransactionsCheckboxState'));
     return checkBoxState === null ? environment.hidePlannedTransactionsCheckboxStateOnApplicationStart : checkBoxState;
   }
-
 }
