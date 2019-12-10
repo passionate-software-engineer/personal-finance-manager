@@ -148,7 +148,7 @@ describe('Accounts page tests', () => {
     page.assertAccountBalancePLNOfUSD('450.19');
   });
 
-  it('should archive accounts and show archived accounts', () => {
+ it('should archive accounts and show archived accounts', () => {
     // when
     const accountName = 'First archive account';
     page.addAccountWithCurrency(accountName, '125.75', 'USD');
@@ -169,5 +169,6 @@ describe('Accounts page tests', () => {
     page.assertAccountBalancePLNOfUSD('450.19');
     page.makeActiveAccounts(page.accountRows().first());
   });
+
 
 });
