@@ -1,7 +1,6 @@
 import {Transaction} from '../components/transaction/transaction';
 import {Injectable} from '@angular/core';
 import {DateHelper} from './date-helper';
-import {error} from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -78,11 +77,35 @@ export class PostTransactionAccountBalanceHelper {
   }
 
   calculateAndAssignPostTransactionBalancesForPastTransactions(transactions: Transaction[]) {
-    this.calculateAndAssignBalances(transactions, false);
+    function getPastTransactions(transactionsToFilter: Transaction[]) {
+      const filtered = [];
+      for (let i = 0; i < transactions.length; i++) {
+        if (!transactionsToFilter[i].isPlanned) {
+          filtered.push(transactionsToFilter[i]);
+        }
+      }
+      return filtered;
+    }
+
+    const pastTransactions = getPastTransactions(transactions);
+
+    this.calculateAndAssignBalances(pastTransactions, false);
   }
 
   calculateAndAssignPostTransactionBalancesForPlannedTransactions(transactions: Transaction[]) {
-    this.calculateAndAssignBalances(transactions, true);
+
+    function getPlannedTransactions(transactionsToFilter: Transaction[]) {
+      const filtered = [];
+      for (let i = 0; i < transactions.length; i++) {
+        if (transactionsToFilter[i].isPlanned) {
+          filtered.push(transactionsToFilter[i]);
+        }
+      }
+      return filtered;
+    }
+
+    const plannedTransactions = getPlannedTransactions(transactions);
+    this.calculateAndAssignBalances(plannedTransactions, true);
   }
 
   private calculateAndAssignBalances(transactions: Transaction[], isCalculatingForPlannedTransactions: boolean) {
