@@ -22,7 +22,7 @@ describe('Accounts page tests', () => {
     await page.removeAllAccounts();
   });
 
- it('should display correct English descriptions', () => {
+  it('should display correct English descriptions', () => {
 
     // then
     expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
@@ -31,7 +31,7 @@ describe('Accounts page tests', () => {
     expect(page.balanceHeader().getText()).toEqual('Balance');
   });
 
- it('should add account', () => {
+  it('should add account', () => {
     // given
     const accountName = 'First Test Account';
 
@@ -44,7 +44,7 @@ describe('Accounts page tests', () => {
     page.assertAccountBalance(page.accountRows().first(), '141,231.53');
   });
 
- it('should update account', () => {
+  it('should update account', () => {
     // when
     const accountName = 'First Updated Test Account';
     page.addAccount('First Test Account', '141231.53');
@@ -58,7 +58,7 @@ describe('Accounts page tests', () => {
     page.assertAccountBalance(page.accountRows().first(), '231.50');
   });
 
- it('should delete account', () => {
+  it('should delete account', () => {
     // when
     page.addAccount('Account to delete', '0');
 
@@ -69,7 +69,7 @@ describe('Accounts page tests', () => {
     page.assertNumberOfAccounts(0);
   });
 
- it('should check balance PLN', () => {
+  it('should check balance PLN', () => {
     // when
     const accountName = 'First Balance PLN Check';
     // given
@@ -78,7 +78,7 @@ describe('Accounts page tests', () => {
     page.assertBalanceOfAllAccounts();
   });
 
- it('should check account balance currency with  box currencies balance currency', () => {
+  it('should check account balance currency with  box currencies balance currency', () => {
     // given
     page.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
     page.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
@@ -111,7 +111,7 @@ describe('Accounts page tests', () => {
     page.assertAccountBalancePLNSummary('5,021.76');
   });
 
- it('should check balance verification date', () => {
+  it('should check balance verification date', () => {
    // when
     const accountName = 'First confirm balance';
     page.addAccountWithCurrency(accountName, '125.75', 'USD');
@@ -124,8 +124,7 @@ describe('Accounts page tests', () => {
     page.assertBalanceVerificationDate(page.accountRows().first(), todayDate);
   });
 
-
- it('should make active accounts', () => {
+  it('should make active accounts', () => {
     // when
     const accountName = 'First archive account make active';
     page.addAccountWithCurrency(accountName, '125.75', 'USD');
@@ -148,7 +147,7 @@ describe('Accounts page tests', () => {
     page.assertAccountBalancePLNOfUSD('450.19');
   });
 
- it('should archive accounts and show archived accounts', () => {
+  it('should archive accounts and show archived accounts', () => {
     // when
     const accountName = 'First archive account';
     page.addAccountWithCurrency(accountName, '125.75', 'USD');
@@ -169,6 +168,5 @@ describe('Accounts page tests', () => {
     page.assertAccountBalancePLNOfUSD('450.19');
     page.makeActiveAccounts(page.accountRows().first());
   });
-
 
 });
