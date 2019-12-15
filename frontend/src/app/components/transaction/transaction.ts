@@ -9,12 +9,14 @@ export class Transaction {
   accountPriceEntries: AccountPriceEntry[] = [];
   editMode = false;
   isPlanned = false;
+  isRecurrent = false;
   editedTransaction: Transaction;
-}
 
+}
 
 export class AccountPriceEntry {
   account: Account;
+  postTransactionAccountBalance = 0;
   price: number;
   pricePLN: number;
 }

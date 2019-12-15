@@ -1,16 +1,19 @@
 package com.pfm.transaction;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_ARCHIVED;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
+import static com.pfm.config.MessagesProvider.ACCOUNT_PRICE_ENTRY_SIZE_CHANGED;
 import static com.pfm.config.MessagesProvider.AT_LEAST_ONE_ACCOUNT_AND_PRICE_IS_REQUIRED;
 import static com.pfm.config.MessagesProvider.CATEGORY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
+import static com.pfm.config.MessagesProvider.DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_CATEGORY;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_DATE;
 import static com.pfm.config.MessagesProvider.EMPTY_TRANSACTION_NAME;
 import static com.pfm.config.MessagesProvider.FUTURE_TRANSACTION_DATE;
-import static com.pfm.config.MessagesProvider.PAST_PLANNED_TRANSACTION_DATE;
+import static com.pfm.config.MessagesProvider.PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.filters.LanguageFilter.LANGUAGE_HEADER;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -23,12 +26,22 @@ import static com.pfm.helpers.TestTransactionProvider.carTransactionWithNoAccoun
 import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
+import static com.pfm.transaction.RecurrencePeriod.EVERY_DAY;
+import static com.pfm.transaction.RecurrencePeriod.EVERY_MONTH;
+import static com.pfm.transaction.RecurrencePeriod.EVERY_WEEK;
+import static com.pfm.transaction.RecurrencePeriod.NONE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -42,6 +55,7 @@ import com.pfm.account.AccountService;
 import com.pfm.config.MessagesProvider.Language;
 import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
+import com.pfm.transaction.TransactionController.CommitResult;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -56,6 +70,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   private static final long NOT_EXISTING_TRANSACTION_ID = -7389387L;
   private static final String EMPTY_DESCRIPTION = "";
+
+  private static final LocalDate CURRENT_DATE = LocalDate.now();
+  private static final LocalDate PAST_DATE = CURRENT_DATE.minusDays(2);
 
   @Autowired
   private AccountService accountService;
@@ -170,7 +187,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodTransactionRequest.setDescription("Car parts");
 
     //when
-    callRestToUpdateTransaction(foodTransactionId, updatedFoodTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitResult(foodTransactionId, updatedFoodTransactionRequest, token);
 
     //then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
@@ -474,7 +491,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedPlannedTransaction.setId(1L);
 
     //when
-    callRestToUpdateTransaction(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     //then
@@ -661,42 +678,30 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldCommitPlannedTransaction() throws Exception {
     //given
-    Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    Transaction plannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
-    plannedTransaction.setPlanned(true);
-
-    long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
-
-    Transaction expectedPlannedTransaction = setTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(),
-        plannedTransactionId, jacekAccountId, foodCategoryId);
+    final long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction expectedPlannedTransactionAfterCommit = callRestToGetTransactionById(plannedTransactionId, token);
 
     List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
     List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     assertThat(allTransactions.size(), is(0));
     assertThat(allPlannedTransactions.size(), is(1));
-    assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransaction)));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransactionAfterCommit)));
 
-    mockMvc
-        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk());
-
+    //when
+    callRestToCommitPlannedTransaction(plannedTransactionId);
     final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
     final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
-    expectedPlannedTransaction.setDate(LocalDate.now());
-    expectedPlannedTransaction.setPlanned(false);
+    expectedPlannedTransactionAfterCommit.setDate(CURRENT_DATE);
+    expectedPlannedTransactionAfterCommit.setPlanned(false);
 
+    //then
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
-    assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransaction))));
+    assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
 
+    expectedPlannedTransactionAfterCommit.setPlanned(false);
   }
 
   @Test
@@ -723,32 +728,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(FUTURE_TRANSACTION_DATE))));
-
-  }
-
-  @Test
-  public void shouldReturnValidationErrorForPlannedTransactionWithPastDate() throws Exception {
-    //given
-    Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(0));
-
-    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
-    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-    Transaction transaction = foodTransactionWithNoAccountAndNoCategory();
-    transaction.setPlanned(true);
-
-    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
-
-    transactionRequest.setCategoryId(foodCategoryId);
-    transactionRequest.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
-    mockMvc
-        .perform(post(TRANSACTIONS_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .content(json(transactionRequest))
-            .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(PAST_PLANNED_TRANSACTION_DATE))));
 
   }
 
@@ -790,6 +769,504 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   }
 
+  @Test
+  public void shouldSetPlannedTransactionAsRecurrent() throws Exception {
+    //given
+    long transactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrent = addedTransaction.isRecurrent();
+    assertThat(addedTransaction, is(not(recurrent)));
+
+    //when
+    mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + SET_AS_RECURRENT)
+            .param("recurrencePeriod", String.valueOf(EVERY_MONTH))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk());
+
+    Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrentAfterUpdate = updatedTransaction.isRecurrent();
+    //then
+    assertThat(recurrentAfterUpdate, is(true));
+
+  }
+
+  @Test
+  public void shouldSetPlannedTransactionAsNotRecurrent() throws Exception {
+    //given
+    final RecurrencePeriod recurrencePeriod = EVERY_MONTH;
+
+    long transactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    final boolean recurrent = addedTransaction.isRecurrent();
+    assertThat(addedTransaction, is(not(recurrent)));
+    addedTransaction.setRecurrencePeriod(recurrencePeriod);
+    int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(transactionId, recurrencePeriod);
+
+    assertThat(status, is(OK.value()));
+
+    Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
+
+    assertTrue(updatedTransaction.isRecurrent());
+    addedTransaction.setRecurrencePeriod(NONE);
+
+    //when
+    status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(transactionId, NONE);
+    assertThat(status, is(OK.value()));
+
+    Transaction transaction = callRestToGetTransactionById(transactionId, token);
+
+    //then
+    assertFalse(transaction.isRecurrent());
+    assertThat(transaction, is(equalTo(addedTransaction)));
+
+  }
+
+  @Test
+  public void shouldReturnNotFoundDuringMakingNotExistingTransactionRecurrent() throws Exception {
+
+    int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(NOT_EXISTING_TRANSACTION_ID, EVERY_MONTH);
+
+    assertThat(status, is(NOT_FOUND.value()));
+  }
+
+  @Test
+  public void shouldAddPlannedTransactionForNextMonthDuringCommittingRecurrentTransaction() throws Exception {
+    //given
+    long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(plannedTransactionId, token);
+
+    List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    assertThat(allTransactions.size(), is(0));
+    assertThat(allPlannedTransactions.size(), is(1));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(addedTransaction)));
+
+    int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(plannedTransactionId, EVERY_MONTH);
+    assertEquals(OK.value(), status);
+
+    Transaction addedTransactionWithRecurrentStatus = callRestToGetTransactionById(plannedTransactionId, token);
+    callRestToCommitPlannedTransaction(plannedTransactionId);
+
+    final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
+    final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    final Transaction expectedNextRecurrentTransaction = Transaction.builder()
+        .id(addedTransactionWithRecurrentStatus.getId())
+        .description(addedTransactionWithRecurrentStatus.getDescription())
+        .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
+        .date(EVERY_MONTH.getNextOccurrenceDate())
+        .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
+        .userId(addedTransactionWithRecurrentStatus.getUserId())
+        .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
+        .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
+        .build();
+
+    assertThat(allTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(LocalDate.now().plusMonths(1))));
+    assertThat(removeTransactionId(allPlannedTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedNextRecurrentTransaction))));
+
+  }
+
+  @Test
+  public void shouldAddPlannedTransactionForNextWeekDuringCommittingRecurrentTransaction() throws Exception {
+    //given
+    final RecurrencePeriod everyWeek = EVERY_WEEK;
+    long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(plannedTransactionId, token);
+
+    List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    assertThat(allTransactions.size(), is(0));
+    assertThat(allPlannedTransactions.size(), is(1));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(addedTransaction)));
+
+    int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(plannedTransactionId, everyWeek);
+    assertEquals(OK.value(), status);
+
+    Transaction addedTransactionWithRecurrentStatus = callRestToGetTransactionById(plannedTransactionId, token);
+    callRestToCommitPlannedTransaction(plannedTransactionId);
+
+    final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
+    final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    final Transaction expectedNextRecurrentTransaction = Transaction.builder()
+        .id(addedTransactionWithRecurrentStatus.getId())
+        .description(addedTransactionWithRecurrentStatus.getDescription())
+        .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
+        .date(everyWeek.getNextOccurrenceDate())
+        .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
+        .userId(addedTransactionWithRecurrentStatus.getUserId())
+        .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
+        .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
+        .build();
+
+    assertThat(allTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(LocalDate.now().plusWeeks(1))));
+    assertThat(removeTransactionId(allPlannedTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedNextRecurrentTransaction))));
+
+  }
+
+  @Test
+  public void shouldAddPlannedTransactionForNextDayDuringCommittingRecurrentTransaction() throws Exception {
+    //given
+    final RecurrencePeriod everyDay = EVERY_DAY;
+
+    long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
+    Transaction addedTransaction = callRestToGetTransactionById(plannedTransactionId, token);
+
+    List<Transaction> allTransactions = callRestToGetAllTransactionsFromDatabase(token);
+    List<Transaction> allPlannedTransactions = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    assertThat(allTransactions.size(), is(0));
+    assertThat(allPlannedTransactions.size(), is(1));
+    assertThat(allPlannedTransactions.get(0), is(equalTo(addedTransaction)));
+
+    int status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(plannedTransactionId, everyDay);
+    assertEquals(OK.value(), status);
+
+    Transaction addedTransactionWithRecurrentStatus = callRestToGetTransactionById(plannedTransactionId, token);
+    callRestToCommitPlannedTransaction(plannedTransactionId);
+
+    final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
+    final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
+
+    final Transaction expectedNextRecurrentTransaction = Transaction.builder()
+        .id(addedTransactionWithRecurrentStatus.getId())
+        .description(addedTransactionWithRecurrentStatus.getDescription())
+        .categoryId(addedTransactionWithRecurrentStatus.getCategoryId())
+        .date(everyDay.getNextOccurrenceDate())
+        .accountPriceEntries(addedTransactionWithRecurrentStatus.getAccountPriceEntries())
+        .userId(addedTransactionWithRecurrentStatus.getUserId())
+        .isPlanned(addedTransactionWithRecurrentStatus.isPlanned())
+        .recurrencePeriod(addedTransactionWithRecurrentStatus.getRecurrencePeriod())
+        .build();
+
+    assertThat(allTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.size(), is(1));
+    assertThat(allPlannedTransactionsAfterCommit.get(0).getDate(), is(equalTo(LocalDate.now().plusDays(1))));
+    assertThat(removeTransactionId(allPlannedTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedNextRecurrentTransaction))));
+
+  }
+
+  @Test
+  public void shouldUpdatePlannedTransactionWithPastDateUsingCommit() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    Transaction updatedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedPlannedTransaction.setCategoryId(carCategoryId);
+    updatedPlannedTransaction.setDate(PAST_DATE);
+    updatedPlannedTransaction.setDescription("Car parts");
+
+    TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
+    updatedPlannedTransaction.setId(1L);
+
+    //when
+    final CommitResult commitResult =
+        callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+
+    final Long updatedId = commitResult.getSavedTransactionId();
+    final Transaction afterUpdate = callRestToGetTransactionById(updatedId, token);
+    List<Transaction> allPlannedTransactionsAfterUpdateInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsAfterUpdateInDb = callRestToGetAllTransactionsFromDatabase(token);
+
+    //then
+    assertThat(allPlannedTransactionsAfterUpdateInDb.size(), is(0));
+    assertThat(allTransactionsAfterUpdateInDb.size(), is(1));
+
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(not(equalTo(updatedPlannedTransaction.getId()))));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getCategoryId(), equalTo(2L));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getDate(), equalTo(PAST_DATE));
+
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getAccountPriceEntries(), equalTo(afterUpdate.getAccountPriceEntries()));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).isPlanned(), equalTo(false));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).isRecurrent(), equalTo(false));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(equalTo(updatedId)));
+  }
+
+  @Test
+  public void shouldUpdatePlannedTransactionWithCurrentDate() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account accountMbank = accountMbankBalance10();
+    accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
+
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    final long foodPlannedTransactionId = callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    Transaction updatedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setAccountId(mbankAccountId);
+    updatedPlannedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(25));
+    updatedPlannedTransaction.setCategoryId(carCategoryId);
+    updatedPlannedTransaction.setDate(CURRENT_DATE);
+    updatedPlannedTransaction.setDescription("Car parts");
+
+    TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
+    updatedPlannedTransaction.setId(1L);
+
+    //when
+    callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+
+    //then
+    assertThat(allPlannedTransactionsInDb.size(), is(1));
+    assertThat(allTransactionsInDb.size(), is(0));
+    assertThat(allPlannedTransactionsInDb.get(0).getDate(), equalTo(CURRENT_DATE));
+  }
+
+  @Test
+  public void shouldUpdateTransactionContainingArchivedAccountWithDifferentCategory() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+    final long categoryUpdateId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    final Transaction originalTransaction = callRestToGetTransactionById(originalTransactionId, token);
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(10));
+    updatedTransaction.setCategoryId(categoryUpdateId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
+    updatedTransaction.setDescription("Food for birthday");
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
+
+    //    Transaction update
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+    Transaction afterUpdate = allTransactionsInDb.get(0);
+
+    //then
+    assertThat(allTransactionsInDb.size(), is(1));
+    assertThat(allPlannedTransactionsInDb.size(), is(0));
+
+    assertThat(afterUpdate.getDate(), equalTo(originalTransaction.getDate()));
+    assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
+    assertThat(afterUpdate.getDescription(), equalTo(originalTransaction.getDescription()));
+    assertThat(afterUpdate.getDescription(), equalTo(originalTransaction.getDescription()));
+    assertThat(afterUpdate.getCategoryId(), equalTo(categoryUpdateId));
+
+  }
+
+  @Test
+  public void shouldUpdateTransactionContainingArchivedAccountWithNewDescription() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    final String descriptionUpdate = "Fuel";
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    final Transaction originalTransaction = callRestToGetTransactionById(originalTransactionId, token);
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(10));
+    updatedTransaction.setCategoryId(foodCategoryId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
+    updatedTransaction.setDescription(descriptionUpdate);
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
+
+    List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
+    List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
+    Transaction afterUpdate = allTransactionsInDb.get(0);
+
+    //then
+    assertThat(allTransactionsInDb.size(), is(1));
+    assertThat(allPlannedTransactionsInDb.size(), is(0));
+
+    assertThat(afterUpdate.getDate(), equalTo(originalTransaction.getDate()));
+    assertThat(afterUpdate.getAccountPriceEntries(), equalTo(originalTransaction.getAccountPriceEntries()));
+    assertThat(afterUpdate.getDescription(), equalTo(descriptionUpdate));
+    assertThat(afterUpdate.getCategoryId(), equalTo(originalTransaction.getCategoryId()));
+  }
+
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingDate() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(10));
+    updatedTransaction.setCategoryId(foodCategoryId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8).plusDays(2));
+    updatedTransaction.setDescription("Food for birthday");
+
+    //when
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    //then
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
+  }
+
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingPrice() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    callRestToMarkAccountAsArchived(jacekAccountId);
+
+    Transaction updatedTransaction = foodTransactionWithNoAccountAndNoCategory();
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(jacekAccountId);
+    updatedTransaction.getAccountPriceEntries().get(0).setPrice(convertDoubleToBigDecimal(111));
+    updatedTransaction.setCategoryId(foodCategoryId);
+    updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
+    updatedTransaction.setDescription("Food for birthday");
+
+    //when
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    //then
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
+  }
+
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccount() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    Account updatedAccount = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    int status = callRestToMarkAccountAsArchived(updatedAccountId);
+    assertThat(status, is(OK.value()));
+    Transaction updatedTransaction = callRestToGetTransactionById(originalTransactionId, token);
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(updatedAccountId);
+
+    //when
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    //then
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
+  }
+
+  @Test
+  public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccounts() throws Exception {
+    //given
+    Account account = accountJacekBalance1000();
+    Account updatedAccount = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    final long originalTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId,
+        foodCategoryId, token);
+
+    int status = callRestToMarkAccountAsArchived(updatedAccountId);
+    assertThat(status, is(OK.value()));
+    Transaction updatedTransaction = callRestToGetTransactionById(originalTransactionId, token);
+
+    updatedTransaction.getAccountPriceEntries().get(0).setAccountId(updatedAccountId);
+    updatedTransaction.getAccountPriceEntries().add(AccountPriceEntry.builder()
+        .price(BigDecimal.TEN)
+        .accountId(jacekAccountId)
+        .build());
+
+    //when
+    TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
+
+    //then
+    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedTransactionRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED))));
+  }
+
   private Transaction removeTransactionId(Transaction transaction) {
     return Transaction.builder()
         .accountPriceEntries(transaction.getAccountPriceEntries())
@@ -798,6 +1275,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .categoryId(transaction.getCategoryId())
         .userId(transaction.getUserId())
         .isPlanned(transaction.isPlanned())
+        .recurrencePeriod(transaction.getRecurrencePeriod())
         .build();
   }
 }

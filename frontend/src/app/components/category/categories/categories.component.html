@@ -272,11 +272,16 @@
   </tbody>
 </table>
 
-<select [(ngModel)]="selectedMonth" (ngModelChange)="monthChanged($event)" name="selectedMonth">
-  <option *ngFor="let month of last12Months" [ngValue]="month">{{month | date:'MMMM yyyy'}}</option>
+<select [(ngModel)]="selectedMonth"
+        (ngModelChange)="monthChanged($event)"
+        name="selectedMonth">
+  <option *ngFor="let month of last12Months"
+          [ngValue]="month">{{month | date:'MMMM yyyy'}}</option>
 </select>
 
-<select [(ngModel)]="costs" (ngModelChange)="costsChanged($event)" name="costs">
+<select [(ngModel)]="costs"
+        (ngModelChange)="costsChanged($event)"
+        name="costs">
   <option [ngValue]=true>Koszty</option>
   <option [ngValue]=false>Przychody</option>
 </select>
@@ -291,8 +296,11 @@
               [height]="height">
 </google-chart>
 
-<select [(ngModel)]="selectedCategory" (ngModelChange)="categoryChanged($event)" name="selectedCategory">
-  <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+<select [(ngModel)]="selectedCategory"
+        (ngModelChange)="categoryChanged($event)"
+        name="selectedCategory">
+  <option *ngFor="let category of categories"
+          [ngValue]="category.id">{{category.name}}</option>
 </select>
 
 <google-chart #chartByCategory

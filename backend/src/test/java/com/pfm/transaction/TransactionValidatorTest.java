@@ -47,7 +47,7 @@ public class TransactionValidatorTest {
     transaction.setAccountPriceEntries(null);
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = transactionValidator.validate(transaction, 1, null);
 
     // then
     assertThat(result, hasSize(4));
@@ -62,7 +62,7 @@ public class TransactionValidatorTest {
     Transaction transaction = new Transaction();
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = transactionValidator.validate(transaction, 1, null);
 
     // then
     assertThat(result, hasSize(4));
@@ -79,7 +79,7 @@ public class TransactionValidatorTest {
     transaction.setCategoryId(NOT_EXISTING_ID);
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = transactionValidator.validate(transaction, 1, null);
 
     // then
     assertThat(result, hasSize(5));
@@ -98,7 +98,7 @@ public class TransactionValidatorTest {
     when(accountService.getAccountByIdAndUserId(eq(NOT_EXISTING_ID), anyLong())).thenReturn(Optional.empty());
 
     // when
-    List<String> result = transactionValidator.validate(transaction, 1);
+    List<String> result = transactionValidator.validate(transaction, 1, null);
 
     // then
     assertThat(result, hasSize(5));

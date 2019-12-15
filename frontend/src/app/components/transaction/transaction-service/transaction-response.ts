@@ -5,6 +5,7 @@ export class TransactionResponse {
   categoryId: number;
   accountPriceEntries: AccountPriceEntry[];
   planned: boolean;
+  recurrent: boolean;
 }
 
 export class AccountPriceEntry {

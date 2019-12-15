@@ -105,7 +105,7 @@ public class AccountController implements AccountApi {
     List<String> validationResult = accountValidator.validateAccountForUpdate(accountId, userId, account);
 
     if (!validationResult.isEmpty()) {
-      log.error("Account is not valid {}", validationResult);
+      log.info("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);
     }
 

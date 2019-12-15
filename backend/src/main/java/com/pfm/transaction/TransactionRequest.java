@@ -35,4 +35,6 @@ public class TransactionRequest {
   @JsonProperty("isPlanned")
   private boolean isPlanned;
 
+  private RecurrencePeriod recurrencePeriod;
+
 }

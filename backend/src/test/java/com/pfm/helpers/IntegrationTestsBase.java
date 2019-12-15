@@ -1,6 +1,10 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -24,7 +28,9 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
+import com.pfm.transaction.RecurrencePeriod;
 import com.pfm.transaction.Transaction;
+import com.pfm.transaction.TransactionController.CommitResult;
 import com.pfm.transaction.TransactionRequest;
 import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
@@ -52,10 +58,12 @@ public abstract class IntegrationTestsBase {
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
+  protected static final String SET_AS_RECURRENT = "/setAsRecurrent";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
+  protected static final String COMMIT_OVERDUE = "/commitOverdue";
 
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
   protected static final long NOT_EXISTING_ID = 0;
@@ -81,7 +89,6 @@ public abstract class IntegrationTestsBase {
 
   @Autowired
   protected Flyway flyway;
-
   protected String token;
   protected long userId;
 
@@ -152,12 +159,12 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected void callRestToMarkAccountAsArchived(long accountId) throws Exception {
-    mockMvc.perform(
+  protected int callRestToMarkAccountAsArchived(long accountId) throws Exception {
+    return mockMvc.perform(
         patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        .andExpect(status().isOk());
+        .andReturn().getResponse().getStatus();
   }
 
   protected ExportResult callRestToExportAllDataAndReturnExportResult(String token) throws Exception {
@@ -189,6 +196,10 @@ public abstract class IntegrationTestsBase {
 
   private Account jsonToAccount(String jsonAccount) throws Exception {
     return mapper.readValue(jsonAccount, Account.class);
+  }
+
+  private CommitResult jsonToCommitResult(String response) throws Exception {
+    return mapper.readValue(response, CommitResult.class);
   }
 
   //category
@@ -299,6 +310,26 @@ public abstract class IntegrationTestsBase {
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
+  protected long callRestToAddFirstTestTransactionAndReturnId() throws Exception {
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+  }
+
+  protected long callRestToAddFirstTestPlannedTransactionAndReturnId() throws Exception {
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+
+    long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    return callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+  }
+
   protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,
       long accountId, long categoryId) {
     transaction.setId(transactionId);
@@ -315,6 +346,7 @@ public abstract class IntegrationTestsBase {
         .description(transactionRequest.getDescription())
         .date(transactionRequest.getDate())
         .isPlanned(transactionRequest.isPlanned())
+        .recurrencePeriod(transactionRequest.getRecurrencePeriod())
         .build();
   }
 
@@ -327,13 +359,27 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
-  protected void callRestToUpdateTransaction(long transactionId, TransactionRequest transactionRequest, String token)
+  protected long callRestToUpdateTransactionAndReturnId(long transactionId, TransactionRequest transactionRequest, String token)
       throws Exception {
-    mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+    return Long.parseLong(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(transactionRequest)))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse().getContentAsString());
+  }
+
+  protected CommitResult callRestToUpdateTransactionAndReturnCommitResult(long transactionId, TransactionRequest transactionRequest,
+      String token)
+      throws Exception {
+    return jsonToCommitResult(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(transactionRequest)))
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse().getContentAsString());
   }
 
   protected void callRestToDeleteTransactionById(long id, String token) throws Exception {
@@ -529,6 +575,36 @@ public abstract class IntegrationTestsBase {
             .build()
     );
 
+  }
+
+  protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId, RecurrencePeriod recurrencePeriod) throws Exception {
+    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT, recurrencePeriod);
+  }
+
+  private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd, RecurrencePeriod recurrencePeriod)
+      throws Exception {
+    return mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + uriEnd)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .param("recurrencePeriod", String.valueOf(recurrencePeriod))
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
+  }
+
+  protected int callRestToCommitPlannedTransaction(long plannedTransactionId) throws Exception {
+    return mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
+  }
+
+  protected int callRestToCommitOverduePlannedTransaction(long plannedTransactionId) throws Exception {
+    return mockMvc
+        .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId + COMMIT_OVERDUE)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
   }
 
   public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {

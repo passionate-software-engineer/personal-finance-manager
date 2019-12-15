@@ -78,7 +78,7 @@ describe('Transaction page tests', () => {
 
   it('should add transaction with two accounts', () => {
 
-    // givene
+    // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
 

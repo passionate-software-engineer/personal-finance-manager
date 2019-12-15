@@ -12,6 +12,7 @@ public class TransactionsHelper {
         .date(transaction.getDate())
         .categoryId(transaction.getCategoryId())
         .isPlanned(transaction.isPlanned())
+        .recurrencePeriod(transaction.getRecurrencePeriod())
         .build();
   }
 
@@ -22,6 +23,7 @@ public class TransactionsHelper {
         .date(transactionRequest.getDate())
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
         .isPlanned(transactionRequest.isPlanned())
+        .recurrencePeriod(transactionRequest.getRecurrencePeriod())
         .build();
   }
 
