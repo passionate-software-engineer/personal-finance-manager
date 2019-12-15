@@ -173,12 +173,14 @@
         * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
         </td>
 
-        <td *ngIf="!account.editMode">
+        <td id="Balance_PLN"
+            *ngIf="!account.editMode">
           {{ account.balancePLN | number: "0.2-2" }}
         </td>
 
         <!-- Last verification date -->
-        <td>{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
+
+        <td id="BalanceVerificationDate">{{ account.lastVerificationDate | date: "yyyy-MM-dd" }}
         </td>
 
         <!-- Options -->
@@ -214,7 +216,7 @@
                 </button>
               </li>
               <li *ngIf="account.archived">
-                <button id="Make active"
+                <button id="MakeActiveBtn"
                         class="btn btn-warning btn-block"
                         (click)="restoreAccount(account)">
                   {{ "button.makeActive" | translate }}
@@ -320,19 +322,19 @@
   <tbody>
     <tr
       *ngFor="let currency of (supportedCurrencies | orderBy: sortableCurrencyTable.order:sortableCurrencyTable.reverse:'case-insensitive')">
-      <td class="tdBoxCurrencies">
+      <td  id="CurrencyName{{currency.name}}" class="tdBoxCurrencies">
         {{ currency.name }}
       </td>
 
-      <td class="tdBoxCurrencies">
+      <td id="CurrencyBalance{{currency.name}}"class="tdBoxCurrencies">
         {{ currency.allAccountsBalance | number: "0.2-2" }}
       </td>
 
-      <td class="tdBoxCurrencies">
+      <td id="CurrencyExchangeRate{{currency.name}}"class="tdBoxCurrencies">
         {{ currency.exchangeRate }}
       </td>
 
-      <td class="tdBoxCurrencies">
+      <td id="CurrencyBalanceOf{{currency.name}}"class="tdBoxCurrencies">
         {{ currency.allAccountsBalancePLN | number: "0.2-2" }}
       </td>
     </tr>
