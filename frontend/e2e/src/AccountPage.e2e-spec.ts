@@ -2,9 +2,13 @@ import {AccountsPage} from './AccountPage.po';
 import {LoginPage} from './LoginPage.po';
 import {RegisterPage} from './RegisterPage.po';
 import {v4 as uuid} from 'uuid';
+import {CategoryPage} from './CategoryPage.po';
+import {TransactionAndFilterPage} from './TransactionPage.po';
 
 describe('Accounts page tests', () => {
-  let page: AccountsPage;
+  const accountPage = new AccountsPage();
+  const categoryPage = new CategoryPage();
+  const transactionPage = new TransactionAndFilterPage();
 
   beforeAll(async () => {
     const registerPage = new RegisterPage();
@@ -17,18 +21,26 @@ describe('Accounts page tests', () => {
   });
 
   beforeEach(async () => {
-    page = new AccountsPage();
-    await page.navigateTo();
-    await page.removeAllAccounts();
+
+    await transactionPage.navigateTo();
+    await transactionPage.removeAllTransactions();
+
+    await accountPage.navigateTo();
+    await accountPage.removeAllAccounts();
+
+    await categoryPage.navigateTo();
+    await categoryPage.removeAllCategories();
+
+    accountPage.navigateTo();
   });
 
   it('should display correct English descriptions', () => {
 
     // then
-    expect(page.refreshAccountsButton().getText()).toEqual('Refresh');
-    expect(page.addAccountButton().getText()).toEqual('Add Account');
-    expect(page.nameHeader().getText()).toEqual('Name ▲');
-    expect(page.balanceHeader().getText()).toEqual('Balance');
+    expect(accountPage.refreshAccountsButton().getText()).toEqual('Refresh');
+    expect(accountPage.addAccountButton().getText()).toEqual('Add Account');
+    expect(accountPage.nameHeader().getText()).toEqual('Name ▲');
+    expect(accountPage.balanceHeader().getText()).toEqual('Balance');
   });
 
   it('should add account', () => {
@@ -36,137 +48,137 @@ describe('Accounts page tests', () => {
     const accountName = 'First Test Account';
 
     // when
-    page.addAccount(accountName, '141231.53');
+    accountPage.addAccount(accountName, '141231.53');
 
     // then
-    page.assertNumberOfAccounts(1);
-    page.assertAccountName(page.accountRows().first(), accountName);
-    page.assertAccountBalance(page.accountRows().first(), '141,231.53');
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '141,231.53');
   });
 
   it('should update account', () => {
     // when
     const accountName = 'First Updated Test Account';
-    page.addAccount('First Test Account', '141231.53');
+    accountPage.addAccount('First Test Account', '141231.53');
 
     // given
-    page.updateAccount(accountName, '231.5');
+    accountPage.updateAccount(accountName, '231.5');
 
     // then
-    page.assertNumberOfAccounts(1);
-    page.assertAccountName(page.accountRows().first(), accountName);
-    page.assertAccountBalance(page.accountRows().first(), '231.50');
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '231.50');
   });
 
   it('should delete account', () => {
     // when
-    page.addAccount('Account to delete', '0');
+    accountPage.addAccount('Account to delete', '0');
 
     // given
-    page.deleteAccount(page.accountRows().first());
+    accountPage.deleteAccount(accountPage.accountRows().first());
 
     // then
-    page.assertNumberOfAccounts(0);
+    accountPage.assertNumberOfAccounts(0);
   });
 
   it('should check balance PLN', () => {
     // when
     const accountName = 'First Balance PLN Check';
     // given
-    page.addAccount(accountName, '250.20');
+    accountPage.addAccount(accountName, '250.20');
     // then
-    page.assertBalanceOfAllAccounts();
+    accountPage.assertBalanceOfAllAccounts();
   });
 
   it('should check account balance currency with  box currencies balance currency', () => {
     // given
-    page.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
-    page.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
-    page.addAccountWithCurrency('Balance currency PLN', '1,250.25', 'PLN');
-    page.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
+    accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
+    accountPage.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
+    accountPage.addAccountWithCurrency('Balance currency PLN', '1,250.25', 'PLN');
+    accountPage.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
 
     // then
-    const balanceEUR = page.balanceOfEURAccount().getText();
-    const balanceGBP = page.balanceOfGBPAccount().getText();
-    const balancePLN = page.balanceOfPLNAccount().getText();
-    const balanceUSD = page.balanceOfUSDAccount().getText();
-    page.assertAccountBalance(page.accountRows().get(0), balanceEUR);
-    page.assertAccountBalance(page.accountRows().get(1), balanceGBP);
-    page.assertAccountBalance(page.accountRows().get(2), balancePLN);
-    page.assertAccountBalance(page.accountRows().get(3), balanceUSD);
+    const balanceEUR = accountPage.balanceOfEURAccount().getText();
+    const balanceGBP = accountPage.balanceOfGBPAccount().getText();
+    const balancePLN = accountPage.balanceOfPLNAccount().getText();
+    const balanceUSD = accountPage.balanceOfUSDAccount().getText();
+    accountPage.assertAccountBalance(accountPage.accountRows().get(0), balanceEUR);
+    accountPage.assertAccountBalance(accountPage.accountRows().get(1), balanceGBP);
+    accountPage.assertAccountBalance(accountPage.accountRows().get(2), balancePLN);
+    accountPage.assertAccountBalance(accountPage.accountRows().get(3), balanceUSD);
   });
 
   it('should check box currencies balance PLN', () => {
     // given
-    page.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
-    page.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
-    page.addAccountWithCurrency('Balance currency PLN', '1,250.25', 'PLN');
-    page.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
+    accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
+    accountPage.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
+    accountPage.addAccountWithCurrency('Balance currency PLN', '1,250.25', 'PLN');
+    accountPage.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
 
     // then
-    page.assertAccountBalancePLNOfEUR('1,273.06');
-    page.assertAccountBalancePLNOfGBP('616.27');
-    page.assertAccountBalancePLNOfPLN('1,250.25');
-    page.assertAccountBalancePLNOfUSD('1,882.19');
-    page.assertAccountBalancePLNSummary('5,021.76');
+    accountPage.assertAccountBalancePLNOfEUR('1,273.06');
+    accountPage.assertAccountBalancePLNOfGBP('616.27');
+    accountPage.assertAccountBalancePLNOfPLN('1,250.25');
+    accountPage.assertAccountBalancePLNOfUSD('1,882.19');
+    accountPage.assertAccountBalancePLNSummary('5,021.76');
   });
 
   it('should check balance verification date', () => {
    // when
     const accountName = 'First confirm balance';
-    page.addAccountWithCurrency(accountName, '125.75', 'USD');
+    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD');
 
     // given
-    page.confirmBalance(page.accountRows().first());
+    accountPage.confirmBalance(accountPage.accountRows().first());
      // then
-    page.assertAccountBalancePLNOfUSD('450.19');
+    accountPage.assertAccountBalancePLNOfUSD('450.19');
     const todayDate = new Date().toISOString().split('T')[0];
-    page.assertBalanceVerificationDate(page.accountRows().first(), todayDate);
+    accountPage.assertBalanceVerificationDate(accountPage.accountRows().first(), todayDate);
   });
 
   it('should make active accounts', () => {
     // when
     const accountName = 'First archive account make active';
-    page.addAccountWithCurrency(accountName, '125.75', 'USD');
-    page.assertNumberOfAccounts(1);
-    page.assertAccountName(page.accountRows().first(), accountName);
-    page.assertAccountBalance(page.accountRows().first(), '125.75');
-    page.assertAccountBalancePLNOfUSD('450.19');
-    page.archiveBalance(page.accountRows().first());
-    page.assertNumberOfAccounts(0);
-    page.archiveAccountsShow();
-    page.assertNumberOfAccounts(1);
+    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD');
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
+    accountPage.assertAccountBalancePLNOfUSD('450.19');
+    accountPage.archiveBalance(accountPage.accountRows().first());
+    accountPage.assertNumberOfAccounts(0);
+    accountPage.archiveAccountsShow();
+    accountPage.assertNumberOfAccounts(1);
 
     // given
-    page.makeActiveAccounts(page.accountRows().first());
+    accountPage.makeActiveAccounts(accountPage.accountRows().first());
 
     // then
-    page.assertNumberOfAccounts(1);
-    page.assertAccountName(page.accountRows().first(), accountName);
-    page.assertAccountBalance(page.accountRows().first(), '125.75');
-    page.assertAccountBalancePLNOfUSD('450.19');
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
+    accountPage.assertAccountBalancePLNOfUSD('450.19');
   });
 
   it('should archive accounts and show archived accounts', () => {
     // when
     const accountName = 'First archive account';
-    page.addAccountWithCurrency(accountName, '125.75', 'USD');
-    page.assertNumberOfAccounts(1);
-    page.assertAccountName(page.accountRows().first(), accountName);
-    page.assertAccountBalance(page.accountRows().first(), '125.75');
-    page.assertAccountBalancePLNOfUSD('450.19');
-    page.archiveBalance(page.accountRows().first());
-    page.assertNumberOfAccounts(0);
+    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD');
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
+    accountPage.assertAccountBalancePLNOfUSD('450.19');
+    accountPage.archiveBalance(accountPage.accountRows().first());
+    accountPage.assertNumberOfAccounts(0);
 
     // given
-    page.archiveAccountsShow();
+    accountPage.archiveAccountsShow();
 
     // then
-    page.assertNumberOfAccounts(1);
-    page.assertAccountName(page.accountRows().first(), accountName);
-    page.assertAccountBalance(page.accountRows().first(), '125.75');
-    page.assertAccountBalancePLNOfUSD('450.19');
-    page.makeActiveAccounts(page.accountRows().first());
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
+    accountPage.assertAccountBalancePLNOfUSD('450.19');
+    accountPage.makeActiveAccounts(accountPage.accountRows().first());
   });
 
 });
