@@ -32,6 +32,8 @@
     "npm-check-updates": "^2.15.0",
     "popper.js": "^1.14.6",
     "rxjs": "^6.3.3",
+    "update": "^0.7.4",
+    "webdriver-manager": "^12.1.7",
     "zone.js": "^0.8.28"
   },
   "devDependencies": {
