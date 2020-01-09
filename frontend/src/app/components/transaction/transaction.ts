@@ -10,8 +10,10 @@ export class Transaction {
   accountPriceEntries: AccountPriceEntry[] = [];
   editMode = false;
   isPlanned = false;
+  // recurrencePeriod = RecurrencePeriod.NONE;
   recurrencePeriod: RecurrencePeriod;
-  isRecurrent = this.recurrencePeriod === undefined ? false : this.recurrencePeriod !== RecurrencePeriod.NONE;
+  // isRecurrent = this.recurrencePeriod === undefined ? false : this.recurrencePeriod !== RecurrencePeriod.NONE;
+  // isRecurrent = false;
   editedTransaction: Transaction;
 
 }

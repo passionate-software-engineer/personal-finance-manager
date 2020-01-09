@@ -445,14 +445,14 @@
                     {{'button.commitOverduePlannedTransaction' | translate}}
                   </button>
                 </li>
-                <li *ngIf="!transaction.isRecurrent">
+                <li *ngIf="!isRecurrent(transaction)">
                   <button (click)="setAsRecurrent(transaction)"
                           class="btn btn-success btn-block"
                           id="SetAsRecurrentBtn">
                     {{'button.setAsRecurrent' | translate}}
                   </button>
                 </li>
-                <li *ngIf="transaction.isRecurrent">
+                <li *ngIf="isRecurrent(transaction)">
                   <button (click)="setAsNotRecurrent(transaction)"
                           class="btn btn-success btn-block"
                           id="SetAsNotRecurrentBtn">
