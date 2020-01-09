@@ -1,6 +1,6 @@
 import {Category} from '../category/category';
 import {Account} from '../account/account';
-import {RecurrencePeriod} from "./recurrence-period";
+import {RecurrencePeriod} from './recurrence-period';
 
 export class Transaction {
   id: number;

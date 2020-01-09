@@ -126,8 +126,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     if (this.isEditingTransactionWithArchivedAccount(transaction)) {
       TransactionsComponent.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
     }
-    console.log('from update trans  ', transaction.recurrencePeriod)
-    console.log('from update edited trans ', transaction.editedTransaction.recurrencePeriod)
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe((commitResult) => {
           this.transactionService.getTransaction(commitResult.savedTransactionId)
@@ -305,7 +303,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
     transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
-    console.log('=========transaction response = ', transactionResponse.recurrencePeriod);
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();
       accountPriceEntry.price = +entry.price; // + added to convert to number
@@ -335,8 +332,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
             transaction.recurrencePeriod = recurrencePeriod;
-            console.log('from setAsRecurrent isRecurrent = ', this.isRecurrent(transaction))
-            console.log('from setAsRecurrent recurrencePeriod = ', transaction.recurrencePeriod)
           }
         );
   }
@@ -347,8 +342,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));
             transaction.recurrencePeriod = RecurrencePeriod.NONE;
-            console.log('from setAsNotRecurrent isRecurrent = ', this.isRecurrent(transaction))
-            console.log('from setAsNotRecurrent recurrencePeriod = ', transaction.recurrencePeriod)
 
           }
         );
