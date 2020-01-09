@@ -12,7 +12,7 @@ import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
-import {Operation} from './transaction';
+import {Operation} from './operation';
 import {RecurrencePeriod} from '../recurrence-period';
 import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
 import {environment} from '../../../../environments/environment';
@@ -331,6 +331,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
+            // here I am assigning on request success
             transaction.isRecurrent = true;
           }
         );
@@ -341,6 +342,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));
+            // here I am assigning on request success
             transaction.isRecurrent = false;
           }
         );
