@@ -304,7 +304,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.id = transactionResponse.id;
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
-    // transaction.isRecurrent = transactionResponse.recurrent;
     transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
     console.log('=========transaction response = ', transactionResponse.recurrencePeriod);
     for (const entry of transactionResponse.accountPriceEntries) {
@@ -335,7 +334,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
-            // transaction.isRecurrent = true;
             transaction.recurrencePeriod = recurrencePeriod;
             console.log('from setAsRecurrent isRecurrent = ', this.isRecurrent(transaction))
             console.log('from setAsRecurrent recurrencePeriod = ', transaction.recurrencePeriod)
@@ -348,7 +346,6 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));
-            // transaction.isRecurrent = false;
             transaction.recurrencePeriod = RecurrencePeriod.NONE;
             console.log('from setAsNotRecurrent isRecurrent = ', this.isRecurrent(transaction))
             console.log('from setAsNotRecurrent recurrencePeriod = ', transaction.recurrencePeriod)

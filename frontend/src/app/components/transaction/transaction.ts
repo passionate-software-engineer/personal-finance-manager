@@ -11,9 +11,6 @@ export class Transaction {
   editMode = false;
   isPlanned = false;
   recurrencePeriod = RecurrencePeriod.NONE;
-  // recurrencePeriod: RecurrencePeriod;
-  // isRecurrent = this.recurrencePeriod === undefined ? false : this.recurrencePeriod !== RecurrencePeriod.NONE;
-  // isRecurrent = false;
   editedTransaction: Transaction;
 
 }
