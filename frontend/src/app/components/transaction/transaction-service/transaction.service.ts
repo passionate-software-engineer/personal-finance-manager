@@ -26,6 +26,7 @@ export class TransactionService extends ServiceBase {
       accountPriceEntries: [],
       date: transaction.date,
       isPlanned: transaction.isPlanned,
+      recurrencePeriod: transaction.recurrencePeriod
     };
 
     for (const entry of transaction.accountPriceEntries) {

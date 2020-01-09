@@ -126,6 +126,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     if (this.isEditingTransactionWithArchivedAccount(transaction)) {
       TransactionsComponent.setEditionDisabledEntriesToEqualOriginalTransactionValues(transaction);
     }
+    console.log('from update trans  ', transaction.recurrencePeriod)
+    console.log('from update edited trans ', transaction.editedTransaction.recurrencePeriod)
     this.transactionService.editTransaction(transaction.editedTransaction)
         .subscribe((commitResult) => {
           this.transactionService.getTransaction(commitResult.savedTransactionId)
@@ -304,7 +306,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.isPlanned = transactionResponse.planned;
     // transaction.isRecurrent = transactionResponse.recurrent;
     transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
-    console.log('=========transaction response = ', transactionResponse.recurrencePeriod)
+    console.log('=========transaction response = ', transactionResponse.recurrencePeriod);
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();
       accountPriceEntry.price = +entry.price; // + added to convert to number
