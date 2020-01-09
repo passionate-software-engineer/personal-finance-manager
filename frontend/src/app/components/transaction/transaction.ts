@@ -1,5 +1,6 @@
 import {Category} from '../category/category';
 import {Account} from '../account/account';
+import {RecurrencePeriod} from './recurrence-period';
 
 export class Transaction {
   id: number;
@@ -9,7 +10,7 @@ export class Transaction {
   accountPriceEntries: AccountPriceEntry[] = [];
   editMode = false;
   isPlanned = false;
-  isRecurrent = false;
+  recurrencePeriod = RecurrencePeriod.NONE;
   editedTransaction: Transaction;
 
 }
