@@ -2,9 +2,13 @@ import {LoginPage} from './LoginPage.po';
 import {RegisterPage} from './RegisterPage.po';
 import {v4 as uuid} from 'uuid';
 import {CategoryPage} from './CategoryPage.po';
+import {AccountsPage} from './AccountPage.po';
+import {TransactionAndFilterPage} from './TransactionPage.po';
 
 describe('Category page tests', () => {
-  let page: CategoryPage;
+  const categoryPage = new CategoryPage();
+  const accountPage = new AccountsPage();
+  const transactionPage = new TransactionAndFilterPage();
 
   beforeAll(async () => {
     const registerPage = new RegisterPage();
@@ -17,19 +21,26 @@ describe('Category page tests', () => {
   });
 
   beforeEach(async () => {
-    page = new CategoryPage();
-    await page.navigateTo();
 
-    await page.removeAllCategories();
+    await transactionPage.navigateTo();
+    await transactionPage.removeAllTransactions();
+
+    await accountPage.navigateTo();
+    await accountPage.removeAllAccounts();
+
+    await categoryPage.navigateTo();
+    await categoryPage.removeAllCategories();
+
+    categoryPage.navigateTo();
   });
 
   it('should display correct English descriptions on category page', () => {
 
     // then
-    expect(page.refreshCategoriesButton().getText()).toEqual('Refresh');
-    expect(page.addCategoryButton().getText()).toEqual('Add Category');
-    expect(page.nameHeader().getText()).toEqual('Name ▲');
-    expect(page.parentCategoryHeader().getText()).toEqual('Parent Category');
+    expect(categoryPage.refreshCategoriesButton().getText()).toEqual('Refresh');
+    expect(categoryPage.addCategoryButton().getText()).toEqual('Add Category');
+    expect(categoryPage.nameHeader().getText()).toEqual('Name ▲');
+    expect(categoryPage.parentCategoryHeader().getText()).toEqual('Parent Category');
   });
 
   it('should add category', () => {
@@ -37,13 +48,13 @@ describe('Category page tests', () => {
     const categoryName = 'Test Category';
 
     // when
-    page.addCategory(categoryName, 'Main Category');
+    categoryPage.addCategory(categoryName, 'Main Category');
 
     // then
-    page.assertMessage('Category added');
-    page.assertNumberOfCategories(1);
-    page.assertCategoryName(page.categoryRowsAll().first(), categoryName);
-    page.assertParentCategory(page.categoryRowsAll().first(), 'Main Category');
+    categoryPage.assertMessage('Category added');
+    categoryPage.assertNumberOfCategories(1);
+    categoryPage.assertCategoryName(categoryPage.categoryRowsAll().first(), categoryName);
+    categoryPage.assertParentCategory(categoryPage.categoryRowsAll().first(), 'Main Category');
 
   });
 
@@ -54,16 +65,16 @@ describe('Category page tests', () => {
     const categoryName = 'Oil';
 
     // when
-    page.addCategory(parentCategoryName, 'Main Category');
-    page.addCategory(categoryName, parentCategoryName);
+    categoryPage.addCategory(parentCategoryName, 'Main Category');
+    categoryPage.addCategory(categoryName, parentCategoryName);
 
     // then
-    page.assertMessage('Category added');
-    page.assertNumberOfCategories(2);
-    page.assertCategoryName(page.categoryRowsAll().first(), parentCategoryName);
-    page.assertParentCategory(page.categoryRowsAll().first(), 'Main Category');
-    page.assertCategoryName(page.categoryRowsAll().last(), categoryName);
-    page.assertParentCategory(page.categoryRowsAll().last(), parentCategoryName);
+    categoryPage.assertMessage('Category added');
+    categoryPage.assertNumberOfCategories(2);
+    categoryPage.assertCategoryName(categoryPage.categoryRowsAll().first(), parentCategoryName);
+    categoryPage.assertParentCategory(categoryPage.categoryRowsAll().first(), 'Main Category');
+    categoryPage.assertCategoryName(categoryPage.categoryRowsAll().last(), categoryName);
+    categoryPage.assertParentCategory(categoryPage.categoryRowsAll().last(), parentCategoryName);
   });
 
   it('should update category without parent category', () => {
@@ -72,14 +83,14 @@ describe('Category page tests', () => {
     const updatedCategoryName = 'Oil';
 
     // when
-    page.addCategory('Car', 'Main Category');
-    page.updateCategory(page.categoryRowsAll().first(), updatedCategoryName, 'Main Category');
+    categoryPage.addCategory('Car', 'Main Category');
+    categoryPage.updateCategory(categoryPage.categoryRowsAll().first(), updatedCategoryName, 'Main Category');
 
     // then
-    page.assertMessage('Category edited');
-    page.assertNumberOfCategories(1);
-    page.assertCategoryName(page.categoryRowsAll().first(), updatedCategoryName);
-    page.assertParentCategory(page.categoryRowsAll().first(), 'Main Category');
+    categoryPage.assertMessage('Category edited');
+    categoryPage.assertNumberOfCategories(1);
+    categoryPage.assertCategoryName(categoryPage.categoryRowsAll().first(), updatedCategoryName);
+    categoryPage.assertParentCategory(categoryPage.categoryRowsAll().first(), 'Main Category');
   });
 
   it('should update category with parentCategory change', () => {
@@ -87,30 +98,30 @@ describe('Category page tests', () => {
     // given
     const parentCategoryName = 'Car';
     const categoryName = 'Oil';
-    page.addCategory(parentCategoryName, 'Main Category');
-    page.addCategory(categoryName, 'Main Category');
+    categoryPage.addCategory(parentCategoryName, 'Main Category');
+    categoryPage.addCategory(categoryName, 'Main Category');
 
     // when
-    page.updateCategory(page.categoryRowsAll().last(), categoryName, parentCategoryName);
+    categoryPage.updateCategory(categoryPage.categoryRowsAll().last(), categoryName, parentCategoryName);
 
     // then
-    page.assertMessage('Category edited');
-    page.assertNumberOfCategories(2);
-    page.assertCategoryName(page.categoryRowsAll().last(), categoryName);
-    page.assertParentCategory(page.categoryRowsAll().last(), parentCategoryName);
+    categoryPage.assertMessage('Category edited');
+    categoryPage.assertNumberOfCategories(2);
+    categoryPage.assertCategoryName(categoryPage.categoryRowsAll().last(), categoryName);
+    categoryPage.assertParentCategory(categoryPage.categoryRowsAll().last(), parentCategoryName);
   });
 
   it('should delete category', () => {
 
     // given
-    page.addCategory('Car', 'Main Category');
+    categoryPage.addCategory('Car', 'Main Category');
 
     // when
-    page.deleteCategory(page.categoryRowsAll().first());
+    categoryPage.deleteCategory(categoryPage.categoryRowsAll().first());
 
     // then
-    page.assertMessage('Category deleted');
-    page.assertNumberOfCategories(0);
+    categoryPage.assertMessage('Category deleted');
+    categoryPage.assertNumberOfCategories(0);
   });
 
   it('should not delete category, because category is parent category', () => {
@@ -118,15 +129,15 @@ describe('Category page tests', () => {
     // given
     const categoryName = 'Car';
     const parentCategoryName = 'Oil';
-    page.addCategory(parentCategoryName, 'Main Category');
-    page.addCategory(categoryName, parentCategoryName);
+    categoryPage.addCategory(parentCategoryName, 'Main Category');
+    categoryPage.addCategory(categoryName, parentCategoryName);
 
     // when
-    page.deleteCategory(page.categoryRowsAll().last());
+    categoryPage.deleteCategory(categoryPage.categoryRowsAll().last());
 
     // then
-    page.assertMessage('Category is parent category. Delete not possible - please first delete all subcategories.');
-    page.assertNumberOfCategories(2);
+    categoryPage.assertMessage('Category is parent category. Delete not possible - please first delete all subcategories.');
+    categoryPage.assertNumberOfCategories(2);
   });
 
 });

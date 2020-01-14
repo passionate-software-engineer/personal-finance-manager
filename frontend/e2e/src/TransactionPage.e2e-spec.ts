@@ -161,34 +161,5 @@ describe('Transaction page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '1,000.00');
   });
 
-  it('should increase the account balance by the inserted transaction' , () => {
-    // given
-    categoryPage.navigateTo();
-    categoryPage.addCategory('Salary', 'Main Category');
-    categoryPage.assertMessage('Category added');
-    categoryPage.assertNumberOfCategories(1);
-    categoryPage.assertCategoryName(categoryPage.categoryRowsAll().first(), 'Salary');
-    categoryPage.assertParentCategory(categoryPage.categoryRowsAll().first(), 'Main Category');
 
-    accountPage.navigateTo();
-    accountPage.addAccountWithCurrency('ING', '9,750.25', 'PLN');
-    accountPage.assertNumberOfAccounts(1);
-    accountPage.assertAccountName(accountPage.accountRows().first(), 'ING');
-    accountPage.assertAccountBalance(accountPage.accountRows().first(), '9,750.25');
-    accountPage.assertAccountBalancePLNSummary('9,750.25');
-
-
-    // when
-    transactionPage.navigateTo();
-    transactionPage.addTransaction('26/11/2019', 'wages', '7850.25', null, 'ING', null, 'Salary');
-    expect(transactionPage.transactionRows().count()).toEqual(1);
-
-    // then
-    accountPage.navigateTo();
-    accountPage.assertNumberOfAccounts(1);
-    accountPage.assertAccountName(accountPage.accountRows().first(), 'ING');
-    accountPage.assertAccountBalance(accountPage.accountRows().first(), '17,600.50');
-    accountPage.assertAccountBalancePLNSummary('17,600.50');
-
-  });
 });
