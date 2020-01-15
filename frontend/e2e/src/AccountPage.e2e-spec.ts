@@ -243,5 +243,35 @@ describe('Accounts page tests', () => {
 
   });
 
+  it('should display the account balance minus the inserted transaction minus' , () => {
+  // given
+      categoryPage.navigateTo();
+      categoryPage.addCategory('Car', 'Main Category');
+      categoryPage.assertMessage('Category added');
+      categoryPage.assertNumberOfCategories(1);
+      categoryPage.addCategory('Oil', 'Car');
+      categoryPage.assertMessage('Category added');
+      categoryPage.assertNumberOfCategories(2);
+
+      accountPage.navigateTo();
+      accountPage.addAccountWithCurrency('PKO', '0', 'EUR');
+      accountPage.assertNumberOfAccounts(1);
+      accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
+      accountPage.assertAccountBalance(accountPage.accountRows().first(), '0.00');
+      accountPage.assertAccountBalancePLNSummary('0.00');
+
+      // when
+      transactionPage.navigateTo();
+      transactionPage.addTransaction('09/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
+      expect(transactionPage.transactionRows().count()).toEqual(1);
+
+      // then
+      accountPage.navigateTo();
+      accountPage.assertNumberOfAccounts(1);
+      accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
+      accountPage.assertAccountBalance(accountPage.accountRows().first(), '-32.75');
+      accountPage.assertAccountBalancePLNSummary('-138.86');
+  });
+
 
 });
