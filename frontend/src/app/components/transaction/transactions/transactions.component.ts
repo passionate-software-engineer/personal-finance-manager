@@ -12,7 +12,7 @@ import {FiltersComponentBase} from './transactions-filter.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../helpers/date-helper';
-import {Operation} from './transaction';
+import {Operation} from './operation';
 import {RecurrencePeriod} from '../recurrence-period';
 import {PostTransactionAccountBalanceHelper} from '../../../helpers/postTransactionAccountBalanceHelper';
 import {environment} from '../../../../environments/environment';
@@ -302,8 +302,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     transaction.id = transactionResponse.id;
     transaction.description = transactionResponse.description;
     transaction.isPlanned = transactionResponse.planned;
-    transaction.isRecurrent = transactionResponse.recurrent;
-
+    transaction.recurrencePeriod = transactionResponse.recurrencePeriod;
     for (const entry of transactionResponse.accountPriceEntries) {
       const accountPriceEntry = new AccountPriceEntry();
       accountPriceEntry.price = +entry.price; // + added to convert to number
@@ -327,11 +326,12 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
   }
 
   setAsRecurrent(transaction: Transaction) {
-    this.transactionService.setAsRecurrent(transaction, RecurrencePeriod.EVERY_MONTH)
+    const recurrencePeriod = RecurrencePeriod.EVERY_MONTH;
+    this.transactionService.setAsRecurrent(transaction, recurrencePeriod)
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetRecurrent'));
-            transaction.isRecurrent = true;
+            transaction.recurrencePeriod = recurrencePeriod;
           }
         );
   }
@@ -341,7 +341,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         .subscribe(() => {
             this.alertService.success(
               this.translate.instant('message.transactionSetNotRecurrent'));
-            transaction.isRecurrent = false;
+            transaction.recurrencePeriod = RecurrencePeriod.NONE;
+
           }
         );
   }
@@ -493,6 +494,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   private isNotOverduePlannedTransaction(transaction: any) {
     return transaction.isPlanned && !DateHelper.isPastDate(transaction.date);
+  }
+
+  private isRecurrent(transaction: any): boolean {
+    return !transaction.recurrencePeriod ? false : transaction.recurrencePeriod !== RecurrencePeriod.NONE;
   }
 
   isEditModeContainsArchivedAccount(transaction: any) {
