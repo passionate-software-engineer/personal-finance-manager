@@ -3,6 +3,7 @@ package com.pfm.account;
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserProvider;
 import com.pfm.currency.CurrencyService;
 import com.pfm.history.HistoryEntryService;
@@ -30,6 +31,7 @@ public class AccountController implements AccountApi {
   private AccountValidator accountValidator;
   private HistoryEntryService historyEntryService;
   private CurrencyService currencyService;
+  private AccountTypeService accountTypeService;
   private UserProvider userProvider;
 
   @Override
@@ -214,6 +216,7 @@ public class AccountController implements AccountApi {
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
+        .type(accountTypeService.getAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId))
         .build();
   }
 

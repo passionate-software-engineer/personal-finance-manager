@@ -1,6 +1,7 @@
 package com.pfm.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pfm.account.type.AccountType;
 import com.pfm.currency.Currency;
 import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
@@ -37,8 +38,12 @@ public final class Account {
   private BigDecimal balance;
 
   @ManyToOne // TODO should not return all currency information, only id
-  @ApiModelProperty(value = "Account's currency", required = true, example = "USD")
+  @ApiModelProperty(value = "Account's currency", required = true)
   private Currency currency;
+
+  @ManyToOne // TODO should not return all account type information, only id
+  @ApiModelProperty(value = "Account's type", required = true)
+  private AccountType type;
 
   @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
   private LocalDate lastVerificationDate;
