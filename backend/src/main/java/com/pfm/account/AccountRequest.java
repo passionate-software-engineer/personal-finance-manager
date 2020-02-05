@@ -23,6 +23,9 @@ public class AccountRequest {
   @ApiModelProperty(value = "Account's currency id", required = true, example = "1")
   private long currencyId;
 
+  @ApiModelProperty(value = "Account's type id", required = true, example = "1")
+  private long accountTypeId;
+
   @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
   private LocalDate lastVerificationDate;
 }
