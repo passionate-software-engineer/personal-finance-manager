@@ -1,6 +1,7 @@
 package com.pfm.account;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.type.AccountTypeService;
@@ -71,6 +72,9 @@ public class AccountController implements AccountApi {
     if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
       return returnBadRequestCurrencyDoesNotExist(accountRequest);
     }
+    if (isProvidedAccountTypeIdIncorrect(accountRequest, userId)) {
+      return returnBadRequestAccountTypeDoesNotExist(accountRequest);
+    }
 
     Account account = convertAccountRequestToAccount(accountRequest, userId);
 
@@ -99,6 +103,9 @@ public class AccountController implements AccountApi {
     // need to do validation before conversion of request as it will throw error otherwise
     if (isProvidedCurrencyIdIncorrect(accountRequest, userId)) {
       return returnBadRequestCurrencyDoesNotExist(accountRequest);
+    }
+    if (isProvidedAccountTypeIdIncorrect(accountRequest, userId)) {
+      return returnBadRequestAccountTypeDoesNotExist(accountRequest);
     }
 
     Account account = convertAccountRequestToAccount(accountRequest, userId);
@@ -231,6 +238,19 @@ public class AccountController implements AccountApi {
   private ResponseEntity<?> returnBadRequestCurrencyDoesNotExist(@RequestBody AccountRequest accountRequest) {
     return ResponseEntity.badRequest()
         .body(Collections.singletonList(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), accountRequest.getCurrencyId())));
+  }
+
+  private boolean isProvidedAccountTypeIdIncorrect(@RequestBody AccountRequest accountRequest, long userId) {
+    if (accountTypeService.findAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId).isEmpty()) {
+      log.info("No account type with id {} was found, not able to update", accountRequest.getAccountTypeId());
+      return true;
+    }
+    return false;
+  }
+
+  private ResponseEntity<?> returnBadRequestAccountTypeDoesNotExist(@RequestBody AccountRequest accountRequest) {
+    return ResponseEntity.badRequest()
+        .body(Collections.singletonList(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), accountRequest.getAccountTypeId())));
   }
 
   private ResponseEntity<?> performUpdate(long accountId, long userId, boolean shouldArchive) {

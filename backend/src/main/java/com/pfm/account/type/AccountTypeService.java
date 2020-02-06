@@ -21,7 +21,7 @@ public class AccountTypeService {
 
   private AccountTypeRepository accountTypeRepository;
 
-  public Optional<AccountType> findCurrencyByIdAndUserId(long accountTypeId, long userId) {
+  public Optional<AccountType> findAccountTypeByIdAndUserId(long accountTypeId, long userId) {
     return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
   }
 
