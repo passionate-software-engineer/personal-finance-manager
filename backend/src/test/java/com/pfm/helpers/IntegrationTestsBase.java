@@ -1,18 +1,5 @@
 package com.pfm.helpers;
 
-import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
-import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
-import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
@@ -49,6 +36,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -473,6 +473,7 @@ public abstract class IntegrationTestsBase {
         .dateTo(filter.getDateTo())
         .priceFrom(filter.getPriceFrom())
         .priceTo(filter.getPriceTo())
+        .isDefault(filter.getIsDefault())
         .build();
   }
 
@@ -495,6 +496,7 @@ public abstract class IntegrationTestsBase {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
+        .isDefault(filterRequest.getIsDefault())
         .build();
   }
 

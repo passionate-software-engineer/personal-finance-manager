@@ -1,5 +1,18 @@
 package com.pfm.filter;
 
+import com.pfm.account.Account;
+import com.pfm.helpers.IntegrationTestsBase;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.HttpHeaders;
+
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -12,6 +25,8 @@ import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
+import static com.pfm.helpers.TestFilterProvider.filterIsDefault;
+import static com.pfm.helpers.TestFilterProvider.filterIsNotDefault;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -27,15 +42,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.account.Account;
-import com.pfm.helpers.IntegrationTestsBase;
-import java.time.LocalDate;
-import java.util.List;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpHeaders;
-
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @BeforeEach
@@ -44,8 +50,17 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }
 
-  @Test
-  public void shouldAddFilter() throws Exception {
+  private static Collection<Object[]> addFilterParameters() {
+    return Arrays.asList(new Object[][]{
+        {filterHomeExpensesUpTo200()},
+        {filterIsDefault()},
+        {filterIsNotDefault()}
+    });
+  }
+
+  @ParameterizedTest
+  @MethodSource("addFilterParameters")
+  public void shouldAddFilter(Filter filter) throws Exception {
     //given
     Long categoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
@@ -54,7 +69,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
-    FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
+    FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filter);
     homeExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
     homeExpensesFilterToAdd.setAccountIds(convertIdsToList(accountId));
 
@@ -65,7 +80,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterId, homeExpensesFilterToAdd);
 
     Filter actualFilter = getFilterById(filterId, token);
-    assertThat(expectedFilter, is(equalTo(actualFilter)));
+    assertThat(actualFilter, is(equalTo(expectedFilter)));
+    assertThat(actualFilter.getIsDefault(), is(expectedFilter.getIsDefault()));
   }
 
   @Test

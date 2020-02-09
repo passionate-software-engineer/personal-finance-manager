@@ -1,12 +1,12 @@
 package com.pfm.helpers;
 
-import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
-
 import com.pfm.filter.Filter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 
 public class TestFilterProvider {
 
@@ -57,6 +57,7 @@ public class TestFilterProvider {
         .priceTo(convertDoubleToBigDecimal(200))
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
+        .isDefault(true)
         .build();
   }
 
@@ -74,6 +75,24 @@ public class TestFilterProvider {
         .name("Food")
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
+        .build();
+  }
+
+  public static Filter filterIsDefault() {
+    return Filter.builder()
+        .name("Food")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .isDefault(true)
+        .build();
+  }
+
+  public static Filter filterIsNotDefault() {
+    return Filter.builder()
+        .name("Food")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .isDefault(false)
         .build();
   }
 
