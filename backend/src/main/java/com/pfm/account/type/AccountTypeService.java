@@ -1,18 +1,15 @@
 package com.pfm.account.type;
 
-import com.pfm.currency.Currency;
-import com.pfm.currency.CurrencyRepository;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.getMessage;
 
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.pfm.config.MessagesProvider.*;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @AllArgsConstructor
