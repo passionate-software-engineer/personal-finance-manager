@@ -1,8 +1,10 @@
 import {Currency} from './currency';
+import {AccountType} from './type';
 
 export class Account {
   id: number;
   name: string;
+  type: AccountType;
   balance = 0;
   currency: Currency;
   editMode = false;

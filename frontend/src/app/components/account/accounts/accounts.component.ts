@@ -1,4 +1,5 @@
 import {Currency} from './../currency';
+import {AccountType} from './../type';
 import {Component, OnInit} from '@angular/core';
 import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
@@ -7,6 +8,7 @@ import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyService} from '../currency-service/currency.service';
+import {AccountTypeService} from '../type-service/type.service';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -18,15 +20,18 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
+  supportedTypes: AccountType[];
   accounts: Account[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
   newAccount: Account = new Account();
   sortableAccountsTable: Sortable = new Sortable('name');
   sortableCurrencyTable: Sortable = new Sortable('name');
+  sortableAccountTypeTable: Sortable = new Sortable('name');
 
   constructor(
     private accountService: AccountService,
+    private typeService: AccountTypeService,
     private currencyService: CurrencyService,
     private alertService: AlertsService,
     private translate: TranslateService
@@ -35,7 +40,9 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrencies(); // TODO - call in parallel
+    //this.getTypes(); // TODO - call in parallel
   }
+
 
   getAccounts(): void {
     this.accountService.getAccounts()
@@ -63,6 +70,17 @@ export class AccountsComponent implements OnInit {
         });
 
   }
+
+//   getTypes(): void {
+//       this.typeService.getTypes()
+//           .subscribe(types => {
+//             this.supportedTypes = types;
+//             this.newAccount.type = this.supportedTypes[0];
+//
+//             this.getAccounts();
+//           });
+//
+//     }
 
   deleteAccount(account) {
     if (confirm(this.translate.instant('message.wantDeleteAccount'))) {

@@ -10,12 +10,14 @@
     <button (click)="getTransactions()"
             class="btn btn-primary"
             id="RefreshTransactionsBtn"
-            type="button">{{'button.refresh' | translate}}</button>
+            type="button">{{'button.refresh' | translate}}
+    </button>
 
     <span class="hidePlannedTransactionsCheckbox">
       <input (change)="negateHidePlannedTransactionsCheckboxAndSaveState()"
              id="hidePlannedTransactionsCheckbox"
-             type="checkbox" [checked]= "getHidePlannedTransactionsCheckboxState()" >
+             type="checkbox"
+             [checked]="getHidePlannedTransactionsCheckboxState()">
       {{"checkbox.hidePlannedTransactions" | translate}}
     </span>
   </div>
@@ -34,16 +36,20 @@
            [(ngModel)]="selectedFilter.name"/>
     <button id="AddFilterBtn"
             class="btn btn-success"
-            (click)="addFilter()">{{'transaction.save' | translate}}</button>
+            (click)="addFilter()">{{'transaction.save' | translate}}
+    </button>
     <button id="UpdateFilterBtn"
             class="btn btn-warning"
-            (click)="updateFilter()">{{'transaction.update' | translate}}</button>
+            (click)="updateFilter()">{{'transaction.update' | translate}}
+    </button>
     <button id="ResetFilterBtn"
             class="btn btn-primary"
-            (click)="resetFilter()">{{'transaction.reset' | translate}}</button>
+            (click)="resetFilter()">{{'transaction.reset' | translate}}
+    </button>
     <button id="DeleteFilterBtn"
             class="btn btn-danger"
-            (click)="deleteFilter()">{{'transaction.delete' | translate}}</button>
+            (click)="deleteFilter()">{{'transaction.delete' | translate}}
+    </button>
   </div>
 
 </div>
@@ -269,10 +275,12 @@
       <td id="EditAccountSaveExitBtn">
         <button (click)="addTransaction()"
                 class="btn btn-success"
-                id="newTransactionSaveButton">{{'button.save' | translate}}</button>
+                id="newTransactionSaveButton">{{'button.save' | translate}}
+        </button>
         <button (click)="addingMode=false"
                 class="btn btn-danger"
-                id="AddTransactionExitBtn">{{'button.exit' | translate}}</button>
+                id="AddTransactionExitBtn">{{'button.exit' | translate}}
+        </button>
       </td>
     </tr>
 
@@ -305,7 +313,8 @@
 
         <!--Description-->
         <td *ngIf="!transaction.editMode"
-            id="DescriptionReadOnly">{{transaction.description}}</td>
+            id="DescriptionReadOnly">{{transaction.description}}
+        </td>
         <td *ngIf="transaction.editMode">
           <input [(ngModel)]="transaction.editedTransaction.description"
                  class="form-control"
@@ -370,7 +379,7 @@
         </ng-template>
 
         <!--Account balance after transaction-->
-        <td >
+        <td>
           <ng-container *ngFor="let entry of transaction.accountPriceEntries">
             <p>{{ entry.postTransactionAccountBalance | number:'0.2'}}</p>
           </ng-container>

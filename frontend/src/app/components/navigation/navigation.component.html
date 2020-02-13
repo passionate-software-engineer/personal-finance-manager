@@ -20,8 +20,9 @@
     class="collapse navbar-collapse"
     id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li [routerLinkActive]="['active']"
-          class="nav-item">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item">
         <a
           id="TransactionLink"
           class="nav-link"
@@ -29,8 +30,9 @@
           routerLinkActive="active">{{'navigation.transactions' | translate}}
         </a>
       </li>
-      <li [routerLinkActive]="['active']"
-          class="nav-item">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item">
         <a
           id="CategoriesLink"
           class="nav-link"
@@ -38,8 +40,9 @@
           routerLinkActive="active">{{'navigation.categories' | translate}}
         </a>
       </li>
-      <li [routerLinkActive]="['active']"
-          class="nav-item">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item">
         <a
           id="AccountsLink"
           class="nav-link"
@@ -47,8 +50,9 @@
           routerLinkActive="active">{{'navigation.accounts' | translate}}
         </a>
       </li>
-      <li [routerLinkActive]="['active']"
-          class="nav-item">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item">
         <a
           id="HistoryLink"
           class="nav-link"
@@ -56,8 +60,9 @@
           routerLinkActive="active">{{'navigation.history' | translate}}
         </a>
       </li>
-      <li [routerLinkActive]="['active']"
-          class="nav-item">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item">
         <a
           class="nav-link"
           routerLink="/export"
@@ -65,11 +70,13 @@
         </a>
       </li>
     </ul>
-    <ul [routerLinkActive]="['active']"
-        class="navbar-nav navbar-right">
-      <li [routerLinkActive]="['active']"
-          class="nav-item"
-          *ngIf="!isUserLoggedIn()">
+    <ul
+      [routerLinkActive]="['active']"
+      class="navbar-nav navbar-right">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item"
+        *ngIf="!isUserLoggedIn()">
         <a
           id="RegisterLink"
           class="nav-link"
@@ -78,9 +85,10 @@
           {{'navigation.register' | translate}}
         </a>
       </li>
-      <li [routerLinkActive]="['active']"
-          class="nav-item"
-          *ngIf="!isUserLoggedIn()">
+      <li
+        [routerLinkActive]="['active']"
+        class="nav-item"
+        *ngIf="!isUserLoggedIn()">
         <a
           id="LoginLink"
           class="nav-link"
