@@ -19,7 +19,7 @@ public class AccountTypeController implements AccountTypeApi {
   public ResponseEntity<List<AccountType>> getAccountType() {
     long userId = userProvider.getCurrentUserId();
 
-    log.info("Returning list of currencies for user " + userId);
+    log.info("Returning list of account types for user " + userId);
 
     List<AccountType> accountType = accountTypeService.getAccountType(userId);
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("account type")
+@RequestMapping("accountType")
 @CrossOrigin
 @Api(value = "AccountType", description = "Controller used to list / add / update / delete account type.")
 public interface AccountTypeApi {
