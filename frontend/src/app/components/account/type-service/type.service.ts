@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {ServiceBase} from '../../../helpers/service-base';
 import {AccountType} from '../type';
 
-const PATH = 'types';
+const PATH = 'accountType';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AccountTypeService extends ServiceBase {
     super(http);
   }
 
-  getTypes(): Observable<AccountType[]> {
+  getAccountType(): Observable<AccountType[]> {
     return this.http.get<AccountType[]>(ServiceBase.apiUrl(PATH));
   }
 

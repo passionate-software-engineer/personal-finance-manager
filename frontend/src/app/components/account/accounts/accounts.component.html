@@ -31,7 +31,6 @@
         <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
-      <!--Account Type-->
       <th id="AccountTypeHeader"
           [class.active]="sortableAccountsTable.order === 'type.name'"
           (click)="sortableAccountsTable.setOrder('type.name')">
@@ -162,7 +161,7 @@
 
         <!-- Account Type -->
         <td *ngIf="account.editMode">
-          <select id="EditAccountAccountTypeSelect"
+          <select id="EditAccountTypeSelect"
                   class="form-control"
                   [(ngModel)]="account.editedAccount.type">
             <option *ngFor="let type of supportedTypes"
