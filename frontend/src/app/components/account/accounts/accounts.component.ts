@@ -20,7 +20,7 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
-  supportedTypes: AccountType[];
+  supportedAccountType: AccountType[];
   accounts: Account[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
@@ -31,7 +31,7 @@ export class AccountsComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private typeService: AccountTypeService,
+    private accountTypeService: AccountTypeService,
     private currencyService: CurrencyService,
     private alertService: AlertsService,
     private translate: TranslateService
@@ -40,7 +40,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrencies(); // TODO - call in parallel
-    //this.getTypes(); // TODO - call in parallel
+    this.getAccountType(); // TODO - call in parallel
   }
 
 
@@ -71,16 +71,16 @@ export class AccountsComponent implements OnInit {
 
   }
 
-//   getTypes(): void {
-//       this.typeService.getTypes()
-//           .subscribe(types => {
-//             this.supportedTypes = types;
-//             this.newAccount.type = this.supportedTypes[0];
-//
-//             this.getAccounts();
-//           });
-//
-//     }
+  getAccountType(): void {
+      this.accountTypeService.getAccountType()
+          .subscribe(accountType => {
+            this.supportedAccountType = accountType;
+            this.newAccount.accountType = this.supportedAccountType[0];
+
+            this.getAccounts();
+          });
+
+    }
 
   deleteAccount(account) {
     if (confirm(this.translate.instant('message.wantDeleteAccount'))) {
@@ -164,7 +164,7 @@ export class AccountsComponent implements OnInit {
 
   onRefreshAccounts() {
     this.getCurrencies(); // TODO - call in parallel
-    this.getAccounts();
+    this.getAccountType(); // TODO - call in parallel
   }
 
   validateAccount(account: Account): boolean {
