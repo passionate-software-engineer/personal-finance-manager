@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ServiceBase} from '../../../helpers/service-base';
-import {AccountType} from '../type';
+import {AccountType} from '../accountType';
 
 const PATH = 'accountType';
 
