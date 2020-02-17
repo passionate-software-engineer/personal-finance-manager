@@ -1,5 +1,5 @@
 import {Currency} from './../currency';
-import {AccountType} from './../type';
+import {AccountType} from './../accountType';
 import {Component, OnInit} from '@angular/core';
 import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
@@ -8,7 +8,7 @@ import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyService} from '../currency-service/currency.service';
-import {AccountTypeService} from '../type-service/type.service';
+import {AccountTypeService} from '../type-service/accountType.service';
 
 const maxAccountBalance = Number.MAX_SAFE_INTEGER;
 const minAccountBalance = Number.MIN_SAFE_INTEGER;
@@ -132,6 +132,7 @@ export class AccountsComponent implements OnInit {
     editedAccount.name = account.editedAccount.name;
     editedAccount.balance = account.editedAccount.balance;
     editedAccount.currency = account.editedAccount.currency;
+    editedAccount.accountType = account.editedAccount.accountType;
     editedAccount.balancePLN = editedAccount.balance * editedAccount.currency.exchangeRate;
 
     this.accountService.editAccount(editedAccount)
@@ -159,6 +160,7 @@ export class AccountsComponent implements OnInit {
           this.addingMode = false;
           this.newAccount = new Account();
           this.newAccount.currency = this.supportedCurrencies[0];
+          this.newAccount.accountType = this.supportedAccountType[0];
         });
   }
 
