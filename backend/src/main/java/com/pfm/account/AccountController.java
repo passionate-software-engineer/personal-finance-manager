@@ -213,6 +213,7 @@ public class AccountController implements AccountApi {
         .name(accountToUpdate.getName())
         .balance(accountToUpdate.getBalance())
         .currency(accountToUpdate.getCurrency())
+        .type(accountToUpdate.getType())
         .lastVerificationDate(accountToUpdate.getLastVerificationDate())
         .archived(archive ? SET_ACCOUNT_AS_ARCHIVED : SET_ACCOUNT_AS_ACTIVE)
         .build();
