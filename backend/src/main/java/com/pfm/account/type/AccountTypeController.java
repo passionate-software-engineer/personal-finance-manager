@@ -16,12 +16,12 @@ public class AccountTypeController implements AccountTypeApi {
   private UserProvider userProvider;
 
   @Override
-  public ResponseEntity<List<AccountType>> getAccountType() {
+  public ResponseEntity<List<AccountType>> getAccountTypes() {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Returning list of account types for user " + userId);
 
-    List<AccountType> accountType = accountTypeService.getAccountType(userId);
+    List<AccountType> accountType = accountTypeService.getAccountTypes(userId);
 
     return ResponseEntity.ok(accountType);
   }

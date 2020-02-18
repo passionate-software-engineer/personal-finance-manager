@@ -1,6 +1,5 @@
 package com.pfm.account.type;
 
-import com.pfm.account.Account;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "AccountType", description = "Controller used to list / add / update / delete account type.")
 public interface AccountTypeApi {
 
-  @ApiOperation(value = "Get list of all accounts", response = Account.class, responseContainer = "List",
+  @ApiOperation(value = "Get list of all accounts", response = AccountType.class, responseContainer = "List",
       authorizations = {@Authorization(value = "Bearer")})
   @GetMapping
-  ResponseEntity<List<AccountType>> getAccountType();
+  ResponseEntity<List<AccountType>> getAccountTypes();
 
   // TODO add support for adding, modifying, deleting currencies
 }

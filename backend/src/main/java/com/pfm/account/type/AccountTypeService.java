@@ -30,7 +30,7 @@ public class AccountTypeService {
     return accountTypeOptional.get();
   }
 
-  public List<AccountType> getAccountType(long userId) {
+  public List<AccountType> getAccountTypes(long userId) {
     return accountTypeRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(AccountType::getName))
         .collect(Collectors.toList());
