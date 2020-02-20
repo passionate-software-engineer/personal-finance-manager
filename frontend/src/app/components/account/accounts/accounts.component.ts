@@ -20,7 +20,7 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
-  supportedType: AccountType[];
+  supportedAccountType: AccountType[];
   accounts: Account[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
