@@ -5,6 +5,7 @@
   "account.balancePLN": "Balance PLN",
   "account.exchangeRate": "Exchange rate",
   "account.currency": "Currency",
+  "account.accountType": "Account Type",
   "account.lastVerificationDate": "Balance verification date",
   "account.total": "Total",
   "category.addCategory": "Add Category",

@@ -20,7 +20,7 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
-  supportedAccountType: AccountType[];
+  supportedAccountTypes: AccountType[];
   accounts: Account[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
@@ -75,8 +75,8 @@ export class AccountsComponent implements OnInit {
   getAccountTypes(): void {
       this.accountTypeService.getAccountTypes()
           .subscribe(accountType => {
-            this.supportedAccountType = accountType;
-            this.newAccount.accountType = this.supportedAccountType[0];
+            this.supportedAccountTypes = accountType;
+            this.newAccount.accountType = this.supportedAccountTypes[0];
 
             this.getAccounts();
           });
@@ -111,7 +111,7 @@ export class AccountsComponent implements OnInit {
         break;
       }
       }
-    for (const accountType of this.supportedAccountType) {
+    for (const accountType of this.supportedAccountTypes) {
       if (accountType.name === account.accountType.name) {
           account.editedAccount.accountType = accountType;
           break;
@@ -167,7 +167,7 @@ export class AccountsComponent implements OnInit {
           this.addingMode = false;
           this.newAccount = new Account();
           this.newAccount.currency = this.supportedCurrencies[0];
-          this.newAccount.accountType = this.supportedAccountType[0];
+          this.newAccount.accountType = this.supportedAccountTypes[0];
         });
   }
 

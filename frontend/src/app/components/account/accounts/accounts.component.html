@@ -92,7 +92,7 @@
         <select id="NewAccountTypeSelect"
                 class="form-control"
                 [(ngModel)]="newAccount.accountType">
-          <option *ngFor="let type of supportedType"
+          <option *ngFor="let accountType of supportedAccountTypes"
                   [ngValue]="accountType">
             {{ accountType.name }}
           </option>
@@ -164,7 +164,7 @@
           <select id="EditAccountTypeSelect"
                   class="form-control"
                   [(ngModel)]="account.editedAccount.accountType">
-            <option *ngFor="let type of supportedType"
+            <option *ngFor="let accountType of supportedAccountTypes"
                     [ngValue]="accountType">
               {{ accountType.name }}
             </option>
@@ -294,11 +294,6 @@
 
       <!-- AccountType -->
       <td></td>
-
-      <!-- AccountType -->
-      <td>
-        {{ "account.total" | translate }}
-      </td>
 
       <!-- Currency -->
       <td></td>
@@ -433,7 +428,7 @@
 
   <tbody>
     <tr
-      *ngFor="let accountType of (supportedAccountType | orderBy: sortableAccountTypeTable.order:sortableAccountTypeTable.reverse:'case-insensitive')">
+      *ngFor="let accountType of (supportedAccountTypes | orderBy: sortableAccountTypeTable.order:sortableAccountTypeTable.reverse:'case-insensitive')">
       <td id="AccountTypeName{{accountType.name}}"
           class="tdBoxAccountType">
         {{ accountType.name }}

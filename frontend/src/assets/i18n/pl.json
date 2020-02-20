@@ -5,6 +5,7 @@
   "account.balancePLN": "Saldo PLN",
   "account.exchangeRate": "Kurs",
   "account.currency": "Waluta",
+  "account.accountType": "Typ Konta",
   "account.lastVerificationDate": "Data potwierdzenia salda",
   "account.total": "Razem",
   "category.addCategory": "Dodaj Kategorię",
