@@ -111,7 +111,7 @@ export class AccountsComponent implements OnInit {
         break;
       }
       }
-    for (const accountType of this.supportedType) {
+    for (const accountType of this.supportedAccountType) {
       if (accountType.name === account.accountType.name) {
           account.editedAccount.accountType = accountType;
           break;
