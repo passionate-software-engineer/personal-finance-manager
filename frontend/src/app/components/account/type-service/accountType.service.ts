@@ -15,7 +15,7 @@ export class AccountTypeService extends ServiceBase {
     super(http);
   }
 
-  getAccountType(): Observable<AccountType[]> {
+  getAccountTypes(): Observable<AccountType[]> {
     return this.http.get<AccountType[]>(ServiceBase.apiUrl(PATH));
   }
 

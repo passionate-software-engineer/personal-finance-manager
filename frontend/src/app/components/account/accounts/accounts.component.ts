@@ -20,7 +20,7 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 })
 export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
-  supportedAccountType: AccountType[];
+  supportedType: AccountType[];
   accounts: Account[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
@@ -40,7 +40,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrencies(); // TODO - call in parallel
-    this.getAccountType(); // TODO - call in parallel
+    this.getAccountTypes(); // TODO - call in parallel
   }
 
 
@@ -57,6 +57,7 @@ export class AccountsComponent implements OnInit {
             this.supportedCurrencies[i].allAccountsBalancePLN =
               this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
           }
+
         });
   }
 
@@ -71,8 +72,8 @@ export class AccountsComponent implements OnInit {
 
   }
 
-  getAccountType(): void {
-      this.accountTypeService.getAccountType()
+  getAccountTypes(): void {
+      this.accountTypeService.getAccountTypes()
           .subscribe(accountType => {
             this.supportedAccountType = accountType;
             this.newAccount.accountType = this.supportedAccountType[0];
@@ -108,6 +109,12 @@ export class AccountsComponent implements OnInit {
       if (currency.name === account.currency.name) {
         account.editedAccount.currency = currency;
         break;
+      }
+      }
+    for (const accountType of this.supportedType) {
+      if (accountType.name === account.accountType.name) {
+          account.editedAccount.accountType = accountType;
+          break;
       }
     }
   }
@@ -166,7 +173,7 @@ export class AccountsComponent implements OnInit {
 
   onRefreshAccounts() {
     this.getCurrencies(); // TODO - call in parallel
-    this.getAccountType(); // TODO - call in parallel
+    this.getAccountTypes(); // TODO - call in parallel
   }
 
   validateAccount(account: Account): boolean {

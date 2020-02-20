@@ -4,8 +4,8 @@ import {AccountType} from './accountType';
 export class Account {
   id: number;
   name: string;
-  accountType: AccountType;
   balance = 0;
+  accountType: AccountType;
   currency: Currency;
   editMode = false;
   lastVerificationDate: Date;
