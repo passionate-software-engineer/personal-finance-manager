@@ -176,8 +176,9 @@ export class AccountsComponent implements OnInit {
   }
 
   onRefreshAccounts() {
-    this.getAccountTypes(); // TODO - call in parallel
     this.getCurrencies(); // TODO - call in parallel
+    this.getAccountTypes(); // TODO - call in parallel
+    this.getAccounts();
   }
 
   validateAccount(account: Account): boolean {
