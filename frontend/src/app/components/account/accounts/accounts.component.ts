@@ -39,8 +39,8 @@ export class AccountsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCurrencies(); // TODO - call in parallel
     this.getAccountTypes(); // TODO - call in parallel
+    this.getCurrencies(); // TODO - call in parallel
   }
 
 
@@ -56,6 +56,9 @@ export class AccountsComponent implements OnInit {
             this.supportedCurrencies[i].allAccountsBalance = this.allAccountsBalanceCurrencies(this.supportedCurrencies[i].name);
             this.supportedCurrencies[i].allAccountsBalancePLN =
               this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
+          }
+          for (let i = 0; i < this.supportedAccountTypes.length; i++) {
+                      this.supportedAccountTypes[i].allAccountsBalancePLN = this.allAccountsBalanceAccountTypes(this.supportedAccountTypes[i].name);
           }
 
         });
@@ -137,9 +140,9 @@ export class AccountsComponent implements OnInit {
     const editedAccount: Account = new Account();
     editedAccount.id = account.id;
     editedAccount.name = account.editedAccount.name;
+    editedAccount.accountType = account.editedAccount.accountType;
     editedAccount.balance = account.editedAccount.balance;
     editedAccount.currency = account.editedAccount.currency;
-    editedAccount.accountType = account.editedAccount.accountType;
     editedAccount.balancePLN = editedAccount.balance * editedAccount.currency.exchangeRate;
 
     this.accountService.editAccount(editedAccount)
@@ -166,14 +169,15 @@ export class AccountsComponent implements OnInit {
           this.accounts.push(this.newAccount);
           this.addingMode = false;
           this.newAccount = new Account();
-          this.newAccount.currency = this.supportedCurrencies[0];
           this.newAccount.accountType = this.supportedAccountTypes[0];
+          this.newAccount.currency = this.supportedCurrencies[0];
+
         });
   }
 
   onRefreshAccounts() {
-    this.getCurrencies(); // TODO - call in parallel
     this.getAccountTypes(); // TODO - call in parallel
+    this.getCurrencies(); // TODO - call in parallel
   }
 
   validateAccount(account: Account): boolean {
@@ -268,6 +272,18 @@ export class AccountsComponent implements OnInit {
     }
     return sum;
   }
+
+  allAccountsBalanceAccountTypes(accountTypeName: string) {
+      let sum = 0;
+
+      for (let i = 0; i < this.accounts.length; ++i) {
+        if (this.accounts[i].accountType.name === accountTypeName) {
+          sum += +this.accounts[i].balancePLN;
+        }
+      }
+      return sum;
+    }
+
 
   restoreAccount(account: Account) {
     this.accountService.restoreAccount(account)
