@@ -1,5 +1,18 @@
 package com.pfm.helpers;
 
+import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
+import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
+import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
@@ -36,19 +49,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
-import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
-import static com.pfm.helpers.TestCategoryProvider.categoryFood;
-import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
-import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -104,7 +104,8 @@ public abstract class IntegrationTestsBase {
   }
 
   //account
-  protected long callRestServiceToAddAccountAndReturnId(Account account, String token) throws Exception {
+  protected long callRestServiceToAddAccountAndReturnId(Account account, String token)
+      throws Exception {
     String response =
         mockMvc
             .perform(post(ACCOUNTS_SERVICE_PATH)
@@ -124,7 +125,8 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  protected BigDecimal callRestServiceAndReturnAccountBalance(long accountId, String token) throws Exception {
+  protected BigDecimal callRestServiceAndReturnAccountBalance(long accountId, String token)
+      throws Exception {
     String response =
         mockMvc
             .perform(get(ACCOUNTS_SERVICE_PATH + "/" + accountId)
@@ -149,7 +151,8 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  protected void callRestToUpdateAccount(long id, AccountRequest accountRequest, String token) throws Exception {
+  protected void callRestToUpdateAccount(long id, AccountRequest accountRequest, String token)
+      throws Exception {
     mockMvc
         .perform(put(ACCOUNTS_SERVICE_PATH + "/" + id)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -167,7 +170,8 @@ public abstract class IntegrationTestsBase {
         .andReturn().getResponse().getStatus();
   }
 
-  protected ExportResult callRestToExportAllDataAndReturnExportResult(String token) throws Exception {
+  protected ExportResult callRestToExportAllDataAndReturnExportResult(String token)
+      throws Exception {
     String response =
         mockMvc
             .perform(get(EXPORT_SERVICE_PATH)
@@ -187,6 +191,7 @@ public abstract class IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isCreated());
+
   }
 
   private List<Account> getAccountsFromResponse(String response) throws Exception {
@@ -203,19 +208,22 @@ public abstract class IntegrationTestsBase {
   }
 
   //category
-  protected long callRestToAddCategoryAndReturnId(Category category, String token) throws Exception {
+  protected long callRestToAddCategoryAndReturnId(Category category, String token)
+      throws Exception {
     CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
 
-  protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category, long parentCategoryId, String token)
+  protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category,
+      long parentCategoryId, String token)
       throws Exception {
     CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
     categoryRequest.setParentCategoryId(parentCategoryId);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
 
-  private long addCategoryRequestAndReturnId(CategoryRequest categoryRequest, String token) throws Exception {
+  private long addCategoryRequestAndReturnId(CategoryRequest categoryRequest, String token)
+      throws Exception {
     String response = mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
@@ -236,7 +244,8 @@ public abstract class IntegrationTestsBase {
     return jsonToCategory(response);
   }
 
-  protected void callRestToUpdateCategory(long id, CategoryRequest categoryRequest, String token) throws Exception {
+  protected void callRestToUpdateCategory(long id, CategoryRequest categoryRequest, String token)
+      throws Exception {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + id)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -270,12 +279,14 @@ public abstract class IntegrationTestsBase {
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
 
-  protected Category convertCategoryRequestToCategoryAndSetId(long categoryId, long userId, CategoryRequest categoryRequest) {
+  protected Category convertCategoryRequestToCategoryAndSetId(long categoryId, long userId,
+      CategoryRequest categoryRequest) {
     return Category.builder()
         .id(categoryId)
         .name(categoryRequest.getName())
         .parentCategory(categoryRequest.getParentCategoryId() == null ? null
-            : categoryService.getCategoryByIdAndUserId(categoryRequest.getParentCategoryId(), userId)
+            : categoryService
+                .getCategoryByIdAndUserId(categoryRequest.getParentCategoryId(), userId)
                 .orElse(null))
         .build();
   }
@@ -283,12 +294,14 @@ public abstract class IntegrationTestsBase {
   protected CategoryRequest convertCategoryToCategoryRequest(Category category) {
     return CategoryRequest.builder()
         .name(category.getName())
-        .parentCategoryId(category.getParentCategory() == null ? null : category.getParentCategory().getId())
+        .parentCategoryId(
+            category.getParentCategory() == null ? null : category.getParentCategory().getId())
         .build();
   }
 
   //transaction
-  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId,
+  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest,
+      long accountId, long categoryId,
       String token)
       throws Exception {
     transactionRequest.setCategoryId(categoryId);
@@ -304,9 +317,11 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token)
+  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId,
+      long categoryId, String token)
       throws Exception {
-    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
+    TransactionRequest transactionRequest = helper
+        .convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
@@ -317,7 +332,8 @@ public abstract class IntegrationTestsBase {
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+    return callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(),
+        jacekAccountId, foodCategoryId, token);
   }
 
   protected long callRestToAddFirstTestPlannedTransactionAndReturnId() throws Exception {
@@ -327,10 +343,12 @@ public abstract class IntegrationTestsBase {
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
-    return callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
+    return callRestToAddTransactionAndReturnId(foodPlannedTransactionWithNoAccountAndNoCategory(),
+        jacekAccountId, foodCategoryId, token);
   }
 
-  protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction, long transactionId,
+  protected Transaction setTransactionIdAccountIdCategoryId(Transaction transaction,
+      long transactionId,
       long accountId, long categoryId) {
     transaction.setId(transactionId);
     transaction.setCategoryId(categoryId);
@@ -338,7 +356,8 @@ public abstract class IntegrationTestsBase {
     return transaction;
   }
 
-  protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId, TransactionRequest transactionRequest) {
+  protected Transaction convertTransactionRequestToTransactionAndSetId(long transactionId,
+      TransactionRequest transactionRequest) {
     return Transaction.builder()
         .id(transactionId)
         .accountPriceEntries(transactionRequest.getAccountPriceEntries())
@@ -359,7 +378,8 @@ public abstract class IntegrationTestsBase {
     return jsonToTransaction(response);
   }
 
-  protected long callRestToUpdateTransactionAndReturnId(long transactionId, TransactionRequest transactionRequest, String token)
+  protected long callRestToUpdateTransactionAndReturnId(long transactionId,
+      TransactionRequest transactionRequest, String token)
       throws Exception {
     return Long.parseLong(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
@@ -370,7 +390,8 @@ public abstract class IntegrationTestsBase {
         .getResponse().getContentAsString());
   }
 
-  protected CommitResult callRestToUpdateTransactionAndReturnCommitResult(long transactionId, TransactionRequest transactionRequest,
+  protected CommitResult callRestToUpdateTransactionAndReturnCommitResult(long transactionId,
+      TransactionRequest transactionRequest,
       String token)
       throws Exception {
     return jsonToCommitResult(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
@@ -394,7 +415,8 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk());
   }
 
-  private Stream<Transaction> callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(String token) throws Exception {
+  private Stream<Transaction> callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(String token)
+      throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
@@ -403,13 +425,15 @@ public abstract class IntegrationTestsBase {
     return getTransactionsFromResponse(response).stream();
   }
 
-  protected List<Transaction> callRestToGetAllTransactionsFromDatabase(String token) throws Exception {
+  protected List<Transaction> callRestToGetAllTransactionsFromDatabase(String token)
+      throws Exception {
     return callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(token)
         .filter(transaction -> !transaction.isPlanned())
         .collect(Collectors.toList());
   }
 
-  protected List<Transaction> callRestToGetAllPlannedTransactionsFromDatabase(String token) throws Exception {
+  protected List<Transaction> callRestToGetAllPlannedTransactionsFromDatabase(String token)
+      throws Exception {
     return callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(token)
         .filter(Transaction::isPlanned)
         .collect(Collectors.toList());
@@ -420,11 +444,13 @@ public abstract class IntegrationTestsBase {
   }
 
   private List<Transaction> getTransactionsFromResponse(String response) throws Exception {
-    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
+    return mapper.readValue(response,
+        mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
   //filters
-  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, String token) throws Exception {
+  protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, String token)
+      throws Exception {
     String response =
         mockMvc
             .perform(post(FILTERS_SERVICE_PATH)
@@ -436,7 +462,8 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected long callRestServiceToAddFilterAndReturnId(Filter filter, String token) throws Exception {
+  protected long callRestServiceToAddFilterAndReturnId(Filter filter, String token)
+      throws Exception {
     String response =
         mockMvc
             .perform(post(FILTERS_SERVICE_PATH)
@@ -448,7 +475,8 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected void callRestServiceToUpdateFilter(long id, FilterRequest filterRequest, String token) throws Exception {
+  protected void callRestServiceToUpdateFilter(long id, FilterRequest filterRequest, String token)
+      throws Exception {
     mockMvc
         .perform(put(FILTERS_SERVICE_PATH + "/" + id)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -477,7 +505,8 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  protected Filter convertFilterRequestToFilterAndSetId(long filterId, FilterRequest filterRequest) {
+  protected Filter convertFilterRequestToFilterAndSetId(long filterId,
+      FilterRequest filterRequest) {
     if (filterRequest.getCategoryIds() == null) {
       filterRequest.setCategoryIds(new ArrayList<>());
     }
@@ -524,7 +553,8 @@ public abstract class IntegrationTestsBase {
   }
 
   private List<Filter> getFiltersFromResponse(String response) throws Exception {
-    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Filter.class));
+    return mapper.readValue(response,
+        mapper.getTypeFactory().constructCollectionType(List.class, Filter.class));
   }
 
   //users
@@ -579,11 +609,14 @@ public abstract class IntegrationTestsBase {
 
   }
 
-  protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId, RecurrencePeriod recurrencePeriod) throws Exception {
-    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT, recurrencePeriod);
+  protected int callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(long transactionId,
+      RecurrencePeriod recurrencePeriod) throws Exception {
+    return callRestToSetPlannedTransactionRecurrentState(transactionId, SET_AS_RECURRENT,
+        recurrencePeriod);
   }
 
-  private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd, RecurrencePeriod recurrencePeriod)
+  private int callRestToSetPlannedTransactionRecurrentState(long transactionId, String uriEnd,
+      RecurrencePeriod recurrencePeriod)
       throws Exception {
     return mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + uriEnd)
@@ -601,7 +634,8 @@ public abstract class IntegrationTestsBase {
         .andReturn().getResponse().getStatus();
   }
 
-  protected int callRestToCommitOverduePlannedTransaction(long plannedTransactionId) throws Exception {
+  protected int callRestToCommitOverduePlannedTransaction(long plannedTransactionId)
+      throws Exception {
     return mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId + COMMIT_OVERDUE)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -609,7 +643,8 @@ public abstract class IntegrationTestsBase {
         .andReturn().getResponse().getStatus();
   }
 
-  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user) throws Exception {
+  public String callRestToRegisterAndAuthenticateUserAndReturnUserToken(User user)
+      throws Exception {
     callRestToRegisterUserAndReturnUserId(user);
     return callRestToAuthenticateUserAndReturnToken(user);
   }

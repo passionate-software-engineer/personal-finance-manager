@@ -1,18 +1,5 @@
 package com.pfm.filter;
 
-import com.pfm.account.Account;
-import com.pfm.helpers.IntegrationTestsBase;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.HttpHeaders;
-
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -23,6 +10,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
+import static com.pfm.helpers.TestFilterProvider.filterCarExpensesWithoutSettingDefault;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
 import static com.pfm.helpers.TestFilterProvider.filterIsDefault;
@@ -41,6 +29,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.pfm.account.Account;
+import com.pfm.helpers.IntegrationTestsBase;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
@@ -122,29 +123,36 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(2));
     long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
-    FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(filterHomeExpensesUpTo200());
+    FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(
+        filterHomeExpensesUpTo200());
     homeExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryHomeId));
-    final long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd, token);
+    final long filterHomeExpensesId = callRestServiceToAddFilterAndReturnId(homeExpensesFilterToAdd,
+        token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
     carExpensesFilterToAdd.setAccountIds(convertIdsToList(accountMbankId, accountJacekId));
     carExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryCarId));
-    final long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd, token);
+    final long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(carExpensesFilterToAdd,
+        token);
 
     FilterRequest foodExpensesFilterToAdd = convertFilterToFilterRequest(filterFoodExpenses());
     foodExpensesFilterToAdd.setAccountIds(convertIdsToList(accountJacekId));
     foodExpensesFilterToAdd.setCategoryIds(convertIdsToList(categoryFoodId));
-    long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(foodExpensesFilterToAdd, token);
+    long filterFoodExpensesId = callRestServiceToAddFilterAndReturnId(foodExpensesFilterToAdd,
+        token);
 
     //when
     final List<Filter> actualListOfFilters = callRestToGetAllFilters(token);
 
     //then
-    final Filter expectedCarExpensesFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, carExpensesFilterToAdd);
+    final Filter expectedCarExpensesFilter = convertFilterRequestToFilterAndSetId(
+        filterCarExpensesId, carExpensesFilterToAdd);
 
-    final Filter expectedFoodExpensesFilter = convertFilterRequestToFilterAndSetId(filterFoodExpensesId, foodExpensesFilterToAdd);
+    final Filter expectedFoodExpensesFilter = convertFilterRequestToFilterAndSetId(
+        filterFoodExpensesId, foodExpensesFilterToAdd);
 
-    final Filter expectedHomeExpensesFilter = convertFilterRequestToFilterAndSetId(filterHomeExpensesId, homeExpensesFilterToAdd);
+    final Filter expectedHomeExpensesFilter = convertFilterRequestToFilterAndSetId(
+        filterHomeExpensesId, homeExpensesFilterToAdd);
 
     assertThat(actualListOfFilters.size(), is(3));
     assertThat(actualListOfFilters, containsInAnyOrder(
@@ -178,17 +186,22 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(actualFilters.contains(expetedCarExpenses), is(false));
   }
 
-  @Test
-  public void shouldUpdateFilter() throws Exception {
+  private static Collection<Object[]> updateFilterParameters() {
+    return Arrays.asList(new Object[][]{
+        {filterIsDefault().getIsDefault(), filterCarExpenses()},
+        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
+    });
+  }
+
+  @ParameterizedTest
+  @MethodSource("updateFilterParameters")
+  public void shouldUpdateFilter(Boolean defaultOrNoDefault, Filter filter) throws Exception {
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
-
-    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filterCarExpenses(), token);
-
+    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filter, token);
     FilterRequest filterCarExpensesToUpdate = FilterRequest.builder()
         .name("Car expenses between 1000$ and 2000$")
         .priceTo(convertDoubleToBigDecimal(2000))
@@ -198,15 +211,14 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
         .dateTo(LocalDate.of(2017, 1, 31))
         .categoryIds(convertIdsToList(categoryId))
         .accountIds(convertIdsToList(accountId))
+        .isDefault(Boolean.valueOf(defaultOrNoDefault))
         .build();
-
     //when
     callRestServiceToUpdateFilter(filterCarExpensesId, filterCarExpensesToUpdate, token);
-
     //then
     Filter updatedFilter = getFilterById(filterCarExpensesId, token);
-    final Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId, filterCarExpensesToUpdate);
-
+    final Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId,
+        filterCarExpensesToUpdate);
     assertThat(updatedFilter, is(equalTo(expectedFilter)));
   }
 
