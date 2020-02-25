@@ -61,6 +61,7 @@ export class AccountsComponent implements OnInit {
         });
   }
 
+
   getCurrencies(): void {
     this.currencyService.getCurrencies()
         .subscribe(currencies => {
