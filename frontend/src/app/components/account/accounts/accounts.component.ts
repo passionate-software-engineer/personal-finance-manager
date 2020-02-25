@@ -57,9 +57,6 @@ export class AccountsComponent implements OnInit {
             this.supportedCurrencies[i].allAccountsBalancePLN =
               this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
           }
-          for (let i = 0; i < this.supportedAccountTypes.length; i++) {
-                      this.supportedAccountTypes[i].allAccountsBalancePLN = this.allAccountsBalanceAccountTypes(this.supportedAccountTypes[i].name);
-          }
 
         });
   }
@@ -105,6 +102,14 @@ export class AccountsComponent implements OnInit {
     account.editMode = true;
     account.editedAccount = new Account();
     account.editedAccount.name = account.name;
+
+    // need to set exactly same object
+    for (const accountType of this.supportedAccountTypes) {
+      if (accountType.name === account.accountType.name) {
+        account.editedAccount.accountType = accountType;
+        break;
+      }
+      }
     account.editedAccount.balance = account.balance;
 
     // need to set exactly same object
@@ -114,12 +119,7 @@ export class AccountsComponent implements OnInit {
         break;
       }
       }
-    for (const accountType of this.supportedAccountTypes) {
-      if (accountType.name === account.accountType.name) {
-          account.editedAccount.accountType = accountType;
-          break;
-      }
-    }
+//
   }
 
   confirmAccountBalance(account: Account) {
@@ -176,9 +176,9 @@ export class AccountsComponent implements OnInit {
   }
 
   onRefreshAccounts() {
+    this.getAccounts();
     this.getCurrencies(); // TODO - call in parallel
     this.getAccountTypes(); // TODO - call in parallel
-    this.getAccounts();
   }
 
   validateAccount(account: Account): boolean {
@@ -273,18 +273,6 @@ export class AccountsComponent implements OnInit {
     }
     return sum;
   }
-
-  allAccountsBalanceAccountTypes(accountTypeName: string) {
-      let sum = 0;
-
-      for (let i = 0; i < this.accounts.length; ++i) {
-        if (this.accounts[i].accountType.name === accountTypeName) {
-          sum += +this.accounts[i].balancePLN;
-        }
-      }
-      return sum;
-    }
-
 
   restoreAccount(account: Account) {
     this.accountService.restoreAccount(account)

@@ -142,6 +142,7 @@
         </button>
       </td>
     </tr>
+
     <ng-container
       *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
       <tr [ngClass]="{'font-italic':account.archived}"
@@ -434,9 +435,10 @@
         {{ accountType.name }}
       </td>
 
-      <td id="AccountTypeBalanceOf{{accountType.name}}"
-          class="tdBoxAccountType">
-        {{ accountType.allAccountsBalancePLN | number: "0.2-2" }}
+      <td>
+<!--        id="AccountTypeBalanceOf{{accountType.name}}"-->
+<!--          class="tdBoxAccountType">-->
+<!--        {{ accountType.allAccountsTypeBalancePLN() | number: "0.2-2" }}-->
       </td>
     </tr>
 
