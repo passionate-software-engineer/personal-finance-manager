@@ -87,11 +87,11 @@
                [(ngModel)]="newAccount.name"/>
       </td>
 
-      <!-- AccountType -->
+      <!-- Account Type -->
       <td>
         <select id="NewAccountTypeSelect"
                 class="form-control"
-                [(ngModel)]="newAccount.accountType">
+                [(ngModel)]="newAccount.type">
           <option *ngFor="let accountType of supportedAccountTypes"
                   [ngValue]="accountType">
             {{ accountType.name }}
@@ -164,7 +164,7 @@
         <td *ngIf="account.editMode">
           <select id="EditAccountTypeSelect"
                   class="form-control"
-                  [(ngModel)]="account.editedAccount.accountType">
+                  [(ngModel)]="account.editedAccount.type">
             <option *ngFor="let accountType of supportedAccountTypes"
                     [ngValue]="accountType">
               {{ accountType.name }}

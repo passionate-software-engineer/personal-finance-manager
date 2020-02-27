@@ -5,7 +5,7 @@ export class Account {
   id: number;
   name: string;
   balance = 0;
-  accountType: AccountType;
+  type: AccountType;
   currency: Currency;
   editMode = false;
   lastVerificationDate: Date;

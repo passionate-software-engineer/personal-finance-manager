@@ -57,7 +57,6 @@ export class AccountsComponent implements OnInit {
             this.supportedCurrencies[i].allAccountsBalancePLN =
               this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
           }
-
         });
   }
 
@@ -75,9 +74,9 @@ export class AccountsComponent implements OnInit {
 
   getAccountTypes(): void {
       this.accountTypeService.getAccountTypes()
-          .subscribe(accountType => {
-            this.supportedAccountTypes = accountType;
-            this.newAccount.accountType = this.supportedAccountTypes[0];
+          .subscribe(type => {
+            this.supportedAccountTypes = type;
+            this.newAccount.type = this.supportedAccountTypes[0];
 
             this.getAccounts();
           });
@@ -105,9 +104,9 @@ export class AccountsComponent implements OnInit {
     account.editedAccount.name = account.name;
 
     // need to set exactly same object
-    for (const accountType of this.supportedAccountTypes) {
-      if (accountType.name === account.accountType.name) {
-        account.editedAccount.accountType = accountType;
+    for (const type of this.supportedAccountTypes) {
+      if (type.name === account.type.name) {
+        account.editedAccount.type = type;
         break;
       }
       }
@@ -120,7 +119,6 @@ export class AccountsComponent implements OnInit {
         break;
       }
       }
-//
   }
 
   confirmAccountBalance(account: Account) {
@@ -141,7 +139,7 @@ export class AccountsComponent implements OnInit {
     const editedAccount: Account = new Account();
     editedAccount.id = account.id;
     editedAccount.name = account.editedAccount.name;
-    editedAccount.accountType = account.editedAccount.accountType;
+    editedAccount.type = account.editedAccount.type;
     editedAccount.balance = account.editedAccount.balance;
     editedAccount.currency = account.editedAccount.currency;
     editedAccount.balancePLN = editedAccount.balance * editedAccount.currency.exchangeRate;
@@ -170,7 +168,7 @@ export class AccountsComponent implements OnInit {
           this.accounts.push(this.newAccount);
           this.addingMode = false;
           this.newAccount = new Account();
-          this.newAccount.accountType = this.supportedAccountTypes[0];
+          this.newAccount.type = this.supportedAccountTypes[0];
           this.newAccount.currency = this.supportedCurrencies[0];
 
         });
