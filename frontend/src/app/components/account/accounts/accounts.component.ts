@@ -57,7 +57,7 @@ export class AccountsComponent implements OnInit {
             this.supportedCurrencies[i].allAccountsBalancePLN =
               this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
           }
-          for (let i = 0; i < this.supportedCurrencies.length; i++) {
+          for (let i = 0; i < this.supportedAccountTypes.length; i++) {
                       this.supportedAccountTypes[i].allAccountsTypeBalancePLN = this.allAccountsBalanceAccountTypePLN(this.supportedAccountTypes[i].name);
            }
 
