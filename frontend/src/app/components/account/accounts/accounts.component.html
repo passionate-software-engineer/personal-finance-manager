@@ -400,7 +400,6 @@
     </tr>
   </tbody>
 </table>
-<td></td>
 
 <!-- Summary by AccountType  -->
 
@@ -435,10 +434,10 @@
         {{ accountType.name }}
       </td>
 
-      <td>
-<!--        id="AccountTypeBalanceOf{{accountType.name}}"-->
-<!--          class="tdBoxAccountType">-->
-<!--        {{ accountType.allAccountsTypeBalancePLN() | number: "0.2-2" }}-->
+      <td
+        id="AccountTypeBalanceOf{{accountType.name}}"
+          class="tdBoxAccountType">
+        {{ accountType.allAccountsTypeBalancePLN | number: "0.2-2" }}
       </td>
     </tr>
 
