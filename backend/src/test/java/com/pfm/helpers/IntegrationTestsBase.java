@@ -65,7 +65,7 @@ public abstract class IntegrationTestsBase {
   protected static final String IMPORT_SERVICE_PATH = "/import";
   protected static final String COMMIT_OVERDUE = "/commitOverdue";
 
-  protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON_UTF8;
+  protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON;
   protected static final long NOT_EXISTING_ID = 0;
 
   @Autowired
