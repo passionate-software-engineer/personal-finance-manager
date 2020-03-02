@@ -58,7 +58,7 @@ export class AccountsComponent implements OnInit {
               this.supportedCurrencies[i].allAccountsBalance * this.supportedCurrencies[i].exchangeRate;
           }
           for (let i = 0; i < this.supportedAccountTypes.length; i++) {
-                      this.supportedAccountTypes[i].allAccountsTypeBalancePLN = this.allAccountsBalanceAccountTypePLN(this.supportedAccountTypes[i].name);
+            this.supportedAccountTypes[i].allAccountsTypeBalancePLN = this.allAccountsBalanceAccountTypePLN(this.supportedAccountTypes[i].name);
            }
 
         });
@@ -280,7 +280,7 @@ export class AccountsComponent implements OnInit {
   allAccountsBalanceAccountTypePLN(typeName: string) {
   let sum = 0;
 
-    for(let i = 0; i < this.accounts.length; ++i) {
+    for (let i = 0; i < this.accounts.length; ++i) {
       if (this.accounts[i].type.name === typeName) {
         sum += +this.accounts[i].balancePLN;
       }
