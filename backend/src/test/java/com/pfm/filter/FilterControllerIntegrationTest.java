@@ -211,7 +211,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
         .dateTo(LocalDate.of(2017, 1, 31))
         .categoryIds(convertIdsToList(categoryId))
         .accountIds(convertIdsToList(accountId))
-        .isDefault(Boolean.valueOf(defaultOrNoDefault))
+        .isDefault(defaultOrNoDefault)
         .build();
     //when
     callRestServiceToUpdateFilter(filterCarExpensesId, filterCarExpensesToUpdate, token);
