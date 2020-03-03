@@ -105,19 +105,19 @@ export class AccountsPage {
     return element(by.id('CurrencyBalanceUSD'));
   }
 
-  exchengeRateOfEUR() {
+  exchangeRateOfEUR() {
    return element(by.id('CurrencyExchangeRateEUR'));
   }
 
-  exchengeRateOfGBP() {
+  exchangeRateOfGBP() {
    return element(by.id('CurrencyExchangeRateGBP'));
   }
 
-  exchengeRateOfPLN() {
+  exchangeRateOfPLN() {
    return element(by.id('CurrencyExchangeRatePLN'));
   }
 
-  exchengeRateOfUSD() {
+  exchangeRateOfUSD() {
     return element(by.id('CurrencyExchangeRateUSD'));
   }
 
@@ -147,10 +147,6 @@ export class AccountsPage {
     return element(by.id('AccountTypeBalanceOfCredit'));
   }
 
-  accountTypeBalancePLNOfForeign_currency() {
-    return element(by.id('AccountTypeBalanceOfForeign_currency'));
-  }
-
   accountTypeBalancePLNOfInvestment() {
     return element(by.id('AccountTypeBalanceOfInvestment'));
   }
@@ -166,14 +162,12 @@ export class AccountsPage {
     return element(by.id('BalanceOfAllAccountsTypeSummary'));
   }
 
-
-
   assertBalanceOfAllAccounts() {
     expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountCurrenciesSummery().getText());
   }
 
   assertBalanceOfAllAccountsType() {
-      expect(this.balanceOfAllAccounts().getText()).toEqual(this.assertBalanceOfAllAccountsType().getText());
+      expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountsTypeSummery().getText());
     }
 
   alert() {
@@ -213,7 +207,27 @@ export class AccountsPage {
   }
 
   assertAccountBalancePLNSummary(expectedBalanceOfAllAccountCurrenciesSummery) {
-  expect(this.balanceOfAllAccounts().getText()).toEqual(expectedBalanceOfAllAccountCurrenciesSummery);
+    expect(this.balanceOfAllAccounts().getText()).toEqual(expectedBalanceOfAllAccountCurrenciesSummery);
+  }
+
+  assertAccountBalancePLNOfCreditAccount(expectedBalanceCreditAccount_PLN) {
+      expect(this.accountTypeBalancePLNOfCredit().getText()).toEqual(expectedBalanceCreditAccount_PLN);
+  }
+
+  assertAccountBalancePLNOfInvestmentAccount(expectedBalanceInvestmentAccount_PLN) {
+      expect(this.accountTypeBalancePLNOfInvestment().getText()).toEqual(expectedBalanceInvestmentAccount_PLN);
+  }
+
+  assertAccountBalancePLNOfPersonalAccount(expectedBalancePersonalAccount_PLN) {
+      expect(this.accountTypeBalancePLNOfPersonal().getText()).toEqual(expectedBalancePersonalAccount_PLN);
+  }
+
+  assertAccountBalancePLNOfSavingAccount(expectedBalanceSavingAccount_PLN) {
+       expect(this.accountTypeBalancePLNOfSaving().getText()).toEqual(expectedBalanceSavingAccount_PLN);
+  }
+
+  assertAccountBalancePLNSummaryWithAccountType(expectedBalanceOfAllAccountsTypeSummery) {
+    expect(this.balanceOfAllAccounts().getText()).toEqual(expectedBalanceOfAllAccountsTypeSummery);
   }
 
 
@@ -262,19 +276,19 @@ export class AccountsPage {
    this.refreshAccountsButton().click();
   }
 
-  addAccountWithAccountTypeAndCurrency(name, balance, accountType, currency) {
-     this.addAccountButton().click();
+  addAccountWithAccountTypeAndCurrency(name, accountType, balance, currency) {
+    this.addAccountButton().click();
 
-     this.newAccountName().sendKeys(name);
-     this.newAccountBalance().sendKeys(balance);
-     this.newAccountAccountType().sendKeys(accountType);
-     this.newAccountCurrency().sendKeys(currency);
+    this.newAccountName().sendKeys(name);
+    this.newAccountAccountType().sendKeys(accountType);
+    this.newAccountBalance().sendKeys(balance);
+    this.newAccountCurrency().sendKeys(currency);
 
-     this.newAccountSaveButton().click();
+    this.newAccountSaveButton().click();
 
-     this.assertSuccessMessage('Account added');
-     this.refreshAccountsButton().click();
-    }
+    this.assertSuccessMessage('Account added');
+    this.refreshAccountsButton().click();
+  }
 
   updateAccount(name, balance) {
     this.optionsButton(this.accountRows().first()).click();

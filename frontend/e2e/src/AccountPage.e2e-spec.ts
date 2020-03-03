@@ -90,6 +90,18 @@ describe('Accounts page tests', () => {
     accountPage.assertBalanceOfAllAccounts();
   });
 
+  it('should check balance PLN with balance PLN from Account Type Table', () => {
+      // when
+      const accountName = 'Balance PLN from Account Type Check';
+      // given
+      accountPage.addAccountWithAccountTypeAndCurrency(accountName, 'Investment', '250.20', 'GBP');
+      // then
+      accountPage.assertBalanceOfAllAccounts();
+      accountPage.assertBalanceOfAllAccountsType();
+    });
+
+
+
   it('should check account balance currency with  box currencies balance currency', () => {
     // given
     accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
@@ -108,6 +120,7 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().get(3), balanceUSD);
   });
 
+
   it('should check box currencies balance PLN', () => {
     // given
     accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
@@ -121,6 +134,29 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalancePLNOfPLN('1,250.25');
     accountPage.assertAccountBalancePLNOfUSD('1,882.19');
     accountPage.assertAccountBalancePLNSummary('5,021.76');
+  });
+
+  it('should check box account type balance PLN', () => {
+    // given
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit', 'Credit', '300.25', 'EUR');
+    accountPage.addAccountWithCurrency('Balance account type Investment', 'Investment', '123.50', 'GBP');
+    accountPage.addAccountWithCurrency('Balance account type Personal', 'Personal', '1250.25', 'PLN');
+    accountPage.addAccountWithCurrency('Balance account type Saving', 'Saving', '525.75', 'USD');
+
+    // then
+    accountPage.assertNumberOfAccounts(4);
+    accountPage.assertAccountBalancePLNOfEUR('1,273.06');
+    accountPage.assertAccountBalancePLNOfGBP('616.27');
+    accountPage.assertAccountBalancePLNOfPLN('1,250.25');
+    accountPage.assertAccountBalancePLNOfUSD('1,882.19');
+    accountPage.assertAccountBalancePLNSummary('5,021.76');
+    accountPage.assertAccountBalancePLNOfCreditAccount('1,273.06');
+    accountPage.assertAccountBalancePLNOfInvestmentAccount('616.27');
+    accountPage.assertAccountBalancePLNOfPersonalAccount('1,250.25');
+    accountPage.assertAccountBalancePLNOfSavingAccount('1,882.19');
+    accountPage.assertBalanceOfAllAccounts();
+    accountPage.assertBalanceOfAllAccountsType();
+
   });
 
   it('should check balance verification date', () => {
@@ -179,6 +215,38 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
     accountPage.assertAccountBalancePLNOfUSD('450.19');
     accountPage.makeActiveAccounts(accountPage.accountRows().first());
+  });
+
+  it('should check account totals  by account type', () => {
+    // given
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_1', 'Credit', '300.25', 'EUR');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_2', 'Credit', '123.50', 'GBP');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_3', 'Credit', '-100.50', 'PLN');
+
+    // then
+    accountPage.assertNumberOfAccounts(3);
+    accountPage.assertAccountBalancePLNOfEUR('1,273.06');
+    accountPage.assertAccountBalancePLNOfGBP('616.27');
+    accountPage.assertAccountBalancePLNOfPLN('-100.50');
+    accountPage.assertAccountBalancePLNOfCreditAccount('1,788.83');
+    accountPage.assertBalanceOfAllAccounts();
+    accountPage.assertBalanceOfAllAccountsType();
+  });
+
+  it('should check account totals  by currency', () => {
+    // given
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_1', 'Investment', '300.25', 'GBP');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_2', 'Personal', '123.50', 'GBP');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_3', 'Saving', '-100.50', 'GBP');
+
+    // then
+    accountPage.assertNumberOfAccounts(3);
+    accountPage.assertAccountBalancePLNOfGBP('1,613.02');
+    accountPage.assertAccountBalancePLNOfInvestmentAccount('1,498.25');
+    accountPage.assertAccountBalancePLNOfPersonalAccount('616.27');
+    accountPage.assertAccountBalancePLNOfSavingAccount('-501.50');
+    accountPage.assertBalanceOfAllAccounts();
+    accountPage.assertBalanceOfAllAccountsType();
   });
 
   it('should increase the account balance by the inserted transaction' , () => {
@@ -244,33 +312,33 @@ describe('Accounts page tests', () => {
   });
 
   it('should display the account balance minus the inserted transaction minus' , () => {
-  // given
-      categoryPage.navigateTo();
-      categoryPage.addCategory('Car', 'Main Category');
-      categoryPage.assertMessage('Category added');
-      categoryPage.assertNumberOfCategories(1);
-      categoryPage.addCategory('Oil', 'Car');
-      categoryPage.assertMessage('Category added');
-      categoryPage.assertNumberOfCategories(2);
+    // given
+    categoryPage.navigateTo();
+    categoryPage.addCategory('Car', 'Main Category');
+    categoryPage.assertMessage('Category added');
+    categoryPage.assertNumberOfCategories(1);
+    categoryPage.addCategory('Oil', 'Car');
+    categoryPage.assertMessage('Category added');
+    categoryPage.assertNumberOfCategories(2);
 
-      accountPage.navigateTo();
-      accountPage.addAccountWithCurrency('PKO', '0', 'EUR');
-      accountPage.assertNumberOfAccounts(1);
-      accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
-      accountPage.assertAccountBalance(accountPage.accountRows().first(), '0.00');
-      accountPage.assertAccountBalancePLNSummary('0.00');
+    accountPage.navigateTo();
+    accountPage.addAccountWithCurrency('PKO', '0', 'EUR');
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '0.00');
+    accountPage.assertAccountBalancePLNSummary('0.00');
 
-      // when
-      transactionPage.navigateTo();
-      transactionPage.addTransaction('09/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
-      expect(transactionPage.transactionRows().count()).toEqual(1);
+    // when
+    transactionPage.navigateTo();
+    transactionPage.addTransaction('09/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
+    expect(transactionPage.transactionRows().count()).toEqual(1);
 
-      // then
-      accountPage.navigateTo();
-      accountPage.assertNumberOfAccounts(1);
-      accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
-      accountPage.assertAccountBalance(accountPage.accountRows().first(), '-32.75');
-      accountPage.assertAccountBalancePLNSummary('-138.86');
+    // then
+    accountPage.navigateTo();
+    accountPage.assertNumberOfAccounts(1);
+    accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '-32.75');
+    accountPage.assertAccountBalancePLNSummary('-138.86');
   });
 
 
