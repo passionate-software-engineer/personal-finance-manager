@@ -26,6 +26,7 @@
     "bootstrap": "^4.4.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "chromedriver": "^80.0.1",
     "core-js": "^2.6.2",
     "jquery": "^3.4.1",
     "ngx-order-pipe": "^2.0.2",
