@@ -40,7 +40,7 @@ public class AccountTypeService {
     accountTypeRepository.save(AccountType.builder().name("Personal").userId(userId).build());
     accountTypeRepository.save(AccountType.builder().name("Investment").userId(userId).build());
     accountTypeRepository.save(AccountType.builder().name("Saving").userId(userId).build());
-
+    accountTypeRepository.save(AccountType.builder().name("Credit").userId(userId).build());
   }
 
 }
