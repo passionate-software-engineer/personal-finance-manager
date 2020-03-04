@@ -19,4 +19,8 @@ export class AccountTypeService extends ServiceBase {
     return this.http.get<AccountType[]>(ServiceBase.apiUrl(PATH));
   }
 
+  editAccountType(accountType: AccountType): Observable<any> {
+      return this.http.put<AccountType>(ServiceBase.apiUrl(PATH, accountType.id), AccountType, this.contentType);
+    }
+
 }

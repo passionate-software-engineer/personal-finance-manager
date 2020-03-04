@@ -1,5 +1,6 @@
 {
   "account.addAccount": "Dodaj Konto",
+  "account.addAccountType": "Dodaj Typ Konta",
   "account.name": "Nazwa",
   "account.balance": "Saldo",
   "account.balancePLN": "Saldo PLN",

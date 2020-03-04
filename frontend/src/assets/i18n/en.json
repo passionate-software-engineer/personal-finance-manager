@@ -1,5 +1,6 @@
 {
   "account.addAccount": "Add Account",
+  "account.addAccountType": "Add Account Type",
   "account.name": "Name",
   "account.balance": "Balance",
   "account.balancePLN": "Balance PLN",

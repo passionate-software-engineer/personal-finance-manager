@@ -125,6 +125,12 @@ export class AccountsComponent implements OnInit {
       }
   }
 
+   onShowAccountTypeEditMode(accountType: AccountType) {
+      accountType.editMode = true;
+      accountType.editedAccountType = new AccountType();
+      accountType.editedAccountType.name = accountType.name;
+    }
+
   confirmAccountBalance(account: Account) {
     this.accountService.markAccountAsVerifiedToday(account)
         .subscribe(() => {
@@ -157,6 +163,25 @@ export class AccountsComponent implements OnInit {
           // TODO - get object from server
         });
   }
+
+  onAccountTypeEdit(accountType: AccountType) {
+//       if (!this.validateAccount(accountType.editedAccountType)) {
+//         return;
+//       }
+      const editedAccountType: AccountType = new AccountType();
+      editedAccountType.id = accountType.id;
+      editedAccountType.name = accountType.editedAccountType.name;
+
+
+      this.accountTypeService.editAccountType(editedAccountType)
+          .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountTypeEdited')
+            );
+            Object.assign(accountType, editedAccountType);
+            // TODO - get object from server
+          });
+    }
 
   onAddAccount() {
     if (!this.validateAddingAccount(this.newAccount)) {

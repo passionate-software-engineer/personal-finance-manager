@@ -454,3 +454,133 @@
       </tr>
   </tbody>
 </table>
+
+
+
+<br/>
+<button id="AddAccountTypeBtn"
+        class="btn btn-success"
+        type="button"
+        (click)="addingMode = !addingMode">
+  {{ "account.addAccountType" | translate }}
+</button>
+<button id="RefreshAccountsTypeBtn"
+        class="btn btn-primary"
+        type="button"
+        (click)="onRefreshAccounts()">
+  {{ "button.refresh" | translate }}
+</button>
+
+  <table class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
+
+      <tr>
+        <!--Name-->
+        <th id="AccountTypeEditHeader"
+            [class.active]="sortableAccountsTable.order === 'name'"
+            (click)="sortableAccountsTable.setOrder('name')">
+          {{ "account.accountType" | translate }}
+          <span [hidden]="!sortableAccountsTable.reverse">▼</span>
+          <span [hidden]="sortableAccountsTable.reverse">▲</span>
+        </th>
+
+
+
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngIf="addingMode">
+        <!-- Name -->
+        <td>
+          <input id="NewAccountTypeNameInput"
+                 class="form-control"
+                 type="text"
+                 [(ngModel)]="newAccountType.name"/>
+        </td>
+
+
+
+        <!-- Buttons -->
+        <td id="NewAccountTypeSaveExitBtn">
+          <button id="NewAccountTypeSaveBtn"
+                  class="btn btn-success"
+                  (click)="onAddAccount()">
+            {{ "button.save" | translate }}
+          </button>
+          <button id="NewAccountTypeExitBtn"
+                  class="btn btn-danger"
+                  (click)="addingMode = false">
+            {{ "button.exit" | translate }}
+          </button>
+        </td>
+      </tr>
+
+      <ng-container
+        *ngFor="let accountType of (supportedAccountTypes | orderBy: sortableAccountTypeTable.order:sortableAccountTypeTable.reverse:'case-insensitive')">
+        <tr id="AccountTypeRow">
+          <!-- AccountTypeName -->
+          <td *ngIf="accountType.editMode">
+            <input id="EditAccountTypeNameInput"
+                   class="form-control"
+                   type="text"
+                   [(ngModel)]="accountType.editedAccountType.name"/>
+          </td>
+          <td id="AccountTypeNameReadOnly"
+              *ngIf="!accountType.editMode">
+            {{ accountType.name}}
+          </td>
+
+
+          <!-- AccountType Options -->
+          <td *ngIf="!accountType.editMode">
+            <div class="dropdown">
+              <button id="AccountTypeOptionsBtn"
+                      class="btn btn-primary btn-block dropdown-toggle"
+                      type="button"
+                      data-toggle="dropdown">
+                {{ "button.options" | translate }}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <button id="AccountTypeEditBtn"
+                          class="btn btn-warning btn-block"
+                          (click)="onShowAccountTypeEditMode(accountType)">
+                    {{ "button.edit" | translate }}
+                  </button>
+                </li>
+
+                <li>
+                  <button id="AccountTypeDeleteBtn"
+                          class="btn btn-danger btn-block"
+                          (click)="deleteAccountType(accountType)">
+                    {{ "button.delete" | translate }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </td>
+
+          <!-- Edit mode buttons -->
+          <td *ngIf="accountType.editMode"
+              id="EditAccountTypeSaveExitBtn">
+            <button id="EditAccountTypeSaveBtn"
+                    class="btn btn-success"
+                    (click)="onAccountTypeEdit(accountType)">
+              {{ "button.save" | translate }}
+            </button>
+            <button id="EditAccountTypeExitBtn"
+                    class="btn btn-danger"
+                    (click)="accountType.editMode = false">
+              {{ "button.exit" | translate }}
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+
+    </tbody>
+  </table>
+
