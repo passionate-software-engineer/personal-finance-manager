@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "cd ./node_modules/protractor && npm i webdriver-manager@latest"
   },
   "private": true,
   "dependencies": {
