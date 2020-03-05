@@ -32,6 +32,7 @@ public class FilterController implements FilterApi {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
+        .isDefault(filterRequest.getIsDefault())
         .build();
   }
 

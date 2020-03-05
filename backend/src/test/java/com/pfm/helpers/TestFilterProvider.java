@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestFilterProvider {
-
   private static final LocalDate DATE_OF_1ST_MARCH_2018 = LocalDate.of(2018, 3, 1);
   private static final LocalDate DATE_OF_31ST_MARCH_2018 = LocalDate.of(2018, 3, 31);
   private static final LocalDate DATE_OF_1ST_JANUARY_2018 = LocalDate.of(2018, 1, 1);
@@ -39,6 +38,7 @@ public class TestFilterProvider {
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
         .build();
+
   }
 
   public static Filter filterCarExpenses() {
@@ -48,6 +48,18 @@ public class TestFilterProvider {
         .dateTo(DATE_OF_31ST_DECEMBER_2018)
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
+        .isDefault(true)
+        .build();
+  }
+
+  public static Filter filterCarExpensesWithoutSettingDefault() {
+    return Filter.builder()
+        .name("Car expenses")
+        .dateFrom(DATE_OF_1ST_JANUARY_2018)
+        .dateTo(DATE_OF_31ST_DECEMBER_2018)
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .isDefault(false)
         .build();
   }
 
@@ -57,6 +69,7 @@ public class TestFilterProvider {
         .priceTo(convertDoubleToBigDecimal(200))
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
+        .isDefault(true)
         .build();
   }
 
@@ -74,6 +87,24 @@ public class TestFilterProvider {
         .name("Food")
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
+        .build();
+  }
+
+  public static Filter filterIsDefault() {
+    return Filter.builder()
+        .name("Food")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .isDefault(true)
+        .build();
+  }
+
+  public static Filter filterIsNotDefault() {
+    return Filter.builder()
+        .name("Food")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .isDefault(false)
         .build();
   }
 
