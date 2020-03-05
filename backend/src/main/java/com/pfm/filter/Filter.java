@@ -72,4 +72,6 @@ public final class Filter {
   @JsonIgnore
   private Long userId;
 
+  private Boolean isDefault;
+
 }
