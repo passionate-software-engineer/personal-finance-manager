@@ -20,35 +20,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Api(value = "Transactions", description = "Controller used to list / add / update / delete transaction.")
 public interface TransactionApi {
 
-  @ApiOperation(value = "Find transaction by id", response = Transaction.class, authorizations = {@Authorization(value = "Bearer")})
-  @GetMapping(value = "/{transactionId}")
+  String BEARER = "Bearer";
+  String TRANSACTION_ID = "{transactionId}";
+
+  @ApiOperation(value = "Find transaction by id", response = Transaction.class, authorizations = {@Authorization(value = BEARER)})
+  @GetMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId);
 
   @ApiOperation(value = "Get list of all transactions", response = Transaction.class, responseContainer = "List",
-      authorizations = {@Authorization(value = "Bearer")})
+      authorizations = {@Authorization(value = BEARER)})
   @GetMapping
   ResponseEntity<List<Transaction>> getTransactions();
 
-  @ApiOperation(value = "Create a new transaction", response = long.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Create a new transaction", response = long.class, authorizations = {@Authorization(value = BEARER)})
   @PostMapping
   ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
 
-  @ApiOperation(value = "Update an existing transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
-  @PutMapping(value = "/{transactionId}")
+  @ApiOperation(value = "Update an existing transaction", response = Void.class, authorizations = {@Authorization(value = BEARER)})
+  @PutMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<?> updateTransaction(@PathVariable long transactionId, TransactionRequest transactionRequest);
 
-  @ApiOperation(value = "Delete an existing transaction", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
-  @DeleteMapping(value = "/{transactionId}")
+  @ApiOperation(value = "Delete an existing transaction", response = Void.class, authorizations = {@Authorization(value = BEARER)})
+  @DeleteMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<?> deleteTransaction(@PathVariable long transactionId);
 
   @ApiOperation(value = "Commits (converts) planned transaction into transaction", response = Void.class,
-      authorizations = {@Authorization(value = "Bearer")})
-  @PatchMapping(value = "/{transactionId}")
+      authorizations = {@Authorization(value = BEARER)})
+  @PatchMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId, TransactionRequest preCommitUpdate);
 
   @ApiOperation(value = "Sets planned transaction status to recurrent", response = Void.class,
-      authorizations = {@Authorization(value = "Bearer")})
-  @PatchMapping(value = "/{transactionId}/setAsRecurrent")
+      authorizations = {@Authorization(value = BEARER)})
+  @PatchMapping(value = "/" + TRANSACTION_ID + "/setAsRecurrent")
   ResponseEntity<?> setAsRecurrent(@PathVariable long transactionId, @RequestParam RecurrencePeriod recurrencePeriod);
 
 }

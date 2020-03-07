@@ -20,7 +20,7 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
 
   //TODO this should be done be spring security
   private static final String pattern = "(/users/.*|.*swagger.*|/error|/)";
-  private final Logger logger = LoggerFactory.getLogger(SecurityRequestInterceptor.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(SecurityRequestInterceptor.class.getName());
 
   private TokenService tokenService;
   private UserProvider userProvider;

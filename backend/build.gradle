@@ -30,7 +30,7 @@ plugins {
     id 'idea'
     id "jacoco"
     id 'java'
-//  id 'pmd' plugin plugin show million errors after gradle upgrade maybe was not used before ???
+    id 'pmd'
     id 'project-report'
 }
 
@@ -60,7 +60,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2:1.4.200'
     runtimeOnly 'io.springfox:springfox-swagger-ui:2.9.2'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation "org.flywaydb:flyway-core:6.2.4"
+    implementation "org.flywaydb:flyway-core:6.3.0"
     runtimeOnly 'org.postgresql:postgresql:42.2.10'
     implementation 'org.springframework.security:spring-security-crypto'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
@@ -72,6 +72,28 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+}
+
+//TODO verify commented rule sets
+pmd {
+    ruleSets = [
+            'java-basic',
+            'java-braces',
+            'java-clone',
+//            'java-codesize',
+//            'java-controversial',
+//            'java-coupling',
+//            'java-design',
+            'java-empty',
+            'java-finalizers',
+//            'java-imports',
+//            'java-optimizations',
+//            'java-strictexception',
+//            'java-strings',
+//            'java-typeresolution',
+            'java-unnecessary'
+//            'java-unusedcode'
+    ]
 }
 
 jacoco {

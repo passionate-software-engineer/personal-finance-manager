@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @CrossOrigin
 public interface ExportImportApi {
 
-  @ApiOperation(value = "Export user data in JSON format", authorizations = {@Authorization(value = "Bearer")})
+  String BEARER = "Bearer";
+
+  @ApiOperation(value = "Export user data in JSON format", authorizations = {@Authorization(value = BEARER)})
   @GetMapping("export")
   ExportResult exportData();
 
