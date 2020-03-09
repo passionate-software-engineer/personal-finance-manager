@@ -23,7 +23,7 @@
   <div class="form-inline float-right">
     <select class="form-control"
             [(ngModel)]="originalFilter"
-            (ngModelChange)="onFilterChange($event)">
+            (ngModelChange)="onFilterChange()">
       <option *ngFor="let filter of filters"
               [ngValue]="filter">
         {{filter.name}}

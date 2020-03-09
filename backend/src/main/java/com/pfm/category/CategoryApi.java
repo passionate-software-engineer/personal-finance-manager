@@ -18,24 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "CATEGORY", description = "Controller used to list / add / update / delete categories.")
 public interface CategoryApi {
 
-  @ApiOperation(value = "Find category by id", response = Category.class, authorizations = {@Authorization(value = "Bearer")})
+  String BEARER = "Bearer";
+
+  @ApiOperation(value = "Find category by id", response = Category.class, authorizations = {@Authorization(value = BEARER)})
   @GetMapping(value = "/{categoryId}")
   ResponseEntity<Category> getCategoryById(@PathVariable long categoryId);
 
   @ApiOperation(value = "Get list of categories", response = Category.class, responseContainer = "List",
-      authorizations = {@Authorization(value = "Bearer")})
+      authorizations = {@Authorization(value = BEARER)})
   @GetMapping
   ResponseEntity<List<Category>> getCategories();
 
-  @ApiOperation(value = "Create a new category", response = Long.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Create a new category", response = Long.class, authorizations = {@Authorization(value = BEARER)})
   @PostMapping
   ResponseEntity<?> addCategory(CategoryRequest categoryRequest);
 
-  @ApiOperation(value = "Update an existing category", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Update an existing category", response = Void.class, authorizations = {@Authorization(value = BEARER)})
   @PutMapping(value = "/{categoryId}")
   ResponseEntity<?> updateCategory(@PathVariable long categoryId, CategoryRequest categoryRequest);
 
-  @ApiOperation(value = "Delete an existing category", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Delete an existing category", response = Void.class, authorizations = {@Authorization(value = BEARER)})
   @DeleteMapping(value = "/{categoryId}")
   ResponseEntity<?> deleteCategory(@PathVariable long categoryId);
 

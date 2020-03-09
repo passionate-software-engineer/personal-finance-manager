@@ -94,7 +94,7 @@ public class TransactionController implements TransactionApi {
     }
 
     final boolean hasDateChangedFromFutureToPast =
-        dateHelper.isFutureDate(originalTransaction.getDate()) && (dateHelper.isPastDate(updatedTransaction.getDate()));
+        dateHelper.isFutureDate(originalTransaction.getDate()) && dateHelper.isPastDate(updatedTransaction.getDate());
 
     if (hasDateChangedFromFutureToPast) {
       return commitPlannedTransaction(transactionId, transactionRequest);
