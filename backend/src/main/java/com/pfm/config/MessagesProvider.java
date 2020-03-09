@@ -18,6 +18,7 @@ public class MessagesProvider {
   public static final String ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST = "accountValidator.accountCurrencyNameDoesNotExist";
   public static final String ACCOUNT_TYPE_ID_DOES_NOT_EXIST = "accountValidator.accountTypeIdDoesNotExist";
   public static final String ACCOUNT_TYPE_NAME_DOES_NOT_EXIST = "accountValidator.accountTypeNameDoesNotExist";
+  public static final String ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS = "accountTypeValidator.accountTypeWithProvidedNameAlreadyExists";
 
   public static final String EMPTY_CATEGORY_NAME = "categoryValidator.emptyCategoryName";
   public static final String PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST = "categoryValidator.providedParentCategoryDoesNotExist";

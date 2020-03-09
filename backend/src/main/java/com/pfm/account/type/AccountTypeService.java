@@ -3,6 +3,7 @@ package com.pfm.account.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,23 @@ public class AccountTypeService {
     return accountTypeRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(AccountType::getName))
         .collect(Collectors.toList());
+  }
+
+  public void updateAccountType(long accountTypeId, long userId, AccountType accountType) {
+    Optional<AccountType> accountTypeFromDb = Optional.ofNullable(getAccountTypeByIdAndUserId(accountTypeId, userId));
+
+    if (!accountTypeFromDb.isPresent()) {
+      throw new IllegalStateException("Account Type with id: " + accountTypeId + " does not exist in database");
+    }
+
+    AccountType accountTypeToUpdate = accountTypeFromDb.get();
+    accountTypeToUpdate.setName(accountType.getName());
+
+    accountTypeRepository.save(accountTypeToUpdate);
+  }
+
+  public boolean isAccountTypeNameAlreadyUsed(long userId, String name) {
+    return accountTypeRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
   public void addDefaultAccountTypes(long userId) {
