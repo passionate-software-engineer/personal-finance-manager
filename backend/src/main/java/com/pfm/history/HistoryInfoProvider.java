@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class HistoryInfoProvider {
 
+  public static final String UNCHECKED = "unchecked";
   private AccountService accountService;
   private CategoryService categoryService;
 
@@ -86,7 +87,7 @@ public class HistoryInfoProvider {
     return historyInfos;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings(UNCHECKED)
   String getValueFromField(Field field, Object object, long userId) {
 
     final SpecialFieldType specialFieldType = field.getAnnotation(HistoryField.class).fieldType();
@@ -127,7 +128,7 @@ public class HistoryInfoProvider {
     return categoryService.getCategoryFromDbByIdAndUserId(categoryId, along).getName();
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings(UNCHECKED)
   private Object getObjectForCategoryIdsField(Field field, Object object, Long along) {
     List<Long> categoryIds = (List<Long>) getValue(field, object);
     List<String> categoriesName = new ArrayList<>();
@@ -138,7 +139,7 @@ public class HistoryInfoProvider {
     return categoriesName;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings(UNCHECKED)
   private Object getObjectForAccountsIdsField(Field field, Object object, Long along) {
     List<Long> accountsIds = (List<Long>) getValue(field, object);
     List<String> accountsNames = new ArrayList<>();
@@ -149,7 +150,7 @@ public class HistoryInfoProvider {
     return accountsNames;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings(UNCHECKED)
   private Object getObjectForAccountPriceEntriesField(Field field, Object object, Long along) {
     List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
     List<String> values = new ArrayList<>();

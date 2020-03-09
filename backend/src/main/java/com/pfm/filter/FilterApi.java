@@ -18,24 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "Filters", description = "Controller used to list / add / update / delete filters.")
 public interface FilterApi {
 
-  @ApiOperation(value = "Find filter by id", response = Filter.class, authorizations = {@Authorization(value = "Bearer")})
+  String BEARER = "Bearer";
+
+  @ApiOperation(value = "Find filter by id", response = Filter.class, authorizations = {@Authorization(value = BEARER)})
   @GetMapping(value = "/{filterId}")
   ResponseEntity<Filter> getFilterById(@PathVariable long filterId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, responseContainer = "List",
-      authorizations = {@Authorization(value = "Bearer")})
+      authorizations = {@Authorization(value = BEARER)})
   @GetMapping
   ResponseEntity<List<Filter>> getFilters();
 
-  @ApiOperation(value = "Create new filter", response = Long.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Create new filter", response = Long.class, authorizations = {@Authorization(value = BEARER)})
   @PostMapping
   ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
-  @ApiOperation(value = "Update an existing filter", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Update an existing filter", response = Void.class, authorizations = {@Authorization(value = BEARER)})
   @PutMapping(value = "/{filterId}")
   ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest);
 
-  @ApiOperation(value = "Delete an existing filter", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Delete an existing filter", response = Void.class, authorizations = {@Authorization(value = BEARER)})
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);
 }

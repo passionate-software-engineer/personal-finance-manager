@@ -53,7 +53,7 @@ pipeline {
                     steps {
                         sh '''
                            cd frontend
-                           npm install
+                           npm install --unsafe-perm
                            npm install -g tslint typescript
                            tslint --config tslint.json --project tsconfig.json
                            ng build

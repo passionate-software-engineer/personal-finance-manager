@@ -181,7 +181,7 @@ export class FiltersComponentBase extends Sortable {
     });
   }
 
-  protected filterTransactions() {
+  public filterTransactions() {
     this.transactions = [];
     for (const transaction of this.allTransactions) {
       this.transactions.push(transaction);
