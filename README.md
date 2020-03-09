@@ -53,7 +53,7 @@ If you want to master your programming skills please visit [our website](https:/
 
 ## How to start project locally
 
-1. Install [JDK 11](https://jdk.java.net/11/), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
+1. Install [JDK 13](https://adoptopenjdk.net/?variant=openjdk13&jvmVariant=hotspot), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
 2. Open terminal window, go to **_backend_** directory & run **_./gradlew bootRun_**
 3. Open second terminal window, go to **_frontend_** directory, run **_npm install_** & **_ng serve --open_**
 4. Browser window will open automatically, you can play with the application
@@ -80,6 +80,6 @@ If you want to master your programming skills please visit [our website](https:/
 ![No changes dialog](readme/git-no-changes.png)
 
 ## Building and pushing docker image (remember to increase the number)
-- docker build . -t piokol/pfm:9
+- docker build . -t piokol/pfm:18
 - docker run -it --user root piokol/pfm:9 /bin/bash (optional just to check image)
-- docker push piokol/pfm:9
+- docker push piokol/pfm:18
