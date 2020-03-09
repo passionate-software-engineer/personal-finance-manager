@@ -81,5 +81,5 @@ If you want to master your programming skills please visit [our website](https:/
 
 ## Building and pushing docker image (remember to increase the number)
 - docker build . -t piokol/pfm:18
-- docker run -it --user root piokol/pfm:9 /bin/bash (optional just to check image)
+- docker run -it --user root piokol/pfm:18 /bin/bash (optional just to check image)
 - docker push piokol/pfm:18
