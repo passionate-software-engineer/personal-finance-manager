@@ -102,6 +102,21 @@ export class AccountsComponent implements OnInit {
     }
   }
 
+//   deleteAccountType(accountType) {
+//     if (confirm(this.translate.instant('message.wantDeleteAccountType'))) {
+//       this.accountTypeService.deleteAccountType(accountType.id)
+//           .subscribe(() => {
+//             this.alertService.success(
+//               this.translate.instant('message.accountTypeDeleted')
+//             );
+//             const index: number = this.accounts.indexOf(accountType);
+//             if (index !== -1) {
+//               this.accounts.splice(index, 1);
+//             }
+//           });
+//     }
+//   }
+
   onShowEditMode(account: Account) {
     account.editMode = true;
     account.editedAccount = new Account();
@@ -125,11 +140,11 @@ export class AccountsComponent implements OnInit {
       }
   }
 
-   onShowAccountTypeEditMode(accountType: AccountType) {
-      accountType.editMode = true;
-      accountType.editedAccountType = new AccountType();
-      accountType.editedAccountType.name = accountType.name;
-    }
+  onShowAccountTypeEditMode(accountType: AccountType) {
+     accountType.editMode = true;
+     accountType.editedAccountType = new AccountType();
+     accountType.editedAccountType.name = accountType.name;
+  }
 
   confirmAccountBalance(account: Account) {
     this.accountService.markAccountAsVerifiedToday(account)
