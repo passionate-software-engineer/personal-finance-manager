@@ -131,6 +131,8 @@ Credentials > Add > Jeniks
 
 Fill the form with your GH credentials.
 
+Save and select them from dropdown.
+
 13. Configure rest of branch source as follows
 ![Cloud Configuration details](readme/branch-source-config.png)
 
