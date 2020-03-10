@@ -119,6 +119,9 @@ Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agen
 ![Cloud Configuration details](readme/cloud-config.png)
 After applying cloud configruation click save.
 
+Set docker cloud details
+![Cloud Configuration details](readme/cloud-details.png)
+
 10. Add new job, enter the name and select "Multibranch Pipeline".
 
 11. Add branch source 
