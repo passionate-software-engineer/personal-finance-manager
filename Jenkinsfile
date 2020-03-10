@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "pfm-docker-java-11"
+        label "pfm-docker-java-13"
     }
     parameters {
         string(name: 'APP_URL', defaultValue: 'https://pfm.passionatesoftwareengineer.com', description: 'Application (frontend) URL')
