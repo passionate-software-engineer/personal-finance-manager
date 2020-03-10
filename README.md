@@ -53,7 +53,7 @@ If you want to master your programming skills please visit [our website](https:/
 
 ## How to start project locally
 
-1. Install [JDK 11](https://jdk.java.net/11/), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
+1. Install [JDK 13](https://adoptopenjdk.net/?variant=openjdk13&jvmVariant=hotspot), [NodeJS](https://nodejs.org/en/), [Angular CLI](https://cli.angular.io/)
 2. Open terminal window, go to **_backend_** directory & run **_./gradlew bootRun_**
 3. Open second terminal window, go to **_frontend_** directory, run **_npm install_** & **_ng serve --open_**
 4. Browser window will open automatically, you can play with the application
@@ -80,6 +80,62 @@ If you want to master your programming skills please visit [our website](https:/
 ![No changes dialog](readme/git-no-changes.png)
 
 ## Building and pushing docker image (remember to increase the number)
-- docker build . -t piokol/pfm:9
-- docker run -it --user root piokol/pfm:9 /bin/bash (optional just to check image)
-- docker push piokol/pfm:9
+- docker build . -t piokol/pfm:18
+- docker run -it --user root piokol/pfm:18 /bin/bash (optional just to check image)
+- docker push piokol/pfm:18
+
+## Setting up local Jenkins instance on docker
+1. Start docker container 
+
+docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+   
+2. Join docker container
+
+docker exec -it -u root myjenkins /bin/bash
+
+3. Setup privileges
+
+usermod -aG root jenkins
+
+chmod 777 /var/run/docker.sock
+
+4. Restart docker container
+
+docker container stop myjenkins
+
+docker container start myjenkins
+
+5. Open Jenkins in webrowser (http://localhost:8080) and login with innital password
+
+6. Click "Install suggested plugins" and wait until Jenkins download plugins.
+
+7. Create admin user.
+
+8. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins -> Manage Plugins.
+
+9. Configure Docker cloud.
+
+Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
+![Cloud Configuration details](readme/cloud-config.png)
+After applying cloud configruation click save.
+
+10. Add new job, enter the name and select "Multibranch Pipeline".
+
+11. Add branch source 
+
+Branch sources > Add source > Github
+
+12. Add GitHub credentials
+
+Credentials > Add > Jeniks
+
+Fill the form with your GH credentials.
+
+Save and select them from dropdown.
+
+13. Configure rest of branch source as follows
+![Branch source details](readme/branch-source-config.png)
+
+Click save.
+
+14. Congrats. Your Jenkins is configured.
