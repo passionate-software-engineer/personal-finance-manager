@@ -101,9 +101,9 @@ If you want to master your programming skills please visit [our website](https:/
 
 4. Restart docker container
 
-docker container stop myjenkins
+* docker container stop myjenkins
 
-docker container start myjenkins
+* docker container start myjenkins
 
 5. Open Jenkins in webrowser (http://localhost:8080) and login with inital password
 
@@ -115,32 +115,32 @@ docker container start myjenkins
 
 9. Configure Docker cloud.
 
-Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
+* Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
 ![Cloud Configuration details](readme/cloud-config.png)
-Click apply.
+* Click apply.
 
-Set docker cloud details
+* Set docker cloud details
 ![Cloud Configuration details](readme/cloud-details.png)
-Click save.
+* Click save.
 
 10. Add new job, enter the name and select "Multibranch Pipeline".
 
 11. Add branch source 
 
-Branch sources > Add source > Github
+* Branch sources > Add source > Github
 
 12. Add GitHub credentials
 
-Credentials > Add > Jenkins
+* Credentials > Add > Jenkins
 
-Fill the form with your GH token which you can generate on https://github.com/settings/tokens.
+* Fill the form with your GH token which you can generate on https://github.com/settings/tokens.
 
-Save and select them from dropdown.
+* Save and select them from dropdown.
 
 13. Configure rest of branch source as follows
 ![Branch source details](readme/branch-source-config.png)
 
-Click save.
+* Click save.
 
 14. Congrats. Your Jenkins is configured.
 
