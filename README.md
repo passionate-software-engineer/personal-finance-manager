@@ -93,7 +93,7 @@ If you want to master your programming skills please visit [our website](https:/
 
   docker exec -it -u root myjenkins /bin/bash
 
-3. Create jenkins user, setup privileges and restart jenkins service
+3.Setup privileges and restart jenkins service
 
   usermod -aG root jenkins
 
