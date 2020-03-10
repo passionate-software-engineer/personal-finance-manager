@@ -121,4 +121,21 @@ After applying cloud configruation click save.
 
 10. Add new job , enter the name and select "Multibranch Pipeline".
 
+11. Add branch source 
+
+Branch sources > Add source > Github
+
+12. Add GitHub credentials
+
+Credentials > Add > Jeniks
+
+Fill the form with your GH credentials.
+
+13. Configure rest of branch source as follows
+![Cloud Configuration details](readme/branch-source-config.png)
+
+Click save 
+
+14. Congrats. Your Jenkins is configured.
+
 
