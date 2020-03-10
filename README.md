@@ -140,4 +140,4 @@ Click save.
 
 14. Congrats. Your Jenkins is configured.
 
-**hint** Download PFM docker image with docker pull to not wait for long time until build starts.
+**Hint**: Download PFM docker image with docker pull to not wait for long time until build starts.
