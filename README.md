@@ -93,16 +93,20 @@ docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenki
 
 docker exec -it -u root myjenkins /bin/bash
 
-3.Setup privileges and restart jenkins service
+3.Setup privileges
 
 usermod -aG root jenkins
 
 chmod 777 /var/run/docker.sock
-
-systemctl restart jenkins.service or service jenkins restart
-  
-4. Open Jenkins in webrowser (http://localhost:8080) and login with innital password
-5. Click "Install suggested plugins" and wait until Jenkins download plugins.
-6. Create admin user
-7. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins > Manage Plugins
-
+4. Restart docker container
+docker container stop myjenkins
+docker container start myjenkins
+5. Open Jenkins in webrowser (http://localhost:8080) and login with innital password
+6. Click "Install suggested plugins" and wait until Jenkins download plugins.
+7. Create admin user
+8. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins -> Manage Plugins
+9. Configure Docker cloud .
+Menage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
+![Cloud Configuration details](readme/cloud-config.png)
+After applying cloud configruation click save.
+10. Add new job , enter the name and select "Multibranch Pipeline"
