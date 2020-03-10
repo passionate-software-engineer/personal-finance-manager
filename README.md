@@ -114,7 +114,8 @@ docker container start myjenkins
 8. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins -> Manage Plugins
 
 9. Configure Docker cloud .
-Menage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
+
+Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
 ![Cloud Configuration details](readme/cloud-config.png)
 After applying cloud configruation click save.
 
