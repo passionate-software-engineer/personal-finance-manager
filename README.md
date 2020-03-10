@@ -87,9 +87,9 @@ If you want to master your programming skills please visit [our website](https:/
 ## Setting up local Jenkins instance on docker
 1. Start docker container 
 
-docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v **/your/home**:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
    
-2. Join docker container
+2. Login to docker container
 
 docker exec -it -u root myjenkins /bin/bash
 
@@ -105,7 +105,7 @@ docker container stop myjenkins
 
 docker container start myjenkins
 
-5. Open Jenkins in webrowser (http://localhost:8080) and login with innital password
+5. Open Jenkins in webrowser (http://localhost:8080) and login with inital password
 
 6. Click "Install suggested plugins" and wait until Jenkins download plugins.
 
@@ -127,9 +127,9 @@ Branch sources > Add source > Github
 
 12. Add GitHub credentials
 
-Credentials > Add > Jeniks
+Credentials > Add > Jenkins
 
-Fill the form with your GH credentials.
+Fill the form with your GH token which you can generate on https://github.com/settings/tokens.
 
 Save and select them from dropdown.
 
@@ -139,3 +139,5 @@ Save and select them from dropdown.
 Click save.
 
 14. Congrats. Your Jenkins is configured.
+
+**hint** Download PFM docker image with docker pull to not wait for long time until build starts.
