@@ -83,3 +83,26 @@ If you want to master your programming skills please visit [our website](https:/
 - docker build . -t piokol/pfm:18
 - docker run -it --user root piokol/pfm:18 /bin/bash (optional just to check image)
 - docker push piokol/pfm:18
+
+## Setting up local Jenkins instance on docker
+1. Start docker container 
+
+   docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+   
+2. Join docker 
+
+  docker exec -it -u root myjenkins /bin/bash
+
+3. Create jenkins user, setup privileges and restart jenkins service
+
+  usermod -aG root jenkins
+
+  chmod 777 /var/run/docker.sock
+
+  systemctl restart jenkins.service or service jenkins restart
+  
+4. Open Jenkins in webrowser (http://localhost:8080) and login with innital password
+5. Click "Install suggested plugins" and wait until Jenkins download plugins.
+6. Create admin user
+7. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins > Manage Plugins
+
