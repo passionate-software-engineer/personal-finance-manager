@@ -109,17 +109,17 @@ docker container start myjenkins
 
 6. Click "Install suggested plugins" and wait until Jenkins download plugins.
 
-7. Create admin user
+7. Create admin user.
 
-8. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins -> Manage Plugins
+8. Instal "Docker" and "Blue Ocean" plugins. Manage Jenkins -> Manage Plugins.
 
-9. Configure Docker cloud .
+9. Configure Docker cloud.
 
 Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
 ![Cloud Configuration details](readme/cloud-config.png)
 After applying cloud configruation click save.
 
-10. Add new job , enter the name and select "Multibranch Pipeline".
+10. Add new job, enter the name and select "Multibranch Pipeline".
 
 11. Add branch source 
 
@@ -136,7 +136,7 @@ Save and select them from dropdown.
 13. Configure rest of branch source as follows
 ![Cloud Configuration details](readme/branch-source-config.png)
 
-Click save 
+Click save.
 
 14. Congrats. Your Jenkins is configured.
 
