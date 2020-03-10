@@ -117,10 +117,11 @@ docker container start myjenkins
 
 Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
 ![Cloud Configuration details](readme/cloud-config.png)
-After applying cloud configruation click save.
+Click apply.
 
 Set docker cloud details
 ![Cloud Configuration details](readme/cloud-details.png)
+Click save.
 
 10. Add new job, enter the name and select "Multibranch Pipeline".
 
