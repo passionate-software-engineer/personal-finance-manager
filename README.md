@@ -93,11 +93,12 @@ docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenki
 
 docker exec -it -u root myjenkins /bin/bash
 
-3.Setup privileges
+3. Setup privileges
 
 usermod -aG root jenkins
 
 chmod 777 /var/run/docker.sock
+
 4. Restart docker container
 
 docker container stop myjenkins
@@ -117,4 +118,6 @@ Menage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agen
 ![Cloud Configuration details](readme/cloud-config.png)
 After applying cloud configruation click save.
 
-10. Add new job , enter the name and select "Multibranch Pipeline"
+10. Add new job , enter the name and select "Multibranch Pipeline".
+
+
