@@ -87,17 +87,17 @@ If you want to master your programming skills please visit [our website](https:/
 ## Setting up local Jenkins instance on docker
 1. Start docker container 
 
-docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v **/your/home**:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+* docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v **/your/home**:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
    
 2. Login to docker container
 
-docker exec -it -u root myjenkins /bin/bash
+* docker exec -it -u root myjenkins /bin/bash
 
 3. Setup privileges
 
-usermod -aG root jenkins
+* usermod -aG root jenkins
 
-chmod 777 /var/run/docker.sock
+* chmod 777 /var/run/docker.sock
 
 4. Restart docker container
 
