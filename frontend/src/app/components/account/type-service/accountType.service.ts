@@ -14,6 +14,11 @@ export class AccountTypeService extends ServiceBase {
   constructor(http: HttpClient) {
     super(http);
   }
+ private static accountTypeToAccountTypeRequest(accountType: AccountType) {
+    return {
+      name: accountType.name
+    };
+  }
 
   getAccountTypes(): Observable<AccountType[]> {
     return this.http.get<AccountType[]>(ServiceBase.apiUrl(PATH));
@@ -24,7 +29,7 @@ export class AccountTypeService extends ServiceBase {
   }
 
   editAccountType(accountType: AccountType): Observable<any> {
-     return this.http.put<AccountType>(ServiceBase.apiUrl(PATH, accountType.id), AccountType, this.contentType);
+     return this.http.put<AccountType>(ServiceBase.apiUrl(PATH, accountType.id), AccountTypeService.accountTypeToAccountTypeRequest(accountType), this.contentType);
  }
 
 }
