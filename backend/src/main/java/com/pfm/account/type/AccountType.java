@@ -1,6 +1,7 @@
 package com.pfm.account.type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -39,7 +39,7 @@ public class AccountTypeController implements AccountTypeApi {
   public ResponseEntity<?> updateAccountType(@PathVariable long accountTypeId, @RequestBody AccountTypeRequest accountTypeRequest) {
     long userId = userProvider.getCurrentUserId();
 
-    if (accountTypeService.getAccountTypeByIdAndUserId(accountTypeId, userId).isEmpty()) {
+    if (accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).isEmpty()) {
       log.info("No accountType with id {} was found, not able to update", accountTypeId);
       return ResponseEntity.notFound().build();
     }
@@ -54,7 +54,7 @@ public class AccountTypeController implements AccountTypeApi {
       return ResponseEntity.badRequest().body(validationResult);
     }
 
-    AccountType accountTypeToUpdate = accountTypeService.getAccountTypeByIdAndUserId(accountTypeId, userId).get();
+    AccountType accountTypeToUpdate = accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).get();
 
     historyEntryService.addHistoryEntryOnUpdate(accountTypeToUpdate, accountType, userId);
     accountTypeService.updateAccountType(accountTypeId, userId, accountType);

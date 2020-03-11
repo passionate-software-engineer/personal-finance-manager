@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AccountTypeRequest {
 
-  @ApiModelProperty(value = "Account name", required = true, example = "Credit")
+  @ApiModelProperty(value = "AccountType name", required = true, example = "Credit")
   private String name;
 
 }

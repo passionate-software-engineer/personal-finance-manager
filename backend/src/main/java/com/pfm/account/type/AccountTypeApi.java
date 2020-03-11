@@ -1,6 +1,5 @@
 package com.pfm.account.type;
 
-import com.pfm.account.AccountRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;

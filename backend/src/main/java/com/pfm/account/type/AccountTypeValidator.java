@@ -1,15 +1,9 @@
 package com.pfm.account.type;
 
-import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
-import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
-import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
-import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
 
-import com.pfm.account.Account;
-import com.pfm.account.AccountService;
 import com.pfm.filter.FilterService;
 import com.pfm.transaction.TransactionService;
 import java.util.ArrayList;
@@ -45,7 +39,7 @@ public class AccountTypeValidator {
   }
 
   public List<String> validateAccountTypeForUpdate(long id, long userId, AccountType accountType) {
-    Optional<AccountType> accountTypeToUpdate = Optional.ofNullable(accountTypeService.getAccountTypeByIdAndUserId(id, userId));
+    Optional<AccountType> accountTypeToUpdate = accountTypeService.getAccountTypeIdAndUserId(id, userId);
 
     if (!accountTypeToUpdate.isPresent()) {
       throw new IllegalStateException("Account with id: " + id + " does not exist in database");
