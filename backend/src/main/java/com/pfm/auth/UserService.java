@@ -47,6 +47,10 @@ public class UserService {
   public User registerUser(User user) {
     String hashedPassword = hashPassword(user.getPassword());
     user.setPassword(hashedPassword);
+
+    // to ignore id passed in request
+    user.setId(null);
+
     return userRepository.save(user);
   }
 
