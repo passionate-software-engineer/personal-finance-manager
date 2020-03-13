@@ -19,7 +19,7 @@ public class CurrencyController implements CurrencyApi {
   public ResponseEntity<List<Currency>> getCurrencies() {
     long userId = userProvider.getCurrentUserId();
 
-    log.info("Returning list of currencies for user " + userId);
+    log.info("Returning list of currencies for user {}", userId);
 
     List<Currency> currencies = currencyService.getCurrencies(userId);
 
