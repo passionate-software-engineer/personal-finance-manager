@@ -44,7 +44,9 @@ repositories {
 
 // keep alphabetical order in groups
 dependencies {
-    //testImplementation 'io.rest-assured:rest-assured:3.3.0'
+    testImplementation 'io.rest-assured:rest-assured:4.2.0'
+    testImplementation 'io.rest-assured:xml-path:4.2.0'
+    testImplementation 'io.rest-assured:json-path:4.2.0'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.3.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
