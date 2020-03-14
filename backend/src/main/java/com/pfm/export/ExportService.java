@@ -56,7 +56,7 @@ public class ExportService {
 
     List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap, userId);
     result.setPeriods(periods);
-    if (periods.size() > 0) {
+    if (!periods.isEmpty()) {
       result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod());
     }
     if (result.getInitialAccountsState().isEmpty()) {

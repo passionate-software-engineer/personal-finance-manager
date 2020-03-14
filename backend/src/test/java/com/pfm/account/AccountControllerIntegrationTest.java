@@ -48,7 +48,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setUp() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }

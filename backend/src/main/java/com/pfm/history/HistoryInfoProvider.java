@@ -111,7 +111,7 @@ public class HistoryInfoProvider {
     return value;
   }
 
-  private List<Field> getFieldsDeclaredAsHistoryFields(Field[] fields) {
+  private List<Field> getFieldsDeclaredAsHistoryFields(Field... fields) {
     return Arrays.stream(fields)
         .peek(field -> field.setAccessible(true))
         .filter(field -> field.isAnnotationPresent(HistoryField.class))
@@ -182,5 +182,4 @@ public class HistoryInfoProvider {
 
     Object apply(Field field, Object object, Long along);
   }
-
 }

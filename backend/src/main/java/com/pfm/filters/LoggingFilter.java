@@ -85,7 +85,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     if (visible) {
       try {
         String contentAsString = new String(content, contentEncoding);
-        log.info("{} " + System.lineSeparator() + " {}", prefix, contentAsString);
+        log.info("{} {} {}", prefix, System.lineSeparator(), contentAsString);
       } catch (UnsupportedEncodingException e) {
         log.info("{} [{} bytes content]", prefix, content.length);
         log.warn("Not able to convert content", e);

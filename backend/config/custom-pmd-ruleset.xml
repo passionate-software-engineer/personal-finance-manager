@@ -14,6 +14,10 @@
 
   <rule ref="category/java/bestpractices.xml">
 <!--    <exclude name="UselessParentheses"/>-->
+    <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+    <exclude name="JUnitTestsShouldIncludeAssert"/>
+    <exclude name="JUnitTestContainsTooManyAsserts"/>
+    <exclude name="UnusedPrivateMethod"/>
   </rule>
 
 </ruleset>

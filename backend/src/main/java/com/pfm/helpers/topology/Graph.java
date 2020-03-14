@@ -3,6 +3,8 @@ package com.pfm.helpers.topology;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -22,8 +24,8 @@ public class Graph<T> {
   public static final class Node<T> {
 
     private final T object;
-    private final HashSet<Edge<T>> inEdges = new HashSet<>();
-    private final HashSet<Edge<T>> outEdges = new HashSet<>();
+    private final Set<Edge<T>> inEdges = new HashSet<>();
+    private final Set<Edge<T>> outEdges = new HashSet<>();
 
     public Node<T> addEdge(Node<T> node) {
       Edge<T> edge = new Edge<>(this, node);
@@ -32,6 +34,7 @@ public class Graph<T> {
       return this;
     }
 
+    @Override
     public boolean equals(Object other) {
       if (other == this) {
         return true;
@@ -46,6 +49,7 @@ public class Graph<T> {
       return this.object.equals(otherNode.getObject());
     }
 
+    @Override
     public int hashCode() {
       return object.hashCode();
     }
