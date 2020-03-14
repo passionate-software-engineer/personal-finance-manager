@@ -32,6 +32,7 @@ public class TransactionValidatorTest {
 
   private static final long NOT_EXISTING_ID = 0L;
 
+  @SuppressWarnings("unused")
   @Mock
   private CategoryService categoryService;
 

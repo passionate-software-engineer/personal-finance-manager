@@ -26,9 +26,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class HistoryEntryServiceTest {
 
+  @SuppressWarnings("unused")
   @Mock
   private HistoryEntryRepository historyEntryRepository;
 
+  @SuppressWarnings("unused")
   @Mock
   private HistoryInfoProvider historyInfoProvider;
 

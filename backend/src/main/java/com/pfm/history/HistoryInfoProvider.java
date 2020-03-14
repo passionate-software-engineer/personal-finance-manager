@@ -87,7 +87,6 @@ public class HistoryInfoProvider {
     return historyInfos;
   }
 
-  @SuppressWarnings(UNCHECKED)
   String getValueFromField(Field field, Object object, long userId) {
 
     final SpecialFieldType specialFieldType = field.getAnnotation(HistoryField.class).fieldType();
@@ -106,7 +105,7 @@ public class HistoryInfoProvider {
     try {
       value = field.get(object);
     } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
+      throw new IllegalStateException(e);
     }
     return value;
   }
@@ -118,51 +117,51 @@ public class HistoryInfoProvider {
         .collect(Collectors.toList());
   }
 
-  private Object getObjectForParentCategoryField(Field field, Object object, Long along) {
+  private Object getObjectForParentCategoryField(Field field, Object object, @SuppressWarnings("unused") Long userId) {
     Category category = (Category) getValue(field, object);
     return category == null ? getMessage(MessagesProvider.MAIN_CATEGORY) : category.getName();
   }
 
-  private Object getObjectForCategoryField(Field field, Object object, Long along) {
+  private Object getObjectForCategoryField(Field field, Object object, Long userId) {
     final long categoryId = (Long) getValue(field, object);
-    return categoryService.getCategoryFromDbByIdAndUserId(categoryId, along).getName();
+    return categoryService.getCategoryFromDbByIdAndUserId(categoryId, userId).getName();
   }
 
   @SuppressWarnings(UNCHECKED)
-  private Object getObjectForCategoryIdsField(Field field, Object object, Long along) {
+  private Object getObjectForCategoryIdsField(Field field, Object object, Long userId) {
     List<Long> categoryIds = (List<Long>) getValue(field, object);
     List<String> categoriesName = new ArrayList<>();
     for (long id : categoryIds) {
-      String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, along).getName();
+      String accountName = categoryService.getCategoryFromDbByIdAndUserId(id, userId).getName();
       categoriesName.add(accountName);
     }
     return categoriesName;
   }
 
   @SuppressWarnings(UNCHECKED)
-  private Object getObjectForAccountsIdsField(Field field, Object object, Long along) {
+  private Object getObjectForAccountsIdsField(Field field, Object object, Long userId) {
     List<Long> accountsIds = (List<Long>) getValue(field, object);
     List<String> accountsNames = new ArrayList<>();
     for (long id : accountsIds) {
-      String accountName = accountService.getAccountFromDbByIdAndUserId(id, along).getName();
+      String accountName = accountService.getAccountFromDbByIdAndUserId(id, userId).getName();
       accountsNames.add(accountName);
     }
     return accountsNames;
   }
 
   @SuppressWarnings(UNCHECKED)
-  private Object getObjectForAccountPriceEntriesField(Field field, Object object, Long along) {
+  private Object getObjectForAccountPriceEntriesField(Field field, Object object, Long userId) {
     List<AccountPriceEntry> accountPriceEntries = (List<AccountPriceEntry>) getValue(field, object);
     List<String> values = new ArrayList<>();
     for (AccountPriceEntry accountPriceEntry : accountPriceEntries) {
       Long accountId = accountPriceEntry.getAccountId();
-      Account account = accountService.getAccountFromDbByIdAndUserId(accountId, along);
+      Account account = accountService.getAccountFromDbByIdAndUserId(accountId, userId);
       values.add(String.format("%s : %s", account.getName(), accountPriceEntry.getPrice()));
     }
     return values;
   }
 
-  private Object getObjectForNoneField(Field field, Object object, Long along) {
+  private Object getObjectForNoneField(Field field, Object object, @SuppressWarnings("unused") Long userId) {
     return getValue(field, object);
   }
 
@@ -180,6 +179,6 @@ public class HistoryInfoProvider {
   @FunctionalInterface
   interface SpecialFieldFunction {
 
-    Object apply(Field field, Object object, Long along);
+    Object apply(Field field, Object object, Long userId);
   }
 }

@@ -33,6 +33,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
   @Autowired
   private UserService userService;
 
+  @Override
   @BeforeEach
   public void before() {
     super.before();

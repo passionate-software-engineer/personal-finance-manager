@@ -8,12 +8,8 @@ import org.junit.jupiter.api.Test;
 
 public class CurrencyControllerIntegrationTest extends IntegrationTestsBase {
 
-  private static Object[] emptyAccountNameParameters() {
-    return new Object[]{"", " ", "    ", null};
-  }
-
   @BeforeEach
-  public void setup() throws Exception {
+  public void beforeEach() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }

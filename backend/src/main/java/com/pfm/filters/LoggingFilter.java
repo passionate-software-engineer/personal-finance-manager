@@ -22,6 +22,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @Slf4j
 @Order(2)
 @Component
+@SuppressWarnings("PMD.TooManyMethods")
 public class LoggingFilter extends OncePerRequestFilter {
 
   static final String REQUEST_MARKER = "|>";

@@ -21,6 +21,7 @@ class UserValidatorTest {
   @InjectMocks
   private UserValidator validator;
 
+  @SuppressWarnings("unused")
   @Mock
   private UserService userService;
 

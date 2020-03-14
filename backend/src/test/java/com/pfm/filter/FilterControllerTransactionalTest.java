@@ -33,6 +33,7 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
   @Autowired
   private FilterController filterController;
 
+  @Override
   @BeforeEach
   public void before() {
     super.before();

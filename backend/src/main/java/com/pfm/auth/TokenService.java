@@ -1,9 +1,9 @@
 package com.pfm.auth;
 
 import java.time.ZonedDateTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ public class TokenService {
   @Value("${refreshTokenExpiryTimeInMinutes}")
   private long refreshTokenExpiryTimeInMinutes;
 
-  private Map<String, Token> accessTokensStorage = new HashMap<>();
+  private Map<String, Token> accessTokensStorage = new ConcurrentHashMap<>();
 
-  private Map<String, Token> refreshTokenStorage = new HashMap<>();
+  private Map<String, Token> refreshTokenStorage = new ConcurrentHashMap<>();
 
-  private Map<Long, Tokens> tokensByUserId = new HashMap<>();
+  private Map<Long, Tokens> tokensByUserId = new ConcurrentHashMap<>();
 
   public TokenService(Map<String, Token> accessTokensStorage, Map<String, Token> refreshTokenStorage,
       Map<Long, Tokens> tokensByUserId) {

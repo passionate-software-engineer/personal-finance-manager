@@ -4,20 +4,22 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
-  <description>
-    This ruleset should turn off UselessParentheses
-  </description>
+  <description>PFM rule set</description>
 
   <rule ref="category/java/errorprone.xml">
     <exclude name="DataflowAnomalyAnalysis"/>
+    <exclude name="AvoidDuplicateLiterals"/>
+    <exclude name="BeanMembersShouldSerialize"/>
+    <exclude name="MoreThanOneLogger"/>
+    <exclude name="UseLocaleWithCaseConversions"/>
   </rule>
 
   <rule ref="category/java/bestpractices.xml">
-<!--    <exclude name="UselessParentheses"/>-->
     <exclude name="JUnitAssertionsShouldIncludeMessage"/>
     <exclude name="JUnitTestsShouldIncludeAssert"/>
     <exclude name="JUnitTestContainsTooManyAsserts"/>
-    <exclude name="UnusedPrivateMethod"/>
+<!--    <exclude name="UnusedPrivateMethod"/>-->
+    <exclude name="UseVarargs"/>
   </rule>
 
 </ruleset>

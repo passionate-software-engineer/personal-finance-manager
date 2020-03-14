@@ -53,6 +53,7 @@ dependencies {
         exclude group: 'org.assertj' // to avoid confusion in imports (e.g. assertThat)
     }
 
+
     implementation 'com.google.code.findbugs:annotations:3.0.1'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation "org.flywaydb:flyway-core:6.3.0"
@@ -72,11 +73,15 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
 }
 
-//TODO enable as many rules as possible
-pmd {
-    ruleSetFiles = files("config/custom-pmd-ruleset.xml")
+pmdMain {
+    ruleSetFiles = files("config/main-pmd-ruleset.xml")
     ruleSets = []
-    ignoreFailures(true)
+}
+
+// TODO - enable more rules
+pmdTest {
+    ruleSetFiles = files("config/test-pmd-ruleset.xml")
+    ruleSets = []
 }
 
 jacoco {

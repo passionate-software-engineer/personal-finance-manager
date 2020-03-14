@@ -32,7 +32,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-// ENHANCEMENT add tests for other services
+// TODO - replace those tests with proper JMeter tests.
+@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class InvoicePerformanceTestBase {

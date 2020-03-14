@@ -34,6 +34,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
+  @SuppressWarnings("unused")
   private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
     return Arrays.asList(new Object[][]{
         {" Marian", " 1232sbbb"},

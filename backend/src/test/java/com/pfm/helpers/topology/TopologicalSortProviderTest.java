@@ -82,7 +82,7 @@ class TopologicalSortProviderTest {
 
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       // when
-      List<Node<Integer>> sortedNodes = sort(graph);
+      sort(graph);
     });
 
     //then
