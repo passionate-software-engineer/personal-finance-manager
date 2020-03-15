@@ -33,6 +33,7 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
   @Autowired
   private CategoryController categoryController;
 
+  @Override
   @BeforeEach
   public void before() {
     super.before();

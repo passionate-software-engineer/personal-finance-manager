@@ -35,12 +35,13 @@ import org.springframework.http.HttpHeaders;
 
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
+  @SuppressWarnings("unused")
   private static Object[] emptyAccountNameParameters() {
     return new Object[]{"", " ", "    ", null};
   }
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void beforeEach() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }

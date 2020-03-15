@@ -51,7 +51,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
-import com.pfm.account.AccountService;
 import com.pfm.config.MessagesProvider.Language;
 import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -63,7 +62,6 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
 public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
@@ -74,11 +72,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   private static final LocalDate CURRENT_DATE = LocalDate.now();
   private static final LocalDate PAST_DATE = CURRENT_DATE.minusDays(2);
 
-  @Autowired
-  private AccountService accountService;
-
   @BeforeEach
-  public void setup() throws Exception {
+  public void beforeEach() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }

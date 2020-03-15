@@ -12,6 +12,7 @@ import org.flywaydb.core.api.migration.Context;
 public class V11__AddCurrenciesForAllUsers extends BaseJavaMigration {
 
   // Support for currencies was added, need to assign default values for each account
+  @Override
   public void migrate(Context context) throws Exception {
 
     try (Statement select = context.getConnection().createStatement()) {

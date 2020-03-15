@@ -46,11 +46,12 @@ import org.springframework.http.HttpHeaders;
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void beforeEach() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }
 
+  @SuppressWarnings("unused")
   private static Collection<Object[]> addFilterParameters() {
     return Arrays.asList(new Object[][]{
         {filterHomeExpensesUpTo200()},
@@ -186,6 +187,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(actualFilters.contains(expetedCarExpenses), is(false));
   }
 
+  @SuppressWarnings("unused")
   private static Collection<Object[]> updateFilterParameters() {
     return Arrays.asList(new Object[][]{
         {filterIsDefault().getIsDefault(), filterCarExpenses()},

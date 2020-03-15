@@ -46,6 +46,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
   @Autowired
   private CurrencyService currencyService;
 
+  @Override
   @BeforeEach
   public void before() {
     super.before();

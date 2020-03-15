@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@SuppressWarnings({"PMD.TooManyMethods"}) // TODO - refactr this class
 public class ExportService {
 
   private TransactionService transactionService;
@@ -56,7 +57,7 @@ public class ExportService {
 
     List<ExportPeriod> periods = generateExportPeriods(monthToTransactionMap, userId);
     result.setPeriods(periods);
-    if (periods.size() > 0) {
+    if (!periods.isEmpty()) {
       result.setInitialAccountsState(periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod());
     }
     if (result.getInitialAccountsState().isEmpty()) {
@@ -122,6 +123,7 @@ public class ExportService {
     return accountNameToAccountMap;
   }
 
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   private Map<String, List<ExportTransaction>> groupTransactionsByMonth(List<ExportTransaction> transactions) {
     Map<String, List<ExportTransaction>> monthToTransactionMap = new TreeMap<>(Collections.reverseOrder());
 
@@ -133,6 +135,7 @@ public class ExportService {
     return monthToTransactionMap;
   }
 
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   private List<ExportTransaction> convertTransactionsToExportTransactions(List<Transaction> transactions, long userId) {
     List<ExportTransaction> convertedTransactions = new ArrayList<>();
 

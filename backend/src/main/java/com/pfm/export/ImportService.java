@@ -70,6 +70,7 @@ public class ImportService {
 
   }
 
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   private void importFilters(ExportResult inputData, long userId, Map<String, Long> accountNameToIdMap, Map<String, Long> categoryNameToIdMap) {
     for (ExportFilter importedFilter : inputData.getFilters()) {
       Filter filter = new Filter();
@@ -148,6 +149,7 @@ public class ImportService {
     return accountNameToIdMap;
   }
 
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   private Map<String, Long> importCategoriesAndMapCategoryNamesToIds(@RequestBody ExportResult inputData, long userId) {
     Map<String, Long> categoryNameToIdMap = new HashMap<>();
 
@@ -168,6 +170,7 @@ public class ImportService {
     return categoryNameToIdMap;
   }
 
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   private List<ExportCategory> sortCategoriesTopologically(List<ExportCategory> categories) {
     Graph<ExportCategory> graph = new Graph<>();
 

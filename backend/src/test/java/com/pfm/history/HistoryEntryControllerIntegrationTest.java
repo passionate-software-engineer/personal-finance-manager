@@ -43,7 +43,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
   private static final String HISTORY_PATH = "/history";
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void beforeEach() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }

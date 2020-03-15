@@ -40,6 +40,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
   @Autowired
   private AccountController accountController;
 
+  @Override
   @BeforeEach
   public void before() {
     super.before();

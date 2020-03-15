@@ -48,13 +48,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class CompareUsers extends IntegrationTestsBase {
+public class CompareUsersIntegrationTest extends IntegrationTestsBase {
 
   @Autowired
   private DataSource dataSource;
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void beforeEach() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }

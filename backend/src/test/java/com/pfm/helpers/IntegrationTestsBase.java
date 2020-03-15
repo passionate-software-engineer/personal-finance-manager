@@ -24,6 +24,7 @@ import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
+import com.pfm.currency.Currency;
 import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
 import com.pfm.filter.Filter;
@@ -50,6 +51,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -61,6 +63,7 @@ public abstract class IntegrationTestsBase {
   protected static final String SET_AS_RECURRENT = "/setAsRecurrent";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
+  protected static final String CURRENCIES_SERVICE_PATH = "/currencies";
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
   protected static final String COMMIT_OVERDUE = "/commitOverdue";
@@ -548,6 +551,15 @@ public abstract class IntegrationTestsBase {
     return getFiltersFromResponse(response);
   }
 
+  protected List<Currency> callRestToGetAllCurrencies(String token) throws Exception {
+    String response = mockMvc.perform(get(CURRENCIES_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token))
+            .andExpect(content().contentType(JSON_CONTENT_TYPE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+    return getCurrenciesFromResponse(response);
+  }
+
   private Filter jsonToFilter(String jsonFilter) throws Exception {
     return mapper.readValue(jsonFilter, Filter.class);
   }
@@ -555,6 +567,11 @@ public abstract class IntegrationTestsBase {
   private List<Filter> getFiltersFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Filter.class));
+  }
+
+  private List<Currency> getCurrenciesFromResponse(String response) throws Exception {
+    return mapper.readValue(response,
+            mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
   }
 
   //users

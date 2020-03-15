@@ -51,7 +51,7 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
       userProvider.setUser(userIdFromToken);
       return true;
     } else {
-      logger.error("Request accessToken \"" + accessToken + "\" is incorrect");
+      logger.error("Request accessToken \" {} \" is incorrect", accessToken);
       response.setContentType("text/plain");
       response.getWriter().write("Request accessToken \"" + accessToken + "\" is incorrect");
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
