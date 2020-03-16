@@ -102,20 +102,20 @@ export class AccountsComponent implements OnInit {
     }
   }
 
-//   deleteAccountType(accountType) {
-//     if (confirm(this.translate.instant('message.wantDeleteAccountType'))) {
-//       this.accountTypeService.deleteAccountType(accountType.id)
-//           .subscribe(() => {
-//             this.alertService.success(
-//               this.translate.instant('message.accountTypeDeleted')
-//             );
-//             const index: number = this.accounts.indexOf(accountType);
-//             if (index !== -1) {
-//               this.accounts.splice(index, 1);
-//             }
-//           });
-//     }
-//   }
+  deleteAccountType(accountType) {
+    if (confirm(this.translate.instant('message.wantDeleteAccountType'))) {
+      this.accountTypeService.deleteAccountType(accountType.id)
+          .subscribe(() => {
+            this.alertService.success(
+              this.translate.instant('message.accountTypeDeleted')
+            );
+            const index: number = this.accounts.indexOf(accountType);
+            if (index !== -1) {
+              this.accounts.splice(index, 1);
+            }
+          });
+    }
+  }
 
   onShowEditMode(account: Account) {
     account.editMode = true;
@@ -223,6 +223,10 @@ export class AccountsComponent implements OnInit {
     this.getCurrencies(); // TODO - call in parallel
     this.getAccountTypes(); // TODO - call in parallel
   }
+
+  onRefreshAccountType() {
+      this.getAccountTypes(); // TODO - call in parallel
+    }
 
   validateAccount(account: Account): boolean {
     if (
