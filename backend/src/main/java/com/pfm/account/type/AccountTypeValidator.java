@@ -1,5 +1,7 @@
 package com.pfm.account.type;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
+import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -60,17 +62,5 @@ public class AccountTypeValidator {
     }
   }
 
-//  public List<String> validateAccountForDelete(long accountId) {
-//    List<String> validationErrors = new ArrayList<>();
-//
-//    if (transactionService.transactionExistByAccountId(accountId)) {
-//      validationErrors.add(getMessage(ACCOUNT_IS_USED_IN_TRANSACTION));
-//    }
-//
-//    if (filterService.filterExistByAccountId(accountId)) {
-//      validationErrors.add(getMessage(ACCOUNT_IS_USED_IN_FILTER));
-//    }
-//
-//    return validationErrors;
-//  }
+
 }

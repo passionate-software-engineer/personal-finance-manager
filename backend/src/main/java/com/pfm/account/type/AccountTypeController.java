@@ -1,5 +1,6 @@
 package com.pfm.account.type;
 
+import com.pfm.account.type.AccountType;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
@@ -60,6 +61,26 @@ public class AccountTypeController implements AccountTypeApi {
     accountTypeService.updateAccountType(accountTypeId, userId, accountType);
 
     log.info("Account type with id {} was successfully updated", accountTypeId);
+
+    return ResponseEntity.ok().build();
+  }
+
+  @Override
+  @Transactional
+  public ResponseEntity<?> deleteAccountType(@PathVariable long accountTypeId) {
+    long userId = userProvider.getCurrentUserId();
+
+    if (!accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).isPresent()) {
+      log.info("No account type with id {} was found, not able to delete", accountTypeId);
+      return ResponseEntity.notFound().build();
+    }
+
+    AccountType accountType = accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).get();
+    historyEntryService.addHistoryEntryOnDelete(accountType, userId);
+    log.info("Attempting to delete account type with id {}", accountTypeId);
+    accountTypeService.deleteAccountType(accountTypeId);
+
+    log.info("Account type with id {} was deleted successfully", accountTypeId);
 
     return ResponseEntity.ok().build();
   }

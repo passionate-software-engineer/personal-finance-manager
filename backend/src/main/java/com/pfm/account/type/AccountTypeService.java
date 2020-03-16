@@ -52,6 +52,10 @@ public class AccountTypeService {
     accountTypeRepository.save(accountTypeToUpdate);
   }
 
+  public void deleteAccountType(long accountTypeId) {
+    accountTypeRepository.deleteById(accountTypeId);
+  }
+
   public boolean isAccountTypeNameAlreadyUsed(long userId, String name) {
     return accountTypeRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
