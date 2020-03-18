@@ -24,6 +24,10 @@ export class AccountTypeService extends ServiceBase {
     return this.http.get<AccountType[]>(ServiceBase.apiUrl(PATH));
   }
 
+  addAccountType(accountType: AccountType): Observable<any> {
+    return this.http.post<any>(ServiceBase.apiUrl(PATH), AccountTypeService.accountTypeToAccountTypeRequest(accountType), this.contentType);
+  }
+
   deleteAccountType(id: number): Observable<any> {
     return this.http.delete<AccountType>(ServiceBase.apiUrl(PATH, id));
   }

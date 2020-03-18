@@ -22,9 +22,11 @@ export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
   supportedAccountTypes: AccountType[];
   accounts: Account[] = [];
+  accountType: AccountType[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
   newAccount: Account = new Account();
+  newAccountType: AccountType = new AccountType();
   sortableAccountsTable: Sortable = new Sortable('name');
   sortableCurrencyTable: Sortable = new Sortable('name');
   sortableAccountTypeTable: Sortable = new Sortable('name');
@@ -180,9 +182,9 @@ export class AccountsComponent implements OnInit {
   }
 
   onAccountTypeEdit(accountType: AccountType) {
-//       if (!this.validateAccount(accountType.editedAccountType)) {
-//         return;
-//       }
+      if (!this.validateAccountType(accountType.editedAccountType)) {
+        return;
+      }
       const editedAccountType: AccountType = new AccountType();
       editedAccountType.id = accountType.id;
       editedAccountType.name = accountType.editedAccountType.name;
@@ -217,6 +219,21 @@ export class AccountsComponent implements OnInit {
 
         });
   }
+
+  onAddAccountType() {
+      if (!this.validateAddingAccountType(this.newAccountType)) {
+        return;
+      }
+
+      this.accountTypeService.addAccountType(this.newAccountType)
+          .subscribe(id => {
+            this.alertService.success(this.translate.instant('message.accountTypeAdded'));
+            this.newAccountType.id = id;
+            this.accountType.push(this.newAccountType);
+            this.addingMode = false;
+            this.newAccountType = new AccountType();
+          });
+    }
 
   onRefreshAccounts() {
     this.getAccounts();
@@ -281,6 +298,34 @@ export class AccountsComponent implements OnInit {
     return true;
   }
 
+
+  validateAccountType(accountType: AccountType): boolean {
+      if (
+        (accountType.name == null || accountType.name.trim() === '')
+      ) {
+        // TODO change validation to validate all at once, not break on error
+        this.alertService.error(
+          this.translate.instant('message.accountTypeNameEmpty')
+        );
+        return false;
+      }
+      if (accountType.name == null || accountType.name === '') {
+        this.alertService.error(
+          this.translate.instant('message.accountTypeNameEmpty')
+        );
+        return false;
+      }
+      if (accountType.name.length > 100) {
+        this.alertService.error(
+          this.translate.instant('message.accountTypeNameTooLong')
+        );
+        return false;
+      }
+      return true;
+    }
+
+
+
   validateAddingAccount(accountToValidate: Account): boolean {
     if (!this.validateAccount(accountToValidate)) {
       return false;
@@ -299,6 +344,25 @@ export class AccountsComponent implements OnInit {
     }
     return true;
   }
+
+  validateAddingAccountType(accountTypeToValidate: AccountType): boolean {
+      if (!this.validateAccountType(accountTypeToValidate)) {
+        return false;
+      }
+      if (
+        this.accounts.filter(
+          accountType =>
+            accountType.name.toLocaleLowerCase() ===
+            accountTypeToValidate.name.toLocaleLowerCase()
+        ).length > 0
+      ) {
+        this.alertService.error(
+          this.translate.instant('message.accountTypeNameExists')
+        );
+        return false;
+      }
+      return true;
+    }
 
   allAccountsBalance() {
     let sum = 0;

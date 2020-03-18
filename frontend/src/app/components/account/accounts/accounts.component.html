@@ -457,11 +457,12 @@
 
 
 
+
 <br/>
 <button id="AddAccountTypeBtn"
         class="btn btn-success"
         type="button"
-        (click)="addingMode = !addingMode">
+        (click)="accountType.addingMode = !addingMode">
   {{ "account.addAccountType" | translate }}
 </button>
 <button id="RefreshAccountTypeBtn"
@@ -492,7 +493,7 @@
 
     <tbody>
 
-      <tr *ngIf="addingMode">
+      <tr *ngIf="accountType.addingMode">
         <!-- Name -->
         <td>
           <input id="NewAccountTypeNameInput"
@@ -512,7 +513,7 @@
           </button>
           <button id="NewAccountTypeExitBtn"
                   class="btn btn-danger"
-                  (click)="addingMode = false">
+                  (click)="accountType.addingMode = false">
             {{ "button.exit" | translate }}
           </button>
         </td>
