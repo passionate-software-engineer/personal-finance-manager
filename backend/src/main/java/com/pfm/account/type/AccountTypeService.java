@@ -3,6 +3,7 @@ package com.pfm.account.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.account.Account;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,11 @@ public class AccountTypeService {
     return accountTypeRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(AccountType::getName))
         .collect(Collectors.toList());
+  }
+
+  public AccountType saveAccountType(long userId, AccountType accountType) {
+    accountType.setUserId(userId);
+    return accountTypeRepository.save(accountType);
   }
 
   public void updateAccountType(long accountTypeId, long userId, AccountType accountType) {

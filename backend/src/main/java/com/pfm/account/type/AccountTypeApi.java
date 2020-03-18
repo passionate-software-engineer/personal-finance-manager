@@ -1,5 +1,6 @@
 package com.pfm.account.type;
 
+import com.pfm.account.AccountRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,6 +25,10 @@ public interface AccountTypeApi {
   ResponseEntity<List<AccountType>> getAccountTypes();
 
   // TODO add support for adding, modifying, deleting currencies
+
+  @ApiOperation(value = "Create a new account type", response = Long.class, authorizations = {@Authorization(value = "Bearer")})
+  @PostMapping
+  ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
 
   @ApiOperation(value = "Update an existing account type", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
   // TODO try to separate response type for each status call 200/400
