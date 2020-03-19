@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.currency.CurrencyService;
@@ -44,6 +45,9 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
   private CategoryService categoryService;
 
   @Autowired
+  private AccountTypeService accountTypeService;
+
+  @Autowired
   private CurrencyService currencyService;
 
   @Override
@@ -52,6 +56,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     super.before();
     userId = userService.registerUser(userZdzislaw()).getId();
     currencyService.addDefaultCurrencies(userId);
+    accountTypeService.addDefaultAccountTypes(userId);
   }
 
   @Test
@@ -59,6 +64,8 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
 
     Account savedAccount = accountService.saveAccount(userId, account);
@@ -89,6 +96,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setType(accountTypeService.getAccountTypes(userId).get(1));
     account.setCurrency(currencyService.getCurrencies(userId).get(1));
 
     Account savedAccount = accountService.saveAccount(userId, account);
@@ -132,6 +140,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setType(accountTypeService.getAccountTypes(userId).get(1));
     account.setCurrency(currencyService.getCurrencies(userId).get(1));
 
     Account savedAccount = accountService.saveAccount(userId, account);
@@ -180,6 +189,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
 
     Account savedAccount = accountService.saveAccount(userId, account);
@@ -211,6 +221,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
+    account.setType(accountTypeService.getAccountTypes(userId).get(1));
     account.setCurrency(currencyService.getCurrencies(userId).get(1));
 
     Account savedAccount = accountService.saveAccount(userId, account);

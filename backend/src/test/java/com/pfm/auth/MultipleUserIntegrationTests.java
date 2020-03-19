@@ -37,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.account.type.AccountType;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryRequest;
 import com.pfm.currency.Currency;
@@ -94,6 +95,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     final long marianOver1000ExpensesFilter = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000(), marianToken);
 
     Account account = accountIdeaBalance100000();
+
+    account.setType(accountTypeService.getAccountTypes(zdzislawUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
 
     long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(account, zdzislawToken);
@@ -292,6 +295,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     Account account = accountMbankBalance10();
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
@@ -313,6 +317,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     Account account = accountMbankBalance10();
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
@@ -344,6 +349,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     Account account = accountMbankBalance10();
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
@@ -352,6 +358,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         marianCategoryCarId, marianToken);
 
     Account zdzislawAccount = accountIdeaBalance100000();
+    zdzislawAccount.setType(accountTypeService.getAccountTypes(zdzislawUserId).get(0));
     zdzislawAccount.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
 
     long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(zdzislawAccount, zdzislawToken);
@@ -417,23 +424,29 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     currencyService.addDefaultCurrencies(marianUserId);
+    accountTypeService.addDefaultAccountTypes(marianUserId);
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
     long zdzislawUserId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
     currencyService.addDefaultCurrencies(zdzislawUserId);
+    accountTypeService.addDefaultAccountTypes(zdzislawUserId);
     final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     //when
 
     //marian
     Currency marianAccountCurrency = currencyService.getCurrencies(marianUserId).get(0);
+    AccountType marianAccountAccountType = accountTypeService.getAccountTypes(marianUserId).get(0);
 
     Account accountMbankMarian = accountMbankBalance10();
     accountMbankMarian.setCurrency(marianAccountCurrency);
+    accountMbankMarian.setType(marianAccountAccountType);
+
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankMarian, marianToken);
 
     Account accountMilleniumMarian = accountMilleniumBalance100();
     accountMilleniumMarian.setCurrency(marianAccountCurrency);
+    accountMilleniumMarian.setType(marianAccountAccountType);
     long marianAccountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMilleniumMarian, marianToken);
 
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
@@ -450,13 +463,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //zdzislaw
     Currency zdzislawAccountCurrency = currencyService.getCurrencies(zdzislawUserId).get(1);
+    AccountType zdzislawAccountAccountType = accountTypeService.getAccountTypes(zdzislawUserId).get(1);
 
     Account accountIngZdzislaw = accountIngBalance9999();
     accountIngZdzislaw.setCurrency(zdzislawAccountCurrency);
+    accountIngZdzislaw.setType(zdzislawAccountAccountType);
     long zdzislawAccountIngId = callRestServiceToAddAccountAndReturnId(accountIngZdzislaw, zdzislawToken);
 
     Account accountIdeaZdzislaw = accountIdeaBalance100000();
     accountIdeaZdzislaw.setCurrency(zdzislawAccountCurrency);
+    accountIdeaZdzislaw.setType(zdzislawAccountAccountType);
     long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaZdzislaw, zdzislawToken);
 
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
@@ -479,12 +495,14 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account marianAccountMbankExpected = accountMbankBalance10();
     marianAccountMbankExpected.setId(marianAccountMbankId);
+    marianAccountMbankExpected.setType(marianAccountAccountType);
     marianAccountMbankExpected.setCurrency(marianAccountCurrency);
     marianAccountMbankExpected
         .setBalance(accountMbankBalance10().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
     Account marianAccountMilleniumExpected = accountMilleniumBalance100();
     marianAccountMilleniumExpected.setId(marianAccountMilleniumId);
+    marianAccountMilleniumExpected.setType(marianAccountAccountType);
     marianAccountMilleniumExpected.setCurrency(marianAccountCurrency);
     marianAccountMilleniumExpected
         .setBalance(
@@ -499,12 +517,14 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account zdzislawAccountIngExpected = accountIngBalance9999();
     zdzislawAccountIngExpected.setId(zdzislawAccountIngId);
+    zdzislawAccountIngExpected.setType(zdzislawAccountAccountType);
     zdzislawAccountIngExpected.setCurrency(zdzislawAccountCurrency);
     zdzislawAccountIngExpected.setBalance(
         accountIngBalance9999().getBalance().add(animalsTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
     Account zdzislawAccountIdeaExpected = accountIdeaBalance100000();
     zdzislawAccountIdeaExpected.setId(zdzislawAccountIdeaId);
+    zdzislawAccountIdeaExpected.setType(zdzislawAccountAccountType);
     zdzislawAccountIdeaExpected.setCurrency(zdzislawAccountCurrency);
     zdzislawAccountIdeaExpected.setBalance(
         accountIdeaBalance100000().getBalance().add(homeTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
@@ -589,6 +609,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     currencyService.addDefaultCurrencies(zdzislawUserId);
 
     Account account = accountMbankBalance10();
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
 
     //when
@@ -598,6 +619,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
         .content(json(convertAccountToAccountRequest(account))))
         .andExpect(status().isOk());
 
+    account.setType(accountTypeService.getAccountTypes(zdzislawUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
 
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)

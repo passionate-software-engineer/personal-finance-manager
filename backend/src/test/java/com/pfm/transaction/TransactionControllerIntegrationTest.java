@@ -51,6 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.pfm.account.Account;
+import com.pfm.account.type.AccountType;
 import com.pfm.config.MessagesProvider.Language;
 import com.pfm.currency.Currency;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -268,6 +269,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
+        .type(AccountType.builder()
+            .id(accountTypeService.getAccountTypes(userId).get(0).getId())
+            .name("Credit")
+            .build())
         .balance(convertDoubleToBigDecimal(1000))
         .currency(Currency.builder()
             .id(currencyService.getCurrencies(userId).get(0).getId())
@@ -544,6 +549,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
+        .type(AccountType.builder()
+            .id(accountTypeService.getAccountTypes(userId).get(0).getId())
+            .name("Credit")
+            .build())
         .balance(convertDoubleToBigDecimal(1000))
         .currency(Currency.builder()
             .id(currencyService.getCurrencies(userId).get(0).getId())

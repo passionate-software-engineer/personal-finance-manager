@@ -1,7 +1,5 @@
 package com.pfm.account.type;
 
-import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
-import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -57,10 +55,10 @@ public class AccountTypeValidator {
   }
 
   private void checkForDuplicatedName(long userId, List<String> validationResults, AccountType accountType) {
-    if (accountType.getName() != null && !accountType.getName().trim().equals("") && accountTypeService.isAccountTypeNameAlreadyUsed(userId, accountType.getName())) {
+    if (accountType.getName() != null && !accountType.getName().trim().equals("") && accountTypeService
+        .isAccountTypeNameAlreadyUsed(userId, accountType.getName())) {
       validationResults.add(getMessage(ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }
-
 
 }

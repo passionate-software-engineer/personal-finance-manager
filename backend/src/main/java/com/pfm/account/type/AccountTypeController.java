@@ -1,8 +1,5 @@
 package com.pfm.account.type;
 
-import com.pfm.account.Account;
-import com.pfm.account.AccountRequest;
-import com.pfm.account.type.AccountType;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
@@ -24,12 +21,11 @@ public class AccountTypeController implements AccountTypeApi {
   private UserProvider userProvider;
   private HistoryEntryService historyEntryService;
 
-
   @Override
   public ResponseEntity<List<AccountType>> getAccountTypes() {
     long userId = userProvider.getCurrentUserId();
 
-    log.info("Returning list of account types for user " + userId);
+    log.info("Returning list of account types for user {}", userId);
 
     List<AccountType> accountType = accountTypeService.getAccountTypes(userId);
 
@@ -42,7 +38,6 @@ public class AccountTypeController implements AccountTypeApi {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Saving accountType {} to the database", accountTypeRequest.getName());
-
 
     AccountType accountType = convertAccountTypeRequestToAccountType(accountTypeRequest);
 
@@ -57,7 +52,6 @@ public class AccountTypeController implements AccountTypeApi {
     historyEntryService.addHistoryEntryOnAdd(createdAccountType, userId);
     return ResponseEntity.ok(createdAccountType.getId());
   }
-
 
   @Override
   @Transactional
