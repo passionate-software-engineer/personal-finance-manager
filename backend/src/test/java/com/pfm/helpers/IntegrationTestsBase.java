@@ -338,6 +338,7 @@ public abstract class IntegrationTestsBase {
   protected long callRestToAddFirstTestTransactionAndReturnId() throws Exception {
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -349,6 +350,7 @@ public abstract class IntegrationTestsBase {
   protected long callRestToAddFirstTestPlannedTransactionAndReturnId() throws Exception {
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);

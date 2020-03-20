@@ -436,17 +436,17 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //marian
     Currency marianAccountCurrency = currencyService.getCurrencies(marianUserId).get(0);
-    AccountType marianAccountAccountType = accountTypeService.getAccountTypes(marianUserId).get(0);
+    AccountType marianAccountType = accountTypeService.getAccountTypes(marianUserId).get(0);
 
     Account accountMbankMarian = accountMbankBalance10();
     accountMbankMarian.setCurrency(marianAccountCurrency);
-    accountMbankMarian.setType(marianAccountAccountType);
+    accountMbankMarian.setType(marianAccountType);
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankMarian, marianToken);
 
     Account accountMilleniumMarian = accountMilleniumBalance100();
     accountMilleniumMarian.setCurrency(marianAccountCurrency);
-    accountMilleniumMarian.setType(marianAccountAccountType);
+    accountMilleniumMarian.setType(marianAccountType);
     long marianAccountMilleniumId = callRestServiceToAddAccountAndReturnId(accountMilleniumMarian, marianToken);
 
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
@@ -463,16 +463,16 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     //zdzislaw
     Currency zdzislawAccountCurrency = currencyService.getCurrencies(zdzislawUserId).get(1);
-    AccountType zdzislawAccountAccountType = accountTypeService.getAccountTypes(zdzislawUserId).get(1);
+    AccountType zdzislawAccountType = accountTypeService.getAccountTypes(zdzislawUserId).get(1);
 
     Account accountIngZdzislaw = accountIngBalance9999();
     accountIngZdzislaw.setCurrency(zdzislawAccountCurrency);
-    accountIngZdzislaw.setType(zdzislawAccountAccountType);
+    accountIngZdzislaw.setType(zdzislawAccountType);
     long zdzislawAccountIngId = callRestServiceToAddAccountAndReturnId(accountIngZdzislaw, zdzislawToken);
 
     Account accountIdeaZdzislaw = accountIdeaBalance100000();
     accountIdeaZdzislaw.setCurrency(zdzislawAccountCurrency);
-    accountIdeaZdzislaw.setType(zdzislawAccountAccountType);
+    accountIdeaZdzislaw.setType(zdzislawAccountType);
     long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(accountIdeaZdzislaw, zdzislawToken);
 
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
@@ -495,14 +495,14 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account marianAccountMbankExpected = accountMbankBalance10();
     marianAccountMbankExpected.setId(marianAccountMbankId);
-    marianAccountMbankExpected.setType(marianAccountAccountType);
+    marianAccountMbankExpected.setType(marianAccountType);
     marianAccountMbankExpected.setCurrency(marianAccountCurrency);
     marianAccountMbankExpected
         .setBalance(accountMbankBalance10().getBalance().add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
     Account marianAccountMilleniumExpected = accountMilleniumBalance100();
     marianAccountMilleniumExpected.setId(marianAccountMilleniumId);
-    marianAccountMilleniumExpected.setType(marianAccountAccountType);
+    marianAccountMilleniumExpected.setType(marianAccountType);
     marianAccountMilleniumExpected.setCurrency(marianAccountCurrency);
     marianAccountMilleniumExpected
         .setBalance(
@@ -517,14 +517,14 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account zdzislawAccountIngExpected = accountIngBalance9999();
     zdzislawAccountIngExpected.setId(zdzislawAccountIngId);
-    zdzislawAccountIngExpected.setType(zdzislawAccountAccountType);
+    zdzislawAccountIngExpected.setType(zdzislawAccountType);
     zdzislawAccountIngExpected.setCurrency(zdzislawAccountCurrency);
     zdzislawAccountIngExpected.setBalance(
         accountIngBalance9999().getBalance().add(animalsTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));
 
     Account zdzislawAccountIdeaExpected = accountIdeaBalance100000();
     zdzislawAccountIdeaExpected.setId(zdzislawAccountIdeaId);
-    zdzislawAccountIdeaExpected.setType(zdzislawAccountAccountType);
+    zdzislawAccountIdeaExpected.setType(zdzislawAccountType);
     zdzislawAccountIdeaExpected.setCurrency(zdzislawAccountCurrency);
     zdzislawAccountIdeaExpected.setBalance(
         accountIdeaBalance100000().getBalance().add(homeTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice()));

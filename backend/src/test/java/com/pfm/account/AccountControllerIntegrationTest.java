@@ -1,6 +1,8 @@
 package com.pfm.account;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
@@ -59,6 +61,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     //when
     String response =
@@ -90,6 +93,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     AccountRequest accountRequest = AccountRequest.builder()
         .name(name)
+        .accountTypeId(accountTypeService.getAccountTypes(userId).get(0).getId())
         .balance(balance)
         .currencyId(currencyService.getCurrencies(userId).get(0).getId())
         .build();
@@ -109,9 +113,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingCurrencyOnAddAccount() throws Exception {
     //given
     long notExistingCurrencyId = 3124151L;
+    //long notExistingAccountTypeId =3124151L;
 
     AccountRequest accountRequest = AccountRequest.builder()
         .name("mBank")
+        .accountTypeId(1)
         .balance(BigDecimal.TEN)
         .currencyId(notExistingCurrencyId)
         .build();
@@ -126,11 +132,14 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), notExistingCurrencyId))));
   }
 
+
+
   @Test
   public void shouldGetAccountById() throws Exception {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
@@ -160,9 +169,11 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account accountJacek = accountJacekBalance1000();
     accountJacek.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountJacek.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     Long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek, token);
     Long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
@@ -189,11 +200,13 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account updatedAccount = accountMbankBalance10();
     updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    updatedAccount.setType(accountTypeService.getAccountTypes(userId).get(1));
 
     //when
     mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountId)
@@ -218,6 +231,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
@@ -251,6 +265,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
@@ -298,6 +313,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
@@ -353,10 +369,12 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(account.getName())
+        .accountTypeId(account.getType().getId())
         .balance(convertDoubleToBigDecimal(666))
         .currencyId(account.getCurrency().getId())
         .build();
@@ -373,6 +391,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(jsonPath("$.id", is(accountId.intValue())))
         .andExpect(jsonPath("$.name", is(equalTo(updatedAccount.getName()))))
+        .andExpect(jsonPath("$.type.name", is(equalTo(account.getType().getName()))))
         .andExpect(jsonPath("$.balance", is(equalTo(updatedAccount.getBalance().toString()))))
         .andExpect(jsonPath("$.currency.name", is(equalTo(account.getCurrency().getName()))))
         .andExpect(jsonPath("$.userId").doesNotExist());
@@ -383,14 +402,17 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
     callRestServiceToAddAccountAndReturnId(account, token);
 
     Account jacekAccount = accountJacekBalance1000();
     jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    account.setType(accountTypeService.getAccountTypes(userId).get(1));
     long accountJacekId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
 
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(account.getName())
+        .accountTypeId(account.getType().getId())
         .balance(convertDoubleToBigDecimal(432))
         .currencyId(account.getCurrency().getId())
         .build();
@@ -410,13 +432,16 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingCurrencyOnUpdateAccount() throws Exception {
     //given
     long notExistingCurrencyId = 3124151L;
+    //long notExistingAccountTypeId = 3124151L;
 
     Account jacekAccount = accountJacekBalance1000();
     jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    jacekAccount.setType(accountTypeService.getAccountTypes(userId).get(1));
     long accountJacekId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
 
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(jacekAccount.getName())
+        .accountTypeId(1L)
         .balance(convertDoubleToBigDecimal(4322))
         .currencyId(notExistingCurrencyId)
         .build();
@@ -429,6 +454,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), notExistingCurrencyId))));
+
   }
 
   @Test
@@ -447,10 +473,12 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest accountToUpdate = AccountRequest.builder()
         .name("")
+        .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
         .build();
@@ -470,6 +498,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
@@ -494,10 +523,12 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest accountRequestToAdd = AccountRequest.builder()
         .name(account.getName())
+        .accountTypeId(account.getType().getId())
         .balance(convertDoubleToBigDecimal(100))
         .currencyId(account.getCurrency().getId())
         .build();
@@ -510,6 +541,57 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByNotExistingAccountTypeOnAddAccount() throws Exception {
+    //given
+    long notExistingAccountTypeId =3124151L;
+
+    AccountRequest accountRequest = AccountRequest.builder()
+        .name("mBank")
+        .accountTypeId(notExistingAccountTypeId)
+        .balance(BigDecimal.TEN)
+        .currencyId(1)
+        .build();
+
+    //when
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), notExistingAccountTypeId))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByNotExistingAccountTypeOnUpdateAccount() throws Exception {
+    //given
+
+    long notExistingAccountTypeId = 3124151L;
+
+    Account jacekAccount = accountJacekBalance1000();
+    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    jacekAccount.setType(accountTypeService.getAccountTypes(userId).get(1));
+    long accountJacekId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
+
+    AccountRequest updatedAccount = AccountRequest.builder()
+        .name(jacekAccount.getName())
+        .accountTypeId(notExistingAccountTypeId)
+        .balance(convertDoubleToBigDecimal(4322))
+        .currencyId(1L)
+        .build();
+
+    //when
+    mockMvc.perform(put(ACCOUNTS_SERVICE_PATH + "/" + accountJacekId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedAccount)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), notExistingAccountTypeId))));;
+
   }
 
 }

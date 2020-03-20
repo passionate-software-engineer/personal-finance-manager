@@ -21,6 +21,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
       account.setBalance(getRandomBalance());
       account.setName(getRandomName());
       account.setCurrency(account.getCurrency());
+      account.setType(account.getType());
 
       int statusCode = given()
           .contentType(ContentType.JSON)

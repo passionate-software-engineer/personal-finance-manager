@@ -11,6 +11,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+import com.pfm.account.type.AccountType;
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserProvider;
 import com.pfm.currency.Currency;
 import com.pfm.currency.CurrencyService;
@@ -32,6 +34,9 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
   private UserProvider userProvider;
 
   @SpyBean
+  private AccountTypeService accountTypeService;
+
+  @SpyBean
   private CurrencyService currencyService;
 
   @SpyBean
@@ -47,6 +52,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     userId = userService.registerUser(userZdzislaw()).getId();
     when(userProvider.getCurrentUserId()).thenReturn(userId);
     currencyService.addDefaultCurrencies(userId);
+    accountTypeService.addDefaultAccountTypes(userId);
   }
 
   @Test
@@ -55,6 +61,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     Account account = accountMbankBalance10();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), anyLong());
     when(currencyService.findCurrencyByIdAndUserId(anyLong(), anyLong())).thenReturn(Optional.of(new Currency()));
+    when(accountTypeService.findAccountTypeByIdAndUserId(anyLong(),anyLong())).thenReturn(Optional.of(new AccountType()));
 
     // when
     try {
@@ -73,11 +80,13 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
     final Long accountId = accountService.saveAccount(userId, account).getId();
 
     Account updatedAccount = accountMbankBalance10();
     updatedAccount.setName("updatedName");
     updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     doThrow(IllegalStateException.class).when(accountService).updateAccount(any(Long.class), any(Long.class), any(Account.class));
 
@@ -99,6 +108,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
     final Long accountId = accountService.saveAccount(userId, account).getId();
 
     doThrow(IllegalStateException.class).when(accountService).deleteAccount(accountId);
