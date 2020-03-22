@@ -568,7 +568,6 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedByNotExistingAccountTypeOnUpdateAccount() throws Exception {
     //given
-
     long notExistingAccountTypeId = 3124151L;
 
     Account jacekAccount = accountJacekBalance1000();
