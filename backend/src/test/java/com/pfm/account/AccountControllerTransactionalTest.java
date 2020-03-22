@@ -61,7 +61,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
     Account account = accountMbankBalance10();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), anyLong());
     when(currencyService.findCurrencyByIdAndUserId(anyLong(), anyLong())).thenReturn(Optional.of(new Currency()));
-    when(accountTypeService.findAccountTypeByIdAndUserId(anyLong(),anyLong())).thenReturn(Optional.of(new AccountType()));
+    when(accountTypeService.findAccountTypeByIdAndUserId(anyLong(), anyLong())).thenReturn(Optional.of(new AccountType()));
 
     // when
     try {

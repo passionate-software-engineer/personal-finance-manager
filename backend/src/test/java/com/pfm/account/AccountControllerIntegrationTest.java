@@ -132,10 +132,9 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), notExistingCurrencyId))));
   }
 
-
-
   @Test
   public void shouldGetAccountById() throws Exception {
+
     //given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -546,7 +545,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldReturnErrorCausedByNotExistingAccountTypeOnAddAccount() throws Exception {
     //given
-    long notExistingAccountTypeId =3124151L;
+    long notExistingAccountTypeId = 3124151L;
 
     AccountRequest accountRequest = AccountRequest.builder()
         .name("mBank")
