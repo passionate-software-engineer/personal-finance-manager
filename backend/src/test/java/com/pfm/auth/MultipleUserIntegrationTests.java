@@ -289,7 +289,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteAccount() throws Exception {
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
@@ -311,7 +311,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransaction() throws Exception {
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
@@ -346,7 +346,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
     long zdzislawUserId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     Account account = accountMbankBalance10();
     account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));

@@ -588,8 +588,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .content(json(updatedAccount)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), notExistingAccountTypeId))));;
-
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), notExistingAccountTypeId))));
   }
 
 }
