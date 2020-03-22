@@ -2,7 +2,6 @@ package com.pfm.account;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
-import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
@@ -551,7 +550,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .name("mBank")
         .accountTypeId(notExistingAccountTypeId)
         .balance(BigDecimal.TEN)
-        .currencyId(1)
+        .currencyId(currencyService.getCurrencies(userId).get(0).getId())
         .build();
 
     //when
@@ -578,7 +577,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .name(jacekAccount.getName())
         .accountTypeId(notExistingAccountTypeId)
         .balance(convertDoubleToBigDecimal(4322))
-        .currencyId(1L)
+        .currencyId(jacekAccount.getCurrency().getId())
         .build();
 
     //when
@@ -588,7 +587,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .content(json(updatedAccount)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), notExistingAccountTypeId))));
+        .andExpect(jsonPath("$[0]", is(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), notExistingAccountTypeId))));
   }
 
 }

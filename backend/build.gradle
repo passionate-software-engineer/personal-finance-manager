@@ -92,10 +92,9 @@ spotbugs {
 
 spotbugsMain {
     reports {
-        html {
+        xml {
             enabled = true
-            destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
-            stylesheet = 'fancy-hist.xsl'
+            destination = file("$buildDir/reports/spotbugs/main/spotbugs.xml")
         }
     }
 }

@@ -111,6 +111,7 @@ public class TransactionService {
         .name(account.getName())
         .balance(newBalance)
         .currency(account.getCurrency())
+        .type(account.getType())
         .build();
 
     if (!addHistoryEntryOnUpdate) {

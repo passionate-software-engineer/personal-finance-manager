@@ -4,8 +4,6 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_AL
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
 
-import com.pfm.filter.FilterService;
-import com.pfm.transaction.TransactionService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,8 +15,6 @@ import org.springframework.stereotype.Service;
 public class AccountTypeValidator {
 
   private AccountTypeService accountTypeService;
-  private TransactionService transactionService;
-  private FilterService filterService;
 
   private List<String> validate(AccountType accountType) {
     List<String> validationResults = new ArrayList<>();

@@ -29,6 +29,7 @@
     <exclude name="CyclomaticComplexity" />
     <exclude name="UseUtilityClass" />
     <exclude name="ExcessiveImports" />
+    <exclude name="LoosePackageCoupling" />
   </rule>
 
 </ruleset>
