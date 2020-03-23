@@ -16,7 +16,7 @@ public interface AccountTypeApi {
 
   String BEARER = "Bearer";
 
-  @ApiOperation(value = "Get list of all accounts", response = AccountType.class, responseContainer = "List",
+  @ApiOperation(value = "Get list of all account types", response = AccountType.class, responseContainer = "List",
       authorizations = {@Authorization(value = BEARER)})
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();

@@ -39,7 +39,7 @@ public final class Filter {
   @ElementCollection
   @Column(name = "account_id")
   @HistoryField(fieldType = SpecialFieldType.ACCOUNT_IDS)
-  //NCEMENT add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
+  //TODO add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> accountIds;
 
   @LazyCollection(LazyCollectionOption.FALSE)

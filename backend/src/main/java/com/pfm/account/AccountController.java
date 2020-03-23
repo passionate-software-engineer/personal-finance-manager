@@ -228,7 +228,7 @@ public class AccountController implements AccountApi {
         .build();
   }
 
-  private boolean isProvidedCurrencyIdIncorrect(@RequestBody AccountRequest accountRequest, long userId) {
+  private boolean isProvidedCurrencyIdIncorrect(AccountRequest accountRequest, long userId) {
     if (currencyService.findCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId).isEmpty()) {
       log.info("No currency with id {} was found, not able to update", accountRequest.getCurrencyId());
       return true;
@@ -236,12 +236,12 @@ public class AccountController implements AccountApi {
     return false;
   }
 
-  private ResponseEntity<?> returnBadRequestCurrencyDoesNotExist(@RequestBody AccountRequest accountRequest) {
+  private ResponseEntity<?> returnBadRequestCurrencyDoesNotExist(AccountRequest accountRequest) {
     return ResponseEntity.badRequest()
         .body(Collections.singletonList(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), accountRequest.getCurrencyId())));
   }
 
-  private boolean isProvidedAccountTypeIdIncorrect(@RequestBody AccountRequest accountRequest, long userId) {
+  private boolean isProvidedAccountTypeIdIncorrect(AccountRequest accountRequest, long userId) {
     if (accountTypeService.findAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId).isEmpty()) {
       log.info("No account type with id {} was found, not able to update", accountRequest.getAccountTypeId());
       return true;
@@ -249,7 +249,7 @@ public class AccountController implements AccountApi {
     return false;
   }
 
-  private ResponseEntity<?> returnBadRequestAccountTypeDoesNotExist(@RequestBody AccountRequest accountRequest) {
+  private ResponseEntity<?> returnBadRequestAccountTypeDoesNotExist(AccountRequest accountRequest) {
     return ResponseEntity.badRequest()
         .body(Collections.singletonList(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), accountRequest.getAccountTypeId())));
   }
