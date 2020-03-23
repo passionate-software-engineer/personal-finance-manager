@@ -43,7 +43,7 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
   private static final String CURRENCIES_SERVICE_PATH = "http://localhost:%d/currencies";
-  private static final String ACCOUNT_TYPE_SERVICE_PATH = "http://localhost:%d/accountType";
+  private static final String ACCOUNT_TYPE_SERVICE_PATH = "http://localhost:%d/accountTypes";
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("accountType")
+@RequestMapping("accountTypes")
 @CrossOrigin
 @Api(value = "AccountType", description = "Controller used to list / add / update / delete account type.")
 public interface AccountTypeApi {
@@ -25,7 +25,7 @@ public interface AccountTypeApi {
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
-  // TODO add support for adding, modifying, deleting currencies
+  // TODO add support for adding, modifying, deleting accountTypes
 
   @ApiOperation(value = "Create a new account type", response = Long.class, authorizations = {@Authorization(value = BEARER)})
   @PostMapping

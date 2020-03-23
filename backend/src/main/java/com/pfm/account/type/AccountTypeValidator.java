@@ -38,7 +38,7 @@ public class AccountTypeValidator {
     Optional<AccountType> accountTypeToUpdate = accountTypeService.getAccountTypeIdAndUserId(id, userId);
 
     if (!accountTypeToUpdate.isPresent()) {
-      throw new IllegalStateException("Account with id: " + id + " does not exist in database");
+      throw new IllegalStateException("Account type with id: " + id + " does not exist in database");
     }
 
     // it's ok when we keep name in updated accountType, it's not duplicate
@@ -51,7 +51,8 @@ public class AccountTypeValidator {
   }
 
   private void checkForDuplicatedName(long userId, List<String> validationResults, AccountType accountType) {
-    if (accountType.getName() != null && !accountType.getName().trim().equals("") && accountTypeService
+    if (accountType.getName() != null && !accountType.getName().trim().equals("")
+        && accountTypeService
         .isAccountTypeNameAlreadyUsed(userId, accountType.getName())) {
       validationResults.add(getMessage(ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }

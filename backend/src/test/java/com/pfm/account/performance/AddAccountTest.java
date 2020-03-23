@@ -12,11 +12,11 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
     runInMultipleThreads(() -> {
 
       Currency[] currencies = getCurrencies();
-      AccountType[] accountType = getAccountTypes();
+      AccountType[] accountTypes = getAccountTypes();
 
       for (int i = 0; i < 10; ++i) {
 
-        Account account = addAndReturnAccount(currencies, accountType);
+        Account account = addAndReturnAccount(currencies, accountTypes);
 
         accounts.add(account);
 
