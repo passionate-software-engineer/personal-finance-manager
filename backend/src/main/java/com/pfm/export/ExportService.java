@@ -228,7 +228,7 @@ public class ExportService {
   private ExportFundsSummary calculateSumOfFunds(List<ExportAccount> accounts, long userId) {
     List<Currency> currencies = currencyService.getCurrencies(userId);
 
-    // ENHANCEMENT change to stream
+    // TODO change to stream
     Map<String, BigDecimal> currencyToExchangeRate = new HashMap<>();
     Map<String, BigDecimal> currencyToBalanceMap = new HashMap<>();
     for (Currency currency : currencies) {

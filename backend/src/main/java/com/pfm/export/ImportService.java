@@ -99,7 +99,7 @@ public class ImportService {
     }
   }
 
-  // ENHANCEMENT add checking account state during import based on period start and end balances & overall account states
+  // TODO add checking account state during import based on period start and end balances & overall account states
   private void importTransaction(Map<String, Long> categoryNameToIdMap, Map<String, Long> accountNameToIdMap, ExportTransaction transaction,
       long userId) {
     Transaction newTransaction = Transaction.builder()
@@ -125,8 +125,8 @@ public class ImportService {
   }
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
-    List<Currency> currencies = currencyService.getCurrencies(userId); // ENHANCEMENT can be replaced with HashMap
-    List<AccountType> accountTypes = accountTypeService.getAccountTypes(userId); // ENHANCEMENT can be replaced with HashMap
+    List<Currency> currencies = currencyService.getCurrencies(userId); // TODO can be replaced with HashMap
+    List<AccountType> accountTypes = accountTypeService.getAccountTypes(userId); // TODO can be replaced with HashMap
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {

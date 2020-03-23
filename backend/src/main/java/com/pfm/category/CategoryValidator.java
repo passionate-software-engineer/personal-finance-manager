@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CategoryValidator {
 
-  //ENHANCEMENT possible can simplify this L
+  //TODO possible can simplify this L
 
   private CategoryService categoryService;
   private FilterService filterService;
