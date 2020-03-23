@@ -32,8 +32,8 @@
       </th>
 
       <th id="AccountTypeHeader"
-          [class.active]="sortableAccountsTable.order === 'name'"
-          (click)="sortableAccountsTable.setOrder('name')">
+          [class.active]="sortableAccountsTable.order === 'type.name'"
+          (click)="sortableAccountsTable.setOrder('type.name')">
         {{ "account.accountType" | translate }}
         <span [hidden]="sortableAccountsTable.reverse">▼</span>
         <span [hidden]="!sortableAccountsTable.reverse">▲</span>
