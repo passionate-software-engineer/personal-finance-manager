@@ -280,7 +280,7 @@ export class AccountsPage {
     this.addAccountButton().click();
 
     this.newAccountName().sendKeys(name);
-    this.newAccountAccountType().sendKeys(accountType);
+    this.newAccountType().sendKeys(accountType);
     this.newAccountBalance().sendKeys(balance);
     this.newAccountCurrency().sendKeys(currency);
 

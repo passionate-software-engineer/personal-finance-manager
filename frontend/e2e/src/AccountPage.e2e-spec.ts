@@ -139,9 +139,9 @@ describe('Accounts page tests', () => {
   it('should check box account type balance PLN', () => {
     // given
     accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit', 'Credit', '300.25', 'EUR');
-    accountPage.addAccountWithCurrency('Balance account type Investment', 'Investment', '123.50', 'GBP');
-    accountPage.addAccountWithCurrency('Balance account type Personal', 'Personal', '1250.25', 'PLN');
-    accountPage.addAccountWithCurrency('Balance account type Saving', 'Saving', '525.75', 'USD');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Investment', 'Investment', '123.50', 'GBP');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Personal', 'Personal', '1250.25', 'PLN');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Saving', 'Saving', '525.75', 'USD');
 
     // then
     accountPage.assertNumberOfAccounts(4);
