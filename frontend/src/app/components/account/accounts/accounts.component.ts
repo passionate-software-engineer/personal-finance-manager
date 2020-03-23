@@ -22,7 +22,7 @@ export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];
   supportedAccountTypes: AccountType[];
   accounts: Account[] = [];
-  accountType: AccountType[] = [];
+  accountTypes: AccountType[] = [];
   addingMode = false;
   showArchivedCheckboxState = false;
   newAccount: Account = new Account();
@@ -104,21 +104,6 @@ export class AccountsComponent implements OnInit {
     }
   }
 
-  deleteAccountType(accountType) {
-    if (confirm(this.translate.instant('message.wantDeleteAccountType'))) {
-      this.accountTypeService.deleteAccountType(accountType.id)
-          .subscribe(() => {
-            this.alertService.success(
-              this.translate.instant('message.accountTypeDeleted')
-            );
-            const index: number = this.accounts.indexOf(accountType);
-            if (index !== -1) {
-              this.accounts.splice(index, 1);
-            }
-          });
-    }
-  }
-
   onShowEditMode(account: Account) {
     account.editMode = true;
     account.editedAccount = new Account();
@@ -140,12 +125,6 @@ export class AccountsComponent implements OnInit {
         break;
       }
       }
-  }
-
-  onShowAccountTypeEditMode(accountType: AccountType) {
-     accountType.editMode = true;
-     accountType.editedAccountType = new AccountType();
-     accountType.editedAccountType.name = accountType.name;
   }
 
   confirmAccountBalance(account: Account) {
@@ -181,25 +160,6 @@ export class AccountsComponent implements OnInit {
         });
   }
 
-  onAccountTypeEdit(accountType: AccountType) {
-      if (!this.validateAccountType(accountType.editedAccountType)) {
-        return;
-      }
-      const editedAccountType: AccountType = new AccountType();
-      editedAccountType.id = accountType.id;
-      editedAccountType.name = accountType.editedAccountType.name;
-
-
-      this.accountTypeService.editAccountType(editedAccountType)
-          .subscribe(() => {
-            this.alertService.success(
-              this.translate.instant('message.accountTypeEdited')
-            );
-            Object.assign(accountType, editedAccountType);
-            // TODO - get object from server
-          });
-    }
-
   onAddAccount() {
     if (!this.validateAddingAccount(this.newAccount)) {
       return;
@@ -220,30 +180,11 @@ export class AccountsComponent implements OnInit {
         });
   }
 
-  onAddAccountType() {
-      if (!this.validateAddingAccountType(this.newAccountType)) {
-        return;
-      }
-
-      this.accountTypeService.addAccountType(this.newAccountType)
-          .subscribe(id => {
-            this.alertService.success(this.translate.instant('message.accountTypeAdded'));
-            this.newAccountType.id = id;
-            this.accountType.push(this.newAccountType);
-            this.addingMode = false;
-            this.newAccountType = new AccountType();
-          });
-    }
-
   onRefreshAccounts() {
     this.getAccounts();
     this.getCurrencies(); // TODO - call in parallel
     this.getAccountTypes(); // TODO - call in parallel
   }
-
-  onRefreshAccountType() {
-      this.getAccountTypes(); // TODO - call in parallel
-    }
 
   validateAccount(account: Account): boolean {
     if (
@@ -298,34 +239,6 @@ export class AccountsComponent implements OnInit {
     return true;
   }
 
-
-  validateAccountType(accountType: AccountType): boolean {
-      if (
-        (accountType.name == null || accountType.name.trim() === '')
-      ) {
-        // TODO change validation to validate all at once, not break on error
-        this.alertService.error(
-          this.translate.instant('message.accountTypeNameEmpty')
-        );
-        return false;
-      }
-      if (accountType.name == null || accountType.name === '') {
-        this.alertService.error(
-          this.translate.instant('message.accountTypeNameEmpty')
-        );
-        return false;
-      }
-      if (accountType.name.length > 100) {
-        this.alertService.error(
-          this.translate.instant('message.accountTypeNameTooLong')
-        );
-        return false;
-      }
-      return true;
-    }
-
-
-
   validateAddingAccount(accountToValidate: Account): boolean {
     if (!this.validateAccount(accountToValidate)) {
       return false;
@@ -344,25 +257,6 @@ export class AccountsComponent implements OnInit {
     }
     return true;
   }
-
-  validateAddingAccountType(accountTypeToValidate: AccountType): boolean {
-      if (!this.validateAccountType(accountTypeToValidate)) {
-        return false;
-      }
-      if (
-        this.accounts.filter(
-          accountType =>
-            accountType.name.toLocaleLowerCase() ===
-            accountTypeToValidate.name.toLocaleLowerCase()
-        ).length > 0
-      ) {
-        this.alertService.error(
-          this.translate.instant('message.accountTypeNameExists')
-        );
-        return false;
-      }
-      return true;
-    }
 
   allAccountsBalance() {
     let sum = 0;

@@ -1,6 +1,7 @@
 package com.pfm.export;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.IMPORT_NOT_POSSIBLE;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -338,6 +339,41 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         // then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", is(String.format(getMessage(ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST), japaneaseAccount.getCurrency()))));
+  }
+
+  @Test
+  public void shouldReturnErrorWhenNotSupportedAccountTypeWasProvided() throws Exception {
+    // given
+    ExportResult input = new ExportResult();
+    input.setCategories(Arrays.asList(
+        ExportCategory.builder()
+            .name(categoryHome().getName())
+            .build(),
+        ExportCategory.builder()
+            .name(categoryFood().getName())
+            .parentCategoryName(categoryHome().getName())
+            .build()
+        )
+    );
+
+    ExportAccount japaneaseAccount = ExportAccount.builder()
+        .name("Japanese Bank")
+        .balance(BigDecimal.TEN)
+        .currency("PLN")
+        .accountType("Inherited")
+        .build();
+
+    input.setInitialAccountsState(Collections.singletonList(japaneaseAccount));
+
+    // when
+    mockMvc.perform(post(IMPORT_SERVICE_PATH)
+        .header("Authorization", token)
+        .content(json(input))
+        .contentType(JSON_CONTENT_TYPE))
+
+        // then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", is(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), japaneaseAccount.getCurrency()))));
   }
 
   @Test

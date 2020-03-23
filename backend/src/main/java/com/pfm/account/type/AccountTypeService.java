@@ -22,10 +22,6 @@ public class AccountTypeService {
     return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
   }
 
-  public Optional<AccountType> getAccountTypeIdAndUserId(long accountTypeId, long userId) {
-    return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
-  }
-
   public AccountType getAccountTypeByIdAndUserId(long accountTypeId, long userId) {
     Optional<AccountType> accountTypeOptional = accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
     if (!accountTypeOptional.isPresent()) {
@@ -38,32 +34,6 @@ public class AccountTypeService {
     return accountTypeRepository.findByUserId(userId).stream()
         .sorted(Comparator.comparing(AccountType::getName))
         .collect(Collectors.toList());
-  }
-
-  public AccountType saveAccountType(long userId, AccountType accountType) {
-    accountType.setUserId(userId);
-    return accountTypeRepository.save(accountType);
-  }
-
-  public void updateAccountType(long accountTypeId, long userId, AccountType accountType) {
-    Optional<AccountType> accountTypeFromDb = Optional.ofNullable(getAccountTypeByIdAndUserId(accountTypeId, userId));
-
-    if (!accountTypeFromDb.isPresent()) {
-      throw new IllegalStateException("Account Type with id: " + accountTypeId + " does not exist in database");
-    }
-
-    AccountType accountTypeToUpdate = accountTypeFromDb.get();
-    accountTypeToUpdate.setName(accountType.getName());
-
-    accountTypeRepository.save(accountTypeToUpdate);
-  }
-
-  public void deleteAccountType(long accountTypeId) {
-    accountTypeRepository.deleteById(accountTypeId);
-  }
-
-  public boolean isAccountTypeNameAlreadyUsed(long userId, String name) {
-    return accountTypeRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
   public void addDefaultAccountTypes(long userId) {
