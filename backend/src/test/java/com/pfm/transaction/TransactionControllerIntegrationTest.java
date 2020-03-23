@@ -84,6 +84,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -108,6 +109,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -137,6 +139,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -164,10 +167,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -206,6 +213,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -225,6 +233,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -244,6 +253,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -386,6 +396,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -409,6 +420,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -438,6 +450,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -469,10 +482,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -506,6 +523,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     final long notExistingPlannedTransactionId = 790;
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -593,10 +611,12 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
     long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -628,10 +648,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -663,6 +687,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -713,6 +738,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -751,6 +777,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -966,10 +993,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -1015,10 +1046,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(0));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long mbankAccountId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -1052,6 +1087,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -1096,6 +1132,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     final String descriptionUpdate = "Fuel";
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -1136,6 +1174,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
@@ -1170,6 +1209,8 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
@@ -1203,9 +1244,13 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccount() throws Exception {
     //given
     Account account = accountJacekBalance1000();
-    Account updatedAccount = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
+    Account updatedAccount = accountMbankBalance10();
     updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setType(accountTypeService.getAccountTypes(userId).get(0));
+
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);
@@ -1237,9 +1282,12 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccounts() throws Exception {
     //given
     Account account = accountJacekBalance1000();
-    Account updatedAccount = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
+    Account updatedAccount = accountMbankBalance10();
     updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
+    updatedAccount.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);

@@ -158,7 +158,7 @@ test {
 
 cpdCheck {
     source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
-    minimumTokenCount = 70
+    minimumTokenCount = 85
 }
 
 gitProperties {

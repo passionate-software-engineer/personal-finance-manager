@@ -79,6 +79,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -370,6 +371,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
             .name(accountMbankBalance10().getName())
             .balance(accountMbankBalance10().getBalance())
             .currency(accountMbankBalance10().getCurrency().getName())
+            .accountType(accountMbankBalance10().getType().getName())
             .build()
         )
     );
@@ -436,6 +438,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
+
     final LocalDateTime currentDate = LocalDateTime.now();
     String userMarianToken = token;
 

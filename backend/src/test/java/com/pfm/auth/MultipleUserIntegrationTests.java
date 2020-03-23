@@ -65,6 +65,8 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
+
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
     //when
@@ -171,6 +173,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     final long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
@@ -203,6 +206,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
@@ -261,13 +265,14 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateAccount() throws Exception {
     //given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
-    String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
+    final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
-    String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
+    final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
+    account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 

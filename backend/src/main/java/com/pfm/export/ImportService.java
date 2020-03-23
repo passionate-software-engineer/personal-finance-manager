@@ -1,10 +1,13 @@
 package com.pfm.export;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.account.type.AccountType;
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserProvider;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
@@ -47,6 +50,7 @@ public class ImportService {
   private AccountService accountService;
   private CategoryService categoryService;
   private CurrencyService currencyService;
+  private AccountTypeService accountTypeService;
   private FilterService filterService;
   private HistoryEntryRepository historyEntryRepository;
   private UserProvider userProvider;
@@ -122,11 +126,15 @@ public class ImportService {
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
     List<Currency> currencies = currencyService.getCurrencies(userId); // ENHANCEMENT can be replaced with HashMap
+    List<AccountType> accountTypes = accountTypeService.getAccountTypes(userId); // ENHANCEMENT can be replaced with HashMap
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {
       if (account.getCurrency() == null) { // backward compatibility - set default currency
         account.setCurrency("PLN");
+      }
+      if (account.getAccountType() == null) { // backward compatibility - set default type
+        account.setAccountType("Personal");
       }
 
       Optional<Currency> currencyOptional = currencies.stream().filter(currency -> currency.getName().equals(account.getCurrency())).findAny();
@@ -135,10 +143,17 @@ public class ImportService {
         throw new ImportFailedException(String.format(getMessage(ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST), account.getCurrency()));
       }
 
+      Optional<AccountType> accountTypeOptional = accountTypes.stream().filter(type -> type.getName().equals(account.getAccountType())).findAny();
+
+      if (accountTypeOptional.isEmpty()) {
+        throw new ImportFailedException(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), account.getCurrency()));
+      }
+
       Account accountToSave = Account.builder()
           .name(account.getName())
           .balance(account.getBalance())
           .currency(currencyOptional.get())
+          .type(accountTypeOptional.get())
           .lastVerificationDate(account.getLastVerificationDate())
           .archived(account.isArchived())
           .build();

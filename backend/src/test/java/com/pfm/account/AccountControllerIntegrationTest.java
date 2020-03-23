@@ -404,7 +404,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     Account jacekAccount = accountJacekBalance1000();
     jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
-    account.setType(accountTypeService.getAccountTypes(userId).get(1));
+    jacekAccount.setType(accountTypeService.getAccountTypes(userId).get(1));
     long accountJacekId = callRestServiceToAddAccountAndReturnId(jacekAccount, token);
 
     AccountRequest updatedAccount = AccountRequest.builder()
