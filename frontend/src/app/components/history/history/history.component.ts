@@ -8,7 +8,7 @@ import {HistoryAccountPriceEntry} from '../historyInfo';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  styleUrls: ['./history.component.scss']
 })
 
 export class HistoryComponent extends Sortable implements OnInit {

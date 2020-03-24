@@ -16,7 +16,7 @@ const minAccountBalance = Number.MIN_SAFE_INTEGER;
 @Component({
   selector: 'app-accounts-list',
   templateUrl: './accounts.component.html',
-  styleUrls: ['./accounts.component.css']
+  styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent implements OnInit {
   supportedCurrencies: Currency[];

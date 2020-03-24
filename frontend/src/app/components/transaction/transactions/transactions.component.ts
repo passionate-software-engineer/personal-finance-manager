@@ -25,7 +25,7 @@ interface TransactionsByType {
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.css']
+  styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent extends FiltersComponentBase implements OnInit {
 
