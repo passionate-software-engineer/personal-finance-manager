@@ -28,7 +28,7 @@ public class UpdateAccountTest extends InvoicePerformanceTestBase {
           .body(convertAccountToAccountRequest(account))
           .header("Authorization", token)
           .when()
-          .put(invoiceServicePath(account.getId()))
+          .put(accountServicePath(account.getId()))
           .statusCode();
 
       // TODO - it has no effect - exception will be ignored by executor - need to add custom uncaught exception handler

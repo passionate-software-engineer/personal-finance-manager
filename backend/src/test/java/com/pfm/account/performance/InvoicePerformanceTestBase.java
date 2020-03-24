@@ -63,7 +63,7 @@ public abstract class InvoicePerformanceTestBase {
     return given()
         .when()
         .header("Authorization", token)
-        .get(invoiceServicePath())
+        .get(accountServicePath())
         .getBody()
         .as(Account[].class);
   }
@@ -76,11 +76,11 @@ public abstract class InvoicePerformanceTestBase {
     return UUID.randomUUID().toString();
   }
 
-  String invoiceServicePath(long id) {
-    return invoiceServicePath() + "/" + id;
+  String accountServicePath(long id) {
+    return accountServicePath() + "/" + id;
   }
 
-  private String invoiceServicePath() {
+  private String accountServicePath() {
     return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
@@ -143,7 +143,7 @@ public abstract class InvoicePerformanceTestBase {
         .header("Authorization", token)
         .body(accountRequest)
         .when()
-        .post(invoiceServicePath())
+        .post(accountServicePath())
         .getBody()
         .asString();
 
@@ -152,7 +152,7 @@ public abstract class InvoicePerformanceTestBase {
     return given()
         .header("Authorization", token)
         .when()
-        .get(invoiceServicePath() + "/" + accountId)
+        .get(accountServicePath() + "/" + accountId)
         .getBody()
         .as(Account.class);
   }
@@ -173,7 +173,7 @@ public abstract class InvoicePerformanceTestBase {
       given()
           .when()
           .header("Authorization", token)
-          .delete(invoiceServicePath(account.getId()));
+          .delete(accountServicePath(account.getId()));
     }
 
     assertThat(getAccounts().length, is(0));
