@@ -271,11 +271,20 @@
 
       <!--Category-->
       <td>
-        <ng-select [items]="categories"
-                   bindLabel="name"
-                   [(ngModel)]="newTransaction.category"
-                   id="newTransactionCategorySelect">
-        </ng-select>
+        <select [(ngModel)]="newTransaction.category"
+                class="form-control"
+                id="newTransactionCategorySelect">
+          <option *ngFor="let category of categories"
+                  [ngValue]="category">
+            {{category.name}}
+          </option>
+        </select>
+
+<!--        <ng-select [items]="categories"-->
+<!--                   bindLabel="name"-->
+<!--                   [(ngModel)]="newTransaction.category"-->
+<!--                   id="newTransactionCategorySelect">-->
+<!--        </ng-select>-->
       </td>
 
       <td id="EditAccountSaveExitBtn">
@@ -396,12 +405,21 @@
             id="CategoryReadOnly">
           {{transaction.category.name}}
         </td>
-        <td *ngIf="transaction.editMode">
-          <ng-select [items]="categories"
-                     bindLabel="name"
-                     [(ngModel)]="transaction.editedTransaction.category"
-                     id="EditTransactionCategorySelect">
-          </ng-select>
+        <td *ngIf="transaction.editMode"
+            id="EditTransactionCategorySelect">
+          <select [(ngModel)]="transaction.editedTransaction.category"
+                  class="form-control">
+            <option *ngFor="let category of categories"
+                    [ngValue]="category">
+              {{category.name}}
+            </option>
+          </select>
+
+<!--          <ng-select [items]="categories"-->
+<!--                     bindLabel="name"-->
+<!--                     [(ngModel)]="transaction.editedTransaction.category"-->
+<!--                     id="EditTransactionCategorySelect">-->
+<!--          </ng-select>-->
         </td>
 
         <td *ngIf="transaction.editMode">

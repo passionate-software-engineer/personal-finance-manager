@@ -281,6 +281,7 @@ export class AccountsPage {
 
     this.newAccountName().sendKeys(name);
     this.newAccountType().sendKeys(accountType);
+    this.newAccountBalance().clear();
     this.newAccountBalance().sendKeys(balance);
     this.newAccountCurrency().sendKeys(currency);
 
