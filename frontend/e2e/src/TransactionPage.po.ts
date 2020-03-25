@@ -138,9 +138,12 @@ export class TransactionAndFilterPage {
     this.newTransactionDateInput().clear();
     this.newTransactionDateInput().sendKeys(date);
     this.newTransactionDescriptionInput().sendKeys(description);
+
+    this.newTransactionPriceInput().get(0).clear();
     this.newTransactionPriceInput().get(0).sendKeys(priceOne);
 
     if (priceTwo !== null) {
+      this.newTransactionPriceInput().get(1).clear();
       this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
     }
 
