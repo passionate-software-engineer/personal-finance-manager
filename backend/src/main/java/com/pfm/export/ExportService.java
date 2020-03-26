@@ -201,6 +201,7 @@ public class ExportService {
             .name(account.getName())
             .balance(account.getBalance())
             .currency(account.getCurrency().getName())
+            .accountType(account.getType().getName())
             .lastVerificationDate(account.getLastVerificationDate())
             .archived(account.isArchived())
             .build()
@@ -214,6 +215,7 @@ public class ExportService {
             .balance(account.getBalance())
             .name(account.getName())
             .currency(account.getCurrency())
+            .accountType(account.getAccountType())
             .lastVerificationDate(account.getLastVerificationDate())
             .archived(account.isArchived())
             .build()
@@ -226,12 +228,12 @@ public class ExportService {
   }
 
   private ExportFundsSummary calculateSumOfFunds(List<ExportAccount> accounts, long userId) {
-    List<Currency> currencies = currencyService.getCurrencies(userId);
+    Map<String, Currency> currencies = currencyService.getCurrencies(userId).stream()
+        .collect(Collectors.toMap(Currency::getName, currency -> currency));
 
-    // TODO change to stream
     Map<String, BigDecimal> currencyToExchangeRate = new HashMap<>();
     Map<String, BigDecimal> currencyToBalanceMap = new HashMap<>();
-    for (Currency currency : currencies) {
+    for (Currency currency : currencies.values()) {
       currencyToExchangeRate.put(currency.getName(), currency.getExchangeRate());
       currencyToBalanceMap.put(currency.getName(), BigDecimal.ZERO);
     }
