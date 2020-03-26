@@ -255,6 +255,7 @@ export class AccountsPage {
     this.addAccountButton().click();
 
     this.newAccountName().sendKeys(name);
+    this.newAccountBalance().clear();
     this.newAccountBalance().sendKeys(balance);
 
     this.newAccountSaveButton().click();
@@ -267,6 +268,7 @@ export class AccountsPage {
    this.addAccountButton().click();
 
    this.newAccountName().sendKeys(name);
+   this.newAccountBalance().clear();
    this.newAccountBalance().sendKeys(balance);
    this.newAccountCurrency().sendKeys(currency);
 
