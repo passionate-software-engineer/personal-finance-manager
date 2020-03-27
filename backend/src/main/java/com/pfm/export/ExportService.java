@@ -228,12 +228,11 @@ public class ExportService {
   }
 
   private ExportFundsSummary calculateSumOfFunds(List<ExportAccount> accounts, long userId) {
-    Map<String, Currency> currencies = currencyService.getCurrencies(userId).stream()
-        .collect(Collectors.toMap(Currency::getName, currency -> currency));
+    List<Currency> currencies = currencyService.getCurrencies(userId);
 
     Map<String, BigDecimal> currencyToExchangeRate = new HashMap<>();
     Map<String, BigDecimal> currencyToBalanceMap = new HashMap<>();
-    for (Currency currency : currencies.values()) {
+    for (Currency currency : currencies) {
       currencyToExchangeRate.put(currency.getName(), currency.getExchangeRate());
       currencyToBalanceMap.put(currency.getName(), BigDecimal.ZERO);
     }
