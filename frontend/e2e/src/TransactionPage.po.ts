@@ -135,8 +135,10 @@ export class TransactionAndFilterPage {
   addTransaction(date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
     this.navigateTo();
     this.addTransactionButton().click();
+
     this.newTransactionDateInput().clear();
     this.newTransactionDateInput().sendKeys(date);
+
     this.newTransactionDescriptionInput().sendKeys(description);
 
     this.newTransactionPriceInput().get(0).clear();
