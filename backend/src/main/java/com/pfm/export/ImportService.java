@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -125,8 +124,11 @@ public class ImportService {
   }
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
-    List<Currency> currencies = currencyService.getCurrencies(userId); // TODO can be replaced with HashMap
-    List<AccountType> accountTypes = accountTypeService.getAccountTypes(userId); // TODO can be replaced with HashMap
+    Map<String, Currency> currencyMap = currencyService.getCurrencies(userId).stream()
+        .collect(Collectors.toMap(Currency::getName, currency -> currency));
+
+    Map<String, AccountType> accountTypeMap = accountTypeService.getAccountTypes(userId).stream()
+        .collect(Collectors.toMap(AccountType::getName, accountType -> accountType));
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {
@@ -137,23 +139,23 @@ public class ImportService {
         account.setAccountType("Personal");
       }
 
-      Optional<Currency> currencyOptional = currencies.stream().filter(currency -> currency.getName().equals(account.getCurrency())).findAny();
+      Currency currency = currencyMap.get(account.getCurrency());
 
-      if (currencyOptional.isEmpty()) {
+      if (currency == null) {
         throw new ImportFailedException(String.format(getMessage(ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST), account.getCurrency()));
       }
 
-      Optional<AccountType> accountTypeOptional = accountTypes.stream().filter(type -> type.getName().equals(account.getAccountType())).findAny();
+      AccountType accountType = accountTypeMap.get(account.getAccountType());
 
-      if (accountTypeOptional.isEmpty()) {
+      if (accountType == null) {
         throw new ImportFailedException(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), account.getCurrency()));
       }
 
       Account accountToSave = Account.builder()
           .name(account.getName())
           .balance(account.getBalance())
-          .currency(currencyOptional.get())
-          .type(accountTypeOptional.get())
+          .currency(currency)
+          .type(accountType)
           .lastVerificationDate(account.getLastVerificationDate())
           .archived(account.isArchived())
           .build();
