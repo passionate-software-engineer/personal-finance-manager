@@ -272,7 +272,6 @@ export class AccountsPage {
    this.newAccountBalance().clear();
    this.newAccountBalance().sendKeys(balance);
 
-   this.newAccountCurrency().clear();
    this.newAccountCurrency().sendKeys(currency);
 
    this.newAccountSaveButton().click();
