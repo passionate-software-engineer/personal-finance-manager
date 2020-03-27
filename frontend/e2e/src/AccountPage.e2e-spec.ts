@@ -299,7 +299,7 @@ describe('Accounts page tests', () => {
 
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('09/01/2020', 'petrol', "-250.56", null, 'ING', null, 'Oil');
+    transactionPage.addTransaction('09/01/2020', 'petrol', '-250.56', null, 'ING', null, 'Oil');
     expect(transactionPage.transactionRows().count()).toEqual(1);
     transactionPage.assertPrices('-250.56 PLN', null);
 
