@@ -301,7 +301,7 @@ describe('Accounts page tests', () => {
     transactionPage.navigateTo();
     transactionPage.addTransaction('09/01/2020', 'petrol', '-250', null, 'ING', null, 'Oil');
     expect(transactionPage.transactionRows().count()).toEqual(1);
-    transactionPage.assertPrices('-250 PLN', null);
+    transactionPage.assertPrices('-250.00 PLN', null);
 
     // then
     accountPage.navigateTo();
@@ -333,7 +333,7 @@ describe('Accounts page tests', () => {
     transactionPage.navigateTo();
     transactionPage.addTransaction('09/01/2020', 'petrol', '-32', null, 'PKO', null, 'Oil');
     expect(transactionPage.transactionRows().count()).toEqual(1);
-    transactionPage.assertPrices('-32.75 EUR (-138.86 PLN)', null);
+    transactionPage.assertPrices('-32.00 EUR (-135.68 PLN)', null);
 
     // then
     accountPage.navigateTo();
