@@ -143,7 +143,7 @@ export class TransactionAndFilterPage {
 
     this.newTransactionPriceInput().get(0).clear();
     this.newTransactionPriceInput().get(0).sendKeys(priceOne);
-    if(!this.newTransactionPriceInput().get(0).getText() == priceOne){
+    if (!this.newTransactionPriceInput().get(0).getText() === priceOne) {
       this.newTransactionPriceInput().get(0).sendKeys(priceOne);
     }
     expect(this.newTransactionPriceInput().get(1).getText()).toEqual(priceTwo);
