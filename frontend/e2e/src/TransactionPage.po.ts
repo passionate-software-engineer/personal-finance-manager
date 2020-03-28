@@ -143,10 +143,12 @@ export class TransactionAndFilterPage {
 
     this.newTransactionPriceInput().get(0).clear();
     this.newTransactionPriceInput().get(0).sendKeys(priceOne);
+    expect(this.newTransactionPriceInput().get(0)).toEqual(priceOne);
 
     if (priceTwo !== null) {
       this.newTransactionPriceInput().get(1).clear();
       this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
+      expect(this.newTransactionPriceInput().get(1)).toEqual(priceTwo);
     }
 
     this.newTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
