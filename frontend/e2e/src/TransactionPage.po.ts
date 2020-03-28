@@ -146,7 +146,7 @@ export class TransactionAndFilterPage {
     if (!this.newTransactionPriceInput().get(0).getText() === priceOne) {
       this.newTransactionPriceInput().get(0).sendKeys(priceOne);
     }
-    expect(this.newTransactionPriceInput().get(1).getText()).toEqual(priceTwo);
+    expect(this.newTransactionPriceInput().get(0).getText()).toEqual(priceTwo);
 
     if (priceTwo !== null) {
       this.newTransactionPriceInput().get(1).clear();
