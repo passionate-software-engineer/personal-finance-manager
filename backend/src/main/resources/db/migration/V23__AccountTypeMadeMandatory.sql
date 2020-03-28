@@ -1,0 +1,2 @@
+ALTER TABLE account
+  ALTER COLUMN type_id SET NOT NULL;

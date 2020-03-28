@@ -9,9 +9,9 @@ import org.flywaydb.core.api.migration.Context;
 // TODO remove after fixing https://github.com/spotbugs/spotbugs/issues/756
 @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
 @SuppressWarnings("checkstyle:typename")
-public class V11__AddCurrenciesForAllUsers extends BaseJavaMigration {
+public class V22__AddAccountTypesForAllUsers extends BaseJavaMigration {
 
-  // Support for currencies was added, need to assign default values for each account
+  // Support for accountTypes was added, need to assign default values for each account
   @Override
   public void migrate(Context context) throws Exception {
 
@@ -21,22 +21,22 @@ public class V11__AddCurrenciesForAllUsers extends BaseJavaMigration {
           int userId = usersRows.getInt(1);
 
           try (Statement insert = context.getConnection().createStatement()) {
-            insert.execute("INSERT INTO currency (name, exchange_rate, user_id) VALUES "
-                + "('PLN', 1.00, " + userId + "), "
-                + "('USD', 3.58, " + userId + "), "
-                + "('EUR', 4.24, " + userId + "), "
-                + "('GBP', 4.99, " + userId + ")"
+            insert.execute("INSERT INTO account_type (name, user_id) VALUES "
+                + "('Personal', " + userId + "), "
+                + "('Investment', " + userId + "), "
+                + "('Saving', " + userId + "), "
+                + "('Credit', " + userId + ")"
             );
           }
 
-          try (Statement getPlnIdSelect = context.getConnection().createStatement()) {
-            try (ResultSet getPlnIdSelectRows = getPlnIdSelect
-                .executeQuery("SELECT id FROM currency WHERE user_id = " + userId + "AND name = 'PLN'")) {
-              while (getPlnIdSelectRows.next()) {
-                int defaultCurrencyId = getPlnIdSelectRows.getInt(1);
+          try (Statement getPersonalIdSelect = context.getConnection().createStatement()) {
+            try (ResultSet getPersonalIdSelectRows = getPersonalIdSelect
+                .executeQuery("SELECT id FROM account_type WHERE user_id = " + userId + "AND name = 'Personal'")) {
+              while (getPersonalIdSelectRows.next()) {
+                int defaultAccountTypeId = getPersonalIdSelectRows.getInt(1);
 
                 try (Statement update = context.getConnection().createStatement()) {
-                  update.execute("UPDATE account SET currency_id = " + defaultCurrencyId + " WHERE user_id = " + userId);
+                  update.execute("UPDATE account SET type_id = " + defaultAccountTypeId + " WHERE user_id = " + userId);
                 }
               }
             }

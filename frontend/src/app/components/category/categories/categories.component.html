@@ -207,7 +207,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let category of categories | orderBy: sortableSummaryTable.order:sortableSummaryTable.reverse:'case-insensitive'">
-      <td> {{category.name}} </td>
+      <td> {{category.name}}</td>
       <td *ngFor="let monthSum of category.sumOfAllTransactionsInMonth">
         {{ monthSum | number:'0.2' }}
       </td>
@@ -224,7 +224,8 @@
         {{income | number:'0.2'}}
       </td>
       <td>
-        {{ incomeBalanceOfAllTransactions | number:'0.2' }}</td>
+        {{ incomeBalanceOfAllTransactions | number:'0.2' }}
+      </td>
       <td>
         {{ incomeBalanceOfAllTransactions / last12Months.length | number:'0.2' }}
       </td>
@@ -276,7 +277,8 @@
         (ngModelChange)="monthChanged($event)"
         name="selectedMonth">
   <option *ngFor="let month of last12Months"
-          [ngValue]="month">{{month | date:'MMMM yyyy'}}</option>
+          [ngValue]="month">{{month | date:'MMMM yyyy'}}
+  </option>
 </select>
 
 <select [(ngModel)]="costs"
@@ -300,7 +302,8 @@
         (ngModelChange)="categoryChanged($event)"
         name="selectedCategory">
   <option *ngFor="let category of categories"
-          [ngValue]="category.id">{{category.name}}</option>
+          [ngValue]="category.id">{{category.name}}
+  </option>
 </select>
 
 <google-chart #chartByCategory

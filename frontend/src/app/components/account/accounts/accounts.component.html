@@ -31,6 +31,14 @@
         <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
+      <th id="AccountTypeHeader"
+          [class.active]="sortableAccountsTable.order === 'type.name'"
+          (click)="sortableAccountsTable.setOrder('type.name')">
+        {{ "account.accountType" | translate }}
+        <span [hidden]="sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="!sortableAccountsTable.reverse">▲</span>
+      </th>
+
       <!--Balance-->
       <th id="BalanceHeader"
           [class.active]="sortableAccountsTable.order === 'balance'"
@@ -79,6 +87,18 @@
                [(ngModel)]="newAccount.name"/>
       </td>
 
+      <!-- Account Type -->
+      <td>
+        <select id="NewAccountTypeSelect"
+                class="form-control"
+                [(ngModel)]="newAccount.type">
+          <option *ngFor="let accountType of supportedAccountTypes"
+                  [ngValue]="accountType">
+            {{ accountType.name }}
+          </option>
+        </select>
+      </td>
+
       <!--Balance-->
       <td>
         <input id="NewAccountBalanceInput"
@@ -122,6 +142,7 @@
         </button>
       </td>
     </tr>
+
     <ng-container
       *ngFor="let account of (accounts | orderBy: sortableAccountsTable.order:sortableAccountsTable.reverse:'case-insensitive')">
       <tr [ngClass]="{'font-italic':account.archived}"
@@ -137,6 +158,22 @@
         <td id="NameReadOnly"
             *ngIf="!account.editMode">
           {{ account.name}}
+        </td>
+
+        <!-- AccountType -->
+        <td *ngIf="account.editMode">
+          <select id="EditAccountTypeSelect"
+                  class="form-control"
+                  [(ngModel)]="account.editedAccount.type">
+            <option *ngFor="let accountType of supportedAccountTypes"
+                    [ngValue]="accountType">
+              {{ accountType.name }}
+            </option>
+          </select>
+        </td>
+
+        <td *ngIf="!account.editMode">
+          {{ account.type.name }}
         </td>
 
         <!--Balance-->
@@ -170,7 +207,7 @@
         <!-- Balance PLN -->
         <td *ngIf="account.editMode">
           {{ account.editedAccount.balance
-        * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
+          * account.editedAccount.currency.exchangeRate | number: "0.2-2" }}
         </td>
 
         <td id="Balance_PLN"
@@ -256,6 +293,9 @@
       <!-- Name -->
       <td></td>
 
+      <!-- AccountType -->
+      <td></td>
+
       <!-- Currency -->
       <td></td>
 
@@ -322,19 +362,23 @@
   <tbody>
     <tr
       *ngFor="let currency of (supportedCurrencies | orderBy: sortableCurrencyTable.order:sortableCurrencyTable.reverse:'case-insensitive')">
-      <td  id="CurrencyName{{currency.name}}" class="tdBoxCurrencies">
+      <td id="CurrencyName{{currency.name}}"
+          class="tdBoxCurrencies">
         {{ currency.name }}
       </td>
 
-      <td id="CurrencyBalance{{currency.name}}"class="tdBoxCurrencies">
+      <td id="CurrencyBalance{{currency.name}}"
+          class="tdBoxCurrencies">
         {{ currency.allAccountsBalance | number: "0.2-2" }}
       </td>
 
-      <td id="CurrencyExchangeRate{{currency.name}}"class="tdBoxCurrencies">
+      <td id="CurrencyExchangeRate{{currency.name}}"
+          class="tdBoxCurrencies">
         {{ currency.exchangeRate }}
       </td>
 
-      <td id="CurrencyBalanceOf{{currency.name}}"class="tdBoxCurrencies">
+      <td id="CurrencyBalanceOf{{currency.name}}"
+          class="tdBoxCurrencies">
         {{ currency.allAccountsBalancePLN | number: "0.2-2" }}
       </td>
     </tr>
@@ -352,6 +396,61 @@
           class="tdBoxCurrencies">
         {{ allAccountsBalance() | number: "0.2-2" }}
       </td>
+
     </tr>
+  </tbody>
+</table>
+
+<!-- Summary by AccountType  -->
+
+<table id="boxAccountType"
+       class="table table-bordered table-striped table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th class="thBoxAccountType"
+          [class.active]="sortableAccountTypeTable.order === 'name'"
+          (click)="sortableAccountTypeTable.setOrder('name')">
+        {{ "account.accountType" | translate }}
+        <span [hidden]="sortableAccountTypeTable.reverse">▼</span>
+        <span [hidden]="!sortableAccountTypeTable.reverse">▲</span>
+      </th>
+
+
+      <th class="thBoxAccountType"
+          [class.active]="sortableAccountTypeTable.order === 'allAccountsBalancePLN'"
+          (click)="sortableAccountTypeTable.setOrder('allAccountsBalancePLN')">
+        {{ "account.balancePLN" | translate }}
+        <span [hidden]="sortableAccountTypeTable.reverse">▼</span>
+        <span [hidden]="!sortableAccountTypeTable.reverse">▲</span>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr
+      *ngFor="let accountType of (supportedAccountTypes | orderBy: sortableAccountTypeTable.order:sortableAccountTypeTable.reverse:'case-insensitive')">
+      <td id="AccountTypeName{{accountType.name}}"
+          class="tdBoxAccountType">
+        {{ accountType.name }}
+      </td>
+
+      <td
+        id="AccountTypeBalanceOf{{accountType.name}}"
+          class="tdBoxAccountType">
+        {{ accountType.allAccountsTypeBalancePLN | number: "0.2-2" }}
+      </td>
+    </tr>
+
+    <tr>
+      <td class="tdBoxAccountType">
+        {{ "account.total" | translate }}
+      </td>
+
+      <td id="BalanceOfAllAccountsTypeSummary"
+          class="tdBoxCurrencies">
+        {{ allAccountsBalance() | number: "0.2-2" }}
+      </td>
+
+      </tr>
   </tbody>
 </table>

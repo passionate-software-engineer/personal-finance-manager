@@ -1,10 +1,13 @@
 package com.pfm.export;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.account.type.AccountType;
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserProvider;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
@@ -30,7 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -47,6 +49,7 @@ public class ImportService {
   private AccountService accountService;
   private CategoryService categoryService;
   private CurrencyService currencyService;
+  private AccountTypeService accountTypeService;
   private FilterService filterService;
   private HistoryEntryRepository historyEntryRepository;
   private UserProvider userProvider;
@@ -95,7 +98,7 @@ public class ImportService {
     }
   }
 
-  // ENHANCEMENT add checking account state during import based on period start and end balances & overall account states
+  // TODO add checking account state during import based on period start and end balances & overall account states
   private void importTransaction(Map<String, Long> categoryNameToIdMap, Map<String, Long> accountNameToIdMap, ExportTransaction transaction,
       long userId) {
     Transaction newTransaction = Transaction.builder()
@@ -121,24 +124,38 @@ public class ImportService {
   }
 
   private Map<String, Long> importAccountsAndMapAccountNamesToIds(@RequestBody ExportResult inputData, long userId) throws ImportFailedException {
-    List<Currency> currencies = currencyService.getCurrencies(userId); // ENHANCEMENT can be replaced with HashMap
+    Map<String, Currency> currencyMap = currencyService.getCurrencies(userId).stream()
+        .collect(Collectors.toMap(Currency::getName, currency -> currency));
+
+    Map<String, AccountType> accountTypeMap = accountTypeService.getAccountTypes(userId).stream()
+        .collect(Collectors.toMap(AccountType::getName, accountType -> accountType));
 
     Map<String, Long> accountNameToIdMap = new HashMap<>();
     for (ExportAccount account : inputData.getInitialAccountsState()) {
       if (account.getCurrency() == null) { // backward compatibility - set default currency
         account.setCurrency("PLN");
       }
+      if (account.getAccountType() == null) { // backward compatibility - set default type
+        account.setAccountType("Personal");
+      }
 
-      Optional<Currency> currencyOptional = currencies.stream().filter(currency -> currency.getName().equals(account.getCurrency())).findAny();
+      Currency currency = currencyMap.get(account.getCurrency());
 
-      if (currencyOptional.isEmpty()) {
+      if (currency == null) {
         throw new ImportFailedException(String.format(getMessage(ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST), account.getCurrency()));
+      }
+
+      AccountType accountType = accountTypeMap.get(account.getAccountType());
+
+      if (accountType == null) {
+        throw new ImportFailedException(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), account.getCurrency()));
       }
 
       Account accountToSave = Account.builder()
           .name(account.getName())
           .balance(account.getBalance())
-          .currency(currencyOptional.get())
+          .currency(currency)
+          .type(accountType)
           .lastVerificationDate(account.getLastVerificationDate())
           .archived(account.isArchived())
           .build();

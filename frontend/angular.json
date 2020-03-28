@@ -25,7 +25,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -155,5 +155,10 @@
   "defaultProject": "frontend",
   "cli": {
     "analytics": "fbe84e90-194d-4723-b826-b124761dbb42"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

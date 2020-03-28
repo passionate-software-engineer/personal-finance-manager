@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-import-export',
   templateUrl: './import-export.component.html',
-  styleUrls: ['./import-export.component.css']
+  styleUrls: ['./import-export.component.scss']
 })
 
 export class ImportExportComponent {

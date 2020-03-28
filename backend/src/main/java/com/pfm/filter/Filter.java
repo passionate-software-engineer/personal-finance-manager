@@ -39,14 +39,14 @@ public final class Filter {
   @ElementCollection
   @Column(name = "account_id")
   @HistoryField(fieldType = SpecialFieldType.ACCOUNT_IDS)
-  //ENHANCEMENT add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
+  //TODO add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> accountIds;
 
   @LazyCollection(LazyCollectionOption.FALSE)
   @ElementCollection
   @Column(name = "category_id")
   @HistoryField(fieldType = SpecialFieldType.CATEGORY_IDS)
-  //ENHANCEMENT descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
+  //TODO descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
   private List<Long> categoryIds;
 
   @ApiModelProperty(value = "Price from", example = "10")

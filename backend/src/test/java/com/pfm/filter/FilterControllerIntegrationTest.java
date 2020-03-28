@@ -68,6 +68,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
 
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
 
@@ -89,12 +90,13 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldGetFilterById() throws Exception {
     //given
-    long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
     FilterRequest carExpensesFilterToAdd = convertFilterToFilterRequest(filterCarExpenses());
     carExpensesFilterToAdd.setAccountIds(convertIdsToList(accountId));
@@ -118,10 +120,14 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     Account accountJacek = accountJacekBalance1000();
     accountJacek.setCurrency(currencyService.getCurrencies(userId).get(2));
-    long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek, token);
+    accountJacek.setType(accountTypeService.getAccountTypes(userId).get(2));
+
+    final long accountJacekId = callRestServiceToAddAccountAndReturnId(accountJacek, token);
 
     Account accountMbank = accountMbankBalance10();
     accountMbank.setCurrency(currencyService.getCurrencies(userId).get(2));
+    accountMbank.setType(accountTypeService.getAccountTypes(userId).get(2));
+
     long accountMbankId = callRestServiceToAddAccountAndReturnId(accountMbank, token);
 
     FilterRequest homeExpensesFilterToAdd = convertFilterToFilterRequest(
@@ -202,6 +208,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
+
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filter, token);
     FilterRequest filterCarExpensesToUpdate = FilterRequest.builder()
@@ -319,6 +327,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     //given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
 

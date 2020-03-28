@@ -23,7 +23,7 @@ public class DeleteAccountTest extends InvoicePerformanceTestBase {
           given()
               .when()
               .header("Authorization", token)
-              .delete(invoiceServicePath(account.getId()))
+              .delete(accountServicePath(account.getId()))
               .statusCode(),
           equalTo(200)
       );

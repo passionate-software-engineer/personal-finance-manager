@@ -1,6 +1,7 @@
 package com.pfm.export;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.IMPORT_NOT_POSSIBLE;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
@@ -79,6 +80,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -340,6 +342,41 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   }
 
   @Test
+  public void shouldReturnErrorWhenNotSupportedAccountTypeWasProvided() throws Exception {
+    // given
+    ExportResult input = new ExportResult();
+    input.setCategories(Arrays.asList(
+        ExportCategory.builder()
+            .name(categoryHome().getName())
+            .build(),
+        ExportCategory.builder()
+            .name(categoryFood().getName())
+            .parentCategoryName(categoryHome().getName())
+            .build()
+        )
+    );
+
+    ExportAccount japaneaseAccount = ExportAccount.builder()
+        .name("Japanese Bank")
+        .balance(BigDecimal.TEN)
+        .currency("PLN")
+        .accountType("Inherited")
+        .build();
+
+    input.setInitialAccountsState(Collections.singletonList(japaneaseAccount));
+
+    // when
+    mockMvc.perform(post(IMPORT_SERVICE_PATH)
+        .header("Authorization", token)
+        .content(json(input))
+        .contentType(JSON_CONTENT_TYPE))
+
+        // then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", is(String.format(getMessage(ACCOUNT_TYPE_NAME_DOES_NOT_EXIST), japaneaseAccount.getCurrency()))));
+  }
+
+  @Test
   public void shouldImportFilters() throws Exception {
     // given
     final ExportResult input = new ExportResult();
@@ -370,6 +407,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
             .name(accountMbankBalance10().getName())
             .balance(accountMbankBalance10().getBalance())
             .currency(accountMbankBalance10().getCurrency().getName())
+            .accountType(accountMbankBalance10().getType().getName())
             .build()
         )
     );
@@ -436,6 +474,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2)); // PLN
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
+
     final LocalDateTime currentDate = LocalDateTime.now();
     String userMarianToken = token;
 
@@ -488,6 +528,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("finalAccountsState[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("finalAccountsState[0].balance", is("1010.00")))
         .andExpect(jsonPath("finalAccountsState[0].currency", is("PLN")))
+        .andExpect(jsonPath("finalAccountsState[0].accountType", is("Personal")))
         .andExpect(jsonPath("categories", hasSize(2)))
         .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
         .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
@@ -508,10 +549,12 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].balance", is("1000.00")))
         .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].currency", is("PLN")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheBeginningOfPeriod[0].accountType", is("Personal")))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod", hasSize(1)))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].balance", is("1010.00")))
         .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].currency", is("PLN")))
+        .andExpect(jsonPath("periods[0].accountStateAtTheEndOfPeriod[0].accountType", is("Personal")))
         .andExpect(jsonPath("periods[0].transactions", hasSize(1)))
         .andExpect(jsonPath("periods[0].transactions[0].description", is(transactionToAddFood.getDescription())))
         .andExpect(jsonPath("periods[0].transactions[0].category", is(categoryFood().getName())))

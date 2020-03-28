@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.Token;
 import com.pfm.auth.Tokens;
 import com.pfm.auth.User;
@@ -64,6 +65,7 @@ public abstract class IntegrationTestsBase {
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String CURRENCIES_SERVICE_PATH = "/currencies";
+  protected static final String ACCOUNT_TYPE_SERVICE_PATH = "/accountTypes"; // TODO - add test for controller
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
   protected static final String COMMIT_OVERDUE = "/commitOverdue";
@@ -89,6 +91,9 @@ public abstract class IntegrationTestsBase {
 
   @Autowired
   protected CurrencyService currencyService;
+
+  @Autowired
+  protected AccountTypeService accountTypeService;
 
   @Autowired
   protected Flyway flyway;
@@ -123,6 +128,7 @@ public abstract class IntegrationTestsBase {
   protected AccountRequest convertAccountToAccountRequest(Account account) {
     return AccountRequest.builder()
         .name(account.getName())
+        .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
         .build();
@@ -331,6 +337,7 @@ public abstract class IntegrationTestsBase {
   protected long callRestToAddFirstTestTransactionAndReturnId() throws Exception {
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
@@ -342,6 +349,7 @@ public abstract class IntegrationTestsBase {
   protected long callRestToAddFirstTestPlannedTransactionAndReturnId() throws Exception {
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);

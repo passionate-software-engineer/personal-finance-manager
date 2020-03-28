@@ -2,7 +2,7 @@
         class="btn btn-primary"
         type="button"
         (click)="onRefreshHistory()">
-  {{'button.refresh' |  translate}}
+  {{'button.refresh' | translate}}
 </button>
 
 <table id="tableHistory"
@@ -52,7 +52,7 @@
       <td class="textcenter">{{historyEntry.date | date: "yyyy-MM-dd HH:mm"}}</td>
 
       <!-- Event -->
-      <td class="textcenter">{{historyEntry.type}} </td>
+      <td class="textcenter">{{historyEntry.type}}</td>
 
       <!-- Event object -->
       <td class="textcenter">{{historyEntry.object}}</td>
@@ -80,7 +80,8 @@
               <!-- 2 identical entries - display as single cell in 2 columns -->
               <td colspan="2"
                   *ngIf="entry.oldValue === entry.newValue && entry.name !== 'accountPriceEntries'"
-                  class="tableHistoryEntryOldValue">{{entry.oldValue}}</td>
+                  class="tableHistoryEntryOldValue">{{entry.oldValue}}
+              </td>
 
               <td colspan="2"
                   *ngIf="entry.oldValue === entry.newValue && entry.name === 'accountPriceEntries'"
@@ -96,7 +97,8 @@
               <!-- Only new entry - display as single cell in 2 columns -->
               <td colspan="2"
                   *ngIf="entry.newValue != null && entry.oldValue == null && entry.name !== 'accountPriceEntries'"
-                  class="textcenter">{{entry.newValue}}</td>
+                  class="textcenter">{{entry.newValue}}
+              </td>
 
               <td colspan="2"
                   *ngIf="entry.newValue != null && entry.oldValue == null && entry.name === 'accountPriceEntries'"

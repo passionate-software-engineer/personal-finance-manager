@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.3.3'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit' // excluding JUnit4
         exclude group: 'org.assertj' // to avoid confusion in imports (e.g. assertThat)
     }
 
@@ -92,10 +93,9 @@ spotbugs {
 
 spotbugsMain {
     reports {
-        html {
+        xml {
             enabled = true
-            destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
-            stylesheet = 'fancy-hist.xsl'
+            destination = file("$buildDir/reports/spotbugs/main/spotbugs.xml")
         }
     }
 }
@@ -159,7 +159,7 @@ test {
 
 cpdCheck {
     source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
-    minimumTokenCount = 70
+    minimumTokenCount = 85
 }
 
 gitProperties {

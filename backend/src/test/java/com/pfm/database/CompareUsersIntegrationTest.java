@@ -67,6 +67,8 @@ public class CompareUsersIntegrationTest extends IntegrationTestsBase {
 
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userMarianId).get(2)); // PLN
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
     String userMarianToken = token;
 
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, userMarianToken);

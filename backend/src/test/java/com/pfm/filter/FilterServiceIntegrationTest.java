@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.pfm.account.Account;
 import com.pfm.account.AccountService;
+import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserService;
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
@@ -23,6 +24,9 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   @Autowired
   private AccountService accountService;
+
+  @Autowired
+  private AccountTypeService accountTypeService;
 
   @Autowired
   private CategoryService categoryService;
@@ -44,8 +48,10 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
   public void shouldCheckIfFilterExistByAccountId() {
     //given
     currencyService.addDefaultCurrencies(userId);
+    accountTypeService.addDefaultAccountTypes(userId);
 
     Account account = accountMbankBalance10();
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
 
     long accountId = accountService.saveAccount(userId, account).getId();

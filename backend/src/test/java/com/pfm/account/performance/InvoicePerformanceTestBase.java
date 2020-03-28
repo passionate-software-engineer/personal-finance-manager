@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.account.type.AccountType;
 import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
 import com.pfm.currency.Currency;
@@ -42,6 +43,7 @@ public abstract class InvoicePerformanceTestBase {
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
   private static final String CURRENCIES_SERVICE_PATH = "http://localhost:%d/currencies";
+  private static final String ACCOUNT_TYPE_SERVICE_PATH = "http://localhost:%d/accountTypes";
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
 
@@ -61,7 +63,7 @@ public abstract class InvoicePerformanceTestBase {
     return given()
         .when()
         .header("Authorization", token)
-        .get(invoiceServicePath())
+        .get(accountServicePath())
         .getBody()
         .as(Account[].class);
   }
@@ -74,16 +76,20 @@ public abstract class InvoicePerformanceTestBase {
     return UUID.randomUUID().toString();
   }
 
-  String invoiceServicePath(long id) {
-    return invoiceServicePath() + "/" + id;
+  String accountServicePath(long id) {
+    return accountServicePath() + "/" + id;
   }
 
-  private String invoiceServicePath() {
+  private String accountServicePath() {
     return String.format(ACCOUNTS_SERVICE_PATH, port);
   }
 
   private String currenciesServicePath() {
     return String.format(CURRENCIES_SERVICE_PATH, port);
+  }
+
+  private String accountTypeServicePath() {
+    return String.format(ACCOUNT_TYPE_SERVICE_PATH, port);
   }
 
   @PostConstruct
@@ -97,9 +103,10 @@ public abstract class InvoicePerformanceTestBase {
     token = authenticateUserAndGetAccessToken(defaultUser);
 
     Currency[] currencies = getCurrencies();
+    AccountType[] accountTypes = getAccountTypes();
 
     for (int i = 0; i < 10; ++i) {
-      Account account = addAndReturnAccount(currencies);
+      Account account = addAndReturnAccount(currencies, accountTypes);
 
       accounts.add(account);
     }
@@ -114,9 +121,19 @@ public abstract class InvoicePerformanceTestBase {
         .as(Currency[].class);
   }
 
-  Account addAndReturnAccount(Currency[] currencies) {
+  protected AccountType[] getAccountTypes() {
+    return given()
+        .header("Authorization", token)
+        .when()
+        .get(accountTypeServicePath())
+        .getBody()
+        .as(AccountType[].class);
+  }
+
+  Account addAndReturnAccount(Currency[] currencies, AccountType[] accountType) {
     AccountRequest accountRequest = AccountRequest.builder()
         .name(UUID.randomUUID().toString())
+        .accountTypeId(accountType[0].getId())
         .balance(getRandomBalance())
         .currencyId(currencies[0].getId())
         .build();
@@ -126,7 +143,7 @@ public abstract class InvoicePerformanceTestBase {
         .header("Authorization", token)
         .body(accountRequest)
         .when()
-        .post(invoiceServicePath())
+        .post(accountServicePath())
         .getBody()
         .asString();
 
@@ -135,7 +152,7 @@ public abstract class InvoicePerformanceTestBase {
     return given()
         .header("Authorization", token)
         .when()
-        .get(invoiceServicePath() + "/" + accountId)
+        .get(accountServicePath() + "/" + accountId)
         .getBody()
         .as(Account.class);
   }
@@ -156,7 +173,7 @@ public abstract class InvoicePerformanceTestBase {
       given()
           .when()
           .header("Authorization", token)
-          .delete(invoiceServicePath(account.getId()));
+          .delete(accountServicePath(account.getId()));
     }
 
     assertThat(getAccounts().length, is(0));
@@ -184,6 +201,7 @@ public abstract class InvoicePerformanceTestBase {
   AccountRequest convertAccountToAccountRequest(Account account) {
     return AccountRequest.builder()
         .name(account.getName())
+        .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
         .build();

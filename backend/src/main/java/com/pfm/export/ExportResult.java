@@ -115,6 +115,8 @@ public final class ExportResult {
 
     private String currency;
 
+    private String accountType;
+
     private LocalDate lastVerificationDate;
 
     private boolean archived;

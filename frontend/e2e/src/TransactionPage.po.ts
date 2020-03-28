@@ -135,13 +135,23 @@ export class TransactionAndFilterPage {
   addTransaction(date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
     this.navigateTo();
     this.addTransactionButton().click();
+
     this.newTransactionDateInput().clear();
     this.newTransactionDateInput().sendKeys(date);
+
     this.newTransactionDescriptionInput().sendKeys(description);
+
+    this.newTransactionPriceInput().get(0).clear();
     this.newTransactionPriceInput().get(0).sendKeys(priceOne);
+    // if (!this.newTransactionPriceInput().get(0).getText() === priceOne) {
+    // this.newTransactionPriceInput().get(0).sendKeys(priceOne);
+    // }
+    // expect(this.newTransactionPriceInput().get(0).getText()).toEqual(priceOne );
 
     if (priceTwo !== null) {
+      this.newTransactionPriceInput().get(1).clear();
       this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
+      // expect(this.newTransactionPriceInput().get(1).getText()).toEqual(priceTwo);
     }
 
     this.newTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();

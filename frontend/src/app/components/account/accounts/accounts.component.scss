@@ -28,6 +28,17 @@ table tr:last-child {
   width: 25%;
 }
 
+#boxAccountType {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.thBoxAccountType,
+.tdBoxAccountType {
+  width: 25%;
+}
+
 .showArchivedCheckbox {
   text-align: right;
   margin-top: -25px;
