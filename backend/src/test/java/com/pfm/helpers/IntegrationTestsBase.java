@@ -561,10 +561,10 @@ public abstract class IntegrationTestsBase {
 
   protected List<Currency> callRestToGetAllCurrencies(String token) throws Exception {
     String response = mockMvc.perform(get(CURRENCIES_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token))
-            .andExpect(content().contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
     return getCurrenciesFromResponse(response);
   }
 
@@ -579,7 +579,7 @@ public abstract class IntegrationTestsBase {
 
   private List<Currency> getCurrenciesFromResponse(String response) throws Exception {
     return mapper.readValue(response,
-            mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
+        mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
   }
 
   //users

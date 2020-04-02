@@ -42,7 +42,7 @@ public class CategoryService {
 
     Category parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId)
         .orElseThrow(() -> new IllegalStateException("Cannot find parent category with id " + category.getParentCategory().getId()));
-    checkIfCanBeParentCategory(parentCategory);
+    checkForTooManyCategoryLevels(parentCategory);
     category.setParentCategory(parentCategory);
 
     return categoryRepository.save(category);
@@ -70,14 +70,14 @@ public class CategoryService {
             + " does not exist in database");
       }
       Category parentCategoryAfterUpdate = parentCategory.get();
-      checkIfCanBeParentCategory(parentCategoryAfterUpdate);
+      checkForTooManyCategoryLevels(parentCategoryAfterUpdate);
       categoryToUpdate.setParentCategory(parentCategoryAfterUpdate);
     }
 
     categoryRepository.save(categoryToUpdate);
   }
 
-  private void checkIfCanBeParentCategory(Category parentCategory) {
+  private void checkForTooManyCategoryLevels(Category parentCategory) {
     if (parentCategory.getParentCategory() != null) {
       throw new IllegalStateException("Too many category levels.");
     }

@@ -1251,7 +1251,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
     updatedAccount.setType(accountTypeService.getAccountTypes(userId).get(0));
 
-
     long jacekAccountId = callRestServiceToAddAccountAndReturnId(account, token);
     long updatedAccountId = callRestServiceToAddAccountAndReturnId(updatedAccount, token);
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
