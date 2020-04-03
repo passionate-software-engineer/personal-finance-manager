@@ -235,7 +235,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
     CategoryRequest carCategoryToUpdate = CategoryRequest.builder()
-        .parentCategoryId(oilCategoryId)
+        .parentCategoryId(carCategoryId)
         .build();
     carCategoryToUpdate.setName("Car");
 

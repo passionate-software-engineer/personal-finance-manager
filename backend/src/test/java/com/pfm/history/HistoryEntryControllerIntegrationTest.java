@@ -210,6 +210,12 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .newValue(getMessage(MAIN_CATEGORY))
         .build());
 
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(3L)
+        .name("priority")
+        .newValue(String.valueOf(category.getPriority()))
+        .build());
+
     assertThat(historyEntries, hasSize(1));
     assertThat(historyEntries.get(0).getObject(), equalTo(Category.class.getSimpleName()));
     assertThat(historyEntries.get(0).getType(), equalTo(Type.ADD));
@@ -237,15 +243,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(3L)
+        .id(4L)
         .name("name")
         .newValue(category.getName())
         .build());
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(4L)
+        .id(5L)
         .name("parentCategory")
         .newValue(parentCategory.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("priority")
+        .newValue(String.valueOf(category.getPriority()))
         .build());
 
     assertThat(historyEntries, hasSize(2));
@@ -272,6 +284,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     Category updatedCategory = categoryOil();
     updatedCategory.setName("Brakes oil");
+    updatedCategory.setPriority(5);
 
     callRestToUpdateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory), token);
 
@@ -282,17 +295,24 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(5L)
+        .id(7L)
         .name("name")
         .oldValue(category.getName())
         .newValue(updatedCategory.getName())
         .build());
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(6L)
+        .id(8L)
         .name("parentCategory")
         .oldValue(parentCategory.getName())
         .newValue(getMessage(MAIN_CATEGORY))
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(9L)
+        .name("priority")
+        .oldValue(String.valueOf(category.getPriority()))
+        .newValue(String.valueOf(updatedCategory.getPriority()))
         .build());
 
     assertThat(historyEntries, hasSize(3));
@@ -318,15 +338,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(3L)
+        .id(4L)
         .name("name")
         .oldValue(category.getName())
         .build());
 
     historyInfosExpected.add(HistoryInfo.builder()
-        .id(4L)
+        .id(5L)
         .name("parentCategory")
         .oldValue(getMessage(MAIN_CATEGORY))
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("priority")
+        .oldValue(String.valueOf(category.getPriority()))
         .build());
 
     assertThat(historyEntries, hasSize(2));
@@ -360,25 +386,25 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(10L)
         .name("description")
         .newValue(transaction.getDescription())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(10L)
+        .id(11L)
         .name("categoryId")
         .newValue(category.getName())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(12L)
         .name("date")
         .newValue(transaction.getDate().toString())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(13L)
         .name("accountPriceEntries")
         .newValue(String.format("[%s : %s]", account.getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
@@ -386,21 +412,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(6L)
+        .id(7L)
         .name("name")
         .newValue(account.getName())
         .oldValue(account.getName())
         .build());
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(7L)
+        .id(8L)
         .name("balance")
         .newValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .oldValue(account.getBalance().toString())
         .build());
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(8L)
+        .id(9L)
         .name("archived")
         .newValue(String.valueOf(account.isArchived()))
         .oldValue(String.valueOf(account.isArchived()))
@@ -443,25 +469,25 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(6L)
+        .id(7L)
         .name("description")
         .newValue(plannedTransaction.getDescription())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(7L)
+        .id(8L)
         .name("categoryId")
         .newValue(category.getName())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(8L)
+        .id(9L)
         .name("date")
         .newValue(plannedTransaction.getDate().toString())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(10L)
         .name("accountPriceEntries")
         .newValue(String.format("[%s : %s]", account.getName(), plannedTransaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
@@ -499,49 +525,49 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(6L)
+        .id(7L)
         .name("description")
         .newValue(plannedTransaction.getDescription())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(7L)
+        .id(8L)
         .name("categoryId")
         .newValue(category.getName())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(8L)
+        .id(9L)
         .name("date")
         .newValue(plannedTransaction.getDate().toString())
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(10L)
         .name("accountPriceEntries")
         .newValue(String.format("[%s : %s]", account.getName(), plannedTransaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(10L)
+        .id(11L)
         .name("description")
         .oldValue(plannedTransaction.getDescription())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(12L)
         .name("categoryId")
         .oldValue(category.getName())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(13L)
         .name("date")
         .oldValue(plannedTransaction.getDate().toString())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(14L)
         .name("accountPriceEntries")
         .oldValue(String.format("[%s : %s]", account.getName(), plannedTransaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
@@ -608,28 +634,28 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(18L)
+        .id(20L)
         .name("description")
         .oldValue(transaction.getDescription())
         .newValue(updatedTransaction.getDescription())
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(19L)
+        .id(21L)
         .name("categoryId")
         .oldValue(categoryCar().getName())
         .newValue(categoryFood().getName())
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(20L)
+        .id(22L)
         .name("date")
         .oldValue(transaction.getDate().toString())
         .newValue(updatedTransaction.getDate().toString())
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(21L)
+        .id(23L)
         .name("accountPriceEntries")
         .oldValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .newValue(String
@@ -640,21 +666,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountIdeaSubstractAmountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
-        .id(22L)
+        .id(24L)
         .name("name")
         .newValue(accountIdeaBalance100000().getName())
         .oldValue(accountIdeaBalance100000().getName())
         .build());
 
     historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
-        .id(23L)
+        .id(25L)
         .name("balance")
         .newValue(accountIdeaBalance100000().getBalance().toString())
         .oldValue(accountIdeaBalance100000().getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .build());
 
     historyInfosOfUpdatingAccountIdeaSubstractAmountExpected.add(HistoryInfo.builder()
-        .id(24L)
+        .id(26L)
         .name("archived")
         .newValue(String.valueOf(accountIdeaBalance100000().isArchived()))
         .oldValue(String.valueOf(accountIdeaBalance100000().isArchived()))
@@ -663,21 +689,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountIdeaAddAmountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
-        .id(25L)
+        .id(27L)
         .name("name")
         .newValue(accountIdeaBalance100000().getName())
         .oldValue(accountIdeaBalance100000().getName())
         .build());
 
     historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
-        .id(26L)
+        .id(28L)
         .name("balance")
         .oldValue(accountIdeaBalance100000().getBalance().toString())
         .newValue(accountIdeaBalance100000().getBalance().add(updatedTransaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .build());
 
     historyInfosOfUpdatingAccountIdeaAddAmountExpected.add(HistoryInfo.builder()
-        .id(27L)
+        .id(29L)
         .name("archived")
         .newValue(String.valueOf(accountIdeaBalance100000().isArchived()))
         .oldValue(String.valueOf(accountIdeaBalance100000().isArchived()))
@@ -686,21 +712,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountIngAddAmountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
-        .id(28L)
+        .id(30L)
         .name("name")
         .newValue(accountIngBalance9999().getName())
         .oldValue(accountIngBalance9999().getName())
         .build());
 
     historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
-        .id(29L)
+        .id(31L)
         .name("balance")
         .oldValue(accountIngBalance9999().getBalance().toString())
         .newValue(accountIngBalance9999().getBalance().add(updatedTransaction.getAccountPriceEntries().get(1).getPrice()).toString())
         .build());
 
     historyInfosOfUpdatingAccountIngAddAmountExpected.add(HistoryInfo.builder()
-        .id(30L)
+        .id(32L)
         .name("archived")
         .newValue(String.valueOf(accountIngBalance9999().isArchived()))
         .oldValue(String.valueOf(accountIngBalance9999().isArchived()))
@@ -778,52 +804,52 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(13L)
         .name("description")
         .newValue("Oil")
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(14L)
         .name("categoryId")
         .newValue("Car")
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(15L)
         .name("date")
         .newValue(String.valueOf(LocalDate.now().plusDays(2)))
         .build());
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
-        .id(14L)
+        .id(16L)
         .name("accountPriceEntries")
         .newValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(15L)
+        .id(17L)
         .name("description")
         .newValue("updatedName")
         .oldValue("Oil")
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(16L)
+        .id(18L)
         .name("categoryId")
         .newValue("Food")
         .oldValue("Car")
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(17L)
+        .id(19L)
         .name("date")
         .newValue(String.valueOf(updatedTransaction.getDate()))
         .oldValue(String.valueOf(transaction.getDate()))
         .build());
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
-        .id(18L)
+        .id(20L)
         .name("accountPriceEntries")
         .newValue(String.format("[%s : %s]", accountIngBalance9999().getName(), updatedTransaction.getAccountPriceEntries().get(0).getPrice()))
         .oldValue(String.format("[%s : %s]", accountIdeaBalance100000().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
@@ -867,25 +893,25 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(16L)
+        .id(17L)
         .name("description")
         .oldValue(transaction.getDescription())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(17L)
+        .id(18L)
         .name("categoryId")
         .oldValue(category.getName())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(18L)
+        .id(19L)
         .name("date")
         .oldValue(transaction.getDate().toString())
         .build());
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
-        .id(19L)
+        .id(20L)
         .name("accountPriceEntries")
         .oldValue(String.format("[%s : %s]", account.getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
         .build());
@@ -893,21 +919,21 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingAccountExpected = new ArrayList<>();
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(14L)
         .name("name")
         .newValue(account.getName())
         .oldValue(account.getName())
         .build());
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(14L)
+        .id(15L)
         .name("balance")
         .oldValue(account.getBalance().add(transaction.getAccountPriceEntries().get(0).getPrice()).toString())
         .newValue(account.getBalance().toString())
         .build());
 
     historyInfosOfUpdatingAccountExpected.add(HistoryInfo.builder()
-        .id(15L)
+        .id(16L)
         .name("archived")
         .oldValue(String.valueOf(account.isArchived()))
         .newValue(String.valueOf(account.isArchived()))
@@ -961,49 +987,49 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfAddingFilterExpected = new ArrayList<>();
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(13L)
         .name("name")
         .newValue(filter.getName())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(14L)
         .name("accountIds")
         .newValue(String.format("[%s, %s]", accountMbank.getName(), accountMillenium.getName()))
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(15L)
         .name("categoryIds")
         .newValue(String.format("[%s, %s]", categoryCar.getName(), categoryFood.getName()))
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(14L)
+        .id(16L)
         .name("priceFrom")
         .newValue(filter.getPriceFrom().toString())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(15L)
+        .id(17L)
         .name("priceTo")
         .newValue(filter.getPriceTo().toString())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(16L)
+        .id(18L)
         .name("dateFrom")
         .newValue(filter.getDateFrom().toString())
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(17L)
+        .id(19L)
         .name("dateTo")
         .newValue(null)
         .build());
 
     historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
-        .id(18L)
+        .id(20L)
         .name("description")
         .newValue(filter.getDescription())
         .build());
@@ -1057,56 +1083,56 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingFilterExpected = new ArrayList<>();
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(19L)
+        .id(21L)
         .name("name")
         .oldValue(filter.getName())
         .newValue(updatedFilter.getName())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(20L)
+        .id(22L)
         .name("accountIds")
         .newValue(String.format("[%s, %s]", accountMbank.getName(), accountMillenium.getName()))
         .oldValue("[]")
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(21L)
+        .id(23L)
         .name("categoryIds")
         .newValue(String.format("[%s, %s]", categoryCar.getName(), categoryFood.getName()))
         .oldValue("[]")
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(22L)
+        .id(24L)
         .name("priceFrom")
         .oldValue(filter.getPriceFrom().toString())
         .newValue(updatedFilter.getPriceFrom().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(23L)
+        .id(25L)
         .name("priceTo")
         .newValue(updatedFilter.getPriceTo().toString())
         .oldValue(filter.getPriceTo().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(24L)
+        .id(26L)
         .name("dateFrom")
         .oldValue(filter.getDateFrom().toString())
         .newValue(updatedFilter.getDateFrom().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(25L)
+        .id(27L)
         .name("dateTo")
         .newValue(updatedFilter.getDateTo().toString())
         .oldValue(filter.getDateTo().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(26L)
+        .id(28L)
         .name("description")
         .oldValue(filter.getDescription())
         .newValue(updatedFilter.getDescription())

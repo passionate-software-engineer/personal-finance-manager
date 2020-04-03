@@ -297,6 +297,7 @@ public abstract class IntegrationTestsBase {
             : categoryService
                 .getCategoryByIdAndUserId(categoryRequest.getParentCategoryId(), userId)
                 .orElse(null))
+        .priority(categoryRequest.getPriority())
         .build();
   }
 
@@ -305,6 +306,7 @@ public abstract class IntegrationTestsBase {
         .name(category.getName())
         .parentCategoryId(
             category.getParentCategory() == null ? null : category.getParentCategory().getId())
+        .priority(category.getPriority())
         .build();
   }
 

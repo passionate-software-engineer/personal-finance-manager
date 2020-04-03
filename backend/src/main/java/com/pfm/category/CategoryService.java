@@ -60,6 +60,7 @@ public class CategoryService {
 
     Category categoryToUpdate = receivedCategory.get();
     categoryToUpdate.setName(category.getName());
+    categoryToUpdate.setPriority(category.getPriority());
 
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
