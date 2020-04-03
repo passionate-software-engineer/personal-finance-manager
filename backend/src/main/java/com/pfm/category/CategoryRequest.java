@@ -1,6 +1,5 @@
 package com.pfm.category;
 
-import com.pfm.history.HistoryField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
