@@ -193,7 +193,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToAddCategoryAndReturnId(category, token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
@@ -237,7 +237,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToAddCategoryAndReturnId(category, token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
@@ -289,7 +289,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToUpdateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory), token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
@@ -332,7 +332,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     callRestToDeleteCategoryById(categoryId, token);
 
     //when
-    List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     //then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();

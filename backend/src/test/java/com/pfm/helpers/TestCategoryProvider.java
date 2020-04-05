@@ -27,6 +27,14 @@ public class TestCategoryProvider {
         .build();
   }
 
+  public static Category categoryGearBoxOil() {
+    return Category.builder()
+        .id(5L)
+        .name("Gear box oil")
+        .priority(12)
+        .build();
+  }
+
   public static Category categoryHome() {
     return Category.builder()
         .id(2L)
