@@ -174,6 +174,7 @@ public class ImportService {
     for (ExportCategory category : categoriesSortedTopologically) {
       Category categoryToSave = new Category();
       categoryToSave.setName(category.getName());
+      categoryToSave.setPriority(category.getPriority());
       categoryToSave.setUserId(userId);
       if (category.getParentCategoryName() != null) {
         categoryToSave.setParentCategory(Category.builder()

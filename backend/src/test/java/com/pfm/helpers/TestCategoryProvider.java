@@ -15,7 +15,7 @@ public class TestCategoryProvider {
   public static Category categoryFood() {
     return Category.builder()
         .name("Food")
-        .priority(2)
+        .priority(3)
         .build();
   }
 
