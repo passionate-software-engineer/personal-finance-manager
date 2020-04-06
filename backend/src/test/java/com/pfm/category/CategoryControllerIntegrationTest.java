@@ -158,6 +158,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome(), token);
     Category categoryToUpdate = categoryHome();
     categoryToUpdate.setName("Second Home");
+    categoryToUpdate.setPriority(5);
 
     //when
     callRestToUpdateCategory(homeCategoryId, convertCategoryToCategoryRequest(categoryToUpdate), token);
@@ -176,6 +177,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId, token);
     CategoryRequest categoryOilToUpdate = CategoryRequest.builder()
         .name("Mannol Oil")
+        .priority(10)
         .build();
 
     //when

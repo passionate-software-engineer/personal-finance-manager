@@ -246,6 +246,5 @@ public class CategoryServiceTest {
 
     //then
     assertThat(exception.getMessage(), is(equalTo("Too many category levels.")));
-
   }
 }

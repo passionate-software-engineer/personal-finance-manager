@@ -38,6 +38,7 @@ public class TestCategoryProvider {
   public static Category categoryHome() {
     return Category.builder()
         .id(2L)
+        .priority(2)
         .name("Home")
         .build();
   }
