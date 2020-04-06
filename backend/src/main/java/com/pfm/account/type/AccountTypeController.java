@@ -26,4 +26,9 @@ public class AccountTypeController implements AccountTypeApi {
     return ResponseEntity.ok(accountType);
   }
 
+  @Override
+  public ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest) {
+    return null;
+  }
+
 }
