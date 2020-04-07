@@ -36,6 +36,15 @@ public class AccountTypeService {
         .collect(Collectors.toList());
   }
 
+  public AccountType saveAccountType(long userId, AccountType accountType) {
+    accountType.setUserId(userId);
+    return accountTypeRepository.save(accountType);
+  }
+
+  public boolean isAccountTypeNameAlreadyUsed(long userId, String name) {
+    return accountTypeRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
+  }
+
   public void addDefaultAccountTypes(long userId) {
     accountTypeRepository.save(AccountType.builder().name("Personal").userId(userId).build());
     accountTypeRepository.save(AccountType.builder().name("Investment").userId(userId).build());
