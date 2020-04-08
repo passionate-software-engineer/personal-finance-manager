@@ -3,6 +3,7 @@ package com.pfm.account.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -45,11 +46,16 @@ public class AccountTypeService {
     return accountTypeRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
-  public void addDefaultAccountTypes(long userId) {
-    accountTypeRepository.save(AccountType.builder().name("Personal").userId(userId).build());
-    accountTypeRepository.save(AccountType.builder().name("Investment").userId(userId).build());
-    accountTypeRepository.save(AccountType.builder().name("Saving").userId(userId).build());
-    accountTypeRepository.save(AccountType.builder().name("Credit").userId(userId).build());
+  public List<AccountType> getDefaultAccountTypes(long userId) {
+    return Arrays.asList(
+        AccountType.builder().name("Personal").userId(userId).build(),
+        AccountType.builder().name("Investment").userId(userId).build(),
+        AccountType.builder().name("Saving").userId(userId).build(),
+        AccountType.builder().name("Credit").userId(userId).build()
+    );
   }
 
+  public void addDefaultAccountTypes(long userId) {
+    getDefaultAccountTypes(userId).forEach(accountTypeRepository::save);
+  }
 }
