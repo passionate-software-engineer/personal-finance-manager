@@ -16,12 +16,6 @@ public class V25__AddCategoryPriorityAndFlatCategoriesStructureForAllUsers exten
   // Support for accountTypes was added, need to assign default values for each account
   @Override
   public void migrate(Context context) throws Exception {
-
-    try (Statement update = context.getConnection().createStatement()) {
-      update.execute("UPDATE category SET priority = 1000"
-      );
-    }
-
     Map<Long, Long> categoryToParentCategoryMap = new HashMap<>();
     try (Statement select = context.getConnection().createStatement()) {
       try (ResultSet categoryRows = select.executeQuery("SELECT * FROM category")) {

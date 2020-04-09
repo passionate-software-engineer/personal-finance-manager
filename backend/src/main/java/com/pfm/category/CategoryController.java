@@ -7,6 +7,7 @@ import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class CategoryController implements CategoryApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest) {
+  public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Saving category {} to the database", categoryRequest.getName());
@@ -87,12 +88,12 @@ public class CategoryController implements CategoryApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest) {
+  public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @Valid @RequestBody CategoryRequest categoryRequest) {
     long userId = userProvider.getCurrentUserId();
 
     Optional<Category> categoryByIdAndUserId = categoryService.getCategoryByIdAndUserId(categoryId, userId);
 
-    if (!categoryByIdAndUserId.isPresent()) {
+    if (categoryByIdAndUserId.isEmpty()) {
       log.info("No category with id {} was found, not able to update", categoryId);
       return ResponseEntity.notFound().build();
     }
@@ -123,7 +124,7 @@ public class CategoryController implements CategoryApi {
   public ResponseEntity<?> deleteCategory(@PathVariable long categoryId) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!categoryService.getCategoryByIdAndUserId(categoryId, userId).isPresent()) {
+    if (categoryService.getCategoryByIdAndUserId(categoryId, userId).isEmpty()) {
       log.info("No category with id {} was found, not able to delete", categoryId);
       return ResponseEntity.notFound().build();
     }

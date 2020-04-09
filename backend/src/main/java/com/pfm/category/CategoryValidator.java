@@ -3,9 +3,7 @@ package com.pfm.category;
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
-import static com.pfm.config.MessagesProvider.CATEGORY_PRIORITY_WRONG_VALUE;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
-import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY;
 import static com.pfm.config.MessagesProvider.TOO_MANY_CATEGORY_LEVELS;
@@ -36,7 +34,7 @@ public class CategoryValidator {
 
     Optional<Category> categoryToUpdate = categoryService.getCategoryByIdAndUserId(id, userId);
 
-    if (!categoryToUpdate.isPresent()) {
+    if (categoryToUpdate.isEmpty()) {
       throw new IllegalStateException("Category with id: " + id + " does not exist in database");
     }
 
@@ -64,14 +62,6 @@ public class CategoryValidator {
   }
 
   private void validate(long userId, List<String> validationResults, Category category) {
-    if (category.getName() == null || category.getName().trim().equals("")) {
-      validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
-    }
-
-    if (category.getPriority() < 1 || category.getPriority() > 1000) {
-      validationResults.add(getMessage(CATEGORY_PRIORITY_WRONG_VALUE));
-    }
-
     if (category.getParentCategory() != null && category.getParentCategory().getId() == null) {
       validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY));
     }
