@@ -46,7 +46,7 @@ public class CategoryController implements CategoryApi {
     log.info("Retrieving category with id: {}", categoryId);
     Optional<Category> category = categoryService.getCategoryByIdAndUserId(categoryId, userId);
 
-    if (!category.isPresent()) {
+    if (category.isEmpty()) {
       log.info("CATEGORY with id {} was not found", categoryId);
       return ResponseEntity.notFound().build();
     }
