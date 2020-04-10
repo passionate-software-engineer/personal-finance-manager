@@ -23,9 +23,13 @@ public class UniqueNameValidator implements ConstraintValidator<UniqueName, Stri
   public boolean isValid(String name, ConstraintValidatorContext context) {
     if (requestType == RequestType.ADD) {
       return categoryRepository.findByNameIgnoreCaseAndUserId(name, userProvider.getCurrentUserId()).size() == 0;
-    } else {
+    }
+
+    if (requestType == RequestType.UPDATE){
       return true;
     }
+
+    return false;
   }
 
   @Override

@@ -58,8 +58,6 @@ public class CategoryValidator {
 
     validate(userId, validationResults, category);
 
-    checkForDuplicatedName(validationResults, category, userId);
-
     return validationResults;
   }
 
