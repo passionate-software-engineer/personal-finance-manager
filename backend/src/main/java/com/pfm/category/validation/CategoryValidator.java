@@ -1,4 +1,4 @@
-package com.pfm.category;
+package com.pfm.category.validation;
 
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
@@ -9,6 +9,8 @@ import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_ID_IS_EMP
 import static com.pfm.config.MessagesProvider.TOO_MANY_CATEGORY_LEVELS;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.category.Category;
+import com.pfm.category.CategoryService;
 import com.pfm.filter.FilterService;
 import com.pfm.transaction.TransactionService;
 import java.util.ArrayList;

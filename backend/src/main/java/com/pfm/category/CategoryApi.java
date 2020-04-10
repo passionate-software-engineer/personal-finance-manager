@@ -1,5 +1,7 @@
 package com.pfm.category;
 
+import com.pfm.category.requests.CategoryAddRequest;
+import com.pfm.category.requests.CategoryUpdateRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -31,11 +33,11 @@ public interface CategoryApi {
 
   @ApiOperation(value = "Create a new category", response = Long.class, authorizations = {@Authorization(value = BEARER)})
   @PostMapping
-  ResponseEntity<?> addCategory(CategoryRequest categoryRequest);
+  ResponseEntity<?> addCategory(CategoryAddRequest categoryRequest);
 
   @ApiOperation(value = "Update an existing category", response = Void.class, authorizations = {@Authorization(value = BEARER)})
   @PutMapping(value = "/{categoryId}")
-  ResponseEntity<?> updateCategory(@PathVariable long categoryId, CategoryRequest categoryRequest);
+  ResponseEntity<?> updateCategory(@PathVariable long categoryId, CategoryUpdateRequest categoryRequest);
 
   @ApiOperation(value = "Delete an existing category", response = Void.class, authorizations = {@Authorization(value = BEARER)})
   @DeleteMapping(value = "/{categoryId}")

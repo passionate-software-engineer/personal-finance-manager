@@ -4,6 +4,10 @@ import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.auth.UserProvider;
+import com.pfm.category.requests.CategoryAddRequest;
+import com.pfm.category.requests.CategoryRequestBase;
+import com.pfm.category.requests.CategoryUpdateRequest;
+import com.pfm.category.validation.CategoryValidator;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +30,7 @@ public class CategoryController implements CategoryApi {
   private HistoryEntryService historyEntryService;
   private UserProvider userProvider;
 
-  private static Category convertToCategory(@RequestBody CategoryRequest categoryRequest) {
+  private static <T extends CategoryRequestBase> Category convertToCategory(@RequestBody T categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
 
     return Category.builder()
@@ -67,7 +71,7 @@ public class CategoryController implements CategoryApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
+  public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryAddRequest categoryRequest) {
     long userId = userProvider.getCurrentUserId();
 
     log.info("Saving category {} to the database", categoryRequest.getName());
@@ -88,7 +92,7 @@ public class CategoryController implements CategoryApi {
 
   @Override
   @Transactional
-  public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @Valid @RequestBody CategoryRequest categoryRequest) {
+  public ResponseEntity<?> updateCategory(@PathVariable long categoryId, @Valid @RequestBody CategoryUpdateRequest categoryRequest) {
     long userId = userProvider.getCurrentUserId();
 
     Optional<Category> categoryByIdAndUserId = categoryService.getCategoryByIdAndUserId(categoryId, userId);
