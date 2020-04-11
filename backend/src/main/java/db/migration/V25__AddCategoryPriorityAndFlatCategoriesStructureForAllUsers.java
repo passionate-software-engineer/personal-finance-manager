@@ -13,7 +13,9 @@ import org.flywaydb.core.api.migration.Context;
 @SuppressWarnings("checkstyle:typename")
 public class V25__AddCategoryPriorityAndFlatCategoriesStructureForAllUsers extends BaseJavaMigration {
 
-  // Support for accountTypes was added, need to assign default values for each account
+  //When method getLong() finds null value in field it returns 0
+  public static final int NULL = 0;
+
   @Override
   public void migrate(Context context) throws Exception {
     Map<Long, Long> categoryToParentCategoryMap = new HashMap<>();
@@ -26,12 +28,12 @@ public class V25__AddCategoryPriorityAndFlatCategoriesStructureForAllUsers exten
     }
 
     for (Map.Entry<Long, Long> entry : categoryToParentCategoryMap.entrySet()) {
-      if (entry.getValue() == 0 || categoryToParentCategoryMap.get(entry.getValue()) == 0) {
+      if (entry.getValue() == NULL || categoryToParentCategoryMap.get(entry.getValue()) == NULL) {
         continue;
       }
 
       long parentCategoryId = categoryToParentCategoryMap.get(entry.getValue());
-      while (categoryToParentCategoryMap.get(parentCategoryId) != 0) {
+      while (categoryToParentCategoryMap.get(parentCategoryId) != NULL) {
         parentCategoryId = categoryToParentCategoryMap.get(parentCategoryId);
       }
 

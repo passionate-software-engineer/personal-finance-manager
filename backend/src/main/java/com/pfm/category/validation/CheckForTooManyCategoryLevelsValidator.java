@@ -19,13 +19,7 @@ public class CheckForTooManyCategoryLevelsValidator implements ConstraintValidat
     }
 
     Optional<Category> categoryById = categoryRepository.findById(categoryId);
-    if (categoryById.isEmpty()) {
-      //This is checked in CategoryExistIfProvided
-      return true;
-    }
-
-    Category category = categoryById.get();
-    return category.getParentCategory() == null;
+    return categoryById.isEmpty() || categoryById.get().getParentCategory() == null;
   }
 
   @Override

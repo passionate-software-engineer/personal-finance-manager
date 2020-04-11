@@ -9,12 +9,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CategoryExistsValidator implements ConstraintValidator<CategoryExistsIfProvided, Long> {
 
-  CategoryRepository categoryRepository;
-  UserProvider userProvider;
+  private final CategoryRepository categoryRepository;
+  private final UserProvider userProvider;
 
   @Override
   public boolean isValid(Long categoryId, ConstraintValidatorContext context) {
-    return categoryId == null || categoryRepository.existsByIdAndUserId(categoryId, userProvider.getCurrentUserId());
+    return categoryId == null
+        || categoryRepository.existsByIdAndUserId(categoryId, userProvider.getCurrentUserId());
   }
 
   @Override
