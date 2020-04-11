@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class CategoryController implements CategoryApi {
 
-  private CategoryService categoryService;
-  private CategoryValidator categoryValidator;
-  private HistoryEntryService historyEntryService;
-  private UserProvider userProvider;
+  private final CategoryService categoryService;
+  private final CategoryValidator categoryValidator;
+  private final HistoryEntryService historyEntryService;
+  private final UserProvider userProvider;
 
   private static <T extends CategoryRequestBase> Category convertToCategory(@RequestBody T categoryRequest) {
     Long parentCategoryId = categoryRequest.getParentCategoryId();
@@ -76,12 +76,6 @@ public class CategoryController implements CategoryApi {
 
     log.info("Saving category {} to the database", categoryRequest.getName());
     Category category = convertToCategory(categoryRequest);
-
-    List<String> validationResult = categoryValidator.validateCategoryForAdd(category, userId);
-    if (!validationResult.isEmpty()) {
-      log.info("Category is not valid {}", validationResult);
-      return ResponseEntity.badRequest().body(validationResult);
-    }
 
     Category createdCategory = categoryService.addCategory(category, userId);
     log.info("Saving category to the database was successful. CATEGORY id is {}", createdCategory.getId());

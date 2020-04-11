@@ -31,9 +31,9 @@ public class V25__AddCategoryPriorityAndFlatCategoriesStructureForAllUsers exten
       }
 
       long parentCategoryId = categoryToParentCategoryMap.get(entry.getValue());
-      do {
+      while (categoryToParentCategoryMap.get(parentCategoryId) != 0) {
         parentCategoryId = categoryToParentCategoryMap.get(parentCategoryId);
-      } while (categoryToParentCategoryMap.get(parentCategoryId) != 0);
+      }
 
       try (Statement update = context.getConnection().createStatement()) {
         update.execute(String.format("UPDATE category SET parent_category_id = %d WHERE id = %d", parentCategoryId, entry.getKey()));

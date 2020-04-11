@@ -1,7 +1,9 @@
 package com.pfm.category.requests;
 
-import com.pfm.category.validation.UniqueName;
+import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
+
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class CategoryUpdateRequest extends CategoryRequestBase {
 
   @ApiModelProperty(value = "CATEGORY name", required = true, example = "Eating out")
-  @UniqueName(requestType = RequestType.UPDATE)
+  @NotBlank(message = EMPTY_CATEGORY_NAME)
   private String name;
 
 }

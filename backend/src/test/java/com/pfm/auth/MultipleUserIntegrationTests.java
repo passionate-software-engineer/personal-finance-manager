@@ -39,7 +39,8 @@ import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
 import com.pfm.account.type.AccountType;
 import com.pfm.category.Category;
-import com.pfm.category.CategoryRequest;
+import com.pfm.category.requests.CategoryRequestBase;
+import com.pfm.category.requests.CategoryUpdateRequest;
 import com.pfm.currency.Currency;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterRequest;
@@ -231,7 +232,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
 
     //when
-    CategoryRequest updatedCategory = CategoryRequest.builder()
+    CategoryRequestBase updatedCategory = CategoryUpdateRequest.builder()
         .name("updatedCategory")
         .build();
 
@@ -651,13 +652,13 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, marianToken)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertCategoryToCategoryRequest(category))))
+        .content(json(convertCategoryToCategoryAddRequest(category))))
         .andExpect(status().isOk());
 
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
         .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertCategoryToCategoryRequest(category))))
+        .content(json(convertCategoryToCategoryAddRequest(category))))
         .andExpect(status().isOk());
   }
 }

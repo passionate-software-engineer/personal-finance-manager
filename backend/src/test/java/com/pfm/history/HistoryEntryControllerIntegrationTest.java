@@ -286,7 +286,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     updatedCategory.setName("Brakes oil");
     updatedCategory.setPriority(5);
 
-    callRestToUpdateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory), token);
+    callRestToUpdateCategory(categoryId, convertCategoryToCategoryUpdateRequest(updatedCategory), token);
 
     //when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);

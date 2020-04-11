@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class CategoryAddRequest extends CategoryRequestBase {
 
   @ApiModelProperty(value = "CATEGORY name", required = true, example = "Eating out")
-  @UniqueName(requestType = RequestType.ADD)
+  @UniqueName
   private String name;
 
 }

@@ -444,7 +444,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(filters.get(0).getPriceFrom(), is(filterPriceFrom));
     assertThat(filters.get(0).getPriceTo(), is(filterPriceTo));
     assertThat(filters.get(0).getCategoryIds(), hasSize(1));
-    assertThat(filters.get(0).getCategoryIds().get(0), is(1L));
+    assertThat(filters.get(0).getCategoryIds().get(0), is(13L));
     assertThat(filters.get(0).getAccountIds(), hasSize(1));
     assertThat(filters.get(0).getAccountIds().get(0), is(6L));
 

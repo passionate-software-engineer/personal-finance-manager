@@ -1032,7 +1032,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allTransactionsAfterUpdateInDb.size(), is(1));
 
     assertThat(allTransactionsAfterUpdateInDb.get(0).getId(), is(not(equalTo(updatedPlannedTransaction.getId()))));
-    assertThat(allTransactionsAfterUpdateInDb.get(0).getCategoryId(), equalTo(2L));
+    assertThat(allTransactionsAfterUpdateInDb.get(0).getCategoryId(), equalTo(carCategoryId));
     assertThat(allTransactionsAfterUpdateInDb.get(0).getDate(), equalTo(PAST_DATE));
 
     assertThat(allTransactionsAfterUpdateInDb.get(0).getAccountPriceEntries(), equalTo(afterUpdate.getAccountPriceEntries()));

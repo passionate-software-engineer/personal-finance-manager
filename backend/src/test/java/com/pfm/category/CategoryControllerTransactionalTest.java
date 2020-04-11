@@ -1,6 +1,7 @@
 package com.pfm.category;
 
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -49,7 +50,7 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
     // when
     try {
-      categoryController.addCategory(convertCategoryToCategoryRequest(category));
+      categoryController.addCategory(convertCategoryToCategoryAddRequest(category));
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
@@ -72,7 +73,7 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
     // when
     try {
-      categoryController.updateCategory(categoryId, convertCategoryToCategoryRequest(updatedCategory));
+      categoryController.updateCategory(categoryId, convertCategoryToCategoryUpdateRequest(updatedCategory));
       fail();
     } catch (IllegalStateException ex) {
       assertNotNull(ex);
@@ -85,7 +86,7 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
   @Test
   void shouldRollbackTransactionWhenCategoryDeleteFailed() {
     //given
-    Category category = categoryCar();
+    Category category = categoryFood();
     final Long categoryId = categoryService.addCategory(category, userId).getId();
 
     doThrow(IllegalStateException.class).when(categoryService).deleteCategory(categoryId);

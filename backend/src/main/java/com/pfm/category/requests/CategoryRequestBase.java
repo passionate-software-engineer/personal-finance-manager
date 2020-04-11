@@ -3,6 +3,7 @@ package com.pfm.category.requests;
 import static com.pfm.config.MessagesProvider.CATEGORY_PRIORITY_WRONG_VALUE;
 
 import com.pfm.category.validation.CategoryExistsIfProvided;
+import com.pfm.category.validation.CheckForTooManyCategoryLevels;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -20,6 +21,7 @@ public abstract class CategoryRequestBase {
 
   @ApiModelProperty(value = "Parent category id", example = "1")
   @CategoryExistsIfProvided
+  @CheckForTooManyCategoryLevels
   private Long parentCategoryId;
 
   @ApiModelProperty(value = "CATEGORY priority", required = true, example = "1")
