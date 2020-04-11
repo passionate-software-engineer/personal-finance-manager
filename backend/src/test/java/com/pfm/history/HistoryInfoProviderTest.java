@@ -158,6 +158,10 @@ class HistoryInfoProviderTest {
         .name("parentCategory")
         .newValue(category.getParentCategory().getName())
         .build());
+    expectedHistoryInfos.add(HistoryInfo.builder()
+        .name("priority")
+        .newValue(String.valueOf(category.getPriority()))
+        .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
   }
@@ -180,6 +184,10 @@ class HistoryInfoProviderTest {
         .name("parentCategory")
         .newValue(getMessage(MessagesProvider.MAIN_CATEGORY))
         .build());
+    expectedHistoryInfos.add(HistoryInfo.builder()
+        .name("priority")
+        .newValue(String.valueOf(category.getPriority()))
+        .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
   }
@@ -189,6 +197,7 @@ class HistoryInfoProviderTest {
     //given
     Category category = categoryOil();
     category.setParentCategory(categoryCar());
+    category.setPriority(900);
     Category updatedCategory = categoryOil();
 
     //when
@@ -205,6 +214,11 @@ class HistoryInfoProviderTest {
         .name("parentCategory")
         .oldValue(category.getParentCategory().getName())
         .newValue(getMessage(MessagesProvider.MAIN_CATEGORY))
+        .build());
+    expectedHistoryInfos.add(HistoryInfo.builder()
+        .name("priority")
+        .oldValue(String.valueOf(category.getPriority()))
+        .newValue(String.valueOf(updatedCategory.getPriority()))
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));

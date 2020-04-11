@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -60,6 +61,8 @@ public final class ExportResult {
 
     private String name;
     private String parentCategoryName;
+    @Default
+    private int priority = 1000;
 
   }
 

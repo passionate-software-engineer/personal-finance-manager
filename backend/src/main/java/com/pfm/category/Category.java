@@ -36,7 +36,11 @@ public final class Category {
   //TODO try using parentCategoryID instead of CATEGORY object
   private Category parentCategory;
 
+  @ApiModelProperty(value = "Category priority", required = true, example = "1")
+  @HistoryField
+  @Builder.Default
+  private int priority = 1000;
+
   @JsonIgnore
   private Long userId;
-
 }

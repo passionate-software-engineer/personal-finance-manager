@@ -88,8 +88,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .name("Pizza")
         .parentCategory(Category.builder()
             .id(foodCategoryId)
-            .build()
-        ).build(), token);
+            .build())
+        .priority(5)
+        .build(), token);
 
     Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
     callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, token);
@@ -123,8 +124,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("categories", hasSize(2)))
         .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
         .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
+        .andExpect(jsonPath("categories[0].priority", is(categoryFood().getPriority())))
         .andExpect(jsonPath("categories[1].name", is("Pizza")))
         .andExpect(jsonPath("categories[1].parentCategoryName", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[1].priority", is(5)))
         .andExpect(jsonPath("periods", hasSize(1)))
         .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
         .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))
@@ -204,10 +207,12 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     input.setCategories(Arrays.asList(
         ExportCategory.builder()
             .name(categoryHome().getName())
+            .priority(categoryHome().getPriority())
             .build(),
         ExportCategory.builder()
             .name(categoryFood().getName())
             .parentCategoryName(categoryHome().getName())
+            .priority(categoryHome().getPriority())
             .build()
         )
     );
@@ -272,8 +277,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(categories, hasSize(2));
     assertThat(categories.get(0).getName(), is(input.getCategories().get(0).getName()));
     assertThat(categories.get(0).getParentCategory(), is(nullValue()));
+    assertThat(categories.get(0).getPriority(), is(input.getCategories().get(0).getPriority()));
     assertThat(categories.get(1).getName(), is(input.getCategories().get(1).getName()));
     assertThat(categories.get(1).getParentCategory().getName(), is(input.getCategories().get(1).getParentCategoryName()));
+    assertThat(categories.get(1).getPriority(), is(input.getCategories().get(1).getPriority()));
 
     List<Transaction> transactions = transactionService.getTransactions(userId);
     assertThat(transactions, hasSize(1));
@@ -437,7 +444,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(filters.get(0).getPriceFrom(), is(filterPriceFrom));
     assertThat(filters.get(0).getPriceTo(), is(filterPriceTo));
     assertThat(filters.get(0).getCategoryIds(), hasSize(1));
-    assertThat(filters.get(0).getCategoryIds().get(0), is(1L));
+    assertThat(filters.get(0).getCategoryIds().get(0), is(13L));
     assertThat(filters.get(0).getAccountIds(), hasSize(1));
     assertThat(filters.get(0).getAccountIds().get(0), is(6L));
 
@@ -485,8 +492,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .name("Pizza")
         .parentCategory(Category.builder()
             .id(foodCategoryId)
-            .build()
-        ).build(), userMarianToken);
+            .build())
+        .priority(5)
+        .build(), userMarianToken);
 
     Transaction transactionToAddFood = foodTransactionWithNoAccountAndNoCategory();
     callRestToAddTransactionAndReturnId(transactionToAddFood, jacekAccountId, foodCategoryId, userMarianToken);
@@ -531,8 +539,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("finalAccountsState[0].accountType", is("Personal")))
         .andExpect(jsonPath("categories", hasSize(2)))
         .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[0].priority", is(categoryFood().getPriority())))
         .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
         .andExpect(jsonPath("categories[1].name", is("Pizza")))
+        .andExpect(jsonPath("categories[1].priority", is(5)))
         .andExpect(jsonPath("categories[1].parentCategoryName", is(categoryFood().getName())))
         .andExpect(jsonPath("periods", hasSize(1)))
         .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
@@ -586,19 +596,23 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("historyEntries[1].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
         .andExpect(jsonPath("historyEntries[1].type", is("ADD")))
         .andExpect(jsonPath("historyEntries[1].object", is("Category")))
-        .andExpect(jsonPath("historyEntries[1].entries", hasSize(2)))
+        .andExpect(jsonPath("historyEntries[1].entries", hasSize(3)))
         .andExpect(jsonPath("historyEntries[1].entries[0].name", is("name")))
         .andExpect(jsonPath("historyEntries[1].entries[0].newValue", is("Food")))
         .andExpect(jsonPath("historyEntries[1].entries[1].name", is("parentCategory")))
         .andExpect(jsonPath("historyEntries[1].entries[1].newValue", is("Main Category")))
+        .andExpect(jsonPath("historyEntries[1].entries[2].name", is("priority")))
+        .andExpect(jsonPath("historyEntries[1].entries[2].newValue", is("3")))
         .andExpect(jsonPath("historyEntries[2].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
         .andExpect(jsonPath("historyEntries[2].type", is("ADD")))
         .andExpect(jsonPath("historyEntries[2].object", is("Category")))
-        .andExpect(jsonPath("historyEntries[2].entries", hasSize(2)))
+        .andExpect(jsonPath("historyEntries[2].entries", hasSize(3)))
         .andExpect(jsonPath("historyEntries[2].entries[0].name", is("name")))
         .andExpect(jsonPath("historyEntries[2].entries[0].newValue", is("Pizza")))
         .andExpect(jsonPath("historyEntries[2].entries[1].name", is("parentCategory")))
         .andExpect(jsonPath("historyEntries[2].entries[1].newValue", is("Food")))
+        .andExpect(jsonPath("historyEntries[2].entries[2].name", is("priority")))
+        .andExpect(jsonPath("historyEntries[2].entries[2].newValue", is("5")))
         .andExpect(jsonPath("historyEntries[3].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
         .andExpect(jsonPath("historyEntries[3].type", is("UPDATE")))
         .andExpect(jsonPath("historyEntries[3].object", is("Account")))
@@ -643,7 +657,5 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("historyEntries[5].entries[6].newValue", is("2018-03-31")))
         .andExpect(jsonPath("historyEntries[5].entries[7].name", is("description")))
         .andExpect(jsonPath("historyEntries[5].entries[7].newValue", is("Food expenses")));
-
   }
-
 }

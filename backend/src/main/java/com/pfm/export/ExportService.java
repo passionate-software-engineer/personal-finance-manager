@@ -167,6 +167,7 @@ public class ExportService {
         .stream()
         .map(category -> ExportCategory.builder()
             .name(category.getName())
+            .priority(category.getPriority())
             .parentCategoryName(category.getParentCategory() != null ? category.getParentCategory().getName() : null)
             .build()
         )

@@ -8,12 +8,14 @@ public class TestCategoryProvider {
     return Category.builder()
         .id(1L)
         .name("Car")
+        .priority(500)
         .build();
   }
 
   public static Category categoryFood() {
     return Category.builder()
         .name("Food")
+        .priority(3)
         .build();
   }
 
@@ -21,12 +23,22 @@ public class TestCategoryProvider {
     return Category.builder()
         .id(2L)
         .name("Oil")
+        .priority(9)
+        .build();
+  }
+
+  public static Category categoryGearBoxOil() {
+    return Category.builder()
+        .id(5L)
+        .name("Gear box oil")
+        .priority(12)
         .build();
   }
 
   public static Category categoryHome() {
     return Category.builder()
         .id(2L)
+        .priority(2)
         .name("Home")
         .build();
   }

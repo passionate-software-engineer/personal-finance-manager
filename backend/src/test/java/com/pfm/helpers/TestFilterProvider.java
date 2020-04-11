@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestFilterProvider {
+
   private static final LocalDate DATE_OF_1ST_MARCH_2018 = LocalDate.of(2018, 3, 1);
   private static final LocalDate DATE_OF_31ST_MARCH_2018 = LocalDate.of(2018, 3, 31);
   private static final LocalDate DATE_OF_1ST_JANUARY_2018 = LocalDate.of(2018, 1, 1);

@@ -1,6 +1,7 @@
 package com.pfm.category;
 
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
+import static com.pfm.helpers.TestCategoryProvider.categoryGearBoxOil;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -229,17 +230,21 @@ public class CategoryServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenPassedParentCategoryWhichDoesNotExist() {
+  public void shouldThrowExceptionCausedByTooManyCategoryLevels() {
     //given
-    long notExistingCategoryId = 5L;
-    when(categoryRepository.findByIdAndUserId(notExistingCategoryId, MOCK_USER_ID)).thenReturn(Optional.empty());
+    Category categoryOil = categoryOil();
+    Category categoryCar = categoryCar();
+    categoryOil.setParentCategory(categoryCar);
+    Category categoryGearBoxOil = categoryGearBoxOil();
+    categoryGearBoxOil.setParentCategory(categoryOil);
+
+    doReturn(Optional.of(categoryOil)).when(categoryRepository).findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID);
 
     //when
     Throwable exception = assertThrows(IllegalStateException.class,
-        () -> categoryService.canBeParentCategory(1, notExistingCategoryId, MOCK_USER_ID));
+        () -> categoryService.addCategory(categoryGearBoxOil, MOCK_USER_ID));
 
     //then
-    assertThat(exception.getMessage(), is(equalTo("Received parent category id (" + notExistingCategoryId + ") which does not exists in database")));
+    assertThat(exception.getMessage(), is(equalTo("Too many category levels.")));
   }
-
 }

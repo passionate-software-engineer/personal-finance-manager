@@ -21,7 +21,7 @@ public class CategoryService {
 
   public Category getCategoryFromDbByIdAndUserId(long id, long userId) {
     Optional<Category> categoryByIdAndUserId = getCategoryByIdAndUserId(id, userId);
-    if (!categoryByIdAndUserId.isPresent()) {
+    if (categoryByIdAndUserId.isEmpty()) {
       throw new IllegalStateException("CATEGORY with id : " + id + " does not exist in database");
     }
 
@@ -42,6 +42,7 @@ public class CategoryService {
 
     Category parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId)
         .orElseThrow(() -> new IllegalStateException("Cannot find parent category with id " + category.getParentCategory().getId()));
+    checkForTooManyCategoryLevels(parentCategory);
     category.setParentCategory(parentCategory);
 
     return categoryRepository.save(category);
@@ -53,25 +54,34 @@ public class CategoryService {
 
   public void updateCategory(long id, long userId, Category category) {
     Optional<Category> receivedCategory = getCategoryByIdAndUserId(id, userId);
-    if (!receivedCategory.isPresent()) {
+    if (receivedCategory.isEmpty()) {
       throw new IllegalStateException("CATEGORY with id : " + id + " does not exist in database");
     }
 
     Category categoryToUpdate = receivedCategory.get();
     categoryToUpdate.setName(category.getName());
+    categoryToUpdate.setPriority(category.getPriority());
 
     if (category.getParentCategory() == null) {
       categoryToUpdate.setParentCategory(null);
     } else {
       Optional<Category> parentCategory = getCategoryByIdAndUserId(category.getParentCategory().getId(), userId);
-      if (!parentCategory.isPresent()) {
+      if (parentCategory.isEmpty()) {
         throw new IllegalStateException("CATEGORY with id : " + category.getParentCategory().getId()
             + " does not exist in database");
       }
-      categoryToUpdate.setParentCategory(parentCategory.get());
+      Category parentCategoryAfterUpdate = parentCategory.get();
+      checkForTooManyCategoryLevels(parentCategoryAfterUpdate);
+      categoryToUpdate.setParentCategory(parentCategoryAfterUpdate);
     }
 
     categoryRepository.save(categoryToUpdate);
+  }
+
+  private void checkForTooManyCategoryLevels(Category parentCategory) {
+    if (parentCategory.getParentCategory() != null) {
+      throw new IllegalStateException("Too many category levels.");
+    }
   }
 
   public boolean isParentCategory(long id) {
@@ -80,27 +90,6 @@ public class CategoryService {
 
   public boolean idExist(long id) {
     return categoryRepository.existsById(id);
-  }
-
-  public boolean canBeParentCategory(long categoryId, long parentCategoryId, long userId) {
-    if (categoryId == parentCategoryId) {
-      return false; // got cycle - one of the parents is trying to use it's child as parent
-    }
-
-    Optional<Category> parentCategoryOptional = getCategoryByIdAndUserId(parentCategoryId, userId);
-
-    if (!parentCategoryOptional.isPresent()) {
-      throw new IllegalStateException(String.format("Received parent category id (%d) which does not exists in database", parentCategoryId));
-    }
-
-    Category parentCategory = parentCategoryOptional.get();
-
-    if (parentCategory.getParentCategory() == null) {
-      return true; // we cannot continue as parent category is null but we need it's id. No parent is trying to use this category as parent so it's ok
-    }
-
-    // TODO - PERFORMANCE - maybe it's faster to retrieve first all and then do calculations, measure and compare - good place to show measuring
-    return canBeParentCategory(categoryId, parentCategory.getParentCategory().getId(), userId);
   }
 
   public boolean isCategoryNameAlreadyUsed(String name, long userId) {

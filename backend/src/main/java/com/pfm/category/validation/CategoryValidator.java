@@ -1,14 +1,13 @@
-package com.pfm.category;
+package com.pfm.category.validation;
 
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.CATEGORY_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
-import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
-import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
-import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY;
 import static com.pfm.config.MessagesProvider.getMessage;
 
+import com.pfm.category.Category;
+import com.pfm.category.CategoryService;
 import com.pfm.filter.FilterService;
 import com.pfm.transaction.TransactionService;
 import java.util.ArrayList;
@@ -23,18 +22,16 @@ public class CategoryValidator {
 
   //TODO possible can simplify this L
 
-  private CategoryService categoryService;
-  private FilterService filterService;
-  private TransactionService transactionService;
+  private final CategoryService categoryService;
+  private final FilterService filterService;
+  private final TransactionService transactionService;
 
   public List<String> validateCategoryForUpdate(long id, long userId, Category category) {
     List<String> validationResults = new ArrayList<>();
 
-    validate(validationResults, category);
-
     Optional<Category> categoryToUpdate = categoryService.getCategoryByIdAndUserId(id, userId);
 
-    if (!categoryToUpdate.isPresent()) {
+    if (categoryToUpdate.isEmpty()) {
       throw new IllegalStateException("Category with id: " + id + " does not exist in database");
     }
 
@@ -42,44 +39,15 @@ public class CategoryValidator {
       checkForDuplicatedName(validationResults, category, userId);
     }
 
-    if (category.getParentCategory() != null
-        && category.getParentCategory().getId() != null
-        && categoryService.categoryExistByIdAndUserId(category.getParentCategory().getId(), userId)
-        && !categoryService.canBeParentCategory(id, category.getParentCategory().getId(), userId)) {
+    if (category.getParentCategory() != null && id == category.getParentCategory().getId()) {
       validationResults.add(getMessage(CATEGORIES_CYCLE_DETECTED));
     }
 
     return validationResults;
   }
 
-  public List<String> validateCategoryForAdd(Category category, long userId) {
-    List<String> validationResults = new ArrayList<>();
-
-    validate(validationResults, category);
-
-    checkForDuplicatedName(validationResults, category, userId);
-
-    return validationResults;
-  }
-
-  private void validate(List<String> validationResults, Category category) {
-    if (category.getName() == null || category.getName().trim().equals("")) {
-      validationResults.add(getMessage(EMPTY_CATEGORY_NAME));
-    }
-
-    if (category.getParentCategory() != null && category.getParentCategory().getId() == null) {
-      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY));
-    }
-
-    if (category.getParentCategory() != null && category.getParentCategory().getId() != null
-        && !categoryService.idExist(category.getParentCategory().getId())) {
-      validationResults.add(getMessage(PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST));
-    }
-  }
-
   private void checkForDuplicatedName(List<String> validationResults, Category category, long userId) {
-    if (category.getName() != null && !category.getName().trim().equals("")
-        && categoryService.isCategoryNameAlreadyUsed(category.getName(), userId)) {
+    if (categoryService.isCategoryNameAlreadyUsed(category.getName(), userId)) {
       validationResults.add(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }

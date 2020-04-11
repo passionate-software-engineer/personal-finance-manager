@@ -27,6 +27,8 @@ public class MessagesProvider {
   public static final String CATEGORY_IS_USED_IN_TRANSACTION = "categoryValidator.categoryIsUsedInTransaction";
   public static final String CATEGORY_IS_USED_IN_FILTER = "categoryValidator.categoryIsUsedInFilter";
   public static final String PROVIDED_PARENT_CATEGORY_ID_IS_EMPTY = "categoryValidator.parentCategoryIdIsEmpty";
+  public static final String TOO_MANY_CATEGORY_LEVELS = "categoryValidator.tooManyCategoryLevels";
+  public static final String CATEGORY_PRIORITY_WRONG_VALUE = "categoryValidator.categoryPriorityWrongValue";
 
   public static final String EMPTY_TRANSACTION_NAME = "transactionValidator.emptyTransactionName";
   public static final String EMPTY_TRANSACTION_CATEGORY = "transactionValidator.emptyTransactionCategory";

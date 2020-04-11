@@ -87,11 +87,11 @@ If you want to master your programming skills please visit [our website](https:/
 ## Setting up local Jenkins instance on docker
 1. Start docker container 
 
-* docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v **/your/home**:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+* docker run --name pfm-jenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v        /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
    
 2. Login to docker container
 
-* docker exec -it -u root myjenkins /bin/bash
+* docker exec -it -u root pfm-jenkins /bin/bash
 
 3. Setup privileges
 
@@ -99,13 +99,15 @@ If you want to master your programming skills please visit [our website](https:/
 
 * chmod 777 /var/run/docker.sock
 
+* exit
+
 4. Restart docker container
 
-* docker container stop myjenkins
+* docker container stop pfm-jenkins
 
-* docker container start myjenkins
+* docker container start pfm-jenkins
 
-5. Open Jenkins in webrowser (http://localhost:8080) and login with inital password
+5. Open Jenkins in the browser (http://localhost:8080) and login with initial password
 
 6. Click "Install suggested plugins" and wait until Jenkins download plugins.
 
@@ -115,13 +117,17 @@ If you want to master your programming skills please visit [our website](https:/
 
 9. Configure Docker cloud.
 
-* Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
-![Cloud Configuration details](readme/cloud-config.png)
-* Click apply.
-
 * Set docker cloud details
 ![Cloud Configuration details](readme/cloud-details.png)
 * Click save.
+
+* Manage Jenkins > Configure System > Cloud > Add new Cloud > Docker > Docker Agent Templates > Add docker template 
+![Cloud Configuration details - Template](readme/cloud-config.png)
+
+* Click on **Container settings..** and add Volumes to cache build dependencies and tools
+![Containers settings - volumes](readme/volumes-setup.png)
+
+* Click apply.
 
 10. Add new job, enter the name and select "Multibranch Pipeline".
 
@@ -144,4 +150,11 @@ If you want to master your programming skills please visit [our website](https:/
 
 14. Congrats. Your Jenkins is configured.
 
-**Hint**: Download PFM docker image with docker pull to not wait for long time until build starts.
+**Hint**: Download PFM docker image with docker pull to not wait for long time until build starts (e.g. docker pull piokol/pfm:18)
+
+## Upgrading Jenkins Core
+
+1. docker pull jenkins/jenkins:lts
+2. docker stop pfm-jenkins
+3. docker rename pfm-jenkins pfm-jenkins-old
+4. repeat steps 1-4 from [Setting up local Jenkins instance on docker](#setting-up-local-jenkins-instance-on-docker)

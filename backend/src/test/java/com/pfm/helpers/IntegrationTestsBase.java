@@ -23,8 +23,10 @@ import com.pfm.auth.User;
 import com.pfm.auth.UserDetails;
 import com.pfm.auth.UserService;
 import com.pfm.category.Category;
-import com.pfm.category.CategoryRequest;
 import com.pfm.category.CategoryService;
+import com.pfm.category.requests.CategoryAddRequest;
+import com.pfm.category.requests.CategoryRequestBase;
+import com.pfm.category.requests.CategoryUpdateRequest;
 import com.pfm.currency.Currency;
 import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult;
@@ -219,19 +221,19 @@ public abstract class IntegrationTestsBase {
   //category
   protected long callRestToAddCategoryAndReturnId(Category category, String token)
       throws Exception {
-    CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
+    CategoryAddRequest categoryRequest = convertCategoryToCategoryAddRequest(category);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
 
   protected long callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(Category category,
       long parentCategoryId, String token)
       throws Exception {
-    CategoryRequest categoryRequest = convertCategoryToCategoryRequest(category);
+    CategoryAddRequest categoryRequest = convertCategoryToCategoryAddRequest(category);
     categoryRequest.setParentCategoryId(parentCategoryId);
     return addCategoryRequestAndReturnId(categoryRequest, token);
   }
 
-  private long addCategoryRequestAndReturnId(CategoryRequest categoryRequest, String token)
+  private long addCategoryRequestAndReturnId(CategoryAddRequest categoryRequest, String token)
       throws Exception {
     String response = mockMvc
         .perform(
@@ -253,7 +255,7 @@ public abstract class IntegrationTestsBase {
     return jsonToCategory(response);
   }
 
-  protected void callRestToUpdateCategory(long id, CategoryRequest categoryRequest, String token)
+  protected void callRestToUpdateCategory(long id, CategoryRequestBase categoryRequest, String token)
       throws Exception {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + id)
@@ -288,8 +290,8 @@ public abstract class IntegrationTestsBase {
         mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
   }
 
-  protected Category convertCategoryRequestToCategoryAndSetId(long categoryId, long userId,
-      CategoryRequest categoryRequest) {
+  protected <T extends CategoryRequestBase> Category convertCategoryRequestToCategoryAndSetId(long categoryId, long userId,
+      T categoryRequest) {
     return Category.builder()
         .id(categoryId)
         .name(categoryRequest.getName())
@@ -297,14 +299,25 @@ public abstract class IntegrationTestsBase {
             : categoryService
                 .getCategoryByIdAndUserId(categoryRequest.getParentCategoryId(), userId)
                 .orElse(null))
+        .priority(categoryRequest.getPriority())
         .build();
   }
 
-  protected CategoryRequest convertCategoryToCategoryRequest(Category category) {
-    return CategoryRequest.builder()
+  protected CategoryUpdateRequest convertCategoryToCategoryUpdateRequest(Category category) {
+    return CategoryUpdateRequest.builder()
         .name(category.getName())
         .parentCategoryId(
             category.getParentCategory() == null ? null : category.getParentCategory().getId())
+        .priority(category.getPriority())
+        .build();
+  }
+
+  protected CategoryAddRequest convertCategoryToCategoryAddRequest(Category category) {
+    return CategoryAddRequest.builder()
+        .name(category.getName())
+        .parentCategoryId(
+            category.getParentCategory() == null ? null : category.getParentCategory().getId())
+        .priority(category.getPriority())
         .build();
   }
 
@@ -561,10 +574,10 @@ public abstract class IntegrationTestsBase {
 
   protected List<Currency> callRestToGetAllCurrencies(String token) throws Exception {
     String response = mockMvc.perform(get(CURRENCIES_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token))
-            .andExpect(content().contentType(JSON_CONTENT_TYPE))
-            .andExpect(status().isOk())
-            .andReturn().getResponse().getContentAsString();
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
     return getCurrenciesFromResponse(response);
   }
 
@@ -579,7 +592,7 @@ public abstract class IntegrationTestsBase {
 
   private List<Currency> getCurrenciesFromResponse(String response) throws Exception {
     return mapper.readValue(response,
-            mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
+        mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
   }
 
   //users

@@ -307,8 +307,8 @@ describe('Accounts page tests', () => {
     accountPage.navigateTo();
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), 'ING');
-    accountPage.assertAccountBalance(accountPage.accountRows().first(), '8,018.96');
-    accountPage.assertAccountBalancePLNSummary('8,018.96');
+    accountPage.assertAccountBalance(accountPage.accountRows().first(), '8,019.52');
+    accountPage.assertAccountBalancePLNSummary('8,019.52');
 
   });
 
@@ -331,9 +331,9 @@ describe('Accounts page tests', () => {
 
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('09/01/2020', 'petrol', '-32', null, 'PKO', null, 'Oil');
+    transactionPage.addTransaction('09/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
     expect(transactionPage.transactionRows().count()).toEqual(1);
-    transactionPage.assertPrices('-32.00 EUR (-135.68 PLN)', null);
+    transactionPage.assertPrices('-32.75 EUR (-138.86 PLN)', null);
 
     // then
     accountPage.navigateTo();

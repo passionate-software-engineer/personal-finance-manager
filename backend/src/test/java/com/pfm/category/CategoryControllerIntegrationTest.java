@@ -2,12 +2,15 @@ package com.pfm.category;
 
 import static com.pfm.config.MessagesProvider.CANNOT_DELETE_PARENT_CATEGORY;
 import static com.pfm.config.MessagesProvider.CATEGORIES_CYCLE_DETECTED;
+import static com.pfm.config.MessagesProvider.CATEGORY_PRIORITY_WRONG_VALUE;
 import static com.pfm.config.MessagesProvider.CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 import static com.pfm.config.MessagesProvider.PROVIDED_PARENT_CATEGORY_DOES_NOT_EXIST;
+import static com.pfm.config.MessagesProvider.TOO_MANY_CATEGORY_LEVELS;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
+import static com.pfm.helpers.TestCategoryProvider.categoryGearBoxOil;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
@@ -25,12 +28,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.category.requests.CategoryAddRequest;
+import com.pfm.category.requests.CategoryRequestBase;
+import com.pfm.category.requests.CategoryUpdateRequest;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpHeaders;
 
 public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
@@ -70,7 +77,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
     //given
-    CategoryRequest categoryToAdd = CategoryRequest.builder().name(name).build();
+    CategoryAddRequest categoryToAdd = CategoryAddRequest.builder().name(name).build();
 
     //when
     mockMvc
@@ -89,7 +96,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
     //given
     callRestToAddCategoryAndReturnId(categoryCar(), token);
-    CategoryRequest categoryToAdd = CategoryRequest.builder().name(categoryCar().getName())
+    CategoryAddRequest categoryToAdd = CategoryAddRequest.builder()
+        .name(categoryCar().getName())
         .build();
 
     //when
@@ -98,6 +106,28 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
             post(CATEGORIES_SERVICE_PATH)
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .content(json(categoryToAdd))
+                .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByNameAlreadyExistInUpdateMethod() throws Exception {
+    //given
+    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    callRestToAddCategoryAndReturnId(categoryHome(), token);
+    CategoryUpdateRequest categoryToUpdate = CategoryUpdateRequest.builder()
+        .name(categoryHome().getName())
+        .build();
+
+    //when
+    mockMvc
+        .perform(
+            put(CATEGORIES_SERVICE_PATH + "/" + categoryCarId)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .content(json(categoryToUpdate))
                 .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isBadRequest())
@@ -154,9 +184,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome(), token);
     Category categoryToUpdate = categoryHome();
     categoryToUpdate.setName("Second Home");
+    categoryToUpdate.setPriority(5);
 
     //when
-    callRestToUpdateCategory(homeCategoryId, convertCategoryToCategoryRequest(categoryToUpdate), token);
+    callRestToUpdateCategory(homeCategoryId, convertCategoryToCategoryUpdateRequest(categoryToUpdate), token);
 
     //then
     categoryToUpdate.setId(homeCategoryId);
@@ -170,8 +201,9 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     //given
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId, token);
-    CategoryRequest categoryOilToUpdate = CategoryRequest.builder()
+    CategoryUpdateRequest categoryOilToUpdate = CategoryUpdateRequest.builder()
         .name("Mannol Oil")
+        .priority(10)
         .build();
 
     //when
@@ -191,7 +223,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .header(HttpHeaders.AUTHORIZATION, token)
-            .content(json(convertCategoryToCategoryRequest(categoryOil()))).contentType(JSON_CONTENT_TYPE))
+            .content(json(convertCategoryToCategoryUpdateRequest(categoryOil()))).contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
 
@@ -199,7 +231,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided() throws Exception {
     //given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    CategoryRequest categoryToUpdate = convertCategoryToCategoryRequest(categoryCar());
+    CategoryUpdateRequest categoryToUpdate = convertCategoryToCategoryUpdateRequest(categoryCar());
     categoryToUpdate.setParentCategoryId(NOT_EXISTING_ID);
 
     //when
@@ -218,7 +250,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     long foodCategoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
 
-    CategoryRequest newCategoryContent = convertCategoryToCategoryRequest(categoryCar());
+    CategoryUpdateRequest newCategoryContent = convertCategoryToCategoryUpdateRequest(categoryCar());
     newCategoryContent.setParentCategoryId(foodCategoryId);
 
     // when // TODO require space after comment start (checkstyle) :)
@@ -230,34 +262,20 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnErrorCausedByCycling() throws Exception {
-    //given
-    long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
-    long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
-    CategoryRequest carCategoryToUpdate = CategoryRequest.builder()
-        .parentCategoryId(oilCategoryId)
-        .build();
-    carCategoryToUpdate.setName("Car");
-
-    //when
-    performUpdateRequestAndAssertCycleErrorIsReturned(carCategoryId, carCategoryToUpdate, token);
-  }
-
-  @Test
-  public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory()
-      throws Exception {
-
+  public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory() throws Exception {
     //given
     Category categoryOil = categoryOil();
     long oilCategoryId = callRestToAddCategoryAndReturnId(categoryOil, token);
-    CategoryRequest categoryOilToUpdate = CategoryRequest.builder().name(categoryOil.getName())
-        .parentCategoryId(oilCategoryId).build();
+    CategoryUpdateRequest categoryOilToUpdate = CategoryUpdateRequest.builder()
+        .name(categoryOil.getName())
+        .parentCategoryId(oilCategoryId)
+        .build();
 
     //when
     performUpdateRequestAndAssertCycleErrorIsReturned(oilCategoryId, categoryOilToUpdate, token);
   }
 
-  private void performUpdateRequestAndAssertCycleErrorIsReturned(long id, CategoryRequest categoryToUpdate, String token) throws Exception {
+  private void performUpdateRequestAndAssertCycleErrorIsReturned(long id, CategoryRequestBase categoryToUpdate, String token) throws Exception {
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + id)
             .content(json(categoryToUpdate)).contentType(JSON_CONTENT_TYPE)
@@ -265,7 +283,6 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(CATEGORIES_CYCLE_DETECTED))));
-
   }
 
   @Test
@@ -280,7 +297,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     //then
     List<Category> categories = callRestToGetAllCategories(token);
-    Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, convertCategoryToCategoryRequest(categoryHome));
+    Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, convertCategoryToCategoryAddRequest(categoryHome));
     assertThat(categories.size(), is(equalTo(1)));
     assertFalse(categories.contains(deletedCategory));
   }
@@ -319,5 +336,48 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {0, 1001})
+  public void shouldReturnValidationErrorCausedByCategoryPriorityIsOutOfRange(int priority) throws Exception {
+    //given
+    CategoryAddRequest categoryToAdd = convertCategoryToCategoryAddRequest(categoryCar());
+    categoryToAdd.setPriority(priority);
+
+    //when
+    mockMvc
+        .perform(
+            post(CATEGORIES_SERVICE_PATH)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .content(json(categoryToAdd))
+                .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(CATEGORY_PRIORITY_WRONG_VALUE))));
+  }
+
+  @Test
+  public void shouldReturnValidationErrorCausedByTooManyCategoryLevels() throws Exception {
+    //given
+    long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId, token);
+
+    CategoryAddRequest categoryToAdd = convertCategoryToCategoryAddRequest(categoryGearBoxOil());
+    categoryToAdd.setParentCategoryId(categoryOilId);
+
+    //when
+    mockMvc
+        .perform(
+            post(CATEGORIES_SERVICE_PATH)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .content(json(categoryToAdd))
+                .contentType(JSON_CONTENT_TYPE)
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(TOO_MANY_CATEGORY_LEVELS))));
+
   }
 }
