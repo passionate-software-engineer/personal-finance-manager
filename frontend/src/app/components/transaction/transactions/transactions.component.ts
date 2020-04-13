@@ -243,8 +243,24 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       this.commit(transaction);
       return;
     }
-    if (confirm(this.translate.instant(deleteDialogMessageKey))) {
-      this.commit(transaction);
+
+    var x = new Date();
+    var y = x.getFullYear().toString();
+    var m = (x.getMonth() + 1).toString();
+    var d = x.getDate().toString();
+    (d.length == 1) && (d = '0' + d);
+    (m.length == 1) && (m = '0' + m);
+    var currentDate = y + '-' + m + '-' + d;
+
+    const commitDate = prompt(this.translate.instant('transaction.commitTransaction'), currentDate);
+    if (commitDate != '') {
+      if (commitDate <= currentDate) {
+        transaction.date = new Date(commitDate);
+        this.commit(transaction);
+      }
+      else {
+        alert(this.translate.instant('message.WrongFutureDate'));
+      }
     }
   }
 
@@ -325,8 +341,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return transaction;
   }
 
-  setAsRecurrent(transaction: Transaction) {
-    const recurrencePeriod = RecurrencePeriod.EVERY_MONTH;
+  setAsRecurrent(transaction: Transaction, recurrencePeriod: RecurrencePeriod) {
     this.transactionService.setAsRecurrent(transaction, recurrencePeriod)
         .subscribe(() => {
             this.alertService.success(

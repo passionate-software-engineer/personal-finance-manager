@@ -72,7 +72,8 @@ export class TransactionService extends ServiceBase {
   }
 
   commitPlannedTransaction(transaction: Transaction) {
-    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), '', this.contentType);
+    const transactionRequest = TransactionService.transactionToTransactionRequest(transaction);
+    return this.http.patch<any>(ServiceBase.apiUrl(PATH + '/' + transaction.id), transactionRequest, this.contentType);
   }
 
   setAsRecurrent(transaction: Transaction, recurrencePeriod: RecurrencePeriod) {
