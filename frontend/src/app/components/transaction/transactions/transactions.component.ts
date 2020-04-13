@@ -246,8 +246,8 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
     const x = new Date();
     const y = x.getFullYear().toString();
-    const m = (x.getMonth() + 1).toString();
-    const d = x.getDate().toString();
+    let m = (x.getMonth() + 1).toString();
+    let d = x.getDate().toString();
     if (d.length === 1) {
       d = '0' + d;
     }

@@ -3,8 +3,8 @@ server:
   tomcat:
     use-relative-redirects: true
 
-accessTokenExpiryTimeInMinutes: 15
-refreshTokenExpiryTimeInMinutes: 60
+accessTokenExpiryTimeInMinutes: 360
+refreshTokenExpiryTimeInMinutes: 500
 
 spring:
   profiles:
