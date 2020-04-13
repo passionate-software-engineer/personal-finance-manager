@@ -244,21 +244,24 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       return;
     }
 
-    var x = new Date();
-    var y = x.getFullYear().toString();
-    var m = (x.getMonth() + 1).toString();
-    var d = x.getDate().toString();
-    (d.length == 1) && (d = '0' + d);
-    (m.length == 1) && (m = '0' + m);
-    var currentDate = y + '-' + m + '-' + d;
+    const x = new Date();
+    const y = x.getFullYear().toString();
+    const m = (x.getMonth() + 1).toString();
+    const d = x.getDate().toString();
+    if (d.length === 1) {
+      d = '0' + d;
+    }
+    if (m.length === 1) {
+      m = '0' + m;
+    }
+    const currentDate = y + '-' + m + '-' + d;
 
     const commitDate = prompt(this.translate.instant('transaction.commitTransaction'), currentDate);
-    if (commitDate != '') {
+    if (commitDate !== '') {
       if (commitDate <= currentDate) {
         transaction.date = new Date(commitDate);
         this.commit(transaction);
-      }
-      else {
+      } else {
         alert(this.translate.instant('message.WrongFutureDate'));
       }
     }
