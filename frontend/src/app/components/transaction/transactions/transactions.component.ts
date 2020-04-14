@@ -234,16 +234,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return x - y;
   }
 
-  commitPlannedTransaction(transaction: Transaction) {
-    if (!this.validateTransaction(transaction, Operation.Commit)) {
-      return;
-    }
-    const deleteDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
-    if (this.isTransactionDateCurrentDate(transaction)) {
-      this.commit(transaction);
-      return;
-    }
-
+  private getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear().toString();
     let month = (date.getMonth() + 1).toString();
@@ -255,9 +246,21 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       month = '0' + month;
     }
     const currentDate = year + '-' + month + '-' + day;
+    return currentDate;
+  }
 
-    const commitDate = prompt(this.translate.instant('transaction.commitTransaction'), currentDate);
-    if (commitDate !== '' && commitDate !== null) {
+  commitPlannedTransaction(transaction: Transaction) {
+    if (!this.validateTransaction(transaction, Operation.Commit)) {
+      return;
+    }
+    const deleteDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
+    if (this.isTransactionDateCurrentDate(transaction)) {
+      this.commit(transaction);
+      return;
+    }
+
+    const commitDate = prompt(this.translate.instant('transaction.commitTransaction'), this.getCurrentDate());
+    if (commitDate !== '' && commitDate !== null && !isNaN(new Date(commitDate).getTime())) {
       if (new Date(commitDate) <= new Date()) {
         transaction.date = new Date(commitDate);
         this.commit(transaction);
