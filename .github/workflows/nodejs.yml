@@ -29,4 +29,4 @@ jobs:
     - run: cd frontend && npm install -g tslint typescript @angular/cli protractor
     - run: cd frontend && tslint --config tslint.json --project tsconfig.json
     - run: cd frontend && ng build
-    - run: cd frontend && ng e2e
+    - run: ./scripts/run_e2e.sh
