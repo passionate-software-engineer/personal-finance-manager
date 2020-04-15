@@ -38,5 +38,5 @@ jobs:
     - run: cd frontend && npm install -g tslint typescript @angular/cli protractor protractor-retry
     - run: cd frontend && tslint --config tslint.json --project tsconfig.json
     - run: cd frontend && ng build
-    - run: chmod -R 755 .
-    - run: sudo ./scripts/run_e2e.sh
+#     - run: chmod -R 755 .
+    - run: ./scripts/run_e2e.sh
