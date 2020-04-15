@@ -29,7 +29,7 @@ jobs:
       run: cd backend && chmod +x gradlew
     - run: ls -al
     - name: Build with Gradle
-      run: cd backend && ./gradlew build
+      run: cd backend && ./gradlew build -x generateGitProperties
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
