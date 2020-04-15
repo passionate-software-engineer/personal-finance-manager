@@ -13,7 +13,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: piokol/pfm:18 
+    container: piokol/pfm:19 
 
     strategy:
       matrix:
