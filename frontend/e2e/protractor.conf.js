@@ -2,6 +2,7 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const {SpecReporter} = require('jasmine-spec-reporter');
+const retry = require('protractor-retry').retry;
 
 exports.config = {
   allScriptsTimeout: 20000,
@@ -24,12 +25,22 @@ exports.config = {
     print: function () {
     }
   },
+
   onPrepare() {
+    retry.onPrepare();
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
     jasmine.getEnv().addReporter(
       new SpecReporter({spec: {displayStacktrace: true}}));
+  },
+
+  onCleanUp : function(results) {
+    retry.onCleanUp(results);
+  },
+
+  afterLaunch : function() {
+    return retry.afterLaunch(3);
   }
 };
 

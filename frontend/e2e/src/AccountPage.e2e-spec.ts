@@ -280,7 +280,7 @@ describe('Accounts page tests', () => {
 
   });
 
-  xit('should reduce the account balance by the minus transaction inserted' , () => {
+  it('should reduce the account balance by the minus transaction inserted' , () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
@@ -312,7 +312,7 @@ describe('Accounts page tests', () => {
 
   });
 
-  xit('should display the account balance minus the inserted transaction minus' , () => {
+  it('should display the account balance minus the inserted transaction minus' , () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
