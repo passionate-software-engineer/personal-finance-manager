@@ -26,6 +26,7 @@ sed -i "s/8088/$BACKEND_PORT/g" src/environments/environment.ts
 cat src/environments/environment.ts
 
 rm -f frontend_output.log
+touch frontend_output.log
 ng serve >>frontend_output.log 2>&1 &
 
 tail -f frontend_output.log | while read LOG_LINE
@@ -35,6 +36,7 @@ do
    [[ "${LOG_LINE}" == *"ERROR in"* ]] && pkill -P $$ tail && echo "Frontend failed to start" && exit 500
 done
 
+webdriver-manager update
 protractor e2e/protractor.conf.js
 
 echo "Stopping application with pid=$backend_pid"
