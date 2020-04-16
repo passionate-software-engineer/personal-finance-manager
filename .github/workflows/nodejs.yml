@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: backend
-        path: backend
+        path: backend/build/reports
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -47,10 +47,5 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: frontend
-        path: frontend
+        path: frontend/ncu_output.txt
     - run: ./scripts/run_e2e.sh
-    - name: Archive production artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: workspace
-        path: .
