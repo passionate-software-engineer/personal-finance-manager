@@ -349,12 +349,22 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
 
   setAsRecurrent(transaction: Transaction, recurrencePeriod: RecurrencePeriod) {
     this.transactionService.setAsRecurrent(transaction, recurrencePeriod)
-        .subscribe(() => {
-            this.alertService.success(
-              this.translate.instant('message.transactionSetRecurrent'));
-            transaction.recurrencePeriod = recurrencePeriod;
-          }
-        );
+      .subscribe(() => {
+        if (recurrencePeriod === 'EVERY_DAY') {
+          this.alertService.success(
+            this.translate.instant('message.transactionSetRecurrentEveryDay'));
+        }
+        else if (recurrencePeriod === 'EVERY_WEEK') {
+          this.alertService.success(
+            this.translate.instant('message.transactionSetRecurrentEveryWeek'));
+        }
+        else if (recurrencePeriod === 'EVERY_MONTH') {
+          this.alertService.success(
+            this.translate.instant('message.transactionSetRecurrentEveryMonth'));
+        }
+        transaction.recurrencePeriod = recurrencePeriod;
+      }
+      );
   }
 
   setAsNotRecurrent(transaction: Transaction) {
