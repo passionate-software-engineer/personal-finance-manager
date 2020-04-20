@@ -77,7 +77,6 @@ pmdMain {
     ruleSets = []
 }
 
-// TODO - enable more rules
 pmdTest {
     ruleSetFiles = files("config/test-pmd-ruleset.xml")
     ruleSets = []
@@ -91,6 +90,7 @@ spotbugs {
     toolVersion = '4.0.0'
 }
 
+// TODO  - spotbugs reports syntax warnings  in  IJ - verify  how it  should be  properly configured
 spotbugsMain {
     reports {
         xml {

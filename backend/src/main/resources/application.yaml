@@ -19,7 +19,8 @@ spring:
           lob:
             non_contextual_creation: true
 
-# TODO wrap log file for days
+# TODO wrap log file every day
+# TODO gzip files older than 3 days
 logging:
   pattern:
     console: "%d [%15.15t] [%36X{Correlation-Id}] %-5p %-30.30c{3}  - %m%n"

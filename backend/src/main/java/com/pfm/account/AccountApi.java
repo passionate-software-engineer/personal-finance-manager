@@ -35,7 +35,7 @@ public interface AccountApi {
   ResponseEntity<?> addAccount(AccountRequest accountRequest);
 
   @ApiOperation(value = "Update an existing account", response = Void.class, authorizations = {@Authorization(value = BEARER)})
-  // TODO try to separate response type for each status call 200/400
+  // TODO Swagger try to separate response type for each status call 200/400
   @PutMapping(value = "/{accountId}")
   ResponseEntity<?> updateAccount(@PathVariable long accountId, AccountRequest accountRequest);
 

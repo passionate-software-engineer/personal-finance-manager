@@ -140,7 +140,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
     assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
 
-    // TODO currency change assertion
+    // TODO add assertion to validate currency change  (check what else is missing)
   }
 
   @Test

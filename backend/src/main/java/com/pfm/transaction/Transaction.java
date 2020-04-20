@@ -32,7 +32,7 @@ public final class Transaction {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  // TODO -- add Swagger annotations - type is used in getAllTransactions
+  // TODO -- add Swagger annotations - type is used in getAllTransactions,  review all  models in Swagger
   @HistoryField
   private String description;
 

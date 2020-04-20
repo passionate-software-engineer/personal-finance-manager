@@ -67,7 +67,7 @@ public abstract class IntegrationTestsBase {
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String CURRENCIES_SERVICE_PATH = "/currencies";
-  protected static final String ACCOUNT_TYPE_SERVICE_PATH = "/accountTypes"; // TODO - add test for controller
+  protected static final String ACCOUNT_TYPE_SERVICE_PATH = "/accountTypes"; // TODO - add tests for controller
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
   protected static final String COMMIT_OVERDUE = "/commitOverdue";

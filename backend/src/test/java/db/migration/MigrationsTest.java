@@ -25,7 +25,6 @@ public class MigrationsTest {
 
   @Test
   public void shouldExecuteAllMigrationsWithSuccess() {
-    // No need to check anything - migration will fail on setting NOT NULL if any account was missed.
     // TODO add check if correct currencies are added and accounts has correct default currency
     // TODO add check if correct account types are added and accounts has correct default account type
 
@@ -36,6 +35,10 @@ public class MigrationsTest {
     flyway.migrate();
 
     //then
+    assertCategoriesWereConvertedToFlatStructure();
+  }
+
+  private void assertCategoriesWereConvertedToFlatStructure() {
     assertThat(categoryRepository.findById(1L).orElseThrow().getParentCategory(), nullValue());
     assertThat(categoryRepository.findById(2L).orElseThrow().getParentCategory().getId(), is(1L));
     assertThat(categoryRepository.findById(3L).orElseThrow().getParentCategory().getId(), is(1L));
