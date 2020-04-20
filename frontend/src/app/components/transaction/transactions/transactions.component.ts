@@ -259,15 +259,23 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       return;
     }
 
-    const commitDate = prompt(this.translate.instant('transaction.commitTransaction'), this.getCurrentDate());
-    if (commitDate !== '' && commitDate !== null && !isNaN(new Date(commitDate).getTime())) {
-      if (new Date(commitDate) <= new Date()) {
-        transaction.date = new Date(commitDate);
-        this.commit(transaction);
-      } else {
-        alert(this.translate.instant('message.InvalidFutureDate'));
-      }
+    let commitDate;
+    do {
+        commitDate = prompt(this.translate.instant('transaction.commitTransaction'), this.getCurrentDate());
+        if (commitDate !== '' && commitDate !== null && !isNaN(new Date(commitDate).getTime()) && new Date(commitDate) <= new Date()) {
+          transaction.date = new Date(commitDate);
+          this.commit(transaction);
+          break;
+        } else if (new Date(commitDate) > new Date()) {
+          alert(this.translate.instant('message.InvalidFutureDate'));
+        } else if (commitDate === '' || commitDate === null) {
+          alert(this.translate.instant('message.InvalidEmptyDate'));
+          break;
+        } else {
+          alert(this.translate.instant('message.InvalidDate'));
+        }
     }
+    while (commitDate !== '' && commitDate !== null);
   }
 
   commitOverduePlannedTransaction(transaction: Transaction) {
@@ -353,12 +361,10 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
         if (recurrencePeriod === 'EVERY_DAY') {
           this.alertService.success(
             this.translate.instant('message.transactionSetRecurrentEveryDay'));
-        }
-        else if (recurrencePeriod === 'EVERY_WEEK') {
+        } else if (recurrencePeriod === 'EVERY_WEEK') {
           this.alertService.success(
             this.translate.instant('message.transactionSetRecurrentEveryWeek'));
-        }
-        else if (recurrencePeriod === 'EVERY_MONTH') {
+        } else if (recurrencePeriod === 'EVERY_MONTH') {
           this.alertService.success(
             this.translate.instant('message.transactionSetRecurrentEveryMonth'));
         }
