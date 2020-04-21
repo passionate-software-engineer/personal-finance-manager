@@ -67,7 +67,7 @@ public abstract class IntegrationTestsBase {
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
   protected static final String CURRENCIES_SERVICE_PATH = "/currencies";
-  protected static final String ACCOUNT_TYPE_SERVICE_PATH = "/accountTypes"; // TODO - add test for controller
+  protected static final String ACCOUNT_TYPE_SERVICE_PATH = "/accountTypes"; // TODO - add tests for controller
   protected static final String EXPORT_SERVICE_PATH = "/export";
   protected static final String IMPORT_SERVICE_PATH = "/import";
   protected static final String COMMIT_OVERDUE = "/commitOverdue";
@@ -108,12 +108,10 @@ public abstract class IntegrationTestsBase {
     flyway.migrate();
   }
 
-  //all
   protected String json(Object object) throws Exception {
     return mapper.writeValueAsString(object);
   }
 
-  //account
   protected long callRestServiceToAddAccountAndReturnId(Account account, String token)
       throws Exception {
     String response =
@@ -218,7 +216,6 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(response, CommitResult.class);
   }
 
-  //category
   protected long callRestToAddCategoryAndReturnId(Category category, String token)
       throws Exception {
     CategoryAddRequest categoryRequest = convertCategoryToCategoryAddRequest(category);
@@ -321,7 +318,6 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  //transaction
   private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest,
       long accountId, long categoryId,
       String token)
@@ -472,7 +468,6 @@ public abstract class IntegrationTestsBase {
         mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
-  //filters
   protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, String token)
       throws Exception {
     String response =
@@ -594,8 +589,6 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
   }
-
-  //users
 
   public long callRestToRegisterUserAndReturnUserId(User user) throws Exception {
     String response =

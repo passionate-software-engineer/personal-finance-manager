@@ -27,10 +27,10 @@ public class TransactionServiceTest {
 
   @Test
   public void shouldReturnExceptionCausedByIdDoesNotExistInDb() {
-    //given
+    // given
     when(transactionRepository.findByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> transactionService.deleteTransaction(NOT_EXISTING_ID, MOCK_USER_ID));
     assertThat(exception.getMessage(), is(equalTo("Transaction with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }

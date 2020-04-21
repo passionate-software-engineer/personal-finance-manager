@@ -508,12 +508,12 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String userZdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    //when
+    // when
     callRestToImportAllData(userZdzislawToken, exportedData);
 
     ExportResult actual = callRestToExportAllDataAndReturnExportResult(userZdzislawToken);
 
-    //then
+    // then
     assertEquals(exportedData, actual);
 
     mockMvc.perform(get(EXPORT_SERVICE_PATH)

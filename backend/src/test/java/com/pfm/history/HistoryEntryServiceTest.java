@@ -39,11 +39,11 @@ public class HistoryEntryServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByTwoArgumentsOfDifferentTypes() {
-    //given
+    // given
     Account account = new Account();
     Category category = new Category();
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       historyEntryService.addHistoryEntryOnUpdate(category, account, 1L);
     });
@@ -54,7 +54,7 @@ public class HistoryEntryServiceTest {
 
   @Test
   public void shouldFilterOutIdsFromHistoryEntries() {
-    //given
+    // given
     final ZonedDateTime date = ZonedDateTime.now();
     Transaction transaction = getTransaction();
 
@@ -118,10 +118,10 @@ public class HistoryEntryServiceTest {
         .build()
     );
 
-    //when
+    // when
     List<HistoryEntry> resultWithoutIds = historyEntryService.prepareExportHistory(historyEntries);
 
-    //then
+    // then
     assertThat(resultWithoutIds, is(expectedHistoryEntries));
 
   }

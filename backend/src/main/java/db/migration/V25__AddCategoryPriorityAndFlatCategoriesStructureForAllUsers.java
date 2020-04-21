@@ -8,12 +8,12 @@ import java.util.Map;
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;
 
-// TODO remove after fixing https://github.com/spotbugs/spotbugs/issues/756
+// remove @SuppressFBBWarnings after fixing https://github.com/spotbugs/spotbugs/issues/756
 @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
 @SuppressWarnings("checkstyle:typename")
 public class V25__AddCategoryPriorityAndFlatCategoriesStructureForAllUsers extends BaseJavaMigration {
 
-  //When method getLong() finds null value in field it returns 0
+  // When method getLong() finds null value in field it returns 0
   public static final int NULL = 0;
 
   @Override

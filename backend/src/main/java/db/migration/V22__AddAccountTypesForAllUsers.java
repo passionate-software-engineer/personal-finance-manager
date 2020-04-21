@@ -6,7 +6,7 @@ import java.sql.Statement;
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;
 
-// TODO remove after fixing https://github.com/spotbugs/spotbugs/issues/756
+// remove @SuppressFBBWarnings after fixing https://github.com/spotbugs/spotbugs/issues/756
 @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
 @SuppressWarnings("checkstyle:typename")
 public class V22__AddAccountTypesForAllUsers extends BaseJavaMigration {

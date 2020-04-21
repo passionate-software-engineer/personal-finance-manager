@@ -55,13 +55,13 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddCategory() throws Exception {
-    //when
+    // when
     Category categoryCar = categoryCar();
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar, token);
     Category categoryOil = categoryOil();
     long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil, carCategoryId, token);
 
-    //then
+    // then
     categoryCar.setId(carCategoryId);
 
     categoryOil.setId(oilCategoryId);
@@ -76,10 +76,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @MethodSource("emptyAccountNameParameters")
   public void shouldReturnErrorCauseByEmptyNameFiled(String name) throws Exception {
-    //given
+    // given
     CategoryAddRequest categoryToAdd = CategoryAddRequest.builder().name(name).build();
 
-    //when
+    // when
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
@@ -94,13 +94,13 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExist() throws Exception {
-    //given
+    // given
     callRestToAddCategoryAndReturnId(categoryCar(), token);
     CategoryAddRequest categoryToAdd = CategoryAddRequest.builder()
         .name(categoryCar().getName())
         .build();
 
-    //when
+    // when
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
@@ -115,14 +115,14 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNameAlreadyExistInUpdateMethod() throws Exception {
-    //given
+    // given
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     callRestToAddCategoryAndReturnId(categoryHome(), token);
     CategoryUpdateRequest categoryToUpdate = CategoryUpdateRequest.builder()
         .name(categoryHome().getName())
         .build();
 
-    //when
+    // when
     mockMvc
         .perform(
             put(CATEGORIES_SERVICE_PATH + "/" + categoryCarId)
@@ -137,7 +137,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetCategories() throws Exception {
-    //when
+    // when
     Category categoryCar = categoryCar();
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
 
@@ -146,7 +146,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     final List<Category> categories = callRestToGetAllCategories(token);
 
-    //then
+    // then
     categoryCar.setId(categoryCarId);
 
     categoryHome.setId(categoryHomeId);
@@ -157,11 +157,11 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetCategoryById() throws Exception {
-    //given
+    // given
     Category categoryCar = categoryCar();
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
 
-    //when
+    // when
     Category actualCarCategory = callRestToGetCategoryById(categoryCarId, token);
 
     // then
@@ -171,7 +171,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedGetMethod() throws Exception {
-    //when
+    // when
     mockMvc
         .perform(get(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .header(HttpHeaders.AUTHORIZATION, token))
@@ -180,16 +180,16 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateCategory() throws Exception {
-    //given
+    // given
     long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome(), token);
     Category categoryToUpdate = categoryHome();
     categoryToUpdate.setName("Second Home");
     categoryToUpdate.setPriority(5);
 
-    //when
+    // when
     callRestToUpdateCategory(homeCategoryId, convertCategoryToCategoryUpdateRequest(categoryToUpdate), token);
 
-    //then
+    // then
     categoryToUpdate.setId(homeCategoryId);
 
     Category result = callRestToGetCategoryById(homeCategoryId, token);
@@ -198,7 +198,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateSubCategory() throws Exception {
-    //given
+    // given
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId, token);
     CategoryUpdateRequest categoryOilToUpdate = CategoryUpdateRequest.builder()
@@ -206,10 +206,10 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .priority(10)
         .build();
 
-    //when
+    // when
     callRestToUpdateCategory(categoryOilId, categoryOilToUpdate, token);
 
-    //given
+    // given
     Category result = callRestToGetCategoryById(categoryOilId, token);
 
     final Category expected = convertCategoryRequestToCategoryAndSetId(categoryOilId, userId, categoryOilToUpdate);
@@ -219,7 +219,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedUpdateMethod() throws Exception {
-    //when
+    // when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -229,12 +229,12 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingParentCategoryIdProvided() throws Exception {
-    //given
+    // given
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     CategoryUpdateRequest categoryToUpdate = convertCategoryToCategoryUpdateRequest(categoryCar());
     categoryToUpdate.setParentCategoryId(NOT_EXISTING_ID);
 
-    //when
+    // when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + categoryId)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -253,7 +253,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     CategoryUpdateRequest newCategoryContent = convertCategoryToCategoryUpdateRequest(categoryCar());
     newCategoryContent.setParentCategoryId(foodCategoryId);
 
-    // when // TODO require space after comment start (checkstyle) :)
+    // when
     mockMvc
         .perform(put(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -263,7 +263,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedBySettingCategoryToBeSelfParentCategory() throws Exception {
-    //given
+    // given
     Category categoryOil = categoryOil();
     long oilCategoryId = callRestToAddCategoryAndReturnId(categoryOil, token);
     CategoryUpdateRequest categoryOilToUpdate = CategoryUpdateRequest.builder()
@@ -271,7 +271,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
         .parentCategoryId(oilCategoryId)
         .build();
 
-    //when
+    // when
     performUpdateRequestAndAssertCycleErrorIsReturned(oilCategoryId, categoryOilToUpdate, token);
   }
 
@@ -287,15 +287,15 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteCategory() throws Exception {
-    //given
+    // given
     Category categoryHome = categoryHome();
     long homeCategoryId = callRestToAddCategoryAndReturnId(categoryHome, token);
     callRestToAddCategoryAndReturnId(categoryOil(), token);
 
-    //when
+    // when
     callRestToDeleteCategoryById(homeCategoryId, token);
 
-    //then
+    // then
     List<Category> categories = callRestToGetAllCategories(token);
     Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, convertCategoryToCategoryAddRequest(categoryHome));
     assertThat(categories.size(), is(equalTo(1)));
@@ -304,26 +304,26 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteSubCategoryAndThenParentCategory() throws Exception {
-    //given
+    // given
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
 
-    //when
+    // when
     callRestToDeleteCategoryById(oilCategoryId, token);
     callRestToDeleteCategoryById(carCategoryId, token);
 
-    //then
+    // then
     List<Category> categories = callRestToGetAllCategories(token);
     assertThat(categories.size(), is(0));
   }
 
   @Test
   public void shouldReturnErrorCausedByTryingToDeleteParentCategoryOfSubCategory() throws Exception {
-    //given
+    // given
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), carCategoryId, token);
 
-    //when
+    // when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
@@ -332,7 +332,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedWrongIdProvidedDeleteMethod() throws Exception {
-    //when
+    // when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
@@ -341,11 +341,11 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @ValueSource(ints = {0, 1001})
   public void shouldReturnValidationErrorCausedByCategoryPriorityIsOutOfRange(int priority) throws Exception {
-    //given
+    // given
     CategoryAddRequest categoryToAdd = convertCategoryToCategoryAddRequest(categoryCar());
     categoryToAdd.setPriority(priority);
 
-    //when
+    // when
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)
@@ -360,14 +360,14 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationErrorCausedByTooManyCategoryLevels() throws Exception {
-    //given
+    // given
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     long categoryOilId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil(), categoryCarId, token);
 
     CategoryAddRequest categoryToAdd = convertCategoryToCategoryAddRequest(categoryGearBoxOil());
     categoryToAdd.setParentCategoryId(categoryOilId);
 
-    //when
+    // when
     mockMvc
         .perform(
             post(CATEGORIES_SERVICE_PATH)

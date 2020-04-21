@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@SuppressWarnings({"PMD.TooManyMethods"}) // TODO - refactr this class
+@SuppressWarnings({"PMD.TooManyMethods"}) // TODO - refactor this class
 public class ExportService {
 
   private TransactionService transactionService;
@@ -66,7 +66,6 @@ public class ExportService {
 
     result.setSumOfAllFundsAtTheBeginningOfExport(calculateSumOfFunds(result.getInitialAccountsState(), userId));
     result.setHistoryEntries(historyEntryService.prepareExportHistory(historyEntryService.getHistoryEntries(userId)));
-    // TODO export / import filters
     return result;
   }
 

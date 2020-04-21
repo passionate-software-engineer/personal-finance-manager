@@ -120,12 +120,12 @@ public class LoggingFilterTest {
 
   @Test
   public void shouldProcessNotWrappedRequest() throws ServletException, IOException {
-    //given
+    // given
 
-    //when
+    // when
     filter.doFilterInternal(request, response, mockFilterChain);
 
-    //then
+    // then
     verify(mockAppender, times(4)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
@@ -151,12 +151,12 @@ public class LoggingFilterTest {
 
   @Test
   public void shouldProcessWrappedRequest() throws ServletException, IOException {
-    //given
+    // given
 
-    //when
+    // when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
-    //then
+    // then
     verify(mockAppender, times(6)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
@@ -190,14 +190,14 @@ public class LoggingFilterTest {
 
   @Test
   public void shouldLogContentLengthWhenInvisibleContentTypeWasProvided() throws ServletException, IOException {
-    //given
+    // given
     when(request.getContentType()).thenReturn(MediaType.APPLICATION_OCTET_STREAM.toString());
     when(request.getQueryString()).thenReturn(null);
 
-    //when
+    // when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
-    //then
+    // then
     verify(mockAppender, times(6)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
@@ -231,13 +231,13 @@ public class LoggingFilterTest {
 
   @Test
   public void shouldHandleUnsupportedEncodingException() throws ServletException, IOException {
-    //given
+    // given
     when(response.getCharacterEncoding()).thenReturn("NOT_EXISTING_ENCODING");
 
-    //when
+    // when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
-    //then
+    // then
     verify(mockAppender, times(7)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
@@ -275,14 +275,14 @@ public class LoggingFilterTest {
 
   @Test
   public void shouldLogWarningAndContentLengthWhenNullContentTypeWasProvided() throws ServletException, IOException {
-    //given
+    // given
     when(request.getContentType()).thenReturn(null);
     when(request.getQueryString()).thenReturn(null);
 
-    //when
+    // when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
-    //then
+    // then
     verify(mockAppender, times(7)).doAppend(captorLoggingEvent.capture());
     final List<LoggingEvent> resultLog = captorLoggingEvent.getAllValues();
 
@@ -320,7 +320,7 @@ public class LoggingFilterTest {
 
   @Test
   public void shouldNotLogAnythingWhenIsAsyncDispatch() throws ServletException, IOException {
-    //given
+    // given
     LoggingFilter filter = new LoggingFilter() {
       @Override
       protected boolean isAsyncDispatch(HttpServletRequest request) {
@@ -328,23 +328,23 @@ public class LoggingFilterTest {
       }
     };
 
-    //when
+    // when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
-    //then
+    // then
     verify(mockAppender, never()).doAppend(captorLoggingEvent.capture());
   }
 
   @Test
   public void shouldNotLogAnythingIfErrorLevelSetForLogger() throws ServletException, IOException {
-    //given
+    // given
     final Logger logger = (Logger) LoggerFactory.getLogger(LoggingFilter.class);
     logger.setLevel(Level.ERROR);
 
-    //when
+    // when
     filter.doFilterInternal(wrappedRequest, wrappedResponse, mockFilterChain);
 
-    //then
+    // then
     assertEquals(0, captorLoggingEvent.getAllValues().size());
   }
 }

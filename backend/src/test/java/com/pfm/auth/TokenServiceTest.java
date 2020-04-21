@@ -22,7 +22,7 @@ public class TokenServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByNullAccessTokenExpiryDate() {
-    //given
+    // given
     Token accessToken = new Token("accessToken", null, 1L);
     accessTokensStorage.put(accessToken.getValue(), accessToken);
     Token refreshToken = new Token("refreshToken", ZonedDateTime.now().plusMinutes(10), 1L);
@@ -31,42 +31,42 @@ public class TokenServiceTest {
     tokensByUserId.put(1L, tokens);
     tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> tokenService.validateAccessToken(accessToken.getValue()));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("AccessToken expiry time does not exist")));
   }
 
   @Test
   public void shouldReturnFalseCausedByExpiredAccessToken() {
-    //given
+    // given
     Token token = new Token("accessToken", ZonedDateTime.now(), 1L);
     accessTokensStorage.put(token.getValue(), token);
     tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
-    //then
+    // then
     assertFalse(tokenService.validateAccessToken(token.getValue()));
   }
 
   @Test
   public void shouldThrowExceptionCausedByNotExistingToken() {
-    //given
+    // given
     String token = "Fake Tokens";
     accessTokensStorage.put(token, null);
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> tokenService.getUserIdBasedOnAccessToken("Not existing Tokens"));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Provided accessToken does not exist")));
   }
 
   @Test
   public void shouldThrowExceptionCausedByNullRefreshTokenExpiryDate() {
-    //given
+    // given
     Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(10), 1L);
     accessTokensStorage.put(accessToken.getValue(), accessToken);
     Token refreshToken = new Token("refreshToken", null, 1L);
@@ -75,41 +75,41 @@ public class TokenServiceTest {
     tokensByUserId.put(1L, tokens);
     tokenService = new TokenService(accessTokensStorage, refreshTokenStorage, tokensByUserId);
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> tokenService.isRefreshTokenValid(refreshToken.getValue()));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken expiry time does not exist")));
   }
 
   @Test
   public void shouldThrowExceptionCausedByNotExistingRefreshToken() {
-    //given
+    // given
     String token = "Fake Tokens";
     this.refreshTokenStorage.put(token, null);
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> tokenService.getUserIdBasedOnRefreshToken("Not existing token"));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Provided refreshToken does not exist")));
   }
 
   @Test
   public void shouldThrowExceptionCausedByNullRefreshTokenWhileValidatingRefreshToken() {
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> tokenService.isRefreshTokenValid(null));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("RefreshToken cannot be null")));
   }
 
   @Test
   public void shouldRemoveAllUserTokensForExpiredRefreshToken() {
-    //given
+    // given
     Token accessToken = new Token("accessToken", ZonedDateTime.now().plusMinutes(15), 1L);
     accessTokensStorage.put(accessToken.getValue(), accessToken);
 
@@ -123,10 +123,10 @@ public class TokenServiceTest {
     assertThat(accessTokensStorage.get(accessToken.getValue()), is(equalTo(accessToken)));
     assertThat(refreshTokenStorage.get(refreshToken.getValue()), is(equalTo(refreshToken)));
 
-    //when
+    // when
     tokenService.isRefreshTokenValid(refreshToken.getValue());
 
-    //then
+    // then
     assertThat(tokensByUserId.get(1L), is(nullValue()));
     assertThat(accessTokensStorage.get(accessToken.getValue()), is(nullValue()));
     assertThat(refreshTokenStorage.get(refreshToken.getValue()), is(nullValue()));

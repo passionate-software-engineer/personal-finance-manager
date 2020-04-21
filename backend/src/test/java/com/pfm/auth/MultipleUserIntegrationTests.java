@@ -55,7 +55,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilter() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -70,7 +70,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
-    //when
+    // when
     FilterRequest filterToAdd = convertFilterToFilterRequest(filterExpensesOver1000());
     filterToAdd.setCategoryIds(convertIdsToList(marianCategoryFoodId));
     filterToAdd.setAccountIds(convertIdsToList(marianAccountMbankId));
@@ -88,7 +88,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserAccountAndCategoryAddedToFilterInUpdateMethod() throws Exception {
-    //given
+    // given
     callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -105,7 +105,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(account, zdzislawToken);
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
 
-    //when
+    // when
     FilterRequest updatedFilter = convertFilterToFilterRequest(filterExpensesOver1000());
     updatedFilter.setAccountIds(convertIdsToList(zdzislawAccountIdeaId));
     updatedFilter.setCategoryIds(convertIdsToList(zdzislawCategoryHomeId));
@@ -123,7 +123,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateFilter() throws Exception {
-    //given
+    // given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -132,7 +132,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianExpensesOver1000Filter = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000(), marianToken);
 
-    //when
+    // when
     FilterRequest updatedFilter = convertFilterToFilterRequest(filterExpensesOver1000());
     updatedFilter.setName("updated name");
 
@@ -146,7 +146,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDelteFilter() throws Exception {
-    //given
+    // given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
     callRestToRegisterUserAndReturnUserId(userZdzislaw());
@@ -154,7 +154,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianExpensesOver1000Filter = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000(), marianToken);
 
-    //when
+    // when
     mockMvc
         .perform(delete(FILTERS_SERVICE_PATH + "/" + marianExpensesOver1000Filter)
             .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
@@ -163,7 +163,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateTransaction() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -180,7 +180,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     final long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
         marianCategoryFoodId, marianToken);
 
-    //when
+    // when
     TransactionRequest updatedTransaction = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
     updatedTransaction.setCategoryId(marianCategoryFoodId);
@@ -196,7 +196,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteTransaction() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -213,7 +213,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long marianFoodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), marianAccountMbankId,
         marianCategoryFoodId, marianToken);
 
-    //when
+    // when
     mockMvc
         .perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + marianFoodTransactionId)
             .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
@@ -222,7 +222,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateCategory() throws Exception {
-    //given
+    // given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -231,7 +231,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
 
-    //when
+    // when
     CategoryRequestBase updatedCategory = CategoryUpdateRequest.builder()
         .name("updatedCategory")
         .build();
@@ -246,7 +246,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteCategory() throws Exception {
-    //given
+    // given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -255,7 +255,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianCategoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), marianToken);
 
-    //when
+    // when
     mockMvc
         .perform(delete(CATEGORIES_SERVICE_PATH + "/" + marianCategoryFoodId)
             .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
@@ -264,7 +264,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToUpdateAccount() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -277,7 +277,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
-    //when
+    // when
     AccountRequest updatedAccount = AccountRequest.builder()
         .name("updated name")
         .balance(convertDoubleToBigDecimal(123))
@@ -293,7 +293,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserTryingToDeleteAccount() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -306,7 +306,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
 
-    //when
+    // when
     mockMvc
         .perform(delete(ACCOUNTS_SERVICE_PATH + "/" + marianAccountMbankId)
             .header(HttpHeaders.AUTHORIZATION, zdzislawToken))
@@ -315,7 +315,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransaction() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -329,7 +329,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(account, marianToken);
     long marianCategoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), marianToken);
 
-    //when
+    // when
     TransactionRequest transactionToAdd = helper.convertTransactionToTransactionRequest(foodTransactionWithNoAccountAndNoCategory());
     transactionToAdd.setCategoryId(marianCategoryCarId);
     transactionToAdd.getAccountPriceEntries().get(0).setAccountId(marianAccountMbankId);
@@ -347,7 +347,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserCategoryAndWrongUserCategoryAddedToTransactionInUpdateMethod() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -370,7 +370,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     long zdzislawAccountIdeaId = callRestServiceToAddAccountAndReturnId(zdzislawAccount, zdzislawToken);
     long zdzislawCategoryHomeId = callRestToAddCategoryAndReturnId(categoryHome(), zdzislawToken);
 
-    //when
+    // when
     TransactionRequest updatedTransaction = helper.convertTransactionToTransactionRequest(carTransactionWithNoAccountAndNoCategory());
     updatedTransaction.setCategoryId(zdzislawCategoryHomeId);
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(zdzislawAccountIdeaId);
@@ -388,7 +388,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedCausedByWrongToken() throws Exception {
-    //given
+    // given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, "Incorrect Access Token")
@@ -399,7 +399,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedCausedByEmptyToken() throws Exception {
-    //given
+    // given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, "")
@@ -410,7 +410,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnUnauthorizedCausedByNullToken() throws Exception {
-    //given
+    // given
     mockMvc
         .perform(post(ACCOUNTS_SERVICE_PATH)
             .content(json(convertAccountToAccountRequest(accountJacekBalance1000())))
@@ -427,7 +427,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterTwoUsersAndAddAccountsCategoriesTransaction() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     currencyService.addDefaultCurrencies(marianUserId);
     accountTypeService.addDefaultAccountTypes(marianUserId);
@@ -438,9 +438,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     accountTypeService.addDefaultAccountTypes(zdzislawUserId);
     final String zdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    //when
-
-    //marian
+    // when
     Currency marianAccountCurrency = currencyService.getCurrencies(marianUserId).get(0);
     AccountType marianAccountType = accountTypeService.getAccountTypes(marianUserId).get(0);
 
@@ -467,7 +465,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     filterExpensesOver1000ToAdd.setAccountIds(convertIdsToList(marianAccountMilleniumId, marianAccountMbankId));
     final long marianExpensesOver1000FilterId = callRestServiceToAddFilterAndReturnId(filterExpensesOver1000ToAdd, marianToken);
 
-    //zdzislaw
     Currency zdzislawAccountCurrency = currencyService.getCurrencies(zdzislawUserId).get(1);
     AccountType zdzislawAccountType = accountTypeService.getAccountTypes(zdzislawUserId).get(1);
 
@@ -494,7 +491,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     filterHomeExpensesToAdd.setCategoryIds(convertIdsToList(zdzislawCategoryHomeId));
     final long zdzislawHomeExpensesFilterId = callRestServiceToAddFilterAndReturnId(filterHomeExpensesToAdd, zdzislawToken);
 
-    //then
+    // then
     final List<Account> accountsMarian = callRestToGetAllAccounts(marianToken);
 
     marianAccountCurrency.setUserId(null); // services do not return userId - it's private information
@@ -607,7 +604,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldAccountWithTheSameNameToDifferentUsers() throws Exception {
-    //given
+    // given
     long marianUserId = callRestToRegisterUserAndReturnUserId(userMarian());
     final String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
     currencyService.addDefaultCurrencies(marianUserId);
@@ -620,7 +617,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     account.setType(accountTypeService.getAccountTypes(marianUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(marianUserId).get(0));
 
-    //when
+    // when
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, marianToken)
         .contentType(JSON_CONTENT_TYPE)
@@ -639,7 +636,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
   @Test
   public void shouldAddCategoryWithTheSameNameToDifferentUsers() throws Exception {
-    //given
+    // given
     callRestToRegisterUserAndReturnUserId(userMarian());
     String marianToken = callRestToAuthenticateUserAndReturnToken(userMarian());
 
@@ -648,7 +645,7 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     Category category = categoryCar();
 
-    //when
+    // when
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, marianToken)
         .contentType(JSON_CONTENT_TYPE)
