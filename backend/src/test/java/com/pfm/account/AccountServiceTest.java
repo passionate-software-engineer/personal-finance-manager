@@ -36,18 +36,18 @@ public class AccountServiceTest {
 
   @Test
   public void shouldGetAccountById() {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setId(1L);
 
     when(accountRepository.findByIdAndUserId(account.getId(), MOCK_USER_ID))
         .thenReturn(Optional.of(account));
 
-    //when
+    // when
     Optional<Account> returnedAccount = accountService
         .getAccountByIdAndUserId(account.getId(), MOCK_USER_ID);
 
-    //then
+    // then
     assertTrue(returnedAccount.isPresent());
 
     Account actualAccount = returnedAccount.get();
@@ -59,7 +59,7 @@ public class AccountServiceTest {
 
   @Test
   public void shouldGetAllAccounts() {
-    //given
+    // given
     Account accountJacek = accountJacekBalance1000();
     accountJacek.setId(1L);
     Account accountMbank = accountMbankBalance10();
@@ -67,10 +67,10 @@ public class AccountServiceTest {
 
     when(accountRepository.findByUserId(MOCK_USER_ID)).thenReturn(Arrays.asList(accountMbank, accountJacek));
 
-    //when
+    // when
     List<Account> actualAccountsList = accountService.getAccounts(MOCK_USER_ID);
 
-    //then
+    // then
     assertThat(actualAccountsList.size(), is(2));
 
     // accounts should be sorted by id
@@ -89,15 +89,15 @@ public class AccountServiceTest {
 
   @Test
   public void shouldSaveAccount() {
-    //given
+    // given
     Account accountToSave = accountMbankBalance10();
     accountToSave.setId(1L);
     when(accountRepository.save(accountToSave)).thenReturn(accountToSave);
 
-    //when
+    // when
     Account account = accountService.saveAccount(MOCK_USER_ID, accountToSave);
 
-    //then
+    // then
     assertNotNull(account);
     assertThat(account.getId(), is(equalTo(accountToSave.getId())));
     assertThat(account.getName(), is(equalTo(accountToSave.getName())));
@@ -106,18 +106,18 @@ public class AccountServiceTest {
 
   @Test
   public void shouldDeleteAccount() {
-    //given
+    // given
 
-    //when
+    // when
     accountService.deleteAccount(1L);
 
-    //then
+    // then
     verify(accountRepository, times(1)).deleteById(1L);
   }
 
   @Test
   public void shouldUpdateAccount() {
-    //given
+    // given
 
     Account updatedAccount = Account.builder()
         .balance(BigDecimal.TEN)
@@ -126,20 +126,20 @@ public class AccountServiceTest {
 
     when(accountRepository.findByIdAndUserId(1L, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));
 
-    //when
+    // when
     accountService.updateAccount(1L, MOCK_USER_ID, updatedAccount);
 
-    //then
+    // then
     verify(accountRepository, times(1)).save(updatedAccount);
   }
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
-    //given
+    // given
     long id = 1;
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       accountService.updateAccount(id, MOCK_USER_ID, accountMbankBalance10());
     });
@@ -150,11 +150,11 @@ public class AccountServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInGetMethod() {
-    //given
+    // given
     long id = 1;
     when(accountRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       accountService.getAccountFromDbByIdAndUserId(id, MOCK_USER_ID);
     });

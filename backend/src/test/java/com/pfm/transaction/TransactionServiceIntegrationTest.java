@@ -186,7 +186,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfTransactionExistByAccountId() {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
     account.setType(accountTypeService.getAccountTypes(userId).get(2));
@@ -207,7 +207,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
     Long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
 
-    //when
+    // when
     assertTrue(transactionService.transactionExistByAccountId(savedAccount.getId()));
 
     transactionService.deleteTransaction(transactionId, userId);
@@ -218,7 +218,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfTransactionExistByCategoryId() {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setUserId(userId);
     account.setType(accountTypeService.getAccountTypes(userId).get(1));
@@ -239,7 +239,7 @@ public class TransactionServiceIntegrationTest extends IntegrationTestsBase {
 
     Long transactionId = transactionService.addTransaction(userId, transaction, false).getId();
 
-    //when
+    // when
     assertTrue(transactionService.transactionExistByCategoryId(categoryId));
 
     transactionService.deleteTransaction(transactionId, userId);

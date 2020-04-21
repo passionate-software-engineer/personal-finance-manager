@@ -57,7 +57,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenAccountAddFailed() {
-    //given
+    // given
     Account account = accountMbankBalance10();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), anyLong());
     when(currencyService.findCurrencyByIdAndUserId(anyLong(), anyLong())).thenReturn(Optional.of(new Currency()));
@@ -71,13 +71,13 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(accountService.getAccounts(userId), hasSize(0));
   }
 
   @Test
   void shouldRollbackTransactionWhenAccountUpdateFailed() {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -98,14 +98,14 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
 
   }
 
   @Test
   void shouldRollbackTransactionWhenAccountDeleteFailed() {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -121,7 +121,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
   }
 }

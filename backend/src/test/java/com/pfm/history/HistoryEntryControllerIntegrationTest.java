@@ -50,17 +50,17 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingAccount() throws Exception {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
 
     callRestServiceToAddAccountAndReturnId(account, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -92,7 +92,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingAccount() throws Exception {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -106,10 +106,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     callRestToUpdateAccount(accountId, convertAccountToAccountRequest(updatedAccount), token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -145,7 +145,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingAccount() throws Exception {
-    //given
+    // given
     Account account = accountMbankBalance10();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -153,10 +153,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     callRestToDeleteAccountById(accountId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -188,14 +188,14 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingCategoryWithNoParentCategory() throws Exception {
-    //given
+    // given
     Category category = categoryOil();
     callRestToAddCategoryAndReturnId(category, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -226,7 +226,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingCategoryWithParentCategory() throws Exception {
-    //given
+    // given
     Category category = categoryOil();
     Category parentCategory = categoryCar();
     final long parentCategoryId = callRestToAddCategoryAndReturnId(parentCategory, token);
@@ -236,10 +236,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestToAddCategoryAndReturnId(category, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -270,7 +270,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingCategory() throws Exception {
-    //given
+    // given
     Category category = categoryOil();
     Category parentCategory = categoryCar();
 
@@ -288,10 +288,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestToUpdateCategory(categoryId, convertCategoryToCategoryUpdateRequest(updatedCategory), token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -325,16 +325,16 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingCategory() throws Exception {
-    //given
+    // given
     Category category = categoryOil();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
     callRestToDeleteCategoryById(categoryId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosExpected = new ArrayList<>();
 
     historyInfosExpected.add(HistoryInfo.builder()
@@ -365,7 +365,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingTransaction() throws Exception {
-    //given
+    // given
     Category category = categoryCar();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
@@ -378,10 +378,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     Transaction transaction = carTransactionWithNoAccountAndNoCategory();
     callRestToAddTransactionAndReturnId(transaction, accountId, categoryId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
 
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
@@ -449,7 +449,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingPlannedTransaction() throws Exception {
-    //given
+    // given
     Category category = categoryCar();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
@@ -462,10 +462,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     Transaction plannedTransaction = carPlannedTransactionWithNoAccountAndNoCategory();
     callRestToAddTransactionAndReturnId(plannedTransaction, accountId, categoryId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
     historyInfosOfAddingTransactionExpected.add(HistoryInfo.builder()
@@ -503,7 +503,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingPlannedTransaction() throws Exception {
-    //given
+    // given
     Category category = categoryCar();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
@@ -517,10 +517,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     long transactionId = callRestToAddTransactionAndReturnId(plannedTransaction, accountId, categoryId, token);
     callRestToDeleteTransactionById(transactionId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     final List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
     List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
@@ -589,7 +589,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingTransaction() throws Exception {
-    //given
+    // given
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
@@ -627,10 +627,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestToUpdateTransactionAndReturnCommitResult(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
 
     historyInfosOfUpdatingTransactionExpected.add(HistoryInfo.builder()
@@ -761,7 +761,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingPlannedTransaction() throws Exception {
-    //given
+    // given
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     final long categoryFoodId = callRestToAddCategoryAndReturnId(categoryFood(), token);
 
@@ -796,10 +796,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestToUpdateTransactionAndReturnCommitResult(transactionId, helper.convertTransactionToTransactionRequest(updatedTransaction), token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     final List<HistoryInfo> historyInfosOfUpdatingTransactionExpected = new ArrayList<>();
     final List<HistoryInfo> historyInfosOfAddingTransactionExpected = new ArrayList<>();
 
@@ -872,7 +872,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingTransaction() throws Exception {
-    //given
+    // given
     Category category = categoryCar();
     final long categoryId = callRestToAddCategoryAndReturnId(category, token);
 
@@ -886,10 +886,10 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     final long transactionId = callRestToAddTransactionAndReturnId(transaction, accountId, categoryId, token);
     callRestToDeleteTransactionById(transactionId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
-    //then
+    // then
     List<HistoryInfo> historyInfosOfDeletingTransactionExpected = new ArrayList<>();
 
     historyInfosOfDeletingTransactionExpected.add(HistoryInfo.builder()
@@ -957,7 +957,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfAddingFilter() throws Exception {
-    //given
+    // given
     Category categoryCar = categoryCar();
     Category categoryFood = categoryFood();
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
@@ -981,7 +981,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestServiceToAddFilterAndReturnId(convertFilterToFilterRequest(filter), token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     List<HistoryInfo> historyInfosOfAddingFilterExpected = new ArrayList<>();
@@ -1044,7 +1044,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfUpdatingFilter() throws Exception {
-    //given
+    // given
     Category categoryCar = categoryCar();
     Category categoryFood = categoryFood();
     final long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
@@ -1077,7 +1077,7 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestServiceToUpdateFilter(filterId, convertFilterToFilterRequest(updatedFilter), token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     List<HistoryInfo> historyInfosOfUpdatingFilterExpected = new ArrayList<>();
@@ -1148,13 +1148,13 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnHistoryOfDeletingFilter() throws Exception {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     final long filterId = callRestServiceToAddFilterAndReturnId(convertFilterToFilterRequest(filter), token);
 
     callRestToDeleteFilterById(filterId, token);
 
-    //when
+    // when
     final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
 
     List<HistoryInfo> historyInfosOfDeletingFilterExpected = new ArrayList<>();

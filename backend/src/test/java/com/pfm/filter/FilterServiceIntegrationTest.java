@@ -46,7 +46,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfFilterExistByAccountId() {
-    //given
+    // given
     currencyService.addDefaultCurrencies(userId);
     accountTypeService.addDefaultAccountTypes(userId);
 
@@ -60,7 +60,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
     filter.setAccountIds(Collections.singletonList(accountId));
     long filterId = filterService.addFilter(userId, filter).getId();
 
-    //when
+    // when
     assertTrue(filterService.filterExistByAccountId(accountId));
 
     filterService.deleteFilter(filterId);
@@ -70,7 +70,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCheckIfFilterExistByCategoryId() {
-    //given
+    // given
     Category category = categoryCar();
     Long categoryId = categoryService.addCategory(category, userId).getId();
 
@@ -78,7 +78,7 @@ public class FilterServiceIntegrationTest extends IntegrationTestsBase {
     filter.setCategoryIds(Collections.singletonList(categoryId));
     long filterId = filterService.addFilter(userId, filter).getId();
 
-    //when
+    // when
     assertTrue(filterService.filterExistByCategoryId(categoryId));
 
     filterService.deleteFilter(filterId);

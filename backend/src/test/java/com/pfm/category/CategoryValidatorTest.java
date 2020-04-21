@@ -27,15 +27,15 @@ public class CategoryValidatorTest {
 
   @Test
   public void validateCategoryForUpdate() {
-    //given
+    // given
     long id = 1L;
     when(categoryService.getCategoryByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> categoryValidator.validateCategoryForUpdate(id, MOCK_USER_ID, new Category()));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Category with id: " + id + " does not exist in database")));
   }
 }

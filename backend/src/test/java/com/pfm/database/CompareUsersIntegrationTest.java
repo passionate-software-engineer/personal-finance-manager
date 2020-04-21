@@ -92,10 +92,10 @@ public class CompareUsersIntegrationTest extends IntegrationTestsBase {
     long userZdzislawId = callRestToRegisterUserAndReturnUserId(userZdzislaw());
     String userZdzislawToken = callRestToAuthenticateUserAndReturnToken(userZdzislaw());
 
-    //when
+    // when
     callRestToImportAllData(userZdzislawToken, exportedData);
 
-    //then
+    // then
     final List<AccountQueryResult> userMarianAccounts = getAccountsFromDb(userMarianId, jdbcTemplate);
     final List<AccountQueryResult> userZdzislawAccounts = getAccountsFromDb(userZdzislawId, jdbcTemplate);
 

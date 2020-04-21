@@ -39,14 +39,14 @@ public final class Filter {
   @ElementCollection
   @Column(name = "account_id")
   @HistoryField(fieldType = SpecialFieldType.ACCOUNT_IDS)
-  @ApiModelProperty(value = "Account ids", dataType="List", example = "1, 3, 17")
+  @ApiModelProperty(value = "Account ids", dataType = "List", example = "1, 3, 17")
   private List<Long> accountIds;
 
   @LazyCollection(LazyCollectionOption.FALSE)
   @ElementCollection
   @Column(name = "category_id")
   @HistoryField(fieldType = SpecialFieldType.CATEGORY_IDS)
-  @ApiModelProperty(value = "Category ids", dataType="List", example = "11, 23, 217")
+  @ApiModelProperty(value = "Category ids", dataType = "List", example = "11, 23, 217")
   private List<Long> categoryIds;
 
   @ApiModelProperty(value = "Price from", example = "10")

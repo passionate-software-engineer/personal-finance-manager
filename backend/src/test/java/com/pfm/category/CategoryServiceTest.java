@@ -38,14 +38,14 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldGetCategoryById() {
-    //given
+    // given
     Category categoryCar = categoryCar();
     when(categoryRepository.findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID)).thenReturn(Optional.of(categoryCar));
 
-    //when
+    // when
     Category result = categoryService.getCategoryByIdAndUserId(categoryCar.getId(), MOCK_USER_ID).orElse(null);
 
-    //then
+    // then
     verify(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
     assertNotNull(result);
     assertThat(result.getId(), is(equalTo(categoryCar.getId())));
@@ -55,15 +55,15 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldGetCategories() {
-    //given
+    // given
     Category categoryCar = categoryCar();
     Category categoryHome = categoryHome();
     when(categoryRepository.findByUserId(MOCK_USER_ID)).thenReturn(new ArrayList<>(Arrays.asList(categoryCar, categoryHome)));
 
-    //when
+    // when
     List<Category> result = categoryService.getCategories(MOCK_USER_ID);
 
-    //then
+    // then
     verify(categoryRepository).findByUserId(MOCK_USER_ID);
     assertNotNull(result);
     assertThat(result.size(), is(2));
@@ -72,20 +72,20 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldAddCategory() {
-    //given
+    // given
     Category category = categoryCar();
     when(categoryRepository.save(category)).thenReturn(category);
 
-    //when
+    // when
     categoryService.addCategory(category, MOCK_USER_ID);
 
-    //then
+    // then
     verify(categoryRepository).save(category);
   }
 
   @Test
   public void shouldThrowIllegalStateExceptionWhenNotExistingParentIdWasProvided() {
-    //given
+    // given
     Category category = Category.builder()
         .name("does not matter")
         .parentCategory(
@@ -97,13 +97,13 @@ public class CategoryServiceTest {
 
     Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.addCategory(category, MOCK_USER_ID));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Cannot find parent category with id -1")));
   }
 
   @Test
   public void shouldAddCategoryWithParentCategory() {
-    //given
+    // given
     Category categoryCar = categoryCar();
     doReturn(categoryCar).when(categoryRepository).save(categoryCar);
     doReturn(Optional.of(categoryCar)).when(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
@@ -112,11 +112,11 @@ public class CategoryServiceTest {
     categoryOil.setParentCategory(categoryCar);
     doReturn(categoryOil).when(categoryRepository).save(categoryOil);
 
-    //when
+    // when
     categoryService.addCategory(categoryCar, MOCK_USER_ID);
     categoryService.addCategory(categoryOil, MOCK_USER_ID);
 
-    //then
+    // then
     verify(categoryRepository).save(categoryCar);
     verify(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
     verify(categoryRepository).save(categoryOil);
@@ -124,28 +124,28 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldDeleteCategory() {
-    //given
+    // given
     long id = 1;
     doNothing().when(categoryRepository).deleteById(id);
 
-    //when
+    // when
     categoryService.deleteCategory(id);
 
-    //then
+    // then
     verify(categoryRepository).deleteById(id);
   }
 
   @Test
   public void shouldUpdateCategory() {
-    //given
+    // given
     Category category = categoryCar();
     when(categoryRepository.findByIdAndUserId(category.getId(), MOCK_USER_ID)).thenReturn(Optional.of(category));
     when(categoryRepository.save(category)).thenReturn(category);
 
-    //when
+    // when
     categoryService.updateCategory(category.getId(), MOCK_USER_ID, category);
 
-    //then
+    // then
     verify(categoryRepository).findByIdAndUserId(category.getId(), MOCK_USER_ID);
     verify(categoryRepository).save(category);
 
@@ -153,7 +153,7 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldUpdateCategoryWithParentCategory() {
-    //given
+    // given
     Category categoryCar = categoryCar();
     Category categoryOil = categoryOil();
     categoryOil.setParentCategory(categoryCar);
@@ -161,10 +161,10 @@ public class CategoryServiceTest {
     doReturn(Optional.of(categoryCar)).when(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
     doReturn(categoryOil).when(categoryRepository).save(categoryOil);
 
-    //when
+    // when
     categoryService.updateCategory(categoryOil.getId(), MOCK_USER_ID, categoryOil);
 
-    //then
+    // then
     verify(categoryRepository).findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID);
     verify(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
     verify(categoryRepository).save(categoryOil);
@@ -172,35 +172,35 @@ public class CategoryServiceTest {
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
-    //given
+    // given
     long id = 1;
     when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       categoryService.getCategoryFromDbByIdAndUserId(id, MOCK_USER_ID);
     });
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + id + " does not exist in database")));
   }
 
   @Test
   public void shouldThrowExceptionCausedByIdNotExistInGetMethod() {
-    //given
+    // given
     long id = 1;
     when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.updateCategory(id, MOCK_USER_ID, new Category()));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + id + " does not exist in database")));
   }
 
   @Test
   public void shouldThrowExceptionCausedByIdOfParentCategoryNotExist() {
-    //given
+    // given
     Category categoryOil = categoryOil();
     Category categoryCar = categoryCar();
     categoryOil.setParentCategory(categoryCar);
@@ -208,30 +208,30 @@ public class CategoryServiceTest {
     doReturn(Optional.of(categoryOil)).when(categoryRepository).findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID);
     doReturn(Optional.empty()).when(categoryRepository).findByIdAndUserId(categoryCar.getId(), MOCK_USER_ID);
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> categoryService.updateCategory(categoryOil.getId(), MOCK_USER_ID, categoryOil));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + categoryCar.getId() + " does not exist in database")));
   }
 
   @Test
   public void shouldCheckIfCategoryExist() {
-    //given
+    // given
     long id = 1;
     when(categoryRepository.existsById(id)).thenReturn(true);
 
-    //when
+    // when
     categoryService.idExist(id);
 
-    //then
+    // then
     verify(categoryRepository).existsById(id);
   }
 
   @Test
   public void shouldThrowExceptionCausedByTooManyCategoryLevels() {
-    //given
+    // given
     Category categoryOil = categoryOil();
     Category categoryCar = categoryCar();
     categoryOil.setParentCategory(categoryCar);
@@ -240,11 +240,11 @@ public class CategoryServiceTest {
 
     doReturn(Optional.of(categoryOil)).when(categoryRepository).findByIdAndUserId(categoryOil.getId(), MOCK_USER_ID);
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class,
         () -> categoryService.addCategory(categoryGearBoxOil, MOCK_USER_ID));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Too many category levels.")));
   }
 }

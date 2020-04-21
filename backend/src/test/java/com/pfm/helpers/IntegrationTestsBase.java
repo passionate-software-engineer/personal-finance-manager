@@ -108,12 +108,10 @@ public abstract class IntegrationTestsBase {
     flyway.migrate();
   }
 
-  //all
   protected String json(Object object) throws Exception {
     return mapper.writeValueAsString(object);
   }
 
-  //account
   protected long callRestServiceToAddAccountAndReturnId(Account account, String token)
       throws Exception {
     String response =
@@ -218,7 +216,6 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(response, CommitResult.class);
   }
 
-  //category
   protected long callRestToAddCategoryAndReturnId(Category category, String token)
       throws Exception {
     CategoryAddRequest categoryRequest = convertCategoryToCategoryAddRequest(category);
@@ -321,7 +318,6 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  //transaction
   private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest,
       long accountId, long categoryId,
       String token)
@@ -472,7 +468,6 @@ public abstract class IntegrationTestsBase {
         mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
   }
 
-  //filters
   protected long callRestServiceToAddFilterAndReturnId(FilterRequest filterRequest, String token)
       throws Exception {
     String response =
@@ -594,8 +589,6 @@ public abstract class IntegrationTestsBase {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Currency.class));
   }
-
-  //users
 
   public long callRestToRegisterUserAndReturnUserId(User user) throws Exception {
     String response =

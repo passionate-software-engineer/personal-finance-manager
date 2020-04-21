@@ -54,15 +54,15 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForTransaction() {
-    //given
+    // given
     Transaction transaction = getTransaction();
     when(categoryService.getCategoryFromDbByIdAndUserId(1L, 1L)).thenReturn(categoryCar());
     when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(transaction, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
@@ -86,7 +86,7 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForFilter() {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     filter.setCategoryIds(convertIdsToList(1L, 2L));
     filter.setAccountIds(convertIdsToList(1L, 2L));
@@ -98,10 +98,10 @@ class HistoryInfoProviderTest {
     lenient().when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
     lenient().when(accountService.getAccountFromDbByIdAndUserId(2L, 1L)).thenReturn(accountIngBalance9999());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(filter, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("name")
@@ -141,14 +141,14 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForCategory() {
-    //given
+    // given
     Category category = categoryOil();
     category.setParentCategory(categoryCar());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(category, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("name")
@@ -168,13 +168,13 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnAddForCategoryWithNoParentCategory() {
-    //given
+    // given
     Category category = categoryCar();
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnAdd(category, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("name")
@@ -194,16 +194,16 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnUpdateForCategory() {
-    //given
+    // given
     Category category = categoryOil();
     category.setParentCategory(categoryCar());
     category.setPriority(900);
     Category updatedCategory = categoryOil();
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnUpdate(category, updatedCategory, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("name")
@@ -226,7 +226,7 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnUpdateForFilter() {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     filter.setCategoryIds(convertIdsToList(1L));
     filter.setAccountIds(convertIdsToList(1L));
@@ -248,10 +248,10 @@ class HistoryInfoProviderTest {
     lenient().when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
     lenient().when(accountService.getAccountFromDbByIdAndUserId(2L, 1L)).thenReturn(accountIngBalance9999());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnUpdate(filter, updatedFilter, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("name")
@@ -299,7 +299,7 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnUpdateForTransaction() {
-    //given
+    // given
     Transaction transaction = getTransaction();
     Transaction updatedTransaction = getTransactionWithNewValues();
 
@@ -309,10 +309,10 @@ class HistoryInfoProviderTest {
     lenient().when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
     lenient().when(accountService.getAccountFromDbByIdAndUserId(2L, 1L)).thenReturn(accountIngBalance9999());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnUpdate(transaction, updatedTransaction, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
@@ -341,15 +341,15 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnDeleteForTransaction() {
-    //given
+    // given
     Transaction transaction = getTransaction();
     when(categoryService.getCategoryFromDbByIdAndUserId(1L, 1L)).thenReturn(categoryFood());
     when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnDelete(transaction, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
@@ -373,7 +373,7 @@ class HistoryInfoProviderTest {
 
   @Test
   void createHistoryEntryOnDeleteForFilter() {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     filter.setCategoryIds(convertIdsToList(1L, 2L));
     filter.setAccountIds(convertIdsToList(1L, 2L));
@@ -387,10 +387,10 @@ class HistoryInfoProviderTest {
     lenient().when(accountService.getAccountFromDbByIdAndUserId(1L, 1L)).thenReturn(accountMbankBalance10());
     lenient().when(accountService.getAccountFromDbByIdAndUserId(2L, 1L)).thenReturn(accountIngBalance9999());
 
-    //when
+    // when
     final List<HistoryInfo> historyInfos = historyInfoProvider.createHistoryEntryOnDelete(filter, USER_ID);
 
-    //then
+    // then
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("name")

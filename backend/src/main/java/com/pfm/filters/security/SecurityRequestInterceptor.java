@@ -18,7 +18,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @CrossOrigin
 public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
 
-  //TODO this should be done with spring security and JWT
+  // TODO this should be done with spring security and JWT
   private static final String pattern = "(/users/.*|.*swagger.*|/error|/)";
   private static final Logger logger = LoggerFactory.getLogger(SecurityRequestInterceptor.class.getName());
 

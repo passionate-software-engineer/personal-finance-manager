@@ -28,13 +28,13 @@ public class MigrationsTest {
     // TODO add check if correct currencies are added and accounts has correct default currency
     // TODO add check if correct account types are added and accounts has correct default account type
 
-    //given
+    // given
     flyway.clean();
 
-    //when
+    // when
     flyway.migrate();
 
-    //then
+    // then
     assertCategoriesWereConvertedToFlatStructure();
   }
 

@@ -46,10 +46,10 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterUser() throws Exception {
-    //given
+    // given
     User user = userMarian();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -58,12 +58,12 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByUsernameAlreadyExist() throws Exception {
-    //given
+    // given
     User user = userMarian();
 
     callRestToRegisterUserAndReturnUserId(user);
 
-    //then
+    // then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -74,14 +74,14 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByUsernameAlreadyExistDifferentLettersSize() throws Exception {
-    //given
+    // given
     User user = userMarian();
 
     callRestToRegisterUserAndReturnUserId(user);
 
     user.setUsername(user.getUsername().toUpperCase());
 
-    //then
+    // then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -92,11 +92,11 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldValidateUser() throws Exception {
-    //given
+    // given
     User user = userMarian();
     callRestToRegisterUserAndReturnUserId(user);
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -105,10 +105,10 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingUser() throws Exception {
-    //given
+    // given
     User user = userMarian();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -118,11 +118,11 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByWrongUserPassword() throws Exception {
-    //given
+    // given
     User user = userMarian();
     callRestToRegisterUserAndReturnUserId(user);
 
-    //when
+    // when
     user.setPassword("Wrong password");
 
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
@@ -134,10 +134,10 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNullUserPasswordUsernameFirstNameLastName() throws Exception {
-    //given
+    // given
     User user = User.builder().build();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -151,7 +151,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyUserPasswordUsernameFirstNameLastName() throws Exception {
-    //given
+    // given
     User user = User.builder()
         .firstName("   ")
         .lastName("      ")
@@ -159,7 +159,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .username("   ")
         .build();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -173,7 +173,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorsCausedByTooLongUserPasswordUsernameFirstNameLastName() throws Exception {
-    //given
+    // given
     User user = User.builder()
         .firstName("A".repeat(UserValidator.FIRST_NAME_MAX_LENGTH + 1))
         .lastName("B".repeat(UserValidator.LAST_NAME_MAX_LENGTH + 1))
@@ -181,7 +181,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .username("D".repeat(UserValidator.USERNAME_MAX_LENGTH + 1))
         .build();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -195,7 +195,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldRegisterUserCorrectlyWithMaxAllowedPasswordUsernameFirstNameLastNameLength() throws Exception {
-    //given
+    // given
     User user = User.builder()
         .firstName("A".repeat(UserValidator.FIRST_NAME_MAX_LENGTH))
         .lastName("B".repeat(UserValidator.LAST_NAME_MAX_LENGTH))
@@ -203,7 +203,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .username("D".repeat(UserValidator.USERNAME_MAX_LENGTH))
         .build();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -213,13 +213,13 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @MethodSource("usernameAndPasswordWithWhitespaces")
   public void shouldReturnErrorCausedByWhiteSpacesInUsernameAndPassword(String username, String password) throws Exception {
-    //given
+    // given
     User user = User.builder()
         .username(username)
         .password(password)
         .build();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
@@ -231,11 +231,11 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnBadRequestForNullRefreshTokenDuringRefreshRequest() throws Exception {
-    //given
+    // given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
         .content(json(null)))
@@ -245,12 +245,12 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnNewAccessTokenOnSuccessfulRefreshRequest() throws Exception {
-    //given
+    // given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
     String refreshToken = tokens.getRefreshToken().getValue();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
         .content(refreshToken))
@@ -262,12 +262,12 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnCorrectTokenAndRemoveOldOneFromTokensStore() throws Exception {
-    //given
+    // given
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     Tokens tokens = callRestToAuthenticateUserAndReturnTokens(userMarian());
     String refreshToken = tokens.getRefreshToken().getValue();
 
-    //when
+    // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
         .contentType(JSON_CONTENT_TYPE)
         .content(refreshToken))

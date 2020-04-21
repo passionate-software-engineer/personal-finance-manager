@@ -39,7 +39,7 @@ public class TopologicalSortProvider {
       }
     }
 
-    //Check to see if all edges are removed
+    // Check to see if all edges are removed
     for (Node<T> node : graph.getNodes()) {
       if (!node.getInEdges().isEmpty()) {
         throw new IllegalStateException("Cycle detected, topological sort not possible");

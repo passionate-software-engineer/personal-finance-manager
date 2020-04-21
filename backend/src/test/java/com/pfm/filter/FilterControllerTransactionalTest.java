@@ -43,7 +43,7 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenFilterAddFailed() {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
@@ -55,13 +55,13 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(filterService.getAllFilters(userId), hasSize(0));
   }
 
   @Test
   void shouldRollbackTransactionWhenFilterUpdateFailed() {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     final Long filterId = filterService.addFilter(userId, filter).getId();
 
@@ -78,14 +78,14 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
 
   }
 
   @Test
   void shouldRollbackTransactionWhenFilterDeleteFailed() {
-    //given
+    // given
     Filter filter = filterFoodExpenses();
     final Long filterId = filterService.addFilter(userId, filter).getId();
 
@@ -99,7 +99,7 @@ class FilterControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
   }
 }

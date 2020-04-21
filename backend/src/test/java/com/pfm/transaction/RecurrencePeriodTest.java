@@ -9,13 +9,13 @@ class RecurrencePeriodTest {
 
   @Test
   void shouldReturnNullForNotRecurrentEnumLiteral() {
-    //given
+    // given
     LocalDate expected = null;
 
-    //when
+    // when
     final LocalDate actual = RecurrencePeriod.NONE.getNextOccurrenceDate();
 
-    //then
+    // then
     assertEquals(actual, expected);
   }
 }

@@ -13,7 +13,7 @@ import org.flywaydb.core.api.migration.Context;
 @SuppressWarnings("checkstyle:typename")
 public class V25__AddCategoryPriorityAndFlatCategoriesStructureForAllUsers extends BaseJavaMigration {
 
-  //When method getLong() finds null value in field it returns 0
+  // When method getLong() finds null value in field it returns 0
   public static final int NULL = 0;
 
   @Override
