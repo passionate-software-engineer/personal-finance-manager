@@ -38,7 +38,7 @@ class CurrencyServiceTest {
       currencyService.getCurrencyByIdAndUserId(currencyId, userId);
     });
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo(String.format(getMessage(ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST), currencyId))));
   }
 

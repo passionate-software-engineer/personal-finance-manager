@@ -32,30 +32,30 @@ public class AccountValidatorTest {
 
   @Test
   public void validateAccountForUpdate() {
-    //given
+    // given
     long id = 1;
 
-    //when
+    // when
     when(accountService.getAccountByIdAndUserId(id, MOCK_USER_ID))
         .thenReturn(Optional.empty());
 
     Throwable exception = assertThrows(IllegalStateException.class, () -> accountValidator.validateAccountForUpdate(id, MOCK_USER_ID, new Account()));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Account with id: " + id + " does not exist in database")));
   }
 
   @Test
   public void shouldReturnValidationErrorIfAccountNameAndBalanceIsEmpty() {
-    //given
+    // given
     long id = 10L;
     when(accountService.getAccountByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));
     Account account = Account.builder().id(id).name("").balance(null).build();
 
-    //when
+    // when
     List<String> result = accountValidator.validateAccountForUpdate(id, MOCK_USER_ID, account);
 
-    //then
+    // then
     assertThat(result.size(), is(2));
     assertThat(result.get(0), is(equalTo(getMessage(EMPTY_ACCOUNT_NAME))));
     assertThat(result.get(1), is(equalTo(getMessage(EMPTY_ACCOUNT_BALANCE))));
@@ -63,13 +63,13 @@ public class AccountValidatorTest {
 
   @Test
   public void shouldNotFindDuplicateWhenNoOtherAccountsExists() {
-    //given
+    // given
     when(accountService.isAccountNameAlreadyUsed(MOCK_USER_ID, accountMbankBalance10().getName())).thenReturn(true);
 
-    //when
+    // when
     List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, accountMbankBalance10());
 
-    //then
+    // then
     assertThat(result.size(), is(1));
     assertThat(result.get(0), is(equalTo(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }

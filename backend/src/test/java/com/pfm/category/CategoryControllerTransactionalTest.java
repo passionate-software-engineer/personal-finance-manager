@@ -44,7 +44,7 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenCategoryAddFailed() {
-    //given
+    // given
     Category category = categoryCar();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
@@ -56,13 +56,13 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(categoryService.getCategories(userId), hasSize(0));
   }
 
   @Test
   void shouldRollbackTransactionWhenCategoryUpdateFailed() {
-    //given
+    // given
     Category category = categoryCar();
     final Long categoryId = categoryService.addCategory(category, userId).getId();
 
@@ -79,13 +79,13 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
   }
 
   @Test
   void shouldRollbackTransactionWhenCategoryDeleteFailed() {
-    //given
+    // given
     Category category = categoryFood();
     final Long categoryId = categoryService.addCategory(category, userId).getId();
 
@@ -99,7 +99,7 @@ class CategoryControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
   }
 }

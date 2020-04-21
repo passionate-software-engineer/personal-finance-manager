@@ -85,7 +85,7 @@ class TopologicalSortProviderTest {
       sort(graph);
     });
 
-    //then
+    // then
     assertThat(exception.getMessage(), CoreMatchers.is(equalTo("Cycle detected, topological sort not possible")));
   }
 

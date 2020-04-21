@@ -27,13 +27,13 @@ public class FilterServiceTest {
 
   @Test
   public void shouldReturnExceptionCausedByIdDoesNotExistInDb() {
-    //given
+    // given
     when(filterRepository.findByIdAndUserId(NOT_EXISTING_ID, MOCK_USER_ID)).thenReturn(Optional.empty());
 
-    //when
+    // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> filterService.updateFilter(NOT_EXISTING_ID, MOCK_USER_ID, new Filter()));
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo("Filter with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }
 }

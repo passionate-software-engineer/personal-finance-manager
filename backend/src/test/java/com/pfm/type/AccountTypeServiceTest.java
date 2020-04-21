@@ -35,12 +35,11 @@ class AccountTypeServiceTest {
     when(accountTypeRepository.findByIdAndUserId(accountTypeId, userId)).thenReturn(Optional.empty());
 
     // when
-
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
       accountTypeService.getAccountTypeByIdAndUserId(accountTypeId, userId);
     });
 
-    //then
+    // then
     assertThat(exception.getMessage(), is(equalTo(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), accountTypeId))));
   }
 

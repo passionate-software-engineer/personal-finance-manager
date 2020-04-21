@@ -81,7 +81,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -91,10 +91,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     BigDecimal expectedPrice = accountJacekBalance1000().getBalance()
         .add(foodTransactionWithNoAccountAndNoCategory().getAccountPriceEntries().get(0).getPrice());
 
-    //when
+    // when
     long transactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
 
-    //then
+    // then
     Transaction expectedTransaction =
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), transactionId, jacekAccountId, foodCategoryId);
 
@@ -106,7 +106,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeleteTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -120,10 +120,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction addedTransaction = foodTransactionWithNoAccountAndNoCategory();
     setTransactionIdAccountIdCategoryId(addedTransaction, transactionId, jacekAccountId, foodCategoryId);
 
-    //when
+    // when
     callRestToDeleteTransactionById(transactionId, token);
 
-    //then
+    // then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
 
     assertThat(allTransactionsInDb.size(), is(0));
@@ -136,7 +136,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetTransactions() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -147,10 +147,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     long foodTransactionId = callRestToAddTransactionAndReturnId(foodTransactionWithNoAccountAndNoCategory(), jacekAccountId, foodCategoryId, token);
     long carTransactionId = callRestToAddTransactionAndReturnId(carTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
-    //when
+    // when
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
 
-    //then
+    // then
     Transaction foodTransactionExpected =
         setTransactionIdAccountIdCategoryId(foodTransactionWithNoAccountAndNoCategory(), foodTransactionId, jacekAccountId, foodCategoryId);
 
@@ -164,7 +164,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -189,10 +189,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodTransactionRequest.setDate(updatedFoodTransactionRequest.getDate().plusDays(1));
     updatedFoodTransactionRequest.setDescription("Car parts");
 
-    //when
+    // when
     callRestToUpdateTransactionAndReturnCommitResult(foodTransactionId, updatedFoodTransactionRequest, token);
 
-    //then
+    // then
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
     assertThat(allTransactionsInDb.size(), is(1));
 
@@ -210,7 +210,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorWhenTryingToDeleteAccountUsedInTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -230,7 +230,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorWhenTryingToDeleteCategoryUsedInTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -250,7 +250,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationErrorInUpdateMethod() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -276,7 +276,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationErrorForArchivedAccount() throws Exception {
-    //given
+    // given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
         .type(AccountType.builder()
@@ -320,10 +320,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyFields() throws Exception {
-    //given
+    // given
     TransactionRequest transactionToAdd = new TransactionRequest();
 
-    //when
+    // when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token)
         .header(LANGUAGE_HEADER, "de") // will default to en
@@ -339,7 +339,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByEmptyDescription() throws Exception {
-    //given
+    // given
     TransactionRequest transactionToAdd = TransactionRequest.builder()
         .description(" ")
         .accountPriceEntries(Collections.singletonList(
@@ -352,7 +352,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .date(LocalDate.of(2018, 10, 10))
         .build();
 
-    //when
+    // when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token)
         .header(LANGUAGE_HEADER, "pl")
@@ -367,7 +367,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingTransactionIdInGetMethod() throws Exception {
-    //when
+    // when
     mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
@@ -375,7 +375,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingTransactionIdInDeleteMethod() throws Exception {
-    //when
+    // when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
@@ -383,7 +383,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnErrorCausedByNotExistingTransactionIdInUpdateMethod() throws Exception {
-    //when
+    // when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
         .header(HttpHeaders.AUTHORIZATION, token)
         .content(json(TransactionRequest.builder().build()))
@@ -393,7 +393,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddPlannedTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -403,10 +403,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction plannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     plannedTransaction.setPlanned(true);
 
-    //when
+    // when
     long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
 
-    //then
+    // then
     Transaction expectedPlannedTransaction =
         setTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(), plannedTransactionId, jacekAccountId,
             foodCategoryId);
@@ -417,7 +417,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldDeletePlannedTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -431,10 +431,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction addedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     setTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
-    //when
+    // when
     callRestToDeletePlannedTransactionById(plannedTransactionId, token);
 
-    //then
+    // then
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
     assertThat(allPlannedTransactionsInDb.size(), is(0));
@@ -447,7 +447,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetPlannedTransactions() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -460,10 +460,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     long carPlannedTransactionId = callRestToAddTransactionAndReturnId(
         carPlannedTransactionWithNoAccountAndNoCategory(), jacekAccountId, carCategoryId, token);
 
-    //when
+    // when
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
-    //then
+    // then
     Transaction foodPlannedTransactionExpected =
         setTransactionIdAccountIdCategoryId(foodPlannedTransactionWithNoAccountAndNoCategory(),
             foodPlannedTransactionId, jacekAccountId, foodCategoryId);
@@ -479,7 +479,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdatePlannedTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -507,11 +507,11 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
     updatedPlannedTransaction.setId(1L);
 
-    //when
+    // when
     callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
 
-    //then
+    // then
     assertThat(allPlannedTransactionsInDb.size(), is(1));
     assertThat(allPlannedTransactionsInDb.get(0), equalTo(updatedPlannedTransaction));
 
@@ -519,7 +519,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnNotFoundDuringGettingNotExistingPlannedTransaction() throws Exception {
-    //given
+    // given
     final long notExistingPlannedTransactionId = 790;
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
@@ -538,14 +538,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .perform(get(TRANSACTIONS_SERVICE_PATH + "/" + notExistingPlannedTransactionId)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
-        //then
+        // then
         .andExpect(status().isNotFound());
 
   }
 
   @Test
   public void shouldReturnBadRequestDuringAddingPlannedTransactionCausedByCategoryNotPassingTransactionValidation() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     Transaction invalidPlannedTransaction = Transaction.builder()
@@ -564,7 +564,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnBadRequestDuringAddingTransactionToArchivedAccount() throws Exception {
-    //given
+    // given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
         .type(AccountType.builder()
@@ -608,7 +608,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnNotFoundDuringUpdatingNotExistingPlannedTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -633,19 +633,19 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodPlannedTransactionRequest.setDate(updatedFoodPlannedTransactionRequest.getDate().plusDays(1));
     updatedFoodPlannedTransactionRequest.setDescription("Car parts");
 
-    //when
+    // when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_TRANSACTION_ID)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedFoodPlannedTransactionRequest)))
 
-        //then
+        // then
         .andExpect(status().isNotFound());
   }
 
   @Test
   public void shouldReturnBadRequestDuringUpdatingPlannedTransactionWithOneThatDoesNotPassValidation() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -672,19 +672,19 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedFoodPlannedTransactionRequest.setDate(updatedFoodPlannedTransactionRequest.getDate().plusDays(1));
     updatedFoodPlannedTransactionRequest.setDescription(EMPTY_DESCRIPTION);
 
-    //when
+    // when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
         .content(json(updatedFoodPlannedTransactionRequest)))
 
-        //then
+        // then
         .andExpect(status().isBadRequest());
   }
 
   @Test
   public void shouldReturnNotFoundDuringDeletingNotExistingPlannedTransaction() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -698,7 +698,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction addedPlannedTransaction = foodPlannedTransactionWithNoAccountAndNoCategory();
     setTransactionIdAccountIdCategoryId(addedPlannedTransaction, plannedTransactionId, jacekAccountId, foodCategoryId);
 
-    //when
+    // when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_TRANSACTION_ID)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
@@ -706,7 +706,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldCommitPlannedTransaction() throws Exception {
-    //given
+    // given
     final long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
     Transaction expectedPlannedTransactionAfterCommit = callRestToGetTransactionById(plannedTransactionId, token);
 
@@ -717,7 +717,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertThat(allPlannedTransactions.size(), is(1));
     assertThat(allPlannedTransactions.get(0), is(equalTo(expectedPlannedTransactionAfterCommit)));
 
-    //when
+    // when
     callRestToCommitPlannedTransaction(plannedTransactionId);
     final List<Transaction> allTransactionsAfterCommit = callRestToGetAllTransactionsFromDatabase(token);
     final List<Transaction> allPlannedTransactionsAfterCommit = callRestToGetAllPlannedTransactionsFromDatabase(token);
@@ -725,7 +725,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     expectedPlannedTransactionAfterCommit.setDate(CURRENT_DATE);
     expectedPlannedTransactionAfterCommit.setPlanned(false);
 
-    //then
+    // then
     assertThat(allTransactionsAfterCommit.size(), is(1));
     assertThat(allPlannedTransactionsAfterCommit.size(), is(0));
     assertThat(removeTransactionId(allTransactionsAfterCommit.get(0)), is(equalTo(removeTransactionId(expectedPlannedTransactionAfterCommit))));
@@ -735,7 +735,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationErrorForTransactionWithFutureDate() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -763,7 +763,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnNotFoundForNotDuringCommittingNotExistingPlannedTransaction() throws Exception {
-    //given
+    // given
     mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_TRANSACTION_ID)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -774,7 +774,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnBadRequestDuringCommittingPlannedTransactionWithArchivedAccount() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -786,10 +786,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     long plannedTransactionId = callRestToAddTransactionAndReturnId(plannedTransaction, jacekAccountId, foodCategoryId, token);
 
-    //when
+    // when
     callRestToMarkAccountAsArchived(jacekAccountId);
 
-    //then
+    // then
     mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + plannedTransactionId)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -802,14 +802,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldSetPlannedTransactionAsRecurrent() throws Exception {
-    //given
+    // given
     long transactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
     Transaction addedTransaction = callRestToGetTransactionById(transactionId, token);
 
     final boolean recurrent = addedTransaction.isRecurrent();
     assertThat(addedTransaction, is(not(recurrent)));
 
-    //when
+    // when
     mockMvc
         .perform(patch(TRANSACTIONS_SERVICE_PATH + "/" + transactionId + SET_AS_RECURRENT)
             .param("recurrencePeriod", String.valueOf(EVERY_MONTH))
@@ -820,14 +820,14 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     Transaction updatedTransaction = callRestToGetTransactionById(transactionId, token);
 
     final boolean recurrentAfterUpdate = updatedTransaction.isRecurrent();
-    //then
+    // then
     assertThat(recurrentAfterUpdate, is(true));
 
   }
 
   @Test
   public void shouldSetPlannedTransactionAsNotRecurrent() throws Exception {
-    //given
+    // given
     final RecurrencePeriod recurrencePeriod = EVERY_MONTH;
 
     long transactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
@@ -845,13 +845,13 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     assertTrue(updatedTransaction.isRecurrent());
     addedTransaction.setRecurrencePeriod(NONE);
 
-    //when
+    // when
     status = callRestToSetPlannedTransactionAsRecurrentAndReturnStatus(transactionId, NONE);
     assertThat(status, is(OK.value()));
 
     Transaction transaction = callRestToGetTransactionById(transactionId, token);
 
-    //then
+    // then
     assertFalse(transaction.isRecurrent());
     assertThat(transaction, is(equalTo(addedTransaction)));
 
@@ -867,7 +867,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddPlannedTransactionForNextMonthDuringCommittingRecurrentTransaction() throws Exception {
-    //given
+    // given
     long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
     Transaction addedTransaction = callRestToGetTransactionById(plannedTransactionId, token);
 
@@ -907,7 +907,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddPlannedTransactionForNextWeekDuringCommittingRecurrentTransaction() throws Exception {
-    //given
+    // given
     final RecurrencePeriod everyWeek = EVERY_WEEK;
     long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
     Transaction addedTransaction = callRestToGetTransactionById(plannedTransactionId, token);
@@ -948,7 +948,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddPlannedTransactionForNextDayDuringCommittingRecurrentTransaction() throws Exception {
-    //given
+    // given
     final RecurrencePeriod everyDay = EVERY_DAY;
 
     long plannedTransactionId = callRestToAddFirstTestPlannedTransactionAndReturnId();
@@ -990,7 +990,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdatePlannedTransactionWithPastDateUsingCommit() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1018,7 +1018,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
     updatedPlannedTransaction.setId(1L);
 
-    //when
+    // when
     final CommitResult commitResult =
         callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
 
@@ -1027,7 +1027,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     List<Transaction> allPlannedTransactionsAfterUpdateInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsAfterUpdateInDb = callRestToGetAllTransactionsFromDatabase(token);
 
-    //then
+    // then
     assertThat(allPlannedTransactionsAfterUpdateInDb.size(), is(0));
     assertThat(allTransactionsAfterUpdateInDb.size(), is(1));
 
@@ -1043,7 +1043,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdatePlannedTransactionWithCurrentDate() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1071,12 +1071,12 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     TransactionRequest updatedPlannedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedPlannedTransaction);
     updatedPlannedTransaction.setId(1L);
 
-    //when
+    // when
     callRestToUpdateTransactionAndReturnCommitResult(foodPlannedTransactionId, updatedPlannedTransactionRequest, token);
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
 
-    //then
+    // then
     assertThat(allPlannedTransactionsInDb.size(), is(1));
     assertThat(allTransactionsInDb.size(), is(0));
     assertThat(allPlannedTransactionsInDb.get(0).getDate(), equalTo(CURRENT_DATE));
@@ -1084,7 +1084,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateTransactionContainingArchivedAccountWithDifferentCategory() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1115,7 +1115,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
     Transaction afterUpdate = allTransactionsInDb.get(0);
 
-    //then
+    // then
     assertThat(allTransactionsInDb.size(), is(1));
     assertThat(allPlannedTransactionsInDb.size(), is(0));
 
@@ -1129,7 +1129,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldUpdateTransactionContainingArchivedAccountWithNewDescription() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1159,7 +1159,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
     Transaction afterUpdate = allTransactionsInDb.get(0);
 
-    //then
+    // then
     assertThat(allTransactionsInDb.size(), is(1));
     assertThat(allPlannedTransactionsInDb.size(), is(0));
 
@@ -1171,7 +1171,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingDate() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1191,10 +1191,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedTransaction.setDate(LocalDate.of(2018, 8, 8).plusDays(2));
     updatedTransaction.setDescription("Food for birthday");
 
-    //when
+    // when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
-    //then
+    // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1206,7 +1206,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingPrice() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1227,10 +1227,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updatedTransaction.setDate(LocalDate.of(2018, 8, 8));
     updatedTransaction.setDescription("Food for birthday");
 
-    //when
+    // when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
-    //then
+    // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1242,7 +1242,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccount() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1264,10 +1264,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     updatedTransaction.getAccountPriceEntries().get(0).setAccountId(updatedAccountId);
 
-    //when
+    // when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
-    //then
+    // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -1279,7 +1279,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldReturnValidationResultForTransactionContainingArchivedAccountDuringChangingAccounts() throws Exception {
-    //given
+    // given
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(0));
     account.setType(accountTypeService.getAccountTypes(userId).get(0));
@@ -1305,10 +1305,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         .accountId(jacekAccountId)
         .build());
 
-    //when
+    // when
     TransactionRequest updatedTransactionRequest = helper.convertTransactionToTransactionRequest(updatedTransaction);
 
-    //then
+    // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)

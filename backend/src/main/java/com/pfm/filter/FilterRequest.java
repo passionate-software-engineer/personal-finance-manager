@@ -20,10 +20,10 @@ public class FilterRequest {
   @ApiModelProperty(value = "Filter Name", example = "Expenses June")
   private String name;
 
-  //TODO add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
+  @ApiModelProperty(value = "Account ids", dataType = "List", example = "1, 3, 99")
   private List<Long> accountIds;
 
-  //TODO add descriptions and example for swagger, up to date(19.10.2018) there is no feature like this
+  @ApiModelProperty(value = "Category ids", dataType = "List", example = "11, 23, 217")
   private List<Long> categoryIds;
 
   @ApiModelProperty(value = "Price from", example = "100")
