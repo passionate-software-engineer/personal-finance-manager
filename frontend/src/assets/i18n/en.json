@@ -130,7 +130,7 @@
   "message.transactionSetRecurrentEveryDay": "Transaction set as recurrent daily",
   "message.transactionSetRecurrentEveryWeek": "Transaction set as recurrent weekly",
   "message.transactionSetRecurrentEveryMonth": "Transaction set as recurrent monthly",
-  "message.transactionSetNotRecurrent": "Transaction set as not recurrent daily / weekly / monthly",
+  "message.transactionSetNotRecurrent": "Transaction set as not recurrent",
   "message.OverduePlannedTransactionCommitted": "Overdue planned transaction committed",
   "message.InvalidDate": "Provided date is invalid - please provide new value or click cancel",
   "message.InvalidFutureDate": "Date cannot be from the future - please provide new value or click cancel",
