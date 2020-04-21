@@ -116,7 +116,7 @@
   "button.setAsRecurrentEveryDay": "Repeat every day",
   "button.setAsRecurrentEveryWeek": "Repeat every week",
   "button.setAsRecurrentEveryMonth": "Repeat every month",
-  "button.setAsNotRecurrent": "Disable daily / weekly / monthly recurrence",
+  "button.setAsNotRecurrent": "Disable recurrence: ",
   "button.commitOverduePlannedTransaction": "Commit overdue transaction",
   "checkbox.showArchived": "Show archived accounts",
   "checkbox.hidePlannedTransactions": "Hide planned transactions",

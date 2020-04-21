@@ -115,7 +115,7 @@
   "button.setAsRecurrentEveryDay": "Powtarzaj każdego dnia",
   "button.setAsRecurrentEveryWeek": "Powtarzaj każdego tygodnia",
   "button.setAsRecurrentEveryMonth": "Powtarzaj każdego miesiąca",
-  "button.setAsNotRecurrent": "Wyłącz dzienne / cotygodniowe / miesięczne powtarzanie",
+  "button.setAsNotRecurrent": "Wyłącz powtarzanie: ",
   "checkbox.showArchived": "Pokaż zarchiwizowane konta",
   "checkbox.hidePlannedTransactions": "Nie pokazuj planowanych transakcji",
   "transaction.save": "Zapisz jako nowy filtr",

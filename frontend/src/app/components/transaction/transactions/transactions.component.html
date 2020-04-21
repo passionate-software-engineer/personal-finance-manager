@@ -500,7 +500,7 @@
                   <button (click)="setAsNotRecurrent(transaction)"
                           class="btn btn-success btn-block"
                           id="SetAsNotRecurrentBtn">
-                    {{'button.setAsNotRecurrent' | translate}}
+                    {{'button.setAsNotRecurrent' | translate}} {{transaction.recurrencePeriod}}
                   </button>
                 </li>
               </ng-container>
