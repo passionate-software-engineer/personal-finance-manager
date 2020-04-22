@@ -1,7 +1,7 @@
 package com.pfm.account.type;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
-import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class AccountTypeValidator {
     List<String> validationResults = new ArrayList<>();
 
     if (accountType.getName() == null || accountType.getName().trim().equals("")) {
-      validationResults.add(getMessage(EMPTY_ACCOUNT_NAME));
+      validationResults.add(getMessage(EMPTY_ACCOUNT_TYPE_NAME));
     }
     return validationResults;
   }

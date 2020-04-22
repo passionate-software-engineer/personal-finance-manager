@@ -1,5 +1,7 @@
 package com.pfm.type;
 
+import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
+import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -12,10 +14,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pfm.account.type.AccountType;
 import com.pfm.account.type.AccountTypeRequest;
 import com.pfm.helpers.IntegrationTestsBase;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
 
 public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
@@ -28,7 +34,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldAddAccountType() throws Exception {
     //given
-    final List<AccountType>  accountTypes = accountTypeService.getAccountTypes(userId);
+    final List<AccountType> accountTypes = accountTypeService.getAccountTypes(userId);
     AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
 
     //when
@@ -66,7 +72,33 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[1].userId").doesNotExist())
         .andExpect(jsonPath("$[2].userId").doesNotExist())
         .andExpect(jsonPath("$[3].userId").doesNotExist())
-        .andExpect(jsonPath("$[4].userId").doesNotExist()
-        );
+        .andExpect(jsonPath("$[4].userId").doesNotExist());
   }
+
+  @ParameterizedTest
+  @MethodSource("emptyAccountTypeNameParameters")
+  public void shouldThrowErrorIfAccountTypeIsNull(String name) throws Exception {
+    //given
+    AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name(name).build();
+
+    //when
+    mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountTypeRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_TYPE_NAME))));
+  }
+
+  @SuppressWarnings("unused")
+  private static Collection<Object[]> emptyAccountTypeNameParameters() {
+    return Arrays.asList(new Object[][]{
+        {""},
+        {" "},
+        {"    "},
+        {null}
+    });
+  }
+
 }
