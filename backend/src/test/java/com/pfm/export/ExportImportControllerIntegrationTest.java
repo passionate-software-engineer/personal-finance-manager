@@ -255,6 +255,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .build();
 
     input.setPeriods(Collections.singletonList(period));
+    input.setFilters(List.of());
+    input.setHistoryEntries(List.of());
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
@@ -336,6 +338,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .build();
 
     input.setInitialAccountsState(Collections.singletonList(japaneaseAccount));
+    input.setFilters(List.of());
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
@@ -371,6 +374,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .build();
 
     input.setInitialAccountsState(Collections.singletonList(japaneaseAccount));
+    input.setFilters(List.of());
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
@@ -424,6 +428,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     emptyFilter.setName("All empty");
 
     input.setFilters(Arrays.asList(filter, emptyFilter));
+    input.setPeriods(List.of());
+    input.setHistoryEntries(List.of());
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
