@@ -234,6 +234,21 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return x - y;
   }
 
+  private getCurrentDate() {
+    const date = new Date();
+    const year = date.getFullYear().toString();
+    let month = (date.getMonth() + 1).toString();
+    let day = date.getDate().toString();
+    if (day.length === 1) {
+        day = '0' + day;
+    }
+    if (month.length === 1) {
+      month = '0' + month;
+    }
+    const currentDate = year + '-' + month + '-' + day;
+    return currentDate;
+  }
+
   commitPlannedTransaction(transaction: Transaction) {
     if (!this.validateTransaction(transaction, Operation.Commit)) {
       return;
@@ -243,9 +258,24 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
       this.commit(transaction);
       return;
     }
-    if (confirm(this.translate.instant(deleteDialogMessageKey))) {
-      this.commit(transaction);
+
+    let commitDate;
+    do {
+        commitDate = prompt(this.translate.instant('transaction.commitTransaction'), this.getCurrentDate());
+        if (commitDate !== '' && commitDate !== null && !isNaN(new Date(commitDate).getTime()) && new Date(commitDate) <= new Date()) {
+          transaction.date = new Date(commitDate);
+          this.commit(transaction);
+          break;
+        } else if (new Date(commitDate) > new Date()) {
+          alert(this.translate.instant('message.InvalidFutureDate'));
+        } else if (commitDate === '' || commitDate === null) {
+          alert(this.translate.instant('message.InvalidEmptyDate'));
+          break;
+        } else {
+          alert(this.translate.instant('message.InvalidDate'));
+        }
     }
+    while (commitDate !== '' && commitDate !== null);
   }
 
   commitOverduePlannedTransaction(transaction: Transaction) {
@@ -325,15 +355,22 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     return transaction;
   }
 
-  setAsRecurrent(transaction: Transaction) {
-    const recurrencePeriod = RecurrencePeriod.EVERY_MONTH;
+  setAsRecurrent(transaction: Transaction, recurrencePeriod: RecurrencePeriod) {
     this.transactionService.setAsRecurrent(transaction, recurrencePeriod)
-        .subscribe(() => {
-            this.alertService.success(
-              this.translate.instant('message.transactionSetRecurrent'));
-            transaction.recurrencePeriod = recurrencePeriod;
-          }
-        );
+      .subscribe(() => {
+        if (recurrencePeriod === 'EVERY_DAY') {
+          this.alertService.success(
+            this.translate.instant('message.transactionSetRecurrentEveryDay'));
+        } else if (recurrencePeriod === 'EVERY_WEEK') {
+          this.alertService.success(
+            this.translate.instant('message.transactionSetRecurrentEveryWeek'));
+        } else if (recurrencePeriod === 'EVERY_MONTH') {
+          this.alertService.success(
+            this.translate.instant('message.transactionSetRecurrentEveryMonth'));
+        }
+        transaction.recurrencePeriod = recurrencePeriod;
+      }
+      );
   }
 
   setAsNotRecurrent(transaction: Transaction) {

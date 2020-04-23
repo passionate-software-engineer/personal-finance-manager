@@ -476,17 +476,31 @@
                   </button>
                 </li>
                 <li *ngIf="!isRecurrent(transaction)">
-                  <button (click)="setAsRecurrent(transaction)"
+                  <button (click)="setAsRecurrent(transaction, 'EVERY_DAY')"
                           class="btn btn-success btn-block"
-                          id="SetAsRecurrentBtn">
-                    {{'button.setAsRecurrent' | translate}}
+                          id="setAsRecurrentEveryDayBtn">
+                    {{'button.setAsRecurrentEveryDay' | translate}}
+                  </button>
+                </li>
+                <li *ngIf="!isRecurrent(transaction)">
+                  <button (click)="setAsRecurrent(transaction, 'EVERY_WEEK')"
+                          class="btn btn-success btn-block"
+                          id="setAsRecurrentEveryWeekBtn">
+                    {{'button.setAsRecurrentEveryWeek' | translate}}
+                  </button>
+                </li>
+                <li *ngIf="!isRecurrent(transaction)">
+                  <button (click)="setAsRecurrent(transaction, 'EVERY_MONTH')"
+                          class="btn btn-success btn-block"
+                          id="setAsRecurrentEveryMonthBtn">
+                    {{'button.setAsRecurrentEveryMonth' | translate}}
                   </button>
                 </li>
                 <li *ngIf="isRecurrent(transaction)">
                   <button (click)="setAsNotRecurrent(transaction)"
                           class="btn btn-success btn-block"
                           id="SetAsNotRecurrentBtn">
-                    {{'button.setAsNotRecurrent' | translate}}
+                    {{'button.setAsNotRecurrent' | translate}} {{transaction.recurrencePeriod}}
                   </button>
                 </li>
               </ng-container>

@@ -144,7 +144,7 @@ public class TransactionController implements TransactionApi {
   @Transactional
   @Override
   public ResponseEntity<?> commitPlannedTransaction(long transactionId,
-      @RequestParam(value = "updatedTransaction", required = false) TransactionRequest preCommitUpdate) {
+      @RequestBody(required = false) TransactionRequest preCommitUpdate) {
     long userId = userProvider.getCurrentUserId();
     Optional<Transaction> plannedTransactionOptional = transactionService.getTransactionByIdAndUserId(transactionId, userId);
 
