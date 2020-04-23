@@ -1,5 +1,6 @@
 package com.pfm.type;
 
+import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
@@ -33,11 +34,11 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldAddAccountType() throws Exception {
-    //given
+    // given
     final List<AccountType> accountTypes = accountTypeService.getAccountTypes(userId);
     AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
 
-    //when
+    // when
     String response =
         mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
             .header(HttpHeaders.AUTHORIZATION, token)
@@ -46,7 +47,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
             .andExpect(status().isOk()).andReturn()
             .getResponse().getContentAsString();
 
-    //then
+    // then
     Long accountTypeId = Long.parseLong(response);
 
     accountTypes.add(AccountType.builder().name(accountTypeRequest.getName()).id(accountTypeId).build());
@@ -78,10 +79,10 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
   @ParameterizedTest
   @MethodSource("emptyAccountTypeNameParameters")
   public void shouldThrowErrorIfAccountTypeIsNull(String name) throws Exception {
-    //given
+    // given
     AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name(name).build();
 
-    //when
+    // when
     mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
         .header(HttpHeaders.AUTHORIZATION, token)
         .contentType(JSON_CONTENT_TYPE)
@@ -99,6 +100,29 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         {"    "},
         {null}
     });
+  }
+
+  @Test
+    public void shouldReturnErrorCausedByExistingAccountTypeName() throws Exception {
+    // given
+    AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
+
+    // when
+    mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountTypeRequest)))
+        .andExpect(status().isOk()).andReturn()
+        .getResponse().getContentAsString();
+
+    // then
+    mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountTypeRequest)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }
 
 }

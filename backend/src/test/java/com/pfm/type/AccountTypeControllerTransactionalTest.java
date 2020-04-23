@@ -46,7 +46,7 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
 
   @Test
   void shouldRollbackTransactionWhenAccountTypeAddFailed() {
-    //given
+    // given
     AccountType accountType = accountInvestment();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
@@ -58,7 +58,7 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
       assertNotNull(ex);
     }
 
-    //then
+    // then
     assertThat(accountTypeService.getAccountTypes(userId), hasSize(0));
   }
 
