@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("accountTypes")
@@ -20,6 +21,10 @@ public interface AccountTypeApi {
       authorizations = {@Authorization(value = BEARER)})
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
+
+  @ApiOperation(value = "Create a new account type", response = Long.class, authorizations = {@Authorization(value = BEARER)})
+  @PostMapping
+  ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
 
 }
 
