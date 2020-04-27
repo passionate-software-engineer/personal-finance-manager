@@ -32,8 +32,7 @@ public class AccountTypeValidator {
 
   private void checkForDuplicatedName(long userId, List<String> validationResults, AccountType accountType) {
     if (accountType.getName() != null && !accountType.getName().trim().equals("")
-        && accountTypeService
-        .isAccountTypeNameAlreadyUsed(userId, accountType.getName())) {
+        && accountTypeService.isAccountTypeNameAlreadyUsed(userId, accountType.getName())) {
       validationResults.add(getMessage(ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS));
     }
   }
