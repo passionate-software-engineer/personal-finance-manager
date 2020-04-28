@@ -26,14 +26,20 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class TransactionExporterTest {
 
   private static final long USER_ID = 1L;
+
   private static final long CATEGORY_ID = 2L;
-  TransactionExporter transactionExporter;
+
+  private TransactionExporter transactionExporter;
+
   @Mock
   private TransactionService transactionService;
+
   @Mock
   private CategoryService categoryService;
+
   @Mock
   private AccountService accountService;
+
   private DateFormatter dateFormatter = new TransactionMonthDateFormatter();
 
   @BeforeEach

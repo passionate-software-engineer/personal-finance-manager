@@ -24,7 +24,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class FilterExporterTest {
 
   private static final long USER_ID = 1L;
+
   private static final long ACCOUNT_ID = 2L;
+
   private static final long CATEGORY_ID = 2L;
 
   @Mock

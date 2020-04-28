@@ -27,8 +27,6 @@ public class TransactionExporter {
   private final AccountService accountService;
   private final DateFormatter dateFormatter;
 
-  // TODO: As in com.pfm.export.converter.FilterExporter, here we can fill that map
-  //  with one query to DB using jdbcTemplate and raw SQL (not spring-data).
   public Map<String, List<ExportTransaction>> getTransactionsByMonth(long userId) {
     return findExportTransactions(userId)
         .stream()

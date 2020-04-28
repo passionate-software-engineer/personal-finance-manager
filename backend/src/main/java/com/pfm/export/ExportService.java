@@ -30,15 +30,12 @@ public class ExportService {
   ExportResult exportData(long userId) {
     List<ExportPeriod> periods = periodExporter.export(userId);
     List<ExportAccount> accounts = accountExporter.export(userId);
-    List<ExportAccount> accountStateAtTheBeginningOfPeriod = periods.isEmpty() ? accounts : lastPeriod(periods);
-
+    List<ExportAccount> accountStateAtTheBeginningOfPeriod = periods.isEmpty() ? accounts : accountStateAtTheBeggingOfLastPeriod(periods);
     List<ExportFilter> filters = filterExporter.export(userId);
     List<ExportCategory> categories = categoryExporter.export(userId);
     ExportFundsSummary sumOfAllFundsAtTheEndOfExport = fundsExporter.export(accounts, userId);
     ExportFundsSummary sumOfAllFundsAtTheBeginningOfExport = fundsExporter.export(accountStateAtTheBeginningOfPeriod, userId);
-
-    // TODO: History entry should be mapped to DTO and as you can see - we use here service.method(service.method()) - looks a bit odd
-    List<HistoryEntry> historyEntries = historyEntryService.prepareExportHistory(historyEntryService.getHistoryEntries(userId));
+    List<HistoryEntry> historyEntries = historyEntryService.prepareExportHistory(userId);
 
     return ExportResult.builder()
         .filters(filters)
@@ -52,7 +49,7 @@ public class ExportService {
         .build();
   }
 
-  private List<ExportAccount> lastPeriod(final List<ExportPeriod> periods) {
+  private List<ExportAccount> accountStateAtTheBeggingOfLastPeriod(final List<ExportPeriod> periods) {
     return periods.get(periods.size() - 1).getAccountStateAtTheBeginningOfPeriod();
   }
 }

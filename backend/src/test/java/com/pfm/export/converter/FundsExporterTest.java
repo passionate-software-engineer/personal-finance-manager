@@ -7,6 +7,7 @@ import com.pfm.currency.CurrencyService;
 import com.pfm.export.ExportResult.ExportAccount;
 import com.pfm.export.ExportResult.ExportFundsSummary;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,10 +20,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class FundsExporterTest {
 
   private static final long USER_ID = 1L;
+
   private static final String PLN_CURRENCY = "PLN";
+
   private static final String USD_CURRENCY = "USD";
+
   @Mock
   private CurrencyService currencyService;
+
   @InjectMocks
   private FundsExporter fundsExporter;
 
@@ -75,7 +80,7 @@ class FundsExporterTest {
   @Test
   public void shouldReturnMapWithAllUsersCurrenciesWithBalance0() {
     // given
-    List<ExportAccount> exportAccounts = List.of();
+    List<ExportAccount> exportAccounts = Collections.emptyList();
     List<Currency> currencies = List.of(createCurrency(PLN_CURRENCY, BigDecimal.ONE));
 
     when(currencyService.getCurrencies(USER_ID)).thenReturn(currencies);
@@ -97,7 +102,8 @@ class FundsExporterTest {
         createExportAccount(USD_CURRENCY, BigDecimal.valueOf(2)),
         createExportAccount(USD_CURRENCY, BigDecimal.valueOf(4)));
 
-    List<Currency> currencies = List.of(createCurrency(PLN_CURRENCY, BigDecimal.ONE), createCurrency(USD_CURRENCY, BigDecimal.valueOf(4)));
+    List<Currency> currencies = List.of(createCurrency(PLN_CURRENCY, BigDecimal.ONE),
+        createCurrency(USD_CURRENCY, BigDecimal.valueOf(4)));
 
     when(currencyService.getCurrencies(USER_ID)).thenReturn(currencies);
 
@@ -109,7 +115,25 @@ class FundsExporterTest {
     Assertions.assertEquals(export.getCurrencyToFundsMap().get(USD_CURRENCY), BigDecimal.valueOf(6));
   }
 
-  // TODO: Create tests for more advanced cases with balance
+  @Test
+  public void shouldCalculateCorrectBalanceForAccountsWithFloatingPointStates() {
+    // given
+    List<ExportAccount> exportAccounts = List.of(
+        createExportAccount(USD_CURRENCY, BigDecimal.valueOf(2.456)),
+        createExportAccount(USD_CURRENCY, BigDecimal.valueOf(3.123)));
+
+    List<Currency> currencies = List.of(createCurrency(PLN_CURRENCY, BigDecimal.ONE),
+        createCurrency(USD_CURRENCY, BigDecimal.valueOf(4.127)));
+
+    when(currencyService.getCurrencies(USER_ID)).thenReturn(currencies);
+
+    // when
+    ExportFundsSummary export = fundsExporter.export(exportAccounts, USER_ID);
+
+    // then
+    Assertions.assertEquals(export.getSumOfAllFundsInBaseCurrency(), BigDecimal.valueOf(23.024533));
+    Assertions.assertEquals(export.getCurrencyToFundsMap().get(USD_CURRENCY), BigDecimal.valueOf(5.579));
+  }
 
   private ExportAccount createExportAccount(String currency, BigDecimal balance) {
     return ExportAccount
