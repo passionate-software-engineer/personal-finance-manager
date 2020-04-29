@@ -3,6 +3,7 @@ package com.pfm.transaction;
 import java.time.LocalDate;
 
 public enum RecurrencePeriod {
+
   NONE,
   EVERY_DAY,
   EVERY_WEEK,

@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
 
 public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
+
   @BeforeEach
   public void setUp() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());

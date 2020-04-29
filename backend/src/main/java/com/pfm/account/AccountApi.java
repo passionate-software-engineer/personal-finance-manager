@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("accounts")
 @CrossOrigin
-@Api(value = "Accounts", description = "Controller used to list / add / update / delete accounts.")
+@Api(tags = {"account-controller"})
 public interface AccountApi {
 
   String BEARER = "Bearer";
@@ -34,7 +34,7 @@ public interface AccountApi {
   @PostMapping
   ResponseEntity<?> addAccount(AccountRequest accountRequest);
 
-  @ApiOperation(value = "Update an existing account", response = Void.class, authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Update an existing account", authorizations = {@Authorization(value = BEARER)})
   // TODO Swagger try to separate response type for each status call 200/400
   @PutMapping(value = "/{accountId}")
   ResponseEntity<?> updateAccount(@PathVariable long accountId, AccountRequest accountRequest);
