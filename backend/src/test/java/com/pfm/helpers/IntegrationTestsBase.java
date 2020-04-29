@@ -16,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
+import com.pfm.account.type.AccountType;
+import com.pfm.account.type.AccountTypeRequest;
 import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.Token;
 import com.pfm.auth.Tokens;
@@ -131,6 +133,12 @@ public abstract class IntegrationTestsBase {
         .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
+        .build();
+  }
+
+  protected AccountTypeRequest convertAccountTypeToAccountTypeRequest(AccountType accountType) {
+    return AccountTypeRequest.builder()
+        .name(accountType.getName())
         .build();
   }
 
