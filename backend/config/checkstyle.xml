@@ -28,7 +28,22 @@
     <property name="lineSeparator" value="lf"/>
   </module>
   <module name="SuppressWarningsFilter"/>
+  
+  <module name="RegexpMultiline">
+      <property name="format" value="^([^\n ]+ )*(class|interface|enum) [^{]*\{\n[^\n}]"/>
+      <property name="message" value="Leave empty row after class/interface/enum definition!"/>
+      <property name="severity" value="error"/>
+      <property name="fileExtensions" value="groovy,java"/>
+  </module>
+  
   <module name="TreeWalker">
+    
+    <module name="EmptyLineSeparator">
+          <property name="tokens" value="PACKAGE_DEF, CLASS_DEF, INTERFACE_DEF, ENUM_DEF, STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF"/>
+          <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+          <property name="allowMultipleEmptyLines" value="false"/>
+    </module>
+    
     <!-- till https://github.com/checkstyle/checkstyle/issues/7388 -->
     <module name="TodoComment">
       <property name="id" value="commentStartWithSpace"/>
