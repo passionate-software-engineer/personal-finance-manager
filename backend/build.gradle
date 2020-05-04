@@ -107,7 +107,7 @@ spotbugsTest {
 
 checkstyle {
     configFile file('config/checkstyle.xml')
-    toolVersion '8.11'
+    toolVersion '8.32'
     showViolations = true
     ignoreFailures = false
     maxWarnings = 0
