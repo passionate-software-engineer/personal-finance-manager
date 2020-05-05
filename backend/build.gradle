@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.5.RELEASE'
+        springBootVersion = '2.2.6.RELEASE'
         lombokVersion = '1.18.12'
     }
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'org.owasp:dependency-check-gradle:5.3.1'
+        classpath 'org.owasp:dependency-check-gradle:5.3.2.1'
     }
 }
 
@@ -16,12 +16,12 @@ buildscript {
 plugins {
     // 3rd party
     id "com.github.ben-manes.versions" version "0.28.0"
-    id "com.github.spotbugs" version "4.0.2"
+    id "com.github.spotbugs" version "4.0.8"
     id "com.gorylenko.gradle-git-properties" version "2.2.2"
     id 'de.aaschmid.cpd' version '3.1'
     id 'io.spring.dependency-management' version "1.0.9.RELEASE"
-    id 'org.owasp.dependencycheck' version '5.3.1'
-    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'org.owasp.dependencycheck' version '5.3.2.1'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
 
     // core
     id 'checkstyle'
@@ -55,14 +55,14 @@ dependencies {
 
     implementation 'com.google.code.findbugs:annotations:3.0.1'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation "org.flywaydb:flyway-core:6.3.1"
+    implementation "org.flywaydb:flyway-core:6.4.1"
     implementation 'org.springframework.security:spring-security-crypto'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     runtimeOnly 'com.h2database:h2:1.4.200'
     runtimeOnly 'io.springfox:springfox-swagger-ui:2.9.2'
-    runtimeOnly 'org.postgresql:postgresql:42.2.11'
+    runtimeOnly 'org.postgresql:postgresql:42.2.12'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
     //Lombok
