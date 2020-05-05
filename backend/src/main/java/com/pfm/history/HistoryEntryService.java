@@ -64,8 +64,8 @@ public class HistoryEntryService {
     saveHistoryEntry(historyEntry);
   }
 
-  public List<HistoryEntry> prepareExportHistory(List<HistoryEntry> historyEntries) {
-    return historyEntries.stream()
+  public List<HistoryEntry> prepareExportHistory(long userId) {
+    return this.getHistoryEntries(userId).stream()
         .map(historyEntry -> HistoryEntry.builder()
             .date(historyEntry.getDate())
             .type(historyEntry.getType())
