@@ -14,7 +14,9 @@ import io.swagger.annotations.Authorization;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,6 +41,10 @@ public interface AccountTypeApi {
   })
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
+
+  @ApiOperation(value = "Delete an existing accountType", response = Void.class, authorizations = {@Authorization(value = BEARER)})
+  @DeleteMapping(value = "/{accountTypeId}")
+  ResponseEntity<?> deleteAccountType(@PathVariable long accountTypeId);
 
 }
 

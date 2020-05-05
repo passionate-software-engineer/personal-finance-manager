@@ -62,4 +62,23 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
     assertThat(accountTypeService.getAccountTypes(userId), hasSize(0));
   }
 
+  @Test
+  void shouldRollbackTransactionWhenAccountTypeDeleteFailed() {
+    // given
+    AccountType accountType = accountInvestment();
+    final Long accountTypeId = accountTypeService.saveAccountType(userId, accountType).getId();
+
+    doThrow(IllegalStateException.class).when(accountTypeService).deleteAccountType(accountTypeId);
+
+    // when
+    try {
+      accountTypeController.deleteAccountType(accountTypeId);
+      fail();
+    } catch (IllegalStateException ex) {
+      assertNotNull(ex);
+    }
+
+    // then
+    assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
+  }
 }

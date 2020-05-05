@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -126,4 +127,13 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
   }
 
+  @Test
+  public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
+
+    // when
+    mockMvc
+        .perform(delete(ACCOUNT_TYPE_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isNotFound());
+  }
 }

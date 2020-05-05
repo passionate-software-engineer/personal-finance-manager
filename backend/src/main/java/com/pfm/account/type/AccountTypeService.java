@@ -23,6 +23,10 @@ public class AccountTypeService {
     return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
   }
 
+  public Optional<AccountType> getAccountTypeIdAndUserId(long accountTypeId, long userId) {
+    return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
+  }
+
   public AccountType getAccountTypeByIdAndUserId(long accountTypeId, long userId) {
     Optional<AccountType> accountTypeOptional = accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
     if (!accountTypeOptional.isPresent()) {
@@ -40,6 +44,10 @@ public class AccountTypeService {
   public AccountType saveAccountType(long userId, AccountType accountType) {
     accountType.setUserId(userId);
     return accountTypeRepository.save(accountType);
+  }
+
+  public void deleteAccountType(long accountTypeId) {
+    accountTypeRepository.deleteById(accountTypeId);
   }
 
   public boolean isAccountTypeNameAlreadyUsed(long userId, String name) {
