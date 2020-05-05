@@ -133,7 +133,29 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
     // when
     mockMvc
         .perform(delete(ACCOUNT_TYPE_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldDeleteAccountType() throws Exception {
+    // given
+    AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
+
+    // when
+    mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountTypeRequest)))
+        .andExpect(status().isOk()).andReturn()
+        .getResponse().getContentAsString();
+
+    // when
+    mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountTypeRequest)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(0)));
   }
 }
