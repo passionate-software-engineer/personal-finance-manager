@@ -7,6 +7,7 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 import com.pfm.account.Account;
 import com.pfm.category.Category;
@@ -25,6 +26,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class HistoryEntryServiceTest {
+
+  private static final long USER_ID = 1L;
 
   @SuppressWarnings("unused")
   @Mock
@@ -58,39 +61,6 @@ public class HistoryEntryServiceTest {
     final ZonedDateTime date = ZonedDateTime.now();
     Transaction transaction = getTransaction();
 
-    List<HistoryInfo> historyInfos = new ArrayList<>();
-    historyInfos.add(HistoryInfo.builder()
-        .id(2L)
-        .name("description")
-        .newValue(transaction.getDescription())
-        .build());
-    historyInfos.add(HistoryInfo.builder()
-        .id(3L)
-        .name("categoryId")
-        .newValue(categoryCar().getName())
-        .build());
-    historyInfos.add(HistoryInfo.builder()
-        .id(4L)
-        .name("date")
-        .newValue(transaction.getDate().toString())
-        .build());
-    historyInfos.add(HistoryInfo.builder()
-        .id(5L)
-        .name("accountPriceEntries")
-        .newValue(String.format("[%s : %s]", accountMbankBalance10().getName(), transaction.getAccountPriceEntries().get(0).getPrice()))
-        .build());
-
-    List<HistoryEntry> historyEntries = new ArrayList<>();
-    historyEntries.add(HistoryEntry.builder()
-        .id(1L)
-        .date(date)
-        .type(Type.ADD)
-        .object("Account")
-        .entries(historyInfos)
-        .userId(1L)
-        .build()
-    );
-
     List<HistoryInfo> expectedHistoryInfos = new ArrayList<>();
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
@@ -118,8 +88,10 @@ public class HistoryEntryServiceTest {
         .build()
     );
 
+    when(historyEntryRepository.findByUserId(USER_ID)).thenReturn(expectedHistoryEntries);
+
     // when
-    List<HistoryEntry> resultWithoutIds = historyEntryService.prepareExportHistory(historyEntries);
+    List<HistoryEntry> resultWithoutIds = historyEntryService.prepareExportHistory(USER_ID);
 
     // then
     assertThat(resultWithoutIds, is(expectedHistoryEntries));

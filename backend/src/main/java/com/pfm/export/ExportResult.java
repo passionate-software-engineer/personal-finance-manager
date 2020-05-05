@@ -16,25 +16,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public final class ExportResult {
 
   private ExportFundsSummary sumOfAllFundsAtTheBeginningOfExport;
   private ExportFundsSummary sumOfAllFundsAtTheEndOfExport;
 
-  private List<ExportAccount> initialAccountsState = new ArrayList<>();
-  private List<ExportAccount> finalAccountsState = new ArrayList<>();
+  private List<ExportAccount> initialAccountsState;
+  private List<ExportAccount> finalAccountsState;
 
-  private List<ExportCategory> categories = new ArrayList<>();
+  private List<ExportCategory> categories;
 
-  private List<ExportPeriod> periods = new ArrayList<>();
-  private List<ExportFilter> filters = new ArrayList<>();
-  private List<HistoryEntry> historyEntries = new ArrayList<>();
+  private List<ExportPeriod> periods;
+  private List<ExportFilter> filters;
+  private List<HistoryEntry> historyEntries;
 
   @Data
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  static final class ExportPeriod {
+  public static final class ExportPeriod {
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -57,7 +58,7 @@ public final class ExportResult {
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  static final class ExportCategory {
+  public static final class ExportCategory {
 
     private String name;
     private String parentCategoryName;
@@ -70,7 +71,7 @@ public final class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  static final class ExportFilter {
+  public static final class ExportFilter {
 
     private String name;
 
@@ -94,7 +95,7 @@ public final class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  static final class ExportTransaction {
+  public static final class ExportTransaction {
 
     private String description;
 
@@ -107,10 +108,10 @@ public final class ExportResult {
   }
 
   @Data
-  @Builder
+  @Builder(toBuilder = true)
   @AllArgsConstructor
   @NoArgsConstructor
-  static final class ExportAccount {
+  public static final class ExportAccount {
 
     private String name;
 
@@ -123,14 +124,13 @@ public final class ExportResult {
     private LocalDate lastVerificationDate;
 
     private boolean archived;
-
   }
 
   @Data
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  static final class ExportAccountPriceEntry {
+  public static final class ExportAccountPriceEntry {
 
     private String account;
 
@@ -141,7 +141,7 @@ public final class ExportResult {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  static final class ExportFundsSummary {
+  public static final class ExportFundsSummary {
 
     private Map<String, BigDecimal> currencyToFundsMap;
 
