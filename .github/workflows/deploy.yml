@@ -27,17 +27,26 @@ jobs:
     - run: ls -al
     - name: Build with Gradle
       run: cd backend && ./gradlew build -x generateGitProperties
-    - name: Archive backend artifacts
-      uses: actions/upload-artifact@v1
+#     - name: Archive backend artifacts
+#       uses: actions/upload-artifact@v1
+#       with:
+#         name: backend
+#         path: backend/build/reports
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#     - run: cd frontend && npm install
+#     - run: cd frontend && npm install -g tslint typescript @angular/cli protractor protractor-retry
+#     - run: cd frontend && tslint --config tslint.json --project tsconfig.json
+#     - run: cd frontend && ng build
+#     - run: ./scripts/run_e2e.sh
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
       with:
-        name: backend
-        path: backend/build/reports
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: cd frontend && npm install
-    - run: cd frontend && npm install -g tslint typescript @angular/cli protractor protractor-retry
-    - run: cd frontend && tslint --config tslint.json --project tsconfig.json
-    - run: cd frontend && ng build
-    - run: ./scripts/run_e2e.sh
+        key: ${{ secrets.AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER }}
+    - run: ssh -o StrictHostKeyChecking=no ec2-user@$ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"
+#         name: id_rsa # optional
+#         known_hosts: ${{ secrets.KNOWN_HOSTS }}
+#         config: ${{ secrets.CONFIG }} # ssh_config; optional
