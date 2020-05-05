@@ -46,7 +46,8 @@ jobs:
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER }}
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
     - run: ssh -o StrictHostKeyChecking=no ec2-user@$ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"
 #         name: id_rsa # optional
-#         known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
 #         config: ${{ secrets.CONFIG }} # ssh_config; optional
