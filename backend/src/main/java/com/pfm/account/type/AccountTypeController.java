@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AccountTypeController implements AccountTypeApi {
 
-  private AccountTypeService accountTypeService;
-  private AccountTypeValidator accountTypeValidator;
-  private UserProvider userProvider;
-  private HistoryEntryService historyEntryService;
+  private final AccountTypeService accountTypeService;
+  private final AccountTypeValidator accountTypeValidator;
+  private final UserProvider userProvider;
+  private final HistoryEntryService historyEntryService;
 
   @Override
   public ResponseEntity<List<AccountType>> getAccountTypes() {
@@ -64,7 +64,7 @@ public class AccountTypeController implements AccountTypeApi {
   public ResponseEntity<?> deleteAccountType(@PathVariable long accountTypeId) {
     long userId = userProvider.getCurrentUserId();
 
-    if (!accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).isPresent()) {
+    if (accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).isEmpty()) {
       log.info("No account type with id {} was found, not able to delete", accountTypeId);
       return ResponseEntity.notFound().build();
     }

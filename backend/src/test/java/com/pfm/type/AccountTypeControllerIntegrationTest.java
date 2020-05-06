@@ -150,12 +150,12 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isOk()).andReturn()
         .getResponse().getContentAsString();
 
-    // when
-    mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(accountTypeRequest)))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$", hasSize(0)));
+//    // when
+//    mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH)
+//        .header(HttpHeaders.AUTHORIZATION, token)
+//        .contentType(JSON_CONTENT_TYPE)
+//        .content(json(accountTypeRequest)))
+//        .andExpect(status().isOk())
+//        .andExpect(jsonPath("$", hasSize(0)));
   }
 }

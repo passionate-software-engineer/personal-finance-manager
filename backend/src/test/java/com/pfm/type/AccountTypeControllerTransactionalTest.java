@@ -16,6 +16,7 @@ import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserProvider;
 import com.pfm.helpers.IntegrationTestsBase;
 import com.pfm.history.HistoryEntryService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +52,9 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
     // when
-    try {
+    Assertions.assertThrows(IllegalStateException.class, () -> {
       accountTypeController.addAccountType(convertAccountTypeToAccountTypeRequest(accountType));
-      fail();
-    } catch (IllegalStateException ex) {
-      assertNotNull(ex);
-    }
+    } );
 
     // then
     assertThat(accountTypeService.getAccountTypes(userId), hasSize(0));

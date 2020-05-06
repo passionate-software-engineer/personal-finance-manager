@@ -5,7 +5,13 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.pfm.Application;
+import com.pfm.account.AccountRepository;
+import com.pfm.auth.UserRepository;
 import com.pfm.category.CategoryRepository;
+import com.pfm.currency.Currency;
+import com.pfm.currency.CurrencyRepository;
+import java.math.BigDecimal;
+import java.util.List;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,9 +29,17 @@ public class MigrationsTest {
   @Autowired
   private CategoryRepository categoryRepository;
 
+  @Autowired
+  private CurrencyRepository currencyRepository;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private AccountRepository accountRepository;
+
   @Test
   public void shouldExecuteAllMigrationsWithSuccess() {
-    // TODO add check if correct currencies are added and accounts has correct default currency
     // TODO add check if correct account types are added and accounts has correct default account type
 
     // given
@@ -36,6 +50,8 @@ public class MigrationsTest {
 
     // then
     assertCategoriesWereConvertedToFlatStructure();
+    assertCurrenciesWereAddedForUsers();
+    assertDefaultCurrenciesForAccount();
   }
 
   private void assertCategoriesWereConvertedToFlatStructure() {
@@ -51,5 +67,26 @@ public class MigrationsTest {
     assertThat(categoryRepository.findById(10L).orElseThrow().getParentCategory().getId(), is(8L));
     assertThat(categoryRepository.findById(11L).orElseThrow().getParentCategory().getId(), is(8L));
     assertThat(categoryRepository.findById(12L).orElseThrow().getParentCategory().getId(), is(8L));
+  }
+
+  private void assertCurrenciesWereAddedForUsers(){
+    userRepository.findAll().forEach(user -> {
+      List<Currency> currencies = currencyRepository.findByUserId(user.getId());
+      assertThat(currencies.size(), is(4));
+      assertThat(currencies.get(0).getName(), is("PLN"));
+      assertThat(currencies.get(1).getName(), is("USD"));
+      assertThat(currencies.get(2).getName(), is("EUR"));
+      assertThat(currencies.get(3).getName(), is("GBP"));
+      assertThat(currencies.get(0).getExchangeRate(), is(BigDecimal.valueOf(100,2)));
+      assertThat(currencies.get(1).getExchangeRate(), is(BigDecimal.valueOf(358,2)));
+      assertThat(currencies.get(2).getExchangeRate(), is(BigDecimal.valueOf(424,2)));
+      assertThat(currencies.get(3).getExchangeRate(), is(BigDecimal.valueOf(499,2)));
+    });
+  }
+
+  private void assertDefaultCurrenciesForAccount(){
+    accountRepository.findAll().forEach((account -> {
+      assertThat(account.getCurrency().getName(), is("PLN"));
+    }));
   }
 }
