@@ -159,8 +159,8 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnitPlatform()
-    //finalizedBy jacocoTestReport
-    //finalizedBy jacocoTestCoverageVerification
+    finalizedBy jacocoTestReport
+    finalizedBy jacocoTestCoverageVerification
 }
 
 cpdCheck {
