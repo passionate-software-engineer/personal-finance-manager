@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.pfm.Application;
 import com.pfm.account.AccountRepository;
+import com.pfm.account.type.AccountType;
 import com.pfm.account.type.AccountTypeRepository;
 import com.pfm.auth.UserRepository;
 import com.pfm.category.CategoryRepository;
@@ -56,6 +57,7 @@ public class MigrationsTest {
     assertCategoriesWereConvertedToFlatStructure();
     assertCurrenciesWereAddedForUsers();
     assertDefaultCurrenciesForAccount();
+    assertAccountTypesWereAddedForUsers();
     assertDefaultAccountTypesForAccount();
   }
 
@@ -92,6 +94,17 @@ public class MigrationsTest {
   private void assertDefaultCurrenciesForAccount(){
     accountRepository.findAll().forEach((account -> {
       assertThat(account.getCurrency().getName(), is("PLN"));
+    }));
+  }
+
+  private void assertAccountTypesWereAddedForUsers() {
+    userRepository.findAll().forEach((user -> {
+      List<AccountType> types = accountTypeRepository.findByUserId(user.getId());
+      assertThat(types.size(), is(4));
+      assertThat(types.get(0).getName(), is("Personal"));
+      assertThat(types.get(1).getName(), is("Investment"));
+      assertThat(types.get(2).getName(), is("Saving"));
+      assertThat(types.get(3).getName(), is("Credit"));
     }));
   }
 

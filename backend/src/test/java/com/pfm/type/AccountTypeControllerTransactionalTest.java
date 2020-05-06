@@ -69,12 +69,9 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
     doThrow(IllegalStateException.class).when(accountTypeService).deleteAccountType(accountTypeId);
 
     // when
-    try {
+    Assertions.assertThrows(IllegalStateException.class, () -> {
       accountTypeController.deleteAccountType(accountTypeId);
-      fail();
-    } catch (IllegalStateException ex) {
-      assertNotNull(ex);
-    }
+    });
 
     // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
