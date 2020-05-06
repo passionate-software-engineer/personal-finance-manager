@@ -153,9 +153,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 //    // when
 //    mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH)
 //        .header(HttpHeaders.AUTHORIZATION, token)
-//        .contentType(JSON_CONTENT_TYPE)
-//        .content(json(accountTypeRequest)))
-//        .andExpect(status().isOk())
-//        .andExpect(jsonPath("$", hasSize(0)));
+//        .contentType(json(accountTypeRequest)))
+//        .andExpect(status().isOk());
   }
 }
