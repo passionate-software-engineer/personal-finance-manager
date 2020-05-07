@@ -49,7 +49,8 @@ jobs:
         name: id_rsa
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
     - run: ls -al ~/.ssh/id_rsa
-    - run: ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"
+    - run: whoami
+    - run: ssh -v -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"
 #         name: id_rsa # optional
 
 #         config: ${{ secrets.CONFIG }} # ssh_config; optional
