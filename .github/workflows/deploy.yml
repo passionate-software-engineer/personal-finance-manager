@@ -49,10 +49,9 @@ jobs:
         name: id_rsa
         known_hosts: ${{ secrets.KNOWN_HOSTS }}   
     - run: |
-          cd backend/build/libs
           export EC2_INSTANCE=ec2-3-121-199-74.eu-central-1.compute.amazonaws.com
           ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
-          scp -i /github/home/.ssh/id_rsa backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
+          scp -i /github/home/.ssh/id_rsa backend/build/libs/backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
           scp -i /github/home/.ssh/id_rsa ../../../scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
           ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
           ./scripts/wait_until_app_is_ready.sh $EC2_INSTANCE
