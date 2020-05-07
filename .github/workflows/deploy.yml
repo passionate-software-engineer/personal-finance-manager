@@ -47,8 +47,7 @@ jobs:
       with:
         key: ${{ secrets.AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER }}
         name: id_rsa
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    - run: ssh -v -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"   
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}   
     - run: |
           cd backend/build/libs
           export EC2_INSTANCE=ec2-3-121-199-74.eu-central-1.compute.amazonaws.com
