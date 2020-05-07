@@ -73,8 +73,8 @@ jobs:
         curl -O https://bootstrap.pypa.io/get-pip.py
         python3 get-pip.py --user
         export PATH=/root/.local/bin:$PATH
-        sudo pip3 uninstall awscli
-        sudo pip3 install awscli --upgrade --user
+        pip3 uninstall awscli
+        pip3 install awscli --upgrade --user
         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
 
 
