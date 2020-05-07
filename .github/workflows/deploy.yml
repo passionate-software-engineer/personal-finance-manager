@@ -66,4 +66,6 @@ jobs:
         cd frontend
         ng build --configuration=aws
         cd dist/frontend
+        sudo pip3 uninstall awscli
+        sudo pip3 install awscli
         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
