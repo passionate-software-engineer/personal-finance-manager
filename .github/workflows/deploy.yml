@@ -18,15 +18,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.13
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.13
-    - name: Grant execute permission for gradlew
-      run: cd backend && chmod +x gradlew
-    - run: ls -al
-    - name: Build with Gradle
-      run: cd backend && ./gradlew build -x generateGitProperties
+#     - name: Set up JDK 1.13
+#       uses: actions/setup-java@v1
+#       with:
+#         java-version: 1.13
+#     - name: Grant execute permission for gradlew
+#       run: cd backend && chmod +x gradlew
+#     - run: ls -al
+#     - name: Build with Gradle
+#       run: cd backend && ./gradlew build -x generateGitProperties
 #     - name: Archive backend artifacts
 #       uses: actions/upload-artifact@v1
 #       with:
@@ -47,7 +47,7 @@ jobs:
       with:
         key: ${{ secrets.AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER }}
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    - run: ssh -o StrictHostKeyChecking=no ec2-user@$ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"
+    - run: ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-121-199-74.eu-central-1.compute.amazonaws.com "date"
 #         name: id_rsa # optional
 
 #         config: ${{ secrets.CONFIG }} # ssh_config; optional
