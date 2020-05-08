@@ -24,7 +24,7 @@ exports.config = {
 //    maxInstances: 2,
 
     chromeOptions: {
-      args: ['--headless', '--disable-gpu', '--start-maximized', '--no-sandbox']
+      args: ['--headless', '--disable-gpu', '--start-maximized', '--no-sandbox',  '--window-size=1920,1080']
     }
   },
 
