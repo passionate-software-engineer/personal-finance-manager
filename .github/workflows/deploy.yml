@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Build, run E2E tests, Deploy to AWS, run E2E tests on AWS
 
 on:
   push:
@@ -81,7 +81,7 @@ jobs:
         pip3 install awscli --upgrade --user
         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
         
-    - name: Run E2E tests
+    - name: Run E2E tests on AWS
       env: 
         APP_URL: https://pfm.passionatesoftwareengineer.com
       run: |
