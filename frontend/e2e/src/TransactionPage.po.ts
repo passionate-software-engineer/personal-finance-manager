@@ -6,7 +6,7 @@ export class TransactionAndFilterPage {
   navigationBar = new NavigationBar();
 
   async navigateTo() {
-    return this.navigationBar.transactionLink().click();;
+    return this.navigationBar.transactionLink().click();
   }
 
   addTransactionButton() {
