@@ -1,9 +1,12 @@
 import {browser, by, element} from 'protractor';
+import {NavigationBar} from './NavigationBar.po';
 
 export class CategoryPage {
 
+  navigationBar = new NavigationBar();
+
   async navigateTo() {
-    return browser.get('/categories');
+    return this.navigationBar.categoriesLink().click();
   }
 
   addCategoryButton() {

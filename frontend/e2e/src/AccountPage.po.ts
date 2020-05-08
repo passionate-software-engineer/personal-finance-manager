@@ -1,9 +1,12 @@
 import {browser, by, element, protractor} from 'protractor';
+import {NavigationBar} from './NavigationBar.po';
 
 export class AccountsPage {
 
+  navigationBar = new NavigationBar();
+
   async navigateTo() {
-    return browser.get('/accounts');
+    return this.navigationBar.accountsLink().click();
   }
 
   addAccountButton() {

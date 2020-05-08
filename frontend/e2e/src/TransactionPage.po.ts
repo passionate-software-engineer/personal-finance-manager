@@ -1,12 +1,13 @@
 import {browser, by, element} from 'protractor';
+import {NavigationBar} from './NavigationBar.po';
 
 export class TransactionAndFilterPage {
 
-  async navigateTo() {
-    return browser.get('/transactions');
-  }
+  navigationBar = new NavigationBar();
 
-  // transaction
+  async navigateTo() {
+    return this.navigationBar.transactionLink().click();;
+  }
 
   addTransactionButton() {
     return element(by.id('AddTransactionBtn'));
