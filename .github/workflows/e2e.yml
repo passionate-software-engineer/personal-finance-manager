@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Run E2E on AWS instance
 
 on:
   push:
@@ -12,7 +12,11 @@ jobs:
     timeout-minutes: 15
 
     steps:
-        
+    - uses: actions/checkout@v2
+    - name: Setup NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x    
     - name: Run E2E tests
       env: 
         APP_URL: https://pfm.passionatesoftwareengineer.com
