@@ -24,7 +24,7 @@ exports.config = {
 //    maxInstances: 2,
 
     chromeOptions: {
-      args: ['--headless', '--disable-gpu', '--start-maximized', '--no-sandbox']
+      args: ['--headless', '--disable-gpu', '--start-maximized', '--no-sandbox',  '--window-size=1920,1080']
     }
   },
 
@@ -47,6 +47,15 @@ exports.config = {
     });
     jasmine.getEnv().addReporter(
       new SpecReporter({spec: {displayStacktrace: true}}));
+
+//    browser.driver.setNetworkConditions({
+//        offline: false,
+//        latency: 0, // Additional latency (ms).
+//        download_throughput: 500 * 1024, // Maximal aggregated download throughput.
+//        upload_throughput: 500 * 1024 // Maximal aggregated upload throughput.
+//    }, "No throttling");
+    // GPRS, Regular 2G, Good 2G, Regular 3G, Good 3G, Regular 4G, DSL, WiFi or No throttling to disable.
+    // When preset is specified values passed in first argument are not respected.
   },
 
   onCleanUp : function(results) {

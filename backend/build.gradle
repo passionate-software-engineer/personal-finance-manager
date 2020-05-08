@@ -50,6 +50,7 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit' // excluding JUnit4
         exclude group: 'org.assertj' // to avoid confusion in imports (e.g. assertThat)
+        exclude group: 'org.junit.vintage' // to avoid warning when running tests in IJ
     }
 
 

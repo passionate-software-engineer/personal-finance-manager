@@ -21,7 +21,6 @@ describe('Accounts page tests', () => {
   });
 
   beforeEach(async () => {
-
     await transactionPage.navigateTo();
     await transactionPage.removeAllTransactions();
 
@@ -280,7 +279,7 @@ describe('Accounts page tests', () => {
 
   });
 
-  xit('should reduce the account balance by the minus transaction inserted' , () => {
+  it('should reduce the account balance by the minus transaction inserted' , () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
@@ -299,7 +298,7 @@ describe('Accounts page tests', () => {
 
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('09/01/2020', 'petrol', '-250', null, 'ING', null, 'Oil');
+    transactionPage.addTransaction('01/01/2020', 'petrol', '-250', null, 'ING', null, 'Oil');
     expect(transactionPage.transactionRows().count()).toEqual(1);
     transactionPage.assertPrices('-250.00 PLN', null);
 
@@ -312,7 +311,7 @@ describe('Accounts page tests', () => {
 
   });
 
-  xit('should display the account balance minus the inserted transaction minus' , () => {
+  it('should display the account balance minus the inserted transaction minus' , () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
@@ -331,7 +330,7 @@ describe('Accounts page tests', () => {
 
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('09/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
+    transactionPage.addTransaction('01/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
     expect(transactionPage.transactionRows().count()).toEqual(1);
     transactionPage.assertPrices('-32.75 EUR (-138.86 PLN)', null);
 

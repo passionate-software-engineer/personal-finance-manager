@@ -1,0 +1,27 @@
+name: Run E2E on AWS instance
+
+on:
+  push:
+    branches: [ feature/e2e_enable_all ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: piokol/pfm:19 
+
+    timeout-minutes: 15
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x    
+    - name: Run E2E tests
+      env: 
+        APP_URL: https://pfm.passionatesoftwareengineer.com
+      run: |
+           cd frontend 
+           npm install
+           webdriver-manager update
+           protractor e2e/protractor.conf.js --baseUrl $APP_URL
