@@ -44,8 +44,8 @@ jobs:
           tslint --config tslint.json --project tsconfig.json
           ng build
       
-# #     - name: Run E2E tests
-# #       run: ./scripts/run_e2e.sh
+    - name: Run E2E tests
+      run: ./scripts/run_e2e.sh
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -55,8 +55,9 @@ jobs:
         known_hosts: ${{ secrets.KNOWN_HOSTS }}   
    
     - name: Deploy backend
+      env:
+        EC2_INSTANCE: ec2-3-121-199-74.eu-central-1.compute.amazonaws.com
       run: |
-          export EC2_INSTANCE=ec2-3-121-199-74.eu-central-1.compute.amazonaws.com
           ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
           scp -i /github/home/.ssh/id_rsa backend/build/libs/backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
           scp -i /github/home/.ssh/id_rsa scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
@@ -67,9 +68,8 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        APP_S3_BUCKET: s3://pfm.passionatesoftwareengineer.com
       run: |
-        export APP_S3_BUCKET=s3://pfm.passionatesoftwareengineer.com
-        
         cd frontend
         ng build --configuration=aws
         cd dist/frontend
@@ -80,3 +80,10 @@ jobs:
         pip3 uninstall awscli
         pip3 install awscli --upgrade --user
         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
+        
+    - name: Run E2E tests
+      env: 
+        APP_URL: https://pfm.passionatesoftwareengineer.com
+      run: |
+           webdriver-manager update
+           protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
