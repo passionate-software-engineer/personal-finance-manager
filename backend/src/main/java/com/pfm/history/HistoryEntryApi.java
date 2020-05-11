@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface HistoryEntryApi {
 
   // TODO add option to return history entries by date range
-  @ApiOperation(value = "List history entries", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
-  @ApiResponses( {
+  @ApiOperation(value = "List history entries", authorizations = {@Authorization(value = "Bearer")})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = HistoryEntry.class, responseContainer = "list"),
-      @ApiResponse(code = 400, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @GetMapping
   ResponseEntity<List<HistoryEntry>> getHistory();

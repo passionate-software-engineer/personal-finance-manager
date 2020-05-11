@@ -19,15 +19,20 @@ public interface AccountTypeApi {
 
   String BEARER = "Bearer";
 
-  @ApiOperation(value = "Get list of all account types", response = Void.class, authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiOperation(value = "Get list of all account types", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = AccountType.class, responseContainer = "list"),
-      @ApiResponse(code = 400, message = "Bad request", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
-  @ApiOperation(value = "Create a new account type", response = Long.class, authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Create a new account type", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "OK", response = Long.class),
+      @ApiResponse(code = 400, message = "Error", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+  })
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
 

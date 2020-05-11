@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(tags = {"currency-controller"})
 public interface CurrencyApi {
 
-  @ApiOperation(value = "Get list of all accounts", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
-  @ApiResponses( {
+  @ApiOperation(value = "Get list of all accounts", authorizations = {@Authorization(value = "Bearer")})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = Currency.class, responseContainer = "list"),
-      @ApiResponse(code = 400, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Currency>> getCurrencies();

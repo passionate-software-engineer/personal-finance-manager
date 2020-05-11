@@ -22,42 +22,46 @@ public interface FilterApi {
 
   String BEARER = "Bearer";
 
-  @ApiOperation(value = "Find filter by id", response = Void.class, authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiOperation(value = "Find filter by id", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = Filter.class),
-      @ApiResponse(code = 400, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 404, message = "Bad request", response = Void.class),
   })
   @GetMapping(value = "/{filterId}")
   ResponseEntity<Filter> getFilterById(@PathVariable long filterId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = Filter.class, responseContainer = "list"),
-      @ApiResponse(code = 400, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Filter>> getFilters();
 
-  @ApiOperation(value = "Create new filter", response = Void.class, authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiOperation(value = "Create new filter", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = Long.class),
       @ApiResponse(code = 400, message = "Bad request", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
-  @ApiOperation(value = "Update an existing filter", response = Void.class, authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiOperation(value = "Update an existing filter", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = Void.class),
       @ApiResponse(code = 400, message = "Bad request", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @PutMapping(value = "/{filterId}")
   ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest);
 
-  @ApiOperation(value = "Delete an existing filter", response = Void.class, authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiOperation(value = "Delete an existing filter", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = Void.class),
-      @ApiResponse(code = 400, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 404, message = "Bad request", response = Void.class),
   })
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);

@@ -16,18 +16,18 @@ public interface ExportImportApi {
 
   String BEARER = "Bearer";
 
-  @ApiOperation(value = "Export user data in JSON format", response = Void.class, authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Export user data in JSON format", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses( {
-      @ApiResponse(code = 200, message = "OK", response = Void.class),
-      @ApiResponse(code = 400, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 200, message = "OK", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @GetMapping("export")
   ExportResult exportData();
 
-  @ApiOperation(value = "Imports previously exported user data", response = Void.class, authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Imports previously exported user data", authorizations = {@Authorization(value = "Bearer")})
   @ApiResponses( {
-      @ApiResponse(code = 200, message = "OK", response = Void.class),
-      @ApiResponse(code = 400, message = "Bad request", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 200, message = "OK", response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
   @PostMapping("import")
   ResponseEntity<?> importData(ExportResult inputData);
