@@ -1,5 +1,6 @@
 package com.pfm.currency;
 
+import com.pfm.swagger.ApiConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,8 +19,8 @@ public interface CurrencyApi {
 
   @ApiOperation(value = "Get list of all accounts", authorizations = {@Authorization(value = "Bearer")})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Currency.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = Currency.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Currency>> getCurrencies();

@@ -1,5 +1,6 @@
 package com.pfm.account.type;
 
+import com.pfm.swagger.ApiConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -21,17 +22,17 @@ public interface AccountTypeApi {
 
   @ApiOperation(value = "Get list of all account types", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = AccountType.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = AccountType.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
   @ApiOperation(value = "Create a new account type", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Long.class),
-      @ApiResponse(code = 400, message = "Error", response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = Long.class),
+      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);

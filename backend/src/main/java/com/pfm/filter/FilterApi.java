@@ -1,5 +1,6 @@
 package com.pfm.filter;
 
+import com.pfm.swagger.ApiConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -24,44 +25,44 @@ public interface FilterApi {
 
   @ApiOperation(value = "Find filter by id", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Filter.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
-      @ApiResponse(code = 404, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = Filter.class),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants.message4),
   })
   @GetMapping(value = "/{filterId}")
   ResponseEntity<Filter> getFilterById(@PathVariable long filterId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Filter.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = Filter.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Filter>> getFilters();
 
   @ApiOperation(value = "Create new filter", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Long.class),
-      @ApiResponse(code = 400, message = "Bad request", response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = Long.class),
+      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
   @ApiOperation(value = "Update an existing filter", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Void.class),
-      @ApiResponse(code = 400, message = "Bad request", response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1),
+      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @PutMapping(value = "/{filterId}")
   ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest);
 
   @ApiOperation(value = "Delete an existing filter", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = Void.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
-      @ApiResponse(code = 404, message = "Bad request", response = Void.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants.message4),
   })
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);

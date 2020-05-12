@@ -1,5 +1,6 @@
 package com.pfm.history;
 
+import com.pfm.swagger.ApiConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,8 +20,8 @@ public interface HistoryEntryApi {
   // TODO add option to return history entries by date range
   @ApiOperation(value = "List history entries", authorizations = {@Authorization(value = "Bearer")})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = HistoryEntry.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = HistoryEntry.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<HistoryEntry>> getHistory();

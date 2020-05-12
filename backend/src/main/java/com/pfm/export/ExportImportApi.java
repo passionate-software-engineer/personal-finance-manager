@@ -1,5 +1,6 @@
 package com.pfm.export;
 
+import com.pfm.swagger.ApiConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,16 +19,16 @@ public interface ExportImportApi {
 
   @ApiOperation(value = "Export user data in JSON format", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @GetMapping("export")
   ExportResult exportData();
 
   @ApiOperation(value = "Imports previously exported user data", authorizations = {@Authorization(value = "Bearer")})
   @ApiResponses({
-      @ApiResponse(code = 200, message = "OK", response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants.message1, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
   })
   @PostMapping("import")
   ResponseEntity<?> importData(ExportResult inputData);
