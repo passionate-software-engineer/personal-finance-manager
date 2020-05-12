@@ -76,7 +76,7 @@ public class MigrationsTest {
     assertThat(categoryRepository.findById(12L).orElseThrow().getParentCategory().getId(), is(8L));
   }
 
-  private void assertCurrenciesWereAddedForUsers(){
+  private void assertCurrenciesWereAddedForUsers() {
     userRepository.findAll().forEach(user -> {
       List<Currency> currencies = currencyRepository.findByUserId(user.getId());
       assertThat(currencies.size(), is(4));
@@ -84,34 +84,34 @@ public class MigrationsTest {
       assertThat(currencies.get(1).getName(), is("USD"));
       assertThat(currencies.get(2).getName(), is("EUR"));
       assertThat(currencies.get(3).getName(), is("GBP"));
-      assertThat(currencies.get(0).getExchangeRate(), is(BigDecimal.valueOf(100,2)));
-      assertThat(currencies.get(1).getExchangeRate(), is(BigDecimal.valueOf(358,2)));
-      assertThat(currencies.get(2).getExchangeRate(), is(BigDecimal.valueOf(424,2)));
-      assertThat(currencies.get(3).getExchangeRate(), is(BigDecimal.valueOf(499,2)));
+      assertThat(currencies.get(0).getExchangeRate(), is(BigDecimal.valueOf(100, 2)));
+      assertThat(currencies.get(1).getExchangeRate(), is(BigDecimal.valueOf(358, 2)));
+      assertThat(currencies.get(2).getExchangeRate(), is(BigDecimal.valueOf(424, 2)));
+      assertThat(currencies.get(3).getExchangeRate(), is(BigDecimal.valueOf(499, 2)));
     });
   }
 
-  private void assertDefaultCurrenciesForAccount(){
-    accountRepository.findAll().forEach((account -> {
+  private void assertDefaultCurrenciesForAccount() {
+    accountRepository.findAll().forEach(account -> {
       assertThat(account.getCurrency().getName(), is("PLN"));
-    }));
+    });
   }
 
   private void assertAccountTypesWereAddedForUsers() {
-    userRepository.findAll().forEach((user -> {
+    userRepository.findAll().forEach(user -> {
       List<AccountType> types = accountTypeRepository.findByUserId(user.getId());
       assertThat(types.size(), is(4));
       assertThat(types.get(0).getName(), is("Personal"));
       assertThat(types.get(1).getName(), is("Investment"));
       assertThat(types.get(2).getName(), is("Saving"));
       assertThat(types.get(3).getName(), is("Credit"));
-    }));
+    });
   }
 
   private void assertDefaultAccountTypesForAccount() {
-    accountRepository.findAll().forEach((account -> {
+    accountRepository.findAll().forEach(account -> {
       assertThat(account.getType().getName(), is("Personal"));
-    }));
+    });
 
   }
 }

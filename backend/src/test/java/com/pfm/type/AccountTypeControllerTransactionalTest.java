@@ -4,8 +4,6 @@ import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -54,7 +52,7 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
     // when
     Assertions.assertThrows(IllegalStateException.class, () -> {
       accountTypeController.addAccountType(convertAccountTypeToAccountTypeRequest(accountType));
-    } );
+    });
 
     // then
     assertThat(accountTypeService.getAccountTypes(userId), hasSize(0));
