@@ -17,7 +17,7 @@ public interface ExportImportApi {
   String BEARER = "Bearer";
 
   @ApiOperation(value = "Export user data in JSON format", authorizations = {@Authorization(value = BEARER)})
-  @ApiResponses( {
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = String.class, responseContainer = "list"),
       @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })
@@ -25,7 +25,7 @@ public interface ExportImportApi {
   ExportResult exportData();
 
   @ApiOperation(value = "Imports previously exported user data", authorizations = {@Authorization(value = "Bearer")})
-  @ApiResponses( {
+  @ApiResponses({
       @ApiResponse(code = 200, message = "OK", response = String.class, responseContainer = "list"),
       @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
   })

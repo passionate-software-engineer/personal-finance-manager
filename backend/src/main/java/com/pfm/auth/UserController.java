@@ -34,7 +34,7 @@ public class UserController implements UserApi {
         .orElseGet(() ->
             ResponseEntity.badRequest()
                 .body(Collections.singletonList(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
-  // TODO should return 401 instead of 400
+    // TODO should return 401 instead of 400
   }
 
   // TODO should enable user to log out / invalidate session
