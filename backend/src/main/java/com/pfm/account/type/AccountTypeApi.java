@@ -22,17 +22,17 @@ public interface AccountTypeApi {
 
   @ApiOperation(value = "Get list of all account types", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = AccountType.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = AccountType.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
   @ApiOperation(value = "Create a new account type", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Long.class),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Long.class),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);

@@ -28,46 +28,46 @@ public interface TransactionApi {
 
   @ApiOperation(value = "Find transaction by id", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Transaction.class),
-      @ApiResponse(code = 400, message = ApiConstants.message2),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Transaction.class),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @GetMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId);
 
   @ApiOperation(value = "Get list of all transactions", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Transaction.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Transaction.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @GetMapping
   ResponseEntity<List<Transaction>> getTransactions();
 
   @ApiOperation(value = "Create a new transaction", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Long.class),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Long.class),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addTransaction(TransactionRequest transactionRequest);
 
   @ApiOperation(value = "Update an existing transaction", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @PutMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<?> updateTransaction(@PathVariable long transactionId, TransactionRequest transactionRequest);
 
   @ApiOperation(value = "Delete an existing transaction", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @DeleteMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<?> deleteTransaction(@PathVariable long transactionId);
@@ -75,9 +75,9 @@ public interface TransactionApi {
   @ApiOperation(value = "Commits (converts) planned transaction into transaction",
       authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @PatchMapping(value = "/" + TRANSACTION_ID)
   ResponseEntity<?> commitPlannedTransaction(@PathVariable long transactionId, TransactionRequest preCommitUpdate);
@@ -85,9 +85,9 @@ public interface TransactionApi {
   @ApiOperation(value = "Sets planned transaction status to recurrent",
       authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @PatchMapping(value = "/" + TRANSACTION_ID + "/setAsRecurrent")
   ResponseEntity<?> setAsRecurrent(@PathVariable long transactionId, @RequestParam RecurrencePeriod recurrencePeriod);

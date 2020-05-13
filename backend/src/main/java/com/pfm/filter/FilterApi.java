@@ -25,44 +25,44 @@ public interface FilterApi {
 
   @ApiOperation(value = "Find filter by id", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Filter.class),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Filter.class),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @GetMapping(value = "/{filterId}")
   ResponseEntity<Filter> getFilterById(@PathVariable long filterId);
 
   @ApiOperation(value = "Get list of all filters", response = Filter.class, authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Filter.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Filter.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Filter>> getFilters();
 
   @ApiOperation(value = "Create new filter", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Long.class),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Long.class),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addFilter(FilterRequest filterRequest);
 
   @ApiOperation(value = "Update an existing filter", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @PutMapping(value = "/{filterId}")
   ResponseEntity<?> updateFilter(@PathVariable long filterId, FilterRequest filterRequest);
 
   @ApiOperation(value = "Delete an existing filter", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);

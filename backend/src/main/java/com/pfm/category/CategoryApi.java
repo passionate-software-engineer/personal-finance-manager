@@ -27,45 +27,45 @@ public interface CategoryApi {
 
   @ApiOperation(value = "Find category by id", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Category.class),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Category.class),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @GetMapping(value = "/{categoryId}")
   ResponseEntity<Category> getCategoryById(@PathVariable long categoryId);
 
   @ApiOperation(value = "Get list of categories", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Category.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Category.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Category>> getCategories();
 
   @ApiOperation(value = "Create a new category", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Long.class),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Long.class),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @PostMapping
   ResponseEntity<?> addCategory(CategoryAddRequest categoryRequest);
 
   @ApiOperation(value = "Update an existing category", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @PutMapping(value = "/{categoryId}")
   ResponseEntity<?> updateCategory(@PathVariable long categoryId, CategoryUpdateRequest categoryRequest);
 
   @ApiOperation(value = "Delete an existing category", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1),
-      @ApiResponse(code = 400, message = ApiConstants.message2, response = String.class),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
-      @ApiResponse(code = 404, message = ApiConstants.message4),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE),
+      @ApiResponse(code = 400, message = ApiConstants._400_BAD_REQ_MESSAGE, response = String.class),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = ApiConstants._404_NOT_FOUND_MESSAGE),
   })
   @DeleteMapping(value = "/{categoryId}")
   ResponseEntity<?> deleteCategory(@PathVariable long categoryId);

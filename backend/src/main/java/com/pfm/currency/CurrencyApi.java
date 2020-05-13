@@ -19,8 +19,8 @@ public interface CurrencyApi {
 
   @ApiOperation(value = "Get list of all accounts", authorizations = {@Authorization(value = "Bearer")})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants.message1, response = Currency.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants.message3, response = String.class),
+      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Currency.class, responseContainer = "list"),
+      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Currency>> getCurrencies();

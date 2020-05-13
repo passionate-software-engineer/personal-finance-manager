@@ -28,15 +28,14 @@ public class SwaggerConfig {
         .paths(any())
         .build()
         .tags(new Tag("account-controller", "Controller used to list / add / update / delete accounts."),
-            new Tag("account-type-controller", "Account Type Controller."),
-            new Tag("category-controller", "Category Controller."),
-            new Tag("currency-controller", "Currency Controller."),
-            new Tag("export-import-controller", "Export Import Controller."),
-            new Tag("filter-controller", "Filter Controller."),
-            new Tag("history-entry-controller", "History Entry Controller."),
-            new Tag("landing-page-controller", "Landing Page Controller."),
-            new Tag("transaction-controller", "Transaction Controller."),
-            new Tag("user-controller", "User Controller.")
+            new Tag("account-type-controller", "Controller used to list / add / update / delete account type."),
+            new Tag("category-controller", "Controller used to list / add / update / delete categories."),
+            new Tag("currency-controller", "Controller used to list / add / update / delete currencies."),
+            new Tag("export-import-controller", "Controller for export / import."),
+            new Tag("filter-controller", "Controller used to list / add / update / delete filters."),
+            new Tag("history-entry-controller", "Controller used to list history."),
+            new Tag("transaction-controller", "Controller used to list / add / update / delete transaction."),
+            new Tag("user-controller", "Controller used to register / refresh / authenticate user.")
         )
         .securitySchemes(Collections.singletonList(new ApiKey("Bearer", "Authorization", "header")));
   }

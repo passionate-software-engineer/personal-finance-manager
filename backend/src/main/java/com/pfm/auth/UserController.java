@@ -4,7 +4,6 @@ import static com.pfm.config.MessagesProvider.INVALID_REFRESH_TOKEN;
 import static com.pfm.config.MessagesProvider.USERNAME_OR_PASSWORD_IS_INCORRECT;
 import static com.pfm.config.MessagesProvider.getMessage;
 
-import com.pfm.account.type.UserApi;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
