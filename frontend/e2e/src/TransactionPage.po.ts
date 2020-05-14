@@ -150,10 +150,10 @@ export class TransactionAndFilterPage {
       this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
     }
 
-    this.newTransactionAccountSelects().get(0).sendKeys(accountNameOne);
+    this.newTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
 
     if (accountNameTwo !== null) {
-      this.newTransactionAccountSelects().get(1).sendKeys(accountNameTwo);
+      this.newTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
     }
 
     this.newTransactionCategorySelect().sendKeys(categoryName);
@@ -177,10 +177,10 @@ export class TransactionAndFilterPage {
       this.editTransactionPriceInput().get(1).sendKeys(priceTwo);
     }
 
-    this.editTransactionAccountSelects().get(0).sendKeys(accountNameOne);
+    this.editTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
 
     if (accountNameTwo !== null) {
-      this.editTransactionAccountSelects().get(1).sendKeys(accountNameTwo);
+      this.editTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
     }
 
     this.editTransactionCategorySelect().sendKeys(categoryName);

@@ -250,13 +250,17 @@
 
       <!--Account-->
       <td>
-        <!-- TODO -  hide archived accounts-->
-        <ng-select *ngFor="let entry of newTransaction.accountPriceEntries"
-                   [items]="accounts"
-                   bindLabel="name"
-                   [(ngModel)]="entry.account"
-                   id="newTransactionAccountSelects">
-        </ng-select>
+        <select *ngFor="let entry of newTransaction.accountPriceEntries"
+                     [(ngModel)]="entry.account"
+                class="form-control"
+                id="newTransactionAccountSelects">
+          <ng-container *ngFor="let account of accounts">
+            <option *ngIf="!account.archived"
+                    [ngValue]="account">
+              {{account.name}}
+            </option>
+          </ng-container>
+        </select>
       </td>
 
 
@@ -365,13 +369,17 @@
 
         <ng-template #accountEditEnabled>
           <td>
-            <!-- TODO -  hide archived accounts-->
-            <ng-select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
-                       [items]="accounts"
-                       bindLabel="name"
+            <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
                        [(ngModel)]="entry.account"
+                    class="form-control"
                        id="EditTransactionAccountSelects">
-            </ng-select>
+              <ng-container *ngFor="let account of accounts">
+                <option *ngIf="!account.archived"
+                        [ngValue]="account">
+                  {{account.name}}
+                </option>
+              </ng-container>
+            </select>
           </td>
         </ng-template>
 
