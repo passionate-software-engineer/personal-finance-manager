@@ -144,24 +144,19 @@ export class TransactionAndFilterPage {
 
     this.newTransactionPriceInput().get(0).clear();
     this.newTransactionPriceInput().get(0).sendKeys(priceOne);
-    // if (!this.newTransactionPriceInput().get(0).getText() === priceOne) {
-    // this.newTransactionPriceInput().get(0).sendKeys(priceOne);
-    // }
-    // expect(this.newTransactionPriceInput().get(0).getText()).toEqual(priceOne );
 
     if (priceTwo !== null) {
       this.newTransactionPriceInput().get(1).clear();
       this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
-      // expect(this.newTransactionPriceInput().get(1).getText()).toEqual(priceTwo);
     }
 
-    this.newTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
+    this.newTransactionAccountSelects().get(0).sendKeys(accountNameOne);
 
     if (accountNameTwo !== null) {
-      this.newTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
+      this.newTransactionAccountSelects().get(1).sendKeys(accountNameTwo);
     }
 
-    this.newTransactionCategorySelect().element(by.cssContainingText('option', categoryName)).click();
+    this.newTransactionCategorySelect().sendKeys(categoryName);
 
     this.newTransactionSaveButton().click();
   }
@@ -182,13 +177,13 @@ export class TransactionAndFilterPage {
       this.editTransactionPriceInput().get(1).sendKeys(priceTwo);
     }
 
-    this.editTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
+    this.editTransactionAccountSelects().get(0).sendKeys(accountNameOne);
 
     if (accountNameTwo !== null) {
-      this.editTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
+      this.editTransactionAccountSelects().get(1).sendKeys(accountNameTwo);
     }
 
-    this.editTransactionCategorySelect().element(by.cssContainingText('option', categoryName)).click();
+    this.editTransactionCategorySelect().sendKeys(categoryName);
 
     this.editTransactionSaveButton().click();
   }
@@ -211,8 +206,6 @@ export class TransactionAndFilterPage {
 
     expect(this.transactionRows().count()).toEqual(0);
   }
-
-  // filter
 
   addFilterButton() {
     return element(by.id('AddFilterBtn'));
