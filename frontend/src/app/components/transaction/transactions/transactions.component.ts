@@ -277,7 +277,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
     while (commitDate !== '' && commitDate !== null);
   }
-
+  // TODO add dialog asking for date
   commitOverduePlannedTransaction(transaction: Transaction) {
     const commitDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
 

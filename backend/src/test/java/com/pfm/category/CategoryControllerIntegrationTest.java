@@ -44,7 +44,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Object[] emptyAccountNameParameters() {
-    return new Object[]{"", " ", "    ", null};
+    return new Object[] {"", " ", "    ", null};
   }
 
   @BeforeEach

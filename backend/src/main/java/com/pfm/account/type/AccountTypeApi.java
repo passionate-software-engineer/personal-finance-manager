@@ -1,7 +1,15 @@
 package com.pfm.account.type;
 
+import static com.pfm.swagger.ApiConstants.BAD_REQUEST_MESSAGE;
+import static com.pfm.swagger.ApiConstants.BEARER;
+import static com.pfm.swagger.ApiConstants.CONTAINER_LIST;
+import static com.pfm.swagger.ApiConstants.OK_MESSAGE;
+import static com.pfm.swagger.ApiConstants.UNAUTHORIZED_MESSAGE;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +20,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("accountTypes")
 @CrossOrigin
-@Api(value = "AccountType", description = "Controller used to list / add / update / delete account type.")
+@Api(tags = {"account-type-controller"})
 public interface AccountTypeApi {
 
-  String BEARER = "Bearer";
-
-  @ApiOperation(value = "Get list of all account types", response = AccountType.class, responseContainer = "List",
-      authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Get list of all account types", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = AccountType.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
+  })
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
-  @ApiOperation(value = "Create a new account type", response = Long.class, authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Create a new account type", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = Long.class),
+      @ApiResponse(code = 400, message = BAD_REQUEST_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
+  })
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
 

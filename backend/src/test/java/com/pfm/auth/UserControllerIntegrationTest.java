@@ -36,7 +36,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
-    return Arrays.asList(new Object[][]{
+    return Arrays.asList(new Object[][] {
         {" Marian", " 1232sbbb"},
         {"Mar ian", "1232 sbbb"},
         {" Mar ian ", " 1232 sbbb "},
@@ -113,7 +113,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
+        .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
   }
 
   @Test
@@ -129,7 +129,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .contentType(JSON_CONTENT_TYPE)
         .content(json(user)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
+        .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
   }
 
   @Test
@@ -240,7 +240,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
         .contentType(JSON_CONTENT_TYPE)
         .content(json(null)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$", is(getMessage(INVALID_REFRESH_TOKEN))));
+        .andExpect(jsonPath("$[0]", is(getMessage(INVALID_REFRESH_TOKEN))));
   }
 
   @Test
