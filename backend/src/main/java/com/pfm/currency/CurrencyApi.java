@@ -1,6 +1,10 @@
 package com.pfm.currency;
 
-import com.pfm.swagger.ApiConstants;
+import static com.pfm.swagger.ApiConstants.BEARER;
+import static com.pfm.swagger.ApiConstants.CONTAINER_LIST;
+import static com.pfm.swagger.ApiConstants.OK_MESSAGE;
+import static com.pfm.swagger.ApiConstants.UNAUTHORIZED_MESSAGE;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -17,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(tags = {"currency-controller"})
 public interface CurrencyApi {
 
-  @ApiOperation(value = "Get list of all accounts", authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Get list of all accounts", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = Currency.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = Currency.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<Currency>> getCurrencies();

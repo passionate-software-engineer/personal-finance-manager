@@ -95,7 +95,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> emptyAccountTypeNameParameters() {
-    return Arrays.asList(new Object[][]{
+    return Arrays.asList(new Object[][] {
         {""},
         {" "},
         {"    "},
@@ -104,7 +104,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-    public void shouldReturnErrorCausedByExistingAccountTypeName() throws Exception {
+  public void shouldReturnErrorCausedByExistingAccountTypeName() throws Exception {
     // given
     AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
 

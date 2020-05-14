@@ -53,7 +53,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> addFilterParameters() {
-    return Arrays.asList(new Object[][]{
+    return Arrays.asList(new Object[][] {
         {filterHomeExpensesUpTo200()},
         {filterIsDefault()},
         {filterIsNotDefault()}
@@ -195,7 +195,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> updateFilterParameters() {
-    return Arrays.asList(new Object[][]{
+    return Arrays.asList(new Object[][] {
         {filterIsDefault().getIsDefault(), filterCarExpenses()},
         {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
     });

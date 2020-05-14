@@ -1,6 +1,10 @@
 package com.pfm.history;
 
-import com.pfm.swagger.ApiConstants;
+import static com.pfm.swagger.ApiConstants.BEARER;
+import static com.pfm.swagger.ApiConstants.CONTAINER_LIST;
+import static com.pfm.swagger.ApiConstants.OK_MESSAGE;
+import static com.pfm.swagger.ApiConstants.UNAUTHORIZED_MESSAGE;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface HistoryEntryApi {
 
   // TODO add option to return history entries by date range
-  @ApiOperation(value = "List history entries", authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "List history entries", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = HistoryEntry.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = HistoryEntry.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
   })
   @GetMapping
   ResponseEntity<List<HistoryEntry>> getHistory();

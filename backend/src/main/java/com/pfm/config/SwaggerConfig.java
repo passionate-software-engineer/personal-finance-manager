@@ -1,5 +1,6 @@
 package com.pfm.config;
 
+import static com.pfm.swagger.ApiConstants.BEARER;
 import static springfox.documentation.builders.PathSelectors.any;
 
 import java.util.Collections;
@@ -37,7 +38,7 @@ public class SwaggerConfig {
             new Tag("transaction-controller", "Controller used to list / add / update / delete transaction."),
             new Tag("user-controller", "Controller used to register / refresh / authenticate user.")
         )
-        .securitySchemes(Collections.singletonList(new ApiKey("Bearer", "Authorization", "header")));
+        .securitySchemes(Collections.singletonList(new ApiKey(BEARER, "Authorization", "header")));
   }
 
   private ApiInfo getApiInfo() {

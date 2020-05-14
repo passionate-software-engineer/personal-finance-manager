@@ -1,6 +1,10 @@
 package com.pfm.export;
 
-import com.pfm.swagger.ApiConstants;
+import static com.pfm.swagger.ApiConstants.BEARER;
+import static com.pfm.swagger.ApiConstants.CONTAINER_LIST;
+import static com.pfm.swagger.ApiConstants.OK_MESSAGE;
+import static com.pfm.swagger.ApiConstants.UNAUTHORIZED_MESSAGE;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,20 +19,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Api(tags = {"export-import-controller"})
 public interface ExportImportApi {
 
-  String BEARER = "Bearer";
-
   @ApiOperation(value = "Export user data in JSON format", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
   })
   @GetMapping("export")
   ExportResult exportData();
 
-  @ApiOperation(value = "Imports previously exported user data", authorizations = {@Authorization(value = "Bearer")})
+  @ApiOperation(value = "Imports previously exported user data", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = ApiConstants._200_OK_MESSAGE, response = String.class, responseContainer = "list"),
-      @ApiResponse(code = 401, message = ApiConstants._401_UN_AUTH_MESSAGE, response = String.class),
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
   })
   @PostMapping("import")
   ResponseEntity<?> importData(ExportResult inputData);
