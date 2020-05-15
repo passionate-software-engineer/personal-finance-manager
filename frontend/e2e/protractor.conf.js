@@ -7,7 +7,7 @@ const retry = require('protractor-retry').retry;
 exports.config = {
   allScriptsTimeout: 20000,
   specs: [
-    './src/**/*.e2e-spec.ts'
+    './src/**/TransactionPage.e2e-spec.ts'
   ],
   capabilities: {
     'browserName': 'chrome',

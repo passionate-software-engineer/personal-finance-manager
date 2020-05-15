@@ -264,10 +264,12 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '9,750.25');
     accountPage.assertAccountBalancePLNSummary('9,750.25');
 
+    const ACCOUNT_INDEX = 0;
+    const CATEGORY_INDEX = 0;
 
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('26/11/2019', 'wages', '7850.25', null, 'ING', null, 'Salary');
+    transactionPage.addTransaction('26/11/2019', 'wages', '7850.25', null, ACCOUNT_INDEX, null, CATEGORY_INDEX);
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     // then
@@ -296,9 +298,12 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '8,269.52');
     accountPage.assertAccountBalancePLNSummary('8,269.52');
 
+    const ACCOUNT_INDEX = 0;
+    const CATEGORY_INDEX = 0;
+
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('01/01/2020', 'petrol', '-250', null, 'ING', null, 'Oil');
+    transactionPage.addTransaction('01/01/2020', 'petrol', '-250', null, ACCOUNT_INDEX, null, CATEGORY_INDEX);
     expect(transactionPage.transactionRows().count()).toEqual(1);
     transactionPage.assertPrices('-250.00 PLN', null);
 
@@ -328,9 +333,12 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '0.00');
     accountPage.assertAccountBalancePLNSummary('0.00');
 
+    const ACCOUNT_INDEX = 0;
+    const CATEGORY_INDEX = 1;
+
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('01/01/2020', 'petrol', '-32.75', null, 'PKO', null, 2);
+    transactionPage.addTransaction('01/01/2020', 'petrol', '-32.75', null, ACCOUNT_INDEX, null, CATEGORY_INDEX);
     expect(transactionPage.transactionRows().count()).toEqual(1);
     transactionPage.assertPrices('-32.75 EUR (-138.86 PLN)', null);
 
