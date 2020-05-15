@@ -249,9 +249,10 @@
       </td>
 
       <!--Account-->
+      <!--   TODO  hide archived accounts   -->
       <td>
         <div *ngFor="let entry of newTransaction.accountPriceEntries; let i = index">
-          <ng-select [items]="getNotArchivedAccounts()"
+          <ng-select [items]="accounts"
                      bindLabel="name"
                      [(ngModel)]="entry.account"
                      id="newTransactionAccountSelects_{{i}}">
@@ -363,10 +364,11 @@
           </td>
         </ng-template>
 
+        <!--   TODO  hide archived accounts   -->
         <ng-template #accountEditEnabled>
           <td>
             <div *ngFor="let entry of transaction.editedTransaction.accountPriceEntries; let i = index">
-              <ng-select [items]="getNotArchivedAccounts()"
+              <ng-select [items]="accounts"
                          bindLabel="name"
                          [(ngModel)]="entry.account"
                          id="EditTransactionAccountSelects_{{i}}">
