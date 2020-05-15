@@ -5,6 +5,11 @@ export class TransactionAndFilterPage {
 
   navigationBar = new NavigationBar();
 
+   ngSelectNth(elementId, optionIndex) {
+  		element(by.id(elementId)).click();
+  		element(by.id(elementId)).all(by.css('.ng-option')).get(optionIndex).click();
+   }
+
   async navigateTo() {
     return this.navigationBar.transactionLink().click();
   }
@@ -53,8 +58,8 @@ export class TransactionAndFilterPage {
     return element.all(by.id('newTransactionAccountSelects'));
   }
 
-  newTransactionCategorySelect() {
-    return element(by.id('newTransactionCategorySelect'));
+  newTransactionCategorySelectOption(optionIndex) {
+    return this.ngSelectNth("newTransactionCategorySelect", optionIndex);
   }
 
   newTransactionSaveButton() {
@@ -77,9 +82,9 @@ export class TransactionAndFilterPage {
     return element.all(by.id('EditTransactionAccountSelects'));
   }
 
-  editTransactionCategorySelect() {
-    return element(by.id('EditTransactionCategorySelect'));
-  }
+  editTransactionCategorySelectOption(optionIndex) {
+      return this.ngSelectNth("EditTransactionCategorySelect", optionIndex);
+    }
 
   editTransactionSaveButton() {
     return element(by.id('EditTransactionSaveBtn'));
@@ -156,7 +161,7 @@ export class TransactionAndFilterPage {
       this.newTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
     }
 
-    this.newTransactionCategorySelect().sendKeys(categoryName);
+    this.newTransactionCategorySelectOption(0);
 
     this.newTransactionSaveButton().click();
   }
@@ -183,7 +188,7 @@ export class TransactionAndFilterPage {
       this.editTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
     }
 
-    this.editTransactionCategorySelect().sendKeys(categoryName);
+    this.editTransactionCategorySelectOption(0);
 
     this.editTransactionSaveButton().click();
   }
