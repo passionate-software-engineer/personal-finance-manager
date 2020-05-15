@@ -60,8 +60,11 @@ describe('Transaction page tests', () => {
     accountPage.navigateTo();
     accountPage.addAccount('Mbank', 1000);
 
+    const ACCOUNT_INDEX = 0;
+    const CATEGORY_INDEX = 0;
+
     // when
-    transactionPage.addTransaction('01/01/2018', 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('01/01/2018', 'desc', 100, null, ACCOUNT_INDEX, null, CATEGORY_INDEX);
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -86,8 +89,12 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Mbank', 1000);
     accountPage.addAccount('Alior', 500);
 
+    const ACCOUNT_MBANK_INDEX = 1;
+    const ACCOUNT_ALIOR_INDEX = 0;
+    const CATEGORY_INDEX = 0;
+
     // when
-    transactionPage.addTransaction('02/02/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+    transactionPage.addTransaction('02/02/2018', 'desc', 100, 50, ACCOUNT_MBANK_INDEX, ACCOUNT_ALIOR_INDEX, CATEGORY_INDEX);
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -117,11 +124,18 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Millenium', 10000);
     accountPage.addAccount('Ing', 5000);
 
-    transactionPage.addTransaction('03/03/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+    const ACCOUNT_ALIOR_INDEX = 0;
+    const ACCOUNT_ING_INDEX = 1;
+    const ACCOUNT_MBANK_INDEX = 2;
+    const ACCOUNT_MILLENIUM_INDEX = 3;
+    const CATEGORY_CAR_INDEX = 0;
+    const CATEGORY_FOOD_INDEX = 1;
+
+    transactionPage.addTransaction('03/03/2018', 'desc', 100, 50, ACCOUNT_MBANK_INDEX, ACCOUNT_ALIOR_INDEX, CATEGORY_CAR_INDEX);
 
     // when
     transactionPage.updateTransaction(transactionPage.transactionRows().first(),
-      '05/05/2018', 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
+      '05/05/2018', 'updated description', 1000, 500, ACCOUNT_MILLENIUM_INDEX, ACCOUNT_ING_INDEX, CATEGORY_FOOD_INDEX);
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -148,7 +162,10 @@ describe('Transaction page tests', () => {
     accountPage.navigateTo();
     accountPage.addAccount('Mbank', 1000);
 
-    transactionPage.addTransaction('07/07/2018', 'desc', 100, null, 'Mbank', null, 'Car');
+    const ACCOUNT_INDEX = 0;
+    const CATEGORY_INDEX = 0;
+
+    transactionPage.addTransaction('07/07/2018', 'desc', 100, null, ACCOUNT_INDEX, null, CATEGORY_INDEX);
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     // when

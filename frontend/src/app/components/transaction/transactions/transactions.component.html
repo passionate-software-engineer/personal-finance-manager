@@ -204,15 +204,15 @@
             {{category.name}}
           </option>
         </select>
-<!--        <ng-select-->
-<!--          [items]="categories"-->
-<!--          [multiple]="true"-->
-<!--          [closeOnSelect]="false"-->
-<!--          [searchable]="true"-->
-<!--          bindLabel="name"-->
-<!--          placeholder="Select categories"-->
-<!--          [(ngModel)]="selectedFilter.categories">-->
-<!--        </ng-select>-->
+        <!--        <ng-select-->
+        <!--          [items]="categories"-->
+        <!--          [multiple]="true"-->
+        <!--          [closeOnSelect]="false"-->
+        <!--          [searchable]="true"-->
+        <!--          bindLabel="name"-->
+        <!--          placeholder="Select categories"-->
+        <!--          [(ngModel)]="selectedFilter.categories">-->
+        <!--        </ng-select>-->
       </td>
 
       <td>
@@ -246,22 +246,18 @@
                class="form-control"
                id="NewTransactionPriceInput"
                type="number">
-        <!--<input type="number" min="0.00" max="10000.00" step="0.01" />-->
       </td>
 
       <!--Account-->
+      <!--   TODO  hide archived accounts   -->
       <td>
-        <select *ngFor="let entry of newTransaction.accountPriceEntries"
-                [(ngModel)]="entry.account"
-                class="form-control"
-                id="newTransactionAccountSelects">
-          <ng-container *ngFor="let account of accounts">
-            <option *ngIf="!account.archived"
-                    [ngValue]="account">
-              {{account.name}}
-            </option>
-          </ng-container>
-        </select>
+        <div *ngFor="let entry of newTransaction.accountPriceEntries; let i = index">
+          <ng-select [items]="accounts"
+                     bindLabel="name"
+                     [(ngModel)]="entry.account"
+                     id="newTransactionAccountSelects_{{i}}">
+          </ng-select>
+        </div>
       </td>
 
 
@@ -271,20 +267,11 @@
 
       <!--Category-->
       <td>
-        <select [(ngModel)]="newTransaction.category"
-                class="form-control"
-                id="newTransactionCategorySelect">
-          <option *ngFor="let category of categories"
-                  [ngValue]="category">
-            {{category.name}}
-          </option>
-        </select>
-
-<!--        <ng-select [items]="categories"-->
-<!--                   bindLabel="name"-->
-<!--                   [(ngModel)]="newTransaction.category"-->
-<!--                   id="newTransactionCategorySelect">-->
-<!--        </ng-select>-->
+        <ng-select [items]="categories"
+                   bindLabel="name"
+                   [(ngModel)]="newTransaction.category"
+                   id="newTransactionCategorySelect">
+        </ng-select>
       </td>
 
       <td id="EditAccountSaveExitBtn">
@@ -377,19 +364,16 @@
           </td>
         </ng-template>
 
+        <!--   TODO  hide archived accounts   -->
         <ng-template #accountEditEnabled>
           <td>
-            <select *ngFor="let entry of transaction.editedTransaction.accountPriceEntries"
-                    [(ngModel)]="entry.account"
-                    class="form-control"
-                    id="EditTransactionAccountSelects">
-              <ng-container *ngFor="let account of accounts">
-                <option *ngIf="!account.archived"
-                        [ngValue]="account">
-                  {{account.name}}
-                </option>
-              </ng-container>
-            </select>
+            <div *ngFor="let entry of transaction.editedTransaction.accountPriceEntries; let i = index">
+              <ng-select [items]="accounts"
+                         bindLabel="name"
+                         [(ngModel)]="entry.account"
+                         id="EditTransactionAccountSelects_{{i}}">
+              </ng-select>
+            </div>
           </td>
         </ng-template>
 
@@ -405,21 +389,12 @@
             id="CategoryReadOnly">
           {{transaction.category.name}}
         </td>
-        <td *ngIf="transaction.editMode"
-            id="EditTransactionCategorySelect">
-          <select [(ngModel)]="transaction.editedTransaction.category"
-                  class="form-control">
-            <option *ngFor="let category of categories"
-                    [ngValue]="category">
-              {{category.name}}
-            </option>
-          </select>
-
-<!--          <ng-select [items]="categories"-->
-<!--                     bindLabel="name"-->
-<!--                     [(ngModel)]="transaction.editedTransaction.category"-->
-<!--                     id="EditTransactionCategorySelect">-->
-<!--          </ng-select>-->
+        <td *ngIf="transaction.editMode">
+          <ng-select [items]="categories"
+                     bindLabel="name"
+                     [(ngModel)]="transaction.editedTransaction.category"
+                     id="EditTransactionCategorySelect">
+          </ng-select>
         </td>
 
         <td *ngIf="transaction.editMode">
