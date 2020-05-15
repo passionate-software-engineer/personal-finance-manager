@@ -24,4 +24,5 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
   void updateAccountBalance(@Param("newBalance") BigDecimal newBalance, @Param("id") long accountId);
 
   boolean existsByIdAndUserId(long accountId, long userId);
+
 }

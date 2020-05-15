@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,17 @@ public class AccountService {
         .collect(Collectors.toList());
   }
 
+  public Collection<Account> getAccountsWithoutBankAccountNumber(List<Account> accounts) {
+    return accounts.stream()
+        .filter(account -> account.getBankAccountNumber().isEmpty())
+        .collect(Collectors.toList());
+  }
+
+  public boolean isAccountIdPresentInAccounts(long accountId, List<Account> accounts) {
+    return accounts.stream()
+        .anyMatch(account -> account.getId().equals(accountId));
+  }
+
   public Account saveAccount(long userId, Account account) {
     account.setUserId(userId);
     return accountRepository.save(account);
@@ -47,6 +59,7 @@ public class AccountService {
 
     Account accountToUpdate = accountFromDb.get();
     accountToUpdate.setName(account.getName());
+    accountToUpdate.setBankAccountNumber(account.getBankAccountNumber());
     accountToUpdate.setBalance(account.getBalance());
     accountToUpdate.setCurrency(account.getCurrency());
     accountToUpdate.setType(account.getType());
@@ -65,4 +78,5 @@ public class AccountService {
   public boolean accountDoesNotExistByIdAndUserId(long accountId, long userId) {
     return !accountRepository.existsByIdAndUserId(accountId, userId);
   }
+
 }

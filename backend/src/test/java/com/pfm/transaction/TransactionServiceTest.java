@@ -32,7 +32,7 @@ public class TransactionServiceTest {
 
     // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> transactionService.deleteTransaction(NOT_EXISTING_ID, MOCK_USER_ID));
-    assertThat(exception.getMessage(), is(equalTo("Transaction with id: " + NOT_EXISTING_ID + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("ParsedFromIngCsv with id: " + NOT_EXISTING_ID + " does not exist in database")));
   }
 
 }

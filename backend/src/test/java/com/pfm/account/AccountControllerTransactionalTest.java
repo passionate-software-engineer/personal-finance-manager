@@ -85,6 +85,7 @@ class AccountControllerTransactionalTest extends IntegrationTestsBase {
 
     Account updatedAccount = accountMbankBalance10();
     updatedAccount.setName("updatedName");
+    updatedAccount.setBankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER);
     updatedAccount.setCurrency(currencyService.getCurrencies(userId).get(0));
     updatedAccount.setType(accountTypeService.getAccountTypes(userId).get(0));
 

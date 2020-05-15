@@ -5,7 +5,6 @@ import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import com.pfm.filter.Filter;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TestFilterProvider {
@@ -110,6 +109,6 @@ public class TestFilterProvider {
   }
 
   public static List<Long> convertIdsToList(Long... ids) {
-    return Arrays.asList(ids);
+    return List.of(ids);
   }
 }

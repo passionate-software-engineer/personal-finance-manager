@@ -1,5 +1,7 @@
 package com.pfm.category;
 
+import static com.pfm.export.ImportService.CATEGORY_NAMED_IMPORTED;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -100,4 +102,11 @@ public class CategoryService {
     return categoryRepository.existsByIdAndUserId(categoryId, userId);
   }
 
+  public void addDefaultCategories(long userId) {
+    addImportedCategory(userId);
+  }
+
+  public Category addImportedCategory(long userId) {
+    return addCategory(Category.builder().name(CATEGORY_NAMED_IMPORTED).parentCategory(null).build(), userId);
+  }
 }

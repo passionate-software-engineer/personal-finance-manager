@@ -9,12 +9,15 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.pfm.helpers.TestAccountProvider;
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -27,7 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class AccountServiceTest {
 
   private static final long MOCK_USER_ID = 999;
-
+  private static final String BANK_ACCOUNT_NUMBER = "11195000012006857419590002";
   @Mock
   private AccountRepository accountRepository;
 
@@ -65,7 +68,7 @@ public class AccountServiceTest {
     Account accountMbank = accountMbankBalance10();
     accountMbank.setId(2L);
 
-    when(accountRepository.findByUserId(MOCK_USER_ID)).thenReturn(Arrays.asList(accountMbank, accountJacek));
+    when(accountRepository.findByUserId(MOCK_USER_ID)).thenReturn(List.of(accountMbank, accountJacek));
 
     // when
     List<Account> actualAccountsList = accountService.getAccounts(MOCK_USER_ID);
@@ -121,6 +124,7 @@ public class AccountServiceTest {
 
     Account updatedAccount = Account.builder()
         .balance(BigDecimal.TEN)
+        .bankAccountNumber(BANK_ACCOUNT_NUMBER)
         .name("Zaskurniaki")
         .build();
 
@@ -161,6 +165,43 @@ public class AccountServiceTest {
 
     // then
     assertThat(exception.getMessage(), is("Account with id: " + id + " does not exist in database"));
+  }
+
+  @Test
+  public void shouldReturnAccountsWithoutBankAccountNumber() {
+    // given
+    Account account1 = TestAccountProvider.accountJacekBalance1000();
+    Account account2 = TestAccountProvider.accountMbankBalance10();
+    Account accountWithoutBankAccountNumber = TestAccountProvider.accountIngBalance9999();
+    accountWithoutBankAccountNumber.setBankAccountNumber("");
+
+    List<Account> allAccountList = List.of(account1, account2, accountWithoutBankAccountNumber);
+    List<Account> expected = List.of(accountWithoutBankAccountNumber);
+
+    // when
+    final Collection<Account> actual = accountService.getAccountsWithoutBankAccountNumber(allAccountList);
+
+    // then
+    assertThat(actual, is(equalTo(expected)));
+    verify(accountRepository, never()).findByUserId(MOCK_USER_ID);
+  }
+
+  @Test
+  public void shouldReturnEmptyListForAllAccountsHavingBankAccountNumber() {
+    // given
+    Account account1 = TestAccountProvider.accountJacekBalance1000();
+    Account account2 = TestAccountProvider.accountMbankBalance10();
+    Account account3 = TestAccountProvider.accountIngBalance9999();
+
+    List<Account> allAccountList = List.of(account1, account2, account3);
+    List<Account> expected = Collections.emptyList();
+
+    // when
+    final Collection<Account> actual = accountService.getAccountsWithoutBankAccountNumber(allAccountList);
+
+    // then
+    assertThat(actual, is(equalTo(expected)));
+    verify(accountRepository, never()).findByUserId(MOCK_USER_ID);
   }
 
 }

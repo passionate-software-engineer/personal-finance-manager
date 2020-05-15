@@ -33,7 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import org.hamcrest.Matchers;
@@ -53,7 +52,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> addFilterParameters() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         {filterHomeExpensesUpTo200()},
         {filterIsDefault()},
         {filterIsNotDefault()}
@@ -195,7 +194,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> updateFilterParameters() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         {filterIsDefault().getIsDefault(), filterCarExpenses()},
         {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
     });

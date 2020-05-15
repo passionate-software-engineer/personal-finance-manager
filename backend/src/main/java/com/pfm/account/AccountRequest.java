@@ -17,6 +17,9 @@ public class AccountRequest {
   @ApiModelProperty(value = "Account name", required = true, example = "Alior Bank savings account")
   private String name;
 
+  @ApiModelProperty(value = "Bank account number", required = true, example = "11195000012006857419590002")
+  private String bankAccountNumber;
+
   @ApiModelProperty(value = "Account's balance", required = true, example = "1438.89")
   private BigDecimal balance;
 

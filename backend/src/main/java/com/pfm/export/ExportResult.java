@@ -115,6 +115,8 @@ public final class ExportResult {
 
     private String name;
 
+    private String bankAccountNumber;
+
     private BigDecimal balance;
 
     private String currency;

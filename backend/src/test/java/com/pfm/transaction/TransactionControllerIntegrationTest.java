@@ -279,6 +279,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .type(AccountType.builder()
             .id(accountTypeService.getAccountTypes(userId).get(0).getId())
             .name("Credit")
@@ -567,6 +568,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     // given
     Account account = Account.builder()
         .name("Jacek Millenium Bank savings")
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .type(AccountType.builder()
             .id(accountTypeService.getAccountTypes(userId).get(0).getId())
             .name("Credit")
@@ -1110,7 +1112,6 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     callRestToUpdateTransactionAndReturnCommitResult(originalTransactionId, updatedTransactionRequest, token);
 
-    //    Transaction update
     List<Transaction> allPlannedTransactionsInDb = callRestToGetAllPlannedTransactionsFromDatabase(token);
     List<Transaction> allTransactionsInDb = callRestToGetAllTransactionsFromDatabase(token);
     Transaction afterUpdate = allTransactionsInDb.get(0);

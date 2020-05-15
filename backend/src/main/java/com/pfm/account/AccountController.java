@@ -211,6 +211,7 @@ public class AccountController implements AccountApi {
   private Account getNewAccountInstanceWithUpdateApplied(Account accountToUpdate, boolean archive) {
     return Account.builder()
         .name(accountToUpdate.getName())
+        .bankAccountNumber(accountToUpdate.getBankAccountNumber())
         .balance(accountToUpdate.getBalance())
         .currency(accountToUpdate.getCurrency())
         .type(accountToUpdate.getType())
@@ -222,6 +223,7 @@ public class AccountController implements AccountApi {
   private Account convertAccountRequestToAccount(AccountRequest accountRequest, long userId) {
     return Account.builder()
         .name(accountRequest.getName())
+        .bankAccountNumber(accountRequest.getBankAccountNumber())
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
         .type(accountTypeService.getAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId))

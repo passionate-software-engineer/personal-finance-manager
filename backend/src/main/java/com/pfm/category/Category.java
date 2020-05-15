@@ -43,4 +43,5 @@ public final class Category {
 
   @JsonIgnore
   private Long userId;
+
 }

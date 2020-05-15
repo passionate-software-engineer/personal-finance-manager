@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TransactionController implements TransactionApi {
 
-  private TransactionsHelper transactionsHelper;
-  private DateHelper dateHelper;
-  private TransactionValidator transactionValidator;
-  private TransactionService transactionService;
-  private HistoryEntryService historyEntryService;
-  private UserProvider userProvider;
+  private final TransactionsHelper transactionsHelper;
+  private final DateHelper dateHelper;
+  private final TransactionValidator transactionValidator;
+  private final TransactionService transactionService;
+  private final HistoryEntryService historyEntryService;
+  private final UserProvider userProvider;
 
   @Override
   public ResponseEntity<Transaction> getTransactionById(@PathVariable long transactionId) {

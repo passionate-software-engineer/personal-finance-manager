@@ -10,6 +10,7 @@ import com.pfm.account.type.AccountType;
 import com.pfm.account.type.AccountTypeService;
 import com.pfm.auth.UserProvider;
 import com.pfm.category.Category;
+import com.pfm.category.CategoryRepository;
 import com.pfm.category.CategoryService;
 import com.pfm.currency.Currency;
 import com.pfm.currency.CurrencyService;
@@ -21,9 +22,6 @@ import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import com.pfm.filter.Filter;
 import com.pfm.filter.FilterService;
-import com.pfm.helpers.topology.Graph;
-import com.pfm.helpers.topology.Graph.Node;
-import com.pfm.helpers.topology.TopologicalSortProvider;
 import com.pfm.history.HistoryEntry;
 import com.pfm.history.HistoryEntryRepository;
 import com.pfm.transaction.AccountPriceEntry;
@@ -45,12 +43,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 @AllArgsConstructor
 public class ImportService {
 
-  private TransactionService transactionService;
-  private AccountService accountService;
+  public static final String CATEGORY_NAMED_IMPORTED = "Imported";
+  public static final String MORE_THAN_ONE_CATEGORY_NAMED_IMPORTED_FOUND = "More than one category with name " + CATEGORY_NAMED_IMPORTED + " found";
+  public static final int CATEGORY_NAMED_IMPORTED_COUNT_ALLOWED = 1;
+
   private CategoryService categoryService;
   private CurrencyService currencyService;
+  private AccountService accountService;
   private AccountTypeService accountTypeService;
   private FilterService filterService;
+  private TransactionService transactionService;
+  private CategoryRepository categoryRepository;
   private HistoryEntryRepository historyEntryRepository;
   private UserProvider userProvider;
 
@@ -153,6 +156,7 @@ public class ImportService {
 
       Account accountToSave = Account.builder()
           .name(account.getName())
+          .bankAccountNumber(account.getBankAccountNumber())
           .balance(account.getBalance())
           .currency(currency)
           .type(accountType)
@@ -170,13 +174,16 @@ public class ImportService {
   private Map<String, Long> importCategoriesAndMapCategoryNamesToIds(@RequestBody ExportResult inputData, long userId) {
     Map<String, Long> categoryNameToIdMap = new HashMap<>();
 
-    List<ExportCategory> categoriesSortedTopologically = sortCategoriesTopologically(inputData.getCategories());
-    for (ExportCategory category : categoriesSortedTopologically) {
+    for (ExportCategory category : inputData.getCategories()) {
       Category categoryToSave = new Category();
       categoryToSave.setName(category.getName());
       categoryToSave.setPriority(category.getPriority());
       categoryToSave.setUserId(userId);
-      if (category.getParentCategoryName() != null) {
+      if (category.getParentCategoryName() == null) {
+        if (category.getName().equals(CATEGORY_NAMED_IMPORTED)) {
+          deleteCategoryNamedImportedFromDbIfAlreadyExistToPreventDuplication(userId);
+        }
+      } else {
         categoryToSave.setParentCategory(Category.builder()
             .id(categoryNameToIdMap.get(category.getParentCategoryName()))
             .build()
@@ -185,28 +192,17 @@ public class ImportService {
       Category savedCategory = categoryService.addCategory(categoryToSave, userId);
       categoryNameToIdMap.put(savedCategory.getName(), savedCategory.getId());
     }
+
     return categoryNameToIdMap;
   }
 
-  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-  private List<ExportCategory> sortCategoriesTopologically(List<ExportCategory> categories) {
-    Graph<ExportCategory> graph = new Graph<>();
-
-    Map<String, Node<ExportCategory>> categoryNameToNodeMap = new HashMap<>();
-
-    for (ExportCategory category : categories) {
-      Node<ExportCategory> node = new Node<>(category);
-      graph.addNode(node);
-      categoryNameToNodeMap.put(category.getName(), node);
+  void deleteCategoryNamedImportedFromDbIfAlreadyExistToPreventDuplication(long userId) {
+    final List<Category> importedCategoryFromDbList = categoryRepository.findByNameIgnoreCaseAndUserId(CATEGORY_NAMED_IMPORTED, userId);
+    long categoriesWithNameImportedCount = importedCategoryFromDbList.size();
+    if (categoriesWithNameImportedCount > CATEGORY_NAMED_IMPORTED_COUNT_ALLOWED) {
+      throw new IllegalStateException(MORE_THAN_ONE_CATEGORY_NAMED_IMPORTED_FOUND);
     }
-
-    for (ExportCategory category : categories) {
-      if (category.getParentCategoryName() != null) {
-        categoryNameToNodeMap.get(category.getParentCategoryName()).addEdge(categoryNameToNodeMap.get(category.getName()));
-      }
-    }
-
-    return TopologicalSortProvider.sort(graph).stream().map(Node::getObject).collect(Collectors.toList());
+    categoryService.deleteCategory(importedCategoryFromDbList.get(0).getId());
   }
 
   private void saveHistoryEntry(HistoryEntry historyEntry) {

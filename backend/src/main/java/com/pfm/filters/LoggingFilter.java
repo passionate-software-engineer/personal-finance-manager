@@ -2,7 +2,6 @@ package com.pfm.filters;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.servlet.FilterChain;
@@ -27,7 +26,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
   static final String REQUEST_MARKER = "|>";
   static final String RESPONSE_MARKER = "|<";
-  private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
+  private static final List<MediaType> VISIBLE_TYPES = List.of(
       MediaType.valueOf("text/*"),
       MediaType.APPLICATION_FORM_URLENCODED,
       MediaType.APPLICATION_JSON,

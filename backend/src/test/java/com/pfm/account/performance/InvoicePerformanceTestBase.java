@@ -42,6 +42,7 @@ public abstract class InvoicePerformanceTestBase {
   static final int THREAD_COUNT = 24;
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
+  private static final String BANK_ACCOUNT_NUMBER = "11195000012006857419590002";
   private static final String CURRENCIES_SERVICE_PATH = "http://localhost:%d/currencies";
   private static final String ACCOUNT_TYPE_SERVICE_PATH = "http://localhost:%d/accountTypes";
 
@@ -133,6 +134,7 @@ public abstract class InvoicePerformanceTestBase {
   Account addAndReturnAccount(Currency[] currencies, AccountType[] accountType) {
     AccountRequest accountRequest = AccountRequest.builder()
         .name(UUID.randomUUID().toString())
+        .bankAccountNumber(BANK_ACCOUNT_NUMBER)
         .accountTypeId(accountType[0].getId())
         .balance(getRandomBalance())
         .currencyId(currencies[0].getId())
@@ -201,6 +203,7 @@ public abstract class InvoicePerformanceTestBase {
   AccountRequest convertAccountToAccountRequest(Account account) {
     return AccountRequest.builder()
         .name(account.getName())
+        .bankAccountNumber(account.getBankAccountNumber())
         .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())

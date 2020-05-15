@@ -1,5 +1,8 @@
-accessTokenExpiryTimeInMinutes: 1
-refreshTokenExpiryTimeInMinutes: 3
+accessTokenExpiryTimeInMinutes: 15
+refreshTokenExpiryTimeInMinutes: 60
+
+#  csv parser
+columnSeparator: ';'
 
 server:
   port: 8105
