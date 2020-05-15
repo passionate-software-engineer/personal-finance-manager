@@ -330,7 +330,7 @@ describe('Accounts page tests', () => {
 
     // when
     transactionPage.navigateTo();
-    transactionPage.addTransaction('01/01/2020', 'petrol', '-32.75', null, 'PKO', null, 'Oil');
+    transactionPage.addTransaction('01/01/2020', 'petrol', '-32.75', null, 'PKO', null, 2);
     expect(transactionPage.transactionRows().count()).toEqual(1);
     transactionPage.assertPrices('-32.75 EUR (-138.86 PLN)', null);
 

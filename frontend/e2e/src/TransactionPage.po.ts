@@ -138,7 +138,7 @@ export class TransactionAndFilterPage {
     }
   }
 
-  addTransaction(date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
+  addTransaction(date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryIndex) {
     this.navigateTo();
     this.addTransactionButton().click();
 
@@ -161,12 +161,12 @@ export class TransactionAndFilterPage {
       this.newTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
     }
 
-    this.newTransactionCategorySelectOption(0);
+    this.newTransactionCategorySelectOption(categoryIndex);
 
     this.newTransactionSaveButton().click();
   }
 
-  updateTransaction(row, date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
+  updateTransaction(row, date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryIndex) {
     this.navigateTo();
     this.optionsButton(row).click();
     this.editButton(row).click();
@@ -188,7 +188,7 @@ export class TransactionAndFilterPage {
       this.editTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
     }
 
-    this.editTransactionCategorySelectOption(0);
+    this.editTransactionCategorySelectOption(categoryIndex);
 
     this.editTransactionSaveButton().click();
   }

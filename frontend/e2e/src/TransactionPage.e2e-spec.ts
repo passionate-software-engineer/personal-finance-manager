@@ -61,7 +61,7 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Mbank', 1000);
 
     // when
-    transactionPage.addTransaction('01/01/2018', 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('01/01/2018', 'desc', 100, null, 'Mbank', null, 0);
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -87,7 +87,7 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Alior', 500);
 
     // when
-    transactionPage.addTransaction('02/02/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+    transactionPage.addTransaction('02/02/2018', 'desc', 100, 50, 'Mbank', 'Alior', 0);
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -117,11 +117,11 @@ describe('Transaction page tests', () => {
     accountPage.addAccount('Millenium', 10000);
     accountPage.addAccount('Ing', 5000);
 
-    transactionPage.addTransaction('03/03/2018', 'desc', 100, 50, 'Mbank', 'Alior', 'Car');
+    transactionPage.addTransaction('03/03/2018', 'desc', 100, 50, 'Mbank', 'Alior', 0);
 
     // when
     transactionPage.updateTransaction(transactionPage.transactionRows().first(),
-      '05/05/2018', 'updated description', 1000, 500, 'Millenium', 'Ing', 'Food');
+      '05/05/2018', 'updated description', 1000, 500, 'Millenium', 'Ing', 1);
 
     // then
     expect(transactionPage.transactionRows().count()).toEqual(1);
@@ -148,7 +148,7 @@ describe('Transaction page tests', () => {
     accountPage.navigateTo();
     accountPage.addAccount('Mbank', 1000);
 
-    transactionPage.addTransaction('07/07/2018', 'desc', 100, null, 'Mbank', null, 'Car');
+    transactionPage.addTransaction('07/07/2018', 'desc', 100, null, 'Mbank', null, 0);
     expect(transactionPage.transactionRows().count()).toEqual(1);
 
     // when
