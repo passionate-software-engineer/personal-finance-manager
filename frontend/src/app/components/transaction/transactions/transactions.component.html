@@ -204,15 +204,15 @@
             {{category.name}}
           </option>
         </select>
-<!--        <ng-select-->
-<!--          [items]="categories"-->
-<!--          [multiple]="true"-->
-<!--          [closeOnSelect]="false"-->
-<!--          [searchable]="true"-->
-<!--          bindLabel="name"-->
-<!--          placeholder="Select categories"-->
-<!--          [(ngModel)]="selectedFilter.categories">-->
-<!--        </ng-select>-->
+        <!--        <ng-select-->
+        <!--          [items]="categories"-->
+        <!--          [multiple]="true"-->
+        <!--          [closeOnSelect]="false"-->
+        <!--          [searchable]="true"-->
+        <!--          bindLabel="name"-->
+        <!--          placeholder="Select categories"-->
+        <!--          [(ngModel)]="selectedFilter.categories">-->
+        <!--        </ng-select>-->
       </td>
 
       <td>
@@ -250,13 +250,12 @@
 
       <!--Account-->
       <td>
-        <!-- TODO -  hide archived accounts-->
         <div *ngFor="let entry of newTransaction.accountPriceEntries; let i = index">
-          <ng-select [items]="accounts"
-                   bindLabel="name"
-                   [(ngModel)]="entry.account"
+          <ng-select [items]="getNotArchivedAccounts()"
+                     bindLabel="name"
+                     [(ngModel)]="entry.account"
                      id="newTransactionAccountSelects_{{i}}">
-        </ng-select>
+          </ng-select>
         </div>
       </td>
 
@@ -366,9 +365,8 @@
 
         <ng-template #accountEditEnabled>
           <td>
-            <!-- TODO -  hide archived accounts-->
             <div *ngFor="let entry of transaction.editedTransaction.accountPriceEntries; let i = index">
-              <ng-select [items]="accounts"
+              <ng-select [items]="getNotArchivedAccounts()"
                          bindLabel="name"
                          [(ngModel)]="entry.account"
                          id="EditTransactionAccountSelects_{{i}}">
