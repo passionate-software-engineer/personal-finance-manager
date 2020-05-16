@@ -64,6 +64,14 @@
         <span [hidden]="sortableAccountsTable.reverse">▲</span>
       </th>
 
+      <th id="BankAccountNumberHeader"
+          [class.active]="sortableAccountsTable.order === 'balancePLN'"
+          (click)="sortableAccountsTable.setOrder('balancePLN')">
+        {{"account.bankAccountNumber" | translate }}
+        <span [hidden]="!sortableAccountsTable.reverse">▼</span>
+        <span [hidden]="sortableAccountsTable.reverse">▲</span>
+      </th>
+
       <th id="DateHeader"
           [class.active]="sortableAccountsTable.order === 'lastVerificationDate'"
           (click)="sortableAccountsTable.setOrder('lastVerificationDate')">
@@ -123,6 +131,14 @@
       <td>
         {{ newAccount.balance * newAccount.currency.exchangeRate | number: "0.2-2"
         }}
+      </td>
+
+      <!-- Bank Account Number-->
+      <td>
+        <input id="NewAccountBankAccountNumberInput"
+               class="form-control"
+               type="text"
+               [(ngModel)]="newAccount.bankAccountNumber"/>
       </td>
 
       <td>
@@ -213,6 +229,19 @@
         <td id="Balance_PLN"
             *ngIf="!account.editMode">
           {{ account.balancePLN | number: "0.2-2" }}
+        </td>
+
+        <!-- Bank Account Number-->
+        <td *ngIf="account.editMode">
+          <input id="EditAccountBankAccountNumberInput"
+                 class="form-control"
+                 type="text"
+                 [(ngModel)]="account.editedAccount.bankAccountNumber"/>
+        </td>
+
+        <td id="BankAccountNumber"
+            *ngIf="!account.editMode">
+          {{ account.bankAccountNumber }}
         </td>
 
         <!-- Last verification date -->

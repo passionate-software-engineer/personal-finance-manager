@@ -4,6 +4,7 @@
   "account.name": "Name",
   "account.balance": "Balance",
   "account.balancePLN": "Balance PLN",
+  "account.bankAccountNumber": "Bank Account Number",
   "account.exchangeRate": "Exchange rate",
   "account.currency": "Currency",
   "account.accountType": "Account Type",

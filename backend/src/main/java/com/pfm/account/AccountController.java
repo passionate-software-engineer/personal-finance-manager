@@ -78,7 +78,7 @@ public class AccountController implements AccountApi {
 
     Account account = convertAccountRequestToAccount(accountRequest, userId);
 
-    List<String> validationResult = accountValidator.validateAccountIncludingNameDuplication(userId, account);
+    List<String> validationResult = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(userId, account);
     if (!validationResult.isEmpty()) {
       log.info("Account is not valid {}", validationResult);
       return ResponseEntity.badRequest().body(validationResult);

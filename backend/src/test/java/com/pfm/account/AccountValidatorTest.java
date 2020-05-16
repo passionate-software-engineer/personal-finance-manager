@@ -83,7 +83,7 @@ public class AccountValidatorTest {
         .build();
 
     // when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, account);
+    List<String> result = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(MOCK_USER_ID, account);
 
     // then
     assertThat(result.size(), is(1));
@@ -103,7 +103,7 @@ public class AccountValidatorTest {
         .build();
 
     // when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, account);
+    List<String> result = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(MOCK_USER_ID, account);
 
     // then
     assertThat(result.size(), is(1));
@@ -123,7 +123,7 @@ public class AccountValidatorTest {
         .build();
 
     // when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, account);
+    List<String> result = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(MOCK_USER_ID, account);
 
     // then
     assertThat(result.size(), is(1));
@@ -143,7 +143,7 @@ public class AccountValidatorTest {
         .build();
 
     // when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, account);
+    List<String> result = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(MOCK_USER_ID, account);
 
     // then
     assertThat(result.size(), is(1));
@@ -175,7 +175,7 @@ public class AccountValidatorTest {
     Account account = Account.builder().id(id).bankAccountNumber(bankAccountNumber).name("saving").balance(BigDecimal.TEN).build();
 
     // when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, account);
+    List<String> result = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(MOCK_USER_ID, account);
 
     // then
     assertThat(result.size(), is(0));
@@ -198,7 +198,7 @@ public class AccountValidatorTest {
     Account account = Account.builder().id(id).bankAccountNumber(bankAccountNumber).name("saving").balance(BigDecimal.TEN).build();
 
     // when
-    List<String> result = accountValidator.validateAccountIncludingNameDuplication(MOCK_USER_ID, account);
+    List<String> result = accountValidator.validateAccountIncludingNameAndBankAccountNumberDuplication(MOCK_USER_ID, account);
 
     // then
     assertThat(result.size(), is(1));

@@ -47,18 +47,19 @@ describe('Accounts page tests', () => {
     const accountName = 'First Test Account';
 
     // when
-    accountPage.addAccount(accountName, '141231.53');
+    accountPage.addAccount(accountName, '141231.53', '11195000012006857419590681');
 
     // then
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '141,231.53');
+    accountPage.assertBankAccountNumber(accountPage.accountRows().first(), '11195000012006857419590681');
   });
 
   it('should update account', () => {
     // when
     const accountName = 'First Updated Test Account';
-    accountPage.addAccount('First Test Account', '141231.53');
+    accountPage.addAccount('First Test Account', '141231.53', '11195000012006857419590681');
 
     // given
     accountPage.updateAccount(accountName, '231.5');
@@ -71,7 +72,7 @@ describe('Accounts page tests', () => {
 
   it('should delete account', () => {
     // when
-    accountPage.addAccount('Account to delete', '0');
+    accountPage.addAccount('Account to delete', '0', '11195000012006857419590681');
 
     // given
     accountPage.deleteAccount(accountPage.accountRows().first());
@@ -84,29 +85,27 @@ describe('Accounts page tests', () => {
     // when
     const accountName = 'First Balance PLN Check';
     // given
-    accountPage.addAccount(accountName, '250.20');
+    accountPage.addAccount(accountName, '250.20', '11195000012006857419590681');
     // then
     accountPage.assertBalanceOfAllAccounts();
   });
 
   it('should check balance PLN with balance PLN from Account Type Table', () => {
-      // when
-      const accountName = 'Balance PLN from Account Type Check';
-      // given
-      accountPage.addAccountWithAccountTypeAndCurrency(accountName, 'Investment', '250.20', 'GBP');
-      // then
-      accountPage.assertBalanceOfAllAccounts();
-      accountPage.assertBalanceOfAllAccountsType();
-    });
-
-
+    // when
+    const accountName = 'Balance PLN from Account Type Check';
+    // given
+    accountPage.addAccountWithAccountTypeAndCurrency(accountName, 'Investment', '250.20', 'GBP');
+    // then
+    accountPage.assertBalanceOfAllAccounts();
+    accountPage.assertBalanceOfAllAccountsType();
+  });
 
   it('should check account balance currency with  box currencies balance currency', () => {
     // given
-    accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
-    accountPage.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
-    accountPage.addAccountWithCurrency('Balance currency PLN', '1250.25', 'PLN');
-    accountPage.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
+    accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR', '11195000012006857419590778');
+    accountPage.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP', '11195000012006857419590875');
+    accountPage.addAccountWithCurrency('Balance currency PLN', '1250.25', 'PLN', '11195000012006857419590099');
+    accountPage.addAccountWithCurrency('Balance currency USD', '525.75', 'USD', '11195000012006857419590584');
 
     // then
     const balanceEUR = accountPage.balanceOfEURAccount().getText();
@@ -119,13 +118,12 @@ describe('Accounts page tests', () => {
     accountPage.assertAccountBalance(accountPage.accountRows().get(3), balanceUSD);
   });
 
-
   it('should check box currencies balance PLN', () => {
     // given
-    accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR');
-    accountPage.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP');
-    accountPage.addAccountWithCurrency('Balance currency PLN', '1250.25', 'PLN');
-    accountPage.addAccountWithCurrency('Balance currency USD', '525.75', 'USD');
+    accountPage.addAccountWithCurrency('Balance currency EUR', '300.25', 'EUR', '11195000012006857419590778');
+    accountPage.addAccountWithCurrency('Balance currency GBP', '123.50', 'GBP', '11195000012006857419590875');
+    accountPage.addAccountWithCurrency('Balance currency PLN', '1250.25', 'PLN', '11195000012006857419590099');
+    accountPage.addAccountWithCurrency('Balance currency USD', '525.75', 'USD', '11195000012006857419590584');
 
     // then
     accountPage.assertAccountBalancePLNOfEUR('1,273.06');
@@ -161,11 +159,11 @@ describe('Accounts page tests', () => {
   it('should check balance verification date', () => {
    // when
     const accountName = 'First confirm balance';
-    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD');
+    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD', '11195000012006857419590584');
 
     // given
     accountPage.confirmBalance(accountPage.accountRows().first());
-     // then
+    // then
     accountPage.assertAccountBalancePLNOfUSD('450.19');
     const todayDate = new Date().toISOString().split('T')[0];
     accountPage.assertBalanceVerificationDate(accountPage.accountRows().first(), todayDate);
@@ -174,7 +172,7 @@ describe('Accounts page tests', () => {
   it('should make active accounts', () => {
     // when
     const accountName = 'First archive account make active';
-    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD');
+    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD', '11195000012006857419590584');
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
@@ -197,7 +195,7 @@ describe('Accounts page tests', () => {
   it('should archive accounts and show archived accounts', () => {
     // when
     const accountName = 'First archive account';
-    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD');
+    accountPage.addAccountWithCurrency(accountName, '125.75', 'USD', '11195000012006857419590584');
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), accountName);
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '125.75');
@@ -248,7 +246,7 @@ describe('Accounts page tests', () => {
     accountPage.assertBalanceOfAllAccountsType();
   });
 
-  it('should increase the account balance by the inserted transaction' , () => {
+  it('should increase the account balance by the inserted transaction', () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Salary', 'Main Category');
@@ -258,7 +256,7 @@ describe('Accounts page tests', () => {
     categoryPage.assertParentCategory(categoryPage.categoryRowsAll().first(), 'Main Category');
 
     accountPage.navigateTo();
-    accountPage.addAccountWithCurrency('ING', '9750.25', 'PLN');
+    accountPage.addAccountWithCurrency('ING', '9750.25', 'PLN', '11195000012006857419590584');
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), 'ING');
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '9,750.25');
@@ -281,7 +279,7 @@ describe('Accounts page tests', () => {
 
   });
 
-  it('should reduce the account balance by the minus transaction inserted' , () => {
+  it('should reduce the account balance by the minus transaction inserted', () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
@@ -292,7 +290,7 @@ describe('Accounts page tests', () => {
     categoryPage.assertNumberOfCategories(2);
 
     accountPage.navigateTo();
-    accountPage.addAccountWithCurrency('ING', '8269.52', 'PLN');
+    accountPage.addAccountWithCurrency('ING', '8269.52', 'PLN', '11195000012006857419590584');
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), 'ING');
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '8,269.52');
@@ -316,7 +314,7 @@ describe('Accounts page tests', () => {
 
   });
 
-  it('should display the account balance minus the inserted transaction minus' , () => {
+  it('should display the account balance minus the inserted transaction minus', () => {
     // given
     categoryPage.navigateTo();
     categoryPage.addCategory('Car', 'Main Category');
@@ -327,7 +325,7 @@ describe('Accounts page tests', () => {
     categoryPage.assertNumberOfCategories(2);
 
     accountPage.navigateTo();
-    accountPage.addAccountWithCurrency('PKO', '0', 'EUR');
+    accountPage.addAccountWithCurrency('PKO', '0', 'EUR', '11195000012006857419590584');
     accountPage.assertNumberOfAccounts(1);
     accountPage.assertAccountName(accountPage.accountRows().first(), 'PKO');
     accountPage.assertAccountBalance(accountPage.accountRows().first(), '0.00');

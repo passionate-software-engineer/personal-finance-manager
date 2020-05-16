@@ -75,6 +75,10 @@ public class AccountService {
     return accountRepository.findByNameIgnoreCaseAndUserId(name, userId).size() != 0;
   }
 
+  public boolean isBankAccountNumberAlreadyUsed(long userId, String bankAccountNumber) {
+    return accountRepository.findByBankAccountNumberAndUserId(bankAccountNumber, userId).size() != 0;
+  }
+
   public boolean accountDoesNotExistByIdAndUserId(long accountId, long userId) {
     return !accountRepository.existsByIdAndUserId(accountId, userId);
   }

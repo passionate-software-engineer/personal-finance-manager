@@ -11,6 +11,7 @@ export class Account {
   lastVerificationDate: Date;
   editedAccount: Account;
   balancePLN = 0;
+  bankAccountNumber: string;
   archived = false;
 }
 

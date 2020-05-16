@@ -3,6 +3,7 @@ package com.pfm.account;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_FILTER;
 import static com.pfm.config.MessagesProvider.ACCOUNT_IS_USED_IN_TRANSACTION;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
+import static com.pfm.config.MessagesProvider.BANK_ACCOUNT_NUMBER_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NUMBER;
@@ -56,11 +57,11 @@ public class AccountValidator {
     return validationResults;
   }
 
-  public List<String> validateAccountIncludingNameDuplication(long userId, Account account) {
+  public List<String> validateAccountIncludingNameAndBankAccountNumberDuplication(long userId, Account account) {
     List<String> validationResults = validate(account);
 
     checkForDuplicatedName(userId, validationResults, account);
-
+    checkForDuplicatedBankAccountNumber(userId, validationResults, account);
     return validationResults;
   }
 
@@ -76,13 +77,28 @@ public class AccountValidator {
       return validate(account);
     }
 
-    // it's not ok if account is duplicating name of other account
-    return validateAccountIncludingNameDuplication(userId, account);
+    if (accountToUpdate.get().getBankAccountNumber().equals(account.getBankAccountNumber())) {
+      return validate(account);
+    }
+
+    // it's not ok if account is duplicating name or bank account number of other account
+    return validateAccountIncludingNameAndBankAccountNumberDuplication(userId, account);
   }
 
   private void checkForDuplicatedName(long userId, List<String> validationResults, Account account) {
-    if (account.getName() != null && !account.getName().trim().equals("") && accountService.isAccountNameAlreadyUsed(userId, account.getName())) {
+    if (isNonNullAndNonEmpty(account.getName()) && accountService.isAccountNameAlreadyUsed(userId, account.getName())) {
       validationResults.add(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS));
+    }
+  }
+
+  private boolean isNonNullAndNonEmpty(String value) {
+    return value != null && !value.trim().equals("");
+  }
+
+  private void checkForDuplicatedBankAccountNumber(long userId, List<String> validationResults, Account account) {
+    if (isNonNullAndNonEmpty(account.getBankAccountNumber()) && accountService
+        .isBankAccountNumberAlreadyUsed(userId, account.getBankAccountNumber())) {
+      validationResults.add(getMessage(BANK_ACCOUNT_NUMBER_ALREADY_EXISTS));
     }
   }
 

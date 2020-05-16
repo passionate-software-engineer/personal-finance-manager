@@ -3,6 +3,7 @@ package com.pfm.account;
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
+import static com.pfm.config.MessagesProvider.BANK_ACCOUNT_NUMBER_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -41,7 +42,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> emptyAccountNameParameters() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {"", null},
         {" ", null},
         {"    ", null},
@@ -426,6 +427,31 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]",
             is(getMessage(ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByDuplicatedBankAccountNumberWhileAddingAccount() throws Exception {
+    // given
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+    callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account jacekAccount = accountJacekBalance1000();
+    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    jacekAccount.setType(accountTypeService.getAccountTypes(userId).get(1));
+
+    jacekAccount.setBankAccountNumber(account.getBankAccountNumber());
+    final AccountRequest jacekAccountRequest = convertAccountToAccountRequest(jacekAccount);
+
+    // when
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .content(json(jacekAccountRequest))
+        .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(BANK_ACCOUNT_NUMBER_ALREADY_EXISTS))));
   }
 
   @Test

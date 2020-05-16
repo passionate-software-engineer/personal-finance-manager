@@ -42,11 +42,24 @@ public abstract class InvoicePerformanceTestBase {
   static final int THREAD_COUNT = 24;
 
   private static final String ACCOUNTS_SERVICE_PATH = "http://localhost:%d/accounts";
-  private static final String BANK_ACCOUNT_NUMBER = "11195000012006857419590002";
   private static final String CURRENCIES_SERVICE_PATH = "http://localhost:%d/currencies";
   private static final String ACCOUNT_TYPE_SERVICE_PATH = "http://localhost:%d/accountTypes";
 
   private static final String USERS_SERVICE_PATH = "http://localhost:%d/users";
+
+  private static final List<String> BANK_ACCOUNT_NUMBERS =
+      List.of(
+          "11195000012006857419590196",
+          "11195000012006857419590584",
+          "11195000012006857419590099",
+          "11195000012006857419590875",
+          "11195000012006857419590778",
+          "11195000012006857419590487",
+          "11195000012006857419590002",
+          "11195000012006857419590972",
+          "11195000012006857419590681",
+          "11195000012006857419590390"
+      );
 
   @Qualifier("pfmObjectMapper")
   @Autowired
@@ -107,7 +120,7 @@ public abstract class InvoicePerformanceTestBase {
     AccountType[] accountTypes = getAccountTypes();
 
     for (int i = 0; i < 10; ++i) {
-      Account account = addAndReturnAccount(currencies, accountTypes);
+      Account account = addAndReturnAccount(currencies, accountTypes, i);
 
       accounts.add(account);
     }
@@ -131,10 +144,10 @@ public abstract class InvoicePerformanceTestBase {
         .as(AccountType[].class);
   }
 
-  Account addAndReturnAccount(Currency[] currencies, AccountType[] accountType) {
+  Account addAndReturnAccount(Currency[] currencies, AccountType[] accountType, int i) {
     AccountRequest accountRequest = AccountRequest.builder()
         .name(UUID.randomUUID().toString())
-        .bankAccountNumber(BANK_ACCOUNT_NUMBER)
+        .bankAccountNumber(BANK_ACCOUNT_NUMBERS.get(i))
         .accountTypeId(accountType[0].getId())
         .balance(getRandomBalance())
         .currencyId(currencies[0].getId())

@@ -16,7 +16,7 @@ public class AddAccountTest extends InvoicePerformanceTestBase {
 
       for (int i = 0; i < 10; ++i) {
 
-        Account account = addAndReturnAccount(currencies, accountTypes);
+        Account account = addAndReturnAccount(currencies, accountTypes, i);
 
         accounts.add(account);
 

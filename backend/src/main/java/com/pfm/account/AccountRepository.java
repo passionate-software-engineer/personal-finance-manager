@@ -15,6 +15,9 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
   @Query("select account from Account account where lower(account.name) like lower(:nameToFind) AND account.userId = :id")
   List<Account> findByNameIgnoreCaseAndUserId(@Param("nameToFind") String nameToFind, @Param("id") long id);
 
+  @Query("select account from Account account where  account.bankAccountNumber = :bankAccountNumberToFind AND account.userId = :id")
+  List<Account> findByBankAccountNumberAndUserId(@Param("bankAccountNumberToFind") String bankAccountNumberToFind, @Param("id") long id);
+
   List<Account> findByUserId(long userId);
 
   Optional<Account> findByIdAndUserId(long id, long userId);
