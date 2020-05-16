@@ -29,7 +29,7 @@
     "chai-as-promised": "^7.1.1",
     "chromedriver": "^80.0.1",
     "core-js": "^3.6.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "ngx-order-pipe": "^2.0.4",
     "npm-check-updates": "^4.0.4",
     "popper.js": "^1.16.1",
