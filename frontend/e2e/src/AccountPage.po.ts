@@ -296,7 +296,7 @@ export class AccountsPage {
     this.refreshAccountsButton().click();
   }
 
-  addAccountWithAccountTypeAndCurrency(name, accountType, balance, currency) {
+  addAccountWithAccountTypeAndCurrency(name, accountType, balance, currency, bankAccountNumber) {
     this.addAccountButton().click();
 
     this.newAccountName().sendKeys(name);
@@ -304,6 +304,7 @@ export class AccountsPage {
     this.newAccountBalance().clear();
     this.newAccountBalance().sendKeys(balance);
     this.newAccountCurrency().sendKeys(currency);
+    this.newAccountBankAccountNumber().sendKeys(bankAccountNumber);
 
     this.newAccountSaveButton().click();
 

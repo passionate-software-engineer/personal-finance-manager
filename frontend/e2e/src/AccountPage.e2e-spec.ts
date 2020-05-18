@@ -94,7 +94,7 @@ describe('Accounts page tests', () => {
     // when
     const accountName = 'Balance PLN from Account Type Check';
     // given
-    accountPage.addAccountWithAccountTypeAndCurrency(accountName, 'Investment', '250.20', 'GBP');
+    accountPage.addAccountWithAccountTypeAndCurrency(accountName, 'Investment', '250.20', 'GBP', '11195000012006857419590875');
     // then
     accountPage.assertBalanceOfAllAccounts();
     accountPage.assertBalanceOfAllAccountsType();
@@ -135,10 +135,10 @@ describe('Accounts page tests', () => {
 
   it('should check box account type balance PLN', () => {
     // given
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit', 'Credit', '300.25', 'EUR');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Investment', 'Investment', '123.50', 'GBP');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Personal', 'Personal', '1250.25', 'PLN');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Saving', 'Saving', '525.75', 'USD');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit', 'Credit', '300.25', 'EUR', '11195000012006857419590778');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Investment', 'Investment', '123.50', 'GBP', '11195000012006857419590875');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Personal', 'Personal', '1250.25', 'PLN', '11195000012006857419590099');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Saving', 'Saving', '525.75', 'USD', '11195000012006857419590584');
 
     // then
     accountPage.assertNumberOfAccounts(4);
@@ -216,9 +216,9 @@ describe('Accounts page tests', () => {
 
   it('should check account totals  by account type', () => {
     // given
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_1', 'Credit', '300.25', 'EUR');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_2', 'Credit', '123.50', 'GBP');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_3', 'Credit', '-100.50', 'PLN');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_1', 'Credit', '300.25', 'EUR', '11195000012006857419590778');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_2', 'Credit', '123.50', 'GBP', '11195000012006857419590875');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account type Credit_3', 'Credit', '-100.50', 'PLN', '11195000012006857419590099');
 
     // then
     accountPage.assertNumberOfAccounts(3);
@@ -232,9 +232,9 @@ describe('Accounts page tests', () => {
 
   it('should check account totals  by currency', () => {
     // given
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_1', 'Investment', '300.25', 'GBP');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_2', 'Personal', '123.50', 'GBP');
-    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_3', 'Saving', '-100.50', 'GBP');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_1', 'Investment', '300.25', 'GBP', '11195000012006857419590778');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_2', 'Personal', '123.50', 'GBP', '11195000012006857419590875');
+    accountPage.addAccountWithAccountTypeAndCurrency('Balance account GBP_3', 'Saving', '-100.50', 'GBP', '11195000012006857419590099');
 
     // then
     accountPage.assertNumberOfAccounts(3);
