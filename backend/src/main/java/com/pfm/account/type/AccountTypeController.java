@@ -3,6 +3,7 @@ package com.pfm.account.type;
 import com.pfm.auth.UserProvider;
 import com.pfm.history.HistoryEntryService;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,13 +64,14 @@ public class AccountTypeController implements AccountTypeApi {
   @Transactional
   public ResponseEntity<?> deleteAccountType(@PathVariable long accountTypeId) {
     long userId = userProvider.getCurrentUserId();
+    Optional<AccountType> accountType = accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId);
 
-    if (accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).isEmpty()) {
+    if (accountType.isEmpty()) {
       log.info("No account type with id {} was found, not able to delete", accountTypeId);
       return ResponseEntity.notFound().build();
     }
 
-    AccountType accountType = accountTypeService.getAccountTypeIdAndUserId(accountTypeId, userId).get();
+    accountType.get();
     historyEntryService.addHistoryEntryOnDelete(accountType, userId);
     log.info("Attempting to delete account type with id {}", accountTypeId);
     accountTypeService.deleteAccountType(accountTypeId);

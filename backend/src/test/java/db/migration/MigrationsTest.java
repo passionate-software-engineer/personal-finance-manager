@@ -45,7 +45,6 @@ public class MigrationsTest {
 
   @Test
   public void shouldExecuteAllMigrationsWithSuccess() {
-    // TODO add check if correct account types are added and accounts has correct default account type
 
     // given
     flyway.clean();

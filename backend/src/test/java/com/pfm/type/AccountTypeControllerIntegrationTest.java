@@ -128,7 +128,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldReturnErrorCauseByNotExistingIdInDeleteMethod() throws Exception {
+  public void shouldReturnErrorCausedByNotExistingIdInDeleteMethod() throws Exception {
 
     // when
     mockMvc
