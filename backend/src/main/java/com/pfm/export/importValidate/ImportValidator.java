@@ -17,7 +17,7 @@ public class ImportValidator {
     private static Periods periods;
     private static SumOfAllFundsAtTheBeginningOfExport sumOfAllFundsAtTheBeginningOfExport;
 
-    List<String> validate(ExportResult inputData) {
+    public List<String> validate(ExportResult inputData) {
         List<String> validationsResult = new ArrayList<>();
         categories.validate(inputData, validationsResult);
         filters.validate(inputData, validationsResult);
