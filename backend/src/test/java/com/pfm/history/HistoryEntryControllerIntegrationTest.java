@@ -144,6 +144,51 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldReturnHistoryOfConfirmingAccountState() throws Exception {
+    // given
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+
+    final long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    callRestToMarkAccountAsVerifiedToday(accountId, token);
+
+    // when
+    final List<HistoryEntry> historyEntries = callRestServiceToReturnHistoryEntries(token);
+
+    // then
+    List<HistoryInfo> historyInfosExpected = new ArrayList<>();
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(4L)
+        .name("name")
+        .newValue(account.getName())
+        .oldValue(account.getName())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(5L)
+        .name("balance")
+        .newValue(account.getBalance().toString())
+        .oldValue(account.getBalance().toString())
+        .build());
+
+    historyInfosExpected.add(HistoryInfo.builder()
+        .id(6L)
+        .name("archived")
+        .newValue("false")
+        .oldValue("false")
+        .build());
+
+    assertThat(historyEntries, hasSize(2));
+    assertThat(historyEntries.get(1).getObject(), equalTo(Account.class.getSimpleName()));
+    assertThat(historyEntries.get(1).getType(), equalTo(Type.UPDATE));
+    assertThat(historyEntries.get(1).getUserId(), equalTo(userId));
+    assertTrue(historyEntries.get(1).getDate().isAfter(ZonedDateTime.now().minusMinutes(2)));
+    assertThat(historyEntries.get(1).getEntries(), equalTo(historyInfosExpected));
+  }
+
+  @Test
   public void shouldReturnHistoryOfDeletingAccount() throws Exception {
     // given
     Account account = accountMbankBalance10();

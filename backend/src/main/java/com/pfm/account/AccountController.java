@@ -142,7 +142,8 @@ public class AccountController implements AccountApi {
 
     accountService.saveAccount(userId, account);
 
-    // TODO add history entry on confirming account state
+    Account accountToUpdate = accountService.getAccountByIdAndUserId(accountId, userId).get();
+    historyEntryService.addHistoryEntryOnUpdate(accountToUpdate, account, userId);
 
     return ResponseEntity.ok().build();
   }

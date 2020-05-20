@@ -38,6 +38,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   public static final String MARK_AS_ARCHIVED = "/markAsArchived";
   public static final String MARK_AS_ACTIVE = "/markAsActive";
+  public static final String MARK_ACCOUNT_AS_VERIFIED_TODAY = "/markAccountAsVerifiedToday";
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> emptyAccountNameParameters() {
