@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -70,4 +71,22 @@ public interface FilterApi {
   })
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);
+
+  @PatchMapping(value = "/{filterId}/markAsDefault")
+  @ApiOperation(value = "Set filter as default", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
+      @ApiResponse(code = 200, message = OK_MESSAGE),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
+  })
+  ResponseEntity<?> setFilterAsDefault(@PathVariable long filterId);
+
+  @PatchMapping(value = "/{filterId}/markAsNotDefault")
+  @ApiOperation(value = "Set filter as not default", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
+      @ApiResponse(code = 200, message = OK_MESSAGE),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
+  })
+  ResponseEntity<?> setFilterAsNotDefault(@PathVariable long filterId);
 }

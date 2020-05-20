@@ -15,6 +15,9 @@ public class FilterService {
 
   public Filter addFilter(long userId, Filter filter) {
     filter.setUserId(userId);
+    if (filter.isDefault()) {
+      checkAnyFilterIsDefault(getAllFilters(userId));
+    }
     return filterRepository.save(filter);
   }
 
@@ -43,7 +46,10 @@ public class FilterService {
     filterToUpdate.setPriceTo(filter.getPriceTo());
     filterToUpdate.setDescription(filter.getDescription());
     filterToUpdate.setName(filter.getName());
-
+    if (filter.isDefault() && !filterToUpdate.isDefault()) {
+      checkAnyFilterIsDefault(getAllFilters(userId));
+    }
+    filterToUpdate.setDefault(filter.isDefault());
     filterRepository.save(filterToUpdate);
   }
 
@@ -63,5 +69,19 @@ public class FilterService {
 
   public boolean filterExistByCategoryId(long categoryId) {
     return filterRepository.existsByCategoryIdsContains(categoryId);
+  }
+
+  public void checkAnyFilterIsDefault(List<Filter> loadFiltersList) {
+    for (Filter filter : loadFiltersList) {
+      if (filter.isDefault()) {
+        setUpFilterIsNotDefault(filter);
+        filterRepository.save(filter);
+        break;
+      }
+    }
+  }
+
+  public void setUpFilterIsNotDefault(Filter filter){
+    filter.setAsNotDefault();
   }
 }

@@ -118,6 +118,7 @@
   "button.setAsNotRecurrent": "Wyłącz powtarzanie: ",
   "checkbox.showArchived": "Pokaż zarchiwizowane konta",
   "checkbox.hidePlannedTransactions": "Nie pokazuj planowanych transakcji",
+  "checkbox.SetUpDefaultFilter" : "Ustaw filter jako domyślny",
   "transaction.save": "Zapisz jako nowy filtr",
   "transaction.update": "Zmodyfikuj wybrany filtr",
   "transaction.reset": "Zresetuj wybrany filtr",

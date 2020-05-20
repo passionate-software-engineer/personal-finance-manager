@@ -562,4 +562,11 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     const checkBoxState = JSON.parse(sessionStorage.getItem('hidePlannedTransactionsCheckboxState'));
     return checkBoxState === null ? environment.hidePlannedTransactionsCheckboxStateOnApplicationStart : checkBoxState;
   }
+
+   negatesetUpDefaultFilterCheckboxAndSaveState(){
+     }
+
+   getSetUpDefaultFilterCheckboxState(){
+     }
 }
+

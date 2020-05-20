@@ -120,6 +120,7 @@
   "button.commitOverduePlannedTransaction": "Commit overdue transaction",
   "checkbox.showArchived": "Show archived accounts",
   "checkbox.hidePlannedTransactions": "Hide planned transactions",
+  "checkbox.SetUpDefaultFilter" : "Set up default filter",
   "transaction.save": "Save as new filter",
   "transaction.update": "Update selected filter",
   "transaction.reset": "Reset selected filter",
