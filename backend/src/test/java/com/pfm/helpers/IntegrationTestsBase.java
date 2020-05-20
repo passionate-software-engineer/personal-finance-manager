@@ -127,6 +127,18 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
+  protected long callRestServiceToAddAccountTypeAndReturnId(AccountTypeRequest accountTypeRequest, String token)
+      throws Exception {
+    String response =
+        mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountTypeRequest)))
+            .andExpect(status().isOk()).andReturn()
+            .getResponse().getContentAsString();
+    return Long.parseLong(response);
+  }
+
   protected AccountRequest convertAccountToAccountRequest(Account account) {
     return AccountRequest.builder()
         .name(account.getName())

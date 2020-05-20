@@ -143,18 +143,9 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
     // given
     AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
 
+    long accountTypeId = callRestServiceToAddAccountTypeAndReturnId(accountTypeRequest, token);
+
     // when
-    String response =
-        mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE)
-            .content(json(accountTypeRequest)))
-            .andExpect(status().isOk()).andReturn()
-            .getResponse().getContentAsString();
-
-    // then
-    Long accountTypeId = Long.parseLong(response);
-
     mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());

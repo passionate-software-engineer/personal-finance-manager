@@ -64,6 +64,7 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
     AccountType accountType = accountInvestment();
     final Long accountTypeId = accountTypeService.saveAccountType(userId, accountType).getId();
 
+    doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnDelete(accountType, userId);
     doThrow(IllegalStateException.class).when(accountTypeService).deleteAccountType(accountTypeId);
 
     // when

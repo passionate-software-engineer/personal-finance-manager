@@ -224,7 +224,7 @@ public class AccountController implements AccountApi {
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
-        .type(accountTypeService.getAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId))
+        .type(accountTypeService.getAccountTypeFromByIdAndUserId(accountRequest.getAccountTypeId(), userId))
         .build();
   }
 
@@ -242,7 +242,7 @@ public class AccountController implements AccountApi {
   }
 
   private boolean isProvidedAccountTypeIdIncorrect(AccountRequest accountRequest, long userId) {
-    if (accountTypeService.findAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId).isEmpty()) {
+    if (accountTypeService.getAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId).isEmpty()) {
       log.info("No account type with id {} was found, not able to update", accountRequest.getAccountTypeId());
       return true;
     }

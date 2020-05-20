@@ -19,15 +19,11 @@ public class AccountTypeService {
 
   private AccountTypeRepository accountTypeRepository;
 
-  public Optional<AccountType> findAccountTypeByIdAndUserId(long accountTypeId, long userId) {
+  public Optional<AccountType> getAccountTypeByIdAndUserId(long accountTypeId, long userId) {
     return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
   }
 
-  public Optional<AccountType> getAccountTypeIdAndUserId(long accountTypeId, long userId) {
-    return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
-  }
-
-  public AccountType getAccountTypeByIdAndUserId(long accountTypeId, long userId) {
+  public AccountType getAccountTypeFromByIdAndUserId(long accountTypeId, long userId) {
     Optional<AccountType> accountTypeOptional = accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
     if (!accountTypeOptional.isPresent()) {
       throw new IllegalStateException(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), accountTypeId));
