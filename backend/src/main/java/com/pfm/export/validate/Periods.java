@@ -15,8 +15,8 @@ public class Periods {
   private static final String CHILD_ARCHIVE_STATUS_MISSING = " account has missing archive status for period from ";
   private static final String CHILD_BALANCE_MISSING = " account has missing balance for period from ";
   private static final String CHILD_CURRENCY_MISSING = " account has missing currency for period from ";
-  private static final String CHILD_LAST_VERIFICATION_DATE_MISSING =
-          " account has missing last verification date for period from ";
+  private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds "
+          + "missing for period from ";
   private static final String TRANSACTION_DATE_MISSING = "Transaction has missing date for period from ";
   private static final String TRANSACTION_ACCOUNT_MISSING = " has missing account for period from ";
   private static final String TRANSACTION_PRICE_MISSING = " has missing price for period from ";
