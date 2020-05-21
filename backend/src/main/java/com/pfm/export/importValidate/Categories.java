@@ -7,33 +7,31 @@ import java.util.List;
 public class Categories {
 
     private static final String EMPTY = "";
+
     private static final String CATEGORY_NAME_MISSING = "Category name is missing";
-    private static final String PARENT_CATEGORY_NAME_MISSING = " parent category name is missing";
-    private static final String PRIORITY_MISSING = " priority is missing";
+    private static final String PARENT_CATEGORY_NAME_MISSING = " category has missing parent category name";
+    private static final String PRIORITY_MISSING = " category has missing priority";
 
-    List<String> validate(ExportResult inputData, List<String> validationsResult) {
+    void validate(List<ExportResult.ExportCategory> inputData, List<String> validationsResult) {
 
-        if (inputData.getCategories() == null) {
-            validationsResult.add("Categories are missing");
-        }
+        if (inputData != null) {
 
-        for (ExportResult.ExportCategory category : inputData.getCategories()) {
+            for (ExportResult.ExportCategory category : inputData) {
 
-            if (checkDataMissing(category.getName())) {
-                validationsResult.add(CATEGORY_NAME_MISSING);
-            } else {
+                if (checkDataMissing(category.getName())) {
+                    validationsResult.add(CATEGORY_NAME_MISSING);
+                } else {
 
-                if (checkDataMissing(category.getParentCategoryName())) {
-                    validationsResult.add(category.getName() + PARENT_CATEGORY_NAME_MISSING);
-                }
+                    if (checkDataMissing(category.getParentCategoryName())) {
+                        validationsResult.add(category.getName() + PARENT_CATEGORY_NAME_MISSING);
+                    }
 
-                if (checkDataMissing(category.getPriority())) {
-                    validationsResult.add(category.getName() + PRIORITY_MISSING);
+                    if (checkDataMissing(category.getPriority())) {
+                        validationsResult.add(category.getName() + PRIORITY_MISSING);
+                    }
                 }
             }
-
         }
-        return validationsResult;
     }
 
     private boolean checkDataMissing(Object data) {

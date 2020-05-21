@@ -15,17 +15,20 @@ public class ImportValidator {
     private static HistoryEntries historyEntries;
     private static InitialAccountsState initialAccountsState;
     private static Periods periods;
-    private static SumOfAllFundsAtTheBeginningOfExport sumOfAllFundsAtTheBeginningOfExport;
+    private static SumOfAllFunds sumOfAllFunds;
 
     public List<String> validate(ExportResult inputData) {
+
         List<String> validationsResult = new ArrayList<>();
-        categories.validate(inputData, validationsResult);
-        filters.validate(inputData, validationsResult);
-        finalAccountsState.validate(inputData, validationsResult);
-        historyEntries.validate(inputData, validationsResult);
-        initialAccountsState.validate(inputData, validationsResult);
-        periods.validate(inputData, validationsResult);
-        sumOfAllFundsAtTheBeginningOfExport.validate(inputData, validationsResult);
+
+        categories.validate(inputData.getCategories(), validationsResult);
+        filters.validate(inputData.getFilters(), validationsResult);
+        finalAccountsState.validate(inputData.getFinalAccountsState(), validationsResult);
+        historyEntries.validate(inputData.getHistoryEntries(), validationsResult);
+        initialAccountsState.validate(inputData.getInitialAccountsState(), validationsResult);
+        periods.validate(inputData.getPeriods(), validationsResult);
+        sumOfAllFunds.validate(inputData, validationsResult);
+
         return validationsResult;
     }
 }

@@ -8,47 +8,55 @@ public class Filters {
 
     private static final String EMPTY = "";
 
-    List<String> validate(ExportResult inputData, List<String> validationsResult) {
-        if (inputData.getFilters() == null) {
-            validationsResult.add("Filters are missing");
-            return validationsResult;
-        }
-        for (ExportResult.ExportFilter filter : inputData.getFilters()) {
-            if (checkDataMissing(filter.getName())) {
-                validationsResult.add("Filter name is missing");
-            } else {
+    private static final String FILTER_NAME_MISSING = "Filter name is missing";
+    private static final String ACCOUNTS_MISSING = " filter has missing accounts";
+    private static final String CATEGORIES_MISSING = " filter has missing categories";
+    private static final String DATA_FROM_MISSING = " filter has missing date from";
+    private static final String DATA_TO_MISSING = " filter has missing date to";
+    private static final String DESCRIPTION_MISSING = " filter has missing description";
+    private static final String PRICE_FROM_MISSING = " filter has missing price from";
+    private static final String PRICE_TO_MISSING = " filter has missing price to";
 
-                if (checkDataMissing(filter.getAccounts())) {
-                    validationsResult.add(filter.getName() + " accounts are missing");
+    void validate(List<ExportResult.ExportFilter> inputData, List<String> validationsResult) {
+
+        if (inputData != null) {
+
+            for (ExportResult.ExportFilter filter : inputData) {
+
+                if (checkDataMissing(filter.getName())) {
+                    validationsResult.add(FILTER_NAME_MISSING);
+                } else {
+
+                    if (checkDataMissing(filter.getAccounts())) {
+                        validationsResult.add(filter.getName() + ACCOUNTS_MISSING);
+                    }
+
+                    if (checkDataMissing(filter.getCategories())) {
+                        validationsResult.add(filter.getName() + CATEGORIES_MISSING);
+                    }
+
+                    if (checkDataMissing(filter.getDateFrom())) {
+                        validationsResult.add(filter.getName() + DATA_FROM_MISSING);
+                    }
+
+                    if (checkDataMissing(filter.getDateTo())) {
+                        validationsResult.add(filter.getName() + DATA_TO_MISSING);
+                    }
+
+                    if (checkDataMissing(filter.getDescription())) {
+                        validationsResult.add(filter.getName() + DESCRIPTION_MISSING);
+                    }
+
+                    if (checkDataMissing(filter.getPriceFrom())) {
+                        validationsResult.add(filter.getName() + PRICE_FROM_MISSING);
+                    }
+
+                    if (checkDataMissing(filter.getPriceTo())) {
+                        validationsResult.add(filter.getName() + PRICE_TO_MISSING);
+                    }
                 }
-
-                if (checkDataMissing(filter.getCategories())) {
-                    validationsResult.add(filter.getName() + " categories are missing");
-                }
-
-                if (checkDataMissing(filter.getDateFrom())) {
-                    validationsResult.add(filter.getName() + " dateFrom is missing");
-                }
-
-                if (checkDataMissing(filter.getDateTo())) {
-                    validationsResult.add(filter.getName() + " dataTo is missing");
-                }
-
-                if (checkDataMissing(filter.getDescription())) {
-                    validationsResult.add(filter.getName() + " description is missing");
-                }
-
-                if (checkDataMissing(filter.getPriceFrom())) {
-                    validationsResult.add(filter.getName() + " priceFrom is missing");
-                }
-
-                if (checkDataMissing(filter.getPriceTo())) {
-                    validationsResult.add(filter.getName() + " priceTo is missing");
-                }
-
             }
         }
-        return validationsResult;
     }
 
     private boolean checkDataMissing(Object data) {
