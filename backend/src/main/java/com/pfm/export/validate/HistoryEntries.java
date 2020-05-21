@@ -2,7 +2,6 @@ package com.pfm.export.validate;
 
 import com.pfm.history.HistoryEntry;
 import com.pfm.history.HistoryInfo;
-
 import java.util.List;
 
 public class HistoryEntries {

@@ -1,7 +1,6 @@
 package com.pfm.export.validate;
 
 import com.pfm.export.ExportResult;
-
 import java.util.List;
 
 public class InitialAccountsState {

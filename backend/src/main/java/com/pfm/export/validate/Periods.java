@@ -1,7 +1,6 @@
 package com.pfm.export.validate;
 
 import com.pfm.export.ExportResult;
-
 import java.util.List;
 
 public class Periods {
@@ -23,8 +22,8 @@ public class Periods {
   private static final String TRANSACTION_CATEGORY_MISSING = " has missing category for period from ";
   private static final String TRANSACTION_DESCRIPTION_MISSING = " has missing description for period from ";
   private static final String CURRENCY_TO_FOUNDS_MAP_MISSING = "Currency founds missing for period from ";
-  private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds " +
-          "missing for period from ";
+  private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds "
+          + "missing for period from ";
 
   void validate(List<ExportResult.ExportPeriod> inputData, List<String> validationsResult) {
 
