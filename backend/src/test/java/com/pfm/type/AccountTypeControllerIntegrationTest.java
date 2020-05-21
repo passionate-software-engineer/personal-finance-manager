@@ -95,7 +95,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> emptyAccountTypeNameParameters() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {""},
         {" "},
         {"    "},
