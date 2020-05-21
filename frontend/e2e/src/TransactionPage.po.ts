@@ -5,6 +5,11 @@ export class TransactionAndFilterPage {
 
   navigationBar = new NavigationBar();
 
+  ngSelectNth(elementId, optionIndex) {
+    element(by.id(elementId)).click();
+    element(by.id(elementId)).all(by.css('.ng-option')).get(optionIndex).click();
+  }
+
   async navigateTo() {
     return this.navigationBar.transactionLink().click();
   }
@@ -49,12 +54,12 @@ export class TransactionAndFilterPage {
     return element.all(by.id('NewTransactionPriceInput'));
   }
 
-  newTransactionAccountSelects() {
-    return element.all(by.id('newTransactionAccountSelects'));
+  newTransactionAccountSelectsSelectOption(selectIndex, optionIndex) {
+     return this.ngSelectNth('newTransactionAccountSelects_' + selectIndex, optionIndex);
   }
 
-  newTransactionCategorySelect() {
-    return element(by.id('newTransactionCategorySelect'));
+  newTransactionCategorySelectOption(optionIndex) {
+    return this.ngSelectNth('newTransactionCategorySelect', optionIndex);
   }
 
   newTransactionSaveButton() {
@@ -77,9 +82,13 @@ export class TransactionAndFilterPage {
     return element.all(by.id('EditTransactionAccountSelects'));
   }
 
-  editTransactionCategorySelect() {
-    return element(by.id('EditTransactionCategorySelect'));
+  editTransactionAccountSelectsSelectOption(selectIndex, optionIndex) {
+     return this.ngSelectNth('EditTransactionAccountSelects_' + selectIndex, optionIndex);
   }
+
+  editTransactionCategorySelectOption(optionIndex) {
+      return this.ngSelectNth('EditTransactionCategorySelect', optionIndex);
+    }
 
   editTransactionSaveButton() {
     return element(by.id('EditTransactionSaveBtn'));
@@ -133,7 +142,7 @@ export class TransactionAndFilterPage {
     }
   }
 
-  addTransaction(date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
+  addTransaction(date, description, priceOne, priceTwo, accountNameOneIndex, accountNameTwoIndex, categoryIndex) {
     this.navigateTo();
     this.addTransactionButton().click();
 
@@ -144,29 +153,24 @@ export class TransactionAndFilterPage {
 
     this.newTransactionPriceInput().get(0).clear();
     this.newTransactionPriceInput().get(0).sendKeys(priceOne);
-    // if (!this.newTransactionPriceInput().get(0).getText() === priceOne) {
-    // this.newTransactionPriceInput().get(0).sendKeys(priceOne);
-    // }
-    // expect(this.newTransactionPriceInput().get(0).getText()).toEqual(priceOne );
 
     if (priceTwo !== null) {
       this.newTransactionPriceInput().get(1).clear();
       this.newTransactionPriceInput().get(1).sendKeys(priceTwo);
-      // expect(this.newTransactionPriceInput().get(1).getText()).toEqual(priceTwo);
     }
 
-    this.newTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
+    this.newTransactionAccountSelectsSelectOption(0, accountNameOneIndex);
 
-    if (accountNameTwo !== null) {
-      this.newTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
+    if (accountNameTwoIndex !== null) {
+      this.newTransactionAccountSelectsSelectOption(1, accountNameTwoIndex);
     }
 
-    this.newTransactionCategorySelect().element(by.cssContainingText('option', categoryName)).click();
+    this.newTransactionCategorySelectOption(categoryIndex);
 
     this.newTransactionSaveButton().click();
   }
 
-  updateTransaction(row, date, description, priceOne, priceTwo, accountNameOne, accountNameTwo, categoryName) {
+  updateTransaction(row, date, description, priceOne, priceTwo, accountNameOneIndex, accountNameTwoIndex, categoryIndex) {
     this.navigateTo();
     this.optionsButton(row).click();
     this.editButton(row).click();
@@ -182,13 +186,13 @@ export class TransactionAndFilterPage {
       this.editTransactionPriceInput().get(1).sendKeys(priceTwo);
     }
 
-    this.editTransactionAccountSelects().get(0).element(by.cssContainingText('option', accountNameOne)).click();
+    this.editTransactionAccountSelectsSelectOption(0, accountNameOneIndex);
 
-    if (accountNameTwo !== null) {
-      this.editTransactionAccountSelects().get(1).element(by.cssContainingText('option', accountNameTwo)).click();
+    if (accountNameTwoIndex !== null) {
+      this.editTransactionAccountSelectsSelectOption(1, accountNameTwoIndex);
     }
 
-    this.editTransactionCategorySelect().element(by.cssContainingText('option', categoryName)).click();
+    this.editTransactionCategorySelectOption(categoryIndex);
 
     this.editTransactionSaveButton().click();
   }
@@ -211,8 +215,6 @@ export class TransactionAndFilterPage {
 
     expect(this.transactionRows().count()).toEqual(0);
   }
-
-  // filter
 
   addFilterButton() {
     return element(by.id('AddFilterBtn'));

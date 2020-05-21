@@ -81,6 +81,17 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     this.newTransaction.date = new Date();
   }
 
+  getNotArchivedAccounts(): Account[] {
+    const notArchivedAccounts: Account[] = [];
+    for (const account of this.accounts) {
+      if (!account.archived) {
+        notArchivedAccounts.push(account);
+      }
+    }
+
+    return notArchivedAccounts;
+  }
+
   getTransactions(): void {
     this.transactionService.getTransactions()
         .subscribe(transactions => {
@@ -277,7 +288,7 @@ export class TransactionsComponent extends FiltersComponentBase implements OnIni
     }
     while (commitDate !== '' && commitDate !== null);
   }
-
+  // TODO add dialog asking for date
   commitOverduePlannedTransaction(transaction: Transaction) {
     const commitDialogMessageKey = 'message.wantCommitPlannedTransactionBeforeDate';
 
