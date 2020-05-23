@@ -4,5 +4,6 @@ export const environment = {
   healthCheckTaskIntervalInSeconds: 30 * 1000,
   accessTokenExpirationTimeWarningLevelInSeconds: 60,
   refreshTokenExpirationTimeWarningLevelInSeconds: 60,
-  hidePlannedTransactionsCheckboxStateOnApplicationStart: false
+  hidePlannedTransactionsCheckboxStateOnApplicationStart: false,
+  setUpDefaultFilterCheckboxStateOnApplicationStart: false
 };

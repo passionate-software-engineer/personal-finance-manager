@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  hidePlannedTransactionsCheckboxStateOnApplicationStart: false
+  hidePlannedTransactionsCheckboxStateOnApplicationStart: false,
+  setUpDefaultFilterCheckboxStateOnApplicationStart: false
 };

@@ -56,7 +56,10 @@
 
 <div>
   <span class="setUpDefaultFilterCheckbox">
-    <input type="checkbox">
+    <input (change)="negatesetUpDefaultFilterCheckboxAndSaveState()"
+           id="setUpDefaultFilterCheckbox"
+           type="checkbox"
+           [checked]="getSetUpDefaultFilterCheckboxState()">
       {{"checkbox.SetUpDefaultFilter" | translate}}
   </span>
 </div>
