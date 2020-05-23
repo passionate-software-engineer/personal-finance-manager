@@ -1,10 +1,11 @@
-package com.pfm.export.validate;
+package com.pfm.export.importValidation;
 
 import com.pfm.history.HistoryEntry;
 import com.pfm.history.HistoryInfo;
+import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryEntries {
+public class ImportHistoryEntriesValidator {
 
   private static final String EMPTY = "";
 
@@ -17,52 +18,55 @@ public class HistoryEntries {
   private static final String PARENT_OBJECT_MISSING = " history entry ID has missing object";
   private static final String PARENT_TYPE_MISSING = " history entry ID has missing type";
 
-  void validate(List<HistoryEntry> inputData, List<String> validationsResult) {
+  List<String> validate(List<HistoryEntry> inputData) {
+
+    List<String> validationResult = new ArrayList<>();
 
     if (inputData != null) {
 
       for (HistoryEntry historyEntry : inputData) {
 
         if (checkDataMissing(historyEntry.getId())) {
-          validationsResult.add(PARENT_ID_MISSING);
+          validationResult.add(PARENT_ID_MISSING);
         } else {
 
           if (checkDataMissing(historyEntry.getDate())) {
-            validationsResult.add(PARENT_DATE_MISSING + historyEntry.getId());
+            validationResult.add(PARENT_DATE_MISSING + historyEntry.getId());
           }
 
           if (historyEntry.getEntries() != null) {
 
             for (HistoryInfo entry : historyEntry.getEntries()) {
               if (checkDataMissing(entry.getName())) {
-                validationsResult.add(CHILD_NAME_MISSING + historyEntry.getId());
+                validationResult.add(CHILD_NAME_MISSING + historyEntry.getId());
               } else {
 
                 if (checkDataMissing(entry.getId())) {
-                  validationsResult.add(entry.getName() + CHILD_ID_MISSING + historyEntry.getId());
+                  validationResult.add(entry.getName() + CHILD_ID_MISSING + historyEntry.getId());
                 }
 
                 if (checkDataMissing(entry.getNewValue())) {
-                  validationsResult.add(entry.getName() + CHILD_NEW_VALUE_MISSING + historyEntry.getId());
+                  validationResult.add(entry.getName() + CHILD_NEW_VALUE_MISSING + historyEntry.getId());
                 }
 
                 if (checkDataMissing(entry.getOldValue())) {
-                  validationsResult.add(entry.getName() + CHILD_OLD_VALUE_MISSING + historyEntry.getId());
+                  validationResult.add(entry.getName() + CHILD_OLD_VALUE_MISSING + historyEntry.getId());
                 }
               }
             }
           }
 
           if (checkDataMissing(historyEntry.getObject())) {
-            validationsResult.add(historyEntry.getId() + PARENT_OBJECT_MISSING);
+            validationResult.add(historyEntry.getId() + PARENT_OBJECT_MISSING);
           }
 
           if (checkDataMissing(historyEntry.getType())) {
-            validationsResult.add(historyEntry.getId() + PARENT_TYPE_MISSING);
+            validationResult.add(historyEntry.getId() + PARENT_TYPE_MISSING);
           }
         }
       }
     }
+    return validationResult;
   }
 
   private boolean checkDataMissing(Object data) {

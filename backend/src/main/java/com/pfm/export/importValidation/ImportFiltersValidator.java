@@ -1,9 +1,10 @@
-package com.pfm.export.validate;
+package com.pfm.export.importValidation;
 
 import com.pfm.export.ExportResult;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Filters {
+public class ImportFiltersValidator {
 
   private static final String EMPTY = "";
 
@@ -16,46 +17,49 @@ public class Filters {
   private static final String PRICE_FROM_MISSING = " filter has missing price from";
   private static final String PRICE_TO_MISSING = " filter has missing price to";
 
-  void validate(List<ExportResult.ExportFilter> inputData, List<String> validationsResult) {
+  List<String> validate(List<ExportResult.ExportFilter> inputData) {
+
+    List<String> validationResult = new ArrayList<>();
 
     if (inputData != null) {
 
       for (ExportResult.ExportFilter filter : inputData) {
 
         if (checkDataMissing(filter.getName())) {
-          validationsResult.add(FILTER_NAME_MISSING);
+          validationResult.add(FILTER_NAME_MISSING);
         } else {
 
           if (checkDataMissing(filter.getAccounts())) {
-            validationsResult.add(filter.getName() + ACCOUNTS_MISSING);
+            validationResult.add(filter.getName() + ACCOUNTS_MISSING);
           }
 
           if (checkDataMissing(filter.getCategories())) {
-            validationsResult.add(filter.getName() + CATEGORIES_MISSING);
+            validationResult.add(filter.getName() + CATEGORIES_MISSING);
           }
 
           if (checkDataMissing(filter.getDateFrom())) {
-            validationsResult.add(filter.getName() + DATA_FROM_MISSING);
+            validationResult.add(filter.getName() + DATA_FROM_MISSING);
           }
 
           if (checkDataMissing(filter.getDateTo())) {
-            validationsResult.add(filter.getName() + DATA_TO_MISSING);
+            validationResult.add(filter.getName() + DATA_TO_MISSING);
           }
 
           if (checkDataMissing(filter.getDescription())) {
-            validationsResult.add(filter.getName() + DESCRIPTION_MISSING);
+            validationResult.add(filter.getName() + DESCRIPTION_MISSING);
           }
 
           if (checkDataMissing(filter.getPriceFrom())) {
-            validationsResult.add(filter.getName() + PRICE_FROM_MISSING);
+            validationResult.add(filter.getName() + PRICE_FROM_MISSING);
           }
 
           if (checkDataMissing(filter.getPriceTo())) {
-            validationsResult.add(filter.getName() + PRICE_TO_MISSING);
+            validationResult.add(filter.getName() + PRICE_TO_MISSING);
           }
         }
       }
     }
+    return validationResult;
   }
 
   private boolean checkDataMissing(Object data) {

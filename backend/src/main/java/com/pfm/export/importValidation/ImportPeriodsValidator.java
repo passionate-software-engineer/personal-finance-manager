@@ -1,9 +1,10 @@
-package com.pfm.export.validate;
+package com.pfm.export.importValidation;
 
 import com.pfm.export.ExportResult;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Periods {
+public class ImportPeriodsValidator {
 
   private static final String EMPTY = "";
 
@@ -24,27 +25,29 @@ public class Periods {
   private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds "
       + "missing for period from ";
 
-  void validate(List<ExportResult.ExportPeriod> inputData, List<String> validationsResult) {
+  List<String> validate(List<ExportResult.ExportPeriod> inputData) {
+
+    List<String> validationResult = new ArrayList<>();
 
     if (inputData != null) {
 
       for (ExportResult.ExportPeriod period : inputData) {
 
         if (checkDataMissing(period.getStartDate())) {
-          validationsResult.add(PERIOD_START_DATE_MISSING);
+          validationResult.add(PERIOD_START_DATE_MISSING);
 
         } else if (checkDataMissing(period.getEndDate())) {
-          validationsResult.add(PERIOD_END_DATE_MISSING);
+          validationResult.add(PERIOD_END_DATE_MISSING);
         } else {
 
-          validateStartOrEndAccountState(period.getAccountStateAtTheBeginningOfPeriod(), validationsResult,
+          validateStartOrEndAccountState(period.getAccountStateAtTheBeginningOfPeriod(), validationResult,
               period);
-          validateStartOrEndAccountState(period.getAccountStateAtTheEndOfPeriod(), validationsResult,
+          validateStartOrEndAccountState(period.getAccountStateAtTheEndOfPeriod(), validationResult,
               period);
 
-          validateStartOrEndSumOfAllFunds(period.getSumOfAllFundsAtTheBeginningOfPeriod(), validationsResult,
+          validateStartOrEndSumOfAllFunds(period.getSumOfAllFundsAtTheBeginningOfPeriod(), validationResult,
               period);
-          validateStartOrEndSumOfAllFunds(period.getSumOfAllFundsAtTheEndOfPeriod(), validationsResult,
+          validateStartOrEndSumOfAllFunds(period.getSumOfAllFundsAtTheEndOfPeriod(), validationResult,
               period);
 
           if (period.getTransactions() != null) {
@@ -52,7 +55,7 @@ public class Periods {
             for (ExportResult.ExportTransaction transaction : period.getTransactions()) {
 
               if (checkDataMissing(transaction.getDate())) {
-                validationsResult.add(TRANSACTION_DATE_MISSING
+                validationResult.add(TRANSACTION_DATE_MISSING
                     + period.getStartDate() + " to " + period.getEndDate());
               } else {
 
@@ -60,13 +63,13 @@ public class Periods {
 
                   for (ExportResult.ExportAccountPriceEntry priceEntry : transaction.getAccountPriceEntries()) {
                     if (checkDataMissing(priceEntry.getAccount())) {
-                      validationsResult.add("Transaction at: " + transaction.getDate()
+                      validationResult.add("Transaction at: " + transaction.getDate()
                           + TRANSACTION_ACCOUNT_MISSING
                           + period.getStartDate() + " to " + period.getEndDate());
                     }
 
                     if (checkDataMissing(priceEntry.getPrice())) {
-                      validationsResult.add("Transaction at: " + transaction.getDate()
+                      validationResult.add("Transaction at: " + transaction.getDate()
                           + TRANSACTION_PRICE_MISSING
                           + period.getStartDate() + " to " + period.getEndDate());
                     }
@@ -74,13 +77,13 @@ public class Periods {
                 }
 
                 if (checkDataMissing(transaction.getCategory())) {
-                  validationsResult.add("Transaction at " + transaction.getDate()
+                  validationResult.add("Transaction at " + transaction.getDate()
                       + TRANSACTION_CATEGORY_MISSING
                       + period.getStartDate() + " to " + period.getEndDate());
                 }
 
                 if (checkDataMissing(transaction.getDescription())) {
-                  validationsResult.add("Transaction from " + transaction.getDate()
+                  validationResult.add("Transaction from " + transaction.getDate()
                       + TRANSACTION_DESCRIPTION_MISSING
                       + period.getStartDate() + " to " + period.getEndDate());
                 }
@@ -90,6 +93,7 @@ public class Periods {
         }
       }
     }
+    return validationResult;
   }
 
   private void validateStartOrEndAccountState(List<ExportResult.ExportAccount> period, List<String> validationsResult,

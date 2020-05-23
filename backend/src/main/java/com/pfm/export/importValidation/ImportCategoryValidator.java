@@ -1,9 +1,10 @@
-package com.pfm.export.validate;
+package com.pfm.export.importValidation;
 
 import com.pfm.export.ExportResult;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Categories {
+public class ImportCategoryValidator {
 
   private static final String EMPTY = "";
 
@@ -11,29 +12,36 @@ public class Categories {
   private static final String PARENT_CATEGORY_NAME_MISSING = " category has missing parent category name";
   private static final String PRIORITY_MISSING = " category has missing priority";
 
-  void validate(List<ExportResult.ExportCategory> inputData, List<String> validationsResult) {
+  List<String> validate(List<ExportResult.ExportCategory> inputData) {
+
+    List<String> validationResult = new ArrayList<>();
 
     if (inputData != null) {
 
       for (ExportResult.ExportCategory category : inputData) {
 
         if (checkDataMissing(category.getName())) {
-          validationsResult.add(CATEGORY_NAME_MISSING);
+          validationResult.add(CATEGORY_NAME_MISSING);
         } else {
 
           if (checkDataMissing(category.getParentCategoryName())) {
-            validationsResult.add(category.getName() + PARENT_CATEGORY_NAME_MISSING);
+            validationResult.add(category.getName() + PARENT_CATEGORY_NAME_MISSING);
           }
 
-          if (checkDataMissing(category.getPriority())) {
-            validationsResult.add(category.getName() + PRIORITY_MISSING);
+          if (checkPriorityFormat(category.getPriority())) {
+            validationResult.add(category.getName() + PRIORITY_MISSING);
           }
         }
       }
     }
+    return validationResult;
   }
 
   private boolean checkDataMissing(Object data) {
     return data == null || EMPTY.equals(data);
+  }
+
+  private boolean checkPriorityFormat(int priority) {
+    return !(priority >= 0 && priority <= 100);
   }
 }
