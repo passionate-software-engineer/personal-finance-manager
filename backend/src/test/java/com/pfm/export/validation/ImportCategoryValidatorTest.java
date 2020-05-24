@@ -18,20 +18,20 @@ class ImportCategoryValidatorTest {
   private ImportCategoryValidator importCategoryValidator = new ImportCategoryValidator();
 
   @ParameterizedTest
-  @MethodSource("CategoryValidate")
+  @MethodSource("categoryValidate")
   public void shouldReturnErrorLogForMissingData(ExportCategory inputCategory, List<String> expectedMessages) {
-    //given
+    // given
     ExportResult input = new ExportResult();
     input.setCategories(Collections.singletonList(inputCategory));
 
-    //when
+    // when
     List<String> result = importCategoryValidator.validate(input.getCategories());
 
-    //then
+    // then
     assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 
-  static Stream<Arguments> CategoryValidate() {
+  static Stream<Arguments> categoryValidate() {
     return Stream.of(
 
         arguments(missingName(),
