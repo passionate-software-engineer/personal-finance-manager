@@ -2,7 +2,6 @@ package com.pfm.export.importValidation;
 
 import com.pfm.export.ExportResult;
 import com.pfm.export.ExportResult.ExportCategory;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +23,7 @@ class ImportCategoryValidatorTest {
     input.setCategories(Collections.singletonList(inputCategory));
 
     //when
-    List<String> result = new ArrayList<>(importCategoryValidator.validate(input.getCategories()));
+    List<String> result = importCategoryValidator.validate(input.getCategories());
 
     //then
     Assertions.assertArrayEquals(expectedMessages.toArray(), result.toArray());
@@ -32,6 +31,7 @@ class ImportCategoryValidatorTest {
 
   static Stream<Arguments> CategoryValidate() {
     return Stream.of(
+
         Arguments.arguments(missingName(),
             Collections.singletonList("Category name is missing")),
 
