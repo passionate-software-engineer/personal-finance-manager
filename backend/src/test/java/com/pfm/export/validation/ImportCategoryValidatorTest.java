@@ -1,4 +1,7 @@
-package com.pfm.export.importValidation;
+package com.pfm.export.validation;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.params.provider.Arguments.*;
 
 import com.pfm.export.ExportResult;
 import com.pfm.export.ExportResult.ExportCategory;
@@ -6,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -26,27 +28,28 @@ class ImportCategoryValidatorTest {
     List<String> result = importCategoryValidator.validate(input.getCategories());
 
     //then
-    Assertions.assertArrayEquals(expectedMessages.toArray(), result.toArray());
+    assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 
   static Stream<Arguments> CategoryValidate() {
     return Stream.of(
 
-        Arguments.arguments(missingName(),
+        arguments(missingName(),
             Collections.singletonList("Category name is missing")),
 
-        Arguments.arguments(missingParentCategoryName(),
+        arguments(missingParentCategoryName(),
             Collections.singletonList("CategoryName category has missing parent category name")),
 
-        Arguments.arguments(missingPriority(),
+        arguments(missingPriority(),
             Collections.singletonList("CategoryName category has missing priority")),
 
-        Arguments.arguments(onlyName(),
+        arguments(onlyName(),
             Arrays.asList("CategoryName category has missing parent category name",
                 "CategoryName category has missing priority")),
 
-        Arguments.arguments(missingAllData(),
+        arguments(missingAllData(),
             Collections.singletonList("Category name is missing"))
+
     );
   }
 

@@ -5,7 +5,7 @@ import static com.pfm.config.MessagesProvider.IMPORT_NOT_POSSIBLE;
 import com.pfm.account.AccountService;
 import com.pfm.auth.UserProvider;
 import com.pfm.config.MessagesProvider;
-import com.pfm.export.importValidation.ImportValidator;
+import com.pfm.export.validation.ImportValidator;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
