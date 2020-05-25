@@ -72,8 +72,8 @@ public class AccountTypeController implements AccountTypeApi {
     }
 
     AccountType accountType = accountTypeOptional.get();
-    historyEntryService.addHistoryEntryOnDelete(accountType, userId);
     log.info("Attempting to delete account type with id {}", accountTypeId);
+    historyEntryService.addHistoryEntryOnDelete(accountType, userId);
     accountTypeService.deleteAccountType(accountTypeId);
 
     log.info("Account type with id {} was deleted successfully", accountTypeId);

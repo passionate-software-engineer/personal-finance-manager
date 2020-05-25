@@ -224,7 +224,7 @@ public class AccountController implements AccountApi {
         .name(accountRequest.getName())
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
-        .type(accountTypeService.getAccountTypeFromByIdAndUserId(accountRequest.getAccountTypeId(), userId))
+        .type(accountTypeService.getAccountTypeFromDbByIdAndUserId(accountRequest.getAccountTypeId(), userId))
         .build();
   }
 

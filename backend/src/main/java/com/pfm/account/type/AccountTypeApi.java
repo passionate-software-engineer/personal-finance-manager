@@ -3,6 +3,7 @@ package com.pfm.account.type;
 import static com.pfm.swagger.ApiConstants.BAD_REQUEST_MESSAGE;
 import static com.pfm.swagger.ApiConstants.BEARER;
 import static com.pfm.swagger.ApiConstants.CONTAINER_LIST;
+import static com.pfm.swagger.ApiConstants.NOT_FOUND_MESSAGE;
 import static com.pfm.swagger.ApiConstants.OK_MESSAGE;
 import static com.pfm.swagger.ApiConstants.UNAUTHORIZED_MESSAGE;
 
@@ -25,11 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(tags = {"account-type-controller"})
 public interface AccountTypeApi {
 
-  @ApiOperation(value = "Get list of all account types", authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Find account type by id", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
-      @ApiResponse(code = 200, message = OK_MESSAGE, response = AccountType.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 200, message = OK_MESSAGE, response = AccountType.class),
       @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
   })
+
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
@@ -42,7 +45,14 @@ public interface AccountTypeApi {
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
 
-  @ApiOperation(value = "Delete an existing accountType", response = Void.class, authorizations = {@Authorization(value = BEARER)})
+  @ApiOperation(value = "Update an existing account type", authorizations = {@Authorization(value = BEARER)})
+  @ApiResponses({
+      @ApiResponse(code = 200, message = OK_MESSAGE),
+      @ApiResponse(code = 400, message = BAD_REQUEST_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
+      @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
+  })
+
   @DeleteMapping(value = "/{accountTypeId}")
   ResponseEntity<?> deleteAccountType(@PathVariable long accountTypeId);
 

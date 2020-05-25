@@ -23,7 +23,7 @@ public class AccountTypeService {
     return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
   }
 
-  public AccountType getAccountTypeFromByIdAndUserId(long accountTypeId, long userId) {
+  public AccountType getAccountTypeFromDbByIdAndUserId(long accountTypeId, long userId) {
     Optional<AccountType> accountTypeOptional = accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
     if (!accountTypeOptional.isPresent()) {
       throw new IllegalStateException(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), accountTypeId));

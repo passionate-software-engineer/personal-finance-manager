@@ -36,7 +36,7 @@ class AccountTypeServiceTest {
 
     // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      accountTypeService.getAccountTypeFromByIdAndUserId(accountTypeId, userId);
+      accountTypeService.getAccountTypeFromDbByIdAndUserId(accountTypeId, userId);
     });
 
     // then
