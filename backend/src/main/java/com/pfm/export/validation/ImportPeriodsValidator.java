@@ -6,8 +6,6 @@ import java.util.List;
 
 public class ImportPeriodsValidator {
 
-  private ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
-
   private static final String EMPTY = "";
 
   private static final String PERIOD_START_OR_END_DATE_MISSING = "Period has missing start or end date";
@@ -18,6 +16,8 @@ public class ImportPeriodsValidator {
   private static final String TRANSACTION_DESCRIPTION_MISSING = " has missing description for period from ";
   private static final String CURRENCY_TO_FOUNDS_MAP_MISSING = "Currency founds missing in ";
   private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds missing in ";
+
+  private ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
 
   List<String> validate(List<ExportResult.ExportPeriod> inputData) {
 
