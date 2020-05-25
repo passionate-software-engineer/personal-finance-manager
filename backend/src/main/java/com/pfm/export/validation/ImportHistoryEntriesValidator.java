@@ -31,7 +31,7 @@ public class ImportHistoryEntriesValidator {
         } else {
 
           if (checkDataMissing(historyEntry.getDate())) {
-            validationResult.add(PARENT_DATE_MISSING + historyEntry.getId());
+            validationResult.add(historyEntry.getId() + PARENT_DATE_MISSING);
           }
 
           if (historyEntry.getEntries() != null) {

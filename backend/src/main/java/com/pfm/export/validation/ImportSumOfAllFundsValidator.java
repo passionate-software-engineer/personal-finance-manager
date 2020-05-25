@@ -8,16 +8,19 @@ public class ImportSumOfAllFundsValidator {
 
   private static final String EMPTY = "";
 
+  private static final String SUM_AT_THE_BEGINNING_OF_EXPORT_MISSING = "Sum of all Funds At The Beginning Of Export is missing";
+  private static final String SUM_AT_THE_END_OF_EXPORT_MISSING = "Sum of all Funds At The End Of Export is missing";
+
   List<String> validate(ExportResult inputData) {
 
     List<String> validationResult = new ArrayList<>();
 
-    if (checkDataMissing(inputData.getSumOfAllFundsAtTheEndOfExport())) {
-      validationResult.add("Sum of all Funds At The end Of Export is missing");
+    if (checkDataMissing(inputData.getSumOfAllFundsAtTheBeginningOfExport())) {
+      validationResult.add(SUM_AT_THE_BEGINNING_OF_EXPORT_MISSING);
     }
 
-    if (checkDataMissing(inputData.getSumOfAllFundsAtTheBeginningOfExport())) {
-      validationResult.add("Sum of all Funds At The Beginning Of Export is missing");
+    if (checkDataMissing(inputData.getSumOfAllFundsAtTheEndOfExport())) {
+      validationResult.add(SUM_AT_THE_END_OF_EXPORT_MISSING);
     }
 
     return validationResult;

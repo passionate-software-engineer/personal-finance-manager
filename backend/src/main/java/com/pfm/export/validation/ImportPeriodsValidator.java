@@ -6,24 +6,18 @@ import java.util.List;
 
 public class ImportPeriodsValidator {
 
+  private ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
+
   private static final String EMPTY = "";
 
-  private static final String PERIOD_START_DATE_MISSING = "Period has missing start date";
-  private static final String PERIOD_END_DATE_MISSING = "Period has missing end date";
-  private static final String CHILD_ACCOUNT_NAME_MISSING = "Account has missing name for period form ";
-  private static final String CHILD_ACCOUNT_TYPE_MISSING = " account has missing type for period from ";
-  private static final String CHILD_ARCHIVE_STATUS_MISSING = " account has missing archive status for period from ";
-  private static final String CHILD_BALANCE_MISSING = " account has missing balance for period from ";
-  private static final String CHILD_CURRENCY_MISSING = " account has missing currency for period from ";
-  private static final String CHILD_LAST_VERIFICATION_DATE_MISSING = " account has missing last verification date for period from ";
+  private static final String PERIOD_START_OR_END_DATE_MISSING = "Period has missing start or end date";
   private static final String TRANSACTION_DATE_MISSING = "Transaction has missing date for period from ";
   private static final String TRANSACTION_ACCOUNT_MISSING = " has missing account for period from ";
   private static final String TRANSACTION_PRICE_MISSING = " has missing price for period from ";
   private static final String TRANSACTION_CATEGORY_MISSING = " has missing category for period from ";
   private static final String TRANSACTION_DESCRIPTION_MISSING = " has missing description for period from ";
-  private static final String CURRENCY_TO_FOUNDS_MAP_MISSING = "Currency founds missing for period from ";
-  private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds "
-      + "missing for period from ";
+  private static final String CURRENCY_TO_FOUNDS_MAP_MISSING = "Currency founds missing in ";
+  private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds missing in ";
 
   List<String> validate(List<ExportResult.ExportPeriod> inputData) {
 
@@ -33,22 +27,23 @@ public class ImportPeriodsValidator {
 
       for (ExportResult.ExportPeriod period : inputData) {
 
-        if (checkDataMissing(period.getStartDate())) {
-          validationResult.add(PERIOD_START_DATE_MISSING);
-
-        } else if (checkDataMissing(period.getEndDate())) {
-          validationResult.add(PERIOD_END_DATE_MISSING);
+        if (checkDataMissing(period.getStartDate()) || checkDataMissing(period.getEndDate())) {
+          validationResult.add(PERIOD_START_OR_END_DATE_MISSING);
         } else {
 
-          validateStartOrEndAccountState(period.getAccountStateAtTheBeginningOfPeriod(), validationResult,
-              period);
-          validateStartOrEndAccountState(period.getAccountStateAtTheEndOfPeriod(), validationResult,
-              period);
+          List<String> beginningAccountsStateLogs = importAccountsStateValidator.validate(period.getAccountStateAtTheBeginningOfPeriod(),
+              "beginning of period from " + period.getStartDate() + " to " + period.getEndDate());
 
-          validateStartOrEndSumOfAllFunds(period.getSumOfAllFundsAtTheBeginningOfPeriod(), validationResult,
-              period);
-          validateStartOrEndSumOfAllFunds(period.getSumOfAllFundsAtTheEndOfPeriod(), validationResult,
-              period);
+          List<String> endAccountsStateLogs = importAccountsStateValidator.validate(period.getAccountStateAtTheEndOfPeriod(),
+              "end of period from " + period.getStartDate() + " to " + period.getEndDate());
+
+          if (!beginningAccountsStateLogs.isEmpty()) {
+            validationResult.addAll(beginningAccountsStateLogs);
+          }
+
+          if (!endAccountsStateLogs.isEmpty()) {
+            validationResult.addAll(endAccountsStateLogs);
+          }
 
           if (period.getTransactions() != null) {
 
@@ -77,18 +72,28 @@ public class ImportPeriodsValidator {
                 }
 
                 if (checkDataMissing(transaction.getCategory())) {
-                  validationResult.add("Transaction at " + transaction.getDate()
+                  validationResult.add("Transaction at: " + transaction.getDate()
                       + TRANSACTION_CATEGORY_MISSING
                       + period.getStartDate() + " to " + period.getEndDate());
                 }
 
                 if (checkDataMissing(transaction.getDescription())) {
-                  validationResult.add("Transaction from " + transaction.getDate()
+                  validationResult.add("Transaction at: " + transaction.getDate()
                       + TRANSACTION_DESCRIPTION_MISSING
                       + period.getStartDate() + " to " + period.getEndDate());
                 }
               }
             }
+          }
+
+          if (period.getSumOfAllFundsAtTheBeginningOfPeriod() != null) {
+            validateSumOfAllFunds(period.getSumOfAllFundsAtTheBeginningOfPeriod(), validationResult, period,
+                "the beginning of period from ");
+          }
+
+          if (period.getSumOfAllFundsAtTheEndOfPeriod() != null) {
+            validateSumOfAllFunds(period.getSumOfAllFundsAtTheEndOfPeriod(), validationResult, period,
+                "the end of period from ");
           }
         }
       }
@@ -96,57 +101,16 @@ public class ImportPeriodsValidator {
     return validationResult;
   }
 
-  private void validateStartOrEndAccountState(List<ExportResult.ExportAccount> period, List<String> validationsResult,
-      ExportResult.ExportPeriod currentPeriod) {
+  private void validateSumOfAllFunds(ExportResult.ExportFundsSummary period, List<String> validationsResult,
+      ExportResult.ExportPeriod currentPeriod, String currentPlace) {
 
-    if (period != null) {
-
-      for (ExportResult.ExportAccount account : period) {
-
-        if (checkDataMissing(account.getName())) {
-          validationsResult.add(CHILD_ACCOUNT_NAME_MISSING
-              + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-        } else {
-
-          if (checkDataMissing(account.getAccountType())) {
-            validationsResult.add(account.getName() + CHILD_ACCOUNT_TYPE_MISSING
-                + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-          }
-
-          if (checkDataMissing(account.isArchived())) {
-            validationsResult.add(account.getName() + CHILD_ARCHIVE_STATUS_MISSING
-                + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-          }
-
-          if (checkDataMissing(account.getBalance())) {
-            validationsResult.add(account.getName() + CHILD_BALANCE_MISSING
-                + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-          }
-
-          if (checkDataMissing(account.getCurrency())) {
-            validationsResult.add(account.getName() + CHILD_CURRENCY_MISSING
-                + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-          }
-
-          if (checkDataMissing(account.getLastVerificationDate())) {
-            validationsResult.add(account.getName() + CHILD_LAST_VERIFICATION_DATE_MISSING
-                + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-          }
-        }
-      }
-    }
-  }
-
-  private void validateStartOrEndSumOfAllFunds(ExportResult.ExportFundsSummary period, List<String> validationsResult,
-      ExportResult.ExportPeriod currentPeriod) {
-
-    if (period.getCurrencyToFundsMap() != null) {
-      validationsResult.add(CURRENCY_TO_FOUNDS_MAP_MISSING
+    if (checkDataMissing(period.getCurrencyToFundsMap())) {
+      validationsResult.add(CURRENCY_TO_FOUNDS_MAP_MISSING + currentPlace
           + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
     }
 
     if (checkDataMissing(period.getSumOfAllFundsInBaseCurrency())) {
-      validationsResult.add(SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING
+      validationsResult.add(SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING + currentPlace
           + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
     }
   }

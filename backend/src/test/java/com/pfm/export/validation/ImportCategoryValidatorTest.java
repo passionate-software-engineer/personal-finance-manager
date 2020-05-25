@@ -1,7 +1,6 @@
 package com.pfm.export.validation;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.params.provider.Arguments.*;
 
 import com.pfm.export.ExportResult;
 import com.pfm.export.ExportResult.ExportCategory;
@@ -34,20 +33,20 @@ class ImportCategoryValidatorTest {
   static Stream<Arguments> categoryValidate() {
     return Stream.of(
 
-        arguments(missingName(),
+        Arguments.arguments(missingName(),
             Collections.singletonList("Category name is missing")),
 
-        arguments(missingParentCategoryName(),
+        Arguments.arguments(missingParentCategoryName(),
             Collections.singletonList("CategoryName category has missing parent category name")),
 
-        arguments(missingPriority(),
+        Arguments.arguments(missingPriority(),
             Collections.singletonList("CategoryName category has missing priority")),
 
-        arguments(onlyName(),
+        Arguments.arguments(onlyName(),
             Arrays.asList("CategoryName category has missing parent category name",
                 "CategoryName category has missing priority")),
 
-        arguments(missingAllData(),
+        Arguments.arguments(missingAllData(),
             Collections.singletonList("Category name is missing"))
 
     );
