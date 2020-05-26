@@ -4,7 +4,9 @@ import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -68,11 +70,33 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
     doThrow(IllegalStateException.class).when(accountTypeService).deleteAccountType(accountTypeId);
 
     // when
-    assertThrows(IllegalStateException.class, () -> {
-      accountTypeController.deleteAccountType(accountTypeId);
-    });
+    assertThrows(IllegalStateException.class, () -> accountTypeController.deleteAccountType(accountTypeId));
 
     // then
     assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
+  }
+
+  @Test
+  void shouldRollbackTransactionWhenAccountTypeUpdateFailed() {
+    // given
+    AccountType accountType = accountInvestment();
+    final Long accountTypeId = accountTypeService.saveAccountType(userId, accountType).getId();
+
+    AccountType updatedAccountType = accountInvestment();
+    updatedAccountType.setName("updatedAccountTypeName");
+
+    doThrow(IllegalStateException.class).when(accountTypeService).updateAccountType(any(Long.class), any(Long.class), any(AccountType.class));
+
+    // when
+    try {
+      accountTypeController.updateAccountType(accountTypeId, convertAccountTypeToAccountTypeRequest(updatedAccountType));
+      fail();
+    } catch (IllegalStateException ex) {
+      assertNotNull(ex);
+    }
+
+    // then
+    assertThat(historyEntryService.getHistoryEntries(userId), hasSize(0));
+
   }
 }

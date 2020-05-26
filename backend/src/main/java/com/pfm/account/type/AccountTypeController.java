@@ -23,6 +23,22 @@ public class AccountTypeController implements AccountTypeApi {
   private final HistoryEntryService historyEntryService;
 
   @Override
+  public ResponseEntity<?> getAccountTypeById(@PathVariable long accountTypeId) {
+    long userId = userProvider.getCurrentUserId();
+
+    log.info("Retrieving account type with id: {}", accountTypeId);
+
+    Optional<AccountType> accountType = accountTypeService.getAccountTypeByIdAndUserId(accountTypeId, userId);
+
+    if (!accountType.isPresent()) {
+      log.info("Account type with id {} was not found", accountTypeId);
+      return ResponseEntity.notFound().build();
+    }
+    log.info("Account type with id {} was successfully retrieved", accountTypeId);
+    return ResponseEntity.ok(accountType.get());
+  }
+
+  @Override
   public ResponseEntity<List<AccountType>> getAccountTypes() {
     long userId = userProvider.getCurrentUserId();
 
@@ -77,6 +93,36 @@ public class AccountTypeController implements AccountTypeApi {
     accountTypeService.deleteAccountType(accountTypeId);
 
     log.info("Account type with id {} was deleted successfully", accountTypeId);
+
+    return ResponseEntity.ok().build();
+  }
+
+  @Override
+  @Transactional
+  public ResponseEntity<?> updateAccountType(@PathVariable long accountTypeId, @RequestBody AccountTypeRequest accountTypeRequest) {
+    long userId = userProvider.getCurrentUserId();
+
+    if (accountTypeService.getAccountTypeByIdAndUserId(accountTypeId, userId).isEmpty()) {
+      log.info("No account type with id {} was found, not able to update", accountTypeId);
+      return ResponseEntity.notFound().build();
+    }
+
+    AccountType accountType = convertAccountTypeRequestToAccountType(accountTypeRequest);
+
+    log.info("Updating account type with id {}", accountTypeId);
+    List<String> validationResult = accountTypeValidator.validateAccountTypeForUpdate(accountTypeId, userId, accountType);
+
+    if (!validationResult.isEmpty()) {
+      log.info("Account type is not valid {}", validationResult);
+      return ResponseEntity.badRequest().body(validationResult);
+    }
+
+    AccountType accountTypeToUpdate = accountTypeService.getAccountTypeByIdAndUserId(accountTypeId, userId).get();
+
+    historyEntryService.addHistoryEntryOnUpdate(accountTypeToUpdate, accountType, userId);
+    accountTypeService.updateAccountType(accountTypeId, userId, accountType);
+
+    log.info("Account type with id {} was successfully updated", accountTypeId);
 
     return ResponseEntity.ok().build();
   }

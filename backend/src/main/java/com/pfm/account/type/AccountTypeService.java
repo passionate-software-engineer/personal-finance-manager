@@ -37,6 +37,19 @@ public class AccountTypeService {
         .collect(Collectors.toList());
   }
 
+  public void updateAccountType(long accountTypeId, long userId, AccountType accountType) {
+    Optional<AccountType> accountTypeFromDb = getAccountTypeByIdAndUserId(accountTypeId, userId);
+
+    if (!accountTypeFromDb.isPresent()) {
+      throw new IllegalStateException("Account type with id: " + accountTypeId + " does not exist in database");
+    }
+
+    AccountType accountTypeToUpdate = accountTypeFromDb.get();
+    accountTypeToUpdate.setName(accountType.getName());
+
+    accountTypeRepository.save(accountTypeToUpdate);
+  }
+
   public AccountType saveAccountType(long userId, AccountType accountType) {
     accountType.setUserId(userId);
     return accountTypeRepository.save(accountType);

@@ -6,6 +6,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,22 @@ public class AccountTypeValidator {
     List<String> validationResults = validate(accountType);
     checkForDuplicatedName(userId, validationResults, accountType);
     return validationResults;
+  }
+
+  public List<String> validateAccountTypeForUpdate(long id, long userId, AccountType accountType) {
+    Optional<AccountType> accountTypeToUpdate = accountTypeService.getAccountTypeByIdAndUserId(id, userId);
+
+    if (!accountTypeToUpdate.isPresent()) {
+      throw new IllegalStateException("Account type with id: " + id + " does not exist in database");
+    }
+
+    // it's ok when we keep name in updated account type, it's not duplicate
+    if (accountTypeToUpdate.get().getName().equals(accountType.getName())) {
+      return validate(accountType);
+    }
+
+    // it's not ok if account type is duplicating name of other account
+    return validateAccountTypeIncludingNameDuplication(userId, accountType);
   }
 
   private void checkForDuplicatedName(long userId, List<String> validationResults, AccountType accountType) {

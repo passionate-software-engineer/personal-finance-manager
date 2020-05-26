@@ -3,16 +3,19 @@ package com.pfm.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
+import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.pfm.account.Account;
 import com.pfm.account.type.AccountType;
 import com.pfm.account.type.AccountTypeRequest;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -32,6 +35,33 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
   public void setUp() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
     token = callRestToAuthenticateUserAndReturnToken(userMarian());
+  }
+
+  @Test
+  public void shouldGetAccountTypeById() throws Exception {
+
+    // given
+    AccountType accountType = AccountType.builder().name("AccountInvestment").build();
+
+    // when
+    String response =
+        mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountType)))
+            .andExpect(status().isOk()).andReturn()
+            .getResponse().getContentAsString();
+
+    // then
+    Long accountTypeId = Long.parseLong(response);
+    mockMvc
+        .perform(get(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
+            .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].id", is(accountTypeId.intValue())))
+        .andExpect(jsonPath("$.name", is(accountType.getName())))
+        .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
   @Test
@@ -149,5 +179,25 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
     mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
         .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void shouldReturnErrorCauseByNotValidAccountTypeUpdateMethod() throws Exception {
+    // given
+    AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
+
+    long accountTypeId = callRestServiceToAddAccountTypeAndReturnId(accountTypeRequest, token);
+    AccountTypeRequest accountTypeToUpdate = AccountTypeRequest.builder()
+        .name("")
+        .build();
+
+    // when
+    mockMvc
+        .perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountTypeToUpdate)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_TYPE_NAME))));
   }
 }
