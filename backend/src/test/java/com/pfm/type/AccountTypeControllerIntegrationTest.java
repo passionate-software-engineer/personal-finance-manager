@@ -3,7 +3,6 @@ package com.pfm.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -15,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.pfm.account.Account;
 import com.pfm.account.type.AccountType;
 import com.pfm.account.type.AccountTypeRequest;
 import com.pfm.helpers.IntegrationTestsBase;
@@ -59,7 +57,6 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
             .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].id", is(accountTypeId.intValue())))
         .andExpect(jsonPath("$.name", is(accountType.getName())))
         .andExpect(jsonPath("$.userId").doesNotExist());
   }
