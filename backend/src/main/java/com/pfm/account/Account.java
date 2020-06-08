@@ -46,13 +46,14 @@ public final class Account {
   private AccountType type;
 
   @ApiModelProperty(value = "Account's last verification date", example = "2019-01-31")
+  @HistoryField
   private LocalDate lastVerificationDate;
 
   @JsonIgnore
   private Long userId;
 
-  @HistoryField
   @ApiModelProperty(value = "Information if account is archived", example = "false")
+  @HistoryField
   private boolean archived;
 
 }

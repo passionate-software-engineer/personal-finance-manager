@@ -41,6 +41,7 @@ import com.pfm.transaction.TransactionController.CommitResult;
 import com.pfm.transaction.TransactionRequest;
 import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -134,6 +135,7 @@ public abstract class IntegrationTestsBase {
         .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
+        .lastVerificationDate(LocalDate.now())
         .build();
   }
 

@@ -112,6 +112,7 @@ public class TransactionService {
         .balance(newBalance)
         .currency(account.getCurrency())
         .type(account.getType())
+        .lastVerificationDate(account.getLastVerificationDate())
         .build();
 
     if (!addHistoryEntryOnUpdate) {

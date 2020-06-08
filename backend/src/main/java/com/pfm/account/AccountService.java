@@ -1,5 +1,6 @@
 package com.pfm.account;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,7 @@ public class AccountService {
     accountToUpdate.setBalance(account.getBalance());
     accountToUpdate.setCurrency(account.getCurrency());
     accountToUpdate.setType(account.getType());
+    accountToUpdate.setLastVerificationDate(LocalDate.now());
 
     accountRepository.save(accountToUpdate);
   }
