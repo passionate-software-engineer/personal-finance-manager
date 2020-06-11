@@ -43,7 +43,7 @@ public class FilterService {
     filterToUpdate.setPriceTo(filter.getPriceTo());
     filterToUpdate.setDescription(filter.getDescription());
     filterToUpdate.setName(filter.getName());
-
+    filterToUpdate.setIsDefault(filter.getIsDefault());
     filterRepository.save(filterToUpdate);
   }
 
@@ -63,5 +63,16 @@ public class FilterService {
 
   public boolean filterExistByCategoryId(long categoryId) {
     return filterRepository.existsByCategoryIdsContains(categoryId);
+  }
+
+  public void checkAnyFilterIsDefault(List<Filter> loadFiltersList) {
+    for (Filter filter : loadFiltersList)
+    {
+      if (filter.getIsDefault()) {
+        filter.setIsDefault(false);
+        filterRepository.save(filter);
+        break;
+      }
+    }
   }
 }
