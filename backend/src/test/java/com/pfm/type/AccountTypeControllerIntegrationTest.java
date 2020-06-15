@@ -3,7 +3,9 @@ package com.pfm.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
+import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -196,6 +198,76 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
             .content(json(accountTypeToUpdate)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_TYPE_NAME))));
+  }
+
+  @Test
+  public void shouldReturnErrorCauseByNotExistingIdInUpdateMethod() throws Exception {
+    // when
+    mockMvc
+        .perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertAccountTypeToAccountTypeRequest(accountInvestment()))))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldUpdateAccountType() throws Exception {
+    // given
+    AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
+
+    long accountTypeId = callRestServiceToAddAccountTypeAndReturnId(accountTypeRequest, token);
+
+    AccountTypeRequest accountTypeToUpdate = AccountTypeRequest.builder()
+        .name("AccountCredit")
+        .build();
+
+    // when
+    mockMvc.perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(accountTypeToUpdate)))
+        .andExpect(status().isOk());
+
+    // then
+    mockMvc.perform(get(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.name", is(accountTypeToUpdate.getName())))
+        .andExpect(jsonPath("$.userId").doesNotExist());
+  }
+
+  @Test
+  public void shouldReturnErrorCausedByNotExistingId() throws Exception {
+    // when
+    mockMvc
+        .perform(get(ACCOUNT_TYPE_SERVICE_PATH + "/" + NOT_EXISTING_ID)
+            .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldUpdateAccountWithUpdatedAccountSameNameAsBefore() throws Exception {
+    // given
+    AccountTypeRequest accountTypeRequest = AccountTypeRequest.builder().name("AccountInvestment").build();
+
+    long accountTypeId = callRestServiceToAddAccountTypeAndReturnId(accountTypeRequest, token);
+    AccountTypeRequest updatedAccountType = AccountTypeRequest.builder()
+        .name(accountTypeRequest.getName()).build();
+
+    mockMvc.perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(JSON_CONTENT_TYPE)
+        .content(json(updatedAccountType)))
+        .andExpect(status().isOk());
+
+    mockMvc.perform(get(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(jsonPath("$.name", is(equalTo(updatedAccountType.getName()))))
+        .andExpect(jsonPath("$.userId").doesNotExist());
   }
 
 }

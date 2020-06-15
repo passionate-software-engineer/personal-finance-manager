@@ -45,7 +45,7 @@ public class AccountTypeValidatorTest {
         accountTypeValidator.validateAccountTypeForUpdate(id, MOCK_USER_ID, new AccountType()));
 
     // then
-    assertThat(exception.getMessage(), is(equalTo("Account Type with id: " + id + " does not exist in database")));
+    assertThat(exception.getMessage(), is(equalTo("Account type with id: " + id + " does not exist in database")));
   }
 
   @Test
@@ -59,7 +59,7 @@ public class AccountTypeValidatorTest {
     List<String> result = accountTypeValidator.validateAccountTypeForUpdate(id, MOCK_USER_ID, accountType);
 
     // then
-    assertThat(result.size(), is(2));
+    assertThat(result.size(), is(1));
     assertThat(result.get(0), is(equalTo(getMessage(EMPTY_ACCOUNT_TYPE_NAME))));
   }
 

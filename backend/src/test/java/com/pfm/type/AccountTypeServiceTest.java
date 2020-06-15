@@ -70,4 +70,19 @@ class AccountTypeServiceTest {
     assertThat(actualAccountType.getName(), is(equalTo(accountType.getName())));
   }
 
+  @Test
+  public void shouldThrowExceptionCausedByIdNotExistInUpdateMethod() {
+    // given
+    long id = 1;
+    when(accountTypeRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
+
+    // when
+    Throwable exception = assertThrows(IllegalStateException.class, () -> {
+      accountTypeService.updateAccountType(id, MOCK_USER_ID, accountInvestment());
+    });
+
+    // then
+    assertThat(exception.getMessage(), is("Account type with id: " + id + " does not exist in database"));
+  }
+
 }
