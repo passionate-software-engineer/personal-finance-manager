@@ -161,5 +161,4 @@ class AccountTypeServiceTest {
     verify(accountTypeRepository).findByIdAndUserId(accountType.getId(), MOCK_USER_ID);
     verify(accountTypeRepository).save(accountType);
   }
-
 }
