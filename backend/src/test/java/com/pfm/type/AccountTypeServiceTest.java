@@ -8,8 +8,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.pfm.account.type.AccountType;
@@ -115,6 +118,48 @@ class AccountTypeServiceTest {
     AccountType accountType2 = actualAccountTypesList.get(1);
     assertThat(accountType2.getId(), is(equalTo(accountTypeInvestment.getId())));
     assertThat(accountType2.getName(), is(equalTo(accountTypeInvestment.getName())));
+  }
+
+  @Test
+  public void shouldSaveAccountType() {
+    // given
+    AccountType accountTypeToSave = accountInvestment();
+    accountTypeToSave.setId(1L);
+    when(accountTypeRepository.save(accountTypeToSave)).thenReturn(accountTypeToSave);
+
+    // when
+    AccountType accountType = accountTypeService.saveAccountType(MOCK_USER_ID, accountTypeToSave);
+
+    // then
+    assertNotNull(accountType);
+    assertThat(accountType.getId(), is(equalTo(accountTypeToSave.getId())));
+    assertThat(accountType.getName(), is(equalTo(accountTypeToSave.getName())));
+  }
+
+  @Test
+  public void shouldDeleteAccountType() {
+    // given
+
+    // when
+    accountTypeService.deleteAccountType(1L);
+
+    // then
+    verify(accountTypeRepository, times(1)).deleteById(1L);
+  }
+
+  @Test
+  public void shouldUpdateAccountType() {
+    // given
+    AccountType accountType = accountInvestment();
+    when(accountTypeRepository.findByIdAndUserId(accountType.getId(), MOCK_USER_ID)).thenReturn(Optional.of(accountType));
+    when(accountTypeRepository.save(accountType)).thenReturn(accountType);
+
+    // when
+    accountTypeService.updateAccountType(accountType.getId(), MOCK_USER_ID, accountType);
+
+    // then
+    verify(accountTypeRepository).findByIdAndUserId(accountType.getId(), MOCK_USER_ID);
+    verify(accountTypeRepository).save(accountType);
   }
 
 }
