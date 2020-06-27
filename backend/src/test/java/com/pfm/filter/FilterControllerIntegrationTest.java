@@ -33,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -230,6 +231,35 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     final Filter expectedFilter = convertFilterRequestToFilterAndSetId(filterCarExpensesId,
         filterCarExpensesToUpdate);
     assertThat(updatedFilter, is(equalTo(expectedFilter)));
+  }
+
+  @Test
+  public void shouldChangeFilterDefault() throws Exception {
+    //given
+    Filter filterCurrentlySetDefault = filterIsDefault();
+    Filter filterCurrentlySetNotDefault = filterIsNotDefault();
+
+    long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
+
+    long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+    long SetfilterSetDefaultId = callRestServiceToAddFilterAndReturnId(filterCurrentlySetDefault, token);
+    long SetNotDefaultId = callRestServiceToAddFilterAndReturnId(filterCurrentlySetNotDefault, token);
+    FilterRequest filterSetNotDefaultToSetDefault = FilterRequest.builder()
+        .name("Food")
+        .categoryIds(new ArrayList<>())
+        .accountIds(new ArrayList<>())
+        .isDefault(true)
+        .build();
+    //when
+    callRestServiceToUpdateFilter(SetNotDefaultId, filterSetNotDefaultToSetDefault, token);
+    //then
+    Filter updatedFilter = getFilterById(SetNotDefaultId, token);
+    Filter changedFilter = getFilterById(SetfilterSetDefaultId, token);
+    assertThat(updatedFilter.getIsDefault(), is(true));
+    assertThat(changedFilter.getIsDefault(), is(false));
   }
 
   @Test

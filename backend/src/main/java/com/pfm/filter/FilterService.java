@@ -43,6 +43,9 @@ public class FilterService {
     filterToUpdate.setPriceTo(filter.getPriceTo());
     filterToUpdate.setDescription(filter.getDescription());
     filterToUpdate.setName(filter.getName());
+    if (filter.getIsDefault() && !filterToUpdate.getIsDefault()) {
+      checkAnyFilterIsDefault(getAllFilters(userId));
+    }
     filterToUpdate.setIsDefault(filter.getIsDefault());
     filterRepository.save(filterToUpdate);
   }
