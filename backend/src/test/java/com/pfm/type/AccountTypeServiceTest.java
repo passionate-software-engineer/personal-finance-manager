@@ -2,8 +2,8 @@ package com.pfm.type;
 
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountTypeProvider.accountCredit;
-import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
+import static com.pfm.helpers.TestAccountTypeProvider.accountTypeCredit;
+import static com.pfm.helpers.TestAccountTypeProvider.accountTypeInvestment;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,7 +58,7 @@ class AccountTypeServiceTest {
   @Test
   public void shouldGetAccountTypeById() {
     // given
-    AccountType accountType = accountInvestment();
+    AccountType accountType = accountTypeInvestment();
     accountType.setId(1L);
 
     when(accountTypeRepository.findByIdAndUserId(accountType.getId(), MOCK_USER_ID))
@@ -85,7 +85,7 @@ class AccountTypeServiceTest {
 
     // when
     Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      accountTypeService.updateAccountType(id, MOCK_USER_ID, accountInvestment());
+      accountTypeService.updateAccountType(id, MOCK_USER_ID, accountTypeInvestment());
     });
 
     // then
@@ -95,9 +95,9 @@ class AccountTypeServiceTest {
   @Test
   public void shouldGetAllAccountTypes() {
     // given
-    AccountType accountTypeCredit = accountCredit();
+    AccountType accountTypeCredit = accountTypeCredit();
     accountTypeCredit.setId(1L);
-    AccountType accountTypeInvestment = accountInvestment();
+    AccountType accountTypeInvestment = accountTypeInvestment();
     accountTypeInvestment.setId(2L);
 
     when(accountTypeRepository.findByUserId(MOCK_USER_ID)).thenReturn(Arrays.asList(accountTypeCredit, accountTypeInvestment));
@@ -123,7 +123,7 @@ class AccountTypeServiceTest {
   @Test
   public void shouldSaveAccountType() {
     // given
-    AccountType accountTypeToSave = accountInvestment();
+    AccountType accountTypeToSave = accountTypeInvestment();
     accountTypeToSave.setId(1L);
     when(accountTypeRepository.save(accountTypeToSave)).thenReturn(accountTypeToSave);
 
@@ -150,7 +150,7 @@ class AccountTypeServiceTest {
   @Test
   public void shouldUpdateAccountType() {
     // given
-    AccountType accountType = accountInvestment();
+    AccountType accountType = accountTypeInvestment();
     when(accountTypeRepository.findByIdAndUserId(accountType.getId(), MOCK_USER_ID)).thenReturn(Optional.of(accountType));
     when(accountTypeRepository.save(accountType)).thenReturn(accountType);
 

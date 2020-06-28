@@ -3,7 +3,7 @@ package com.pfm.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
+import static com.pfm.helpers.TestAccountTypeProvider.accountTypeInvestment;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -39,7 +39,6 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
   @Test
   public void shouldGetAccountTypeById() throws Exception {
-
     // given
     AccountType accountType = AccountType.builder().name("AccountInvestment").build();
 
@@ -207,7 +206,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         .perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + NOT_EXISTING_ID)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE)
-            .content(json(convertAccountTypeToAccountTypeRequest(accountInvestment()))))
+            .content(json(convertAccountTypeToAccountTypeRequest(accountTypeInvestment()))))
         .andExpect(status().isNotFound());
   }
 

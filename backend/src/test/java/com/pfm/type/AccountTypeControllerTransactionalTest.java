@@ -1,6 +1,6 @@
 package com.pfm.type;
 
-import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
+import static com.pfm.helpers.TestAccountTypeProvider.accountTypeInvestment;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -48,7 +48,7 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
   @Test
   void shouldRollbackTransactionWhenAccountTypeAddFailed() {
     // given
-    AccountType accountType = accountInvestment();
+    AccountType accountType = accountTypeInvestment();
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnAdd(any(Object.class), any(Long.class));
 
     // when
@@ -63,7 +63,7 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
   @Test
   void shouldRollbackTransactionWhenAccountTypeDeleteFailed() {
     // given
-    AccountType accountType = accountInvestment();
+    AccountType accountType = accountTypeInvestment();
     final Long accountTypeId = accountTypeService.saveAccountType(userId, accountType).getId();
 
     doThrow(IllegalStateException.class).when(historyEntryService).addHistoryEntryOnDelete(any(Object.class), any(Long.class));
@@ -79,10 +79,10 @@ class AccountTypeControllerTransactionalTest extends IntegrationTestsBase {
   @Test
   void shouldRollbackTransactionWhenAccountTypeUpdateFailed() {
     // given
-    AccountType accountType = accountInvestment();
+    AccountType accountType = accountTypeInvestment();
     final Long accountTypeId = accountTypeService.saveAccountType(userId, accountType).getId();
 
-    AccountType updatedAccountType = accountInvestment();
+    AccountType updatedAccountType = accountTypeInvestment();
     updatedAccountType.setName("updatedAccountTypeName");
 
     doThrow(IllegalStateException.class).when(accountTypeService).updateAccountType(any(Long.class), any(Long.class), any(AccountType.class));

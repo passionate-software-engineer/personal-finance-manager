@@ -43,7 +43,7 @@ public class AccountTypeValidator {
       return validate(accountType);
     }
 
-    // it's not ok if account type is duplicating name of other account
+    // it's not ok if account type is duplicating name of other account type
     return validateAccountTypeIncludingNameDuplication(userId, accountType);
   }
 

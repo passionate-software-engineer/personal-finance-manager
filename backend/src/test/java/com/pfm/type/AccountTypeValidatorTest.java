@@ -3,7 +3,7 @@ package com.pfm.type;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_TYPE_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
-import static com.pfm.helpers.TestAccountTypeProvider.accountInvestment;
+import static com.pfm.helpers.TestAccountTypeProvider.accountTypeInvestment;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -52,7 +52,7 @@ public class AccountTypeValidatorTest {
   public void shouldReturnValidationErrorIfAccountTypeNameIsEmpty() {
     // given
     long id = 10L;
-    when(accountTypeService.getAccountTypeByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(accountInvestment()));
+    when(accountTypeService.getAccountTypeByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.of(accountTypeInvestment()));
     AccountType accountType = AccountType.builder().id(id).name("").build();
 
     // when
@@ -66,10 +66,10 @@ public class AccountTypeValidatorTest {
   @Test
   public void shouldNotFindDuplicateWhenNoOtherAccountTypeExists() {
     // given
-    when(accountTypeService.isAccountTypeNameAlreadyUsed(MOCK_USER_ID, accountInvestment().getName())).thenReturn(true);
+    when(accountTypeService.isAccountTypeNameAlreadyUsed(MOCK_USER_ID, accountTypeInvestment().getName())).thenReturn(true);
 
     // when
-    List<String> result = accountTypeValidator.validateAccountTypeIncludingNameDuplication(MOCK_USER_ID, accountInvestment());
+    List<String> result = accountTypeValidator.validateAccountTypeIncludingNameDuplication(MOCK_USER_ID, accountTypeInvestment());
 
     // then
     assertThat(result.size(), is(1));

@@ -33,7 +33,6 @@ public interface AccountTypeApi {
       @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
       @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
   })
-
   @GetMapping(value = "/{accountTypeId}")
   ResponseEntity<?> getAccountTypeById(@PathVariable long accountId);
 
@@ -42,8 +41,6 @@ public interface AccountTypeApi {
       @ApiResponse(code = 200, message = OK_MESSAGE, response = AccountType.class, responseContainer = CONTAINER_LIST),
       @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
   })
-
-
   @GetMapping
   ResponseEntity<List<AccountType>> getAccountTypes();
 
@@ -53,7 +50,6 @@ public interface AccountTypeApi {
       @ApiResponse(code = 400, message = BAD_REQUEST_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
       @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
   })
-
   @PostMapping
   ResponseEntity<?> addAccountType(AccountTypeRequest accountTypeRequest);
 
@@ -64,7 +60,6 @@ public interface AccountTypeApi {
       @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
       @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
   })
-
   @PutMapping(value = "/{accountTypeId}")
   ResponseEntity<?> updateAccountType(@PathVariable long accountTypeId, AccountTypeRequest accountTypeRequest);
 
@@ -74,7 +69,6 @@ public interface AccountTypeApi {
       @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = String.class),
       @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE),
   })
-
   @DeleteMapping(value = "/{accountTypeId}")
   ResponseEntity<?> deleteAccountType(@PathVariable long accountTypeId);
 

@@ -73,5 +73,4 @@ public interface CategoryApi {
   })
   @DeleteMapping(value = "/{categoryId}")
   ResponseEntity<?> deleteCategory(@PathVariable long categoryId);
-
 }
