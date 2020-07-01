@@ -59,7 +59,7 @@ jobs:
         EC2_INSTANCE: ec2-18-184-186-168.eu-central-1.compute.amazonaws.com
       run: |
           ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
-          ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "[ ! -e 'jdk' ] && wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz && mkdir jdk && tar -C jdk -xvf OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz --strip-components=1 && export JAVA_HOME=/home/ec2-user/jdk"
+          ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "[ ! -e 'jdk' ] && wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz && mkdir jdk && tar -C jdk -xvf OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz --strip-components=1 && export JAVA_HOME=/home/ec2-user/jdk && export PATH=$JAVA_HOME/bin:$PATH"
           scp -i /github/home/.ssh/id_rsa backend/build/libs/backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
           scp -i /github/home/.ssh/id_rsa scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
           ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
