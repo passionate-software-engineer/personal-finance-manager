@@ -56,7 +56,7 @@ jobs:
    
     - name: Deploy backend
       env:
-        EC2_INSTANCE: ec2-3-121-199-74.eu-central-1.compute.amazonaws.com
+        EC2_INSTANCE: ec2-18-184-186-168.eu-central-1.compute.amazonaws.com
       run: |
           ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
           ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "[ ! -e 'jdk' ] && wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz && mkdir jdk && tar -C jdk -xvf OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz --strip-components=1 && export JAVA_HOME=/home/ec2-user/jdk"
@@ -82,9 +82,9 @@ jobs:
 #         pip3 install awscli --upgrade --user
 #         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
         
-    - name: Run E2E tests on AWS
-      env: 
-        APP_URL: https://pfm.passionatesoftwareengineer.com
-      run: |
-           webdriver-manager update
-           protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
+#     - name: Run E2E tests on AWS
+#       env: 
+#         APP_URL: https://pfm.passionatesoftwareengineer.com
+#       run: |
+#            webdriver-manager update
+#            protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
