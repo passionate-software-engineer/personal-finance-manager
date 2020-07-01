@@ -19,11 +19,11 @@ jobs:
       with:
         java-version: 1.13
     
-#     - name: Build backend
-#       run: |
-#           cd backend
-#           chmod +x gradlew
-#           ./gradlew build -x generateGitProperties
+    - name: Build backend
+      run: |
+          cd backend
+          chmod +x gradlew
+          ./gradlew build -x generateGitProperties
     
 #     - name: Archive backend artifacts
 #       uses: actions/upload-artifact@v1
@@ -47,23 +47,24 @@ jobs:
 #     - name: Run E2E tests
 #       run: ./scripts/run_e2e.sh
 
-#     - name: Install SSH key
-#       uses: shimataro/ssh-key-action@v2
-#       with:
-#         key: ${{ secrets.AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER }}
-#         name: id_rsa
-#         known_hosts: ${{ secrets.KNOWN_HOSTS }}   
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.AWS_PRIVATE_KEY_PASSIONATE_SOFTWARE_ENGINEER }}
+        name: id_rsa
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}   
    
-#     - name: Deploy backend
-#       env:
-#         EC2_INSTANCE: ec2-18-184-186-168.eu-central-1.compute.amazonaws.com
-#       run: |
-#           ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
-#           #ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "[ ! -e 'jdk' ] && wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz && mkdir jdk && tar -C jdk -xvf OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz --strip-components=1 && echo 'export JAVA_HOME=/home/ec2-user/jdk' >> .bash_profile && echo 'PATH=$JAVA_HOME/bin:$PATH' >> .bash_profile"
-#           scp -i /github/home/.ssh/id_rsa backend/build/libs/backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
-#           scp -i /github/home/.ssh/id_rsa scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
-#           ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
-#           ./scripts/wait_until_app_is_ready.sh $EC2_INSTANCE
+    - name: Deploy backend
+      env:
+        EC2_INSTANCE: ec2-18-184-186-168.eu-central-1.compute.amazonaws.com
+      run: |
+          ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
+          # TODO improve it to allow app to be started in brand new EC2 instance
+          # ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "[ ! -e 'jdk' ] && wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz && mkdir jdk && tar -C jdk -xvf OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz --strip-components=1 && echo 'export JAVA_HOME=/home/ec2-user/jdk' >> .bash_profile && echo 'PATH=$JAVA_HOME/bin:$PATH' >> .bash_profile"
+          scp -i /github/home/.ssh/id_rsa backend/build/libs/backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
+          scp -i /github/home/.ssh/id_rsa scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
+          ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
+          ./scripts/wait_until_app_is_ready.sh $EC2_INSTANCE
           
     - name: Deploy frontend # TODO simplify it by fixing aws-cli installation in docker image
       env:
