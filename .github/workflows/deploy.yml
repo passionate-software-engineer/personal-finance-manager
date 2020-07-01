@@ -69,7 +69,7 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        APP_S3_BUCKET: s3://pfm.passionatesoftwareengineer.com
+        APP_S3_BUCKET: s3://pfm-2
       run: |
         cd frontend
         ng build --configuration=aws
