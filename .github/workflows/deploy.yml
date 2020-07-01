@@ -36,16 +36,16 @@ jobs:
       with:
         node-version: 12.x
     
-    - name: Build frontend
-      run: |
-          cd frontend 
-          npm install
-          npm install -g tslint typescript @angular/cli protractor protractor-retry
-          tslint --config tslint.json --project tsconfig.json
-          ng build
+#     - name: Build frontend
+#       run: |
+#           cd frontend 
+#           npm install
+#           npm install -g tslint typescript @angular/cli protractor protractor-retry
+#           tslint --config tslint.json --project tsconfig.json
+#           ng build
       
-    - name: Run E2E tests
-      run: ./scripts/run_e2e.sh
+#     - name: Run E2E tests
+#       run: ./scripts/run_e2e.sh
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -64,22 +64,22 @@ jobs:
           ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
           ./scripts/wait_until_app_is_ready.sh $EC2_INSTANCE
           
-    - name: Deploy frontend # TODO simplify it by fixing aws-cli installation in docker image
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        APP_S3_BUCKET: s3://pfm.passionatesoftwareengineer.com
-      run: |
-        cd frontend
-        ng build --configuration=aws
-        cd dist/frontend
+#     - name: Deploy frontend # TODO simplify it by fixing aws-cli installation in docker image
+#       env:
+#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         APP_S3_BUCKET: s3://pfm.passionatesoftwareengineer.com
+#       run: |
+#         cd frontend
+#         ng build --configuration=aws
+#         cd dist/frontend
         
-        curl -O https://bootstrap.pypa.io/get-pip.py
-        python3 get-pip.py --user
-        export PATH=/root/.local/bin:$PATH
-        pip3 uninstall awscli
-        pip3 install awscli --upgrade --user
-        aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
+#         curl -O https://bootstrap.pypa.io/get-pip.py
+#         python3 get-pip.py --user
+#         export PATH=/root/.local/bin:$PATH
+#         pip3 uninstall awscli
+#         pip3 install awscli --upgrade --user
+#         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
         
     - name: Run E2E tests on AWS
       env: 
