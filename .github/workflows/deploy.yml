@@ -44,8 +44,8 @@ jobs:
           tslint --config tslint.json --project tsconfig.json
           ng build
       
-    - name: Run E2E tests
-      run: ./scripts/run_e2e.sh
+#     - name: Run E2E tests
+#       run: ./scripts/run_e2e.sh
 
 #     - name: Install SSH key
 #       uses: shimataro/ssh-key-action@v2
