@@ -39,8 +39,8 @@ jobs:
     - name: Build frontend
       run: |
           cd frontend 
-          npm install
-          npm install -g tslint typescript @angular/cli protractor protractor-retry
+          sudo npm install
+          sudo npm install -g tslint typescript @angular/cli protractor protractor-retry
           tslint --config tslint.json --project tsconfig.json
           ng build
       
