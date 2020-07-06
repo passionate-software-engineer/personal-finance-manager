@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -122,6 +123,7 @@ public class AccountServiceTest {
     Account updatedAccount = Account.builder()
         .balance(BigDecimal.TEN)
         .name("Zaskurniaki")
+        .lastVerificationDate(LocalDate.now())
         .build();
 
     when(accountRepository.findByIdAndUserId(1L, MOCK_USER_ID)).thenReturn(Optional.of(accountMbankBalance10()));

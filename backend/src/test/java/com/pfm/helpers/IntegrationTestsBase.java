@@ -1,5 +1,6 @@
 package com.pfm.helpers;
 
+import static com.pfm.account.AccountControllerIntegrationTest.MARK_ACCOUNT_AS_VERIFIED_TODAY;
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
@@ -40,6 +41,7 @@ import com.pfm.transaction.TransactionController.CommitResult;
 import com.pfm.transaction.TransactionRequest;
 import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -133,6 +135,7 @@ public abstract class IntegrationTestsBase {
         .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
+        .lastVerificationDate(LocalDate.now())
         .build();
   }
 
@@ -177,6 +180,14 @@ public abstract class IntegrationTestsBase {
             .contentType(JSON_CONTENT_TYPE)
         )
         .andExpect(status().isOk());
+  }
+
+  protected int callRestToMarkAccountAsVerifiedToday(long accountId, String token) throws Exception {
+    return mockMvc.perform(
+        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_ACCOUNT_AS_VERIFIED_TODAY)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
   }
 
   protected int callRestToMarkAccountAsArchived(long accountId) throws Exception {

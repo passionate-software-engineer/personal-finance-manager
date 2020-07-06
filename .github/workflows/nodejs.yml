@@ -11,7 +11,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: piokol/pfm:19 
+    container: piokol/pfm:19
 
     timeout-minutes: 25
 

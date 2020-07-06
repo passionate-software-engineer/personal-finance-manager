@@ -142,7 +142,7 @@ public class AccountController implements AccountApi {
 
     accountService.saveAccount(userId, account);
 
-    // TODO add history entry on confirming account state
+    historyEntryService.addHistoryEntryOnUpdate(account, account, userId);
 
     return ResponseEntity.ok().build();
   }
@@ -214,7 +214,7 @@ public class AccountController implements AccountApi {
         .balance(accountToUpdate.getBalance())
         .currency(accountToUpdate.getCurrency())
         .type(accountToUpdate.getType())
-        .lastVerificationDate(accountToUpdate.getLastVerificationDate())
+        .lastVerificationDate(LocalDate.now())
         .archived(archive ? SET_ACCOUNT_AS_ARCHIVED : SET_ACCOUNT_AS_ACTIVE)
         .build();
   }
@@ -225,6 +225,7 @@ public class AccountController implements AccountApi {
         .balance(accountRequest.getBalance())
         .currency(currencyService.getCurrencyByIdAndUserId(accountRequest.getCurrencyId(), userId))
         .type(accountTypeService.getAccountTypeByIdAndUserId(accountRequest.getAccountTypeId(), userId))
+        .lastVerificationDate(LocalDate.now())
         .build();
   }
 
