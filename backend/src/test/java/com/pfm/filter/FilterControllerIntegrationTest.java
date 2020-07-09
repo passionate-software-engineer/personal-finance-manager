@@ -89,6 +89,40 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldAddFilterWithSettingDefault() throws Exception {
+    // given
+    Filter filterSetDefault1 = filterHomeExpensesUpTo200();
+    Filter filterSetDefault2 = filterIsDefault();
+    assertThat(filterSetDefault1.getIsDefault(), is(true));
+
+    Long categoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
+
+    Account account = accountJacekBalance1000();
+    account.setCurrency(currencyService.getCurrencies(userId).get(2));
+    account.setType(accountTypeService.getAccountTypes(userId).get(2));
+
+    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
+
+    FilterRequest firstFilterToAdd = convertFilterToFilterRequest(filterSetDefault1);
+    firstFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
+    firstFilterToAdd.setAccountIds(convertIdsToList(accountId));
+
+    FilterRequest secondFilterToAdd = convertFilterToFilterRequest(filterSetDefault2);
+    secondFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
+    secondFilterToAdd.setAccountIds(convertIdsToList(accountId));
+
+    // when
+    Long firstFilterId = callRestServiceToAddFilterAndReturnId(firstFilterToAdd, token);
+    Long secondFilterId = callRestServiceToAddFilterAndReturnId(secondFilterToAdd, token);
+
+    // then
+    Filter filter1 = getFilterById(firstFilterId, token);
+    Filter filter2 = getFilterById(secondFilterId, token);
+    assertThat(filter1.getIsDefault(), is(false));
+    assertThat(filter2.getIsDefault(), is(true));
+  }
+
+  @Test
   public void shouldGetFilterById() throws Exception {
     // given
 

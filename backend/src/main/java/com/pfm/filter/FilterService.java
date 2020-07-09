@@ -15,6 +15,9 @@ public class FilterService {
 
   public Filter addFilter(long userId, Filter filter) {
     filter.setUserId(userId);
+    if (filter.getIsDefault()) {
+      checkAnyFilterIsDefault(getAllFilters(userId));
+    }
     return filterRepository.save(filter);
   }
 
