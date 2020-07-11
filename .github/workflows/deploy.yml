@@ -14,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Set up JDK 1.13
+    - name: Set up JDK 1.14
       uses: actions/setup-java@v1
       with:
-        java-version: 1.13
+        java-version: 1.14
     
     - name: Build backend
       run: |
@@ -85,9 +85,10 @@ jobs:
         pip3 install awscli --upgrade --user
         aws s3 cp --recursive --acl "public-read" . $APP_S3_BUCKET
         
-#     - name: Run E2E tests on AWS
-#       env: 
-#         APP_URL: https://pfm.passionatesoftwareengineer.com
-#       run: |
-#            webdriver-manager update
-#            protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
+    - name: Run E2E tests on AWS
+      env: 
+        APP_URL: https://pfm.passionatesoftwareengineer.com
+      run: |
+           webdriver-manager update
+           sudo apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install google-chrome-stable
+           protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL
