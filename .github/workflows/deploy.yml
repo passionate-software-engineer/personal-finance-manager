@@ -87,7 +87,7 @@ jobs:
         
     - name: Run E2E tests on AWS
       env: 
-        APP_URL: https://pfm.passionatesoftwareengineer.com
+        APP_URL: http://pfm-2.passionatesoftwareengineer.com
       run: |
            webdriver-manager update
            sudo apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install google-chrome-stable
