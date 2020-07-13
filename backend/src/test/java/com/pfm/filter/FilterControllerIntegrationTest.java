@@ -84,7 +84,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     Filter actualFilter = getFilterById(filterId, token);
     assertThat(actualFilter, is(equalTo(expectedFilter)));
-    assertThat(actualFilter.getIsDefault(), is(expectedFilter.getIsDefault()));
+    assertThat(actualFilter.isDefault(), is(expectedFilter.isDefault()));
   }
 
   @Test
@@ -196,8 +196,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @SuppressWarnings("unused")
   private static Collection<Object[]> updateFilterParameters() {
     return Arrays.asList(new Object[][] {
-        {filterIsDefault().getIsDefault(), filterCarExpenses()},
-        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
+        {filterIsDefault().isDefault(), filterCarExpenses()},
+        {filterIsNotDefault().isDefault(), filterCarExpensesWithoutSettingDefault()}
     });
   }
 

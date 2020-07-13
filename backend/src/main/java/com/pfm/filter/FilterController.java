@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FilterController implements FilterApi {
 
+  private static final boolean SET_FILTER_AS_DEFAULT = true;
+  private static final boolean SET_FILTER_AS_NOT_DEFAULT = false;
+
   private FilterService filterService;
   private FilterValidator filterValidator;
   private UserProvider userProvider;
@@ -32,7 +35,7 @@ public class FilterController implements FilterApi {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
-        .isDefault(filterRequest.getIsDefault())
+        .isDefault(filterRequest.isDefault())
         .build();
   }
 
@@ -124,5 +127,65 @@ public class FilterController implements FilterApi {
     filterService.deleteFilter(filterId);
 
     return ResponseEntity.ok().build();
+  }
+
+  @Override
+  // FIXME lukasz below methods can - common part can be extracted to avoid duplication
+  public ResponseEntity<?> setFilterAsDefault(long filterId) {
+    final boolean updateToBeApplied = SET_FILTER_AS_DEFAULT;
+    long userId = userProvider.getCurrentUserId();
+
+    log.info("Retrieving filter with id: {}", filterId);
+    Optional<Filter> filterOptional = filterService.getFilterByIdAndUserId(filterId, userId);
+    if (filterOptional.isEmpty()) {
+      log.info("No filter with id {} was found, not able to set as default", filterId);
+      return ResponseEntity.notFound().build();
+    }
+    Filter filterToUpdate = filterOptional.get();
+    Filter filter = getNewFilterInstanceWithUpdateApplied(filterToUpdate, updateToBeApplied);
+    historyEntryService.addHistoryEntryOnUpdate(filterToUpdate, filter, userId);
+    return performUpdate(filterId, userId, updateToBeApplied);
+  }
+
+  @Override
+  public ResponseEntity<?> setFilterAsNotDefault(long filterId) {
+    final boolean updateToBeApplied = SET_FILTER_AS_NOT_DEFAULT;
+    long userId = userProvider.getCurrentUserId();
+
+    log.info("Retrieving filter with id: {}", filterId);
+    Optional<Filter> filterOptional = filterService.getFilterByIdAndUserId(filterId, userId);
+    if (filterOptional.isEmpty()) {
+      log.info("No filter with id {} was found, not able to set as not default", filterId);
+      return ResponseEntity.notFound().build();
+    }
+    Filter filterToUpdate = filterOptional.get();
+    Filter filter = getNewFilterInstanceWithUpdateApplied(filterToUpdate, updateToBeApplied);
+    historyEntryService.addHistoryEntryOnUpdate(filterToUpdate, filter, userId);
+    return performUpdate(filterId, userId, updateToBeApplied);
+
+  }
+
+  private Filter getNewFilterInstanceWithUpdateApplied(Filter filterToUpdate, boolean updateToBeApplied) {
+    return Filter.builder()
+        .name(filterToUpdate.getName())
+        .accountIds(filterToUpdate.getAccountIds())
+        .categoryIds(filterToUpdate.getCategoryIds())
+        .priceFrom(filterToUpdate.getPriceFrom())
+        .priceTo(filterToUpdate.getPriceTo())
+        .dateFrom(filterToUpdate.getDateFrom())
+        .dateTo(filterToUpdate.getDateTo())
+        .description(filterToUpdate.getDescription())
+        .isDefault(updateToBeApplied ? SET_FILTER_AS_DEFAULT : SET_FILTER_AS_NOT_DEFAULT)
+        .build();
+  }
+
+  private ResponseEntity<?> performUpdate(long filterId, long userId, boolean isDefault) {
+    Optional<Filter> filterOptional = filterService.getFilterByIdAndUserId(filterId, userId);
+
+    log.info("Attempting to set filter as {} with id {} ", isDefault ? "default" : "not default", filterId);
+    filterOptional.get().setDefault(isDefault);
+    filterService.updateFilter(filterId, userId, filterOptional.get());
+    return ResponseEntity.ok().build();
+
   }
 }

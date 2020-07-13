@@ -528,7 +528,7 @@ public abstract class IntegrationTestsBase {
         .dateTo(filter.getDateTo())
         .priceFrom(filter.getPriceFrom())
         .priceTo(filter.getPriceTo())
-        .isDefault(filter.getIsDefault())
+        .isDefault(filter.isDefault())
         .build();
   }
 
@@ -552,7 +552,7 @@ public abstract class IntegrationTestsBase {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
-        .isDefault(filterRequest.getIsDefault())
+        .isDefault(filterRequest.isDefault())
         .build();
   }
 
