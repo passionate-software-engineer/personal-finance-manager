@@ -1034,6 +1034,12 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
         .newValue(filter.getDescription())
         .build());
 
+    historyInfosOfAddingFilterExpected.add(HistoryInfo.builder()
+        .id(21L)
+        .name("isDefault")
+        .newValue("false")
+        .build());
+
     assertThat(historyEntries, hasSize(5));
     assertThat(historyEntries.get(4).getObject(), equalTo(Filter.class.getSimpleName()));
     assertThat(historyEntries.get(4).getType(), equalTo(Type.ADD));
@@ -1083,59 +1089,66 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfUpdatingFilterExpected = new ArrayList<>();
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(21L)
+        .id(22L)
         .name("name")
         .oldValue(filter.getName())
         .newValue(updatedFilter.getName())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(22L)
+        .id(23L)
         .name("accountIds")
         .newValue(String.format("[%s, %s]", accountMbank.getName(), accountMillenium.getName()))
         .oldValue("[]")
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(23L)
+        .id(24L)
         .name("categoryIds")
         .newValue(String.format("[%s, %s]", categoryCar.getName(), categoryFood.getName()))
         .oldValue("[]")
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(24L)
+        .id(25L)
         .name("priceFrom")
         .oldValue(filter.getPriceFrom().toString())
         .newValue(updatedFilter.getPriceFrom().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(25L)
+        .id(26L)
         .name("priceTo")
         .newValue(updatedFilter.getPriceTo().toString())
         .oldValue(filter.getPriceTo().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(26L)
+        .id(27L)
         .name("dateFrom")
         .oldValue(filter.getDateFrom().toString())
         .newValue(updatedFilter.getDateFrom().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(27L)
+        .id(28L)
         .name("dateTo")
         .newValue(updatedFilter.getDateTo().toString())
         .oldValue(filter.getDateTo().toString())
         .build());
 
     historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
-        .id(28L)
+        .id(29L)
         .name("description")
         .oldValue(filter.getDescription())
         .newValue(updatedFilter.getDescription())
+        .build());
+
+    historyInfosOfUpdatingFilterExpected.add(HistoryInfo.builder()
+        .id(30L)
+        .name("isDefault")
+        .oldValue("false")
+        .newValue("false")
         .build());
 
     assertThat(historyEntries, hasSize(6));
@@ -1160,51 +1173,57 @@ class HistoryEntryControllerIntegrationTest extends IntegrationTestsBase {
     List<HistoryInfo> historyInfosOfDeletingFilterExpected = new ArrayList<>();
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(9L)
+        .id(10L)
         .name("name")
         .oldValue(filter.getName())
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(10L)
+        .id(11L)
         .name("accountIds")
         .oldValue("[]")
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(11L)
+        .id(12L)
         .name("categoryIds")
         .oldValue("[]")
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(12L)
+        .id(13L)
         .name("priceFrom")
         .oldValue(filter.getPriceFrom().toString())
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(13L)
+        .id(14L)
         .name("priceTo")
         .oldValue(filter.getPriceTo().toString())
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(14L)
+        .id(15L)
         .name("dateFrom")
         .oldValue(filter.getDateFrom().toString())
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(15L)
+        .id(16L)
         .name("dateTo")
         .oldValue(filter.getDateTo().toString())
         .build());
 
     historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
-        .id(16L)
+        .id(17L)
         .name("description")
         .oldValue(filter.getDescription())
+        .build());
+
+    historyInfosOfDeletingFilterExpected.add(HistoryInfo.builder()
+        .id(18L)
+        .name("isDefault")
+        .oldValue("false")
         .build());
 
     assertThat(historyEntries, hasSize(2));

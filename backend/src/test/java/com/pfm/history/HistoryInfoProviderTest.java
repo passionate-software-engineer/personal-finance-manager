@@ -135,6 +135,10 @@ class HistoryInfoProviderTest {
         .name("description")
         .newValue(null)
         .build());
+    expectedHistoryInfos.add(HistoryInfo.builder()
+        .name("isDefault")
+        .newValue("false")
+        .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
   }
@@ -293,6 +297,11 @@ class HistoryInfoProviderTest {
         .oldValue(filter.getDescription())
         .newValue(updatedFilter.getDescription())
         .build());
+    expectedHistoryInfos.add(HistoryInfo.builder()
+        .name("isDefault")
+        .oldValue("false")
+        .newValue("false")
+        .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
   }
@@ -423,6 +432,10 @@ class HistoryInfoProviderTest {
     expectedHistoryInfos.add(HistoryInfo.builder()
         .name("description")
         .oldValue(null)
+        .build());
+    expectedHistoryInfos.add(HistoryInfo.builder()
+        .name("isDefault")
+        .oldValue("false")
         .build());
 
     assertThat(historyInfos, is(equalTo(expectedHistoryInfos)));
