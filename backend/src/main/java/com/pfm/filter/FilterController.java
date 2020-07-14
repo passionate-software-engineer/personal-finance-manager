@@ -130,7 +130,6 @@ public class FilterController implements FilterApi {
   }
 
   @Override
-  // FIXME lukasz below methods can - common part can be extracted to avoid duplication
   public ResponseEntity<?> setFilterAsDefault(long filterId) {
     final boolean updateToBeApplied = SET_FILTER_AS_DEFAULT;
     return getFilterByIdAndApplyUpdate(filterId, updateToBeApplied,

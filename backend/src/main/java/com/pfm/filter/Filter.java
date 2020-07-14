@@ -76,4 +76,13 @@ public final class Filter {
   @HistoryField(nullable = true) // ??? lukasz
   private boolean isDefault;
 
+  public Filter setAsDefault() {
+    this.setDefault(true);
+    return this;
+  }
+
+  public Filter setAsNotDefault() {
+    this.setDefault(false);
+    return this;
+  }
 }
