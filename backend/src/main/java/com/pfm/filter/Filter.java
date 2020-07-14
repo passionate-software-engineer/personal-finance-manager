@@ -73,7 +73,7 @@ public final class Filter {
   private Long userId;
 
   @ApiModelProperty(value = "Is default filter", example = "true")
-  @HistoryField(nullable = true) // ??? lukasz
+  @HistoryField(nullable = true)
   private boolean isDefault;
 
   public Filter setAsDefault() {
