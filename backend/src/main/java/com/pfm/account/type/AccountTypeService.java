@@ -19,11 +19,11 @@ public class AccountTypeService {
 
   private AccountTypeRepository accountTypeRepository;
 
-  public Optional<AccountType> findAccountTypeByIdAndUserId(long accountTypeId, long userId) {
+  public Optional<AccountType> getAccountTypeByIdAndUserId(long accountTypeId, long userId) {
     return accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
   }
 
-  public AccountType getAccountTypeByIdAndUserId(long accountTypeId, long userId) {
+  public AccountType getAccountTypeFromDbByIdAndUserId(long accountTypeId, long userId) {
     Optional<AccountType> accountTypeOptional = accountTypeRepository.findByIdAndUserId(accountTypeId, userId);
     if (!accountTypeOptional.isPresent()) {
       throw new IllegalStateException(String.format(getMessage(ACCOUNT_TYPE_ID_DOES_NOT_EXIST), accountTypeId));
@@ -37,9 +37,26 @@ public class AccountTypeService {
         .collect(Collectors.toList());
   }
 
+  public void updateAccountType(long accountTypeId, long userId, AccountType accountType) {
+    Optional<AccountType> accountTypeFromDb = getAccountTypeByIdAndUserId(accountTypeId, userId);
+
+    if (!accountTypeFromDb.isPresent()) {
+      throw new IllegalStateException("Account type with id: " + accountTypeId + " does not exist in database");
+    }
+
+    AccountType accountTypeToUpdate = accountTypeFromDb.get();
+    accountTypeToUpdate.setName(accountType.getName());
+
+    accountTypeRepository.save(accountTypeToUpdate);
+  }
+
   public AccountType saveAccountType(long userId, AccountType accountType) {
     accountType.setUserId(userId);
     return accountTypeRepository.save(accountType);
+  }
+
+  public void deleteAccountType(long accountTypeId) {
+    accountTypeRepository.deleteById(accountTypeId);
   }
 
   public boolean isAccountTypeNameAlreadyUsed(long userId, String name) {
