@@ -14,6 +14,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryAnimals;
 import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestCategoryProvider.categoryImported;
 import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterExpensesOver1000;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
@@ -447,7 +448,6 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     accountMbankMarian.setType(marianAccountType);
 
     long marianAccountMbankId = callRestServiceToAddAccountAndReturnId(accountMbankMarian, marianToken);
-
     Account accountMilleniumMarian = accountMilleniumBalance100();
     accountMilleniumMarian.setCurrency(marianAccountCurrency);
     accountMilleniumMarian.setType(marianAccountType);
@@ -539,16 +539,24 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     final List<Category> marianCategories = callRestToGetAllCategories(marianToken);
 
+    final Category marianImportedCategoryExpected = categoryImported();
+
     Category marianCategoryCarExpected = categoryCar();
     marianCategoryCarExpected.setId(marianCategoryCarId);
 
     Category marianCategoryFoodExpected = categoryFood();
     marianCategoryFoodExpected.setId(marianCategoryFoodId);
 
-    assertThat(marianCategories, hasSize(2));
-    assertThat(marianCategories, containsInAnyOrder(marianCategoryCarExpected, marianCategoryFoodExpected));
+    assertThat(marianCategories, hasSize(3));
+    assertThat(removeCategoriesId(marianCategories),
+        containsInAnyOrder(
+            removeCategoryId(marianImportedCategoryExpected),
+            removeCategoryId(marianCategoryCarExpected),
+            removeCategoryId(marianCategoryFoodExpected)));
 
     final List<Category> zdzislawCategories = callRestToGetAllCategories(zdzislawToken);
+
+    final Category zdzislawImportedCategoryExpected = categoryImported();
 
     Category zdzislawCategoryHomeExpected = categoryHome();
     zdzislawCategoryHomeExpected.setId(zdzislawCategoryHomeId);
@@ -556,8 +564,12 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
     Category zdzislawCategoryAnimalsExpected = categoryAnimals();
     zdzislawCategoryAnimalsExpected.setId(zdzislawCategoryAnimalsId);
 
-    assertThat(zdzislawCategories, hasSize(2));
-    assertThat(zdzislawCategories, containsInAnyOrder(zdzislawCategoryAnimalsExpected, zdzislawCategoryHomeExpected));
+    assertThat(zdzislawCategories, hasSize(3));
+    assertThat(removeCategoriesId(zdzislawCategories),
+        containsInAnyOrder(
+            removeCategoryId(zdzislawImportedCategoryExpected),
+            removeCategoryId(zdzislawCategoryAnimalsExpected),
+            removeCategoryId(zdzislawCategoryHomeExpected)));
 
     final List<Transaction> marianTransactions = callRestToGetAllTransactionsFromDatabase(marianToken);
 

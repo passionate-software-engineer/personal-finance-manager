@@ -108,6 +108,7 @@ export class AccountsComponent implements OnInit {
     account.editMode = true;
     account.editedAccount = new Account();
     account.editedAccount.name = account.name;
+    account.editedAccount.bankAccountNumber = account.bankAccountNumber;
 
     // need to set exactly same object
     for (const type of this.supportedAccountTypes) {
@@ -149,6 +150,7 @@ export class AccountsComponent implements OnInit {
     editedAccount.balance = account.editedAccount.balance;
     editedAccount.currency = account.editedAccount.currency;
     editedAccount.balancePLN = editedAccount.balance * editedAccount.currency.exchangeRate;
+    editedAccount.bankAccountNumber = account.editedAccount.bankAccountNumber;
 
     this.accountService.editAccount(editedAccount)
         .subscribe(() => {

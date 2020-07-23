@@ -15,6 +15,7 @@ import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccou
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.pfm.account.Account;
 import com.pfm.category.Category;
@@ -126,7 +127,8 @@ public class CompareUsersIntegrationTest extends IntegrationTestsBase {
     final List<CategoryFromMainParentCategoryQueryResult> userZdzislawMainCategoryCategories = getCategoriesFromMainCategoryFromDb(userZdzislawId,
         jdbcTemplate);
 
-    assertEquals(userMarianMainCategoryCategories, userZdzislawMainCategoryCategories);
+    assertTrue(userMarianMainCategoryCategories.containsAll(userZdzislawMainCategoryCategories));
+    assertTrue(userZdzislawMainCategoryCategories.containsAll(userMarianMainCategoryCategories));
 
     final List<FilterQueryResult> userMarianFilters = getFiltersFromDb(userMarianId, jdbcTemplate);
     final List<FilterQueryResult> userZdzislawFilters = getFiltersFromDb(userZdzislawId, jdbcTemplate);

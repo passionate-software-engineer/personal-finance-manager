@@ -79,7 +79,7 @@ public class TransactionService {
     Optional<Transaction> transactionFromDb = getTransactionByIdAndUserId(id, userId);
 
     if (!transactionFromDb.isPresent()) {
-      throw new IllegalStateException("Transaction with id: " + id + " does not exist in database");
+      throw new IllegalStateException("ParsedFromIngCsv with id: " + id + " does not exist in database");
     }
 
     return transactionFromDb.get();
@@ -109,6 +109,7 @@ public class TransactionService {
 
     Account accountWithNewBalance = Account.builder()
         .name(account.getName())
+        .bankAccountNumber(account.getBankAccountNumber())
         .balance(newBalance)
         .currency(account.getCurrency())
         .type(account.getType())

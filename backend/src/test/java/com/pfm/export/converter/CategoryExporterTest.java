@@ -1,12 +1,13 @@
 package com.pfm.export.converter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 import com.pfm.category.Category;
 import com.pfm.category.CategoryService;
 import com.pfm.export.ExportResult.ExportCategory;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,11 +35,11 @@ class CategoryExporterTest {
     List<ExportCategory> export = categoryExporter.export(USER_ID);
 
     // then
-    Assertions.assertEquals(export.size(), 1);
+    assertEquals(export.size(), 1);
     ExportCategory exportCategory = export.get(0);
-    Assertions.assertEquals(exportCategory.getName(), category.getName());
-    Assertions.assertEquals(exportCategory.getPriority(), category.getPriority());
-    Assertions.assertNull(exportCategory.getParentCategoryName());
+    assertEquals(exportCategory.getName(), category.getName());
+    assertEquals(exportCategory.getPriority(), category.getPriority());
+    assertNull(exportCategory.getParentCategoryName());
   }
 
   private Category createCategory() {

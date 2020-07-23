@@ -3,6 +3,7 @@ package com.pfm.account;
 import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_ID_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS;
+import static com.pfm.config.MessagesProvider.BANK_ACCOUNT_NUMBER_ALREADY_EXISTS;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_BALANCE;
 import static com.pfm.config.MessagesProvider.EMPTY_ACCOUNT_NAME;
 import static com.pfm.config.MessagesProvider.getMessage;
@@ -41,7 +42,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> emptyAccountNameParameters() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {"", null},
         {" ", null},
         {"    ", null},
@@ -92,6 +93,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     // given
     AccountRequest accountRequest = AccountRequest.builder()
         .name(name)
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(accountTypeService.getAccountTypes(userId).get(0).getId())
         .balance(balance)
         .currencyId(currencyService.getCurrencies(userId).get(0).getId())
@@ -371,6 +373,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(account.getName())
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(account.getType().getId())
         .balance(convertDoubleToBigDecimal(666))
         .currencyId(account.getCurrency().getId())
@@ -409,6 +412,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(account.getName())
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(account.getType().getId())
         .balance(convertDoubleToBigDecimal(432))
         .currencyId(account.getCurrency().getId())
@@ -426,6 +430,31 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
+  public void shouldReturnErrorCausedByDuplicatedBankAccountNumberWhileAddingAccount() throws Exception {
+    // given
+    Account account = accountMbankBalance10();
+    account.setCurrency(currencyService.getCurrencies(userId).get(0));
+    account.setType(accountTypeService.getAccountTypes(userId).get(0));
+    callRestServiceToAddAccountAndReturnId(account, token);
+
+    Account jacekAccount = accountJacekBalance1000();
+    jacekAccount.setCurrency(currencyService.getCurrencies(userId).get(1));
+    jacekAccount.setType(accountTypeService.getAccountTypes(userId).get(1));
+
+    jacekAccount.setBankAccountNumber(account.getBankAccountNumber());
+    final AccountRequest jacekAccountRequest = convertAccountToAccountRequest(jacekAccount);
+
+    // when
+    mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .content(json(jacekAccountRequest))
+        .contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0]", is(getMessage(BANK_ACCOUNT_NUMBER_ALREADY_EXISTS))));
+  }
+
+  @Test
   public void shouldReturnErrorCausedByNotExistingCurrencyOnUpdateAccount() throws Exception {
     // given
     long notExistingCurrencyId = 3124151L;
@@ -437,6 +466,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(jacekAccount.getName())
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(1L)
         .balance(convertDoubleToBigDecimal(4322))
         .currencyId(notExistingCurrencyId)
@@ -473,6 +503,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest accountToUpdate = AccountRequest.builder()
         .name("")
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
@@ -523,6 +554,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
     callRestServiceToAddAccountAndReturnId(account, token);
     AccountRequest accountRequestToAdd = AccountRequest.builder()
         .name(account.getName())
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(account.getType().getId())
         .balance(convertDoubleToBigDecimal(100))
         .currencyId(account.getCurrency().getId())
@@ -545,6 +577,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     AccountRequest accountRequest = AccountRequest.builder()
         .name("mBank")
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(notExistingAccountTypeId)
         .balance(BigDecimal.TEN)
         .currencyId(currencyService.getCurrencies(userId).get(0).getId())
@@ -572,6 +605,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
     AccountRequest updatedAccount = AccountRequest.builder()
         .name(jacekAccount.getName())
+        .bankAccountNumber(TARGET_BANK_ACCOUNT_NUMBER)
         .accountTypeId(notExistingAccountTypeId)
         .balance(convertDoubleToBigDecimal(4322))
         .currencyId(jacekAccount.getCurrency().getId())

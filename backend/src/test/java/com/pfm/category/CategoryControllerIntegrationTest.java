@@ -12,6 +12,7 @@ import static com.pfm.helpers.TestCategoryProvider.categoryCar;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryGearBoxOil;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestCategoryProvider.categoryImported;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -56,12 +57,16 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldAddCategory() throws Exception {
     // when
+    Category categoryImported = categoryImported();
     Category categoryCar = categoryCar();
     long carCategoryId = callRestToAddCategoryAndReturnId(categoryCar, token);
     Category categoryOil = categoryOil();
     long oilCategoryId = callRestToAddCategoryWithSpecifiedParentCategoryIdAndReturnId(categoryOil, carCategoryId, token);
 
+    final long categoryImportedId = callRestToGetCategoryNamedImportedId(token);
+
     // then
+    categoryImported.setId(categoryImportedId);
     categoryCar.setId(carCategoryId);
 
     categoryOil.setId(oilCategoryId);
@@ -69,8 +74,8 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     List<Category> categories = callRestToGetAllCategories(token);
 
-    assertThat(categories.size(), is(2));
-    assertThat(categories, containsInAnyOrder(categoryCar, categoryOil));
+    assertThat(categories.size(), is(3));
+    assertThat(categories, containsInAnyOrder(categoryImported, categoryCar, categoryOil));
   }
 
   @ParameterizedTest
@@ -138,6 +143,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   @Test
   public void shouldGetCategories() throws Exception {
     // when
+    Category categoryImported = categoryImported();
     Category categoryCar = categoryCar();
     long categoryCarId = callRestToAddCategoryAndReturnId(categoryCar, token);
 
@@ -146,13 +152,17 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     final List<Category> categories = callRestToGetAllCategories(token);
 
+    final Long categoryNamedImportedId = callRestToGetCategoryNamedImportedId(token);
+
     // then
+
+    categoryImported.setId(categoryNamedImportedId);
     categoryCar.setId(categoryCarId);
 
     categoryHome.setId(categoryHomeId);
 
-    assertThat(categories.size(), is(2));
-    assertThat(categories, containsInAnyOrder(categoryCar, categoryHome));
+    assertThat(categories.size(), is(3));
+    assertThat(categories, containsInAnyOrder(categoryImported, categoryCar, categoryHome));
   }
 
   @Test
@@ -298,7 +308,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
     // then
     List<Category> categories = callRestToGetAllCategories(token);
     Category deletedCategory = convertCategoryRequestToCategoryAndSetId(homeCategoryId, userId, convertCategoryToCategoryAddRequest(categoryHome));
-    assertThat(categories.size(), is(equalTo(1)));
+    assertThat(categories.size(), is(equalTo(2)));
     assertFalse(categories.contains(deletedCategory));
   }
 
@@ -314,7 +324,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     List<Category> categories = callRestToGetAllCategories(token);
-    assertThat(categories.size(), is(0));
+    assertThat(categories.size(), is(1));
   }
 
   @Test

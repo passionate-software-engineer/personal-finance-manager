@@ -15,8 +15,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -58,7 +56,7 @@ public class CategoryServiceTest {
     // given
     Category categoryCar = categoryCar();
     Category categoryHome = categoryHome();
-    when(categoryRepository.findByUserId(MOCK_USER_ID)).thenReturn(new ArrayList<>(Arrays.asList(categoryCar, categoryHome)));
+    when(categoryRepository.findByUserId(MOCK_USER_ID)).thenReturn(List.of(categoryCar, categoryHome));
 
     // when
     List<Category> result = categoryService.getCategories(MOCK_USER_ID);
@@ -177,9 +175,7 @@ public class CategoryServiceTest {
     when(categoryRepository.findByIdAndUserId(id, MOCK_USER_ID)).thenReturn(Optional.empty());
 
     // when
-    Throwable exception = assertThrows(IllegalStateException.class, () -> {
-      categoryService.getCategoryFromDbByIdAndUserId(id, MOCK_USER_ID);
-    });
+    Throwable exception = assertThrows(IllegalStateException.class, () -> categoryService.getCategoryFromDbByIdAndUserId(id, MOCK_USER_ID));
 
     // then
     assertThat(exception.getMessage(), is(equalTo("CATEGORY with id : " + id + " does not exist in database")));

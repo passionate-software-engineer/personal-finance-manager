@@ -1,18 +1,21 @@
 package com.pfm.helpers;
 
 import static com.pfm.account.AccountControllerIntegrationTest.MARK_AS_ARCHIVED;
+import static com.pfm.export.ImportService.CATEGORY_NAMED_IMPORTED;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestTransactionProvider.foodPlannedTransactionWithNoAccountAndNoCategory;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfm.account.Account;
 import com.pfm.account.AccountRequest;
@@ -42,6 +45,7 @@ import com.pfm.transaction.TransactionsHelper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.flywaydb.core.Flyway;
@@ -53,6 +57,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -65,6 +71,7 @@ public abstract class IntegrationTestsBase {
   protected static final String ACCOUNTS_SERVICE_PATH = "/accounts";
   protected static final String CATEGORIES_SERVICE_PATH = "/categories";
   protected static final String TRANSACTIONS_SERVICE_PATH = "/transactions";
+  protected static final String CSV_IMPORT_SERVICE_PATH = "/csvImport";
   protected static final String SET_AS_RECURRENT = "/setAsRecurrent";
   protected static final String USERS_SERVICE_PATH = "/users";
   protected static final String FILTERS_SERVICE_PATH = "/filters";
@@ -75,6 +82,7 @@ public abstract class IntegrationTestsBase {
   protected static final String COMMIT_OVERDUE = "/commitOverdue";
 
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON;
+  protected static final String TARGET_BANK_ACCOUNT_NUMBER = "06105014451000009715050457";
   protected static final long NOT_EXISTING_ID = 0;
 
   @Autowired
@@ -142,6 +150,7 @@ public abstract class IntegrationTestsBase {
   protected AccountRequest convertAccountToAccountRequest(Account account) {
     return AccountRequest.builder()
         .name(account.getName())
+        .bankAccountNumber(account.getBankAccountNumber())
         .accountTypeId(account.getType().getId())
         .balance(account.getBalance())
         .currencyId(account.getCurrency().getId())
@@ -172,6 +181,15 @@ public abstract class IntegrationTestsBase {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
     return getAccountsFromResponse(response);
+  }
+
+  protected List<AccountType> callRestToGetAllAccountTypes(String token) throws Exception {
+    String response = mockMvc.perform(get(ACCOUNT_TYPE_SERVICE_PATH)
+        .header(HttpHeaders.AUTHORIZATION, token))
+        .andExpect(content().contentType(JSON_CONTENT_TYPE))
+        .andExpect(status().isOk())
+        .andReturn().getResponse().getContentAsString();
+    return getAccountTypesFromResponse(response);
   }
 
   protected void callRestToDeleteAccountById(long id, String token) throws Exception {
@@ -223,9 +241,41 @@ public abstract class IntegrationTestsBase {
 
   }
 
+  protected List<Transaction> callRestToImportTransactionsFromCsvFileAndReturnFilteredTransactions(MockMultipartFile mockMultipartFile,
+      long importTargetAccountId) throws Exception {
+    final String response = callRestToImportTransactionsFromCsvFileAndReturnResponse(importTargetAccountId, mockMultipartFile)
+        .getContentAsString();
+    return getParsedTransactionsFromResponse(response);
+  }
+
+  protected int callRestToImportTransactionsFromCsvFileAndReturnStatus(long importTargetAccountId,
+      MockMultipartFile mockMultipartFile) throws Exception {
+    return callRestToImportTransactionsFromCsvFileAndReturnResponse(importTargetAccountId, mockMultipartFile).getStatus();
+  }
+
+  protected MockHttpServletResponse callRestToImportTransactionsFromCsvFileAndReturnResponse(long importTargetAccountId,
+      MockMultipartFile mockMultipartFile) throws Exception {
+    return mockMvc.perform(multipart(CSV_IMPORT_SERVICE_PATH)
+        .file(mockMultipartFile)
+        .param("accountId", String.valueOf(importTargetAccountId))
+        .header(HttpHeaders.AUTHORIZATION, token)
+        .contentType(MediaType.MULTIPART_FORM_DATA))
+        .andReturn()
+        .getResponse();
+  }
+
+  protected List<Transaction> getParsedTransactionsFromResponse(String response) throws JsonProcessingException {
+    return mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, Transaction.class));
+  }
+
   private List<Account> getAccountsFromResponse(String response) throws Exception {
     return mapper.readValue(response,
         mapper.getTypeFactory().constructCollectionType(List.class, Account.class));
+  }
+
+  private List<AccountType> getAccountTypesFromResponse(String response) throws Exception {
+    return mapper.readValue(response,
+        mapper.getTypeFactory().constructCollectionType(List.class, AccountType.class));
   }
 
   private Account jsonToAccount(String jsonAccount) throws Exception {
@@ -292,6 +342,14 @@ public abstract class IntegrationTestsBase {
     return getCategoriesFromResponse(response);
   }
 
+  protected Long callRestToGetCategoryNamedImportedId(String token) throws Exception {
+    return callRestToGetAllCategories(token).stream()
+        .filter(category -> category.getName().equals(CATEGORY_NAMED_IMPORTED))
+        .map(Category::getId)
+        .findFirst()
+        .get();
+  }
+
   protected void callRestToDeleteCategoryById(long id, String token) throws Exception {
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + id)
         .header(HttpHeaders.AUTHORIZATION, token))
@@ -338,9 +396,7 @@ public abstract class IntegrationTestsBase {
         .build();
   }
 
-  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest,
-      long accountId, long categoryId,
-      String token)
+  private long callRestToAddTransactionAndReturnId(TransactionRequest transactionRequest, long accountId, long categoryId, String token)
       throws Exception {
     transactionRequest.setCategoryId(categoryId);
     transactionRequest.getAccountPriceEntries().get(0).setAccountId(accountId);
@@ -355,11 +411,8 @@ public abstract class IntegrationTestsBase {
     return Long.parseLong(response);
   }
 
-  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId,
-      long categoryId, String token)
-      throws Exception {
-    TransactionRequest transactionRequest = helper
-        .convertTransactionToTransactionRequest(transaction);
+  protected long callRestToAddTransactionAndReturnId(Transaction transaction, long accountId, long categoryId, String token) throws Exception {
+    TransactionRequest transactionRequest = helper.convertTransactionToTransactionRequest(transaction);
     return callRestToAddTransactionAndReturnId(transactionRequest, accountId, categoryId, token);
   }
 
@@ -596,6 +649,12 @@ public abstract class IntegrationTestsBase {
     return getCurrenciesFromResponse(response);
   }
 
+  protected Optional<Currency> callRestToGetCurrencyByNameIgnoreCase(String currencyName, String token) throws Exception {
+    return callRestToGetAllCurrencies(token).stream()
+        .filter(currency -> currency.getName().equalsIgnoreCase(currencyName))
+        .findFirst();
+  }
+
   private Filter jsonToFilter(String jsonFilter) throws Exception {
     return mapper.readValue(jsonFilter, Filter.class);
   }
@@ -698,6 +757,21 @@ public abstract class IntegrationTestsBase {
       throws Exception {
     callRestToRegisterUserAndReturnUserId(user);
     return callRestToAuthenticateUserAndReturnToken(user);
+  }
+
+  protected Category removeCategoryId(Category category) {
+    return Category.builder()
+        .id(null)
+        .name(category.getName())
+        .parentCategory(category.getParentCategory() == null ? null : Category.builder().id(category.getParentCategory().getId()).build())
+        .priority(category.getPriority())
+        .build();
+  }
+
+  protected List<Category> removeCategoriesId(List<Category> categories) {
+    return categories.stream()
+        .map(this::removeCategoryId)
+        .collect(Collectors.toList());
   }
 
   private UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {

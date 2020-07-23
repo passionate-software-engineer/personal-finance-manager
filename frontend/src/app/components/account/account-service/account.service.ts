@@ -20,6 +20,7 @@ export class AccountService extends ServiceBase {
       name: account.name,
       accountTypeId: account.type.id,
       balance: account.balance,
+      bankAccountNumber: account.bankAccountNumber,
       currencyId: account.currency.id
     };
   }

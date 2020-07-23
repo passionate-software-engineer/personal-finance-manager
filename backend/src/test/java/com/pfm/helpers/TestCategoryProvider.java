@@ -1,8 +1,17 @@
 package com.pfm.helpers;
 
+import static com.pfm.export.ImportService.CATEGORY_NAMED_IMPORTED;
+
 import com.pfm.category.Category;
 
 public class TestCategoryProvider {
+
+  public static Category categoryImported() {
+    return Category.builder()
+        .id(1L)
+        .name(CATEGORY_NAMED_IMPORTED)
+        .build();
+  }
 
   public static Category categoryCar() {
     return Category.builder()

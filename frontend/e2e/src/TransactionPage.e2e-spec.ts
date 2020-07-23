@@ -58,7 +58,7 @@ describe('Transaction page tests', () => {
     categoryPage.addCategory('Car', 'Main Category');
 
     accountPage.navigateTo();
-    accountPage.addAccount('Mbank', 1000);
+    accountPage.addAccount('Mbank', 1000, '11195000012006857419590584');
 
     const ACCOUNT_INDEX = 0;
     const CATEGORY_INDEX = 0;
@@ -86,8 +86,8 @@ describe('Transaction page tests', () => {
     categoryPage.addCategory('Car', 'Main Category');
 
     accountPage.navigateTo();
-    accountPage.addAccount('Mbank', 1000);
-    accountPage.addAccount('Alior', 500);
+    accountPage.addAccount('Mbank', 1000, '11195000012006857419590099');
+    accountPage.addAccount('Alior', 500, '11195000012006857419590875');
 
     const ACCOUNT_MBANK_INDEX = 1;
     const ACCOUNT_ALIOR_INDEX = 0;
@@ -118,11 +118,11 @@ describe('Transaction page tests', () => {
     categoryPage.addCategory('Food', 'Main Category');
 
     accountPage.navigateTo();
-    accountPage.addAccount('Mbank', 1000);
-    accountPage.addAccount('Alior', 500);
+    accountPage.addAccount('Mbank', 1000, '11195000012006857419590875');
+    accountPage.addAccount('Alior', 500, '11195000012006857419590099');
 
-    accountPage.addAccount('Millenium', 10000);
-    accountPage.addAccount('Ing', 5000);
+    accountPage.addAccount('Millenium', 10000, '11195000012006857419590584');
+    accountPage.addAccount('Ing', 5000, '11195000012006857419590196');
 
     const ACCOUNT_ALIOR_INDEX = 0;
     const ACCOUNT_ING_INDEX = 1;
@@ -160,7 +160,7 @@ describe('Transaction page tests', () => {
     categoryPage.addCategory('Car', 'Main Category');
 
     accountPage.navigateTo();
-    accountPage.addAccount('Mbank', 1000);
+    accountPage.addAccount('Mbank', 1000, '11195000012006857419590196');
 
     const ACCOUNT_INDEX = 0;
     const CATEGORY_INDEX = 0;

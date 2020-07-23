@@ -24,6 +24,7 @@ export class AccountsPage {
   nameHeader() {
     return element(by.id('NameHeader'));
   }
+
   accountTypeHeader() {
     return element(by.id('AccountTypeHeader'));
   }
@@ -46,6 +47,10 @@ export class AccountsPage {
 
   newAccountBalance() {
     return element(by.id('NewAccountBalanceInput'));
+  }
+
+  newAccountBankAccountNumber() {
+    return element(by.id('NewAccountBankAccountNumberInput'));
   }
 
   newAccountSaveButton() {
@@ -109,15 +114,15 @@ export class AccountsPage {
   }
 
   exchangeRateOfEUR() {
-   return element(by.id('CurrencyExchangeRateEUR'));
+    return element(by.id('CurrencyExchangeRateEUR'));
   }
 
   exchangeRateOfGBP() {
-   return element(by.id('CurrencyExchangeRateGBP'));
+    return element(by.id('CurrencyExchangeRateGBP'));
   }
 
   exchangeRateOfPLN() {
-   return element(by.id('CurrencyExchangeRatePLN'));
+    return element(by.id('CurrencyExchangeRatePLN'));
   }
 
   exchangeRateOfUSD() {
@@ -135,6 +140,7 @@ export class AccountsPage {
   balancePLNOfPLN() {
     return element(by.id('CurrencyBalanceOfPLN'));
   }
+
   balancePLNOfUSD() {
     return element(by.id('CurrencyBalanceOfUSD'));
   }
@@ -142,6 +148,7 @@ export class AccountsPage {
   balanceOfAllAccounts() {
     return element(by.id('BalanceOfAllAccounts'));
   }
+
   balanceOfAllAccountCurrenciesSummery() {
     return element(by.id('BalanceOfAllAccountsCurrenciesSummary'));
   }
@@ -157,6 +164,7 @@ export class AccountsPage {
   accountTypeBalancePLNOfPersonal() {
     return element(by.id('AccountTypeBalanceOfPersonal'));
   }
+
   accountTypeBalancePLNOfSaving() {
     return element(by.id('AccountTypeBalanceOfSaving'));
   }
@@ -170,8 +178,8 @@ export class AccountsPage {
   }
 
   assertBalanceOfAllAccountsType() {
-      expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountsTypeSummery().getText());
-    }
+    expect(this.balanceOfAllAccounts().getText()).toEqual(this.balanceOfAllAccountsTypeSummery().getText());
+  }
 
   alert() {
     return element.all(by.id('Alert'));
@@ -189,6 +197,10 @@ export class AccountsPage {
     expect(row.element(by.id('BalanceReadOnly')).getText()).toEqual(expectedBalance);
   }
 
+  assertBankAccountNumber(row, expectedBankAccountNumber) {
+    expect(row.element(by.id('BankAccountNumber')).getText()).toEqual(expectedBankAccountNumber);
+  }
+
   assertBalanceVerificationDate(row, expectedVerificationDate) {
     expect(row.element(by.id('BalanceVerificationDate')).getText()).toEqual(expectedVerificationDate);
   }
@@ -202,7 +214,7 @@ export class AccountsPage {
   }
 
   assertAccountBalancePLNOfPLN(expectedBalance_PLN) {
-   expect(this.balancePLNOfPLN().getText()).toEqual(expectedBalance_PLN);
+    expect(this.balancePLNOfPLN().getText()).toEqual(expectedBalance_PLN);
   }
 
   assertAccountBalancePLNOfUSD(expectedBalance_PLN) {
@@ -214,19 +226,19 @@ export class AccountsPage {
   }
 
   assertAccountBalancePLNOfCreditAccount(expectedBalanceCreditAccount_PLN) {
-      expect(this.accountTypeBalancePLNOfCredit().getText()).toEqual(expectedBalanceCreditAccount_PLN);
+    expect(this.accountTypeBalancePLNOfCredit().getText()).toEqual(expectedBalanceCreditAccount_PLN);
   }
 
   assertAccountBalancePLNOfInvestmentAccount(expectedBalanceInvestmentAccount_PLN) {
-      expect(this.accountTypeBalancePLNOfInvestment().getText()).toEqual(expectedBalanceInvestmentAccount_PLN);
+    expect(this.accountTypeBalancePLNOfInvestment().getText()).toEqual(expectedBalanceInvestmentAccount_PLN);
   }
 
   assertAccountBalancePLNOfPersonalAccount(expectedBalancePersonalAccount_PLN) {
-      expect(this.accountTypeBalancePLNOfPersonal().getText()).toEqual(expectedBalancePersonalAccount_PLN);
+    expect(this.accountTypeBalancePLNOfPersonal().getText()).toEqual(expectedBalancePersonalAccount_PLN);
   }
 
   assertAccountBalancePLNOfSavingAccount(expectedBalanceSavingAccount_PLN) {
-       expect(this.accountTypeBalancePLNOfSaving().getText()).toEqual(expectedBalanceSavingAccount_PLN);
+    expect(this.accountTypeBalancePLNOfSaving().getText()).toEqual(expectedBalanceSavingAccount_PLN);
   }
 
   assertAccountBalancePLNSummaryWithAccountType(expectedBalanceOfAllAccountsTypeSummery) {
@@ -254,36 +266,37 @@ export class AccountsPage {
     expect(this.accountRows().count()).toEqual(0);
   }
 
-  addAccount(name, balance) {
+  addAccount(name, balance, bankAccountNumber) {
     this.addAccountButton().click();
 
     this.newAccountName().sendKeys(name);
     this.newAccountBalance().clear();
     this.newAccountBalance().sendKeys(balance);
-
+    this.newAccountBankAccountNumber().sendKeys(bankAccountNumber);
     this.newAccountSaveButton().click();
 
     this.assertSuccessMessage('Account added');
     this.refreshAccountsButton().click();
   }
 
-  addAccountWithCurrency(name, balance, currency) {
-   this.addAccountButton().click();
+  addAccountWithCurrency(name, balance, currency, bankAccountNumber) {
+    this.addAccountButton().click();
 
-   this.newAccountName().sendKeys(name);
+    this.newAccountName().sendKeys(name);
 
-   this.newAccountBalance().clear();
-   this.newAccountBalance().sendKeys(balance);
+    this.newAccountBalance().clear();
+    this.newAccountBalance().sendKeys(balance);
 
-   this.newAccountCurrency().sendKeys(currency);
+    this.newAccountCurrency().sendKeys(currency);
 
-   this.newAccountSaveButton().click();
+    this.newAccountBankAccountNumber().sendKeys(bankAccountNumber);
+    this.newAccountSaveButton().click();
 
-   this.assertSuccessMessage('Account added');
-   this.refreshAccountsButton().click();
+    this.assertSuccessMessage('Account added');
+    this.refreshAccountsButton().click();
   }
 
-  addAccountWithAccountTypeAndCurrency(name, accountType, balance, currency) {
+  addAccountWithAccountTypeAndCurrency(name, accountType, balance, currency, bankAccountNumber) {
     this.addAccountButton().click();
 
     this.newAccountName().sendKeys(name);
@@ -291,6 +304,7 @@ export class AccountsPage {
     this.newAccountBalance().clear();
     this.newAccountBalance().sendKeys(balance);
     this.newAccountCurrency().sendKeys(currency);
+    this.newAccountBankAccountNumber().sendKeys(bankAccountNumber);
 
     this.newAccountSaveButton().click();
 

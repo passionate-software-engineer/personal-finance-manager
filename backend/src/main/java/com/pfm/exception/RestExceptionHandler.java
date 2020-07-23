@@ -4,6 +4,7 @@ import static com.pfm.config.MessagesProvider.getMessage;
 
 import com.pfm.config.MessagesProvider;
 import com.pfm.filters.CorrelationIdFilter;
+import com.pfm.transaction.import1.TransactionsParsingException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
+  @ExceptionHandler(value = {TransactionsParsingException.class})
+  public ResponseEntity<Object> handleTransactionsParsingException(Exception exception, WebRequest request) {
+    log.error("Internal error", exception);
+
+    return handleExceptionInternal(exception, exception.getMessage(), new HttpHeaders(),
+        HttpStatus.INTERNAL_SERVER_ERROR, request);
+  }
 
   @ExceptionHandler(value = {Exception.class})
   public ResponseEntity<Object> handleUnhandledException(Exception exception, WebRequest request) {

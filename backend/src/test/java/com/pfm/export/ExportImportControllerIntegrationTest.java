@@ -4,10 +4,12 @@ import static com.pfm.config.MessagesProvider.ACCOUNT_CURRENCY_NAME_DOES_NOT_EXI
 import static com.pfm.config.MessagesProvider.ACCOUNT_TYPE_NAME_DOES_NOT_EXIST;
 import static com.pfm.config.MessagesProvider.IMPORT_NOT_POSSIBLE;
 import static com.pfm.config.MessagesProvider.getMessage;
+import static com.pfm.export.ImportService.CATEGORY_NAMED_IMPORTED;
 import static com.pfm.helpers.TestAccountProvider.accountJacekBalance1000;
 import static com.pfm.helpers.TestAccountProvider.accountMbankBalance10;
 import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
+import static com.pfm.helpers.TestCategoryProvider.categoryImported;
 import static com.pfm.helpers.TestCategoryProvider.categoryOil;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestTransactionProvider.foodTransactionWithNoAccountAndNoCategory;
@@ -16,6 +18,7 @@ import static com.pfm.helpers.TestUsersProvider.userZdzislaw;
 import static java.math.RoundingMode.HALF_UP;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasValue;
@@ -48,7 +51,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -121,13 +123,16 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("finalAccountsState[0].name", is(accountJacekBalance1000().getName())))
         .andExpect(jsonPath("finalAccountsState[0].balance", is("1010.00")))
         .andExpect(jsonPath("finalAccountsState[0].currency", is("PLN")))
-        .andExpect(jsonPath("categories", hasSize(2)))
-        .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories", hasSize(3)))
+        .andExpect(jsonPath("categories[0].name", is(categoryImported().getName())))
         .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
-        .andExpect(jsonPath("categories[0].priority", is(categoryFood().getPriority())))
-        .andExpect(jsonPath("categories[1].name", is("Pizza")))
-        .andExpect(jsonPath("categories[1].parentCategoryName", is(categoryFood().getName())))
-        .andExpect(jsonPath("categories[1].priority", is(5)))
+        .andExpect(jsonPath("categories[0].priority", is(1000)))
+        .andExpect(jsonPath("categories[1].name", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[1].parentCategoryName").doesNotExist())
+        .andExpect(jsonPath("categories[1].priority", is(3)))
+        .andExpect(jsonPath("categories[2].name", is("Pizza")))
+        .andExpect(jsonPath("categories[2].parentCategoryName", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[2].priority", is(5)))
         .andExpect(jsonPath("periods", hasSize(1)))
         .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
         .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))
@@ -194,7 +199,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("sumOfAllFundsAtTheEndOfExport.currencyToFundsMap", hasValue("0.00")))
         .andExpect(jsonPath("initialAccountsState", hasSize(0)))
         .andExpect(jsonPath("finalAccountsState", hasSize(0)))
-        .andExpect(jsonPath("categories", hasSize(0)))
+        .andExpect(jsonPath("categories", hasSize(1)))
         .andExpect(jsonPath("periods", hasSize(0)))
         .andExpect(jsonPath("filters", hasSize(0)));
 
@@ -203,8 +208,18 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   @Test
   public void shouldImportTransactions() throws Exception {
     // given
+
+    List<Category> categoriesAfterUserInitialization = categoryService.getCategories(userId);
+    assertThat(categoriesAfterUserInitialization, hasSize(1));
+    String categoryName = categoriesAfterUserInitialization.get(0).getName();
+    assertThat(categoryName, is(equalTo(CATEGORY_NAMED_IMPORTED)));
+    Category afterUserInitializationImportedCategory = categoriesAfterUserInitialization.get(0);
+
     ExportResult input = new ExportResult();
-    input.setCategories(Arrays.asList(
+    input.setCategories(List.of(
+        ExportCategory.builder()
+            .name(afterUserInitializationImportedCategory.getName())
+            .build(),
         ExportCategory.builder()
             .name(categoryHome().getName())
             .priority(categoryHome().getPriority())
@@ -229,8 +244,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         // should default to PLN
         .build();
 
-    input.setInitialAccountsState(Arrays.asList(aliorAccount, ideaBankAccount));
-    input.setFinalAccountsState(Arrays.asList(aliorAccount, ideaBankAccount));
+    input.setInitialAccountsState(List.of(aliorAccount, ideaBankAccount));
+    input.setFinalAccountsState(List.of(aliorAccount, ideaBankAccount));
 
     ExportAccountPriceEntry entry = ExportAccountPriceEntry.builder()
         .account(aliorAccount.getName()) // TODO add checkstyle check to detect magic strings & numbers
@@ -245,8 +260,8 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .build();
 
     ExportPeriod period = ExportPeriod.builder()
-        .accountStateAtTheBeginningOfPeriod(Arrays.asList(aliorAccount, ideaBankAccount))
-        .accountStateAtTheEndOfPeriod(Arrays.asList(aliorAccount, ideaBankAccount))
+        .accountStateAtTheBeginningOfPeriod(List.of(aliorAccount, ideaBankAccount))
+        .accountStateAtTheEndOfPeriod(List.of(aliorAccount, ideaBankAccount))
         .startDate(LocalDate.MIN)
         .endDate(LocalDate.MAX)
         .transactions(Collections.singletonList(transaction))
@@ -276,12 +291,14 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(accounts.get(1).getBalance(), is(ideaBankAccount.getBalance().setScale(2, HALF_UP)));
 
     List<Category> categories = categoryService.getCategories(userId);
-    assertThat(categories, hasSize(2));
-    assertThat(categories.get(0).getName(), is(input.getCategories().get(0).getName()));
+    assertThat(categories, hasSize(3));
+    assertThat(categories.get(0).getName(), is(CATEGORY_NAMED_IMPORTED));
     assertThat(categories.get(0).getParentCategory(), is(nullValue()));
     assertThat(categories.get(0).getPriority(), is(input.getCategories().get(0).getPriority()));
     assertThat(categories.get(1).getName(), is(input.getCategories().get(1).getName()));
-    assertThat(categories.get(1).getParentCategory().getName(), is(input.getCategories().get(1).getParentCategoryName()));
+    assertThat(categories.get(1).getParentCategory(), is(nullValue()));
+    assertThat(categories.get(2).getName(), is(input.getCategories().get(2).getName()));
+    assertThat(categories.get(2).getParentCategory().getName(), is(input.getCategories().get(2).getParentCategoryName()));
     assertThat(categories.get(1).getPriority(), is(input.getCategories().get(1).getPriority()));
 
     List<Transaction> transactions = transactionService.getTransactions(userId);
@@ -320,7 +337,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   public void shouldReturnErrorWhenNotSupportedCurrencyWasProvided() throws Exception {
     // given
     ExportResult input = new ExportResult();
-    input.setCategories(Arrays.asList(
+    input.setCategories(List.of(
         ExportCategory.builder()
             .name(categoryHome().getName())
             .build(),
@@ -355,7 +372,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
   public void shouldReturnErrorWhenNotSupportedAccountTypeWasProvided() throws Exception {
     // given
     ExportResult input = new ExportResult();
-    input.setCategories(Arrays.asList(
+    input.setCategories(List.of(
         ExportCategory.builder()
             .name(categoryHome().getName())
             .build(),
@@ -398,9 +415,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     filter.setName(filterName);
     final String filterDescription = "some description";
     filter.setDescription(filterDescription);
-    final LocalDate filterFromDate = LocalDate.of(2000, 01, 01);
+    final LocalDate filterFromDate = LocalDate.of(2000, 1, 1);
     filter.setDateFrom(filterFromDate);
-    final LocalDate filterFromTo = LocalDate.of(2020, 01, 01);
+    final LocalDate filterFromTo = LocalDate.of(2020, 1, 1);
     filter.setDateTo(filterFromTo);
     final BigDecimal filterPriceFrom = BigDecimal.valueOf(99L, 2);
     filter.setPriceFrom(filterPriceFrom);
@@ -427,7 +444,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     ExportResult.ExportFilter emptyFilter = new ExportResult.ExportFilter();
     emptyFilter.setName("All empty");
 
-    input.setFilters(Arrays.asList(filter, emptyFilter));
+    input.setFilters(List.of(filter, emptyFilter));
     input.setPeriods(Collections.emptyList());
     input.setHistoryEntries(Collections.emptyList());
 
@@ -450,9 +467,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertThat(filters.get(0).getPriceFrom(), is(filterPriceFrom));
     assertThat(filters.get(0).getPriceTo(), is(filterPriceTo));
     assertThat(filters.get(0).getCategoryIds(), hasSize(1));
-    assertThat(filters.get(0).getCategoryIds().get(0), is(13L));
     assertThat(filters.get(0).getAccountIds(), hasSize(1));
-    assertThat(filters.get(0).getAccountIds().get(0), is(6L));
 
     // TODO empty filter assertions
 
@@ -465,7 +480,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     ExportResult.ExportFilter filterEmptyString = ExportResult.ExportFilter.builder().name("").build();
     ExportResult.ExportFilter filterNullObject = ExportResult.ExportFilter.builder().name(null).build();
     ExportResult.ExportFilter filterWithWhiteblanks = ExportResult.ExportFilter.builder().name("   ").build();
-    input.setFilters(Arrays.asList(filterEmptyString, filterNullObject, filterWithWhiteblanks));
+    input.setFilters(List.of(filterEmptyString, filterNullObject, filterWithWhiteblanks));
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
@@ -543,13 +558,16 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("finalAccountsState[0].balance", is("1010.00")))
         .andExpect(jsonPath("finalAccountsState[0].currency", is("PLN")))
         .andExpect(jsonPath("finalAccountsState[0].accountType", is("Personal")))
-        .andExpect(jsonPath("categories", hasSize(2)))
-        .andExpect(jsonPath("categories[0].name", is(categoryFood().getName())))
-        .andExpect(jsonPath("categories[0].priority", is(categoryFood().getPriority())))
+        .andExpect(jsonPath("categories", hasSize(3)))
+
+        .andExpect(jsonPath("categories[0].name", is(categoryImported().getName())))
+        .andExpect(jsonPath("categories[0].priority", is(categoryImported().getPriority())))
         .andExpect(jsonPath("categories[0].parentCategoryName").doesNotExist())
-        .andExpect(jsonPath("categories[1].name", is("Pizza")))
-        .andExpect(jsonPath("categories[1].priority", is(5)))
-        .andExpect(jsonPath("categories[1].parentCategoryName", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[1].name", is(categoryFood().getName())))
+        .andExpect(jsonPath("categories[1].priority", is(categoryFood().getPriority())))
+        .andExpect(jsonPath("categories[1].parentCategoryName").doesNotExist())
+        .andExpect(jsonPath("categories[2].name", is("Pizza")))
+        .andExpect(jsonPath("categories[2].parentCategoryName", is(categoryFood().getName())))
         .andExpect(jsonPath("periods", hasSize(1)))
         .andExpect(jsonPath("periods[0].startDate", is("2018-08-01")))
         .andExpect(jsonPath("periods[0].endDate", is("2018-08-31")))

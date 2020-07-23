@@ -12,7 +12,13 @@ public class MessagesProvider {
   public static final String EMPTY_ACCOUNT_NAME = "accountValidator.emptyAccountName";
   public static final String EMPTY_ACCOUNT_BALANCE = "accountValidator.emptyAccountBalance";
   public static final String EMPTY_ACCOUNT_TYPE_NAME = "accountValidator.emptyAccountTypeName";
+
+  public static final String EMPTY_ACCOUNT_NUMBER = "accountValidator.emptyAccountNumber";
+  public static final String INVALID_ACCOUNT_NUMBER = "accountValidator.notValidAccountNumber";
+  public static final String INVALID_CONTROL_SUM_FOR_POLISH_ACCOUNT_NUMBER = "accountValidator.notValidControlSumForPolishAccountNumber";
+
   public static final String ACCOUNT_WITH_PROVIDED_NAME_ALREADY_EXISTS = "accountValidator.accountWithProvidedNameAlreadyExists";
+  public static final String BANK_ACCOUNT_NUMBER_ALREADY_EXISTS = "accountValidator.bankAccountNumberAlreadyExists";
   public static final String ACCOUNT_IS_USED_IN_TRANSACTION = "accountValidator.accountIsUsedInTransaction";
   public static final String ACCOUNT_IS_USED_IN_FILTER = "accountValidator.accountIsUsedInFilter";
   public static final String ACCOUNT_CURRENCY_ID_DOES_NOT_EXIST = "accountValidator.accountCurrencyIdDoesNotExist";

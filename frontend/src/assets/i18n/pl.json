@@ -4,6 +4,7 @@
   "account.name": "Nazwa",
   "account.balance": "Saldo",
   "account.balancePLN": "Saldo PLN",
+  "account.bankAccountNumber": "Numer rachunku bankowego",
   "account.exchangeRate": "Kurs",
   "account.currency": "Waluta",
   "account.accountType": "Typ Konta",

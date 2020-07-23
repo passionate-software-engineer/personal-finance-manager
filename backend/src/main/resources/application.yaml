@@ -5,6 +5,8 @@ server:
 
 accessTokenExpiryTimeInMinutes: 15
 refreshTokenExpiryTimeInMinutes: 60
+#  csv parser
+columnSeparator: ';'
 
 spring:
   profiles:
