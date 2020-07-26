@@ -72,6 +72,7 @@ public final class Filter {
   @JsonIgnore
   private Long userId;
 
+  @ApiModelProperty(value = "Is default filter", example = "true")
+  @HistoryField(nullable = true)
   private Boolean isDefault;
-
 }

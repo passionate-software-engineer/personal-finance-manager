@@ -41,5 +41,6 @@ public class FilterRequest {
   @ApiModelProperty(value = "Description", example = "Food filter")
   private String description;
 
+  @ApiModelProperty(value = "Is default filter", example = "true")
   private Boolean isDefault;
 }

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -70,4 +71,10 @@ public interface FilterApi {
   })
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);
+
+  @PatchMapping(value = "/{filterId}/markAsDefault")
+  ResponseEntity<?> setFilterAsDefault(@PathVariable long filterId);
+
+  @PatchMapping(value = "/{filterId}/markAsNotDefault")
+  ResponseEntity<?> setFilterAsNotDefault(@PathVariable long filterId);
 }

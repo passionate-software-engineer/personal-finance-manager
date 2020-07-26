@@ -72,13 +72,16 @@ public class FilterService {
   }
 
   public void checkAnyFilterIsDefault(List<Filter> loadFiltersList) {
-    for (Filter filter : loadFiltersList)
-    {
+    for (Filter filter : loadFiltersList) {
       if (filter.getIsDefault()) {
-        filter.setIsDefault(false);
+        setUpFilterIsNotDefault(filter);
         filterRepository.save(filter);
         break;
       }
     }
+  }
+
+  public void setUpFilterIsNotDefault(Filter filter){
+    filter.setIsDefault(false);
   }
 }
