@@ -646,7 +646,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("historyEntries[5].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))
         .andExpect(jsonPath("historyEntries[5].type", is("ADD")))
         .andExpect(jsonPath("historyEntries[5].object", is("Filter")))
-        .andExpect(jsonPath("historyEntries[5].entries", hasSize(8)))
+        .andExpect(jsonPath("historyEntries[5].entries", hasSize(9)))
         .andExpect(jsonPath("historyEntries[5].entries[0].name", is("name")))
         .andExpect(jsonPath("historyEntries[5].entries[0].newValue", is("Food")))
         .andExpect(jsonPath("historyEntries[5].entries[1].name", is("accountIds")))
