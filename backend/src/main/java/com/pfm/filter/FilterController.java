@@ -132,36 +132,31 @@ public class FilterController implements FilterApi {
   @Override
   public ResponseEntity<?> setFilterAsDefault(long filterId) {
     final boolean updateToBeApplied = SET_FILTER_AS_DEFAULT;
-    long userId = userProvider.getCurrentUserId();
-
-    log.info("Retrieving filter with id: {}", filterId);
-    Optional<Filter> filterOptional = filterService.getFilterByIdAndUserId(filterId, userId);
-    if (filterOptional.isEmpty()) {
-      log.info("No filter with id {} was found, not able to set as default", filterId);
-      return ResponseEntity.notFound().build();
-    }
-    Filter filterToUpdate = filterOptional.get();
-    Filter filter = getNewFilterInstanceWithUpdateApplied(filterToUpdate, updateToBeApplied);
-    historyEntryService.addHistoryEntryOnUpdate(filterToUpdate, filter, userId);
-    return performUpdate(filterId, userId, updateToBeApplied);
+    return getFilterByIdAndApplyUpdate(filterId, updateToBeApplied,
+        "No filter with id {} was found, not able to set as default");
   }
 
   @Override
   public ResponseEntity<?> setFilterAsNotDefault(long filterId) {
     final boolean updateToBeApplied = SET_FILTER_AS_NOT_DEFAULT;
+    return getFilterByIdAndApplyUpdate(filterId, updateToBeApplied,
+        "No filter with id {} was found, not able to set as not default");
+  }
+
+  private ResponseEntity<?> getFilterByIdAndApplyUpdate(long filterId, boolean updateToBeApplied, String messageToBeLogged) {
+
     long userId = userProvider.getCurrentUserId();
 
     log.info("Retrieving filter with id: {}", filterId);
     Optional<Filter> filterOptional = filterService.getFilterByIdAndUserId(filterId, userId);
     if (filterOptional.isEmpty()) {
-      log.info("No filter with id {} was found, not able to set as not default", filterId);
+      log.info(messageToBeLogged, filterId);
       return ResponseEntity.notFound().build();
     }
     Filter filterToUpdate = filterOptional.get();
     Filter filter = getNewFilterInstanceWithUpdateApplied(filterToUpdate, updateToBeApplied);
     historyEntryService.addHistoryEntryOnUpdate(filterToUpdate, filter, userId);
     return performUpdate(filterId, userId, updateToBeApplied);
-
   }
 
   private Filter getNewFilterInstanceWithUpdateApplied(Filter filterToUpdate, boolean updateToBeApplied) {
