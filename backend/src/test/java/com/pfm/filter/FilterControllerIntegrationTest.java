@@ -10,11 +10,10 @@ import static com.pfm.helpers.TestCategoryProvider.categoryFood;
 import static com.pfm.helpers.TestCategoryProvider.categoryHome;
 import static com.pfm.helpers.TestFilterProvider.convertIdsToList;
 import static com.pfm.helpers.TestFilterProvider.filterCarExpenses;
-import static com.pfm.helpers.TestFilterProvider.filterCarExpensesWithoutSettingDefault;
 import static com.pfm.helpers.TestFilterProvider.filterFoodExpenses;
 import static com.pfm.helpers.TestFilterProvider.filterHomeExpensesUpTo200;
-import static com.pfm.helpers.TestFilterProvider.filterIsDefault;
-import static com.pfm.helpers.TestFilterProvider.filterIsNotDefault;
+import static com.pfm.helpers.TestFilterProvider.foodFilter;
+import static com.pfm.helpers.TestFilterProvider.notDefaultFilter;
 import static com.pfm.helpers.TestHelper.convertDoubleToBigDecimal;
 import static com.pfm.helpers.TestUsersProvider.userMarian;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -33,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.pfm.account.Account;
 import com.pfm.helpers.IntegrationTestsBase;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -43,8 +41,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
+
+  public static final boolean DEFAULT = true;
+  public static final boolean NOT_DEFAULT = false;
 
   @BeforeEach
   public void beforeEach() throws Exception {
@@ -54,10 +56,10 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> addFilterParameters() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {filterHomeExpensesUpTo200()},
-        {filterIsDefault()},
-        {filterIsNotDefault()}
+        {foodFilter().setAsDefault()},
+        {foodFilter().setAsNotDefault()}
     });
   }
 
@@ -85,41 +87,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     Filter actualFilter = getFilterById(filterId, token);
     assertThat(actualFilter, is(equalTo(expectedFilter)));
-    assertThat(actualFilter.getIsDefault(), is(expectedFilter.getIsDefault()));
-  }
-
-  @Test
-  public void shouldAddFilterWithSettingDefault() throws Exception {
-    // given
-    Filter filterSetDefault1 = filterHomeExpensesUpTo200();
-    Filter filterSetDefault2 = filterIsDefault();
-    assertThat(filterSetDefault1.getIsDefault(), is(true));
-
-    Long categoryId = callRestToAddCategoryAndReturnId(categoryFood(), token);
-
-    Account account = accountJacekBalance1000();
-    account.setCurrency(currencyService.getCurrencies(userId).get(2));
-    account.setType(accountTypeService.getAccountTypes(userId).get(2));
-
-    Long accountId = callRestServiceToAddAccountAndReturnId(account, token);
-
-    FilterRequest firstFilterToAdd = convertFilterToFilterRequest(filterSetDefault1);
-    firstFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
-    firstFilterToAdd.setAccountIds(convertIdsToList(accountId));
-
-    FilterRequest secondFilterToAdd = convertFilterToFilterRequest(filterSetDefault2);
-    secondFilterToAdd.setCategoryIds(convertIdsToList(categoryId));
-    secondFilterToAdd.setAccountIds(convertIdsToList(accountId));
-
-    // when
-    Long firstFilterId = callRestServiceToAddFilterAndReturnId(firstFilterToAdd, token);
-    Long secondFilterId = callRestServiceToAddFilterAndReturnId(secondFilterToAdd, token);
-
-    // then
-    Filter filter1 = getFilterById(firstFilterId, token);
-    Filter filter2 = getFilterById(secondFilterId, token);
-    assertThat(filter1.getIsDefault(), is(false));
-    assertThat(filter2.getIsDefault(), is(true));
+    assertThat(actualFilter.isDefault(), is(expectedFilter.isDefault()));
   }
 
   @Test
@@ -231,8 +199,8 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   @SuppressWarnings("unused")
   private static Collection<Object[]> updateFilterParameters() {
     return Arrays.asList(new Object[][] {
-        {filterIsDefault().getIsDefault(), filterCarExpenses()},
-        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
+        {foodFilter().isDefault(), filterCarExpenses().setAsDefault()},
+        {notDefaultFilter().isDefault(), filterCarExpenses().setAsNotDefault()}
     });
   }
 
@@ -268,32 +236,31 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
   }
 
   @Test
-  public void shouldChangeFilterDefault() throws Exception {
-    //given
-    Filter filterCurrentlySetDefault = filterIsDefault();
-    Filter filterCurrentlySetNotDefault = filterIsNotDefault();
+  public void shouldSetFilterAsDefault() throws Exception {
+    // given
 
     long categoryId = callRestToAddCategoryAndReturnId(categoryCar(), token);
     Account account = accountJacekBalance1000();
     account.setCurrency(currencyService.getCurrencies(userId).get(2));
     account.setType(accountTypeService.getAccountTypes(userId).get(2));
+    Filter filter = filterCarExpenses();
+
+    assertThat(filterCarExpenses().isDefault(), is(NOT_DEFAULT));
+
+    filterFoodExpenses().setDefault(DEFAULT);
 
     long accountId = callRestServiceToAddAccountAndReturnId(account, token);
-    long SetfilterSetDefaultId = callRestServiceToAddFilterAndReturnId(filterCurrentlySetDefault, token);
-    long SetNotDefaultId = callRestServiceToAddFilterAndReturnId(filterCurrentlySetNotDefault, token);
-    FilterRequest filterSetNotDefaultToSetDefault = FilterRequest.builder()
-        .name("Food")
-        .categoryIds(new ArrayList<>())
-        .accountIds(new ArrayList<>())
-        .isDefault(true)
-        .build();
-    //when
-    callRestServiceToUpdateFilter(SetNotDefaultId, filterSetNotDefaultToSetDefault, token);
-    //then
-    Filter updatedFilter = getFilterById(SetNotDefaultId, token);
-    Filter changedFilter = getFilterById(SetfilterSetDefaultId, token);
-    assertThat(updatedFilter.getIsDefault(), is(true));
-    assertThat(changedFilter.getIsDefault(), is(false));
+
+    long filterCarExpensesId = callRestServiceToAddFilterAndReturnId(filter, token);
+
+    final Filter filterFromDb = getFilterById(filterCarExpensesId, token);
+    assertThat(filterFromDb.isDefault(), is(NOT_DEFAULT));
+
+    final int status = callRestToSetFilterAsDefaultAndReturnResponseStatus(filterCarExpensesId);
+    assertThat(status, is(HttpStatus.OK.value()));
+    final Filter filterFromDbAsDefault = getFilterById(filterCarExpensesId, token);
+    assertThat(filterFromDbAsDefault.isDefault(), is(DEFAULT));
+
   }
 
   @Test

@@ -76,6 +76,9 @@ public abstract class IntegrationTestsBase {
 
   protected static final MediaType JSON_CONTENT_TYPE = MediaType.APPLICATION_JSON;
   protected static final long NOT_EXISTING_ID = 0;
+  private static final String SET_AS_DEFAULT = "/setAsDefault";
+  private static final String SET_AS_NOT_DEFAULT = "/setAsNotDefault";
+
 
   @Autowired
   protected UserService userService;
@@ -528,7 +531,7 @@ public abstract class IntegrationTestsBase {
         .dateTo(filter.getDateTo())
         .priceFrom(filter.getPriceFrom())
         .priceTo(filter.getPriceTo())
-        .isDefault(filter.getIsDefault())
+        .isDefault(filter.isDefault())
         .build();
   }
 
@@ -552,7 +555,7 @@ public abstract class IntegrationTestsBase {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
-        .isDefault(filterRequest.getIsDefault())
+        .isDefault(filterRequest.isDefault())
         .build();
   }
 
@@ -686,6 +689,22 @@ public abstract class IntegrationTestsBase {
       throws Exception {
     callRestToRegisterUserAndReturnUserId(user);
     return callRestToAuthenticateUserAndReturnToken(user);
+  }
+
+  protected int callRestToSetFilterAsDefaultAndReturnResponseStatus(long filterId) throws Exception {
+    return mockMvc.perform(
+        patch(FILTERS_SERVICE_PATH + "/" + filterId + SET_AS_DEFAULT)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
+  }
+
+  protected int callRestToSetFilterAsNotDefault(long filterId) throws Exception {
+    return mockMvc.perform(
+        patch(FILTERS_SERVICE_PATH + "/" + filterId + SET_AS_NOT_DEFAULT)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE))
+        .andReturn().getResponse().getStatus();
   }
 
   private UserDetails jsonToAuthResponse(String jsonAuthResponse) throws Exception {

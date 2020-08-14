@@ -35,7 +35,7 @@ public class FilterController implements FilterApi {
         .priceFrom(filterRequest.getPriceFrom())
         .priceTo(filterRequest.getPriceTo())
         .description(filterRequest.getDescription())
-        .isDefault(filterRequest.getIsDefault())
+        .isDefault(filterRequest.isDefault())
         .build();
   }
 
@@ -177,7 +177,7 @@ public class FilterController implements FilterApi {
     Optional<Filter> filterOptional = filterService.getFilterByIdAndUserId(filterId, userId);
 
     log.info("Attempting to set filter as {} with id {} ", isDefault ? "default" : "not default", filterId);
-    filterOptional.get().setIsDefault(isDefault);
+    filterOptional.get().setDefault(isDefault);
     filterService.updateFilter(filterId, userId, filterOptional.get());
     return ResponseEntity.ok().build();
   }

@@ -42,5 +42,5 @@ public class FilterRequest {
   private String description;
 
   @ApiModelProperty(value = "Is default filter", example = "true")
-  private Boolean isDefault;
+  private boolean isDefault;
 }

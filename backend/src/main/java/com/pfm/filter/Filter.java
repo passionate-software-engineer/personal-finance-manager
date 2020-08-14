@@ -74,5 +74,15 @@ public final class Filter {
 
   @ApiModelProperty(value = "Is default filter", example = "true")
   @HistoryField(nullable = true)
-  private Boolean isDefault;
+  private boolean isDefault;
+
+  public Filter setAsDefault() {
+    this.setDefault(true);
+    return this;
+  }
+
+  public Filter setAsNotDefault() {
+    this.setDefault(false);
+    return this;
+  }
 }

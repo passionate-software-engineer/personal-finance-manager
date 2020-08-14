@@ -49,18 +49,6 @@ public class TestFilterProvider {
         .dateTo(DATE_OF_31ST_DECEMBER_2018)
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
-        .isDefault(true)
-        .build();
-  }
-
-  public static Filter filterCarExpensesWithoutSettingDefault() {
-    return Filter.builder()
-        .name("Car expenses")
-        .dateFrom(DATE_OF_1ST_JANUARY_2018)
-        .dateTo(DATE_OF_31ST_DECEMBER_2018)
-        .categoryIds(new ArrayList<>())
-        .accountIds(new ArrayList<>())
-        .isDefault(false)
         .build();
   }
 
@@ -70,7 +58,6 @@ public class TestFilterProvider {
         .priceTo(convertDoubleToBigDecimal(200))
         .categoryIds(new ArrayList<>())
         .accountIds(new ArrayList<>())
-        .isDefault(true)
         .build();
   }
 
@@ -83,7 +70,7 @@ public class TestFilterProvider {
         .build();
   }
 
-  public static Filter filterWithNameOnly() {
+  public static Filter foodFilter() {
     return Filter.builder()
         .name("Food")
         .categoryIds(new ArrayList<>())
@@ -91,16 +78,7 @@ public class TestFilterProvider {
         .build();
   }
 
-  public static Filter filterIsDefault() {
-    return Filter.builder()
-        .name("Food")
-        .categoryIds(new ArrayList<>())
-        .accountIds(new ArrayList<>())
-        .isDefault(true)
-        .build();
-  }
-
-  public static Filter filterIsNotDefault() {
+  public static Filter notDefaultFilter() {
     return Filter.builder()
         .name("Food")
         .categoryIds(new ArrayList<>())
