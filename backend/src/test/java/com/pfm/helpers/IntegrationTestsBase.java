@@ -691,17 +691,17 @@ public abstract class IntegrationTestsBase {
     return callRestToAuthenticateUserAndReturnToken(user);
   }
 
-  protected int callRestToSetFilterAsDefaultAndReturnResponseStatus(long filterId) throws Exception {
-    return mockMvc.perform(
-        patch(FILTERS_SERVICE_PATH + "/" + filterId + SET_AS_DEFAULT)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE))
-        .andReturn().getResponse().getStatus();
+  protected int callRestToSetFilterAsDefaultAndReturnStatus(long filterId) throws Exception {
+    return callRestToSetDefaultFilterPropertyAndReturnStatus(filterId, SET_AS_DEFAULT);
   }
 
-  protected int callRestToSetFilterAsNotDefault(long filterId) throws Exception {
+  protected int callRestToSetFilterAsNotDefaultAndReturnStatus(long filterId) throws Exception {
+    return callRestToSetDefaultFilterPropertyAndReturnStatus(filterId, SET_AS_NOT_DEFAULT);
+  }
+
+  private int callRestToSetDefaultFilterPropertyAndReturnStatus(long filterId, String uriEnd) throws Exception {
     return mockMvc.perform(
-        patch(FILTERS_SERVICE_PATH + "/" + filterId + SET_AS_NOT_DEFAULT)
+        patch(FILTERS_SERVICE_PATH + "/" + filterId + uriEnd)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(JSON_CONTENT_TYPE))
         .andReturn().getResponse().getStatus();
