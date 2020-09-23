@@ -72,7 +72,7 @@ public interface FilterApi {
   @DeleteMapping(value = "/{filterId}")
   ResponseEntity<?> deleteFilter(@PathVariable long filterId);
 
-  @PatchMapping(value = "/{filterId}/markAsDefault")
+  @PatchMapping(value = "/{filterId}/setAsDefault")
   @ApiOperation(value = "Set filter as default", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
       @ApiResponse(code = 200, message = OK_MESSAGE),
@@ -81,7 +81,7 @@ public interface FilterApi {
   })
   ResponseEntity<?> setFilterAsDefault(@PathVariable long filterId);
 
-  @PatchMapping(value = "/{filterId}/markAsNotDefault")
+  @PatchMapping(value = "/{filterId}/setAsNotDefault")
   @ApiOperation(value = "Set filter as not default", authorizations = {@Authorization(value = BEARER)})
   @ApiResponses({
       @ApiResponse(code = 200, message = OK_MESSAGE),
