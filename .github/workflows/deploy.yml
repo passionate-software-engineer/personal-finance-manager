@@ -14,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Set up JDK 1.13
+    - name: Set up JDK 1.14
       uses: actions/setup-java@v1
       with:
-        java-version: 1.13
+        java-version: 1.14
     
     - name: Build backend
       run: |
@@ -25,11 +25,11 @@ jobs:
           chmod +x gradlew
           ./gradlew build -x generateGitProperties
     
-    - name: Archive backend artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: backend
-        path: backend/build/reports
+#     - name: Archive backend artifacts
+#       uses: actions/upload-artifact@v1
+#       with:
+#         name: backend
+#         path: backend/build/reports
     
     - name: Setup NodeJS
       uses: actions/setup-node@v1
@@ -39,13 +39,15 @@ jobs:
     - name: Build frontend
       run: |
           cd frontend 
-          npm install
-          npm install -g tslint typescript @angular/cli protractor protractor-retry
+          sudo npm install
+          sudo npm install -g tslint typescript @angular/cli protractor protractor-retry
           tslint --config tslint.json --project tsconfig.json
           ng build
       
     - name: Run E2E tests
-      run: ./scripts/run_e2e.sh
+      run: |
+          sudo apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install google-chrome-stable
+          ./scripts/run_e2e.sh
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -56,19 +58,22 @@ jobs:
    
     - name: Deploy backend
       env:
-        EC2_INSTANCE: ec2-3-121-199-74.eu-central-1.compute.amazonaws.com
+        EC2_INSTANCE: ec2-18-184-186-168.eu-central-1.compute.amazonaws.com
+        DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }} 
       run: |
           ssh -i /github/home/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE "mkdir -p app"
+          # TODO improve it to allow app to be started in brand new EC2 instance
+          # ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "[ ! -e 'jdk' ] && wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz && mkdir jdk && tar -C jdk -xvf OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz --strip-components=1 && echo 'export JAVA_HOME=/home/ec2-user/jdk' >> .bash_profile && echo 'PATH=$JAVA_HOME/bin:$PATH' >> .bash_profile"
           scp -i /github/home/.ssh/id_rsa backend/build/libs/backend-1.0.jar ec2-user@$EC2_INSTANCE:/home/ec2-user/app/backend-1.0.jar.new
           scp -i /github/home/.ssh/id_rsa scripts/start_backend.sh ec2-user@$EC2_INSTANCE:/home/ec2-user/app/start_app.sh
-          ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh"
+          ssh -i /github/home/.ssh/id_rsa ec2-user@$EC2_INSTANCE "cd app && source ~/.bash_profile && ./start_app.sh $DATABASE_PASSWORD"
           ./scripts/wait_until_app_is_ready.sh $EC2_INSTANCE
           
     - name: Deploy frontend # TODO simplify it by fixing aws-cli installation in docker image
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        APP_S3_BUCKET: s3://pfm.passionatesoftwareengineer.com
+        APP_S3_BUCKET: s3://pfm-2
       run: |
         cd frontend
         ng build --configuration=aws
@@ -83,7 +88,8 @@ jobs:
         
     - name: Run E2E tests on AWS
       env: 
-        APP_URL: https://pfm.passionatesoftwareengineer.com
+        APP_URL: http://pfm-2.passionatesoftwareengineer.com
       run: |
            webdriver-manager update
+           sudo apt-get -qqy update && apt-get -qqy --assume-yes --no-install-recommends install google-chrome-stable
            protractor frontend/e2e/protractor.conf.js --baseUrl $APP_URL

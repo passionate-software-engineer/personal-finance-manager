@@ -11,7 +11,7 @@ If you want to contribute please contact [Piotr](mailto:piotr@passionatesoftware
 If you want to master your programming skills please visit [our website](https://passionatesoftwareengineer.com).
 
 ## Demo instance
-[Personal Finance Manager demo instance](https://pfm.passionatesoftwareengineer.com)
+[Personal Finance Manager demo instance](https://pfm-2.passionatesoftwareengineer.com)
 
 ## API Reference
 [Swagger API](https://backend.passionatesoftwareengineer.com)
