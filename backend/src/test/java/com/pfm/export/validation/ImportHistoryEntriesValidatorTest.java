@@ -7,17 +7,22 @@ import com.pfm.history.HistoryEntry;
 import com.pfm.history.HistoryEntry.Type;
 import com.pfm.history.HistoryInfo;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ImportHistoryEntriesValidatorTest {
 
-  private ImportHistoryEntriesValidator importHistoryEntriesValidator = new ImportHistoryEntriesValidator();
+  private ImportHistoryEntriesValidator importHistoryEntriesValidator;
+
+  @BeforeEach
+  void setUp() {
+    importHistoryEntriesValidator = new ImportHistoryEntriesValidator();
+  }
 
   @ParameterizedTest
   @MethodSource("historyEntriesValidate")
@@ -36,39 +41,35 @@ class ImportHistoryEntriesValidatorTest {
   static Stream<Arguments> historyEntriesValidate() {
     return Stream.of(
         Arguments.arguments(missingParentId(),
-            Collections.singletonList("History entry ID is missing")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 ID;")),
 
         Arguments.arguments(missingParentDate(),
-            Collections.singletonList("255 history entry ID has missing date")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 date;")),
 
         Arguments.arguments(missingParentObject(),
-            Collections.singletonList("255 history entry ID has missing object")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 object;")),
 
         Arguments.arguments(missingParentType(),
-            Collections.singletonList("255 history entry ID has missing type")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 type;")),
 
         Arguments.arguments(missingChildName(),
-            Collections.singletonList("Entry ID has missing name in history entry ID:255")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 name;")),
 
         Arguments.arguments(missingChildId(),
-            Collections.singletonList("Child entry has missing ID in history entry ID:255")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 id;")),
 
         Arguments.arguments(missingChildNewValue(),
-            Collections.singletonList("Child entry has missing new value in history entry ID:255")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 new value;")),
 
         Arguments.arguments(missingChildOldValue(),
-            Collections.singletonList("Child entry has missing old value in history entry ID:255")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 old value;")),
 
         Arguments.arguments(missingAllData(),
-            Collections.singletonList("History entry ID is missing")),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 ID; date; object; type; entries;")),
 
         Arguments.arguments(onlyParentIdAndChildName(),
-            Arrays.asList("255 history entry ID has missing date",
-                "Child entry has missing ID in history entry ID:255",
-                "Child entry has missing new value in history entry ID:255",
-                "Child entry has missing old value in history entry ID:255",
-                "255 history entry ID has missing object",
-                "255 history entry ID has missing type"))
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 date; object; type;"
+                + " missing in entry number:0 id; new value; old value;"))
     );
   }
 

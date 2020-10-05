@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ImportSumOfAllFundsValidatorTest {
 
-  private ImportSumOfAllFundsValidator importSumOfAllFundsValidator = new ImportSumOfAllFundsValidator();
+  private final ImportSumOfAllFundsValidator importSumOfAllFundsValidator = new ImportSumOfAllFundsValidator();
 
   @ParameterizedTest
   @MethodSource("exportSumValidate")

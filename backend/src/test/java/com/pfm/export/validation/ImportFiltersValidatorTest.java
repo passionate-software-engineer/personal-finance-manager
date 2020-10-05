@@ -6,17 +6,22 @@ import com.pfm.export.ExportResult;
 import com.pfm.export.ExportResult.ExportFilter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ImportFiltersValidatorTest {
 
-  private ImportFiltersValidator importFiltersValidator = new ImportFiltersValidator();
+  private ImportFiltersValidator importFiltersValidator;
+
+  @BeforeEach
+  void setUp() {
+    importFiltersValidator = new ImportFiltersValidator();
+  }
 
   @ParameterizedTest
   @MethodSource("filtersValidate")
@@ -36,40 +41,27 @@ class ImportFiltersValidatorTest {
     return Stream.of(
 
         Arguments.arguments(missingName(),
-            Collections.singletonList("Filter name is missing")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 name;")),
         Arguments.arguments(missingAccounts(),
-            Collections.singletonList("ExampleFilterName filter has missing accounts")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 accounts;")),
         Arguments.arguments(missingCategories(),
-            Collections.singletonList("ExampleFilterName filter has missing categories")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 categories;")),
         Arguments.arguments(missingDateFrom(),
-            Collections.singletonList("ExampleFilterName filter has missing date from")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 date from;")),
         Arguments.arguments(missingDateTo(),
-            Collections.singletonList("ExampleFilterName filter has missing date to")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 date to;")),
         Arguments.arguments(missingDescription(),
-            Collections.singletonList("ExampleFilterName filter has missing description")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 description;")),
         Arguments.arguments(missingPriceFrom(),
-            Collections.singletonList("ExampleFilterName filter has missing price from")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 price from;")),
         Arguments.arguments(missingPriceTo(),
-            Collections.singletonList("ExampleFilterName filter has missing price to")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 price to;")),
         Arguments.arguments(missingAllDate(),
-            Collections.singletonList("Filter name is missing")),
-
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 name; accounts;"
+                + " categories; date from; date to; description; price from; price to;")),
         Arguments.arguments(onlyName(),
-            Arrays.asList("ExampleFilterName filter has missing accounts",
-                "ExampleFilterName filter has missing categories",
-                "ExampleFilterName filter has missing date from",
-                "ExampleFilterName filter has missing date to",
-                "ExampleFilterName filter has missing description",
-                "ExampleFilterName filter has missing price from",
-                "ExampleFilterName filter has missing price to"))
+            Collections.singletonList("All incorrect or missing fields in filters number: 0 accounts;"
+                + " categories; date from; date to; description; price from; price to;"))
 
     );
   }

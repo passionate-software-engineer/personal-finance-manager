@@ -1,53 +1,57 @@
 package com.pfm.export.validation;
 
-import com.pfm.export.ExportResult;
+import com.pfm.export.ExportResult.ExportAccount;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.stereotype.Component;
 
-public class ImportAccountsStateValidator {
+@Component
+public class ImportAccountsStateValidator extends HelperValidator {
 
-  private static final String EMPTY = "";
+  private static final String NAME = " name;";
+  private static final String ACCOUNT_TYPE = " account type;";
+  private static final String BALANCE = " balance;";
+  private static final String CURRENCY = " currency;";
+  private static final String LAST_VERIFICATION_DATE = " last verification date;";
 
-  private static final String ACCOUNT_NAME_MISSING = "Account name is missing in ";
-  private static final String TYPE_MISSING = " account has missing type in ";
-  private static final String BALANCE_MISSING = " account has missing balance in ";
-  private static final String CURRENCY_MISSING = " account has missing currency in ";
-  private static final String LAST_VERIFICATION_DATE_MISSING = " account has missing last verification date in ";
-
-  List<String> validate(List<ExportResult.ExportAccount> inputData, String currentPlaceName) {
+  List<String> validate(List<ExportAccount> inputData, String accountPlace) {
 
     List<String> validationResult = new ArrayList<>();
 
-    if (inputData != null) {
-
-      for (ExportResult.ExportAccount account : inputData) {
-
-        if (checkDataMissing(account.getName())) {
-          validationResult.add(ACCOUNT_NAME_MISSING + currentPlaceName);
-        } else {
-
-          if (checkDataMissing(account.getAccountType())) {
-            validationResult.add(account.getName() + TYPE_MISSING + currentPlaceName);
-          }
-
-          if (checkDataMissing(account.getBalance())) {
-            validationResult.add(account.getName() + BALANCE_MISSING + currentPlaceName);
-          }
-
-          if (checkDataMissing(account.getCurrency())) {
-            validationResult.add(account.getName() + CURRENCY_MISSING + currentPlaceName);
-          }
-
-          if (checkDataMissing(account.getLastVerificationDate())) {
-            validationResult.add(account.getName() + LAST_VERIFICATION_DATE_MISSING + currentPlaceName);
-          }
-        }
+    for (int i = 0; i < inputData.size(); i++) {
+      Optional<String> result = validateAccount(inputData.get(i));
+      if (result.isPresent()) {
+        validationResult.add(createResultMessage(accountPlace, i, result.get()));
       }
     }
     return validationResult;
   }
 
-  private boolean checkDataMissing(Object data) {
-    return data == null || EMPTY.equals(data);
+  Optional<String> validateAccount(ExportAccount inputData) {
+
+    StringBuilder incorrectFields = new StringBuilder();
+
+    if (checkDataMissing(inputData.getName())) {
+      incorrectFields.append(NAME);
+    }
+    if (checkDataMissing(inputData.getAccountType())) {
+      incorrectFields.append(ACCOUNT_TYPE);
+    }
+    if (checkDataMissing(inputData.getBalance())) {
+      incorrectFields.append(BALANCE);
+    }
+    if (checkDataMissing(inputData.getCurrency())) {
+      incorrectFields.append(CURRENCY);
+    }
+    if (checkDataMissing(inputData.getLastVerificationDate())) {
+      incorrectFields.append(LAST_VERIFICATION_DATE);
+    }
+
+    if (incorrectFields.length() > 0) {
+      return Optional.of(incorrectFields.toString());
+    }
+
+    return Optional.empty();
   }
 }

@@ -31,6 +31,16 @@ import org.springframework.http.HttpHeaders;
 
 public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
+  @SuppressWarnings("unused")
+  private static Collection<Object[]> emptyAccountTypeNameParameters() {
+    return Arrays.asList(new Object[][]{
+        {""},
+        {" "},
+        {"    "},
+        {null}
+    });
+  }
+
   @BeforeEach
   public void setUp() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
@@ -120,16 +130,6 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_TYPE_NAME))));
-  }
-
-  @SuppressWarnings("unused")
-  private static Collection<Object[]> emptyAccountTypeNameParameters() {
-    return Arrays.asList(new Object[][]{
-        {""},
-        {" "},
-        {"    "},
-        {null}
-    });
   }
 
   @Test

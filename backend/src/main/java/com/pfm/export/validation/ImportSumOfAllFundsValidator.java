@@ -3,7 +3,9 @@ package com.pfm.export.validation;
 import com.pfm.export.ExportResult;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ImportSumOfAllFundsValidator {
 
   private static final String EMPTY = "";

@@ -6,10 +6,10 @@ import com.pfm.export.ExportResult;
 import com.pfm.export.ExportResult.ExportAccount;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,6 +17,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 class ImportAccountsStateValidatorTest {
 
   private ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
+
+  @BeforeEach
+  void setUp() {
+    importAccountsStateValidator = new ImportAccountsStateValidator();
+  }
 
   @ParameterizedTest
   @MethodSource("accountsStateValidate")
@@ -29,45 +34,28 @@ class ImportAccountsStateValidatorTest {
     // when
     List<String> resultForInitialAccountsState = importAccountsStateValidator.validate(input.getInitialAccountsState(),
         "initial accounts state");
-    List<String> resultForFinalAccountsState = importAccountsStateValidator.validate(input.getFinalAccountsState(),
-        "final accounts state");
 
     // then
     for (int i = 0; i < resultForInitialAccountsState.size(); i++) {
-      assertEquals(expectedMessages.get(i) + "initial accounts state", resultForInitialAccountsState.get(i));
-    }
-
-    for (int i = 0; i < resultForFinalAccountsState.size(); i++) {
-      assertEquals(expectedMessages.get(i) + "final accounts state", resultForFinalAccountsState.get(i));
+      assertEquals(expectedMessages.get(i), resultForInitialAccountsState.get(i));
     }
   }
 
   static Stream<Arguments> accountsStateValidate() {
     return Stream.of(
         Arguments.arguments(missingName(),
-            Collections.singletonList("Account name is missing in ")),
-
+            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 name;")),
         Arguments.arguments(missingAccountType(),
-            Collections.singletonList("ExampleAccountsState account has missing type in ")),
-
+            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 account type;")),
         Arguments.arguments(missingBalance(),
-            Collections.singletonList("ExampleAccountsState account has missing balance in ")),
-
+            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 balance;")),
         Arguments.arguments(missingCurrency(),
-            Collections.singletonList("ExampleAccountsState account has missing currency in ")),
-
+            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 currency;")),
         Arguments.arguments(missingLastVerification(),
-            Collections.singletonList("ExampleAccountsState account has missing last verification date in ")),
-
+            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 last verification date;")),
         Arguments.arguments(missingAllData(),
-            Collections.singletonList("Account name is missing in ")),
-
-        Arguments.arguments(onlyName(),
-            Arrays.asList("ExampleAccountsState account has missing type in ",
-                "ExampleAccountsState account has missing balance in ",
-                "ExampleAccountsState account has missing currency in ",
-                "ExampleAccountsState account has missing last verification date in "))
-    );
+            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0"
+                + " name; account type; balance; currency; last verification date;")));
   }
 
   private static ExportResult.ExportAccount missingName() {
@@ -102,12 +90,6 @@ class ImportAccountsStateValidatorTest {
 
   private static ExportResult.ExportAccount missingAllData() {
     return new ExportAccount();
-  }
-
-  private static ExportResult.ExportAccount onlyName() {
-    ExportResult.ExportAccount exportAccount = new ExportAccount();
-    exportAccount.setName("ExampleAccountsState");
-    return exportAccount;
   }
 
   private static ExportResult.ExportAccount correctAccountsState() {

@@ -3,17 +3,22 @@ package com.pfm.export.validation;
 import com.pfm.export.ExportResult;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ImportValidator {
 
-  private static ImportCategoryValidator categories;
-  private static ImportFiltersValidator filters;
-  private static ImportHistoryEntriesValidator historyEntries;
-  private static ImportAccountsStateValidator accountsState;
-  private static ImportPeriodsValidator periods;
-  private static ImportSumOfAllFundsValidator sumOfAllFunds;
+  private static final String INITIAL_ACCOUNT_STATE = "initial ";
+  private static final String FINAL_ACCOUNT_STATE = "final ";
+
+  private final ImportCategoryValidator categories;
+  private final ImportFiltersValidator filters;
+  private final ImportHistoryEntriesValidator historyEntries;
+  private final ImportAccountsStateValidator accountsState;
+  private final ImportPeriodsValidator periods;
+  private final ImportSumOfAllFundsValidator sumOfAllFunds;
 
   public List<String> validate(ExportResult inputData) {
 
@@ -21,8 +26,8 @@ public class ImportValidator {
 
     validationsResult.addAll(categories.validate(inputData.getCategories()));
     validationsResult.addAll(filters.validate(inputData.getFilters()));
-    validationsResult.addAll(accountsState.validate(inputData.getInitialAccountsState(), "initial accounts state"));
-    validationsResult.addAll(accountsState.validate(inputData.getFinalAccountsState(), "final accounts state"));
+    validationsResult.addAll(accountsState.validate(inputData.getInitialAccountsState(), INITIAL_ACCOUNT_STATE));
+    validationsResult.addAll(accountsState.validate(inputData.getFinalAccountsState(), FINAL_ACCOUNT_STATE));
     validationsResult.addAll(historyEntries.validate(inputData.getHistoryEntries()));
     validationsResult.addAll(periods.validate(inputData.getPeriods()));
     validationsResult.addAll(sumOfAllFunds.validate(inputData));

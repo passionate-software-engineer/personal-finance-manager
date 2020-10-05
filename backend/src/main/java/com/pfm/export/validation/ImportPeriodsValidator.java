@@ -1,121 +1,139 @@
 package com.pfm.export.validation;
 
 import com.pfm.export.ExportResult;
+import com.pfm.export.ExportResult.ExportTransaction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-public class ImportPeriodsValidator {
+@Component
+@AllArgsConstructor
+public class ImportPeriodsValidator extends HelperValidator {
 
-  private static final String EMPTY = "";
+  private static final String DATA_NAME = "periods";
+  private static final String BEGINNING_ACCOUNT_STATE = " beginning account number: ";
+  private static final String END_ACCOUNT_STATE = " end account number: ";
+  private static final String START_DATE = " start date;";
+  private static final String END_DATE = " end date;";
+  private static final String BEGINNING_SUM_OF_ALL_FOUNDS = " beginning sum of all founds;";
+  private static final String BEGINNING_CURRENCY_TO_FOUNDS = " beginning currency founds;";
+  private static final String BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY = " beginning sum of all founds in currency;";
+  private static final String END_SUM_OF_ALL_FOUNDS = " end sum of all founds;";
+  private static final String END_CURRENCY_TO_FOUNDS = " end currency founds;";
+  private static final String END_SUM_OF_ALL_FOUNDS_IN_CURRENCY = " end sum of all founds in currency;";
+  private static final String TRANSACTIONS = " transactions;";
+  private static final String MAIN_TRANSACTION_MESSAGE = " in transaction number: ";
+  private static final String TRANSACTION_DATE = " date;";
+  private static final String TRANSACTION_CATEGORY = " category;";
+  private static final String TRANSACTION_DESCRIPTION = " description;";
+  private static final String TRANSACTION_ENTRIES = " entries;";
+  private static final String TRANSACTION_ENTRIES_MAIN_MESSAGE = " in entry number: ";
+  private static final String TRANSACTION_ENTRY_ACCOUNT = " account;";
+  private static final String TRANSACTION_ENTRY_PRICE = " price;";
 
-  private static final String PERIOD_START_OR_END_DATE_MISSING = "Period has missing start or end date";
-  private static final String TRANSACTION_DATE_MISSING = "Transaction has missing date for period from ";
-  private static final String TRANSACTION_ACCOUNT_MISSING = " has missing account for period from ";
-  private static final String TRANSACTION_PRICE_MISSING = " has missing price for period from ";
-  private static final String TRANSACTION_CATEGORY_MISSING = " has missing category for period from ";
-  private static final String TRANSACTION_DESCRIPTION_MISSING = " has missing description for period from ";
-  private static final String CURRENCY_TO_FOUNDS_MAP_MISSING = "Currency founds missing in ";
-  private static final String SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING = "Sum of all founds missing in ";
-
-  private ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
+  private final ImportAccountsStateValidator importAccountsStateValidator;
 
   List<String> validate(List<ExportResult.ExportPeriod> inputData) {
 
     List<String> validationResult = new ArrayList<>();
 
-    if (inputData != null) {
+    for (int i = 0; i < inputData.size(); i++) {
 
-      for (ExportResult.ExportPeriod period : inputData) {
+      StringBuilder incorrectFields = new StringBuilder();
 
-        if (checkDataMissing(period.getStartDate()) || checkDataMissing(period.getEndDate())) {
-          validationResult.add(PERIOD_START_OR_END_DATE_MISSING);
-        } else {
+      if (checkDataMissing(inputData.get(i).getStartDate())) {
+        incorrectFields.append(START_DATE);
+      }
+      if (checkDataMissing(inputData.get(i).getEndDate())) {
+        incorrectFields.append(END_DATE);
+      }
+      if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod())) {
+        incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS);
+      } else {
+        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getCurrencyToFundsMap())) {
+          incorrectFields.append(BEGINNING_CURRENCY_TO_FOUNDS);
+        }
+        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getSumOfAllFundsInBaseCurrency())) {
+          incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
+        }
+      }
+      if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod())) {
+        incorrectFields.append(END_SUM_OF_ALL_FOUNDS);
+      } else {
+        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getCurrencyToFundsMap())) {
+          incorrectFields.append(END_CURRENCY_TO_FOUNDS);
+        }
+        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getSumOfAllFundsInBaseCurrency())) {
+          incorrectFields.append(END_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
+        }
+      }
+      for (int j = 0; j < inputData.get(i).getAccountStateAtTheBeginningOfPeriod().size(); j++) {
+        Optional<String> result = importAccountsStateValidator
+            .validateAccount(inputData.get(i).getAccountStateAtTheBeginningOfPeriod().get(j));
+        if (result.isPresent()) {
+          incorrectFields.append(BEGINNING_ACCOUNT_STATE).append(j).append(result.get());
+        }
+      }
+      for (int j = 0; j < inputData.get(i).getAccountStateAtTheEndOfPeriod().size(); j++) {
+        Optional<String> result = importAccountsStateValidator
+            .validateAccount(inputData.get(i).getAccountStateAtTheEndOfPeriod().get(j));
+        if (result.isPresent()) {
+          incorrectFields.append(END_ACCOUNT_STATE).append(j).append(result.get());
+        }
+      }
 
-          List<String> beginningAccountsStateLogs = importAccountsStateValidator.validate(period.getAccountStateAtTheBeginningOfPeriod(),
-              "beginning of period from " + period.getStartDate() + " to " + period.getEndDate());
+      if (inputData.get(i).getTransactions().size() == 0) {
+        incorrectFields.append(TRANSACTIONS);
+      } else {
+        List<ExportTransaction> transactions = List.copyOf(inputData.get(i).getTransactions());
+        for (int j = 0; j < transactions.size(); j++) {
 
-          List<String> endAccountsStateLogs = importAccountsStateValidator.validate(period.getAccountStateAtTheEndOfPeriod(),
-              "end of period from " + period.getStartDate() + " to " + period.getEndDate());
+          StringBuilder incorrectTransactionsFields = new StringBuilder();
 
-          if (!beginningAccountsStateLogs.isEmpty()) {
-            validationResult.addAll(beginningAccountsStateLogs);
+          if (checkDataMissing(transactions.get(j).getDate())) {
+            incorrectTransactionsFields.append(TRANSACTION_DATE);
+          }
+          if (checkDataMissing(transactions.get(j).getCategory())) {
+            incorrectTransactionsFields.append(TRANSACTION_CATEGORY);
+          }
+          if (checkDataMissing(transactions.get(j).getDescription())) {
+            incorrectFields.append(TRANSACTION_DESCRIPTION);
           }
 
-          if (!endAccountsStateLogs.isEmpty()) {
-            validationResult.addAll(endAccountsStateLogs);
-          }
+          if (checkDataMissing(transactions.get(j).getAccountPriceEntries())) {
+            incorrectFields.append(TRANSACTION_ENTRIES);
+          } else {
+            for (int k = 0; k < transactions.get(j).getAccountPriceEntries().size(); k++) {
 
-          if (period.getTransactions() != null) {
+              StringBuilder incorrectFieldsInTransactionAccounts = new StringBuilder();
 
-            for (ExportResult.ExportTransaction transaction : period.getTransactions()) {
+              if (checkDataMissing(transactions.get(j).getAccountPriceEntries().get(k).getAccount())) {
+                incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_ACCOUNT);
+              }
+              if (checkDataMissing(transactions.get(j).getAccountPriceEntries().get(k).getPrice())) {
+                incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_PRICE);
+              }
 
-              if (checkDataMissing(transaction.getDate())) {
-                validationResult.add(TRANSACTION_DATE_MISSING
-                    + period.getStartDate() + " to " + period.getEndDate());
-              } else {
-
-                if (transaction.getAccountPriceEntries() != null) {
-
-                  for (ExportResult.ExportAccountPriceEntry priceEntry : transaction.getAccountPriceEntries()) {
-                    if (checkDataMissing(priceEntry.getAccount())) {
-                      validationResult.add("Transaction at: " + transaction.getDate()
-                          + TRANSACTION_ACCOUNT_MISSING
-                          + period.getStartDate() + " to " + period.getEndDate());
-                    }
-
-                    if (checkDataMissing(priceEntry.getPrice())) {
-                      validationResult.add("Transaction at: " + transaction.getDate()
-                          + TRANSACTION_PRICE_MISSING
-                          + period.getStartDate() + " to " + period.getEndDate());
-                    }
-                  }
-                }
-
-                if (checkDataMissing(transaction.getCategory())) {
-                  validationResult.add("Transaction at: " + transaction.getDate()
-                      + TRANSACTION_CATEGORY_MISSING
-                      + period.getStartDate() + " to " + period.getEndDate());
-                }
-
-                if (checkDataMissing(transaction.getDescription())) {
-                  validationResult.add("Transaction at: " + transaction.getDate()
-                      + TRANSACTION_DESCRIPTION_MISSING
-                      + period.getStartDate() + " to " + period.getEndDate());
-                }
+              if (incorrectFieldsInTransactionAccounts.length() > 0) {
+                incorrectTransactionsFields.append(TRANSACTION_ENTRIES_MAIN_MESSAGE)
+                    .append(k).append(incorrectFieldsInTransactionAccounts.toString());
               }
             }
           }
 
-          if (period.getSumOfAllFundsAtTheBeginningOfPeriod() != null) {
-            validateSumOfAllFunds(period.getSumOfAllFundsAtTheBeginningOfPeriod(), validationResult, period,
-                "the beginning of period from ");
-          }
-
-          if (period.getSumOfAllFundsAtTheEndOfPeriod() != null) {
-            validateSumOfAllFunds(period.getSumOfAllFundsAtTheEndOfPeriod(), validationResult, period,
-                "the end of period from ");
+          if (incorrectTransactionsFields.length() > 0) {
+            incorrectFields.append(MAIN_TRANSACTION_MESSAGE).append(j).append(incorrectTransactionsFields.toString());
           }
         }
       }
+
+      if (incorrectFields.length() > 0) {
+        validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
+      }
     }
+
     return validationResult;
-  }
-
-  private void validateSumOfAllFunds(ExportResult.ExportFundsSummary period, List<String> validationsResult,
-      ExportResult.ExportPeriod currentPeriod, String currentPlace) {
-
-    if (checkDataMissing(period.getCurrencyToFundsMap())) {
-      validationsResult.add(CURRENCY_TO_FOUNDS_MAP_MISSING + currentPlace
-          + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-    }
-
-    if (checkDataMissing(period.getSumOfAllFundsInBaseCurrency())) {
-      validationsResult.add(SUM_OF_ALL_FOUNDS_IN_BASE_CURRENCY_MISSING + currentPlace
-          + currentPeriod.getStartDate() + " to " + currentPeriod.getEndDate());
-    }
-  }
-
-  private boolean checkDataMissing(Object data) {
-    return data == null || EMPTY.equals(data);
   }
 }

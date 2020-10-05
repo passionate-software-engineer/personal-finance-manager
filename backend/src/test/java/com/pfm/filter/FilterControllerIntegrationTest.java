@@ -45,12 +45,6 @@ import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
-  @BeforeEach
-  public void beforeEach() throws Exception {
-    userId = callRestToRegisterUserAndReturnUserId(userMarian());
-    token = callRestToAuthenticateUserAndReturnToken(userMarian());
-  }
-
   @SuppressWarnings("unused")
   private static Collection<Object[]> addFilterParameters() {
     return Arrays.asList(new Object[][]{
@@ -58,6 +52,20 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
         {filterIsDefault()},
         {filterIsNotDefault()}
     });
+  }
+
+  @SuppressWarnings("unused")
+  private static Collection<Object[]> updateFilterParameters() {
+    return Arrays.asList(new Object[][]{
+        {filterIsDefault().getIsDefault(), filterCarExpenses()},
+        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
+    });
+  }
+
+  @BeforeEach
+  public void beforeEach() throws Exception {
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }
 
   @ParameterizedTest
@@ -191,14 +199,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     assertThat(actualFilters, contains(expectedFoodExpenses));
     assertThat(actualFilters.contains(expetedCarExpenses), is(false));
-  }
-
-  @SuppressWarnings("unused")
-  private static Collection<Object[]> updateFilterParameters() {
-    return Arrays.asList(new Object[][]{
-        {filterIsDefault().getIsDefault(), filterCarExpenses()},
-        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
-    });
   }
 
   @ParameterizedTest

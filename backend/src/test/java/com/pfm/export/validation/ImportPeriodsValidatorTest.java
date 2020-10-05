@@ -10,17 +10,23 @@ import com.pfm.export.ExportResult.ExportPeriod;
 import com.pfm.export.ExportResult.ExportTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ImportPeriodsValidatorTest {
 
-  private ImportPeriodsValidator importPeriodsValidator = new ImportPeriodsValidator();
+  private ImportPeriodsValidator importPeriodsValidator;
+
+  @BeforeEach
+  void setUp() {
+    ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
+    importPeriodsValidator = new ImportPeriodsValidator(importAccountsStateValidator);
+  }
 
   @ParameterizedTest
   @MethodSource("periodsValidate")
@@ -41,57 +47,45 @@ class ImportPeriodsValidatorTest {
 
   static Stream<Arguments> periodsValidate() {
     return Stream.of(
+
         Arguments.arguments(missingStartDate(),
-            Collections.singletonList("Period has missing start or end date")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 start date;")),
         Arguments.arguments(missingEndDate(),
-            Collections.singletonList("Period has missing start or end date")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 end date;")),
         Arguments.arguments(missingPeriodAccountName(),
-            Arrays.asList("Account name is missing in beginning of period from 2020-01-10 to 2020-01-20",
-                "Account name is missing in end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList(
+                "All incorrect or missing fields in periods number: 0 beginning account number: 0 name; end account number: 0 name;")),
         Arguments.arguments(missingPeriodAccountType(),
-            Arrays.asList("ExampleName account has missing type in beginning of period from 2020-01-10 to 2020-01-20",
-                "ExampleName account has missing type in end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0"
+                + " beginning account number: 0 account type; end account number: 0 account type;")),
         Arguments.arguments(missingPeriodAccountBalance(),
-            Arrays.asList("ExampleName account has missing balance in beginning of period from 2020-01-10 to 2020-01-20",
-                "ExampleName account has missing balance in end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList(
+                "All incorrect or missing fields in periods number: 0 beginning account number: 0 balance; end account number: 0 balance;")),
         Arguments.arguments(missingPeriodAccountCurrency(),
-            Arrays.asList("ExampleName account has missing currency in beginning of period from 2020-01-10 to 2020-01-20",
-                "ExampleName account has missing currency in end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList(
+                "All incorrect or missing fields in periods number: 0 beginning account number: 0 currency; end account number: 0 currency;")),
         Arguments.arguments(missingPeriodAccountLastVerificationDate(),
-            Arrays.asList("ExampleName account has missing last verification date in beginning of period from 2020-01-10 to 2020-01-20",
-                "ExampleName account has missing last verification date in end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 beginning account number: 0 last verification date;"
+                + " end account number: 0 last verification date;")),
         Arguments.arguments(missingTransactionDate(),
-            Collections.singletonList("Transaction has missing date for period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 date;")),
         Arguments.arguments(missingTransactionChildAccount(),
-            Collections.singletonList("Transaction at: 2020-04-10 has missing account for period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 in entry number: 0 account;")),
         Arguments.arguments(missingTransactionChildPrice(),
-            Collections.singletonList("Transaction at: 2020-04-10 has missing price for period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList(
+                "All incorrect or missing fields in periods number: 0 in transaction number: 0 in entry number: 0 price;")),
         Arguments.arguments(missingTransactionCategory(),
-            Collections.singletonList("Transaction at: 2020-04-10 has missing category for period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 category;")),
         Arguments.arguments(missingTransactionDescription(),
-            Collections.singletonList("Transaction at: 2020-04-10 has missing description for period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 description;")),
         Arguments.arguments(missingCurrencyToFoundsMap(),
-            Arrays.asList("Currency founds missing in the beginning of period from 2020-01-10 to 2020-01-20",
-                "Currency founds missing in the end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 beginning currency founds; end currency founds;")),
         Arguments.arguments(missingSumOfAllFundsInBaseCurrency(),
-            Arrays.asList("Sum of all founds missing in the beginning of period from 2020-01-10 to 2020-01-20",
-                "Sum of all founds missing in the end of period from 2020-01-10 to 2020-01-20")),
-
+            Collections.singletonList(
+                "All incorrect or missing fields in periods number: 0 beginning sum of all founds in currency; end sum of all founds in currency;")),
         Arguments.arguments(missingAllData(),
-            Collections.singletonList("Period has missing start or end date")));
+            Collections.singletonList("All incorrect or missing fields in periods number: 0"
+                + " start date; end date; beginning sum of all founds; end sum of all founds; transactions;")));
   }
 
   private static ExportResult.ExportPeriod missingStartDate() {

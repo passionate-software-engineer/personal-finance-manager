@@ -131,16 +131,6 @@ public class TransactionController implements TransactionApi {
     return ResponseEntity.ok().build();
   }
 
-  @Data
-  @NoArgsConstructor
-  @AllArgsConstructor
-  @Builder
-  public static class CommitResult {
-
-    private Long savedTransactionId;
-    private Long recurrentTransactionId;
-  }
-
   @Transactional
   @Override
   public ResponseEntity<?> commitPlannedTransaction(long transactionId,
@@ -260,5 +250,15 @@ public class TransactionController implements TransactionApi {
         .accountPriceEntries(getAccountPriceEntriesNewInstance(toCommit))
         .recurrencePeriod(toCommit.getRecurrencePeriod())
         .build();
+  }
+
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class CommitResult {
+
+    private Long savedTransactionId;
+    private Long recurrentTransactionId;
   }
 }
