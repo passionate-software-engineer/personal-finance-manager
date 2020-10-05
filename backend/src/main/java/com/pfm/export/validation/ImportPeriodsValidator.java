@@ -19,10 +19,8 @@ public class ImportPeriodsValidator extends HelperValidator {
   private static final String START_DATE = " start date;";
   private static final String END_DATE = " end date;";
   private static final String BEGINNING_SUM_OF_ALL_FOUNDS = " beginning sum of all founds;";
-  private static final String BEGINNING_CURRENCY_TO_FOUNDS = " beginning currency founds;";
   private static final String BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY = " beginning sum of all founds in currency;";
   private static final String END_SUM_OF_ALL_FOUNDS = " end sum of all founds;";
-  private static final String END_CURRENCY_TO_FOUNDS = " end currency founds;";
   private static final String END_SUM_OF_ALL_FOUNDS_IN_CURRENCY = " end sum of all founds in currency;";
   private static final String TRANSACTIONS = " transactions;";
   private static final String MAIN_TRANSACTION_MESSAGE = " in transaction number: ";
@@ -54,9 +52,6 @@ public class ImportPeriodsValidator extends HelperValidator {
       if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod())) {
         incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS);
       } else {
-        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getCurrencyToFundsMap())) {
-          incorrectFields.append(BEGINNING_CURRENCY_TO_FOUNDS);
-        }
         if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getSumOfAllFundsInBaseCurrency())) {
           incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
         }
@@ -64,9 +59,6 @@ public class ImportPeriodsValidator extends HelperValidator {
       if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod())) {
         incorrectFields.append(END_SUM_OF_ALL_FOUNDS);
       } else {
-        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getCurrencyToFundsMap())) {
-          incorrectFields.append(END_CURRENCY_TO_FOUNDS);
-        }
         if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getSumOfAllFundsInBaseCurrency())) {
           incorrectFields.append(END_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
         }

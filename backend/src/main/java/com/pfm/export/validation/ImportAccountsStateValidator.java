@@ -10,10 +10,7 @@ import org.springframework.stereotype.Component;
 public class ImportAccountsStateValidator extends HelperValidator {
 
   private static final String NAME = " name;";
-  private static final String ACCOUNT_TYPE = " account type;";
   private static final String BALANCE = " balance;";
-  private static final String CURRENCY = " currency;";
-  private static final String LAST_VERIFICATION_DATE = " last verification date;";
 
   List<String> validate(List<ExportAccount> inputData, String accountPlace) {
 
@@ -35,17 +32,8 @@ public class ImportAccountsStateValidator extends HelperValidator {
     if (checkDataMissing(inputData.getName())) {
       incorrectFields.append(NAME);
     }
-    if (checkDataMissing(inputData.getAccountType())) {
-      incorrectFields.append(ACCOUNT_TYPE);
-    }
     if (checkDataMissing(inputData.getBalance())) {
       incorrectFields.append(BALANCE);
-    }
-    if (checkDataMissing(inputData.getCurrency())) {
-      incorrectFields.append(CURRENCY);
-    }
-    if (checkDataMissing(inputData.getLastVerificationDate())) {
-      incorrectFields.append(LAST_VERIFICATION_DATE);
     }
 
     if (incorrectFields.length() > 0) {

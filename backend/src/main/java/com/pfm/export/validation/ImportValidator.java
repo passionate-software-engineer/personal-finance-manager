@@ -18,7 +18,6 @@ public class ImportValidator {
   private final ImportHistoryEntriesValidator historyEntries;
   private final ImportAccountsStateValidator accountsState;
   private final ImportPeriodsValidator periods;
-  private final ImportSumOfAllFundsValidator sumOfAllFunds;
 
   public List<String> validate(ExportResult inputData) {
 
@@ -30,7 +29,6 @@ public class ImportValidator {
     validationsResult.addAll(accountsState.validate(inputData.getFinalAccountsState(), FINAL_ACCOUNT_STATE));
     validationsResult.addAll(historyEntries.validate(inputData.getHistoryEntries()));
     validationsResult.addAll(periods.validate(inputData.getPeriods()));
-    validationsResult.addAll(sumOfAllFunds.validate(inputData));
 
     return validationsResult;
   }

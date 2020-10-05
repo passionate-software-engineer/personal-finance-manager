@@ -22,17 +22,11 @@ class ImportAccountsStateValidatorTest {
     return Stream.of(
         Arguments.arguments(missingName(),
             Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 name;")),
-        Arguments.arguments(missingAccountType(),
-            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 account type;")),
         Arguments.arguments(missingBalance(),
             Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 balance;")),
-        Arguments.arguments(missingCurrency(),
-            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 currency;")),
-        Arguments.arguments(missingLastVerification(),
-            Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0 last verification date;")),
         Arguments.arguments(missingAllData(),
             Collections.singletonList("All incorrect or missing fields in initial accounts state number: 0"
-                + " name; account type; balance; currency; last verification date;")));
+                + " name; balance;")));
   }
 
   private static ExportResult.ExportAccount missingName() {
@@ -41,27 +35,9 @@ class ImportAccountsStateValidatorTest {
     return exportAccount;
   }
 
-  private static ExportResult.ExportAccount missingAccountType() {
-    ExportResult.ExportAccount exportAccount = correctAccountsState();
-    exportAccount.setAccountType("");
-    return exportAccount;
-  }
-
   private static ExportResult.ExportAccount missingBalance() {
     ExportResult.ExportAccount exportAccount = correctAccountsState();
     exportAccount.setBalance(null);
-    return exportAccount;
-  }
-
-  private static ExportResult.ExportAccount missingCurrency() {
-    ExportResult.ExportAccount exportAccount = correctAccountsState();
-    exportAccount.setCurrency("");
-    return exportAccount;
-  }
-
-  private static ExportResult.ExportAccount missingLastVerification() {
-    ExportResult.ExportAccount exportAccount = correctAccountsState();
-    exportAccount.setLastVerificationDate(null);
     return exportAccount;
   }
 

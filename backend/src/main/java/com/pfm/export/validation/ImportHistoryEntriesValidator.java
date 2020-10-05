@@ -9,15 +9,12 @@ import org.springframework.stereotype.Component;
 public class ImportHistoryEntriesValidator extends HelperValidator {
 
   private static final String DATA_NAME = "history entries";
-  private static final String ID = " ID;";
   private static final String DATE = " date;";
   private static final String OBJECT = " object;";
   private static final String TYPE = " type;";
   private static final String ENTRIES = " entries;";
-  private static final String CHILD_ID = " id;";
   private static final String CHILD_NAME = " name;";
   private static final String CHILD_NEW_VALUE = " new value;";
-  private static final String CHILD_OLD_VALUE = " old value;";
 
   List<String> validate(List<HistoryEntry> inputData) {
 
@@ -29,9 +26,6 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
 
       incorrectFields.setLength(0);
 
-      if (checkDataMissing(inputData.get(i).getId())) {
-        incorrectFields.append(ID);
-      }
       if (checkDataMissing(inputData.get(i).getDate())) {
         incorrectFields.append(DATE);
       }
@@ -48,17 +42,11 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
 
           incorrectChildFields.setLength(0);
 
-          if (checkDataMissing(inputData.get(i).getEntries().get(j).getId())) {
-            incorrectChildFields.append(CHILD_ID);
-          }
           if (checkDataMissing(inputData.get(i).getEntries().get(j).getName())) {
             incorrectChildFields.append(CHILD_NAME);
           }
           if (checkDataMissing(inputData.get(i).getEntries().get(j).getNewValue())) {
             incorrectChildFields.append(CHILD_NEW_VALUE);
-          }
-          if (checkDataMissing(inputData.get(i).getEntries().get(j).getOldValue())) {
-            incorrectChildFields.append(CHILD_OLD_VALUE);
           }
 
           if (incorrectChildFields.length() > 0) {

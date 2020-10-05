@@ -10,7 +10,6 @@ public class ImportCategoryValidator extends HelperValidator {
 
   private static final String DATA_NAME = "category";
   private static final String NAME = " name;";
-  private static final String PARENT_CATEGORY_NAME = " parent category name;";
   private static final String PRIORITY = " priority;";
 
   List<String> validate(List<ExportResult.ExportCategory> inputData) {
@@ -21,12 +20,9 @@ public class ImportCategoryValidator extends HelperValidator {
     for (int i = 0; i < inputData.size(); i++) {
 
       incorrectFields.setLength(0);
-      
+
       if (checkDataMissing(inputData.get(i).getName())) {
         incorrectFields.append(NAME);
-      }
-      if (checkDataMissing(inputData.get(i).getParentCategoryName())) {
-        incorrectFields.append(PARENT_CATEGORY_NAME);
       }
       if (checkPriorityFormat(inputData.get(i).getPriority())) {
         incorrectFields.append(PRIORITY);

@@ -33,8 +33,6 @@ class ImportValidatorTest {
   private ImportAccountsStateValidator accountsState;
   @Mock
   private ImportPeriodsValidator periods;
-  @Mock
-  private ImportSumOfAllFundsValidator sumOfAllFunds;
   @InjectMocks
   private ImportValidator importValidator;
 
@@ -65,7 +63,6 @@ class ImportValidatorTest {
     when(accountsState.validate(exportResult.getFinalAccountsState(), "final ")).thenReturn(Collections.singletonList("finalAccount"));
     when(historyEntries.validate(exportResult.getHistoryEntries())).thenReturn(Collections.singletonList("history"));
     when(periods.validate(exportResult.getPeriods())).thenReturn(Collections.singletonList("periods"));
-    when(sumOfAllFunds.validate(exportResult)).thenReturn(Collections.singletonList("sum"));
 
     final List<String> validationResult = importValidator.validate(exportResult);
 
@@ -75,7 +72,6 @@ class ImportValidatorTest {
     verify(accountsState).validate(exportResult.getFinalAccountsState(), "final ");
     verify(historyEntries).validate(exportResult.getHistoryEntries());
     verify(periods).validate(exportResult.getPeriods());
-    verify(sumOfAllFunds).validate(exportResult);
     Assertions.assertEquals("category", validationResult.get(0));
     Assertions.assertEquals("filters", validationResult.get(1));
     Assertions.assertEquals("initialAccount", validationResult.get(2));
