@@ -19,54 +19,26 @@ class ImportHistoryEntriesValidatorTest {
 
   private ImportHistoryEntriesValidator importHistoryEntriesValidator;
 
-  @BeforeEach
-  void setUp() {
-    importHistoryEntriesValidator = new ImportHistoryEntriesValidator();
-  }
-
-  @ParameterizedTest
-  @MethodSource("historyEntriesValidate")
-  public void shouldReturnErrorLogForMissingData(HistoryEntry inputHistoryEntry, List<String> expectedMessages) {
-    // given
-    ExportResult input = new ExportResult();
-    input.setHistoryEntries(Collections.singletonList(inputHistoryEntry));
-
-    // when
-    List<String> result = importHistoryEntriesValidator.validate(input.getHistoryEntries());
-
-    // then
-    assertArrayEquals(expectedMessages.toArray(), result.toArray());
-  }
-
   static Stream<Arguments> historyEntriesValidate() {
     return Stream.of(
         Arguments.arguments(missingParentId(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 ID;")),
-
         Arguments.arguments(missingParentDate(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 date;")),
-
         Arguments.arguments(missingParentObject(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 object;")),
-
         Arguments.arguments(missingParentType(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 type;")),
-
         Arguments.arguments(missingChildName(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 name;")),
-
         Arguments.arguments(missingChildId(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 id;")),
-
         Arguments.arguments(missingChildNewValue(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 new value;")),
-
         Arguments.arguments(missingChildOldValue(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 old value;")),
-
         Arguments.arguments(missingAllData(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 ID; date; object; type; entries;")),
-
         Arguments.arguments(onlyParentIdAndChildName(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 date; object; type;"
                 + " missing in entry number:0 id; new value; old value;"))
@@ -188,5 +160,24 @@ class ImportHistoryEntriesValidatorTest {
     historyInfo.setOldValue("OldValue");
 
     return Collections.singletonList(historyInfo);
+  }
+
+  @BeforeEach
+  void setUp() {
+    importHistoryEntriesValidator = new ImportHistoryEntriesValidator();
+  }
+
+  @ParameterizedTest
+  @MethodSource("historyEntriesValidate")
+  public void shouldReturnErrorLogForMissingData(HistoryEntry inputHistoryEntry, List<String> expectedMessages) {
+    // given
+    ExportResult input = new ExportResult();
+    input.setHistoryEntries(Collections.singletonList(inputHistoryEntry));
+
+    // when
+    List<String> result = importHistoryEntriesValidator.validate(input.getHistoryEntries());
+
+    // then
+    assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 }

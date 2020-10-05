@@ -16,16 +16,6 @@ class ImportSumOfAllFundsValidatorTest {
 
   private final ImportSumOfAllFundsValidator importSumOfAllFundsValidator = new ImportSumOfAllFundsValidator();
 
-  @ParameterizedTest
-  @MethodSource("exportSumValidate")
-  public void shouldReturnErrorLogForMissingData(ExportResult inputSum, List<String> expectedMessages) {
-    // when
-    List<String> result = importSumOfAllFundsValidator.validate(inputSum);
-
-    // then
-    assertArrayEquals(expectedMessages.toArray(), result.toArray());
-  }
-
   static Stream<Arguments> exportSumValidate() {
     return Stream.of(
         Arguments.arguments(missingStartSum(),
@@ -61,5 +51,15 @@ class ImportSumOfAllFundsValidatorTest {
         .build());
 
     return exportResult;
+  }
+
+  @ParameterizedTest
+  @MethodSource("exportSumValidate")
+  public void shouldReturnErrorLogForMissingData(ExportResult inputSum, List<String> expectedMessages) {
+    // when
+    List<String> result = importSumOfAllFundsValidator.validate(inputSum);
+
+    // then
+    assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 }

@@ -16,11 +16,12 @@ public class ImportCategoryValidator extends HelperValidator {
   List<String> validate(List<ExportResult.ExportCategory> inputData) {
 
     List<String> validationResult = new ArrayList<>();
+    StringBuilder incorrectFields = new StringBuilder();
 
     for (int i = 0; i < inputData.size(); i++) {
 
-      StringBuilder incorrectFields = new StringBuilder();
-
+      incorrectFields.setLength(0);
+      
       if (checkDataMissing(inputData.get(i).getName())) {
         incorrectFields.append(NAME);
       }

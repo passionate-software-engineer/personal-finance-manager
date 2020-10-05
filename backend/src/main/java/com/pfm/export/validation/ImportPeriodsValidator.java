@@ -1,6 +1,7 @@
 package com.pfm.export.validation;
 
 import com.pfm.export.ExportResult;
+import com.pfm.export.ExportResult.ExportAccountPriceEntry;
 import com.pfm.export.ExportResult.ExportTransaction;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +39,11 @@ public class ImportPeriodsValidator extends HelperValidator {
   List<String> validate(List<ExportResult.ExportPeriod> inputData) {
 
     List<String> validationResult = new ArrayList<>();
+    StringBuilder incorrectFields = new StringBuilder();
 
     for (int i = 0; i < inputData.size(); i++) {
 
-      StringBuilder incorrectFields = new StringBuilder();
+      incorrectFields.setLength(0);
 
       if (checkDataMissing(inputData.get(i).getStartDate())) {
         incorrectFields.append(START_DATE);
@@ -87,53 +89,69 @@ public class ImportPeriodsValidator extends HelperValidator {
       if (inputData.get(i).getTransactions().size() == 0) {
         incorrectFields.append(TRANSACTIONS);
       } else {
-        List<ExportTransaction> transactions = List.copyOf(inputData.get(i).getTransactions());
-        for (int j = 0; j < transactions.size(); j++) {
+        Optional<String> result = validateTransactions(List.copyOf(inputData.get(i).getTransactions()));
+        result.ifPresent(incorrectFields::append);
 
-          StringBuilder incorrectTransactionsFields = new StringBuilder();
-
-          if (checkDataMissing(transactions.get(j).getDate())) {
-            incorrectTransactionsFields.append(TRANSACTION_DATE);
-          }
-          if (checkDataMissing(transactions.get(j).getCategory())) {
-            incorrectTransactionsFields.append(TRANSACTION_CATEGORY);
-          }
-          if (checkDataMissing(transactions.get(j).getDescription())) {
-            incorrectFields.append(TRANSACTION_DESCRIPTION);
-          }
-
-          if (checkDataMissing(transactions.get(j).getAccountPriceEntries())) {
-            incorrectFields.append(TRANSACTION_ENTRIES);
-          } else {
-            for (int k = 0; k < transactions.get(j).getAccountPriceEntries().size(); k++) {
-
-              StringBuilder incorrectFieldsInTransactionAccounts = new StringBuilder();
-
-              if (checkDataMissing(transactions.get(j).getAccountPriceEntries().get(k).getAccount())) {
-                incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_ACCOUNT);
-              }
-              if (checkDataMissing(transactions.get(j).getAccountPriceEntries().get(k).getPrice())) {
-                incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_PRICE);
-              }
-
-              if (incorrectFieldsInTransactionAccounts.length() > 0) {
-                incorrectTransactionsFields.append(TRANSACTION_ENTRIES_MAIN_MESSAGE)
-                    .append(k).append(incorrectFieldsInTransactionAccounts.toString());
-              }
-            }
-          }
-
-          if (incorrectTransactionsFields.length() > 0) {
-            incorrectFields.append(MAIN_TRANSACTION_MESSAGE).append(j).append(incorrectTransactionsFields.toString());
-          }
+        if (incorrectFields.length() > 0) {
+          validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
         }
-      }
-
-      if (incorrectFields.length() > 0) {
-        validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
       }
     }
 
     return validationResult;
+  }
+
+  private Optional<String> validateTransactions(List<ExportTransaction> transactions) {
+
+    StringBuilder incorrectTransactionsFields = new StringBuilder();
+
+    for (int j = 0; j < transactions.size(); j++) {
+
+      incorrectTransactionsFields.setLength(0);
+
+      if (checkDataMissing(transactions.get(j).getDate())) {
+        incorrectTransactionsFields.append(TRANSACTION_DATE);
+      }
+      if (checkDataMissing(transactions.get(j).getCategory())) {
+        incorrectTransactionsFields.append(TRANSACTION_CATEGORY);
+      }
+      if (checkDataMissing(transactions.get(j).getDescription())) {
+        incorrectTransactionsFields.append(TRANSACTION_DESCRIPTION);
+      }
+
+      if (checkDataMissing(transactions.get(j).getAccountPriceEntries())) {
+        incorrectTransactionsFields.append(TRANSACTION_ENTRIES);
+      } else {
+        Optional<String> result = validateEntries(transactions.get(j).getAccountPriceEntries());
+        result.ifPresent(incorrectTransactionsFields::append);
+      }
+
+      if (incorrectTransactionsFields.length() > 0) {
+        return Optional.of(MAIN_TRANSACTION_MESSAGE + j + incorrectTransactionsFields.toString());
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<String> validateEntries(List<ExportAccountPriceEntry> entries) {
+
+    StringBuilder incorrectFieldsInTransactionAccounts = new StringBuilder();
+
+    for (int k = 0; k < entries.size(); k++) {
+
+      incorrectFieldsInTransactionAccounts.setLength(0);
+
+      if (checkDataMissing(entries.get(k).getAccount())) {
+        incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_ACCOUNT);
+      }
+      if (checkDataMissing(entries.get(k).getPrice())) {
+        incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_PRICE);
+      }
+
+      if (incorrectFieldsInTransactionAccounts.length() > 0) {
+        return Optional.of(TRANSACTION_ENTRIES_MAIN_MESSAGE + k + incorrectFieldsInTransactionAccounts.toString());
+      }
+    }
+    return Optional.empty();
   }
 }

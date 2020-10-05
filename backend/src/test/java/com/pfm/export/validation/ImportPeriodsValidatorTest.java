@@ -39,9 +39,6 @@ class ImportPeriodsValidatorTest {
     List<String> result = importPeriodsValidator.validate(input.getPeriods());
 
     // then
-    for (String errorLog : result) {
-      System.out.println(errorLog);
-    }
     assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 
@@ -77,15 +74,12 @@ class ImportPeriodsValidatorTest {
         Arguments.arguments(missingTransactionCategory(),
             Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 category;")),
         Arguments.arguments(missingTransactionDescription(),
-            Collections.singletonList("All incorrect or missing fields in periods number: 0 description;")),
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 description;")),
         Arguments.arguments(missingCurrencyToFoundsMap(),
             Collections.singletonList("All incorrect or missing fields in periods number: 0 beginning currency founds; end currency founds;")),
         Arguments.arguments(missingSumOfAllFundsInBaseCurrency(),
             Collections.singletonList(
-                "All incorrect or missing fields in periods number: 0 beginning sum of all founds in currency; end sum of all founds in currency;")),
-        Arguments.arguments(missingAllData(),
-            Collections.singletonList("All incorrect or missing fields in periods number: 0"
-                + " start date; end date; beginning sum of all founds; end sum of all founds; transactions;")));
+                "All incorrect or missing fields in periods number: 0 beginning sum of all founds in currency; end sum of all founds in currency;")));
   }
 
   private static ExportResult.ExportPeriod missingStartDate() {
@@ -261,10 +255,6 @@ class ImportPeriodsValidatorTest {
     exportPeriod.setSumOfAllFundsAtTheEndOfPeriod(fundsSummary);
 
     return exportPeriod;
-  }
-
-  private static ExportResult.ExportPeriod missingAllData() {
-    return new ExportPeriod();
   }
 
   private static ExportResult.ExportPeriod correctPeriod() {

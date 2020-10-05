@@ -3,7 +3,7 @@ package com.pfm.export.validation;
 import org.springframework.stereotype.Component;
 
 @Component
-public abstract class HelperValidator {
+public class HelperValidator {
 
   private static final String EMPTY = "";
   private static final String MAIN_MESSAGE = "All incorrect or missing fields in ";

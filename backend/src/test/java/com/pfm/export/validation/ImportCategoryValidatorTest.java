@@ -16,25 +16,6 @@ class ImportCategoryValidatorTest {
 
   private ImportCategoryValidator importCategoryValidator;
 
-  @BeforeEach
-  void setUp() {
-    importCategoryValidator = new ImportCategoryValidator();
-  }
-
-  @ParameterizedTest
-  @MethodSource("categoryValidate")
-  public void shouldReturnErrorLogForMissingData(ExportCategory inputCategory, List<String> expectedMessages) {
-    // given
-    ExportResult input = new ExportResult();
-    input.setCategories(Collections.singletonList(inputCategory));
-
-    // when
-    List<String> result = importCategoryValidator.validate(input.getCategories());
-
-    // then
-    assertArrayEquals(expectedMessages.toArray(), result.toArray());
-  }
-
   static Stream<Arguments> categoryValidate() {
     return Stream.of(
         Arguments.arguments(missingName(),
@@ -84,5 +65,24 @@ class ImportCategoryValidatorTest {
         .parentCategoryName("ParentCategoryName")
         .priority(100)
         .build();
+  }
+
+  @BeforeEach
+  void setUp() {
+    importCategoryValidator = new ImportCategoryValidator();
+  }
+
+  @ParameterizedTest
+  @MethodSource("categoryValidate")
+  public void shouldReturnErrorLogForMissingData(ExportCategory inputCategory, List<String> expectedMessages) {
+    // given
+    ExportResult input = new ExportResult();
+    input.setCategories(Collections.singletonList(inputCategory));
+
+    // when
+    List<String> result = importCategoryValidator.validate(input.getCategories());
+
+    // then
+    assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 }

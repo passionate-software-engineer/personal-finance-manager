@@ -18,29 +18,6 @@ class ImportAccountsStateValidatorTest {
 
   private ImportAccountsStateValidator importAccountsStateValidator = new ImportAccountsStateValidator();
 
-  @BeforeEach
-  void setUp() {
-    importAccountsStateValidator = new ImportAccountsStateValidator();
-  }
-
-  @ParameterizedTest
-  @MethodSource("accountsStateValidate")
-  public void shouldReturnErrorLogForMissingData(ExportAccount inputAccount, List<String> expectedMessages) {
-    // given
-    ExportResult input = new ExportResult();
-    input.setInitialAccountsState(Collections.singletonList(inputAccount));
-    input.setFinalAccountsState(Collections.singletonList(inputAccount));
-
-    // when
-    List<String> resultForInitialAccountsState = importAccountsStateValidator.validate(input.getInitialAccountsState(),
-        "initial accounts state");
-
-    // then
-    for (int i = 0; i < resultForInitialAccountsState.size(); i++) {
-      assertEquals(expectedMessages.get(i), resultForInitialAccountsState.get(i));
-    }
-  }
-
   static Stream<Arguments> accountsStateValidate() {
     return Stream.of(
         Arguments.arguments(missingName(),
@@ -101,5 +78,28 @@ class ImportAccountsStateValidatorTest {
         .currency("ExampleCurrency")
         .lastVerificationDate(LocalDate.now())
         .build();
+  }
+
+  @BeforeEach
+  void setUp() {
+    importAccountsStateValidator = new ImportAccountsStateValidator();
+  }
+
+  @ParameterizedTest
+  @MethodSource("accountsStateValidate")
+  public void shouldReturnErrorLogForMissingData(ExportAccount inputAccount, List<String> expectedMessages) {
+    // given
+    ExportResult input = new ExportResult();
+    input.setInitialAccountsState(Collections.singletonList(inputAccount));
+    input.setFinalAccountsState(Collections.singletonList(inputAccount));
+
+    // when
+    List<String> resultForInitialAccountsState = importAccountsStateValidator.validate(input.getInitialAccountsState(),
+        "initial accounts state");
+
+    // then
+    for (int i = 0; i < resultForInitialAccountsState.size(); i++) {
+      assertEquals(expectedMessages.get(i), resultForInitialAccountsState.get(i));
+    }
   }
 }

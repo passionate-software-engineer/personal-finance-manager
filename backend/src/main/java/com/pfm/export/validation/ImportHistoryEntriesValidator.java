@@ -22,10 +22,12 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
   List<String> validate(List<HistoryEntry> inputData) {
 
     List<String> validationResult = new ArrayList<>();
+    StringBuilder incorrectFields = new StringBuilder();
+    StringBuilder incorrectChildFields = new StringBuilder();
 
     for (int i = 0; i < inputData.size(); i++) {
 
-      StringBuilder incorrectFields = new StringBuilder();
+      incorrectFields.setLength(0);
 
       if (checkDataMissing(inputData.get(i).getId())) {
         incorrectFields.append(ID);
@@ -44,7 +46,7 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
       } else {
         for (int j = 0; j < inputData.get(i).getEntries().size(); j++) {
 
-          StringBuilder incorrectChildFields = new StringBuilder();
+          incorrectChildFields.setLength(0);
 
           if (checkDataMissing(inputData.get(i).getEntries().get(j).getId())) {
             incorrectChildFields.append(CHILD_ID);

@@ -18,25 +18,6 @@ class ImportFiltersValidatorTest {
 
   private ImportFiltersValidator importFiltersValidator;
 
-  @BeforeEach
-  void setUp() {
-    importFiltersValidator = new ImportFiltersValidator();
-  }
-
-  @ParameterizedTest
-  @MethodSource("filtersValidate")
-  public void shouldReturnErrorLogForMissingData(ExportFilter inputFilter, List<String> expectedMessages) {
-    // given
-    ExportResult input = new ExportResult();
-    input.setFilters(Collections.singletonList(inputFilter));
-
-    // when
-    List<String> result = importFiltersValidator.validate(input.getFilters());
-
-    // then
-    assertArrayEquals(expectedMessages.toArray(), result.toArray());
-  }
-
   static Stream<Arguments> filtersValidate() {
     return Stream.of(
 
@@ -135,5 +116,24 @@ class ImportFiltersValidatorTest {
         .priceFrom(BigDecimal.valueOf(10))
         .priceTo(BigDecimal.valueOf(100))
         .build();
+  }
+
+  @BeforeEach
+  void setUp() {
+    importFiltersValidator = new ImportFiltersValidator();
+  }
+
+  @ParameterizedTest
+  @MethodSource("filtersValidate")
+  public void shouldReturnErrorLogForMissingData(ExportFilter inputFilter, List<String> expectedMessages) {
+    // given
+    ExportResult input = new ExportResult();
+    input.setFilters(Collections.singletonList(inputFilter));
+
+    // when
+    List<String> result = importFiltersValidator.validate(input.getFilters());
+
+    // then
+    assertArrayEquals(expectedMessages.toArray(), result.toArray());
   }
 }
