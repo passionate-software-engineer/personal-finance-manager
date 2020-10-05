@@ -67,7 +67,7 @@ class ImportValidatorTest {
     when(periods.validate(exportResult.getPeriods())).thenReturn(Collections.singletonList("periods"));
     when(sumOfAllFunds.validate(exportResult)).thenReturn(Collections.singletonList("sum"));
 
-    List<String> validationResult = importValidator.validate(exportResult);
+    final List<String> validationResult = importValidator.validate(exportResult);
 
     verify(categories).validate(exportResult.getCategories());
     verify(filters).validate(exportResult.getFilters());
