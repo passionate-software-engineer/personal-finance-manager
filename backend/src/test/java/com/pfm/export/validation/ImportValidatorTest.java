@@ -42,11 +42,11 @@ class ImportValidatorTest {
 
   @BeforeEach
   void setUp() {
-    List<ExportCategory> exportCategories = new ArrayList<>();
-    List<ExportFilter> exportFilters = new ArrayList<>();
-    List<ExportAccount> exportAccounts = new ArrayList<>();
-    List<HistoryEntry> historyEntries = new ArrayList<>();
-    List<ExportPeriod> exportPeriods = new ArrayList<>();
+    final List<ExportCategory> exportCategories = new ArrayList<>();
+    final List<ExportFilter> exportFilters = new ArrayList<>();
+    final List<ExportAccount> exportAccounts = new ArrayList<>();
+    final List<HistoryEntry> historyEntries = new ArrayList<>();
+    final List<ExportPeriod> exportPeriods = new ArrayList<>();
 
     exportResult = new ExportResult();
     exportResult.setCategories(exportCategories);
