@@ -78,6 +78,5 @@ class ImportValidatorTest {
     Assertions.assertEquals("finalAccount", validationResult.get(3));
     Assertions.assertEquals("history", validationResult.get(4));
     Assertions.assertEquals("periods", validationResult.get(5));
-    Assertions.assertEquals("sum", validationResult.get(6));
   }
 }

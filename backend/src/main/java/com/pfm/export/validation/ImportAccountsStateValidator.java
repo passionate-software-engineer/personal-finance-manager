@@ -16,10 +16,12 @@ public class ImportAccountsStateValidator extends HelperValidator {
 
     List<String> validationResult = new ArrayList<>();
 
-    for (int i = 0; i < inputData.size(); i++) {
-      Optional<String> result = validateAccount(inputData.get(i));
-      if (result.isPresent()) {
-        validationResult.add(createResultMessage(accountPlace, i, result.get()));
+    if (inputData != null) {
+      for (int i = 0; i < inputData.size(); i++) {
+        Optional<String> result = validateAccount(inputData.get(i));
+        if (result.isPresent()) {
+          validationResult.add(createResultMessage(accountPlace, i, result.get()));
+        }
       }
     }
     return validationResult;

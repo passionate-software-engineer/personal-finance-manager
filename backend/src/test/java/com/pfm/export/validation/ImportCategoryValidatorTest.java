@@ -20,24 +20,16 @@ class ImportCategoryValidatorTest {
     return Stream.of(
         Arguments.arguments(missingName(),
             Collections.singletonList("All incorrect or missing fields in category number: 0 name;")),
-        Arguments.arguments(incorrectPriority(),
-            Collections.singletonList("All incorrect or missing fields in category number: 0 priority;")),
         Arguments.arguments(onlyName(),
-            Collections.singletonList("All incorrect or missing fields in category number: 0 parent category name; priority;")),
+            Collections.emptyList()),
         Arguments.arguments(missingAllData(),
-            Collections.singletonList("All incorrect or missing fields in category number: 0 name; priority;"))
+            Collections.singletonList("All incorrect or missing fields in category number: 0 name;"))
     );
   }
 
   private static ExportResult.ExportCategory missingName() {
     ExportCategory exportCategory = correctCategory();
     exportCategory.setName("");
-    return exportCategory;
-  }
-
-  private static ExportResult.ExportCategory incorrectPriority() {
-    ExportCategory exportCategory = correctCategory();
-    exportCategory.setPriority(9999999);
     return exportCategory;
   }
 

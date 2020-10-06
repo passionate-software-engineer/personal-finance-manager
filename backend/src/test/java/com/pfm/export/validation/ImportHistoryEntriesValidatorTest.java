@@ -21,8 +21,6 @@ class ImportHistoryEntriesValidatorTest {
 
   static Stream<Arguments> historyEntriesValidate() {
     return Stream.of(
-        Arguments.arguments(missingParentId(),
-            Collections.singletonList("All incorrect or missing fields in history entries number: 0 ID;")),
         Arguments.arguments(missingParentDate(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 date;")),
         Arguments.arguments(missingParentObject(),
@@ -31,24 +29,12 @@ class ImportHistoryEntriesValidatorTest {
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 type;")),
         Arguments.arguments(missingChildName(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 name;")),
-        Arguments.arguments(missingChildId(),
-            Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 id;")),
         Arguments.arguments(missingChildNewValue(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 new value;")),
-        Arguments.arguments(missingChildOldValue(),
-            Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 old value;")),
-        Arguments.arguments(missingAllData(),
-            Collections.singletonList("All incorrect or missing fields in history entries number: 0 ID; date; object; type; entries;")),
         Arguments.arguments(onlyParentIdAndChildName(),
-            Collections.singletonList("All incorrect or missing fields in history entries number: 0 date; object; type;"
-                + " missing in entry number:0 id; new value; old value;"))
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0"
+                + " date; object; type; missing in entry number:0 new value;"))
     );
-  }
-
-  private static HistoryEntry missingParentId() {
-    HistoryEntry historyEntry = correctHistoryEntry();
-    historyEntry.setId(null);
-    return historyEntry;
   }
 
   private static HistoryEntry missingParentDate() {
@@ -83,20 +69,6 @@ class ImportHistoryEntriesValidatorTest {
     return historyEntry;
   }
 
-  private static HistoryEntry missingChildId() {
-    HistoryEntry historyEntry = correctHistoryEntry();
-
-    List<HistoryInfo> historyInfo = correctEntry();
-
-    for (HistoryInfo historyInfo1 : historyInfo) {
-      historyInfo1.setId(null);
-    }
-
-    historyEntry.setEntries(historyInfo);
-
-    return historyEntry;
-  }
-
   private static HistoryEntry missingChildNewValue() {
     HistoryEntry historyEntry = correctHistoryEntry();
 
@@ -109,24 +81,6 @@ class ImportHistoryEntriesValidatorTest {
     historyEntry.setEntries(historyInfo);
 
     return historyEntry;
-  }
-
-  private static HistoryEntry missingChildOldValue() {
-    HistoryEntry historyEntry = correctHistoryEntry();
-
-    List<HistoryInfo> historyInfo = correctEntry();
-
-    for (HistoryInfo historyInfo1 : historyInfo) {
-      historyInfo1.setOldValue("");
-    }
-
-    historyEntry.setEntries(historyInfo);
-
-    return historyEntry;
-  }
-
-  private static HistoryEntry missingAllData() {
-    return new HistoryEntry();
   }
 
   private static HistoryEntry onlyParentIdAndChildName() {

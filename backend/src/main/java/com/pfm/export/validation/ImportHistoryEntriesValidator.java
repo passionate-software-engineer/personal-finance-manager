@@ -22,41 +22,43 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
     StringBuilder incorrectFields = new StringBuilder();
     StringBuilder incorrectChildFields = new StringBuilder();
 
-    for (int i = 0; i < inputData.size(); i++) {
+    if (inputData != null) {
+      for (int i = 0; i < inputData.size(); i++) {
 
-      incorrectFields.setLength(0);
+        incorrectFields.setLength(0);
 
-      if (checkDataMissing(inputData.get(i).getDate())) {
-        incorrectFields.append(DATE);
-      }
-      if (checkDataMissing(inputData.get(i).getObject())) {
-        incorrectFields.append(OBJECT);
-      }
-      if (checkDataMissing(inputData.get(i).getType())) {
-        incorrectFields.append(TYPE);
-      }
-      if (inputData.get(i).getEntries() == null) {
-        incorrectFields.append(ENTRIES);
-      } else {
-        for (int j = 0; j < inputData.get(i).getEntries().size(); j++) {
+        if (checkDataMissing(inputData.get(i).getDate())) {
+          incorrectFields.append(DATE);
+        }
+        if (checkDataMissing(inputData.get(i).getObject())) {
+          incorrectFields.append(OBJECT);
+        }
+        if (checkDataMissing(inputData.get(i).getType())) {
+          incorrectFields.append(TYPE);
+        }
+        if (inputData.get(i).getEntries() == null) {
+          incorrectFields.append(ENTRIES);
+        } else {
+          for (int j = 0; j < inputData.get(i).getEntries().size(); j++) {
 
-          incorrectChildFields.setLength(0);
+            incorrectChildFields.setLength(0);
 
-          if (checkDataMissing(inputData.get(i).getEntries().get(j).getName())) {
-            incorrectChildFields.append(CHILD_NAME);
-          }
-          if (checkDataMissing(inputData.get(i).getEntries().get(j).getNewValue())) {
-            incorrectChildFields.append(CHILD_NEW_VALUE);
-          }
+            if (checkDataMissing(inputData.get(i).getEntries().get(j).getName())) {
+              incorrectChildFields.append(CHILD_NAME);
+            }
+            if (checkDataMissing(inputData.get(i).getEntries().get(j).getNewValue())) {
+              incorrectChildFields.append(CHILD_NEW_VALUE);
+            }
 
-          if (incorrectChildFields.length() > 0) {
-            incorrectFields.append(getChildMessage(incorrectChildFields.toString(), j));
+            if (incorrectChildFields.length() > 0) {
+              incorrectFields.append(getChildMessage(incorrectChildFields.toString(), j));
+            }
           }
         }
-      }
 
-      if (incorrectFields.length() > 0) {
-        validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
+        if (incorrectFields.length() > 0) {
+          validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
+        }
       }
     }
 

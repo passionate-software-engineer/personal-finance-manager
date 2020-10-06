@@ -52,18 +52,9 @@ class ImportPeriodsValidatorTest {
         Arguments.arguments(missingPeriodAccountName(),
             Collections.singletonList(
                 "All incorrect or missing fields in periods number: 0 beginning account number: 0 name; end account number: 0 name;")),
-        Arguments.arguments(missingPeriodAccountType(),
-            Collections.singletonList("All incorrect or missing fields in periods number: 0"
-                + " beginning account number: 0 account type; end account number: 0 account type;")),
         Arguments.arguments(missingPeriodAccountBalance(),
             Collections.singletonList(
                 "All incorrect or missing fields in periods number: 0 beginning account number: 0 balance; end account number: 0 balance;")),
-        Arguments.arguments(missingPeriodAccountCurrency(),
-            Collections.singletonList(
-                "All incorrect or missing fields in periods number: 0 beginning account number: 0 currency; end account number: 0 currency;")),
-        Arguments.arguments(missingPeriodAccountLastVerificationDate(),
-            Collections.singletonList("All incorrect or missing fields in periods number: 0 beginning account number: 0 last verification date;"
-                + " end account number: 0 last verification date;")),
         Arguments.arguments(missingTransactionDate(),
             Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 date;")),
         Arguments.arguments(missingTransactionChildAccount(),
@@ -75,8 +66,6 @@ class ImportPeriodsValidatorTest {
             Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 category;")),
         Arguments.arguments(missingTransactionDescription(),
             Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 description;")),
-        Arguments.arguments(missingCurrencyToFoundsMap(),
-            Collections.singletonList("All incorrect or missing fields in periods number: 0 beginning currency founds; end currency founds;")),
         Arguments.arguments(missingSumOfAllFundsInBaseCurrency(),
             Collections.singletonList(
                 "All incorrect or missing fields in periods number: 0 beginning sum of all founds in currency; end sum of all founds in currency;")));
@@ -108,54 +97,12 @@ class ImportPeriodsValidatorTest {
     return exportPeriod;
   }
 
-  private static ExportResult.ExportPeriod missingPeriodAccountType() {
-    ExportPeriod exportPeriod = correctPeriod();
-    List<ExportAccount> exportAccount = correctAccountState();
-
-    for (ExportAccount exportAccount1 : exportAccount) {
-      exportAccount1.setAccountType("");
-    }
-
-    exportPeriod.setAccountStateAtTheBeginningOfPeriod(exportAccount);
-    exportPeriod.setAccountStateAtTheEndOfPeriod(exportAccount);
-
-    return exportPeriod;
-  }
-
   private static ExportResult.ExportPeriod missingPeriodAccountBalance() {
     ExportPeriod exportPeriod = correctPeriod();
     List<ExportAccount> exportAccount = correctAccountState();
 
     for (ExportAccount exportAccount1 : exportAccount) {
       exportAccount1.setBalance(null);
-    }
-
-    exportPeriod.setAccountStateAtTheBeginningOfPeriod(exportAccount);
-    exportPeriod.setAccountStateAtTheEndOfPeriod(exportAccount);
-
-    return exportPeriod;
-  }
-
-  private static ExportResult.ExportPeriod missingPeriodAccountCurrency() {
-    ExportPeriod exportPeriod = correctPeriod();
-    List<ExportAccount> exportAccount = correctAccountState();
-
-    for (ExportAccount exportAccount1 : exportAccount) {
-      exportAccount1.setCurrency("");
-    }
-
-    exportPeriod.setAccountStateAtTheBeginningOfPeriod(exportAccount);
-    exportPeriod.setAccountStateAtTheEndOfPeriod(exportAccount);
-
-    return exportPeriod;
-  }
-
-  private static ExportResult.ExportPeriod missingPeriodAccountLastVerificationDate() {
-    ExportPeriod exportPeriod = correctPeriod();
-    List<ExportAccount> exportAccount = correctAccountState();
-
-    for (ExportAccount exportAccount1 : exportAccount) {
-      exportAccount1.setLastVerificationDate(null);
     }
 
     exportPeriod.setAccountStateAtTheBeginningOfPeriod(exportAccount);
@@ -229,18 +176,6 @@ class ImportPeriodsValidatorTest {
     }
 
     exportPeriod.setTransactions(exportTransaction);
-
-    return exportPeriod;
-  }
-
-  private static ExportResult.ExportPeriod missingCurrencyToFoundsMap() {
-    ExportPeriod exportPeriod = correctPeriod();
-    ExportFundsSummary fundsSummary = correctSumOfAllFounds();
-
-    fundsSummary.setCurrencyToFundsMap(null);
-
-    exportPeriod.setSumOfAllFundsAtTheBeginningOfPeriod(fundsSummary);
-    exportPeriod.setSumOfAllFundsAtTheEndOfPeriod(fundsSummary);
 
     return exportPeriod;
   }

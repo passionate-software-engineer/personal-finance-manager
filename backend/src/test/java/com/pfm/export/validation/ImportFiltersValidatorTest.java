@@ -23,27 +23,8 @@ class ImportFiltersValidatorTest {
 
         Arguments.arguments(missingName(),
             Collections.singletonList("All incorrect or missing fields in filters number: 0 name;")),
-        Arguments.arguments(missingAccounts(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 accounts;")),
-        Arguments.arguments(missingCategories(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 categories;")),
-        Arguments.arguments(missingDateFrom(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 date from;")),
-        Arguments.arguments(missingDateTo(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 date to;")),
-        Arguments.arguments(missingDescription(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 description;")),
-        Arguments.arguments(missingPriceFrom(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 price from;")),
-        Arguments.arguments(missingPriceTo(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 price to;")),
-        Arguments.arguments(missingAllDate(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 name; accounts;"
-                + " categories; date from; date to; description; price from; price to;")),
         Arguments.arguments(onlyName(),
-            Collections.singletonList("All incorrect or missing fields in filters number: 0 accounts;"
-                + " categories; date from; date to; description; price from; price to;"))
-
+            Collections.emptyList())
     );
   }
 
@@ -51,52 +32,6 @@ class ImportFiltersValidatorTest {
     ExportResult.ExportFilter missingName = correctFilter();
     missingName.setName("");
     return missingName;
-  }
-
-  private static ExportResult.ExportFilter missingAccounts() {
-    ExportResult.ExportFilter missingAccounts = correctFilter();
-    missingAccounts.setAccounts(null);
-    return missingAccounts;
-  }
-
-  private static ExportResult.ExportFilter missingCategories() {
-    ExportResult.ExportFilter missingCategories = correctFilter();
-    missingCategories.setCategories(null);
-    return missingCategories;
-  }
-
-  private static ExportResult.ExportFilter missingDateFrom() {
-    ExportResult.ExportFilter missingDateFrom = correctFilter();
-    missingDateFrom.setDateFrom(null);
-    return missingDateFrom;
-  }
-
-  private static ExportResult.ExportFilter missingDateTo() {
-    ExportResult.ExportFilter missingDateTo = correctFilter();
-    missingDateTo.setDateTo(null);
-    return missingDateTo;
-  }
-
-  private static ExportResult.ExportFilter missingDescription() {
-    ExportResult.ExportFilter missingDescription = correctFilter();
-    missingDescription.setDescription("");
-    return missingDescription;
-  }
-
-  private static ExportResult.ExportFilter missingPriceFrom() {
-    ExportResult.ExportFilter missingPriceFrom = correctFilter();
-    missingPriceFrom.setPriceFrom(null);
-    return missingPriceFrom;
-  }
-
-  private static ExportResult.ExportFilter missingPriceTo() {
-    ExportResult.ExportFilter missingPriceTo = correctFilter();
-    missingPriceTo.setPriceTo(null);
-    return missingPriceTo;
-  }
-
-  private static ExportResult.ExportFilter missingAllDate() {
-    return new ExportResult.ExportFilter();
   }
 
   private static ExportResult.ExportFilter onlyName() {

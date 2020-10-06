@@ -39,53 +39,55 @@ public class ImportPeriodsValidator extends HelperValidator {
     List<String> validationResult = new ArrayList<>();
     StringBuilder incorrectFields = new StringBuilder();
 
-    for (int i = 0; i < inputData.size(); i++) {
+    if (inputData != null) {
+      for (int i = 0; i < inputData.size(); i++) {
 
-      incorrectFields.setLength(0);
+        incorrectFields.setLength(0);
 
-      if (checkDataMissing(inputData.get(i).getStartDate())) {
-        incorrectFields.append(START_DATE);
-      }
-      if (checkDataMissing(inputData.get(i).getEndDate())) {
-        incorrectFields.append(END_DATE);
-      }
-      if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod())) {
-        incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS);
-      } else {
-        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getSumOfAllFundsInBaseCurrency())) {
-          incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
+        if (checkDataMissing(inputData.get(i).getStartDate())) {
+          incorrectFields.append(START_DATE);
         }
-      }
-      if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod())) {
-        incorrectFields.append(END_SUM_OF_ALL_FOUNDS);
-      } else {
-        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getSumOfAllFundsInBaseCurrency())) {
-          incorrectFields.append(END_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
+        if (checkDataMissing(inputData.get(i).getEndDate())) {
+          incorrectFields.append(END_DATE);
         }
-      }
-      for (int j = 0; j < inputData.get(i).getAccountStateAtTheBeginningOfPeriod().size(); j++) {
-        Optional<String> result = importAccountsStateValidator
-            .validateAccount(inputData.get(i).getAccountStateAtTheBeginningOfPeriod().get(j));
-        if (result.isPresent()) {
-          incorrectFields.append(BEGINNING_ACCOUNT_STATE).append(j).append(result.get());
+        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod())) {
+          incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS);
+        } else {
+          if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getSumOfAllFundsInBaseCurrency())) {
+            incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
+          }
         }
-      }
-      for (int j = 0; j < inputData.get(i).getAccountStateAtTheEndOfPeriod().size(); j++) {
-        Optional<String> result = importAccountsStateValidator
-            .validateAccount(inputData.get(i).getAccountStateAtTheEndOfPeriod().get(j));
-        if (result.isPresent()) {
-          incorrectFields.append(END_ACCOUNT_STATE).append(j).append(result.get());
+        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod())) {
+          incorrectFields.append(END_SUM_OF_ALL_FOUNDS);
+        } else {
+          if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getSumOfAllFundsInBaseCurrency())) {
+            incorrectFields.append(END_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
+          }
         }
-      }
+        for (int j = 0; j < inputData.get(i).getAccountStateAtTheBeginningOfPeriod().size(); j++) {
+          Optional<String> result = importAccountsStateValidator
+              .validateAccount(inputData.get(i).getAccountStateAtTheBeginningOfPeriod().get(j));
+          if (result.isPresent()) {
+            incorrectFields.append(BEGINNING_ACCOUNT_STATE).append(j).append(result.get());
+          }
+        }
+        for (int j = 0; j < inputData.get(i).getAccountStateAtTheEndOfPeriod().size(); j++) {
+          Optional<String> result = importAccountsStateValidator
+              .validateAccount(inputData.get(i).getAccountStateAtTheEndOfPeriod().get(j));
+          if (result.isPresent()) {
+            incorrectFields.append(END_ACCOUNT_STATE).append(j).append(result.get());
+          }
+        }
 
-      if (inputData.get(i).getTransactions().size() == 0) {
-        incorrectFields.append(TRANSACTIONS);
-      } else {
-        Optional<String> result = validateTransactions(List.copyOf(inputData.get(i).getTransactions()));
-        result.ifPresent(incorrectFields::append);
+        if (inputData.get(i).getTransactions().size() == 0) {
+          incorrectFields.append(TRANSACTIONS);
+        } else {
+          Optional<String> result = validateTransactions(List.copyOf(inputData.get(i).getTransactions()));
+          result.ifPresent(incorrectFields::append);
 
-        if (incorrectFields.length() > 0) {
-          validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
+          if (incorrectFields.length() > 0) {
+            validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
+          }
         }
       }
     }
