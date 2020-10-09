@@ -476,9 +476,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         // then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(3)))
-        .andExpect(jsonPath("$[0]", is("Filter is missing name")))
-        .andExpect(jsonPath("$[1]", is("Filter is missing name")))
-        .andExpect(jsonPath("$[2]", is("Filter is missing name")));
+        .andExpect(jsonPath("$[0]", is("All incorrect or missing fields in filters number: 0 name;")))
+        .andExpect(jsonPath("$[1]", is("All incorrect or missing fields in filters number: 1 name;")))
+        .andExpect(jsonPath("$[2]", is("All incorrect or missing fields in filters number: 2 name;")));
 
   }
 

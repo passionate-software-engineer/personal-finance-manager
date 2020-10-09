@@ -36,7 +36,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {" Marian", " 1232sbbb"},
         {"Mar ian", "1232 sbbb"},
         {" Mar ian ", " 1232 sbbb "},

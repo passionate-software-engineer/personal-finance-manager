@@ -41,7 +41,7 @@ public class AccountControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> emptyAccountNameParameters() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {"", null},
         {" ", null},
         {"    ", null},
