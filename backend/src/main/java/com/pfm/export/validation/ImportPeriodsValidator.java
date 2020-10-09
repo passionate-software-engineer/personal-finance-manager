@@ -44,23 +44,23 @@ public class ImportPeriodsValidator extends HelperValidator {
 
         incorrectFields.setLength(0);
 
-        if (checkDataMissing(inputData.get(i).getStartDate())) {
+        if (isDataIncorrect(inputData.get(i).getStartDate())) {
           incorrectFields.append(START_DATE);
         }
-        if (checkDataMissing(inputData.get(i).getEndDate())) {
+        if (isDataIncorrect(inputData.get(i).getEndDate())) {
           incorrectFields.append(END_DATE);
         }
-        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod())) {
+        if (isDataIncorrect(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod())) {
           incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS);
         } else {
-          if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getSumOfAllFundsInBaseCurrency())) {
+          if (isDataIncorrect(inputData.get(i).getSumOfAllFundsAtTheBeginningOfPeriod().getSumOfAllFundsInBaseCurrency())) {
             incorrectFields.append(BEGINNING_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
           }
         }
-        if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod())) {
+        if (isDataIncorrect(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod())) {
           incorrectFields.append(END_SUM_OF_ALL_FOUNDS);
         } else {
-          if (checkDataMissing(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getSumOfAllFundsInBaseCurrency())) {
+          if (isDataIncorrect(inputData.get(i).getSumOfAllFundsAtTheEndOfPeriod().getSumOfAllFundsInBaseCurrency())) {
             incorrectFields.append(END_SUM_OF_ALL_FOUNDS_IN_CURRENCY);
           }
         }
@@ -103,17 +103,17 @@ public class ImportPeriodsValidator extends HelperValidator {
 
       incorrectTransactionsFields.setLength(0);
 
-      if (checkDataMissing(transactions.get(j).getDate())) {
+      if (isDataIncorrect(transactions.get(j).getDate())) {
         incorrectTransactionsFields.append(TRANSACTION_DATE);
       }
-      if (checkDataMissing(transactions.get(j).getCategory())) {
+      if (isDataIncorrect(transactions.get(j).getCategory())) {
         incorrectTransactionsFields.append(TRANSACTION_CATEGORY);
       }
-      if (checkDataMissing(transactions.get(j).getDescription())) {
+      if (isDataIncorrect(transactions.get(j).getDescription())) {
         incorrectTransactionsFields.append(TRANSACTION_DESCRIPTION);
       }
 
-      if (checkDataMissing(transactions.get(j).getAccountPriceEntries())) {
+      if (isDataIncorrect(transactions.get(j).getAccountPriceEntries())) {
         incorrectTransactionsFields.append(TRANSACTION_ENTRIES);
       } else {
         Optional<String> result = validateEntries(transactions.get(j).getAccountPriceEntries());
@@ -135,10 +135,10 @@ public class ImportPeriodsValidator extends HelperValidator {
 
       incorrectFieldsInTransactionAccounts.setLength(0);
 
-      if (checkDataMissing(entries.get(k).getAccount())) {
+      if (isDataIncorrect(entries.get(k).getAccount())) {
         incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_ACCOUNT);
       }
-      if (checkDataMissing(entries.get(k).getPrice())) {
+      if (isDataIncorrect(entries.get(k).getPrice())) {
         incorrectFieldsInTransactionAccounts.append(TRANSACTION_ENTRY_PRICE);
       }
 

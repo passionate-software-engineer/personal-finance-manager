@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasValue;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -516,9 +517,10 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // when
     callRestToImportAllData(userZdzislawToken, exportedData);
 
-    callRestToExportAllDataAndReturnExportResult(userZdzislawToken);
+    ExportResult actual = callRestToExportAllDataAndReturnExportResult(userZdzislawToken);
 
     // then
+    assertEquals(exportedData, actual);
 
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
         .header("Authorization", userZdzislawToken))
@@ -604,7 +606,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
         .andExpect(jsonPath("historyEntries[1].entries[0].name", is("name")))
         .andExpect(jsonPath("historyEntries[1].entries[0].newValue", is("Food")))
         .andExpect(jsonPath("historyEntries[1].entries[1].name", is("parentCategory")))
-        .andExpect(jsonPath("historyEntries[1].entries[1].newValue", is("Kategoria gÅ\u0082Ã³wna")))
+        .andExpect(jsonPath("historyEntries[1].entries[1].newValue", is("Main Category")))
         .andExpect(jsonPath("historyEntries[1].entries[2].name", is("priority")))
         .andExpect(jsonPath("historyEntries[1].entries[2].newValue", is("3")))
         .andExpect(jsonPath("historyEntries[2].date", containsString(currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))

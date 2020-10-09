@@ -31,10 +31,10 @@ public class ImportAccountsStateValidator extends HelperValidator {
 
     StringBuilder incorrectFields = new StringBuilder();
 
-    if (checkDataMissing(inputData.getName())) {
+    if (isDataIncorrect(inputData.getName())) {
       incorrectFields.append(NAME);
     }
-    if (checkDataMissing(inputData.getBalance())) {
+    if (isDataIncorrect(inputData.getBalance())) {
       incorrectFields.append(BALANCE);
     }
 

@@ -8,7 +8,7 @@ public class HelperValidator {
 
   private static final String MAIN_MESSAGE = "All incorrect or missing fields in ";
 
-  boolean checkDataMissing(Object data) {
+  boolean isDataIncorrect(Object data) {
     return data == null || !StringUtils.hasText(data.toString());
   }
 

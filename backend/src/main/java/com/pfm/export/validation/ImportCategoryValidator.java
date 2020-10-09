@@ -21,7 +21,7 @@ public class ImportCategoryValidator extends HelperValidator {
 
         incorrectFields.setLength(0);
 
-        if (checkDataMissing(inputData.get(i).getName())) {
+        if (isDataIncorrect(inputData.get(i).getName())) {
           incorrectFields.append(NAME);
         }
 

@@ -27,13 +27,13 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
 
         incorrectFields.setLength(0);
 
-        if (checkDataMissing(inputData.get(i).getDate())) {
+        if (isDataIncorrect(inputData.get(i).getDate())) {
           incorrectFields.append(DATE);
         }
-        if (checkDataMissing(inputData.get(i).getObject())) {
+        if (isDataIncorrect(inputData.get(i).getObject())) {
           incorrectFields.append(OBJECT);
         }
-        if (checkDataMissing(inputData.get(i).getType())) {
+        if (isDataIncorrect(inputData.get(i).getType())) {
           incorrectFields.append(TYPE);
         }
         if (inputData.get(i).getEntries() == null) {
@@ -43,10 +43,10 @@ public class ImportHistoryEntriesValidator extends HelperValidator {
 
             incorrectChildFields.setLength(0);
 
-            if (checkDataMissing(inputData.get(i).getEntries().get(j).getName())) {
+            if (isDataIncorrect(inputData.get(i).getEntries().get(j).getName())) {
               incorrectChildFields.append(CHILD_NAME);
             }
-            if (checkDataMissing(inputData.get(i).getEntries().get(j).getNewValue())) {
+            if (isDataIncorrect(inputData.get(i).getEntries().get(j).getNewValue())) {
               incorrectChildFields.append(CHILD_NEW_VALUE);
             }
 
