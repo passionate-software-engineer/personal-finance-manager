@@ -31,6 +31,8 @@ class ImportHistoryEntriesValidatorTest {
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 name;")),
         Arguments.arguments(missingChildNewValue(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0 missing in entry number:0 new value;")),
+        Arguments.arguments(missingEntries(),
+            Collections.singletonList("All incorrect or missing fields in history entries number: 0 entries;")),
         Arguments.arguments(onlyParentIdAndChildName(),
             Collections.singletonList("All incorrect or missing fields in history entries number: 0"
                 + " date; object; type; missing in entry number:0 new value;"))
@@ -80,6 +82,12 @@ class ImportHistoryEntriesValidatorTest {
 
     historyEntry.setEntries(historyInfo);
 
+    return historyEntry;
+  }
+
+  private static HistoryEntry missingEntries() {
+    HistoryEntry historyEntry = correctHistoryEntry();
+    historyEntry.setEntries(null);
     return historyEntry;
   }
 

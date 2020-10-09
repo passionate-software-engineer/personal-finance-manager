@@ -79,15 +79,15 @@ public class ImportPeriodsValidator extends HelperValidator {
           }
         }
 
-        if (inputData.get(i).getTransactions().size() == 0) {
+        if (isDataIncorrect(inputData.get(i).getTransactions())) {
           incorrectFields.append(TRANSACTIONS);
         } else {
           Optional<String> result = validateTransactions(List.copyOf(inputData.get(i).getTransactions()));
           result.ifPresent(incorrectFields::append);
+        }
 
-          if (incorrectFields.length() > 0) {
-            validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
-          }
+        if (incorrectFields.length() > 0) {
+          validationResult.add(createResultMessage(DATA_NAME, i, incorrectFields.toString()));
         }
       }
     }

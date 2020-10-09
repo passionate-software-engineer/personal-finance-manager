@@ -57,8 +57,16 @@ class ImportPeriodsValidatorTest {
                 "All incorrect or missing fields in periods number: 0 beginning account number: 0 balance; end account number: 0 balance;")),
         Arguments.arguments(missingTransactionDate(),
             Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 date;")),
+        Arguments.arguments(missingBeginningSumOfAllFounds(),
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 beginning sum of all founds;")),
+        Arguments.arguments(missingEndSumOfAllFounds(),
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 end sum of all founds;")),
+        Arguments.arguments(missingTransactions(),
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 transactions;")),
         Arguments.arguments(missingTransactionChildAccount(),
             Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 in entry number: 0 account;")),
+        Arguments.arguments(missingTransactionAccounts(),
+            Collections.singletonList("All incorrect or missing fields in periods number: 0 in transaction number: 0 entries;")),
         Arguments.arguments(missingTransactionChildPrice(),
             Collections.singletonList(
                 "All incorrect or missing fields in periods number: 0 in transaction number: 0 in entry number: 0 price;")),
@@ -111,6 +119,18 @@ class ImportPeriodsValidatorTest {
     return exportPeriod;
   }
 
+  private static ExportResult.ExportPeriod missingBeginningSumOfAllFounds() {
+    ExportPeriod exportPeriod = correctPeriod();
+    exportPeriod.setSumOfAllFundsAtTheBeginningOfPeriod(null);
+    return exportPeriod;
+  }
+
+  private static ExportResult.ExportPeriod missingEndSumOfAllFounds() {
+    ExportPeriod exportPeriod = correctPeriod();
+    exportPeriod.setSumOfAllFundsAtTheEndOfPeriod(null);
+    return exportPeriod;
+  }
+
   private static ExportResult.ExportPeriod missingTransactionDate() {
     ExportPeriod exportPeriod = correctPeriod();
     List<ExportTransaction> exportTransaction = correctTransactions();
@@ -121,6 +141,12 @@ class ImportPeriodsValidatorTest {
 
     exportPeriod.setTransactions(exportTransaction);
 
+    return exportPeriod;
+  }
+
+  private static ExportResult.ExportPeriod missingTransactions() {
+    ExportPeriod exportPeriod = correctPeriod();
+    exportPeriod.setTransactions(null);
     return exportPeriod;
   }
 
@@ -136,6 +162,18 @@ class ImportPeriodsValidatorTest {
 
     exportPeriod.setTransactions(exportTransaction);
 
+    return exportPeriod;
+  }
+
+  private static ExportResult.ExportPeriod missingTransactionAccounts() {
+    ExportPeriod exportPeriod = correctPeriod();
+    List<ExportTransaction> exportTransaction = correctTransactions();
+
+    for (ExportTransaction exportTransaction1 : exportTransaction) {
+      exportTransaction1.setAccountPriceEntries(null);
+    }
+
+    exportPeriod.setTransactions(exportTransaction);
     return exportPeriod;
   }
 
