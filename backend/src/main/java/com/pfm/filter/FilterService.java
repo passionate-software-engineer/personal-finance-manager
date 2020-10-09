@@ -81,7 +81,7 @@ public class FilterService {
     }
   }
 
-  public void setUpFilterIsNotDefault(Filter filter){
+  public void setUpFilterIsNotDefault(Filter filter) {
     filter.setAsNotDefault();
   }
 }

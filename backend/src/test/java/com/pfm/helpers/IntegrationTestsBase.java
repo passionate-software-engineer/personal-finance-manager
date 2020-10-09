@@ -79,7 +79,6 @@ public abstract class IntegrationTestsBase {
   private static final String SET_AS_DEFAULT = "/setAsDefault";
   private static final String SET_AS_NOT_DEFAULT = "/setAsNotDefault";
 
-
   @Autowired
   protected UserService userService;
 
