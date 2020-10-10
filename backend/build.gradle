@@ -1,27 +1,27 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.6.RELEASE'
-        lombokVersion = '1.18.12'
+        springBootVersion = '2.3.4.RELEASE'
+        lombokVersion = '1.18.14'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'org.owasp:dependency-check-gradle:5.3.2.1'
+        classpath 'org.owasp:dependency-check-gradle:6.0.2'
     }
 }
 
 // keep alphabetical order in groups
 plugins {
     // 3rd party
-    id "com.github.ben-manes.versions" version "0.28.0"
-    id "com.github.spotbugs" version "4.0.8"
-    id "com.gorylenko.gradle-git-properties" version "2.2.2"
+    id "com.github.ben-manes.versions" version "0.33.0"
+    id "com.github.spotbugs" version "4.5.1"
+    id "com.gorylenko.gradle-git-properties" version "2.2.3"
     id 'de.aaschmid.cpd' version '3.1'
-    id 'io.spring.dependency-management' version "1.0.9.RELEASE"
-    id 'org.owasp.dependencycheck' version '5.3.2.1'
-    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version "1.0.10.RELEASE"
+    id 'org.owasp.dependencycheck' version '6.0.2'
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
 
     // core
     id 'checkstyle'
@@ -42,11 +42,11 @@ repositories {
 
 // keep alphabetical order in groups
 dependencies {
-    testImplementation 'io.rest-assured:rest-assured:4.2.0'
-    testImplementation 'io.rest-assured:xml-path:4.2.0'
-    testImplementation 'io.rest-assured:json-path:4.2.0'
+    testImplementation 'io.rest-assured:rest-assured:4.3.1'
+    testImplementation 'io.rest-assured:xml-path:4.3.1'
+    testImplementation 'io.rest-assured:json-path:4.3.1'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
-    testImplementation 'org.mockito:mockito-junit-jupiter:3.3.3'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.5.13'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit' // excluding JUnit4
         exclude group: 'org.assertj' // to avoid confusion in imports (e.g. assertThat)
@@ -55,15 +55,15 @@ dependencies {
 
 
     implementation 'com.google.code.findbugs:annotations:3.0.1'
-    implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation "org.flywaydb:flyway-core:6.4.1"
-    implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation "org.flywaydb:flyway-core:7.0.2"
+    implementation 'org.springframework.security:spring-security-crypto:5.4.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     runtimeOnly 'com.h2database:h2:1.4.200'
-    runtimeOnly 'io.springfox:springfox-swagger-ui:2.9.2'
-    runtimeOnly 'org.postgresql:postgresql:42.2.12'
+    runtimeOnly 'io.springfox:springfox-swagger-ui:3.0.0'
+    runtimeOnly 'org.postgresql:postgresql:42.2.17'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
     //Lombok
