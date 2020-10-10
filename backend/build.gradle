@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.google.code.findbugs:annotations:3.0.1'
     implementation 'io.springfox:springfox-swagger2:3.0.0'
     implementation "org.flywaydb:flyway-core:7.0.2"
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.security:spring-security-crypto:5.4.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -71,6 +72,9 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.google.guava:guava:16+"
 }
 
 pmdMain {
