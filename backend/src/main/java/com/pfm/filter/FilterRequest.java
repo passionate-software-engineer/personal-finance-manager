@@ -1,6 +1,6 @@
 package com.pfm.filter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,28 +17,28 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FilterRequest {
 
-  @ApiModelProperty(value = "Filter Name", example = "Expenses June")
+  @Schema(description = "Filter Name", example = "Expenses June")
   private String name;
 
-  @ApiModelProperty(value = "Account ids", dataType = "List", example = "1, 3, 99")
+  @Schema(description = "Account ids", example = "[1, 3, 99]")
   private List<Long> accountIds;
 
-  @ApiModelProperty(value = "Category ids", dataType = "List", example = "11, 23, 217")
+  @Schema(description = "Category ids", example = "[1, 3, 99]")
   private List<Long> categoryIds;
 
-  @ApiModelProperty(value = "Price from", example = "100")
+  @Schema(description = "Price from", example = "100")
   private BigDecimal priceFrom;
 
-  @ApiModelProperty(value = "Price to", example = "300")
+  @Schema(description = "Price to", example = "300")
   private BigDecimal priceTo;
 
-  @ApiModelProperty(value = "Date", example = "2018-06-15")
+  @Schema(description = "Date", example = "2018-06-15")
   private LocalDate dateFrom;
 
-  @ApiModelProperty(value = "Date", example = "2018-07-16")
+  @Schema(description = "Date", example = "2018-07-16")
   private LocalDate dateTo;
 
-  @ApiModelProperty(value = "Description", example = "Food filter")
+  @Schema(description = "Description", example = "Food filter")
   private String description;
 
   private Boolean isDefault;

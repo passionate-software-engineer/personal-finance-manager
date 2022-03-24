@@ -1,5 +1,5 @@
 ALTER TABLE transaction
-  ADD is_recurrent BOOLEAN DEFAULT FALSE;
+    ADD is_recurrent BOOLEAN DEFAULT FALSE;
 
 ALTER TABLE transaction
-  ADD recurrence_period integer;
+    ADD recurrence_period integer;

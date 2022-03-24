@@ -1,13 +1,17 @@
 package com.pfm.auth;
 
+import static com.pfm.helpers.http.HttpCodesAsString.BAD_REQUEST;
+import static com.pfm.helpers.http.HttpCodesAsString.OK;
 import static com.pfm.swagger.ApiConstants.BAD_REQUEST_MESSAGE;
-import static com.pfm.swagger.ApiConstants.CONTAINER_LIST;
 import static com.pfm.swagger.ApiConstants.OK_MESSAGE;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,29 +20,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("users")
 @CrossOrigin
-@Api(tags = {"user-controller"})
+@Tag(name = "User Controller", description = "Controller used to register / refresh / authenticate user")
 public interface UserApi {
 
-  @ApiOperation(value = "Authenticate user")
+  @Operation(summary = "Authenticate user")
   @ApiResponses({
-      @ApiResponse(code = 200, message = OK_MESSAGE, response = UserDetails.class),
-      @ApiResponse(code = 400, message = BAD_REQUEST_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(responseCode = OK, description = OK_MESSAGE, content = {@Content(
+          mediaType = "application/json", schema = @Schema(implementation = UserDetails.class))}),
+      @ApiResponse(responseCode = BAD_REQUEST, description = BAD_REQUEST_MESSAGE, content = {@Content(
+          array = @ArraySchema(schema = @Schema(implementation = String.class)))})
   })
   @PostMapping("/authenticate")
   ResponseEntity<?> authenticateUser(@RequestBody User userToAuthenticate);
 
-  @ApiOperation(value = "Register user")
+  @Operation(summary = "Register user")
   @ApiResponses({
-      @ApiResponse(code = 200, message = OK_MESSAGE, response = Long.class),
-      @ApiResponse(code = 400, message = BAD_REQUEST_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(responseCode = OK, description = OK_MESSAGE, content = {@Content(
+          schema = @Schema(implementation = Long.class))}),
+      @ApiResponse(responseCode = BAD_REQUEST, description = BAD_REQUEST_MESSAGE, content = {@Content(
+          array = @ArraySchema(schema = @Schema(implementation = String.class)))})
   })
   @PostMapping("/register")
   ResponseEntity<?> registerUser(@RequestBody User user);
 
-  @ApiOperation(value = "Refresh user's token")
+  @Operation(summary = "Refresh user's token")
   @ApiResponses({
-      @ApiResponse(code = 200, message = OK_MESSAGE, response = Token.class),
-      @ApiResponse(code = 400, message = BAD_REQUEST_MESSAGE, response = String.class, responseContainer = CONTAINER_LIST),
+      @ApiResponse(responseCode = OK, description = OK_MESSAGE, content = {@Content(
+          mediaType = "application/json", schema = @Schema(implementation = Token.class))}),
+      @ApiResponse(responseCode = BAD_REQUEST, description = BAD_REQUEST_MESSAGE, content = {@Content(
+          array = @ArraySchema(schema = @Schema(implementation = String.class)))})
   })
   @PostMapping("/refresh")
   ResponseEntity<?> refreshToken(@RequestBody String refreshToken);

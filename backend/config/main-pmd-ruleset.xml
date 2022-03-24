@@ -11,6 +11,8 @@
   </rule>
 
   <rule ref="category/java/bestpractices.xml">
+    <exclude name="GuardLogStatement"/>
+    <exclude name="UnusedAssignment"/>
   </rule>
 
   <rule ref="category/java/multithreading.xml">
@@ -30,6 +32,7 @@
     <exclude name="UseUtilityClass" />
     <exclude name="ExcessiveImports" />
     <exclude name="LoosePackageCoupling" />
+    <exclude name="CognitiveComplexity"/>
   </rule>
 
 </ruleset>

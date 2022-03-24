@@ -35,9 +35,9 @@ public class RestExceptionHandlerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .header(CorrelationIdFilter.CORRELATION_ID, correlationId)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(userMarian())))
+            .header(CorrelationIdFilter.CORRELATION_ID, correlationId)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(userMarian())))
 
         // then
         .andExpect(status().isInternalServerError())
@@ -57,9 +57,9 @@ public class RestExceptionHandlerIntegrationTest extends IntegrationTestsBase {
     body = body.replace("username", "username123"); // no such field exists so bad request will be returned
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .header(CorrelationIdFilter.CORRELATION_ID, correlationId)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(body))
+            .header(CorrelationIdFilter.CORRELATION_ID, correlationId)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(body))
 
         // then
         .andExpect(status().isBadRequest())

@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.6.RELEASE'
-        lombokVersion = '1.18.12'
+        springBootVersion = '2.6.4'
+        lombokVersion = '1.18.22'
     }
     repositories {
         mavenCentral()
@@ -16,9 +16,9 @@ buildscript {
 plugins {
     // 3rd party
     id "com.github.ben-manes.versions" version "0.28.0"
-    id "com.github.spotbugs" version "4.0.8"
-    id "com.gorylenko.gradle-git-properties" version "2.2.2"
-    id 'de.aaschmid.cpd' version '3.1'
+    id "com.github.spotbugs" version "5.0.6"
+    id "com.gorylenko.gradle-git-properties" version "2.4.0"
+    id 'de.aaschmid.cpd' version '3.3'
     id 'io.spring.dependency-management' version "1.0.9.RELEASE"
     id 'org.owasp.dependencycheck' version '5.3.2.1'
     id 'org.springframework.boot' version '2.2.6.RELEASE'
@@ -34,7 +34,7 @@ plugins {
 
 version '1.0'
 
-sourceCompatibility = 1.13
+sourceCompatibility = 1.17
 
 repositories {
     mavenCentral()
@@ -53,16 +53,16 @@ dependencies {
         exclude group: 'org.junit.vintage' // to avoid warning when running tests in IJ
     }
 
-
     implementation 'com.google.code.findbugs:annotations:3.0.1'
-    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation "org.flywaydb:flyway-core:6.4.1"
-    implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.security:spring-security-crypto'
 
     runtimeOnly 'com.h2database:h2:1.4.200'
-    runtimeOnly 'io.springfox:springfox-swagger-ui:2.9.2'
     runtimeOnly 'org.postgresql:postgresql:42.2.12'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
@@ -84,19 +84,21 @@ pmdTest {
 }
 
 jacoco {
-    toolVersion = "0.8.5"
+    toolVersion = "0.8.7"
 }
 
 spotbugs {
-    toolVersion = '4.0.0'
+    toolVersion = '4.6.0'
+    excludeFilter = file("config/spotbugs-exclude.xml")
 }
 
 // TODO  - spotbugs reports syntax warnings  in  IJ - verify  how it  should be  properly configured
 spotbugsMain {
     reports {
-        xml {
-            enabled = true
-            destination = file("$buildDir/reports/spotbugs/main/spotbugs.xml")
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+            stylesheet = 'fancy-hist.xsl'
         }
     }
 }
@@ -166,6 +168,7 @@ test {
 cpdCheck {
     source = sourceSets.main.allJava // only java, groovy and scala classes in 'main' sourceSets
     minimumTokenCount = 90
+    ignoreAnnotations = true
 }
 
 gitProperties {

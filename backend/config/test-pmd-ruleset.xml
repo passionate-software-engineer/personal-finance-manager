@@ -2,7 +2,8 @@
 <ruleset name="ExampleRuleset"
   xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+  xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+  http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
   <description>PFM rule set</description>
 
@@ -20,6 +21,8 @@
     <exclude name="JUnitTestContainsTooManyAsserts"/>
 <!--    <exclude name="UnusedPrivateMethod"/>-->
     <exclude name="UseVarargs"/>
+    <exclude name="JUnit5TestShouldBePackagePrivate"/>
+    <exclude name="UnusedPrivateMethod"/>
   </rule>
 
 </ruleset>

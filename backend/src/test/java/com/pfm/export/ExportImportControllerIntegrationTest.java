@@ -102,7 +102,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // when
     // then
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
-        .header("Authorization", token))
+            .header("Authorization", token))
         .andExpect(status().isOk())
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("1000.00")))
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.EUR", is("0.00")))
@@ -176,7 +176,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
-        .header("Authorization", token))
+            .header("Authorization", token))
 
         // then
         .andExpect(status().isOk())
@@ -205,15 +205,15 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     ExportResult input = new ExportResult();
     input.setCategories(Arrays.asList(
-        ExportCategory.builder()
-            .name(categoryHome().getName())
-            .priority(categoryHome().getPriority())
-            .build(),
-        ExportCategory.builder()
-            .name(categoryFood().getName())
-            .parentCategoryName(categoryHome().getName())
-            .priority(categoryHome().getPriority())
-            .build()
+            ExportCategory.builder()
+                .name(categoryHome().getName())
+                .priority(categoryHome().getPriority())
+                .build(),
+            ExportCategory.builder()
+                .name(categoryFood().getName())
+                .parentCategoryName(categoryHome().getName())
+                .priority(categoryHome().getPriority())
+                .build()
         )
     );
 
@@ -260,9 +260,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(input))
-        .contentType(JSON_CONTENT_TYPE))
+            .header("Authorization", token)
+            .content(json(input))
+            .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isCreated());
 
     // then
@@ -307,9 +307,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(new ExportResult()))
-        .contentType(JSON_CONTENT_TYPE))
+            .header("Authorization", token)
+            .content(json(new ExportResult()))
+            .contentType(JSON_CONTENT_TYPE))
 
         // then
         .andExpect(status().isBadRequest())
@@ -321,13 +321,13 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     ExportResult input = new ExportResult();
     input.setCategories(Arrays.asList(
-        ExportCategory.builder()
-            .name(categoryHome().getName())
-            .build(),
-        ExportCategory.builder()
-            .name(categoryFood().getName())
-            .parentCategoryName(categoryHome().getName())
-            .build()
+            ExportCategory.builder()
+                .name(categoryHome().getName())
+                .build(),
+            ExportCategory.builder()
+                .name(categoryFood().getName())
+                .parentCategoryName(categoryHome().getName())
+                .build()
         )
     );
 
@@ -342,9 +342,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(input))
-        .contentType(JSON_CONTENT_TYPE))
+            .header("Authorization", token)
+            .content(json(input))
+            .contentType(JSON_CONTENT_TYPE))
 
         // then
         .andExpect(status().isBadRequest())
@@ -356,13 +356,13 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     // given
     ExportResult input = new ExportResult();
     input.setCategories(Arrays.asList(
-        ExportCategory.builder()
-            .name(categoryHome().getName())
-            .build(),
-        ExportCategory.builder()
-            .name(categoryFood().getName())
-            .parentCategoryName(categoryHome().getName())
-            .build()
+            ExportCategory.builder()
+                .name(categoryHome().getName())
+                .build(),
+            ExportCategory.builder()
+                .name(categoryFood().getName())
+                .parentCategoryName(categoryHome().getName())
+                .build()
         )
     );
 
@@ -378,9 +378,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(input))
-        .contentType(JSON_CONTENT_TYPE))
+            .header("Authorization", token)
+            .content(json(input))
+            .contentType(JSON_CONTENT_TYPE))
 
         // then
         .andExpect(status().isBadRequest())
@@ -407,9 +407,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     final BigDecimal filterPriceTo = BigDecimal.valueOf(19999L, 2);
     filter.setPriceTo(filterPriceTo);
     input.setCategories(Collections.singletonList(
-        ExportCategory.builder()
-            .name(categoryOil().getName())
-            .build()
+            ExportCategory.builder()
+                .name(categoryOil().getName())
+                .build()
         )
     );
     filter.setCategories(Collections.singletonList(categoryOil().getName()));
@@ -433,9 +433,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(input))
-        .contentType(JSON_CONTENT_TYPE))
+            .header("Authorization", token)
+            .content(json(input))
+            .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isCreated());
 
     // then
@@ -469,9 +469,9 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
 
     // when
     mockMvc.perform(post(IMPORT_SERVICE_PATH)
-        .header("Authorization", token)
-        .content(json(input))
-        .contentType(JSON_CONTENT_TYPE))
+            .header("Authorization", token)
+            .content(json(input))
+            .contentType(JSON_CONTENT_TYPE))
 
         // then
         .andExpect(status().isBadRequest())
@@ -523,7 +523,7 @@ public class ExportImportControllerIntegrationTest extends IntegrationTestsBase 
     assertEquals(exportedData, actual);
 
     mockMvc.perform(get(EXPORT_SERVICE_PATH)
-        .header("Authorization", userZdzislawToken))
+            .header("Authorization", userZdzislawToken))
         .andExpect(status().isOk())
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.sumOfAllFundsInBaseCurrency", is("1000.00")))
         .andExpect(jsonPath("sumOfAllFundsAtTheBeginningOfExport.currencyToFundsMap.EUR", is("0.00")))

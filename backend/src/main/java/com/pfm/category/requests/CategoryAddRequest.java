@@ -1,7 +1,7 @@
 package com.pfm.category.requests;
 
 import com.pfm.category.validation.UniqueName;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CategoryAddRequest extends CategoryRequestBase {
 
-  @ApiModelProperty(value = "CATEGORY name", required = true, example = "Eating out")
+  @Schema(description = "CATEGORY name", required = true, example = "Eating out")
   @UniqueName
   private String name;
 

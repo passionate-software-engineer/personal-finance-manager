@@ -1,7 +1,7 @@
 package com.pfm.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,15 +19,14 @@ import lombok.NoArgsConstructor;
 @Entity
 public final class AccountPriceEntry {
 
-  @ApiModelProperty(value = "Account id", required = true, example = "1")
+  @Schema(description = "Account id", required = true, example = "1")
   protected Long accountId;
 
-  @ApiModelProperty(value = "Price", required = true, example = "-15.99")
+  @Schema(description = "Price", required = true, example = "-15.99")
   protected BigDecimal price;
 
   @Id
   @JsonIgnore
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
 }

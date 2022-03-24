@@ -1,6 +1,5 @@
 package com.pfm.account.type;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AccountTypeRequest {
 
-  @ApiModelProperty(value = "Account type name", required = true, example = "Credit")
+  //  @ApiModelProperty(value = "Account type name", required = true, example = "Credit")
   private String name;
 
 }

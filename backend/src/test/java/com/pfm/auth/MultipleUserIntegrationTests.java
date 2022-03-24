@@ -619,18 +619,18 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, marianToken)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(account))))
+            .header(HttpHeaders.AUTHORIZATION, marianToken)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertAccountToAccountRequest(account))))
         .andExpect(status().isOk());
 
     account.setType(accountTypeService.getAccountTypes(zdzislawUserId).get(0));
     account.setCurrency(currencyService.getCurrencies(zdzislawUserId).get(0));
 
     mockMvc.perform(post(ACCOUNTS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertAccountToAccountRequest(account))))
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertAccountToAccountRequest(account))))
         .andExpect(status().isOk());
   }
 
@@ -647,15 +647,15 @@ public class MultipleUserIntegrationTests extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, marianToken)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertCategoryToCategoryAddRequest(category))))
+            .header(HttpHeaders.AUTHORIZATION, marianToken)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertCategoryToCategoryAddRequest(category))))
         .andExpect(status().isOk());
 
     mockMvc.perform(post(CATEGORIES_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(convertCategoryToCategoryAddRequest(category))))
+            .header(HttpHeaders.AUTHORIZATION, zdzislawToken)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(convertCategoryToCategoryAddRequest(category))))
         .andExpect(status().isOk());
   }
 }

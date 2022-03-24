@@ -131,9 +131,9 @@ public abstract class IntegrationTestsBase {
       throws Exception {
     String response =
         mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE)
-            .content(json(accountTypeRequest)))
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(JSON_CONTENT_TYPE)
+                .content(json(accountTypeRequest)))
             .andExpect(status().isOk()).andReturn()
             .getResponse().getContentAsString();
     return Long.parseLong(response);
@@ -167,7 +167,7 @@ public abstract class IntegrationTestsBase {
 
   protected List<Account> callRestToGetAllAccounts(String token) throws Exception {
     String response = mockMvc.perform(get(ACCOUNTS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -176,7 +176,7 @@ public abstract class IntegrationTestsBase {
 
   protected void callRestToDeleteAccountById(long id, String token) throws Exception {
     mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
 
@@ -193,9 +193,9 @@ public abstract class IntegrationTestsBase {
 
   protected int callRestToMarkAccountAsArchived(long accountId) throws Exception {
     return mockMvc.perform(
-        patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE))
+            patch(ACCOUNTS_SERVICE_PATH + "/" + accountId + MARK_AS_ARCHIVED)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(JSON_CONTENT_TYPE))
         .andReturn().getResponse().getStatus();
   }
 
@@ -265,7 +265,7 @@ public abstract class IntegrationTestsBase {
 
   protected Category callRestToGetCategoryById(long id, String token) throws Exception {
     String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -285,7 +285,7 @@ public abstract class IntegrationTestsBase {
 
   protected List<Category> callRestToGetAllCategories(String token) throws Exception {
     String response = mockMvc.perform(get(CATEGORIES_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -294,7 +294,7 @@ public abstract class IntegrationTestsBase {
 
   protected void callRestToDeleteCategoryById(long id, String token) throws Exception {
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
 
@@ -411,7 +411,7 @@ public abstract class IntegrationTestsBase {
 
   protected Transaction callRestToGetTransactionById(long id, String token) throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -422,9 +422,9 @@ public abstract class IntegrationTestsBase {
       TransactionRequest transactionRequest, String token)
       throws Exception {
     return Long.parseLong(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(transactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(transactionRequest)))
         .andExpect(status().isOk())
         .andReturn()
         .getResponse().getContentAsString());
@@ -435,9 +435,9 @@ public abstract class IntegrationTestsBase {
       String token)
       throws Exception {
     return jsonToCommitResult(mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(transactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(transactionRequest)))
         .andExpect(status().isOk())
         .andReturn()
         .getResponse().getContentAsString());
@@ -445,20 +445,20 @@ public abstract class IntegrationTestsBase {
 
   protected void callRestToDeleteTransactionById(long id, String token) throws Exception {
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
 
   protected void callRestToDeletePlannedTransactionById(long id, String token) throws Exception {
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
 
   private Stream<Transaction> callRestToGetStreamOfAllPlannedAndNotPlannedTransactions(String token)
       throws Exception {
     String response = mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -526,7 +526,7 @@ public abstract class IntegrationTestsBase {
 
   protected void callRestToDeleteFilterById(long id, String token) throws Exception {
     mockMvc.perform(delete(FILTERS_SERVICE_PATH + "/" + id)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
 
@@ -580,7 +580,7 @@ public abstract class IntegrationTestsBase {
 
   protected List<Filter> callRestToGetAllFilters(String token) throws Exception {
     String response = mockMvc.perform(get(FILTERS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -589,7 +589,7 @@ public abstract class IntegrationTestsBase {
 
   protected List<Currency> callRestToGetAllCurrencies(String token) throws Exception {
     String response = mockMvc.perform(get(CURRENCIES_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
@@ -626,8 +626,8 @@ public abstract class IntegrationTestsBase {
 
   public String callRestToAuthenticateUserAndReturnToken(User user) throws Exception {
     String response = mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
@@ -636,8 +636,8 @@ public abstract class IntegrationTestsBase {
 
   public Tokens callRestToAuthenticateUserAndReturnTokens(User user) throws Exception {
     String response = mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
     UserDetails authResponse = jsonToAuthResponse(response);
