@@ -24,7 +24,7 @@
     "@ng-select/ng-select": "^6.1.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
-    "angular-google-charts": "^0.1.6",
+    "angular-google-charts": "^2.2.2",
     "bootstrap": "^4.4.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
