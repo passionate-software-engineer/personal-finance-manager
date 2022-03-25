@@ -17,6 +17,7 @@
     "@angular/compiler": "^9.0.6",
     "@angular/core": "^9.0.6",
     "@angular/forms": "^9.0.6",
+    "@angular/localize": "^9.1.13",
     "@angular/platform-browser": "^9.0.6",
     "@angular/platform-browser-dynamic": "^9.0.6",
     "@angular/router": "^9.0.6",
@@ -55,9 +56,9 @@
     "karma-jasmine": "~3.1.1",
     "karma-jasmine-html-reporter": "^1.5.2",
     "protractor": "^5.4.3",
+    "protractor-retry": "^1.2.12",
     "ts-node": "~8.6.2",
     "tslint": "~6.1.0",
-    "typescript": "^3.7.5",
-    "protractor-retry": "^1.2.12"
+    "typescript": "^3.7.5"
   }
 }
