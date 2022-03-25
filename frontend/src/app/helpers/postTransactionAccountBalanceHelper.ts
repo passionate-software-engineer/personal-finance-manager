@@ -1,7 +1,6 @@
 import {Transaction} from '../components/transaction/transaction';
 import {Injectable} from '@angular/core';
 import {DateHelper} from './date-helper';
-import {error} from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -89,10 +88,10 @@ export class PostTransactionAccountBalanceHelper {
     accountIdToTransactionsMap.forEach((transactionsByAccountId) => {
         for (let i = 0; i < transactionsByAccountId.length; i++) {
           if (isCalculatingForPlannedTransactions && !transactionsByAccountId[i].isPlanned) {
-            throw error('Unexpected past transaction found while calculating postTransactions balances for planned transactions');
+            throw Error('Unexpected past transaction found while calculating postTransactions balances for planned transactions');
           }
           if (!isCalculatingForPlannedTransactions && transactionsByAccountId[i].isPlanned) {
-            throw error('Unexpected planned transaction found while calculating postTransactions balances for past transactions');
+            throw Error('Unexpected planned transaction found while calculating postTransactions balances for past transactions');
           }
 
           const accountPriceEntries = transactionsByAccountId[i].accountPriceEntries;
