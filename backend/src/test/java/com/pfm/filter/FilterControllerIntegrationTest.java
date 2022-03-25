@@ -45,19 +45,27 @@ import org.springframework.http.HttpHeaders;
 
 public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
-  @BeforeEach
-  public void beforeEach() throws Exception {
-    userId = callRestToRegisterUserAndReturnUserId(userMarian());
-    token = callRestToAuthenticateUserAndReturnToken(userMarian());
-  }
-
   @SuppressWarnings("unused")
   private static Collection<Object[]> addFilterParameters() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {filterHomeExpensesUpTo200()},
         {filterIsDefault()},
         {filterIsNotDefault()}
     });
+  }
+
+  @SuppressWarnings("unused")
+  private static Collection<Object[]> updateFilterParameters() {
+    return Arrays.asList(new Object[][]{
+        {filterIsDefault().getIsDefault(), filterCarExpenses()},
+        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
+    });
+  }
+
+  @BeforeEach
+  public void beforeEach() throws Exception {
+    userId = callRestToRegisterUserAndReturnUserId(userMarian());
+    token = callRestToAuthenticateUserAndReturnToken(userMarian());
   }
 
   @ParameterizedTest
@@ -191,14 +199,6 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
 
     assertThat(actualFilters, contains(expectedFoodExpenses));
     assertThat(actualFilters.contains(expetedCarExpenses), is(false));
-  }
-
-  @SuppressWarnings("unused")
-  private static Collection<Object[]> updateFilterParameters() {
-    return Arrays.asList(new Object[][] {
-        {filterIsDefault().getIsDefault(), filterCarExpenses()},
-        {filterIsNotDefault().getIsDefault(), filterCarExpensesWithoutSettingDefault()}
-    });
   }
 
   @ParameterizedTest
@@ -336,7 +336,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     callRestServiceToAddFilterAndReturnId(filter, token);
 
     mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + jacekAccountId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_USED_IN_FILTER))));
@@ -352,7 +352,7 @@ public class FilterControllerIntegrationTest extends IntegrationTestsBase {
     callRestServiceToAddFilterAndReturnId(filter, token);
 
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(CATEGORY_IS_USED_IN_FILTER))));

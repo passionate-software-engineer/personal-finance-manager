@@ -31,6 +31,16 @@ import org.springframework.http.HttpHeaders;
 
 public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
+  @SuppressWarnings("unused")
+  private static Collection<Object[]> emptyAccountTypeNameParameters() {
+    return Arrays.asList(new Object[][]{
+        {""},
+        {" "},
+        {"    "},
+        {null}
+    });
+  }
+
   @BeforeEach
   public void setUp() throws Exception {
     userId = callRestToRegisterUserAndReturnUserId(userMarian());
@@ -45,9 +55,9 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
     // when
     String response =
         mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE)
-            .content(json(accountType)))
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(JSON_CONTENT_TYPE)
+                .content(json(accountType)))
             .andExpect(status().isOk()).andReturn()
             .getResponse().getContentAsString();
 
@@ -71,9 +81,9 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
     // when
     String response =
         mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .contentType(JSON_CONTENT_TYPE)
-            .content(json(accountTypeRequest)))
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(JSON_CONTENT_TYPE)
+                .content(json(accountTypeRequest)))
             .andExpect(status().isOk()).andReturn()
             .getResponse().getContentAsString();
 
@@ -114,22 +124,12 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(accountTypeRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountTypeRequest)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_ACCOUNT_TYPE_NAME))));
-  }
-
-  @SuppressWarnings("unused")
-  private static Collection<Object[]> emptyAccountTypeNameParameters() {
-    return Arrays.asList(new Object[][] {
-        {""},
-        {" "},
-        {"    "},
-        {null}
-    });
   }
 
   @Test
@@ -139,17 +139,17 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(accountTypeRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountTypeRequest)))
         .andExpect(status().isOk()).andReturn()
         .getResponse().getContentAsString();
 
     // then
     mockMvc.perform(post(ACCOUNT_TYPE_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(accountTypeRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountTypeRequest)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(ACCOUNT_TYPE_WITH_PROVIDED_NAME_ALREADY_EXISTS))));
@@ -175,7 +175,7 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(delete(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk());
   }
 
@@ -223,14 +223,14 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(accountTypeToUpdate)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(accountTypeToUpdate)))
         .andExpect(status().isOk());
 
     // then
     mockMvc.perform(get(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(jsonPath("$.name", is(accountTypeToUpdate.getName())))
@@ -256,13 +256,13 @@ public class AccountTypeControllerIntegrationTest extends IntegrationTestsBase {
         .name(accountTypeRequest.getName()).build();
 
     mockMvc.perform(put(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedAccountType)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedAccountType)))
         .andExpect(status().isOk());
 
     mockMvc.perform(get(ACCOUNT_TYPE_SERVICE_PATH + "/" + accountTypeId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(content().contentType(JSON_CONTENT_TYPE))
         .andExpect(jsonPath("$.name", is(equalTo(updatedAccountType.getName()))))

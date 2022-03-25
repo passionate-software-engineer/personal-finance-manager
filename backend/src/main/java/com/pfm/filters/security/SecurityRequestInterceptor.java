@@ -1,6 +1,5 @@
 package com.pfm.filters.security;
 
-import com.google.common.net.HttpHeaders;
 import com.pfm.auth.TokenService;
 import com.pfm.auth.UserProvider;
 import javax.servlet.http.HttpServletRequest;
@@ -8,18 +7,19 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @AllArgsConstructor
 @Component
 @CrossOrigin
-public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
+public class SecurityRequestInterceptor implements HandlerInterceptor {
 
   // TODO this should be done with spring security and JWT
-  private static final String pattern = "(/users/.*|.*swagger.*|/error|/)";
+  private static final String pattern = "(/users/.*|.*swagger.*|/error|/v3/api-docs)";
   private static final Logger logger = LoggerFactory.getLogger(SecurityRequestInterceptor.class.getName());
 
   private TokenService tokenService;
@@ -61,8 +61,7 @@ public class SecurityRequestInterceptor extends HandlerInterceptorAdapter {
   }
 
   @Override
-  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-    super.postHandle(request, response, handler, modelAndView);
+  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
     userProvider.removeUser();
   }
 

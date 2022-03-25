@@ -2,7 +2,7 @@ package com.pfm.category.requests;
 
 import static com.pfm.config.MessagesProvider.EMPTY_CATEGORY_NAME;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CategoryUpdateRequest extends CategoryRequestBase {
 
-  @ApiModelProperty(value = "CATEGORY name", required = true, example = "Eating out")
+  @Schema(description = "CATEGORY name", required = true, example = "Eating out")
   @NotBlank(message = EMPTY_CATEGORY_NAME)
   private String name;
 

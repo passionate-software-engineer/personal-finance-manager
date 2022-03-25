@@ -36,7 +36,7 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
   @SuppressWarnings("unused")
   private static Collection<Object[]> usernameAndPasswordWithWhitespaces() {
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {" Marian", " 1232sbbb"},
         {"Mar ian", "1232 sbbb"},
         {" Mar ian ", " 1232 sbbb "},
@@ -51,8 +51,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isOk());
   }
 
@@ -65,8 +65,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
@@ -83,8 +83,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", is(getMessage(USER_WITH_PROVIDED_USERNAME_ALREADY_EXIST))));
@@ -98,8 +98,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isOk());
   }
 
@@ -110,8 +110,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
   }
@@ -126,8 +126,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
     user.setPassword("Wrong password");
 
     mockMvc.perform(post(USERS_SERVICE_PATH + "/authenticate")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_OR_PASSWORD_IS_INCORRECT))));
   }
@@ -139,8 +139,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(EMPTY_USERNAME))))
@@ -161,8 +161,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))
@@ -183,8 +183,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(String.format(getMessage(TOO_LONG_USERNAME), UserValidator.USERNAME_MAX_LENGTH))))
@@ -205,8 +205,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isOk());
   }
 
@@ -221,8 +221,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/register")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(user)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(user)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", is(getMessage(USERNAME_CONTAINS_WHITSPACE))))
@@ -237,8 +237,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(null)))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(null)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$[0]", is(getMessage(INVALID_REFRESH_TOKEN))));
   }
@@ -252,8 +252,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(refreshToken))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(refreshToken))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", is(not(nullValue()))))
         .andExpect(content().string(containsString("value")))
@@ -269,8 +269,8 @@ public class UserControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(USERS_SERVICE_PATH + "/refresh")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(refreshToken))
+            .contentType(JSON_CONTENT_TYPE)
+            .content(refreshToken))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", is(not(nullValue()))))
         .andExpect(content().string(containsString("value")))

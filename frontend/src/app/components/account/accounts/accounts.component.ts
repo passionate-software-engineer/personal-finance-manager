@@ -1,9 +1,8 @@
-import {Currency} from './../currency';
-import {AccountType} from './../accountType';
+import {Currency} from '../currency';
+import {AccountType} from '../accountType';
 import {Component, OnInit} from '@angular/core';
 import {Account} from '../account';
 import {AccountService} from '../account-service/account.service';
-import {isNumeric} from 'rxjs/internal-compatibility';
 import {AlertsService} from '../../alert/alerts-service/alerts.service';
 import {Sortable} from '../../../helpers/sortable';
 import {TranslateService} from '@ngx-translate/core';
@@ -220,7 +219,7 @@ export class AccountsComponent implements OnInit {
       return false;
     }
 
-    if (!isNumeric(account.balance)) {
+    if (isNaN(account.balance)) {
       this.alertService.error(
         this.translate.instant('message.balanceNotCorrect')
       );

@@ -222,7 +222,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         token);
 
     mockMvc.perform(delete(ACCOUNTS_SERVICE_PATH + "/" + jacekAccountId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IS_USED_IN_TRANSACTION))));
@@ -242,7 +242,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
         token);
 
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + foodCategoryId)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(CATEGORY_IS_USED_IN_TRANSACTION))));
@@ -266,9 +266,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
     updateFoodTransaction.setDate(null);
 
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + foodTransactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .content(json(updateFoodTransaction))
-        .contentType(JSON_CONTENT_TYPE))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(updateFoodTransaction))
+            .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_DATE))));
@@ -325,10 +325,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .header(LANGUAGE_HEADER, "de") // will default to en
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(transactionToAdd)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .header(LANGUAGE_HEADER, "de") // will default to en
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(4)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME, Language.ENGLISH))))
@@ -354,10 +354,10 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(post(TRANSACTIONS_SERVICE_PATH)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .header(LANGUAGE_HEADER, "pl")
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(transactionToAdd)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .header(LANGUAGE_HEADER, "pl")
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(transactionToAdd)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(3)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(EMPTY_TRANSACTION_NAME, Language.POLISH))))
@@ -369,7 +369,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingTransactionIdInGetMethod() throws Exception {
     // when
     mockMvc.perform(get(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -377,7 +377,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingTransactionIdInDeleteMethod() throws Exception {
     // when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -385,9 +385,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedByNotExistingTransactionIdInUpdateMethod() throws Exception {
     // when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .content(json(TransactionRequest.builder().build()))
-        .contentType(JSON_CONTENT_TYPE))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .content(json(TransactionRequest.builder().build()))
+            .contentType(JSON_CONTENT_TYPE))
         .andExpect(status().isNotFound());
   }
 
@@ -635,9 +635,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_TRANSACTION_ID)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedFoodPlannedTransactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedFoodPlannedTransactionRequest)))
 
         // then
         .andExpect(status().isNotFound());
@@ -674,9 +674,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + transactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedFoodPlannedTransactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedFoodPlannedTransactionRequest)))
 
         // then
         .andExpect(status().isBadRequest());
@@ -700,7 +700,7 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(delete(TRANSACTIONS_SERVICE_PATH + "/" + NOT_EXISTING_TRANSACTION_ID)
-        .header(HttpHeaders.AUTHORIZATION, token))
+            .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
@@ -1196,9 +1196,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedTransactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedTransactionRequest)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(DATE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
@@ -1232,9 +1232,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedTransactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedTransactionRequest)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(PRICE_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
@@ -1269,9 +1269,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedTransactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedTransactionRequest)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_IN_TRANSACTION_ARCHIVED_ACCOUNT_CANNOT_BE_CHANGED))));
@@ -1310,9 +1310,9 @@ public class TransactionControllerIntegrationTest extends IntegrationTestsBase {
 
     // then
     mockMvc.perform(put(TRANSACTIONS_SERVICE_PATH + "/" + originalTransactionId)
-        .header(HttpHeaders.AUTHORIZATION, token)
-        .contentType(JSON_CONTENT_TYPE)
-        .content(json(updatedTransactionRequest)))
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .contentType(JSON_CONTENT_TYPE)
+            .content(json(updatedTransactionRequest)))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0]", Matchers.is(getMessage(ACCOUNT_PRICE_ENTRY_SIZE_CHANGED))));

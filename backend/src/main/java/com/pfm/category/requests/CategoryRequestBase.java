@@ -4,7 +4,7 @@ import static com.pfm.config.MessagesProvider.CATEGORY_PRIORITY_WRONG_VALUE;
 
 import com.pfm.category.validation.CategoryExistsIfProvided;
 import com.pfm.category.validation.CheckForTooManyCategoryLevels;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import lombok.Builder;
@@ -19,12 +19,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class CategoryRequestBase {
 
-  @ApiModelProperty(value = "Parent category id", example = "1")
+  @Schema(description = "Parent category id", example = "1")
   @CategoryExistsIfProvided
   @CheckForTooManyCategoryLevels
   private Long parentCategoryId;
 
-  @ApiModelProperty(value = "CATEGORY priority", required = true, example = "1")
+  @Schema(description = "CATEGORY priority", required = true, example = "1")
   @Builder.Default
   @Min(value = 1, message = CATEGORY_PRIORITY_WRONG_VALUE)
   @Max(value = 1000, message = CATEGORY_PRIORITY_WRONG_VALUE)
