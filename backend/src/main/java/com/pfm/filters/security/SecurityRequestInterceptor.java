@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class SecurityRequestInterceptor implements HandlerInterceptor {
 
   // TODO this should be done with spring security and JWT
-  private static final String pattern = "(/users/.*|.*swagger.*|/error|/|/v3/api-docs)";
+  private static final String pattern = "(/users/.*|.*swagger.*|/error|/v3/api-docs)";
   private static final Logger logger = LoggerFactory.getLogger(SecurityRequestInterceptor.class.getName());
 
   private TokenService tokenService;

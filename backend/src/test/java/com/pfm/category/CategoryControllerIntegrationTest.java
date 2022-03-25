@@ -325,7 +325,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
 
     // when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + carCategoryId)
-            .header(HttpHeaders.AUTHORIZATION, token))
+        .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(getMessage(CANNOT_DELETE_PARENT_CATEGORY)));
   }
@@ -334,7 +334,7 @@ public class CategoryControllerIntegrationTest extends IntegrationTestsBase {
   public void shouldReturnErrorCausedWrongIdProvidedDeleteMethod() throws Exception {
     // when
     mockMvc.perform(delete(CATEGORIES_SERVICE_PATH + "/" + NOT_EXISTING_ID)
-            .header(HttpHeaders.AUTHORIZATION, token))
+        .header(HttpHeaders.AUTHORIZATION, token))
         .andExpect(status().isNotFound());
   }
 
